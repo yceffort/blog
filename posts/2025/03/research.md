@@ -23,5 +23,6 @@ description: '게을러터져서 이제 만든'
 
 - https://research.yceffort.kr/slides/best-practice-for-package-1
 - https://research.yceffort.kr/slides/best-practice-for-package-2
+- https://research.yceffort.kr/slides/best-practice-for-package-3
 
 😉
