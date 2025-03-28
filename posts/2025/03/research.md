@@ -19,7 +19,7 @@ description: '게을러터져서 이제 만든'
 
 아직 얼기설기 만들어서 보완할 부분이 많지만, 일단 출시한 뒤에 시간이 날 때 조금씩 개선해 나가려 한다. 블로그 글로 쓰기엔 조금 애매하거나 귀찮은 이야기, 혹은 발표나 소개용 자료, 또는 잘 정리해서 보관하고 싶은 자료들은 모두 이 사이트에서 Marp 형태로 만들어둘 계획이다.
 
-오픈 기념으로 곧 출간될 책 내용과 연계된 자료 두 개를 먼저 공개했다.
+오픈 기념으로 곧 출간될 책 내용과 연계된 자료 세개 공개..!
 
 - https://research.yceffort.kr/slides/best-practice-for-package-1
 - https://research.yceffort.kr/slides/best-practice-for-package-2
