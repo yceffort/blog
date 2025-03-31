@@ -60,7 +60,7 @@
     "query-string": "^9.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-is": "^19.0.0",
+    "react-is": "^19.1.0",
     "rehype": "^13.0.2",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-katex": "^7.0.1",
