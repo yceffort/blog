@@ -48,7 +48,7 @@
     "front-matter": "^4.0.2",
     "glob": "^11.0.1",
     "image-size": "^2.0.1",
-    "lefthook": "^1.11.5",
+    "lefthook": "^1.11.8",
     "next": "^15.2.4",
     "next-mdx-remote": "^5.0.0",
     "next-mdx-remote-client": "^2.1.1",
