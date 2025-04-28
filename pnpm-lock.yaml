@@ -22,7 +22,7 @@ importers:
         version: 0.0.3
       '@naverpay/stylelint-config':
         specifier: ^0.0.4
-        version: 0.0.4(postcss-scss@4.0.9(postcss@8.5.3))(postcss@8.5.3)(stylelint-order@6.0.4(stylelint@16.19.1(typescript@5.8.3)))(stylelint-scss@6.11.1(stylelint@16.19.1(typescript@5.8.3)))(stylelint@16.19.1(typescript@5.8.3))
+        version: 0.0.4(postcss-scss@4.0.9(postcss@8.5.3))(postcss@8.5.3)(stylelint-order@7.0.0(stylelint@16.19.1(typescript@5.8.3)))(stylelint-scss@6.11.1(stylelint@16.19.1(typescript@5.8.3)))(stylelint@16.19.1(typescript@5.8.3))
       '@tailwindcss/forms':
         specifier: ^0.5.10
         version: 0.5.10(tailwindcss@4.1.4)
@@ -141,8 +141,8 @@ importers:
         specifier: ^16.18.0
         version: 16.19.1(typescript@5.8.3)
       stylelint-order:
-        specifier: ^6.0.4
-        version: 6.0.4(stylelint@16.19.1(typescript@5.8.3))
+        specifier: ^7.0.0
+        version: 7.0.0(stylelint@16.19.1(typescript@5.8.3))
       stylelint-scss:
         specifier: ^6.11.1
         version: 6.11.1(stylelint@16.19.1(typescript@5.8.3))
@@ -2920,8 +2920,8 @@ packages:
     resolution: {integrity: sha512-8sLjZwK0R+JlxlYcTuVnyT2v+htpdrjDOKuMcOVdYjt52Lh8hWRYpxBPoKx/Zg+bcjc3wx6fmQevMmUztS/ccA==}
     engines: {node: '>=4'}
 
-  postcss-sorting@8.0.2:
-    resolution: {integrity: sha512-M9dkSrmU00t/jK7rF6BZSZauA5MAaBW4i5EnJXspMwt4iqTh/L9j6fgMnbElEOfyRyfLfVbIHj/R52zHzAPe1Q==}
+  postcss-sorting@9.1.0:
+    resolution: {integrity: sha512-Mn8KJ45HNNG6JBpBizXcyf6LqY/qyqetGcou/nprDnFwBFBLGj0j/sNKV2lj2KMOVOwdXu14aEzqJv8CIV6e8g==}
     peerDependencies:
       postcss: ^8.4.20
 
@@ -3388,10 +3388,11 @@ packages:
       babel-plugin-macros:
         optional: true
 
-  stylelint-order@6.0.4:
-    resolution: {integrity: sha512-0UuKo4+s1hgQ/uAxlYU4h0o0HS4NiQDud0NAUNI0aa8FJdmYHA5ZZTFHiV5FpmE3071e9pZx5j0QpVJW5zOCUA==}
+  stylelint-order@7.0.0:
+    resolution: {integrity: sha512-rSWxx0KscYfxU02wEskKXES9lkRzuuONMMNkZ7SUc6uiF3tDKm7e+sE0Ax/SBlG4TUf1sp1R6f3/SlsPGmzthg==}
+    engines: {node: '>=20.19.0'}
     peerDependencies:
-      stylelint: ^14.0.0 || ^15.0.0 || ^16.0.1
+      stylelint: ^16.18.0
 
   stylelint-scss@6.11.1:
     resolution: {integrity: sha512-e4rYo0UY+BIMtGeGanghrvHTjcryxgZbyFxUedp8dLFqC4P70aawNdYjRrQxbnKhu3BNr4+lt5e/53tcKXiwFA==}
@@ -4043,12 +4044,12 @@ snapshots:
     dependencies:
       markdownlint-cli2: 0.11.0
 
-  '@naverpay/stylelint-config@0.0.4(postcss-scss@4.0.9(postcss@8.5.3))(postcss@8.5.3)(stylelint-order@6.0.4(stylelint@16.19.1(typescript@5.8.3)))(stylelint-scss@6.11.1(stylelint@16.19.1(typescript@5.8.3)))(stylelint@16.19.1(typescript@5.8.3))':
+  '@naverpay/stylelint-config@0.0.4(postcss-scss@4.0.9(postcss@8.5.3))(postcss@8.5.3)(stylelint-order@7.0.0(stylelint@16.19.1(typescript@5.8.3)))(stylelint-scss@6.11.1(stylelint@16.19.1(typescript@5.8.3)))(stylelint@16.19.1(typescript@5.8.3))':
     dependencies:
       postcss: 8.5.3
       postcss-scss: 4.0.9(postcss@8.5.3)
       stylelint: 16.19.1(typescript@5.8.3)
-      stylelint-order: 6.0.4(stylelint@16.19.1(typescript@5.8.3))
+      stylelint-order: 7.0.0(stylelint@16.19.1(typescript@5.8.3))
       stylelint-scss: 6.11.1(stylelint@16.19.1(typescript@5.8.3))
 
   '@next/env@15.3.1': {}
@@ -7066,7 +7067,7 @@ snapshots:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
 
-  postcss-sorting@8.0.2(postcss@8.5.3):
+  postcss-sorting@9.1.0(postcss@8.5.3):
     dependencies:
       postcss: 8.5.3
 
@@ -7722,10 +7723,10 @@ snapshots:
       client-only: 0.0.1
       react: 19.1.0
 
-  stylelint-order@6.0.4(stylelint@16.19.1(typescript@5.8.3)):
+  stylelint-order@7.0.0(stylelint@16.19.1(typescript@5.8.3)):
     dependencies:
       postcss: 8.5.3
-      postcss-sorting: 8.0.2(postcss@8.5.3)
+      postcss-sorting: 9.1.0(postcss@8.5.3)
       stylelint: 16.19.1(typescript@5.8.3)
 
   stylelint-scss@6.11.1(stylelint@16.19.1(typescript@5.8.3)):
