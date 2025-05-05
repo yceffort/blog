@@ -23,6 +23,9 @@ importers:
       '@naverpay/stylelint-config':
         specifier: ^0.0.4
         version: 0.0.4(postcss-scss@4.0.9(postcss@8.5.3))(postcss@8.5.3)(stylelint-order@6.0.4(stylelint@14.16.1))(stylelint-scss@6.11.1(stylelint@14.16.1))(stylelint@14.16.1)
+      '@stylistic/stylelint-plugin':
+        specifier: ^3.1.2
+        version: 3.1.2(stylelint@14.16.1)
       '@tailwindcss/forms':
         specifier: ^0.5.10
         version: 0.5.10(tailwindcss@4.1.4)
@@ -137,6 +140,9 @@ importers:
       sharp:
         specifier: ^0.34.1
         version: 0.34.1
+      stylelint:
+        specifier: ^14.2.0
+        version: 14.16.1
       stylelint-order:
         specifier: ^6.0.4
         version: 6.0.4(stylelint@14.16.1)
@@ -158,13 +164,6 @@ importers:
       vfile:
         specifier: ^6.0.3
         version: 6.0.3
-    devDependencies:
-      '@stylistic/stylelint-plugin':
-        specifier: ^3.1.2
-        version: 3.1.2(stylelint@14.16.1)
-      stylelint:
-        specifier: ^14.2.0
-        version: 14.16.1
 
 packages:
 
