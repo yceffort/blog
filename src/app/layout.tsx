@@ -7,6 +7,7 @@ import {Analytics} from '@vercel/analytics/react'
 import type {Metadata} from 'next'
 import type {ReactNode} from 'react'
 
+import FloatingBanner from '#components/Banner'
 import LayoutWrapper from '#components/LayoutWrapper'
 import {Providers} from '#components/Provider'
 import {SiteConfig} from '#src/config'
@@ -81,6 +82,7 @@ export default function Layout({children}: {children: ReactNode}) {
         `}
           </Script>
           <Analytics />
+          <FloatingBanner />
         </body>
       </html>
     </>
