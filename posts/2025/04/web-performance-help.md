@@ -50,4 +50,8 @@ description: '🤔'
 
 [이력서](https://yceffort.notion.site/9fc4262c01744a63a849cdccdde5c85f)
 
+## 분석 이력 살펴보기
+
+[보러가기](/tags/web-performance-analysis/)
+
 편하게 문의 주시면 감사하겠습니다! 🙇🏻‍♂️
