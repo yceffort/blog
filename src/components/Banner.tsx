@@ -47,9 +47,7 @@ const FloatingBanner = ({
 
   return (
     <div
-      className={`fixed bottom-0 left-0 w-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white p-4 shadow-lg z-50
-                 transition-all duration-500 ease-out transform
-                 ${isMounted ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}
+      className={`fixed bottom-0 left-0 w-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white p-4 shadow-lg z-50 transition-all duration-500 ease-out transform ${isMounted ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}
       role="alert"
     >
       <div className="container mx-auto relative">
