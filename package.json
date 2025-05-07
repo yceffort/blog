@@ -47,7 +47,7 @@
     "date-fns": "^4.1.0",
     "eslint": "^9.24.0",
     "front-matter": "^4.0.2",
-    "glob": "^11.0.1",
+    "glob": "^11.0.2",
     "image-size": "^2.0.2",
     "lefthook": "^1.11.8",
     "next": "^15.3.0",
