@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@naverpay/commit-helper':
-        specifier: ^1.1.0
-        version: 1.1.0(husky@8.0.3)(typescript@5.8.3)
+        specifier: ^1.2.0
+        version: 1.2.0(husky@8.0.3)(typescript@5.8.3)
       '@naverpay/eslint-config':
         specifier: ^2.2.5
         version: 2.2.5(@types/estree@1.0.6)(@typescript-eslint/eslint-plugin@8.27.0(@typescript-eslint/parser@8.27.0(eslint@9.25.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.25.1(jiti@2.4.2))(typescript@5.8.3))(@typescript-eslint/parser@8.27.0(eslint@9.25.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.25.1(jiti@2.4.2))(jsonc-eslint-parser@2.4.0)(typescript@5.8.3)
@@ -395,8 +395,8 @@ packages:
   '@naverpay/ast-parser@0.0.2':
     resolution: {integrity: sha512-o9T9GmtF2r/z4jQVgUsaNrupKsxvpZ+zsa21UB37l7fnZSv3Nef8CiNFp2p4u5Vojp+X/uV/XT0sBw2kwd4y3w==}
 
-  '@naverpay/commit-helper@1.1.0':
-    resolution: {integrity: sha512-PjH1LqYcm7ZKLDpzT0+MbPiKPmgyVRpokFLzYma/BeVncMFWbWEc1S0jGCAeFIkbjU4BYlpPXViZD1CIISvSeQ==}
+  '@naverpay/commit-helper@1.2.0':
+    resolution: {integrity: sha512-XV9YSdAvSPjEq1ei+7T1gPpUNfC91LQqHrCgd7KeVR51tBLYi6VpAYSPhOvcLtcxXeGBl16GvEIK+vLutvRzGQ==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     peerDependencies:
@@ -4080,7 +4080,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@naverpay/commit-helper@1.1.0(husky@8.0.3)(typescript@5.8.3)':
+  '@naverpay/commit-helper@1.2.0(husky@8.0.3)(typescript@5.8.3)':
     dependencies:
       cosmiconfig: 8.3.6(typescript@5.8.3)
       husky: 8.0.3
