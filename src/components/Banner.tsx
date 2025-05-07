@@ -3,10 +3,12 @@
 import {useState, useEffect} from 'react'
 
 interface FloatingBannerProps {
-  postPath?: string;
+  postPath?: string
 }
 
-const FloatingBanner = ({postPath = '/2025/04/web-performance-help'}: FloatingBannerProps) => {
+const FloatingBanner = ({
+  postPath = '/2025/04/web-performance-help',
+}: FloatingBannerProps) => {
   const [isVisible, setIsVisible] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   const localStorageKey = 'hideBanner_WebPerfHelp_20250426'
