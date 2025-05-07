@@ -6,6 +6,16 @@ import defaultTheme from 'tailwindcss/defaultTheme'
 export default {
   mode: 'jit',
   content: ['./src/**/*.ts*'],
+  safelist: [
+    'fixed',
+    'bottom-0',
+    'opacity-100',
+    'from-indigo-600',
+    'via-purple-600',
+    'to-pink-600',
+    'translate-y-0',
+    'bg-gradient-to-r',
+  ],
   darkMode: 'class',
   theme: {
     extend: {
