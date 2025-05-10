@@ -164,6 +164,9 @@ importers:
       vfile:
         specifier: ^6.0.3
         version: 6.0.3
+      web-vitals:
+        specifier: ^5.0.0
+        version: 5.0.0
 
 packages:
 
@@ -3733,6 +3736,9 @@ packages:
 
   web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
+
+  web-vitals@5.0.0:
+    resolution: {integrity: sha512-yuayYLYyO4QdqB7YriMtUZxCIsUbcpZLnoPCJXocLvTRcAh/Jz2rgqsHrh9Oz/NHApB/Somd05NMsuhJV3YcLQ==}
 
   webidl-conversions@5.0.0:
     resolution: {integrity: sha512-VlZwKPCkYKxQgeSbH5EyngOmRp7Ww7I9rQLERETtf5ofd9pGeswWiOtogpEO850jziPRarreGxn5QIiTqpb2wA==}
@@ -8265,6 +8271,8 @@ snapshots:
       xml-name-validator: 3.0.0
 
   web-namespaces@2.0.1: {}
+
+  web-vitals@5.0.0: {}
 
   webidl-conversions@5.0.0: {}
 

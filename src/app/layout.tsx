@@ -2,12 +2,13 @@ import './tailwind.css'
 
 import Script from 'next/script'
 
-import {Analytics} from '@vercel/analytics/react'
+import {Analytics as VercelAnalytics} from '@vercel/analytics/react'
 
 import type {Metadata} from 'next'
 import type {ReactNode} from 'react'
 
 import FloatingBanner from '#components/Banner'
+import {GoogleAnalyticsWebVitalsTracker} from '#components/GoogleAnalyticsWebVitalsTracker'
 import LayoutWrapper from '#components/LayoutWrapper'
 import {Providers} from '#components/Provider'
 import {SiteConfig} from '#src/config'
@@ -44,6 +45,8 @@ export const metadata: Metadata = {
   },
 }
 
+const GA_MEASUREMENT_ID = SiteConfig.googleAnalyticsId
+
 export default function Layout({children}: {children: ReactNode}) {
   return (
     <>
@@ -68,20 +71,30 @@ export default function Layout({children}: {children: ReactNode}) {
           <Providers>
             <LayoutWrapper>{children}</LayoutWrapper>
           </Providers>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${SiteConfig.googleAnalyticsId}`}
-            strategy="afterInteractive"
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', '${SiteConfig.googleAnalyticsId}');
-        `}
-          </Script>
-          <Analytics />
+          {GA_MEASUREMENT_ID && (
+            <>
+              <Script
+                strategy="afterInteractive"
+                src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              />
+              <Script
+                id="google-analytics"
+                strategy="afterInteractive"
+                dangerouslySetInnerHTML={{
+                  __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${GA_MEASUREMENT_ID}', {
+                    page_path: window.location.pathname,
+                  });
+                `,
+                }}
+              />
+            </>
+          )}
+          <VercelAnalytics />
+          <GoogleAnalyticsWebVitalsTracker />
           <FloatingBanner />
         </body>
       </html>
