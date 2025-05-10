@@ -1,5 +1,5 @@
 {
-  "protect": [],
+  "protect": ["master"],
   "rules": {
     "feature": null,
     "post": null
