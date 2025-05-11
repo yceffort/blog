@@ -6,7 +6,9 @@ import {onCLS, onFCP, onINP, onLCP, onTTFB} from 'web-vitals'
 
 import type {Metric} from 'web-vitals'
 
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+import {SiteConfig} from '#src/config'
+
+const GA_MEASUREMENT_ID = SiteConfig.googleAnalyticsId
 
 function sendToGoogleAnalytics({name, value, id}: Metric) {
   if (typeof window.gtag !== 'function' || !GA_MEASUREMENT_ID) {
