@@ -3,6 +3,7 @@ import './tailwind.css'
 import Script from 'next/script'
 
 import {Analytics as VercelAnalytics} from '@vercel/analytics/react'
+import {SpeedInsights as VercelSpeedInsights} from '@vercel/speed-insights/next'
 
 import type {Metadata} from 'next'
 import type {ReactNode} from 'react'
@@ -94,6 +95,7 @@ export default function Layout({children}: {children: ReactNode}) {
             </>
           )}
           <VercelAnalytics />
+          <VercelSpeedInsights />
           <GoogleAnalyticsWebVitalsTracker />
           <FloatingBanner />
         </body>
