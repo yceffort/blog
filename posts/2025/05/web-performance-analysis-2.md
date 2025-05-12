@@ -190,7 +190,7 @@ curl https://ipinfo.io/18.67.51.98/json
 해당 웹서비스 분석 중에 가장 눈에 띄었던 것은 해당 웹서비스의 `/`를 불러오기 위해 필요한 자바스크립트 파일이었습니다. `/` 를 불러오기 위해 총 14,647kb 크기에 달하는 41개의 자바스크립트 파일을 불러오고 있었습니다. 물론 그 중에는 `kakao.min.js` `gtm.js` 등 써드 파티 라이브러리도 있었습니다만, 해당 웹서비스가 서빙하는 next.js 리소스의 크기도 만만치 않았습니다.
 
 <!-- prettier-ignore-start -->
-```jsx
+```javascript
 self.__BUILD_MANIFEST = function(t, s, e, a, c, i, n, o, u, d, p, m, l, k, f, y, r, b, h, g, j, v, w, S, _, x, M, C, D, I, T, A, E, U, B, F, q, z) {
     return {
         __rewrites: {
@@ -252,7 +252,7 @@ nextjs 는 `getInitialProps` 또는 `getServerSideProps` 와 같은 함수를 �
 
 - `fallbackLng`에서 `en` 제거: 제가 방문한 사이트는 `/ko` 임에도 불구하고 `/en` 정보까지 포함되어 있는 이유는 아마도 불러오지 못한 정보를 위한 fallback 처리인 `fallbackLng` 에 `en` 이 추가 추가 되어있기 때문일 것으로 보입니다.
 
-  ```jsx
+  ```javascript
   A.exports = {
     i18n: {
       defaultLocale: 'default',
@@ -577,8 +577,7 @@ nextjs 는 `getInitialProps` 또는 `getServerSideProps` 와 같은 함수를 �
 </div>
 ```
 
-```jsx
-X.ZT,
+```javascript
   {
     font: 'title_1_B',
     color: 'greyScale90',
