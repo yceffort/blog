@@ -154,24 +154,24 @@ nextjs 의 버전을 정확히 추정할 수 있는 방법은 없지만, 내부 
 
 ```bash
 nslookup example.com
-Server:    10.100.3.167
+Server:    0.0.0.0
 Address:  10.100.3.167#53
 
 Non-authoritative answer:
 Name:  example.com
-Address: 18.67.51.98
+Address: 0.0.0.0
 Name:  example.com
-Address: 18.67.51.56
+Address: 0.0.0.0
 Name:  example.com
-Address: 18.67.51.4
+Address: 0.0.0.0
 Name:  example.com
-Address: 18.67.51.48
+Address: 0.0.0.0
 
-curl https://ipinfo.io/18.67.51.98/json
+curl https://ipinfo.io/0.0.0.0/json
 
 {
-  "ip": "18.67.51.98",
-  "hostname": "server-18-67-51-98.icn57.r.cloudfront.net",
+  "ip": "0.0.0.0",
+  "hostname": "server-0.0.0.0.icn00.r.cloudfront.net",
   "city": "Seoul",
   "region": "Seoul",
   "country": "KR",
@@ -183,7 +183,7 @@ curl https://ipinfo.io/18.67.51.98/json
 }
 ```
 
-- AWS 에서 운영 중이며, Amazon Cloud Front를 사용하고 있는 것으로 보입니다.
+- AWS 에서 운영 중이며, 인천 Amazon Cloud Front를 사용하고 있는 것으로 보입니다.
 
 # 4. 제안
 
