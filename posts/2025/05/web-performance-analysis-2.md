@@ -647,7 +647,7 @@ nextjs 는 `getInitialProps` 또는 `getServerSideProps` 와 같은 함수를 �
   style="font-size:50px"
   class="css-bygkac e1mepo3j0"
 >
-  콘텐츠 현지화 프리랜서 커리어 성장 플랫폼
+  플랫폼
 </div>
 
 <!-- 최종적으로 렌더링되는 크기 -->
@@ -659,7 +659,7 @@ nextjs 는 `getInitialProps` 또는 `getServerSideProps` 와 같은 함수를 �
   style="font-size: 30px;"
   class="css-bygkac e1mepo3j0"
 >
-  콘텐츠 현지화 프리랜서 커리어 성장 플랫폼
+  플랫폼
 </div>
 ```
 
@@ -677,7 +677,7 @@ nextjs 는 `getInitialProps` 또는 `getServerSideProps` 와 같은 함수를 �
 대충 로직을 파악해보면 다음과 같았습니다.
 
 - 현재 환경이 데스크톱이면 50px 로 설정
-- 데스크톱이 아니고, ko 면 30px 로 설정, 그 외에는 24 px 로 설정
+- 데스크톱이 아니고, ko 면 30px 로 설정, 그 외에는 24px 로 설정
 
 현재 정황상 브라우저/모바일 여부도 서버에서가 아닌 클라이언트에서 판단하고 있다는 것을 의미합니다. 이는 클라이언트 코드가 실행되는 시점에서 폰트가 급격하게 줄어들므로, CLS 에 안좋은 영향을 미치게 됩니다.
 
