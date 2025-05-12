@@ -206,7 +206,7 @@ self.__BUILD_MANIFEST_CB && self.__BUILD_MANIFEST_CB();
 ```
 <!-- prettier-ignore-end -->
 
-위 파일은 next.js 에서 제공하는 `__buildManefiest.js` 파일입니다. 해당 자바스크립트 파일은 next.js 로 빌드된 웹사이트에 대한 정보를 나타내고 있습니니다. 보시면 `/` 를 불러오기 위해 총 9개의 자바스크립트 파일이 필요하다는 것을 알 수 있으며, 이외에 모든 사이트 최초 로딩에 필요한 `__app` `framework` 파일 까지 포함하면 대략 3메가 정도가 필요한 것으로 볼 수 있습니다. 평균적인 웹사이트가 약 22개의 자바스크립트 파일을 680kb 로 제공하는 것을 비춰보았을때, 이 웹사이트는 상당히 큰 편이라고 볼 수 있습니다.
+위 파일은 next.js 에서 제공하는 `__buildManifest.js` 파일입니다. 해당 자바스크립트 파일은 next.js 로 빌드된 웹사이트에 대한 정보를 나타내고 있습니니다. 보시면 `/` 를 불러오기 위해 총 9개의 자바스크립트 파일이 필요하다는 것을 알 수 있으며, 이외에 모든 사이트 최초 로딩에 필요한 `__app` `framework` 파일 까지 포함하면 대략 3메가 정도가 필요한 것으로 볼 수 있습니다. 평균적인 웹사이트가 약 22개의 자바스크립트 파일을 680kb 로 제공하는 것을 비춰보았을때, 이 웹사이트는 상당히 큰 편이라고 볼 수 있습니다.
 
 [HTTP Archive: State of JavaScript](https://httparchive.org/reports/state-of-javascript?start=earliest&end=latest&view=list#bytesJs)
 
