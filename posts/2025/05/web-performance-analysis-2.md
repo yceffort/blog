@@ -238,7 +238,7 @@ lodash 는 트리쉐이킹이 되지 않는 대표적인 라이브러리로, 이
 
 ![image.png](/images/web-performance-analysis-2/image 05.png)
 
-정상적으로 트리쉐이킹이 가능한 라이브러리라면, 위 스샷의 <https://bundlephobia.com/package/lodash-es@4.17.21> 의 경우 처럼 `exports` 분석이 가능할 것입니다.
+정상적으로 트리쉐이킹이 가능한 라이브러리라면, 위 스샷의 [Bundlephobia: lodash-es](https://bundlephobia.com/package/lodash-es@4.17.21) 의 경우 처럼 `exports` 분석이 가능할 것입니다.
 
 ### 4-1-2. 다국어 리소스 사용에 따른 거대한 props
 
