@@ -108,9 +108,9 @@ description: '관심 가져주셔서 감사합니다. 🙇🏻‍♂️'
 
 ![image.png](/images/web-performance-analysis-2/image.png)
 
-![image.png](/images/web-performance-analysis-2/image 01.png)
+![image.png](/images/web-performance-analysis-2/image1.png)
 
-![image.png](/images/web-performance-analysis-2/image 02.png)
+![image.png](/images/web-performance-analysis-2/image2.png)
 
 분석에 사용한 도구는 다음과 같습니다.
 
@@ -189,22 +189,108 @@ curl https://ipinfo.io/18.67.51.98/json
 
 해당 웹서비스 분석 중에 가장 눈에 띄었던 것은 해당 웹서비스의 `/`를 불러오기 위해 필요한 자바스크립트 파일이었습니다. `/` 를 불러오기 위해 총 14,647kb 크기에 달하는 41개의 자바스크립트 파일을 불러오고 있었습니다. 물론 그 중에는 `kakao.min.js` `gtm.js` 등 써드 파티 라이브러리도 있었습니다만, 해당 웹서비스가 서빙하는 next.js 리소스의 크기도 만만치 않았습니다.
 
-<!-- prettier-ignore-start -->
 ```javascript
-self.__BUILD_MANIFEST = function(t, s, e, a, c, i, n, o, u, d, p, m, l, k, f, y, r, b, h, g, j, v, w, S, _, x, M, C, D, I, T, A, E, U, B, F, q, z) {
-    return {
-        __rewrites: {
-            beforeFiles: [],
-            afterFiles: [],
-            fallback: []
-        },
-        "/": [e, a, d, c, p, l, h, n, "static/chunks/pages/index-6b09fcdd8e2f5445.js"],
-        // .. 다른 페이지 생략
-    }
-}("static/chunks/15-a9a48f7944e0e298.js", "static/chunks/8631-592dbd6f83032fc0.js", "static/chunks/fec483df-db3f7b2046a0a64a.js", "static/chunks/3763-ecbc1ef0a619ccdc.js", "static/chunks/7978-897f3a152fd54de3.js", "static/chunks/966-6cef0f650c8a7441.js", "static/css/2c191b1d58af9610.css", "static/chunks/3053-ae68c57739ba1ff4.js", "static/chunks/3127-870b5d6feca82804.js", "static/chunks/1907-ad5c27c3b3b7d60b.js", "static/chunks/5011-6994a6f9b60dd1c1.js", "static/chunks/5912-301e1a380c683a48.js", "static/chunks/2451-9e32b55d273f58ab.js", "static/chunks/9819-61b2f434cbd511ac.js", "static/chunks/2992-759ed9bf2658b944.js", "static/chunks/9738-70e6b0d150c1fb76.js", "static/chunks/8412-36d0e0939bef9710.js", "static/chunks/5967-26ad41dd5b9edc06.js", "static/chunks/3055-58c5470e34b2f706.js", "static/chunks/8349-9faf5341f07dd35c.js", "static/chunks/7094-84c88e31a56721ad.js", "static/chunks/3096-eb0b475935c82a55.js", "static/chunks/6186-c06b470a95a9374e.js", "static/chunks/9099-7d6cb2e6ff4b5743.js", "static/chunks/2957-1ebc10f740dfdb59.js", "static/chunks/8888-8d8e077c448bea31.js", "static/chunks/2871-2587166ff722243e.js", "static/chunks/9152-098296c0be4fa4cb.js", "static/chunks/2272ea81-d98992a44535b5b7.js", "static/chunks/9965-2bf9c244cc59be40.js", "static/chunks/9433-769dc6182acbdb07.js", "static/chunks/3676-60038ecd98fea7cc.js", "static/chunks/5872-d6248ba3506507b6.js", "static/chunks/770-740564783223b60a.js", "static/chunks/1134-7590ca8c52014b90.js", "static/chunks/4045-93d1c0b9d354c3b9.js", "static/chunks/9534-625ccbc57a2af12a.js", "static/chunks/6404-ef83ba69c344044a.js"),
-self.__BUILD_MANIFEST_CB && self.__BUILD_MANIFEST_CB();
+;(self.__BUILD_MANIFEST = (function (
+  t,
+  s,
+  e,
+  a,
+  c,
+  i,
+  n,
+  o,
+  u,
+  d,
+  p,
+  m,
+  l,
+  k,
+  f,
+  y,
+  r,
+  b,
+  h,
+  g,
+  j,
+  v,
+  w,
+  S,
+  _,
+  x,
+  M,
+  C,
+  D,
+  I,
+  T,
+  A,
+  E,
+  U,
+  B,
+  F,
+  q,
+  z,
+) {
+  return {
+    __rewrites: {
+      beforeFiles: [],
+      afterFiles: [],
+      fallback: [],
+    },
+    '/': [
+      e,
+      a,
+      d,
+      c,
+      p,
+      l,
+      h,
+      n,
+      'static/chunks/pages/index-6b09fcdd8e2f5445.js',
+    ],
+    // .. 다른 페이지 생략
+  }
+})(
+  'static/chunks/15-a9a48f7944e0e298.js',
+  'static/chunks/8631-592dbd6f83032fc0.js',
+  'static/chunks/fec483df-db3f7b2046a0a64a.js',
+  'static/chunks/3763-ecbc1ef0a619ccdc.js',
+  'static/chunks/7978-897f3a152fd54de3.js',
+  'static/chunks/966-6cef0f650c8a7441.js',
+  'static/css/2c191b1d58af9610.css',
+  'static/chunks/3053-ae68c57739ba1ff4.js',
+  'static/chunks/3127-870b5d6feca82804.js',
+  'static/chunks/1907-ad5c27c3b3b7d60b.js',
+  'static/chunks/5011-6994a6f9b60dd1c1.js',
+  'static/chunks/5912-301e1a380c683a48.js',
+  'static/chunks/2451-9e32b55d273f58ab.js',
+  'static/chunks/9819-61b2f434cbd511ac.js',
+  'static/chunks/2992-759ed9bf2658b944.js',
+  'static/chunks/9738-70e6b0d150c1fb76.js',
+  'static/chunks/8412-36d0e0939bef9710.js',
+  'static/chunks/5967-26ad41dd5b9edc06.js',
+  'static/chunks/3055-58c5470e34b2f706.js',
+  'static/chunks/8349-9faf5341f07dd35c.js',
+  'static/chunks/7094-84c88e31a56721ad.js',
+  'static/chunks/3096-eb0b475935c82a55.js',
+  'static/chunks/6186-c06b470a95a9374e.js',
+  'static/chunks/9099-7d6cb2e6ff4b5743.js',
+  'static/chunks/2957-1ebc10f740dfdb59.js',
+  'static/chunks/8888-8d8e077c448bea31.js',
+  'static/chunks/2871-2587166ff722243e.js',
+  'static/chunks/9152-098296c0be4fa4cb.js',
+  'static/chunks/2272ea81-d98992a44535b5b7.js',
+  'static/chunks/9965-2bf9c244cc59be40.js',
+  'static/chunks/9433-769dc6182acbdb07.js',
+  'static/chunks/3676-60038ecd98fea7cc.js',
+  'static/chunks/5872-d6248ba3506507b6.js',
+  'static/chunks/770-740564783223b60a.js',
+  'static/chunks/1134-7590ca8c52014b90.js',
+  'static/chunks/4045-93d1c0b9d354c3b9.js',
+  'static/chunks/9534-625ccbc57a2af12a.js',
+  'static/chunks/6404-ef83ba69c344044a.js',
+)),
+  self.__BUILD_MANIFEST_CB && self.__BUILD_MANIFEST_CB()
 ```
-<!-- prettier-ignore-end -->
 
 위 파일은 next.js 에서 제공하는 `__buildManifest.js` 파일입니다. 해당 자바스크립트 파일은 next.js 로 빌드된 웹사이트에 대한 정보를 나타내고 있습니니다. 보시면 `/` 를 불러오기 위해 총 9개의 자바스크립트 파일이 필요하다는 것을 알 수 있으며, 이외에 모든 사이트 최초 로딩에 필요한 `__app` `framework` 파일 까지 포함하면 대략 3메가 정도가 필요한 것으로 볼 수 있습니다. 평균적인 웹사이트가 약 22개의 자바스크립트 파일을 680kb 로 제공하는 것을 비춰보았을때, 이 웹사이트는 상당히 큰 편이라고 볼 수 있습니다.
 
@@ -214,7 +300,7 @@ self.__BUILD_MANIFEST_CB && self.__BUILD_MANIFEST_CB();
 
 그 중에서도 단연 눈에 띄는 것은 `__app.js` 입니다. `_app.js`는 next.js 의 핵심 파일로, 웹사이트를 불러오기 위해 가장 먼저 항상 포함되는 자바스크립트 파일입니다. 이 파일이 크다는 것은 모든 페이지의 성능에 악영향을 미친다는 것을 의미합니다. 이 파일 크기가 크다는 것은, 그만큼 프로젝트의 공통영역에 많은 부담이 가고 있다는 것을 뜻합니다.
 
-![image.png](/images/web-performance-analysis-2/image 03.png)
+![image.png](/images/web-performance-analysis-2/image3.png)
 
 실제로도 위 분석 결과를 살펴보면 2메가가 넘는 `__app` 의 다운로드와 파싱을 위해 대부분의 시간을 소비하고 있는 것을 볼 수 있습니다. (실제 minify 를 해제 하면 9메가까지 커집니다.) 따라서 이 파일에 실제로 필요한 내용만 들어가 있는지, 불필요한 리소스가 있는지 확인해본다면 성능 문제를 크게 해결할 수 있을 것으로 보입니다.
 
@@ -224,7 +310,7 @@ self.__BUILD_MANIFEST_CB && self.__BUILD_MANIFEST_CB();
 
 lodash 는 트리쉐이킹이 되지 않는 대표적인 라이브러리로, 이 웹사이트에서 트리쉐이킹 되지 않는 `lodash` 의 흔적을 볼 수 있었습니다.
 
-![image.png](/images/web-performance-analysis-2/image 04.png)
+![image.png](/images/web-performance-analysis-2/image4.png)
 
 위 스크린샷은 해당 웹사이트에서 찾은 `lodash` 라이브러리의 흔적과 실제로 사용하고 있는지 여부의 일부를 가져온 것입니다. `kt` 변수에 `lodash` 에서 제공하는 함수들이 추가되어있는 것을 확인했습니다. `lodash` 는 트리쉐이킹이 되지 않기 때문에, 이처럼 사용하지도 않는 유틸이 모두 `__app`에 추가되어 있는 것을 보실 수 있으며, 이는 번들 크기에 그대로 부담이 됩니다.
 
@@ -236,7 +322,7 @@ lodash 는 트리쉐이킹이 되지 않는 대표적인 라이브러리로, 이
 
 [Bundlephobia | Size of npm dependencies](https://bundlephobia.com/)
 
-![image.png](/images/web-performance-analysis-2/image 05.png)
+![image.png](/images/web-performance-analysis-2/image5.png)
 
 정상적으로 트리쉐이킹이 가능한 라이브러리라면, 위 스샷의 [Bundlephobia: lodash-es](https://bundlephobia.com/package/lodash-es@4.17.21) 의 경우 처럼 `exports` 분석이 가능할 것입니다.
 
@@ -244,7 +330,7 @@ lodash 는 트리쉐이킹이 되지 않는 대표적인 라이브러리로, 이
 
 nextjs 는 `getInitialProps` 또는 `getServerSideProps` 와 같은 함수를 호출한다음, 해당 함수의 결과물을 클라이언트에 내려줌으로써 하이드레이션 과정을 거칩니다. 해당 페이지에서 제공되는 `props` 를 보고 싶다면, `window.__NEXT_DATA__`를 확인해보면 됩니다.
 
-![image.png](/images/web-performance-analysis-2/image 06.png)
+![image.png](/images/web-performance-analysis-2/image6.png)
 
 `/` 의 경우, 다국어 제공을 위한 `next-i18next` 관련 props 가 제공되고 있는 것을 볼 수 있었습니다. 문제는 이 객체의 크기가 560kb 에 달할 정도로 매우 크다는 것입니다.
 
@@ -284,7 +370,7 @@ nextjs 는 `getInitialProps` 또는 `getServerSideProps` 와 같은 함수를 �
 
 - `namespace` 를 페이지별로 세분화: 다국어 정보를 하나씩 보면서 느낀 또한가지 문제점은, 현재 페이지에서 불필요한 언어정보도 모두 반환되고 있는 것 같다는 사실입니다. `next-i18next` 에서 제공하는 네임스페이스도 사용하지 않는 것 같다는 생각도 들었습니다.
 
-  ![image.png](/images/web-performance-analysis-2/image 07.png)
+  ![image.png](/images/web-performance-analysis-2/image7.png)
 
   네임스페이스를 사용하면 다국어 리소스를 여러 파일로 분리할 수 있는 핵심적인 기술로, 이처럼 다국어 파일이 거대해지는 것을 막는데 중요한 역할을 합니다.
 
@@ -301,7 +387,7 @@ nextjs 는 `getInitialProps` 또는 `getServerSideProps` 와 같은 함수를 �
 
 현재 웹서비스가 타겟으로 하고 있는 브라우저가 어떻게 되시나요? 제가 서비스 제공 현황까지는 정확하게 알 수 없지만, 성능 입장에서만 말 씀드리면 웹서비스 지원 타겟은 높을 수록 좋습니다. 반대로 말하자면, 구형 브라우저를 지원하려고 애쓰지 않을 수록 성능은 향상되고 번들 크기는 감소합니다. 현재 개발자님의 웹사이트에서 발견한 폴리필은 다음과 같습니다.
 
-![image.png](/images/web-performance-analysis-2/image 08.png)
+![image.png](/images/web-performance-analysis-2/image8.png)
 
 그리고 해당 폴리필들의 버전과 현황은 다음과 같습니다.
 
@@ -329,7 +415,7 @@ nextjs 는 `getInitialProps` 또는 `getServerSideProps` 와 같은 함수를 �
 
 서비스내 고유한 아이디 생성을 위해 uuid 라이브러리를 사용하시는 것으로 보입니다.
 
-![image.png](/images/web-performance-analysis-2/image 09.png)
+![image.png](/images/web-performance-analysis-2/image9.png)
 
 그러나 해당 라이브러리는 10.3kb 정도로 제법 큰편에 속합니다.
 
@@ -343,13 +429,13 @@ nextjs 는 `getInitialProps` 또는 `getServerSideProps` 와 같은 함수를 �
 
 크롬 개발자도구에서는, `Coverage`라고 하는 메뉴가 있는데, 이 메뉴에서는 실제로 해당 페이지를 위해 사용한 코드가 무엇인지 구별하는 기능을 제공하고 있습니다.
 
-![image.png](/images/web-performance-analysis-2/image 010.png)
+![image.png](/images/web-performance-analysis-2/image10.png)
 
 이 메뉴로 살펴본 결과, 2메가 가량의 `__app.js` 의 리소스중 78% (빨간색)는 실제 페이지 로딩에 필요하지 않다는 분석 결과가 나왔습니다. 물론 이 78%가 당장에 제거해도 된다는 것을 의미하지는 않습니다. 페이지 초기 로딩에는 필요하지 않지만, 사용자 인터랙션에 따라 필요할 수도 있고, 에러 처리에 필요한 코드일 수도 있습니다.
 
 그러나 물론 이중에는 실제로 삭제 가능한 코드도 있을 것입니다. 다음 스크린샷을 한번 살펴보겠습니다.
 
-![image.png](/images/web-performance-analysis-2/image 011.png)
+![image.png](/images/web-performance-analysis-2/image11.png)
 
 위 코드는 추정 컨데, Microsoft Office Open XML 형식, 특히 스프레드 시트 파일을 분석하기 위한 코드로 보입니다. 그 이유는 다음과 같습니다.
 
@@ -461,11 +547,11 @@ nextjs 는 `getInitialProps` 또는 `getServerSideProps` 와 같은 함수를 �
 
 실제로 현재 위 두 라이브러리가 nextjs 가 페이지를 렌더링하는데 필요한 리소스를 블로킹하는 것을 볼 수 있습니다.
 
-![image.png](/images/web-performance-analysis-2/image 012.png)
+![image.png](/images/web-performance-analysis-2/image12.png)
 
 단순히 저 네 라이브러리에 defer를 추가하는 것 만으로도 nextjs 가 페이지를 불러오는 시점을 크게 앞당길수 있습니다.
 
-![image.png](/images/web-performance-analysis-2/image 013.png)
+![image.png](/images/web-performance-analysis-2/image13.png)
 
 위 스샷은 앞선 네개의 리소스에 단순히 `defer` 만 추가한 코드 인데요. next.js 코드를 다운로드 하고 파싱하는 시점을 1초 가까이 줄인 것을 볼 수 있습니다.
 
@@ -473,14 +559,14 @@ nextjs 는 `getInitialProps` 또는 `getServerSideProps` 와 같은 함수를 �
 
 개발자님의 사이트는 사이트 최초 접근시 대형 배너가 노출되는 구조입니다.
 
-![image.png](/images/web-performance-analysis-2/image 014.png)
+![image.png](/images/web-performance-analysis-2/image14.png)
 
 당연히 이는 성능적으로, 그리고 LCP 가 별로 좋아하지 않는 UI 입니다. 개발자 입장에서는 없애고 싶은 리소스이지만 사업적으로는 중요한 배너일 수 있습니다. 이러한 배너를 노출시키면서도, 라이트 하우스 점수를 최대한 끌어올 수 있는 방법을 몇가지 제안해드리겠습니다.
 
 - 더 압축률이 높은 이미지 포맷 사용: 현재 사용중인 이미지는 PNG 입니다만, webp 나 avif 등을 사용하신다면 이미지의 크기를 더 줄이실 수 있습니다.
 - 서버에서 이미지를 가져오도록 변경: 현재 구조에서는 자바스크립트 번들이 모두 다운로드되고 파싱된 이후에 서야 비로소 배너에 뜰 이미지를 알수 있는 구조입니다.
 
-  ![image.png](/images/web-performance-analysis-2/image 015.png)
+  ![image.png](/images/web-performance-analysis-2/image15.png)
 
   배너에 필요한 이미지를 서버사이드 렌더링에서 인지할 수 있도록 `getServerSideProps` 를 활용해보시기 바랍니다.
 
@@ -506,9 +592,9 @@ nextjs 는 `getInitialProps` 또는 `getServerSideProps` 와 같은 함수를 �
 
   위 태그를 추가한 전후를 살펴보면 다음과 같습니다.
 
-  ![image.png](/images/web-performance-analysis-2/image 016.png)
+  ![image.png](/images/web-performance-analysis-2/image16.png)
 
-  ![image.png](/images/web-performance-analysis-2/image 017.png)
+  ![image.png](/images/web-performance-analysis-2/image17.png)
 
 단순히 해당 태그를 추가한 것 만으로 이미지 다운로드 우선순위가 크게 앞당겨졌으며, LCP 역시 1초가까이 향상된 것을 볼 수 있습니다.
 
@@ -545,9 +631,9 @@ nextjs 는 `getInitialProps` 또는 `getServerSideProps` 와 같은 함수를 �
 
 현재 개발자님의 사이트에 있는 큰 제목이 CLS 를 발생시키고 있는 것으로 보입니다.
 
-![image.png](/images/web-performance-analysis-2/image 018.png)
+![image.png](/images/web-performance-analysis-2/image18.png)
 
-![image.png](/images/web-performance-analysis-2/image 019.png)
+![image.png](/images/web-performance-analysis-2/image19.png)
 
 위에서 보시는 것 처럼 제목 영역이 크게 움직이는 것으로 보이는데, 그 이유를 찾아보니 다음과 같았습니다.
 
