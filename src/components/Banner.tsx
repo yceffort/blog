@@ -30,6 +30,7 @@ const FloatingBanner = ({
   }, [])
 
   const handleClose = () => {
+    track('clicked.web_performance_help_banner_close')
     setIsMounted(false)
     setTimeout(() => {
       setIsVisible(false)
