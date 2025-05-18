@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import {useState, useEffect} from 'react'
 
+import {track} from '@vercel/analytics/react'
+
 const FloatingBanner = ({
   postPath = '/2025/04/web-performance-help',
 }: {
@@ -84,6 +86,7 @@ const FloatingBanner = ({
           <div className="flex-shrink-0 mt-2 sm:mt-0">
             <Link
               href={postPath}
+              onClick={() => track('clicked.web_performance_help_banner')}
               className="bg-white hover:bg-gray-100 text-indigo-700 text-sm font-bold py-2 px-4 rounded shadow"
             >
               자세히 보기
