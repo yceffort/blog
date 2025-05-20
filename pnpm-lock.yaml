@@ -161,6 +161,10 @@ importers:
       web-vitals:
         specifier: ^5.0.1
         version: 5.0.1
+    devDependencies:
+      stylelint:
+        specifier: ^16.19.1
+        version: 16.19.1(typescript@5.8.3)
 
 packages:
 

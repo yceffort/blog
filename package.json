@@ -89,5 +89,8 @@
     "onlyBuiltDependencies": [
       "lefthook"
     ]
+  },
+  "devDependencies": {
+    "stylelint": "^16.19.1"
   }
 }
