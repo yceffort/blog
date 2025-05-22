@@ -21,8 +21,8 @@ importers:
         specifier: ^0.0.3
         version: 0.0.3
       '@naverpay/stylelint-config':
-        specifier: 1.0.0-rc.250520-08167ad
-        version: 1.0.0-rc.250520-08167ad(postcss-scss@4.0.9(postcss@8.5.3))(postcss@8.5.3)(typescript@5.8.3)
+        specifier: ^1.0.0
+        version: 1.0.0(postcss-scss@4.0.9(postcss@8.5.3))(postcss@8.5.3)(typescript@5.8.3)
       '@stylistic/stylelint-plugin':
         specifier: ^3.1.2
         version: 3.1.2(stylelint@16.19.1(typescript@5.8.3))
@@ -455,8 +455,8 @@ packages:
     resolution: {integrity: sha512-Hfqm/kVA7M4O2GiCggpAnunu9WYkCDoIrWvkSAJsRzTyxDN1Eg7U36813KH9h+CR3Egp2xwJk4E/zFdBBTbDwA==}
     hasBin: true
 
-  '@naverpay/stylelint-config@1.0.0-rc.250520-08167ad':
-    resolution: {integrity: sha512-4aAerCdsoxGluPwhDgz5LIvyQ7BkGJ3UBwVENbaZRc0aV3UEKoskBK+K7sVyuLxJiujgn3UVBjGFfjbgpftlAA==}
+  '@naverpay/stylelint-config@1.0.0':
+    resolution: {integrity: sha512-pg/XuBXZJlOecz0MsD18WsdBlVZB6mYGbDPSL67diiSdirhNaKhcXgKZpYcf5RQlV2Ld69Qeokgay1VCSHqaHA==}
     peerDependencies:
       postcss: ^8.5.3
       postcss-scss: ^4.0.9
@@ -4164,7 +4164,7 @@ snapshots:
     dependencies:
       markdownlint-cli2: 0.11.0
 
-  '@naverpay/stylelint-config@1.0.0-rc.250520-08167ad(postcss-scss@4.0.9(postcss@8.5.3))(postcss@8.5.3)(typescript@5.8.3)':
+  '@naverpay/stylelint-config@1.0.0(postcss-scss@4.0.9(postcss@8.5.3))(postcss@8.5.3)(typescript@5.8.3)':
     dependencies:
       postcss: 8.5.3
       postcss-scss: 4.0.9(postcss@8.5.3)
