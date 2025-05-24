@@ -37,17 +37,29 @@ export default function Page() {
         </div>
       </div>
       <div className="prose max-w-none pt-8 pb-8 dark:prose-dark xl:col-span-2">
-        <p>Hello, I am a full stack engineer working in Korea.</p>
         <p>
-          Yesterday All my troubles seemed so far away Now it looks as though
-          they&apos;re here to stay Oh, I believe in yesterday Suddenly I&apos;m
-          not half the man I used to be There&apos;s a shadow hanging over me
-          Oh, yesterday came suddenly Why she had to go I don&apos;t know, she
-          wouldn&apos;t say I said something wrong Now I long for yesterday
+          I'm a frontend-focused full stack engineer based in Korea, with deep
+          experience in building scalable systems, shared UI libraries, and
+          developer tooling for large-scale teams.
         </p>
         <p>
-          Yesterday love was such an easy game to play. Now I need a place to
-          hide away. Oh, I believe in yesterday.
+          At NAVER Financial, I lead the development of core frontend
+          infrastructure, focusing on reusability, performance, and long-term
+          maintainability.
+        </p>
+        <p>
+          Outside of work, I spend time reading and writing about technology,
+          software architecture, and the deeper questions behind how we build
+          things. I believe thoughtful engineering is rooted in clarity,
+          curiosity, and a strong sense of context — and I try to reflect that
+          not only in code, but in the way I communicate and write.
+        </p>
+        <p>
+          I value substance over spectacle. I believe good engineering is not
+          just about writing code, but about making thoughtful decisions that
+          serve both users and developers over time. In the era of AI, I think
+          engineers matter more than ever — not for how fast we ship, but for
+          how well we understand what should be built, and why.
         </p>
         <p>
           <Link href="https://yceffort.notion.site/9fc4262c01744a63a849cdccdde5c85f">
