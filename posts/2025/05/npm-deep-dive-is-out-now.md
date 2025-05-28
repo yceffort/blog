@@ -9,8 +9,6 @@ date: 2025-05-28 23:45:59
 description: '🙇🏻‍♂️'
 ---
 
-# 『npm Deep Dive』 가 출간되었습니다.
-
 ![npm-deep-dive](https://wikibook.co.kr/images/cover/l/9791158396077.jpg)
 
 ## npm을 언제 처음 진지하게 이해하려 했나요?
