@@ -12,7 +12,7 @@ const FloatingBanner = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
-  const localStorageKey = 'hideBanner_WebPerfHelp_20250426'
+  const localStorageKey = 'hideBanner_WebPerfHelp_20250602'
 
   useEffect(() => {
     let hideBannerPreference = 'false'
@@ -77,11 +77,10 @@ const FloatingBanner = ({
         <div className="flex flex-col sm:flex-row items-center sm:justify-between pr-8 sm:pr-10">
           <div className="flex-grow mb-3 sm:mb-0 sm:mr-4 text-center sm:text-left">
             <p className="font-bold text-lg mb-1">
-              웹사이트 성능 개선, 함께해요!
+              ⚡ 웹사이트 성능, 고민되시나요?
             </p>
-            <p className="text-sm text-purple-100">
-              책 집필을 위한 실제 서비스 사례를 찾습니다. 성능 분석 및 개선
-              제안을 드려요.
+            <p className="text-sm text-purple-100 font-bold">
+              실제 서비스의 성능 문제를 진단하고 개선 방향을 제안드립니다.
             </p>
           </div>
           <div className="flex-shrink-0 mt-2 sm:mt-0">
