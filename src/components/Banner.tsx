@@ -30,7 +30,7 @@ const FloatingBanner = ({
   }, [])
 
   const handleClose = () => {
-    track('clicked.web_performance_help_banner_close')
+    track('clicked.web_performance_help_banner_close2')
     setIsMounted(false)
     setTimeout(() => {
       setIsVisible(false)
@@ -86,7 +86,7 @@ const FloatingBanner = ({
           <div className="flex-shrink-0 mt-2 sm:mt-0">
             <Link
               href={postPath}
-              onClick={() => track('clicked.web_performance_help_banner')}
+              onClick={() => track('clicked.web_performance_help_banner2')}
               className="bg-white hover:bg-gray-100 text-indigo-700 text-sm font-bold py-2 px-4 rounded shadow"
             >
               자세히 보기
