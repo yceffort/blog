@@ -6,6 +6,9 @@ import {useState, useEffect} from 'react'
 
 import {track} from '@vercel/analytics/react'
 
+const localStorageKey = 'hideBanner_NaverPayIntern_20250609'
+const endDate = new Date('2025-06-15T23:59:59')
+
 const NaverPayInternshipBanner = ({
   postPath = '/2025/06/naver-pay-fe-summer-internship',
 }: {
@@ -14,11 +17,10 @@ const NaverPayInternshipBanner = ({
   const [isVisible, setIsVisible] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   const pathname = usePathname()
-  const localStorageKey = 'hideBanner_NaverPayIntern_20250609'
 
   useEffect(() => {
     const now = new Date()
-    const end = new Date('2025-06-15T23:59:59')
+    const end = new Date(endDate)
 
     if (now > end) {
       return
