@@ -22,6 +22,11 @@ const NaverPayInternshipBanner = ({
       return
     }
 
+    // Hide banner on the internship post page
+    if (window.location.pathname.startsWith(postPath)) {
+      return
+    }
+
     let hideBannerPreference = 'false'
     try {
       hideBannerPreference = localStorage.getItem(localStorageKey) || 'false'
@@ -34,7 +39,7 @@ const NaverPayInternshipBanner = ({
       const timer = setTimeout(() => setIsMounted(true), 100)
       return () => clearTimeout(timer)
     }
-  }, [])
+  }, [postPath])
 
   const handleClose = () => {
     track('clicked.naverpay_internship_banner_close')
