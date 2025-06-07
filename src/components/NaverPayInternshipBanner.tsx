@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import {usePathname} from 'next/navigation'
 import {useState, useEffect} from 'react'
 
 import {track} from '@vercel/analytics/react'
@@ -12,6 +13,7 @@ const NaverPayInternshipBanner = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
+  const pathname = usePathname()
   const localStorageKey = 'hideBanner_NaverPayIntern_20250609'
 
   useEffect(() => {
@@ -23,7 +25,7 @@ const NaverPayInternshipBanner = ({
     }
 
     // Hide banner on the internship post page
-    if (window.location.pathname.startsWith(postPath)) {
+    if (pathname.startsWith(postPath)) {
       return
     }
 
@@ -39,7 +41,7 @@ const NaverPayInternshipBanner = ({
       const timer = setTimeout(() => setIsMounted(true), 100)
       return () => clearTimeout(timer)
     }
-  }, [postPath])
+  }, [postPath, pathname])
 
   const handleClose = () => {
     track('clicked.naverpay_internship_banner_close')
