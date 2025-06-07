@@ -20,7 +20,7 @@ const NaverPayInternshipBanner = ({
 
   useEffect(() => {
     const now = new Date()
-    const end = new Date(endDate)
+    const end = endDate
 
     if (now > end) {
       return
