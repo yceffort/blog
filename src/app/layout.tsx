@@ -11,6 +11,7 @@ import type {ReactNode} from 'react'
 import FloatingBanner from '#components/Banner'
 import {GoogleAnalyticsWebVitalsTracker} from '#components/GoogleAnalyticsWebVitalsTracker'
 import LayoutWrapper from '#components/LayoutWrapper'
+import NaverPayInternshipBanner from '#components/NaverPayInternshipBanner'
 import {Providers} from '#components/Provider'
 import {SiteConfig} from '#src/config'
 
@@ -98,6 +99,7 @@ export default function Layout({children}: {children: ReactNode}) {
           <VercelSpeedInsights />
           <GoogleAnalyticsWebVitalsTracker />
           <FloatingBanner />
+          <NaverPayInternshipBanner />
         </body>
       </html>
     </>
