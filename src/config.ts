@@ -24,6 +24,10 @@ export const SiteConfig = {
       path: '/about',
     },
     {
+      label: 'resume',
+      path: '/resume',
+    },
+    {
       label: '🧪 Research',
       path: 'https://research.yceffort.kr',
     },

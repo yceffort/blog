@@ -15,6 +15,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: 'https://yceffort.kr/about',
       lastModified: new Date(),
     },
+    {
+      url: 'https://yceffort.kr/resume',
+      lastModified: new Date(),
+    },
     ...posts.map((post) => {
       return {
         url: `https://yceffort.kr/${post.fields.slug}`,
