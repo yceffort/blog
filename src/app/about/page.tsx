@@ -38,29 +38,30 @@ export default function Page() {
       </div>
       <div className="prose max-w-none pt-8 pb-8 dark:prose-dark xl:col-span-2">
         <p>
-          I'm a frontend-focused full stack engineer based in Korea, with deep
-          experience in building scalable systems, shared UI libraries, and
-          developer tooling for large-scale teams.
+          I'm a frontend-focused full stack engineer based in Korea, with
+          extensive experience in building scalable systems, shared UI
+          libraries, and developer tooling for large-scale teams.
         </p>
         <p>
           At NAVER Financial, I lead the development of core frontend
-          infrastructure, focusing on reusability, performance, and long-term
-          maintainability.
+          infrastructure, with an emphasis on reusability, performance, and
+          long-term maintainability.
         </p>
         <p>
-          Outside of work, I spend time reading and writing about technology,
-          software architecture, and the deeper questions behind how we build
-          things. I believe thoughtful engineering is rooted in clarity,
-          curiosity, and a strong sense of context — and I try to reflect that
-          not only in code, but in the way I communicate and write.
+          Outside of work, I read and write about technology, software
+          architecture, and the deeper questions that shape how we build. I
+          believe thoughtful engineering is grounded in clarity, curiosity, and
+          context — principles I aim to reflect not just in code, but also in
+          how I communicate and write.
         </p>
         <p>
-          I value substance over spectacle. I believe good engineering is not
-          just about writing code, but about making thoughtful decisions that
-          serve both users and developers over time. In the era of AI, I think
+          I value substance over spectacle. To me, good engineering isn't just
+          about writing code, but about making intentional decisions that serve
+          both users and developers over time. In the era of AI, I believe
           engineers matter more than ever — not for how fast we ship, but for
-          how well we understand what should be built, and why.
+          how deeply we understand what should be built, and why.
         </p>
+
         <p>
           <Link href="https://yceffort.notion.site/9fc4262c01744a63a849cdccdde5c85f">
             Detailed Resume (Notion)
