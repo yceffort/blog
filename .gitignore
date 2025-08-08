@@ -44,3 +44,6 @@ node_modules/
 
 functions/env.json
 .lighthouseci
+
+# Claude Code
+CLAUDE.md
