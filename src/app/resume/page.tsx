@@ -47,10 +47,11 @@ export default function Page() {
         </ul>
         <h2>Summary</h2>
         <p>
-          10년 이상의 프론트엔드 개발 경험을 보유한 엔지니어로, React와 TypeScript를 기반으로
-          네이버 파이낸셜에서 대규모 금융 서비스를 설계·운영하며, 조직의 기술 표준과 공통
-          라이브러리를 구축하여 개발 생산성 향상에 기여하고 있습니다. 또한 기술 서적 집필과
-          오픈소스 활동을 통해 개발 커뮤니티에 적극적으로 기여하고 있습니다.
+          10년 이상의 프론트엔드 개발 경험을 보유한 엔지니어로, React와
+          TypeScript를 기반으로 네이버 파이낸셜에서 대규모 금융 서비스를
+          설계·운영하며, 조직의 기술 표준과 공통 라이브러리를 구축하여 개발
+          생산성 향상에 기여하고 있습니다. 또한 기술 서적 집필과 오픈소스 활동을
+          통해 개발 커뮤니티에 적극적으로 기여하고 있습니다.
         </p>
         <h2>Key Expertise</h2>
         <ul className="list-disc pl-5">
@@ -101,7 +102,9 @@ export default function Page() {
                       https://github.com/orgs/NaverPayDev/repositories
                     </a>
                   </li>
-                  <li>내부 생산성 향상을 위한 MCP(Model Context Protocol) 제작</li>
+                  <li>
+                    내부 생산성 향상을 위한 MCP(Model Context Protocol) 제작
+                  </li>
                 </ul>
               </li>
             </ul>
@@ -263,16 +266,19 @@ export default function Page() {
           <li className="ml-6">
             <span className="absolute -left-1.5 flex h-3 w-3 items-center justify-center rounded-full bg-blue-400 ring-8 ring-white dark:bg-blue-500 dark:ring-gray-900" />
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              <a href="https://dan.naver.com/24/sessions/600">DAN24 컨퍼런스 발표</a>
+              <a href="https://dan.naver.com/24/sessions/600">
+                DAN24 컨퍼런스 발표
+              </a>
             </h3>
             <time className="mb-2 block text-sm font-normal leading-none text-gray-500 dark:text-gray-400">
               2024
             </time>
             <p>
-              네이버 개발자 컨퍼런스 DAN24에서 &apos;웹 서비스 번들 사이즈 최적화&apos;
-              세션을 발표했습니다. 수년간 운영된 서비스의 번들 사이즈를 최적화하여
-              성능을 개선한 경험과 불필요한 리소스 제거, NPM 라이브러리 효율적 관리,
-              트리 쉐이킹 최적화 등의 실전 노하우를 공유했습니다.
+              네이버 개발자 컨퍼런스 DAN24에서 &apos;웹 서비스 번들 사이즈
+              최적화&apos; 세션을 발표했습니다. 수년간 운영된 서비스의 번들
+              사이즈를 최적화하여 성능을 개선한 경험과 불필요한 리소스 제거, NPM
+              라이브러리 효율적 관리, 트리 쉐이킹 최적화 등의 실전 노하우를
+              공유했습니다.
             </p>
           </li>
         </ol>
@@ -298,7 +304,10 @@ export default function Page() {
           블로그: <a href="https://yceffort.kr/">yceffort.kr</a>
         </p>
         <p>
-          깃헙: <a href="https://github.com/yceffort">github.com/yceffort</a>, <a href="https://github.com/yceffort-naver">github.com/yceffort-naver</a>
+          깃헙: <a href="https://github.com/yceffort">github.com/yceffort</a>,{' '}
+          <a href="https://github.com/yceffort-naver">
+            github.com/yceffort-naver
+          </a>
         </p>
       </div>
     </>
