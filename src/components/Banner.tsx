@@ -6,13 +6,13 @@ import {useState, useEffect} from 'react'
 import {track} from '@vercel/analytics/react'
 
 const FloatingBanner = ({
-  postPath = '/2025/04/web-performance-help',
+  postPath = '/2025/11/web-performance-deep-dive-beta-reader',
 }: {
   postPath?: string
 }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
-  const localStorageKey = 'hideBanner_WebPerfHelp_20250602'
+  const localStorageKey = 'hideBanner_BetaReader_20251113'
 
   useEffect(() => {
     let hideBannerPreference = 'false'
@@ -30,7 +30,7 @@ const FloatingBanner = ({
   }, [])
 
   const handleClose = () => {
-    track('clicked.web_performance_help_banner_close2')
+    track('clicked.beta_reader_banner_close')
     setIsMounted(false)
     setTimeout(() => {
       setIsVisible(false)
@@ -77,16 +77,17 @@ const FloatingBanner = ({
         <div className="flex flex-col sm:flex-row items-center sm:justify-between pr-8 sm:pr-10">
           <div className="flex-grow mb-3 sm:mb-0 sm:mr-4 text-center sm:text-left">
             <p className="font-bold text-lg mb-1">
-              ⚡ 웹사이트 성능, 고민되시나요?
+              📚 Web Performance Deep Dive 베타 리더 모집 (~11/30)
             </p>
             <p className="text-sm text-purple-100 font-bold">
-              실제 서비스의 성능 문제를 진단하고 개선 방향을 제안드립니다.
+              웹 성능 최적화의 모든 것을 다룬 신간의 베타 리더를 모집합니다.
+              출판 시 책 2권 증정!
             </p>
           </div>
           <div className="flex-shrink-0 mt-2 sm:mt-0">
             <Link
               href={postPath}
-              onClick={() => track('clicked.web_performance_help_banner2')}
+              onClick={() => track('clicked.beta_reader_banner')}
               className="bg-white hover:bg-gray-100 text-indigo-700 text-sm font-bold py-2 px-4 rounded shadow"
             >
               자세히 보기
