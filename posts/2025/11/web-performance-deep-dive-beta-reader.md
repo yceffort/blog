@@ -1,5 +1,5 @@
 ---
-title: web performance deep dive (가제) 베타 리더를 모십니다. (~11/30)
+title: web performance deep dive (가제) 베타 리더를 모십니다. (마감)
 tags:
   - web
   - book
@@ -7,6 +7,8 @@ published: true
 date: 2025-11-10 17:41:00
 description: '많관부'
 ---
+
+# 마감되었습니다. 감사합니다.
 
 제 세번째 책인 가제 `<<web performance deep dive>>`의 베타 리더를 모십니다.
 
