@@ -43,7 +43,7 @@ export function parseCodeSnippet() {
   return (tree: Root) => {
     visit(tree, 'element', (node: Element) => {
       const className = node.properties?.className
-      if (!Array.isArray(className)) return
+      if (!Array.isArray(className)) {return}
 
       const [token, type] = className as [string, TokenType]
       if (token === 'token' && type in tokenClassNames) {
