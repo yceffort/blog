@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
 import {ViewTransition} from 'react'
@@ -16,8 +15,8 @@ import remarkToc from 'remark-toc'
 import MathLoader from '#components/layouts/Post/math'
 import MDXComponents from '#components/MDXComponents'
 import PageTitle from '#components/PageTitle'
+import ProfileImage from '#components/ProfileImage'
 import Tag from '#components/Tag'
-import profile from '#public/profile.jpeg'
 import {SiteConfig} from '#src/config'
 import imageMetadataPlugin from '#utils/imageMetadata'
 import {parseCodeSnippet} from '#utils/Markdown'
@@ -111,16 +110,10 @@ export default async function Page(props: {
               <dd>
                 <ul className="flex justify-center space-x-8 sm:space-x-12 xl:block xl:space-x-0 xl:space-y-8">
                   <li className="flex items-center space-x-2">
-                    <ViewTransition name={`${transitionName}-avatar`}>
-                      <Image
-                        src={profile}
-                        placeholder="blur"
-                        alt="avatar"
-                        width={40}
-                        height={40}
-                        className="h-10 w-10 rounded-full"
-                      />
-                    </ViewTransition>
+                    <ProfileImage
+                      size={40}
+                      transitionName={`${transitionName}-avatar`}
+                    />
                     <dl className="whitespace-nowrap text-sm font-medium leading-5">
                       <dt className="sr-only">Name</dt>
                       <dd className="text-gray-900 dark:text-gray-100">

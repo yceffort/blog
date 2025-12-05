@@ -1,7 +1,5 @@
-import Image from 'next/image'
-
 import SocialIcon from '#components/icons'
-import profile from '#public/profile.jpeg'
+import ProfileImage from '#components/ProfileImage'
 import {SiteConfig} from '#src/config'
 
 export const dynamic = 'error'
@@ -10,14 +8,7 @@ export default function Page() {
   return (
     <div className="w-full px-4 md:w-[95vw] md:max-w-[95vw] md:px-0 mx-auto">
       <div className="flex flex-col items-center space-x-2 pt-8 pb-8">
-        <Image
-          src={profile}
-          placeholder="blur"
-          alt="avatar"
-          width={192}
-          height={192}
-          className="h-48 w-48 rounded-full shadow-sm"
-        />
+        <ProfileImage size={192} />
         <h3 className="pt-4 pb-2 text-3xl font-black leading-8 tracking-tight text-gray-900 dark:text-gray-100">
           {SiteConfig.author.name}
         </h3>

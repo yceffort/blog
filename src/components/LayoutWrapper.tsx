@@ -1,17 +1,16 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 
 import Footer from './Footer'
 import MobileNav from './MobileNav'
+import ProfileImage from './ProfileImage'
 import SectionContainer from './SectionContainer'
 import ThemeSwitch from './ThemeSwitch'
 
 import type {ReactNode} from 'react'
 
-import profile from '#public/profile.jpeg'
 import {SiteConfig} from '#src/config'
 
 const LayoutWrapper = ({children}: {children: ReactNode}) => {
@@ -35,14 +34,7 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
             <Link href="/" aria-label="yceffort's blog">
               <div className="flex items-center justify-between">
                 <div className="mr-3">
-                  <Image
-                    src={profile}
-                    alt="avatar"
-                    width={40}
-                    height={40}
-                    placeholder="blur"
-                    className="h-10 w-10 rounded-full"
-                  />
+                  <ProfileImage size={40} />
                 </div>
                 <div className="hidden h-6 text-2xl font-semibold sm:block">
                   {SiteConfig.title}
