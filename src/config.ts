@@ -20,12 +20,8 @@ export const SiteConfig = {
       path: '/tags',
     },
     {
-      label: 'about',
+      label: 'About',
       path: '/about',
-    },
-    {
-      label: 'resume',
-      path: '/resume',
     },
     {
       label: '🧪 Research',
