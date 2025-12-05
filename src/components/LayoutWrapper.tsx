@@ -29,7 +29,7 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
 
   return (
     <SectionContainer className={wide ? '' : containerClass} wide={wide}>
-      <div className="flex h-screen flex-col justify-between">
+      <div className="flex min-h-screen flex-col justify-between">
         <header className="sticky top-0 z-40 flex items-center justify-between border-b-2 border-black bg-white/90 py-6 backdrop-blur-none dark:border-white dark:bg-gray-950/90">
           <div>
             <Link href="/" aria-label="yceffort's blog">
