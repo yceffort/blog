@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
+import {ViewTransition} from 'react'
 
 import {format} from 'date-fns'
 import {MDXRemote} from 'next-mdx-remote-client/rsc'
@@ -97,9 +98,7 @@ export default async function Page(props: {
                 </div>
               </dl>
               <div>
-                <PageTitle style={{viewTransitionName: transitionName}}>
-                  {title}
-                </PageTitle>
+                <PageTitle transitionName={transitionName}>{title}</PageTitle>
               </div>
             </div>
           </header>
@@ -112,14 +111,16 @@ export default async function Page(props: {
               <dd>
                 <ul className="flex justify-center space-x-8 sm:space-x-12 xl:block xl:space-x-0 xl:space-y-8">
                   <li className="flex items-center space-x-2">
-                    <Image
-                      src={profile}
-                      placeholder="blur"
-                      alt="avatar"
-                      width={40}
-                      height={40}
-                      className="h-10 w-10 rounded-full"
-                    />
+                    <ViewTransition name={`${transitionName}-avatar`}>
+                      <Image
+                        src={profile}
+                        placeholder="blur"
+                        alt="avatar"
+                        width={40}
+                        height={40}
+                        className="h-10 w-10 rounded-full"
+                      />
+                    </ViewTransition>
                     <dl className="whitespace-nowrap text-sm font-medium leading-5">
                       <dt className="sr-only">Name</dt>
                       <dd className="text-gray-900 dark:text-gray-100">
@@ -161,11 +162,13 @@ export default async function Page(props: {
                     <h2 className="mb-4 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
                       Tags
                     </h2>
-                    <div className="flex flex-wrap gap-y-2">
-                      {tags.map((tag) => (
-                        <Tag key={tag} text={tag} />
-                      ))}
-                    </div>
+                    <ViewTransition name={`${transitionName}-tags`}>
+                      <div className="flex flex-wrap gap-y-2">
+                        {tags.map((tag) => (
+                          <Tag key={tag} text={tag} />
+                        ))}
+                      </div>
+                    </ViewTransition>
                   </div>
                 )}
               </div>
