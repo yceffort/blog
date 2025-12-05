@@ -35,7 +35,7 @@ export default function PostCard({post}: {post: Post}) {
           </div>
           <div>
             <ViewTransition name={transitionName}>
-              <h3 className="text-xl font-black leading-tight tracking-tight line-clamp-1">
+              <h3 className="text-xl font-black leading-tight tracking-tight line-clamp-2">
                 <Link
                   href={`/${slug}`}
                   className="text-black decoration-4 hover:underline dark:text-white"
