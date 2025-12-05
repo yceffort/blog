@@ -85,9 +85,9 @@ const color: Color = '' // 'red', 'blue', 'green' 자동완성이 된다! ✅
 타입스크립트는 유니온 타입을 만들 때, 서브타입 관계에 있는 타입들을 자동으로 정리한다. `A`가 `B`의 서브타입이면, `A | B`는 그냥 `B`로 단순화된다.
 
 ```typescript
-type T1 = 'red' | string      // string (리터럴이 흡수됨)
-type T2 = number | 1          // number (리터럴이 흡수됨)
-type T3 = string | unknown    // unknown (string이 흡수됨)
+type T1 = 'red' | string // string (리터럴이 흡수됨)
+type T2 = number | 1 // number (리터럴이 흡수됨)
+type T3 = string | unknown // unknown (string이 흡수됨)
 ```
 
 `'red'`는 `string`의 서브타입이므로, `'red' | string`은 `string`으로 단순화된다. 이 과정에서 `'red'`라는 정보가 완전히 사라져버린다.
@@ -99,11 +99,11 @@ type T3 = string | unknown    // unknown (string이 흡수됨)
 ```typescript
 type A = {}
 
-const a: A = 'hello'     // ✅ 문자열도 {}에 할당 가능
-const b: A = 123         // ✅ 숫자도 {}에 할당 가능
-const c: A = {foo: 1}    // ✅ 객체도 당연히 가능
-const d: A = null        // ❌ null은 불가
-const e: A = undefined   // ❌ undefined도 불가
+const a: A = 'hello' // ✅ 문자열도 {}에 할당 가능
+const b: A = 123 // ✅ 숫자도 {}에 할당 가능
+const c: A = {foo: 1} // ✅ 객체도 당연히 가능
+const d: A = null // ❌ null은 불가
+const e: A = undefined // ❌ undefined도 불가
 ```
 
 자바스크립트에서 원시 타입도 래퍼 객체를 통해 프로퍼티에 접근할 수 있기 때문이다. `'hello'.length`가 동작하는 것처럼.
@@ -115,17 +115,17 @@ const e: A = undefined   // ❌ undefined도 불가
 ```typescript
 type Test = string & {}
 
-const a: Test = 'hello'    // ✅
-const b: Test = '#ff5500'  // ✅
+const a: Test = 'hello' // ✅
+const b: Test = '#ff5500' // ✅
 
 // 반대 방향도 마찬가지
-const c: string = 'hello' as Test  // ✅
+const c: string = 'hello' as Test // ✅
 ```
 
 그러나 타입스크립트 컴파일러 내부에서는 이 둘을 **다른 타입 객체(different type identity)** 로 취급한다. 유니온 타입을 단순화할 때, 타입스크립트는 "이 타입이 저 타입의 서브타입인가?"를 체크하는데, `string`과 `string & {}`는 서로 다른 타입 ID를 가지고 있어서 단순화 대상이 되지 않는다.
 
 ```typescript
-type Color1 = 'red' | string        // string (단순화됨)
+type Color1 = 'red' | string // string (단순화됨)
 type Color2 = 'red' | (string & {}) // 'red' | (string & {}) (단순화 안됨!)
 ```
 
@@ -138,12 +138,12 @@ IDE(정확히는 TypeScript Language Service)는 유니온 타입에서 리터�
 
 #### 5. 정리
 
-| 타입 | 값의 집합 | 타입 ID | 자동완성 |
-|------|----------|---------|----------|
-| `string` | 모든 문자열 | A | ❌ |
-| `string & {}` | 모든 문자열 | B | - |
-| `'red' \| string` | 모든 문자열 | A (단순화) | ❌ |
-| `'red' \| (string & {})` | 모든 문자열 | 유니온 유지 | ✅ |
+| 타입                     | 값의 집합   | 타입 ID     | 자동완성 |
+| ------------------------ | ----------- | ----------- | -------- |
+| `string`                 | 모든 문자열 | A           | ❌       |
+| `string & {}`            | 모든 문자열 | B           | -        |
+| `'red' \| string`        | 모든 문자열 | A (단순화)  | ❌       |
+| `'red' \| (string & {})` | 모든 문자열 | 유니온 유지 | ✅       |
 
 결국 이 트릭은 타입의 **구조적 동등성** 과 **타입 ID** 가 다르다는 점을 이용한 것이다. 값의 집합은 동일하지만, 컴파일러가 내부적으로 다르게 처리하기 때문에 단순화를 피할 수 있다.
 
@@ -155,13 +155,7 @@ IDE(정확히는 TypeScript Language Service)는 유니온 타입에서 리터�
 type LiteralUnion<T extends string> = T | (string & {})
 
 type CSSColor = LiteralUnion<
-  | 'black'
-  | 'white'
-  | 'red'
-  | 'green'
-  | 'blue'
-  | 'transparent'
-  | 'currentColor'
+  'black' | 'white' | 'red' | 'green' | 'blue' | 'transparent' | 'currentColor'
 >
 
 function setBackground(color: CSSColor) {
