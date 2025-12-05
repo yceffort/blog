@@ -48,3 +48,6 @@ functions/env.json
 # Claude Code
 CLAUDE.md
 .claude/
+
+# Generated at build time
+.posts-cache.json
