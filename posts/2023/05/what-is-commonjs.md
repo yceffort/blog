@@ -102,12 +102,12 @@ module.exports = class Square {
   }
 }
 
-console.log('exports >>>', exports) // [class Square]
-console.log('module.exports >>>', module.exports) // {}
+console.log('exports >>>', exports) // {}
+console.log('module.exports >>>', module.exports) // [class Square]
 console.log('compare', exports === module.exports) // false
 
 // index.js
-const Square = require('./Math.js') // {}
+const Square = require('./Math.js') // Square
 ```
 
 ```javascript
@@ -121,12 +121,12 @@ exports = class Square {
   }
 }
 
-console.log('exports >>>', exports) // {}
-console.log('module.exports >>>', module.exports) // [class Square]
+console.log('exports >>>', exports) // [class Square]
+console.log('module.exports >>>', module.exports) // {}
 console.log('compare', exports === module.exports) // false
 
 // index.js
-const Square = require('./Math.js') // Square
+const Square = require('./Math.js') // {}
 ```
 
 이러한 차이가 발생하는 이유는 무엇일까? **그 이유는 바로 `exports`자체가 `module.exports`를 가리키고 있기 때문이다.** 이는 nodejs의 문서에도 나와있다.
