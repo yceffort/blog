@@ -1,10 +1,13 @@
+import Image from 'next/image'
 import Link from 'next/link'
+import {ViewTransition} from 'react'
 
 import {format} from 'date-fns'
 
 import type {Post} from '#src/type'
 
 import Tag from '#components/Tag'
+import profile from '#public/profile.jpeg'
 
 export default function PostCard({post}: {post: Post}) {
   const {
@@ -18,23 +21,36 @@ export default function PostCard({post}: {post: Post}) {
     <article className="flex h-[240px] flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:scale-[1.02] hover:shadow-md dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-900">
       <div className="flex flex-1 flex-col justify-between p-6">
         <div className="space-y-4">
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <Tag key={tag} text={tag} />
-            ))}
+          <div className="flex items-center justify-between">
+            <ViewTransition name={`${transitionName}-tags`}>
+              <div className="flex flex-wrap gap-2">
+                {tags.slice(0, 3).map((tag) => (
+                  <Tag key={tag} text={tag} />
+                ))}
+              </div>
+            </ViewTransition>
+            <ViewTransition name={`${transitionName}-avatar`}>
+              <Image
+                src={profile}
+                placeholder="blur"
+                alt="avatar"
+                width={32}
+                height={32}
+                className="h-8 w-8 rounded-full"
+              />
+            </ViewTransition>
           </div>
           <div>
-            <h3
-              className="text-xl font-black leading-tight tracking-tight line-clamp-1"
-              style={{viewTransitionName: transitionName}}
-            >
-              <Link
-                href={`/${slug}`}
-                className="text-black decoration-4 hover:underline dark:text-white"
-              >
-                {title}
-              </Link>
-            </h3>
+            <ViewTransition name={transitionName}>
+              <h3 className="text-xl font-black leading-tight tracking-tight line-clamp-1">
+                <Link
+                  href={`/${slug}`}
+                  className="text-black decoration-4 hover:underline dark:text-white"
+                >
+                  {title}
+                </Link>
+              </h3>
+            </ViewTransition>
             <dl>
               <dt className="sr-only">Published on</dt>
               <dd className="text-sm font-bold leading-6 text-gray-600 dark:text-gray-400">
