@@ -54,7 +54,7 @@ const MobileNav = memo(() => {
         onClick={onToggleNav}
       >
         <div
-          className="relative mx-4 flex w-full max-w-sm flex-col items-center rounded-[2rem] border-2 border-gray-500 bg-white p-8 shadow-brutal dark:border-white dark:bg-gray-950 dark:shadow-brutal-dark"
+          className="relative mx-4 flex w-full max-w-sm flex-col items-center rounded-[2rem] border-2 border-gray-500 bg-white p-8 shadow-brutal dark:border-white dark:bg-gray-800 dark:shadow-brutal-dark"
           onClick={(e) => e.stopPropagation()}
         >
           <button
@@ -81,7 +81,7 @@ const MobileNav = memo(() => {
               <Link
                 key={link.path}
                 href={link.path}
-                className="w-full rounded-xl border-2 border-gray-500 bg-white py-3 text-center text-xl font-black text-black shadow-brutal-sm transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-primary hover:shadow-none dark:border-white dark:bg-gray-950 dark:text-white dark:hover:bg-secondary dark:hover:text-black"
+                className="w-full rounded-xl border-2 border-gray-500 bg-white py-3 text-center text-xl font-black text-black shadow-brutal-sm transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-primary hover:shadow-none dark:border-white dark:bg-gray-800 dark:text-white dark:hover:bg-secondary dark:hover:text-black"
                 onClick={onToggleNav}
               >
                 {link.label}

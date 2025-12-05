@@ -67,7 +67,7 @@ export default function Layout({children}: {children: ReactNode}) {
           />
           <link rel="manifest" href="/site.webmanifest" />
         </head>
-        <body className="bg-white text-black antialiased dark:bg-gray-900 dark:text-white">
+        <body className="bg-white text-black antialiased dark:bg-gray-800 dark:text-white">
           <Providers>
             <LayoutWrapper>{children}</LayoutWrapper>
           </Providers>
