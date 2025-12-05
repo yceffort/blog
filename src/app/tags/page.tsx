@@ -30,12 +30,22 @@ function TagCloud({tags}: {tags: TagWithCount[]}) {
   const minCount = Math.min(...tags.map((t) => t.count))
 
   const getTagSize = (count: number) => {
-    if (maxCount === minCount) return 'text-base'
+    if (maxCount === minCount) {
+      return 'text-base'
+    }
     const ratio = (count - minCount) / (maxCount - minCount)
-    if (ratio > 0.8) return 'text-2xl md:text-3xl'
-    if (ratio > 0.6) return 'text-xl md:text-2xl'
-    if (ratio > 0.4) return 'text-lg md:text-xl'
-    if (ratio > 0.2) return 'text-base md:text-lg'
+    if (ratio > 0.8) {
+      return 'text-2xl md:text-3xl'
+    }
+    if (ratio > 0.6) {
+      return 'text-xl md:text-2xl'
+    }
+    if (ratio > 0.4) {
+      return 'text-lg md:text-xl'
+    }
+    if (ratio > 0.2) {
+      return 'text-base md:text-lg'
+    }
     return 'text-sm md:text-base'
   }
 
@@ -149,13 +159,19 @@ function StatsBar({tags}: {tags: TagWithCount[]}) {
   return (
     <div className="mt-8 flex flex-wrap justify-center gap-4 font-mono text-sm text-gray-600 dark:text-gray-400 md:mt-12">
       <span className="rounded border border-gray-300 px-3 py-1 dark:border-gray-700">
-        <span className="text-green-600 dark:text-green-500">{totalTags}</span> tags
+        <span className="text-green-600 dark:text-green-500">{totalTags}</span>{' '}
+        tags
       </span>
       <span className="rounded border border-gray-300 px-3 py-1 dark:border-gray-700">
-        <span className="text-cyan-600 dark:text-cyan-500">{totalPosts}</span> posts
+        <span className="text-cyan-600 dark:text-cyan-500">{totalPosts}</span>{' '}
+        posts
       </span>
       <span className="rounded border border-gray-300 px-3 py-1 dark:border-gray-700">
-        avg <span className="text-amber-600 dark:text-yellow-500">{(totalPosts / totalTags).toFixed(1)}</span> posts/tag
+        avg{' '}
+        <span className="text-amber-600 dark:text-yellow-500">
+          {(totalPosts / totalTags).toFixed(1)}
+        </span>{' '}
+        posts/tag
       </span>
     </div>
   )
