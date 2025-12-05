@@ -126,11 +126,12 @@ function ResumeContent() {
                   </span>
                   <ul className="mt-1 list-circle space-y-1 pl-5 text-sm">
                     <li>
-                      마이데이터(은행, 카드, 증권, 보험, 연금, PFMS) 및 회원 인증
-                      등 다양한 서비스 개발
+                      마이데이터(은행, 카드, 증권, 보험, 연금, PFMS) 및 회원
+                      인증 등 다양한 서비스 개발
                     </li>
                     <li>
-                      React, Next.js, K8S, Koa를 기반으로 모바일 지향 서비스 개발
+                      React, Next.js, K8S, Koa를 기반으로 모바일 지향 서비스
+                      개발
                     </li>
                     <li>SPA에서 SSR 전환, 마이크로 서비스 설계, 운영, 배포</li>
                     <li>Node.js(Koa) 기반 서버 개발</li>
@@ -187,8 +188,8 @@ function ResumeContent() {
               <ul className="list-disc space-y-1 pl-5">
                 <li>트리플 애플리케이션 프론트엔드 서비스 개발</li>
                 <li>
-                  JavaScript로 작성된 결제 서비스 및 공통 컴포넌트를 TypeScript로
-                  변환
+                  JavaScript로 작성된 결제 서비스 및 공통 컴포넌트를
+                  TypeScript로 변환
                 </li>
                 <li>글로벌 도시 검색 서비스 개발</li>
                 <li>항공권 판매 서비스 개발 및 관리</li>
@@ -334,8 +335,8 @@ function ResumeContent() {
               2018 ~
             </time>
             <p className="mt-2 text-gray-600 dark:text-gray-300">
-              개인 블로그를 통해 프로그래밍 인사이트와 고민을 공유합니다. 블로그는
-              직접 개발하여 운영중입니다.
+              개인 블로그를 통해 프로그래밍 인사이트와 고민을 공유합니다.
+              블로그는 직접 개발하여 운영중입니다.
             </p>
           </div>
           <div>
@@ -346,8 +347,8 @@ function ResumeContent() {
               2021.01 ~ 2021.12
             </time>
             <p className="mt-2 text-gray-600 dark:text-gray-300">
-              삼성 청년 소프트웨어 아카데미에서 청년들의 멘토로 참여해 프로그래밍
-              관련 질의응답과 칼럼 작성을 진행했습니다.
+              삼성 청년 소프트웨어 아카데미에서 청년들의 멘토로 참여해
+              프로그래밍 관련 질의응답과 칼럼 작성을 진행했습니다.
             </p>
           </div>
           <div>

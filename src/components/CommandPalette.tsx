@@ -59,13 +59,10 @@ export default function CommandPalette({posts, tags}: CommandPaletteProps) {
     setSearch(value)
   }, [])
 
-  const runCommand = useCallback(
-    (command: () => void) => {
-      setOpen(false)
-      command()
-    },
-    [],
-  )
+  const runCommand = useCallback((command: () => void) => {
+    setOpen(false)
+    command()
+  }, [])
 
   const searchLower = search.toLowerCase()
   const filteredTags = tags.filter((t) =>
@@ -134,7 +131,9 @@ export default function CommandPalette({posts, tags}: CommandPaletteProps) {
             </Command.Item>
             <Command.Item
               value="resume"
-              onSelect={() => runCommand(() => router.push('/about?tab=resume'))}
+              onSelect={() =>
+                runCommand(() => router.push('/about?tab=resume'))
+              }
               className="flex cursor-pointer items-center gap-2 rounded px-3 py-2 font-mono text-sm text-green-400 aria-selected:bg-green-500/20"
             >
               <span className="text-green-600">~</span> cd about/resume
@@ -150,7 +149,9 @@ export default function CommandPalette({posts, tags}: CommandPaletteProps) {
 
           <Command.Group
             heading={
-              <span className="font-mono text-xs text-green-600"># Actions</span>
+              <span className="font-mono text-xs text-green-600">
+                # Actions
+              </span>
             }
             className="mb-2"
           >
