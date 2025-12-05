@@ -16,7 +16,7 @@ import {SiteConfig} from '#src/config'
 const LayoutWrapper = ({children}: {children: ReactNode}) => {
   const pathname = usePathname()
   let containerClass = 'xl:max-w-5xl' // Default safe width for blog posts
-  let wide = false
+  const wide = false
 
   if (pathname === '/') {
     containerClass = 'xl:max-w-7xl' // Wider for home page list
@@ -46,7 +46,9 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
                     onClick={(e) => {
                       e.preventDefault()
                       e.stopPropagation()
-                      document.dispatchEvent(new CustomEvent('open-command-palette'))
+                      document.dispatchEvent(
+                        new CustomEvent('open-command-palette'),
+                      )
                     }}
                     className="ml-1 inline-block h-4 w-1.5 translate-y-0.5 animate-blink bg-current hover:bg-green-500 sm:h-5 sm:w-2"
                     aria-label="Open search"
@@ -56,6 +58,29 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
             </Link>
           </div>
           <div className="flex items-center text-base leading-5">
+            <button
+              type="button"
+              onClick={() =>
+                document.dispatchEvent(new CustomEvent('open-command-palette'))
+              }
+              className="mr-2 flex items-center gap-1 rounded border border-gray-300 px-2 py-1 font-mono text-xs text-gray-500 transition-colors hover:border-green-500 hover:text-green-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-green-500 dark:hover:text-green-400 sm:mr-4"
+              aria-label="Open command palette"
+            >
+              <svg
+                className="h-3.5 w-3.5 sm:hidden"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <span className="hidden sm:inline">⌘P</span>
+            </button>
             <div className="hidden sm:block">
               {SiteConfig.menu.map((link) => (
                 <Link
