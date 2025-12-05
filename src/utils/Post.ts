@@ -62,26 +62,17 @@ export async function getAllPosts(): Promise<Post[]> {
   return posts
 }
 
-interface Tag {
-  tag: string
-  count: number
-}
-
 export async function getAllTagsFromPosts(): Promise<TagWithCount[]> {
-  const tags: string[] = (await getAllPosts()).reduce<string[]>(
-    (prev: string[], curr: Post) => {
-      curr.frontMatter.tags.forEach((tag: string) => {
-        prev.push(tag)
-      })
-      return prev
-    },
-    [],
-  )
+  const posts = await getAllPosts()
+  const tagCountMap = new Map<string, number>()
 
-  const tagWithCount = [...new Set(tags)].map((tag) => ({
-    tag,
-    count: tags.filter((t) => t === tag).length,
-  }))
+  for (const post of posts) {
+    for (const tag of post.frontMatter.tags) {
+      tagCountMap.set(tag, (tagCountMap.get(tag) ?? 0) + 1)
+    }
+  }
 
-  return tagWithCount.sort((a: Tag, b: Tag) => b.count - a.count)
+  return Array.from(tagCountMap.entries())
+    .map(([tag, count]) => ({tag, count}))
+    .sort((a, b) => b.count - a.count)
 }
