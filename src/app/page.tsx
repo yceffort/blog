@@ -1,33 +1,45 @@
+import {Suspense} from 'react'
+
 import InfiniteScrollList from '#components/InfiniteScrollList'
 import {DEFAULT_NUMBER_OF_POSTS} from '#src/constants'
 import {getAllPosts} from '#utils/Post'
 
-export default async function Page(props: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>
-}) {
-  const searchParams = await props.searchParams
+export default async function Page() {
   const allPosts = await getAllPosts()
 
-  const initialPage = searchParams.page
-    ? parseInt(
-        Array.isArray(searchParams.page)
-          ? searchParams.page[0]
-          : searchParams.page,
-      )
-    : 1
-
-  // Calculate how many posts to show initially based on the page number
-  // If page=2, we show posts for page 1 AND 2 so the user can scroll up if needed?
-  // Or just show 1..N?
-  // The user wants "redirect to that page area".
-  // If we load 1..N, we can scroll to N.
-  const endIndex = initialPage * DEFAULT_NUMBER_OF_POSTS
-
-  // Strip body to reduce payload size
-  const posts = allPosts.slice(0, endIndex).map((post) => ({
+  // Strip body to reduce payload size - load first page of posts
+  const posts = allPosts.slice(0, DEFAULT_NUMBER_OF_POSTS).map((post) => ({
     ...post,
     body: '',
   }))
 
-  return <InfiniteScrollList posts={posts} initialPage={initialPage} />
+  return (
+    <Suspense
+      fallback={
+        <div className="divide-y divide-gray-200 px-4 dark:divide-gray-700">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Array.from({length: DEFAULT_NUMBER_OF_POSTS}).map((_, i) => (
+              <div
+                key={i}
+                className="animate-pulse rounded-lg border-2 border-black bg-white p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:border-gray-600 dark:bg-gray-800"
+              >
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3" />
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-4" />
+                <div className="space-y-2">
+                  <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded" />
+                  <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-5/6" />
+                </div>
+                <div className="flex gap-2 mt-4">
+                  <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-16" />
+                  <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-12" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      }
+    >
+      <InfiniteScrollList posts={posts} />
+    </Suspense>
+  )
 }
