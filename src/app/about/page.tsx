@@ -1,22 +1,14 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
 import SocialIcon from '#components/icons'
-import profile from '#public/profile.jpeg'
+import ProfileImage from '#components/ProfileImage'
 import {SiteConfig} from '#src/config'
 
 export default function Page() {
   return (
     <>
       <div className="flex flex-col items-center space-x-2 pt-8">
-        <Image
-          src={profile}
-          placeholder="blur"
-          alt="avatar"
-          width={192}
-          height={192}
-          className="h-48 w-48 rounded-full"
-        />
+        <ProfileImage size={192} />
         <h3 className="pt-4 pb-2 text-2xl font-bold leading-8 tracking-tight">
           {SiteConfig.author.name}
         </h3>

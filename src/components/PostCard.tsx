@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import {ViewTransition} from 'react'
 
@@ -6,8 +5,8 @@ import {format} from 'date-fns'
 
 import type {Post} from '#src/type'
 
+import ProfileImage from '#components/ProfileImage'
 import Tag from '#components/Tag'
-import profile from '#public/profile.jpeg'
 
 export default function PostCard({post}: {post: Post}) {
   const {
@@ -29,16 +28,10 @@ export default function PostCard({post}: {post: Post}) {
                 ))}
               </div>
             </ViewTransition>
-            <ViewTransition name={`${transitionName}-avatar`}>
-              <Image
-                src={profile}
-                placeholder="blur"
-                alt="avatar"
-                width={32}
-                height={32}
-                className="h-8 w-8 rounded-full"
-              />
-            </ViewTransition>
+            <ProfileImage
+              size={32}
+              transitionName={`${transitionName}-avatar`}
+            />
           </div>
           <div>
             <ViewTransition name={transitionName}>
