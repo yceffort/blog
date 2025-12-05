@@ -13,10 +13,8 @@ import {DEFAULT_NUMBER_OF_POSTS} from '#src/constants'
 
 export default function InfiniteScrollList({
   posts: initialPosts,
-  initialPage = 1,
 }: {
   posts: Post[]
-  initialPage?: number
 }) {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -26,11 +24,7 @@ export default function InfiniteScrollList({
   const [loading, setLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
   // Track the highest page loaded to prevent duplicate fetches
-  const loadedPageRef = useRef(initialPage)
-
-  // Calculate initial index based on page
-  const initialTopMostItemIndex =
-    initialPage > 1 ? (initialPage - 1) * DEFAULT_NUMBER_OF_POSTS : 0
+  const loadedPageRef = useRef(1)
 
   const loadMore = useCallback(async () => {
     if (loading || !hasMore) {
@@ -64,7 +58,6 @@ export default function InfiniteScrollList({
         totalCount={posts.length}
         data={posts}
         endReached={loadMore}
-        initialTopMostItemIndex={initialTopMostItemIndex}
         overscan={200}
         itemContent={(index, post) => {
           return (

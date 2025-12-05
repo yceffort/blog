@@ -96,7 +96,6 @@
       "micromatch": ">=4.0.8",
       "front-matter>js-yaml": "^3.14.2",
       "js-yaml@^4": ">=4.1.1",
-      "brace-expansion": ">=2.0.2",
       "@eslint/plugin-kit": ">=0.3.4",
       "mdast-util-to-hast": ">=13.2.1"
     }
