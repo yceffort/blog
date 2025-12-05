@@ -8,10 +8,12 @@ import {SpeedInsights as VercelSpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
 import type {ReactNode} from 'react'
 
+import CommandPalette from '#components/CommandPalette'
 import {GoogleAnalyticsWebVitalsTracker} from '#components/GoogleAnalyticsWebVitalsTracker'
 import LayoutWrapper from '#components/LayoutWrapper'
 import {Providers} from '#components/Provider'
 import {SiteConfig} from '#src/config'
+import {getAllPosts, getAllTagsFromPosts} from '#utils/Post'
 
 export const metadata: Metadata = {
   title: SiteConfig.title,
@@ -47,7 +49,18 @@ export const metadata: Metadata = {
 
 const GA_MEASUREMENT_ID = SiteConfig.googleAnalyticsId
 
-export default function Layout({children}: {children: ReactNode}) {
+export default async function Layout({children}: {children: ReactNode}) {
+  const posts = await getAllPosts()
+  const tags = await getAllTagsFromPosts()
+  const postsForSearch = posts.map((p) => ({
+    frontMatter: {
+      title: p.frontMatter.title,
+      tags: p.frontMatter.tags,
+      description: p.frontMatter.description,
+    },
+    fields: {slug: p.fields.slug},
+  }))
+
   return (
     <>
       <html lang="kr" suppressHydrationWarning>
@@ -70,6 +83,7 @@ export default function Layout({children}: {children: ReactNode}) {
         <body className="bg-white text-black antialiased dark:bg-gray-800 dark:text-white">
           <Providers>
             <LayoutWrapper>{children}</LayoutWrapper>
+            <CommandPalette posts={postsForSearch} tags={tags} />
           </Providers>
           {GA_MEASUREMENT_ID && (
             <>

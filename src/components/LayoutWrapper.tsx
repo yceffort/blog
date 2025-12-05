@@ -20,8 +20,8 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
 
   if (pathname === '/') {
     containerClass = 'xl:max-w-7xl' // Wider for home page list
-  } else if (pathname === '/resume') {
-    wide = true
+  } else if (pathname === '/about') {
+    containerClass = 'max-w-6xl' // About page - fixed width
   } else if (pathname?.startsWith('/tags')) {
     containerClass = 'xl:max-w-7xl' // Wider for tags list
   }
@@ -36,8 +36,21 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
                 <div className="mr-3">
                   <ProfileImage size={40} />
                 </div>
-                <div className="hidden h-6 text-2xl font-semibold sm:block">
-                  {SiteConfig.title}
+                <div className="h-6 text-base font-semibold sm:text-2xl">
+                  <span className="font-mono text-green-600 dark:text-green-400">
+                    $
+                  </span>{' '}
+                  <span className="hidden sm:inline">{SiteConfig.title}</span>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      document.dispatchEvent(new CustomEvent('open-command-palette'))
+                    }}
+                    className="ml-1 inline-block h-4 w-1.5 translate-y-0.5 animate-blink bg-current hover:bg-green-500 sm:h-5 sm:w-2"
+                    aria-label="Open search"
+                  />
                 </div>
               </div>
             </Link>
