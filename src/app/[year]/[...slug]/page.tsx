@@ -154,10 +154,10 @@ export default async function Page(props: {
               <div className="divide-gray-200 text-sm font-medium leading-5 dark:divide-gray-700 xl:col-start-1 xl:row-start-2 xl:divide-y">
                 {tags && (
                   <div className="py-4 xl:py-8">
-                    <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                    <h2 className="mb-4 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
                       Tags
                     </h2>
-                    <div className="flex flex-wrap">
+                    <div className="flex flex-wrap gap-y-2">
                       {tags.map((tag) => (
                         <Tag key={tag} text={tag} />
                       ))}
@@ -168,7 +168,7 @@ export default async function Page(props: {
               <div className="pt-4 xl:pt-8">
                 <Link
                   href="/"
-                  className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400"
+                  className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                 >
                   &larr; Back to the blog
                 </Link>
