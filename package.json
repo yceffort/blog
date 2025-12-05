@@ -15,7 +15,7 @@
   "author": "yceffort <root@yceffort.kr>",
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "node scripts/generate-posts-cache.mjs && next build",
     "dev": "next dev",
     "lint": "eslint '**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,yaml,yml,json}'",
     "lint:fix": "eslint '**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,yaml,yml,json}' --fix",
