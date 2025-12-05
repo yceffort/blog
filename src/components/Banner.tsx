@@ -1,49 +1,62 @@
 'use client'
 
 import Link from 'next/link'
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useCallback} from 'react'
 
 import {track} from '@vercel/analytics/react'
+
+const LOCAL_STORAGE_KEY = 'hideBanner_BetaReader_20251113'
+
+function getHideBannerPreference(): boolean {
+  if (typeof window === 'undefined') {
+    return true
+  }
+  try {
+    return localStorage.getItem(LOCAL_STORAGE_KEY) === 'true'
+  } catch {
+    return false
+  }
+}
 
 const FloatingBanner = ({
   postPath = '/2025/11/web-performance-deep-dive-beta-reader',
 }: {
   postPath?: string
 }) => {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isHidden, setIsHidden] = useState(true)
   const [isMounted, setIsMounted] = useState(false)
-  const localStorageKey = 'hideBanner_BetaReader_20251113'
 
   useEffect(() => {
-    let hideBannerPreference = 'false'
-    try {
-      hideBannerPreference = localStorage.getItem(localStorageKey) || 'false'
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.warn('localStorage에 접근할 수 없습니다.', error)
+    const shouldHide = getHideBannerPreference()
+    if (shouldHide) {
+      return
     }
-    if (hideBannerPreference !== 'true') {
-      setIsVisible(true)
-      const timer = setTimeout(() => setIsMounted(true), 100)
-      return () => clearTimeout(timer)
+
+    const showTimer = setTimeout(() => {
+      setIsHidden(false)
+    }, 0)
+    const mountTimer = setTimeout(() => setIsMounted(true), 100)
+
+    return () => {
+      clearTimeout(showTimer)
+      clearTimeout(mountTimer)
     }
   }, [])
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     track('clicked.beta_reader_banner_close')
     setIsMounted(false)
     setTimeout(() => {
-      setIsVisible(false)
+      setIsHidden(true)
       try {
-        localStorage.setItem(localStorageKey, 'true')
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.warn('localStorage 저장 실패', error)
+        localStorage.setItem(LOCAL_STORAGE_KEY, 'true')
+      } catch {
+        // ignore localStorage errors
       }
     }, 500)
-  }
+  }, [])
 
-  if (!isVisible) {
+  if (isHidden) {
     return null
   }
 
