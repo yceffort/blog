@@ -8,7 +8,6 @@ import {SpeedInsights as VercelSpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
 import type {ReactNode} from 'react'
 
-import FloatingBanner from '#components/Banner'
 import {GoogleAnalyticsWebVitalsTracker} from '#components/GoogleAnalyticsWebVitalsTracker'
 import LayoutWrapper from '#components/LayoutWrapper'
 import {Providers} from '#components/Provider'
@@ -97,7 +96,7 @@ export default function Layout({children}: {children: ReactNode}) {
           <VercelAnalytics />
           <VercelSpeedInsights />
           <GoogleAnalyticsWebVitalsTracker />
-          <FloatingBanner />
+          {/* <FloatingBanner /> */}
         </body>
       </html>
     </>
