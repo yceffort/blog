@@ -24,6 +24,14 @@ const Components: Record<IconType, FC<{className: string}>> = {
   twitter: TwitterIcon,
 }
 
+const sizeClasses: Record<number, string> = {
+  4: 'h-4 w-4',
+  5: 'h-5 w-5',
+  6: 'h-6 w-6',
+  8: 'h-8 w-8',
+  10: 'h-10 w-10',
+}
+
 const SocialIcon = ({
   kind,
   href,
@@ -31,7 +39,7 @@ const SocialIcon = ({
 }: {
   kind: IconType
   href: string
-  size?: number
+  size?: 4 | 5 | 6 | 8 | 10
 }) => {
   if (!href) {
     return null
@@ -48,7 +56,7 @@ const SocialIcon = ({
     >
       <span className="sr-only">{kind}</span>
       <SocialSvg
-        className={`fill-current text-gray-700 hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400 h-${size} w-${size}`}
+        className={`fill-current text-gray-700 hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400 ${sizeClasses[size]}`}
       />
     </a>
   )
