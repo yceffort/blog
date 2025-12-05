@@ -74,9 +74,11 @@ export default async function Page(props: {
     frontMatter: {title, tags, date},
     body,
     path,
+    fields: {slug: postSlug},
   } = post
 
   const updatedAt = format(new Date(date), 'yyyy-MM-dd')
+  const transitionName = `post-${postSlug.replace(/\//g, '-')}`
   const link = `https://github.com/yceffort/yceffort-blog-v2/issues/new?labels=%F0%9F%92%AC%20Discussion&title=[Discussion] issue on ${title}&assignees=yceffort&body=${SiteConfig.url}/${slug}`
 
   return (
@@ -95,7 +97,9 @@ export default async function Page(props: {
                 </div>
               </dl>
               <div>
-                <PageTitle>{title}</PageTitle>
+                <PageTitle style={{viewTransitionName: transitionName}}>
+                  {title}
+                </PageTitle>
               </div>
             </div>
           </header>

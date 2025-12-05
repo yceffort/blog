@@ -112,3 +112,12 @@ code {
     text-align: right;
     color: rgb(156, 163, 175); /* Line number color */
 }
+
+/* View Transitions */
+@supports (view-transition-name: none) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: 0.3s;
+        animation-timing-function: ease-in-out;
+    }
+}

@@ -1,5 +1,8 @@
 export default {
   reactStrictMode: true,
+  experimental: {
+    viewTransition: true,
+  },
   async redirects() {
     return [
       {
