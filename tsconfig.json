@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "lib": ["dom", "es2022"],
     "baseUrl": "./",
     "moduleResolution": "bundler",
@@ -38,6 +38,7 @@
     "next-env.d.ts",
     "typing/*.d.ts",
     "**/*.ts*",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
   ]
 }
