@@ -8,7 +8,7 @@ import remarkMath from 'remark-math'
 import toc from 'remark-toc'
 import {visit} from 'unist-util-visit'
 
-import type {Node} from 'unist'
+import type {Element, Root} from 'hast'
 
 import imageMetadataPlugin from '#utils/imageMetadata'
 
@@ -40,11 +40,13 @@ const tokenClassNames: Record<TokenType, string> = {
 } as const
 
 export function parseCodeSnippet() {
-  return (tree: Node) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    visit(tree, 'element', (node: any) => {
-      const [token, type]: [string, TokenType] = node.properties.className || []
-      if (token === 'token') {
+  return (tree: Root) => {
+    visit(tree, 'element', (node: Element) => {
+      const className = node.properties?.className
+      if (!Array.isArray(className)) return
+
+      const [token, type] = className as [string, TokenType]
+      if (token === 'token' && type in tokenClassNames) {
         node.properties.className = [tokenClassNames[type]]
       }
     })
