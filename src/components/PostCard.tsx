@@ -17,7 +17,7 @@ export default function PostCard({post}: {post: Post}) {
   const transitionName = `post-${slug.replace(/\//g, '-')}`
 
   return (
-    <article className="flex h-[240px] flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:scale-[1.02] hover:shadow-md dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-900">
+    <article className="flex h-[240px] flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:scale-[1.02] hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
       <div className="flex flex-1 flex-col justify-between p-6">
         <div className="space-y-4">
           <div className="flex items-center justify-between">

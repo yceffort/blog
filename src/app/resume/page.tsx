@@ -32,7 +32,7 @@ export default function Page() {
       <div className="w-full space-y-8 pb-12">
         {/* Profile & Summary */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          <section className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900/50 md:p-10">
+          <section className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-800/50 md:p-10">
             <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100">
               Profile
             </h2>
@@ -52,7 +52,7 @@ export default function Page() {
             </ul>
           </section>
 
-          <section className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900/50 md:p-10">
+          <section className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-800/50 md:p-10">
             <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100">
               Key Expertise
             </h2>
@@ -77,7 +77,7 @@ export default function Page() {
           </section>
         </div>
 
-        <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900/50 md:p-12">
+        <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800/50 md:p-12">
           <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-gray-100">
             Summary
           </h2>
@@ -90,13 +90,13 @@ export default function Page() {
           </p>
         </section>
 
-        <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900/50 md:p-12">
+        <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800/50 md:p-12">
           <h2 className="mb-8 text-2xl font-bold text-gray-900 dark:text-gray-100">
             Employment History
           </h2>
           <ol className="relative border-l border-gray-200 dark:border-gray-700">
             <li className="mb-10 ml-6">
-              <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-primary-100 ring-8 ring-white dark:bg-primary-900 dark:ring-gray-900">
+              <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-primary-100 ring-8 ring-white dark:bg-primary-900 dark:ring-gray-800">
                 <span className="h-3 w-3 rounded-full bg-primary-600 dark:bg-primary-400" />
               </span>
               <h3 className="mb-1 flex items-center text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -167,7 +167,7 @@ export default function Page() {
               </p>
             </li>
             <li className="mb-10 ml-6">
-              <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-900">
+              <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-800">
                 <span className="h-3 w-3 rounded-full bg-gray-400 dark:bg-gray-500" />
               </span>
               <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -195,7 +195,7 @@ export default function Page() {
               </p>
             </li>
             <li className="mb-10 ml-6">
-              <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-900">
+              <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-800">
                 <span className="h-3 w-3 rounded-full bg-gray-400 dark:bg-gray-500" />
               </span>
               <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -229,7 +229,7 @@ export default function Page() {
               </p>
             </li>
             <li className="ml-6">
-              <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-900">
+              <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-800">
                 <span className="h-3 w-3 rounded-full bg-gray-400 dark:bg-gray-500" />
               </span>
               <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -261,13 +261,13 @@ export default function Page() {
           </ol>
         </section>
 
-        <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900/50 md:p-12">
+        <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800/50 md:p-12">
           <h2 className="mb-8 text-2xl font-bold text-gray-900 dark:text-gray-100">
             Education
           </h2>
           <ol className="relative border-l border-gray-200 dark:border-gray-700">
             <li className="mb-10 ml-6">
-              <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-900">
+              <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-800">
                 <span className="h-3 w-3 rounded-full bg-gray-400 dark:bg-gray-500" />
               </span>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -281,7 +281,7 @@ export default function Page() {
               </p>
             </li>
             <li className="ml-6">
-              <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-900">
+              <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-800">
                 <span className="h-3 w-3 rounded-full bg-gray-400 dark:bg-gray-500" />
               </span>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -297,7 +297,7 @@ export default function Page() {
           </ol>
         </section>
 
-        <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900/50 md:p-12">
+        <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800/50 md:p-12">
           <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-gray-100">
             Extra-Curricular Activities
           </h2>
@@ -359,7 +359,7 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900/50 md:p-12">
+        <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800/50 md:p-12">
           <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-gray-100">
             Publishing
           </h2>
