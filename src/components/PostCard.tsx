@@ -12,6 +12,7 @@ export default function PostCard({post}: {post: Post}) {
     frontMatter: {date, title, description, tags},
   } = post
   const updatedAt = format(new Date(date), 'yyyy-MM-dd')
+  const transitionName = `post-${slug.replace(/\//g, '-')}`
 
   return (
     <article className="flex h-[240px] flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:scale-[1.02] hover:shadow-md dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-900">
@@ -23,7 +24,10 @@ export default function PostCard({post}: {post: Post}) {
             ))}
           </div>
           <div>
-            <h3 className="text-xl font-black leading-tight tracking-tight line-clamp-1">
+            <h3
+              className="text-xl font-black leading-tight tracking-tight line-clamp-1"
+              style={{viewTransitionName: transitionName}}
+            >
               <Link
                 href={`/${slug}`}
                 className="text-black decoration-4 hover:underline dark:text-white"
