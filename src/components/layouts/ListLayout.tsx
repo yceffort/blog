@@ -1,5 +1,3 @@
-
-
 import type {Post} from '#src/type'
 
 import PostCard from '#components/PostCard'
