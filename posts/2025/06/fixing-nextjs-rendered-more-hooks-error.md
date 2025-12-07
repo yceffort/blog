@@ -422,124 +422,171 @@ Next.js App Router는 겉보기엔 안정화된 것처럼 보이지만, 내부�
 
 물론 App Router, 리액트, Nextjs 가 지향하는 방향에는 동의한다. 서버 컴포넌트, 스트리밍, RSC 기반 트리 아키텍처 등은 앞으로 웹의 중요한 기반이 될 수도 있다. 하지만 지금 상태는 솔직히, **사용자가 버그 리포트 테스트 드라이버가 되는 느낌**이다. 이 외에도 여러 이슈를 제보했지만, 딱히 답변은 없었고, 여전히 메이저 버전 올리기에 바빠 보인다. 물론 내부적으로 버그 패치를 위해 열심히 노력중이시겠지만, 공식 배포용으로 쓰기에는 아직 너무 많은 부분이 열려 있다.
 
-## 추가
+## 근본 원인 분석
 
-https://github.com/vercel/next.js/issues/63388 를 살펴보니, `loading.tsx`를 삭제하는 것 만으로도 해당 문제를 해결할 수 있다는 글이 올라오고 있었다. 이 컴포넌트를 삭제하는 것만으로도 동작하는 이유는 아마도 다음과 같지 않을까?
+이 문제에 대해 여러 GitHub 이슈와 PR을 살펴본 결과, 근본적인 원인을 파악할 수 있었다.
 
-### 이중 Suspense Boundary 문제
+- [React #33556](https://github.com/facebook/react/issues/33556) - use 훅의 조건부 호출 문제 보고
+- [React #33580](https://github.com/facebook/react/issues/33580) - 발생 조건 상세 분석
+- [React PR #34068](https://github.com/facebook/react/pull/34068) - 수정 시도 (미머지)
+- [Next.js #63388](https://github.com/vercel/next.js/issues/63388) - loading.tsx 관련 워크어라운드 발견
 
-`loading.tsx`가 있으면 Next.js는 자동으로 해당 페이지를 `<Suspense>` boundary로 감싼다:
+### HooksDispatcher 전환 버그
+
+[PR #34068](https://github.com/facebook/react/pull/34068)에서 밝혀진 핵심 원인은 다음과 같다:
+
+> `useThenable`이 `ReactSharedInternals.H`를 `HooksDispatcherOnMount`로 업데이트하면서 이후 훅들이 "이전 훅"으로 잘못 처리됨
+
+무슨 말인지 이해하기 어려우니 조금 더 풀어서 설명해보자.
+
+React는 훅 호출을 처리하기 위해 내부적으로 **HooksDispatcher**라는 객체를 사용한다. 이 객체는 컴포넌트의 렌더링 단계에 따라 다른 버전이 사용된다.
+
+```javascript
+// React 내부 (단순화)
+ReactSharedInternals.H = {
+  useState: mountState,    // 마운트 시 → 훅 초기화
+  useEffect: mountEffect,
+  useMemo: mountMemo,
+  // ...
+}
+
+// 또는
+
+ReactSharedInternals.H = {
+  useState: updateState,   // 업데이트 시 → 기존 훅 상태 재사용
+  useEffect: updateEffect,
+  useMemo: updateMemo,
+  // ...
+}
+```
+
+- **마운트(Mount)**: 컴포넌트가 처음 렌더링될 때. 훅들이 초기화된다.
+- **업데이트(Update)**: 컴포넌트가 리렌더링될 때. 기존 훅 상태를 재사용한다.
+
+문제는 `use()` 훅 내부에서 호출되는 `useThenable` 함수가 **디스패처를 강제로 Mount 버전으로 전환**한다는 것이다.
+
+```javascript
+function useThenable(thenable) {
+  // Promise 처리 로직...
+
+  // 💥 문제의 코드: 디스패처를 Mount 버전으로 강제 변경!
+  ReactSharedInternals.H = HooksDispatcherOnMount;
+}
+```
+
+이렇게 되면 다음과 같은 상황이 발생한다:
+
+```javascript
+// 정상적인 "업데이트" 렌더링이라고 가정
+function Router() {
+  // 1. useState 호출
+  //    → HooksDispatcherOnUpdate.useState 사용
+  //    → 기존 상태 재사용 ✅
+  const [state, setState] = useState(actionQueue.state);
+
+  // 2. use() 호출 (state가 Promise인 경우)
+  //    → 내부에서 useThenable 호출
+  //    → 💥 ReactSharedInternals.H = HooksDispatcherOnMount로 변경!
+  const unwrapped = use(state);
+
+  // 3. useMemo 호출
+  //    → HooksDispatcherOnMount.useMemo 사용 (Mount 버전!)
+  //    → React: "어? 새로운 훅이 추가됐네?" 🚨
+  //    → 에러 발생!
+  const memoized = useMemo(...);
+}
+```
+
+React는 `useMemo`가 호출될 때 Mount 버전 디스패처를 보고 "이전 렌더링에는 없던 새로운 훅이 추가되었다"고 판단한다. 하지만 실제로는 `useMemo`가 이전 렌더링에도 있었다. 단지 디스패처가 잘못 전환되었을 뿐이다.
+
+이것이 "Rendered more hooks than during the previous render" 에러의 실제 원인이다.
+
+### 발생 조건
+
+[React #33580](https://github.com/facebook/react/issues/33580)에서 정리된 발생 조건은 다음과 같다. **모든 조건이 동시에 충족되어야 버그가 발생**한다:
+
+1. `hydrateRoot`를 사용한 앱 수화 (Next.js App Router가 이에 해당)
+2. 에러 바운더리와 Suspense로 감싼 서브트리에서 렌더링 중 에러 발생
+3. 다음을 수행하는 이펙트:
+   - 연쇄 업데이트 유발
+   - 즉시 `startTransition` 실행
+   - 상위 컴포넌트 상태를 **새로 생성된 Promise**로 업데이트
+   - 부모에서 `use`로 조건부 읽기 (Promise일 때만)
+4. `use` 호출 후 다른 훅이 1개 이상 존재
+
+**하나라도 제거하면 에러가 사라진다.** 그래서 `loading.tsx` 제거(조건 2 제거)나 `use` 훅 패치(조건 3, 4 제거)가 해결책이 되는 것이다.
+
+### Race Condition
+
+[Next.js #63388](https://github.com/vercel/next.js/issues/63388)에서 확인된 또 다른 특징은 **데이터 로딩 속도에 따라 발생 여부가 달라진다**는 것이다:
+
+```
+빠른 데이터 로딩 (50ms)  → 버그 발생 빈도 높음
+느린 데이터 로딩 (500ms) → 버그 발생 빈도 낮음
+```
+
+이건 전형적인 race condition이다. 서버 데이터가 빠르게 도착하면 `state`가 `일반 객체 → Promise → 일반 객체`로 빠르게 전환되면서, 디스패처 전환 타이밍이 꼬이게 된다.
+
+### 왜 해결책들이 동작하는가
+
+이제 앞서 제시한 해결책들이 왜 동작하는지 명확해진다.
+
+**1. `loading.tsx` 제거**
 
 ```jsx
-// loading.tsx가 있을 때 Next.js가 내부적으로 생성하는 구조
-<Suspense fallback={<LoadingComponent />}>
+// loading.tsx가 있으면
+<Suspense fallback={<Loading />}>  ← 이 Suspense가 발생 조건 2를 충족
   <PageComponent />
 </Suspense>
+
+// loading.tsx가 없으면
+<PageComponent />  ← Suspense 경계 제거 → 발생 조건 2 미충족 → 버그 우회
 ```
 
-그런데 App Router 내부에서도 이미 Suspense를 사용하고 있기 때문에 다음과 같은 **이중 Suspense 상황**이 발생한다:
+**2. `useUnwrapState` 패치**
 
-```jsx
-// App Router 내부 구조 (추측)
-<Suspense fallback={<GlobalLoading />}>
-  {/* Next.js 내부 */}
-  <Suspense fallback={<LoadingFromFile />}>
-    {/* loading.tsx */}
-    <Router>{/* useActionQueue에서 use(state) 호출 */}</Router>
-  </Suspense>
-</Suspense>
+```javascript
+// 기존: use() 호출 → useThenable 호출 → 디스패처 전환 💥
+return isThenable(state) ? use(state) : state;
+
+// 패치 후: use() 호출 자체를 제거 → useThenable 호출 안 함 → 디스패처 전환 없음 ✅
+return useUnwrapState(state);
 ```
 
-이중 Suspense의 핵심 문제는 Promise 해결 타이밍과 컴포넌트 재렌더링 순서가 복잡해진다는 것이다. 예컨데 `use()` 훅이 Promise를 throw하면:
+`use()` 훅을 사용하지 않으면 `useThenable`이 호출되지 않고, 따라서 디스패처가 잘못 전환되는 일도 없다.
 
-1. **내부 Suspense (loading.tsx)가 먼저 catch** → Loading 컴포넌트 렌더링
-2. **외부 Suspense (App Router)도 동시에 반응** → 전체 Router 컴포넌트 상태 변경
-3. **Promise가 resolve되면 두 Suspense가 순차적으로 재시작**
+### 공식 수정 상태
 
-이 과정에서 Router 컴포넌트가 **예상보다 많은 렌더링 사이클**을 거치게 되고, 리액트는 "첫 번째 렌더링에서는 `use()` 훅이 호출되지 않았는데, 두 번째 렌더링에서는 호출되었다"고 인식하여 훅 개수 불일치 에러를 던지는 것이다. (라고 추측 중)
+[PR #34068](https://github.com/facebook/react/pull/34068)에서 다음과 같은 해결책이 제안되었다:
 
-```jsx
-// 첫 번째 렌더링 (loading.tsx Suspense 활성화)
-function Router() {
-  const state = useActionQueue(actionQueue)  // 1. useState
-  // state가 일반 객체 → use() 호출 안됨    // 총 훅 개수: 1개
-  const memoized = useMemo(...)              // 2. useMemo
-}                                            // 총 훅 개수: 2개
+```javascript
+// 새로운 전역 플래그 추가
+let hasDispatcherSwitchedDueToUse = false;
 
-// 두 번째 렌더링 (서버 데이터 도착 후)
-function Router() {
-  const state = useActionQueue(actionQueue)  // 1. useState
-  // state가 Promise → use() 호출됨!        // 2. use (새로 추가!)
-  const memoized = useMemo(...)              // 3. useMemo
-}                                            // 총 훅 개수: 3개 (2개 → 3개로 증가!)
-```
+function useThenable(thenable) {
+  // ...
+  hasDispatcherSwitchedDueToUse = true;  // 플래그 설정
+  ReactSharedInternals.H = HooksDispatcherOnMount;
+}
 
-### Race Condition과 서버 스트리밍 타이밍
-
-또 다른 한가지 추측은 깃헙 이슈에서 언급한 "race condition"이다. 데이터 로딩 속도에 따라 문제 발생 여부가 달라진다:
-
-**빠른 데이터 로딩 (50ms) - 문제 발생**:
-
-```jsx
-function Router() {
-  // 첫 번째 렌더링: loading.tsx의 Suspense가 아직 활성화되기 전
-  const state = useActionQueue(actionQueue)
-  // state가 이미 완료된 데이터 → Promise가 아님 → use() 호출 안됨
-  const memoized = useMemo(...)              // 총 훅: 2개
-
-  // 갑자기 서버에서 새로운 Promise 상태가 도착
-  // → 컴포넌트 리렌더링 트리거
-
-  // 두 번째 렌더링: 이번엔 Promise 상태가 됨
-  const state2 = useActionQueue(actionQueue)
-  // state가 Promise → use() 호출됨!        // 새로운 훅 추가!
-  const memoized2 = useMemo(...)             // 총 훅: 3개 (2개→3개 증가!)
+// 이후 훅 호출 시
+function checkHooksOrder() {
+  if (hasDispatcherSwitchedDueToUse) {
+    // use()로 인한 디스패처 전환이었으므로
+    // 훅 개수 불일치를 에러로 처리하지 않음
+  }
 }
 ```
 
-**느린 데이터 로딩 (500ms) - 정상 동작**:
-
-```jsx
-function Router() {
-  // 첫 번째 렌더링: loading.tsx의 Suspense가 먼저 활성화됨
-  const state = useActionQueue(actionQueue)
-  // state가 Promise → use() 호출됨 → 즉시 Suspense 트리거
-  // → 렌더링 중단됨 (useMemo까지 도달하지 않음)
-
-  // Suspense fallback 동안 500ms 대기...
-
-  // 두 번째 렌더링: 데이터 완료 후
-  const state2 = useActionQueue(actionQueue)
-  // state가 완료된 데이터 → use() 호출 안됨
-  const memoized2 = useMemo(...)             // 총 훅: 2개 (일관됨)
-}
-```
-
-핵심은 **타이밍**이다. 데이터가 너무 빨리 도착하면 `loading.tsx`의 Suspense가 제대로 작동하기 전에 상태 변화가 일어나서, 같은 컴포넌트가 서로 다른 훅 호출 패턴을 가지게 된다. 이는 리액트의 "훅은 항상 같은 순서로 호출되어야 한다"는 규칙을 위반하게 만든다.
-
-`loading.tsx`가 있으면 Next.js는 다음과 같은 복잡한 상태 전환을 해야 한다:
-
-```jsx
-// loading.tsx 없을 때: 단순한 상태 전환
-Page Loading → Page Rendered
-
-// loading.tsx 있을 때: 복잡한 상태 전환
-Page Loading → Loading.tsx Rendered → Suspense Resolved → Page Rendered
-              ↑                      ↑
-         첫 번째 Suspense        두 번째 Suspense (use 훅)
-```
-
-이 과정에서 `useActionQueue`의 `use()` 훅이 예상과 다른 타이밍에 호출되면서 리액트의 훅 호출 순서 규칙을 위반하게 된다.
+하지만 이 PR은 2025년 11월에 장기 비활성으로 자동 종료되었다. 즉, **아직 공식적으로 수정되지 않았다.**
 
 ### 두 해결책의 비교
-
-아마도 앞서 제기한 해결책과 `loading.tsx` 모두 문제를 해결하는 방법이 아닐까 싶다. 두개를 비교하면 다음과 같다.
 
 | 방법                 | 장점                 | 단점                    |
 | -------------------- | -------------------- | ----------------------- |
 | **loading.tsx 제거** | 간단하고 확실한 해결 | 로딩 UX 완전히 포기     |
 | **use 훅 패치**      | 로딩 UX 유지 가능    | Suspense 기능 일부 제한 |
 
-`loading.tsx` 제거는 **문제 상황 자체를 회피하는 방법**이라고 볼 수 있다. 근본적인 해결책은 아니지만, 이중 Suspense boundary 제거로 race condition과 훅 호출 순서 문제를 피할 수 있다.
+`loading.tsx` 제거는 **문제 상황 자체를 회피하는 방법**이라고 볼 수 있다. 근본적인 해결책은 아니지만, 발생 조건 중 하나를 제거하여 버그를 우회할 수 있다.
 
 개인적으로는 UX를 포기하는 것보다는 `useUnwrapState` 패치가 더 나은 접근법이라고 생각한다. Suspense 메커니즘을 우회하면서도 `loading.tsx`의 UX 이점은 유지할 수 있기 때문이다.
