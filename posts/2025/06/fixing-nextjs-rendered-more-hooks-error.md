@@ -444,7 +444,7 @@ React는 훅 호출을 처리하기 위해 내부적으로 **HooksDispatcher**�
 ```javascript
 // React 내부 (단순화)
 ReactSharedInternals.H = {
-  useState: mountState,    // 마운트 시 → 훅 초기화
+  useState: mountState, // 마운트 시 → 훅 초기화
   useEffect: mountEffect,
   useMemo: mountMemo,
   // ...
@@ -453,7 +453,7 @@ ReactSharedInternals.H = {
 // 또는
 
 ReactSharedInternals.H = {
-  useState: updateState,   // 업데이트 시 → 기존 훅 상태 재사용
+  useState: updateState, // 업데이트 시 → 기존 훅 상태 재사용
   useEffect: updateEffect,
   useMemo: updateMemo,
   // ...
@@ -470,7 +470,7 @@ function useThenable(thenable) {
   // Promise 처리 로직...
 
   // 💥 문제의 코드: 디스패처를 Mount 버전으로 강제 변경!
-  ReactSharedInternals.H = HooksDispatcherOnMount;
+  ReactSharedInternals.H = HooksDispatcherOnMount
 }
 ```
 
@@ -547,10 +547,10 @@ React는 `useMemo`가 호출될 때 Mount 버전 디스패처를 보고 "이전 
 
 ```javascript
 // 기존: use() 호출 → useThenable 호출 → 디스패처 전환 💥
-return isThenable(state) ? use(state) : state;
+return isThenable(state) ? use(state) : state
 
 // 패치 후: use() 호출 자체를 제거 → useThenable 호출 안 함 → 디스패처 전환 없음 ✅
-return useUnwrapState(state);
+return useUnwrapState(state)
 ```
 
 `use()` 훅을 사용하지 않으면 `useThenable`이 호출되지 않고, 따라서 디스패처가 잘못 전환되는 일도 없다.
@@ -561,12 +561,12 @@ return useUnwrapState(state);
 
 ```javascript
 // 새로운 전역 플래그 추가
-let hasDispatcherSwitchedDueToUse = false;
+let hasDispatcherSwitchedDueToUse = false
 
 function useThenable(thenable) {
   // ...
-  hasDispatcherSwitchedDueToUse = true;  // 플래그 설정
-  ReactSharedInternals.H = HooksDispatcherOnMount;
+  hasDispatcherSwitchedDueToUse = true // 플래그 설정
+  ReactSharedInternals.H = HooksDispatcherOnMount
 }
 
 // 이후 훅 호출 시
