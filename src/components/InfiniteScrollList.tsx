@@ -1,9 +1,13 @@
 'use client'
 
 import {useRouter, useSearchParams} from 'next/navigation'
-import {useCallback, useRef, useState} from 'react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 
-import {VirtuosoGrid, type VirtuosoGridHandle} from 'react-virtuoso'
+import {
+  VirtuosoGrid,
+  type GridStateSnapshot,
+  type VirtuosoGridHandle,
+} from 'react-virtuoso'
 
 import type {Post} from '#src/type'
 
@@ -11,20 +15,71 @@ import PostCard from '#components/PostCard'
 import {fetchPosts} from '#src/app/actions'
 import {DEFAULT_NUMBER_OF_POSTS} from '#src/constants'
 
+const DEFAULT_STORAGE_KEY = 'infinite-scroll-state'
+
+function getStoredState(key: string): {
+  posts: Post[]
+  gridState: GridStateSnapshot
+} | null {
+  if (typeof window === 'undefined') return null
+  try {
+    const stored = sessionStorage.getItem(key)
+    if (stored) {
+      return JSON.parse(stored)
+    }
+  } catch {}
+  return null
+}
+
+function saveState(key: string, posts: Post[], gridState: GridStateSnapshot) {
+  try {
+    sessionStorage.setItem(key, JSON.stringify({posts, gridState}))
+  } catch {}
+}
+
 export default function InfiniteScrollList({
   posts: initialPosts,
+  storageKey = DEFAULT_STORAGE_KEY,
 }: {
   posts: Post[]
+  storageKey?: string
 }) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const virtuosoRef = useRef<VirtuosoGridHandle>(null)
+  const gridStateRef = useRef<GridStateSnapshot | undefined>(undefined)
 
-  const [posts, setPosts] = useState<Post[]>(initialPosts)
+  const [posts, setPosts] = useState<Post[]>(() => {
+    const stored = getStoredState(storageKey)
+    return stored?.posts ?? initialPosts
+  })
   const [loading, setLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
-  // Track the highest page loaded to prevent duplicate fetches
-  const loadedPageRef = useRef(1)
+  const loadedPageRef = useRef(
+    Math.ceil(posts.length / DEFAULT_NUMBER_OF_POSTS),
+  )
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (gridStateRef.current) {
+        saveState(storageKey, posts, gridStateRef.current)
+      }
+    }
+
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (target.closest('a') && gridStateRef.current) {
+        saveState(storageKey, posts, gridStateRef.current)
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    document.addEventListener('click', handleClick)
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+      document.removeEventListener('click', handleClick)
+    }
+  }, [posts, storageKey])
 
   const loadMore = useCallback(async () => {
     if (loading || !hasMore) {
@@ -59,6 +114,10 @@ export default function InfiniteScrollList({
         data={posts}
         endReached={loadMore}
         overscan={200}
+        restoreStateFrom={getStoredState(storageKey)?.gridState}
+        stateChanged={(state) => {
+          gridStateRef.current = state
+        }}
         itemContent={(index, post) => {
           return (
             <div className="py-2 px-2 pb-8">
