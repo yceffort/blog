@@ -55,9 +55,9 @@ Core web vital (이하 코어 웹 바이탈)은 모든 웹페이지에 적용되
 
 |                                                                                                        | LCP | FID | CLS |
 | :----------------------------------------------------------------------------------------------------: | :-: | :-: | :-: |
-| [Chrome User Experience Report](https://developers.google.com/web/tools/chrome-user-experience-report) | ✔  | ✔  | ✔  |
-|             [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/)              | ✔  | ✔  | ✔  |
-|    [Search Console (Core Web Vitals Report)](https://support.google.com/webmasters/answer/9205520)     | ✔  | ✔  | ✔  |
+| [Chrome User Experience Report](https://developers.google.com/web/tools/chrome-user-experience-report) |  ✔  |  ✔  |  ✔  |
+|             [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/)              |  ✔  |  ✔  |  ✔  |
+|    [Search Console (Core Web Vitals Report)](https://support.google.com/webmasters/answer/9205520)     |  ✔  |  ✔  |  ✔  |
 
 ![page-speed-insight](./images/yceffort-page-speed-insight.png)
 
@@ -96,8 +96,8 @@ getLCP(sendToAnalytics)
 
 |                                                                              | LCP | FID | CLS |
 | :--------------------------------------------------------------------------: | :-: | :-: | :-: |
-|           [web-vitals](https://github.com/GoogleChrome/web-vitals)           | ✔  | ✔  | ✔  |
-| [web vitals Extension](https://github.com/GoogleChrome/web-vitals-extension) | ✔  | ✔  | ✔  |
+|           [web-vitals](https://github.com/GoogleChrome/web-vitals)           |  ✔  |  ✔  |  ✔  |
+| [web vitals Extension](https://github.com/GoogleChrome/web-vitals-extension) |  ✔  |  ✔  |  ✔  |
 
 ![web-vitals-extension](./images/yceffort-web-vitals-extension.png)
 
@@ -175,8 +175,8 @@ new PerformanceObserver((entryList) => {
 
 |                                                                            | LCP |                FID                 | CLS |
 | :------------------------------------------------------------------------: | :-: | :--------------------------------: | :-: |
-| [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools) | ✔  | ✘ [TBT](https://web.dev/tbt/) 활용 | ✔  |
-|      [Lighthouse](https://developers.google.com/web/tools/lighthouse)      | ✔  | ✘ [TBT](https://web.dev/tbt/) 활용 | ✔  |
+| [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools) |  ✔  | ✘ [TBT](https://web.dev/tbt/) 활용 |  ✔  |
+|      [Lighthouse](https://developers.google.com/web/tools/lighthouse)      |  ✔  | ✘ [TBT](https://web.dev/tbt/) 활용 |  ✔  |
 
 이러한 도구는 훌륭하지만, 실제 성능 측정을 대체할 수 있는 것은 아니다.
 

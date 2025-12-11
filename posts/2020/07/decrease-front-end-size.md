@@ -97,7 +97,7 @@ function render(data, target) {
 function t(e, n) {
   console.log('Rendered!')
 }
-Object.defineProperty(n, '__esModule', {value: !0}), (n.render = t)
+;(Object.defineProperty(n, '__esModule', {value: !0}), (n.render = t))
 var o = r(1)
 r.n(o)
 ```
@@ -127,8 +127,8 @@ module.exports = {
 
 ```javascript
 // minified bundle.js (part of)
-;(exports = module.exports = __webpack_require__(1)()),
-  exports.push([module.i, '.comment {\r\n  color: black;\r\n}', ''])
+;((exports = module.exports = __webpack_require__(1)()),
+  exports.push([module.i, '.comment {\r\n  color: black;\r\n}', '']))
 ```
 
 minifier는 코드가 문자열이기 때문에 더 이상 최소화 할 수 없다. 이를 최소화 하기 위해서는, 아래와 같이 옵션을 추가하면 된다.
@@ -353,7 +353,7 @@ export function render(data, target) {
 ```javascript
 // bundle.js (part  of)
 /* 0 */
-;(function (module, __webpack_exports__, __webpack_require__) {
+;((function (module, __webpack_exports__, __webpack_require__) {
   'use strict'
   Object.defineProperty(__webpack_exports__, '__esModule', {value: true})
   var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(1)
@@ -366,7 +366,7 @@ export function render(data, target) {
     function render(data, target) {
       console.log('Rendered!')
     }
-  }
+  })
 ```
 
 과거 이러한 방식은 CommonJS나 AMD 모듈로 부터 분리시키기 위해 필요했다. 그러나 이러한 방식은 각 모듈의 사이즈를 키우고 퍼포먼스를 저하시킨다.
@@ -448,7 +448,7 @@ module.exports = {
 
 ```javascript
 // bundle.js (part of)
-;(function (module, exports) {
+;((function (module, exports) {
   // A module that exports `window.React`. Without `externals`,
   // this module would include the whole React bundle
   module.exports = React
@@ -457,7 +457,7 @@ module.exports = {
     // A module that exports `window.ReactDOM`. Without `externals`,
     // this module would include the whole ReactDOM bundle
     module.exports = ReactDOM
-  }
+  })
 ```
 
 ### `AMD` 패키지의 경우

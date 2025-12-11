@@ -40,8 +40,12 @@ function generatePostsCache() {
       return prev
     }, [])
     .sort((a, b) => {
-      if (a.frontMatter.date < b.frontMatter.date) {return 1}
-      if (a.frontMatter.date > b.frontMatter.date) {return -1}
+      if (a.frontMatter.date < b.frontMatter.date) {
+        return 1
+      }
+      if (a.frontMatter.date > b.frontMatter.date) {
+        return -1
+      }
       return 0
     })
 

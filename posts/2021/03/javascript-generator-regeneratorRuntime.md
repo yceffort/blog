@@ -48,7 +48,7 @@ var fibonacci = /*#__PURE__*/ regeneratorRuntime.mark(function _callee() {
     while (1) {
       switch ((_context.prev = _context.next)) {
         case 0:
-          ;(prev = 0), (current = 1)
+          ;((prev = 0), (current = 1))
 
         case 1:
           if (!true) {

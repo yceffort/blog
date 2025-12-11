@@ -114,9 +114,9 @@ http 요청은 옵셔널 헤더인 [Referer](https://developer.mozilla.org/en-US
 
 |                                   | No Data        | Origin Only                                | Full URL                   |
 | --------------------------------- | -------------- | ------------------------------------------ | -------------------------- |
-| `no-referrer`                     | ✔             |                                            |                            |
-| `origin`                          |                | ✔                                         |                            |
-| `unsafe-url`                      |                |                                            | ✔                         |
+| `no-referrer`                     | ✔              |                                            |                            |
+| `origin`                          |                | ✔                                          |                            |
+| `unsafe-url`                      |                |                                            | ✔                          |
 | `strict-origin`                   | HTTPS → HTTP   | HTTPS → HTTPS, HTTP → HTTP                 |                            |
 | `no-referrer-when-downgrade`      | HTTPS → HTTP   |                                            | HTTPS → HTTPS, HTTP → HTTP |
 | `origin-when-cross-origin`        |                | `cross-origin`                             | `same-origin`              |

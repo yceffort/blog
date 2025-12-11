@@ -157,7 +157,7 @@ V8_INLINE static internal::Address* GetRoot(v8::Isolate* isolate, int index) {
 
 ```javascript
 function MyNumbers() {
-  ;(this._integer = 1), (this._double = 1.1)
+  ;((this._integer = 1), (this._double = 1.1))
 }
 // 전역변수
 var _global_integer = 1

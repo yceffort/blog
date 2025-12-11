@@ -21,7 +21,9 @@ function getStoredState(key: string): {
   posts: Post[]
   gridState: GridStateSnapshot
 } | null {
-  if (typeof window === 'undefined') return null
+  if (typeof window === 'undefined') {
+    return null
+  }
   try {
     const stored = sessionStorage.getItem(key)
     if (stored) {
