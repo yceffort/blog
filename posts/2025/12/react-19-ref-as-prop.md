@@ -22,25 +22,25 @@ React 초기에는 클래스 컴포넌트가 주를 이루었고, 클래스 컴�
 ```tsx
 class MyComponent extends React.Component {
   doSomething() {
-    console.log('Hello!');
+    console.log('Hello!')
   }
 
   render() {
-    return <div>Hello</div>;
+    return <div>Hello</div>
   }
 }
 
 class Parent extends React.Component {
-  myRef = React.createRef();
+  myRef = React.createRef()
 
   handleClick = () => {
     // ref.current는 MyComponent의 인스턴스를 가리킨다.
     // 따라서 인스턴스 메서드를 직접 호출할 수 있다.
-    this.myRef.current.doSomething();
+    this.myRef.current.doSomething()
   }
 
   render() {
-    return <MyComponent ref={this.myRef} />;
+    return <MyComponent ref={this.myRef} />
   }
 }
 ```
@@ -49,8 +49,8 @@ class Parent extends React.Component {
 
 ```tsx
 // 함수형 컴포넌트는 인스턴스가 없다
-function MyButton({ children }) {
-  return <button>{children}</button>;
+function MyButton({children}) {
+  return <button>{children}</button>
 }
 
 // MyButton()은 그냥 함수 호출이다.
@@ -62,14 +62,14 @@ function MyButton({ children }) {
 
 ```tsx
 // React 18 이하에서 ref를 직접 함수형 컴포넌트에 전달하려는 시도 (잘못된 방법)
-import { useRef } from 'react';
+import {useRef} from 'react'
 
-function MyButton({ children }) {
-  return <button>{children}</button>;
+function MyButton({children}) {
+  return <button>{children}</button>
 }
 
 function App() {
-  const buttonRef = useRef(null);
+  const buttonRef = useRef(null)
 
   // React는 MyButton 컴포넌트에 ref를 연결할 수 없으므로,
   // 개발 모드에서 "Function components cannot be given refs." 경고가 발생하고
@@ -79,17 +79,17 @@ function App() {
       <MyButton ref={buttonRef}>클릭하세요</MyButton>
       <button onClick={() => console.log(buttonRef.current)}>ref 확인</button>
     </div>
-  );
+  )
 }
 ```
 
 ```tsx
 // React 18 이하 (forwardRef를 사용한 올바른 방법)
-import { forwardRef } from 'react';
+import {forwardRef} from 'react'
 
 const MyInput = forwardRef((props, ref) => {
-  return <input {...props} ref={ref} />;
-});
+  return <input {...props} ref={ref} />
+})
 ```
 
 이 방식에는 몇 가지 불편한 점이 있었다.
@@ -108,16 +108,16 @@ React 19부터는 함수형 컴포넌트에서도 `ref`를 일반적인 `prop`�
 
 ```tsx
 // React 19
-function MyInput({ placeholder, ref }) {
-  return <input placeholder={placeholder} ref={ref} />;
+function MyInput({placeholder, ref}) {
+  return <input placeholder={placeholder} ref={ref} />
 }
 
 // 사용 예시
-import { useRef } from 'react';
+import {useRef} from 'react'
 
 function App() {
-  const inputRef = useRef(null);
-  return <MyInput ref={inputRef} placeholder="검색어를 입력하세요" />;
+  const inputRef = useRef(null)
+  return <MyInput ref={inputRef} placeholder="검색어를 입력하세요" />
 }
 ```
 
@@ -127,21 +127,17 @@ function App() {
 
 ```tsx
 interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  ref?: React.Ref<HTMLInputElement>;
+  label: string
+  ref?: React.Ref<HTMLInputElement>
 }
 
-export default function SearchInput({ label, ref, ...rest }: SearchInputProps) {
+export default function SearchInput({label, ref, ...rest}: SearchInputProps) {
   return (
     <div className="flex flex-col">
       <label className="text-sm font-bold">{label}</label>
-      <input 
-        ref={ref} 
-        className="border p-2 rounded" 
-        {...rest} 
-      />
+      <input ref={ref} className="border p-2 rounded" {...rest} />
     </div>
-  );
+  )
 }
 ```
 
