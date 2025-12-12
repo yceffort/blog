@@ -35,18 +35,16 @@
 }
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 7rem;
+    scroll-padding-top: 6rem;
 }
-
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-    scroll-margin-top: 7rem;
+    scroll-margin-top: 6rem;
 }
-
 a {
     word-break: break-all;
 }
