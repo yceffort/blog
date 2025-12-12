@@ -6,6 +6,7 @@ import {usePathname} from 'next/navigation'
 import Footer from './Footer'
 import MobileNav from './MobileNav'
 import ProfileImage from './ProfileImage'
+import ScrollTop from './ScrollTop'
 import SectionContainer from './SectionContainer'
 import ThemeSwitch from './ThemeSwitch'
 
@@ -98,6 +99,7 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
         </header>
         <main className="mb-auto">{children}</main>
         <Footer />
+        <ScrollTop />
       </div>
     </SectionContainer>
   )
