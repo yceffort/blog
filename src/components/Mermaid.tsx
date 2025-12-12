@@ -1,0 +1,50 @@
+'use client'
+
+import {useEffect, useRef, useState} from 'react'
+
+import mermaid from 'mermaid'
+import {useTheme} from 'next-themes'
+
+export default function Mermaid({chart}: {chart: string}) {
+  const {theme} = useTheme()
+  const ref = useRef<HTMLDivElement>(null)
+  const [rendered, setRendered] = useState(false)
+
+  useEffect(() => {
+    // 테마 설정
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: theme === 'dark' ? 'dark' : 'default',
+      securityLevel: 'loose',
+      fontFamily: 'inherit',
+    })
+
+    const renderChart = async () => {
+      if (!ref.current) {return}
+
+      try {
+        const id = `mermaid-${Math.random().toString(36).substring(2, 9)}`
+        const {svg} = await mermaid.render(id, chart)
+        if (ref.current) {
+          ref.current.innerHTML = svg
+          setRendered(true)
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Mermaid rendering failed:', error)
+        if (ref.current) {
+          ref.current.innerText = 'Invalid Mermaid syntax'
+        }
+      }
+    }
+
+    renderChart()
+  }, [chart, theme])
+
+  return (
+    <div
+      ref={ref}
+      className={`mermaid flex justify-center my-8 ${rendered ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+    />
+  )
+}
