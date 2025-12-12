@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import dynamic from 'next/dynamic' // Import dynamic from next/dynamic
+import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 
 import Footer from './Footer'
@@ -16,9 +16,9 @@ import type {ReactNode} from 'react'
 import {SiteConfig} from '#src/config'
 
 // Dynamically import ThemeSwitch with ssr: false and a loading placeholder
-const DynamicThemeSwitch = dynamic(() => import('./ThemeSwitch'), { 
+const DynamicThemeSwitch = dynamic(() => import('./ThemeSwitch'), {
   ssr: false,
-  loading: () => <div className="ml-1 mr-1 h-10 w-10 rounded-md sm:ml-4" /> // Matches dimensions and margin of ThemeSwitch button
+  loading: () => <div className="ml-1 mr-1 h-10 w-10 rounded-md sm:ml-4" />, // Matches dimensions and margin of ThemeSwitch button
 })
 
 const LayoutWrapper = ({children}: {children: ReactNode}) => {
