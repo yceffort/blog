@@ -13,7 +13,7 @@ const ThemeSwitch = () => {
   const {theme, setTheme} = useTheme()
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
+     
     setMounted(true)
   }, [])
 
@@ -46,20 +46,10 @@ const ThemeSwitch = () => {
       className="ml-1 mr-1 h-8 w-8 rounded-sm p-1 sm:ml-4"
       onClick={handleButtonClick}
       title={
-        theme === 'system'
-          ? 'System'
-          : theme === 'dark'
-          ? 'Dark'
-          : 'Light'
+        theme === 'system' ? 'System' : theme === 'dark' ? 'Dark' : 'Light'
       }
     >
-      {theme === 'system' ? (
-        <Monitor />
-      ) : theme === 'dark' ? (
-        <Moon />
-      ) : (
-        <Sun />
-      )}
+      {theme === 'system' ? <Monitor /> : theme === 'dark' ? <Moon /> : <Sun />}
     </button>
   )
 }
