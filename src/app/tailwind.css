@@ -126,15 +126,12 @@ code {
 .prose h2[id^="table-of-contents"] {
     @apply mb-4 mt-8 pb-2 border-b border-gray-200 dark:border-gray-700;
 }
-
 .prose h2[id^="table-of-contents"] + ul {
     @apply bg-gray-50 dark:bg-gray-800/50 rounded-lg p-5 border border-gray-200 dark:border-gray-700 list-none my-6 !pl-5;
 }
-
 .prose h2[id^="table-of-contents"] + ul > li {
     @apply mt-0 !pl-0;
 }
-
 .prose h2[id^="table-of-contents"] + ul > li::before {
     @apply hidden; /* Remove default bullet */
 }
@@ -148,15 +145,40 @@ code {
 .prose h2[id^="table-of-contents"] + ul > li > ul {
     @apply mt-1 pl-4 border-l-2 border-gray-200 dark:border-gray-700 list-none !mb-2;
 }
-
 .prose h2[id^="table-of-contents"] + ul > li > ul > li {
     @apply mt-1 !pl-0;
 }
-
 .prose h2[id^="table-of-contents"] + ul > li > ul > li::before {
     @apply hidden;
 }
-
 .prose h2[id^="table-of-contents"] + ul > li > ul > li > a {
     @apply text-sm text-gray-600 dark:text-gray-400 no-underline hover:text-primary-600 dark:hover:text-primary-400 block py-1 transition-colors;
+}
+
+/* Third level links */
+.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul {
+    @apply mt-1 pl-4 border-l-2 border-gray-200 dark:border-gray-700 list-none !mb-2;
+}
+.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul > li {
+    @apply mt-1 !pl-0;
+}
+.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul > li::before {
+    @apply hidden;
+}
+.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul > li > a {
+    @apply text-xs text-gray-500 dark:text-gray-400 no-underline hover:text-primary-600 dark:hover:text-primary-400 block py-1 transition-colors;
+}
+
+/* Fourth level links */
+.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul > li > ul {
+    @apply mt-1 pl-3 border-l-2 border-gray-100 dark:border-gray-700 list-none !mb-2;
+}
+.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul > li > ul > li {
+    @apply mt-1 !pl-0;
+}
+.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul > li > ul > li::before {
+    @apply hidden;
+}
+.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul > li > ul > li > a {
+    @apply text-xs text-gray-400 dark:text-gray-500 no-underline hover:text-primary-600 dark:hover:text-primary-400 block py-0.5 transition-colors;
 }
