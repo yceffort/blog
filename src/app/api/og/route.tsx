@@ -34,7 +34,9 @@ export async function GET(request: Request) {
     const imageUrl = `${baseUrl}/${ogBackgroundImageName}`
 
     const imageRes = await fetch(imageUrl)
-    if (!imageRes.ok) {throw new Error(`Failed to fetch image: ${imageUrl}`)}
+    if (!imageRes.ok) {
+      throw new Error(`Failed to fetch image: ${imageUrl}`)
+    }
     const imageBuffer = await imageRes.arrayBuffer()
     const imageBase64 = Buffer.from(imageBuffer).toString('base64')
 
@@ -44,7 +46,9 @@ export async function GET(request: Request) {
       'https://cdn.jsdelivr.net/gh/fonts-archive/NanumGothic/NanumGothicBold.ttf'
 
     const fontRes = await fetch(fontUrl)
-    if (!fontRes.ok) {throw new Error(`Failed to fetch font: ${fontUrl}`)}
+    if (!fontRes.ok) {
+      throw new Error(`Failed to fetch font: ${fontUrl}`)
+    }
     const fontData = await fontRes.arrayBuffer()
 
     return new ImageResponse(
@@ -60,7 +64,7 @@ export async function GET(request: Request) {
       >
         {/* Background Image Layer */}
         <img
-          alt=""
+          alt={title}
           src={`data:image/jpeg;base64,${imageBase64}`}
           style={{
             position: 'absolute',
@@ -201,8 +205,11 @@ export async function GET(request: Request) {
       },
     )
   } catch (e: unknown) {
-    return new Response(`Failed to generate the image: ${e instanceof Error ? e.message : 'Unknown error'}`, {
-      status: 500,
-    })
+    return new Response(
+      `Failed to generate the image: ${e instanceof Error ? e.message : 'Unknown error'}`,
+      {
+        status: 500,
+      },
+    )
   }
 }
