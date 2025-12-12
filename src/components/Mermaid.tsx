@@ -20,7 +20,9 @@ export default function Mermaid({chart}: {chart: string}) {
     })
 
     const renderChart = async () => {
-      if (!ref.current) {return}
+      if (!ref.current) {
+        return
+      }
 
       try {
         const id = `mermaid-${Math.random().toString(36).substring(2, 9)}`
