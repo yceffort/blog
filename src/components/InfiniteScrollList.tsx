@@ -53,6 +53,11 @@ export default function InfiniteScrollList({
 
   const [posts, setPosts] = useState<Post[]>(() => {
     const stored = getStoredState(storageKey)
+    if (stored && stored.posts.length > 0 && initialPosts.length > 0) {
+      if (stored.posts[0].fields.slug !== initialPosts[0].fields.slug) {
+        return initialPosts
+      }
+    }
     return stored?.posts ?? initialPosts
   })
   const [loading, setLoading] = useState(false)
