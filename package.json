@@ -52,7 +52,7 @@
     "glob": "^11.1.0",
     "image-size": "^2.0.2",
     "lefthook": "^1.11.13",
-    "next": "^16.0.7",
+    "next": "^16.0.9",
     "next-mdx-remote": "^5.0.0",
     "next-mdx-remote-client": "^2.1.2",
     "next-remote-watch": "^2.0.0",
