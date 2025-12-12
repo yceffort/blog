@@ -1,13 +1,16 @@
 import {redirect} from 'next/navigation'
 
-import { SiteConfig } from '#src/config'
+import type {Metadata} from 'next'
+
+import {SiteConfig} from '#src/config'
 import {DEFAULT_NUMBER_OF_POSTS} from '#src/constants'
 import {getAllPosts} from '#utils/Post'
-import type { Metadata } from 'next'
 
 export const dynamic = 'error'
 
-export async function generateMetadata(props: {params: Promise<{id: string}>}): Promise<Metadata> {
+export async function generateMetadata(props: {
+  params: Promise<{id: string}>
+}): Promise<Metadata> {
   const params = await props.params
   const {id} = params
   const pageTitle = `Page ${id} - ${SiteConfig.title}`

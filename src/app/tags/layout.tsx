@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react'
-import type { Metadata } from 'next'
+import type {Metadata} from 'next'
+import type {ReactNode} from 'react'
 
-import { SiteConfig } from '#src/config'
+import {SiteConfig} from '#src/config'
 
 export const metadata: Metadata = {
   title: 'Tags - ' + SiteConfig.title,
