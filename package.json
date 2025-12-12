@@ -49,7 +49,7 @@
     "date-fns": "^4.1.0",
     "eslint": "^9.27.0",
     "front-matter": "^4.0.2",
-    "glob": "^11.1.0",
+    "glob": "^13.0.0",
     "image-size": "^2.0.2",
     "lefthook": "^1.11.13",
     "mermaid": "^11.12.2",
