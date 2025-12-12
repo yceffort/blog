@@ -4,12 +4,15 @@ pre-commit:
     eslint:
       glob: '*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,yaml,yml}'
       run: pnpm exec eslint --fix {staged_files}
+      stage_fixed: true
     prettier:
       glob: '*.{ts,cts,tsx,js,cjs,jsx,json,md,yaml,yml}'
       run: pnpm exec prettier --write {staged_files}
+      stage_fixed: true
     stylelint:
       glob: '*.{scss,css}'
       run: pnpm exec stylelint --fix {staged_files}
+      stage_fixed: true
     # 고쳐야할게 넘 많아서 패스..
     # markdownlint:
     #   glob: '*.md'
