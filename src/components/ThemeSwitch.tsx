@@ -27,11 +27,11 @@ const ThemeSwitch = () => {
   }, [])
 
   return (
-    <div ref={menuRef} className="relative ml-1 mr-1 sm:ml-4">
+    <div className="relative ml-1 mr-1 sm:ml-4" ref={menuRef}>
       <button
         aria-label="Theme Menu"
         type="button"
-        className="flex h-8 w-8 items-center justify-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-gray-800"
+        className="flex h-10 w-10 items-center justify-center rounded-md p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
         onClick={() => setMenuOpen(!menuOpen)}
       >
         {theme === 'system' ? (
@@ -44,10 +44,10 @@ const ThemeSwitch = () => {
       </button>
 
       {menuOpen && (
-        <div className="absolute right-0 top-full mt-2 w-36 origin-top-right rounded-md border border-gray-100 bg-white p-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-gray-800 dark:bg-gray-900">
+        <div className="absolute right-0 top-full mt-2 w-40 origin-top-right rounded-md border border-gray-100 bg-white p-2 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-gray-800 dark:bg-gray-900">
           <div className="flex flex-col space-y-1">
             <button
-              className={`flex w-full items-center rounded-md px-2 py-2 text-sm ${
+              className={`flex w-full items-center rounded-md px-3 py-2.5 text-sm font-medium ${
                 theme === 'light'
                   ? 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100'
                   : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
@@ -57,13 +57,13 @@ const ThemeSwitch = () => {
                 setMenuOpen(false)
               }}
             >
-              <span className="mr-2 h-4 w-4">
+              <span className="mr-3 flex h-5 w-5 items-center justify-center">
                 <Sun />
               </span>
               Light
             </button>
             <button
-              className={`flex w-full items-center rounded-md px-2 py-2 text-sm ${
+              className={`flex w-full items-center rounded-md px-3 py-2.5 text-sm font-medium ${
                 theme === 'dark'
                   ? 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100'
                   : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
@@ -73,13 +73,13 @@ const ThemeSwitch = () => {
                 setMenuOpen(false)
               }}
             >
-              <span className="mr-2 h-4 w-4">
+              <span className="mr-3 flex h-5 w-5 items-center justify-center">
                 <Moon />
               </span>
               Dark
             </button>
             <button
-              className={`flex w-full items-center rounded-md px-2 py-2 text-sm ${
+              className={`flex w-full items-center rounded-md px-3 py-2.5 text-sm font-medium ${
                 theme === 'system'
                   ? 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100'
                   : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
@@ -89,7 +89,7 @@ const ThemeSwitch = () => {
                 setMenuOpen(false)
               }}
             >
-              <span className="mr-2 h-4 w-4">
+              <span className="mr-3 flex h-5 w-5 items-center justify-center">
                 <Monitor />
               </span>
               System
