@@ -27,7 +27,7 @@ const ThemeSwitch = () => {
   }, [])
 
   return (
-    <div className="relative ml-1 mr-1 sm:ml-4" ref={menuRef}>
+    <div ref={menuRef} className="relative ml-1 mr-1 sm:ml-4">
       <button
         aria-label="Theme Menu"
         type="button"

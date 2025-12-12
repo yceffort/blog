@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import dynamic from 'next/dynamic' // Import dynamic from next/dynamic
+import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 
 import Footer from './Footer'
@@ -16,7 +16,7 @@ import type {ReactNode} from 'react'
 import {SiteConfig} from '#src/config'
 
 // Dynamically import ThemeSwitch with ssr: false
-const DynamicThemeSwitch = dynamic(() => import('./ThemeSwitch'), { ssr: false })
+const DynamicThemeSwitch = dynamic(() => import('./ThemeSwitch'), {ssr: false})
 
 const LayoutWrapper = ({children}: {children: ReactNode}) => {
   const pathname = usePathname()
