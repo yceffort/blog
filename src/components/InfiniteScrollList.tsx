@@ -71,6 +71,12 @@ export default function InfiniteScrollList({
   const loadedPageRef = useRef(
     Math.ceil(posts.length / DEFAULT_NUMBER_OF_POSTS),
   )
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const handleBeforeUnload = () => {
@@ -120,52 +126,62 @@ export default function InfiniteScrollList({
 
   return (
     <div className="divide-y divide-gray-200 px-4 dark:divide-gray-700">
-      <VirtuosoGrid
-        ref={virtuosoRef}
-        useWindowScroll
-        totalCount={posts.length}
-        data={posts}
-        endReached={loadMore}
-        overscan={200}
-        restoreStateFrom={getStoredState(storageKey)?.gridState}
-        stateChanged={(state) => {
-          gridStateRef.current = state
-        }}
-        itemContent={(index, post) => {
-          return (
-            <div className="py-2 px-2 pb-8">
+      {!mounted ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <div key={post.fields.slug} className="w-full py-2 px-2 pb-8">
               <PostCard post={post} />
             </div>
-          )
-        }}
-        rangeChanged={({startIndex}) => {
-          const page = Math.floor(startIndex / DEFAULT_NUMBER_OF_POSTS) + 1
-          const currentParams = new URLSearchParams(searchParams.toString())
-
-          if (page > 1) {
-            currentParams.set('page', page.toString())
-          } else {
-            currentParams.delete('page')
-          }
-
-          const newQuery = currentParams.toString()
-          const newPath = newQuery ? `/?${newQuery}` : '/'
-
-          // Use replace to update URL without adding to history stack for every scroll
-          router.replace(newPath, {scroll: false})
-        }}
-        listClassName="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-        itemClassName="w-full"
-        components={{
-          Footer: () => {
-            return loading ? (
-              <div className="py-8 text-center text-gray-500 dark:text-gray-400 mb-8">
-                Loading more posts...
+          ))}
+        </div>
+      ) : (
+        <VirtuosoGrid
+          ref={virtuosoRef}
+          useWindowScroll
+          totalCount={posts.length}
+          data={posts}
+          endReached={loadMore}
+          overscan={200}
+          restoreStateFrom={getStoredState(storageKey)?.gridState}
+          stateChanged={(state) => {
+            gridStateRef.current = state
+          }}
+          itemContent={(index, post) => {
+            return (
+              <div className="py-2 px-2 pb-8">
+                <PostCard post={post} />
               </div>
-            ) : null
-          },
-        }}
-      />
+            )
+          }}
+          rangeChanged={({startIndex}) => {
+            const page = Math.floor(startIndex / DEFAULT_NUMBER_OF_POSTS) + 1
+            const currentParams = new URLSearchParams(searchParams.toString())
+
+            if (page > 1) {
+              currentParams.set('page', page.toString())
+            } else {
+              currentParams.delete('page')
+            }
+
+            const newQuery = currentParams.toString()
+            const newPath = newQuery ? `/?${newQuery}` : '/'
+
+            // Use replace to update URL without adding to history stack for every scroll
+            router.replace(newPath, {scroll: false})
+          }}
+          listClassName="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          itemClassName="w-full"
+          components={{
+            Footer: () => {
+              return loading ? (
+                <div className="py-8 text-center text-gray-500 dark:text-gray-400 mb-8">
+                  Loading more posts...
+                </div>
+              ) : null
+            },
+          }}
+        />
+      )}
     </div>
   )
 }
