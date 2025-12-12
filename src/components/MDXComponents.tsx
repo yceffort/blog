@@ -5,6 +5,23 @@ import type {HTMLProps} from 'react'
 
 import Mermaid from '#components/Mermaid'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function extractText(node: any): string {
+  if (typeof node === 'string') {
+    return node
+  }
+  if (typeof node === 'number') {
+    return String(node)
+  }
+  if (Array.isArray(node)) {
+    return node.map(extractText).join('')
+  }
+  if (node && typeof node === 'object' && 'props' in node) {
+    return extractText(node.props.children)
+  }
+  return ''
+}
+
 function NextImage(props: HTMLProps<HTMLImageElement>) {
   const {src} = props
   const width = Number(props.width)
@@ -66,8 +83,8 @@ const MdxComponents = {
       children.props.className &&
       children.props.className.includes('language-mermaid')
     ) {
-      // Extract the code string. Depending on how MDX passes it, it might be in children.props.children
-      return <Mermaid chart={String(children.props.children).trim()} />
+      const chartCode = extractText(children.props.children).trim()
+      return <Mermaid chart={chartCode} />
     }
 
     return <pre {...props} />
