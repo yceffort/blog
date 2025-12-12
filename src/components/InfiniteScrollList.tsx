@@ -20,6 +20,7 @@ const DEFAULT_STORAGE_KEY = 'infinite-scroll-state'
 function getStoredState(key: string): {
   posts: Post[]
   gridState: GridStateSnapshot
+  uniqueKey?: string
 } | null {
   if (typeof window === 'undefined') {
     return null
@@ -33,18 +34,25 @@ function getStoredState(key: string): {
   return null
 }
 
-function saveState(key: string, posts: Post[], gridState: GridStateSnapshot) {
+function saveState(
+  key: string,
+  posts: Post[],
+  gridState: GridStateSnapshot,
+  uniqueKey: string,
+) {
   try {
-    sessionStorage.setItem(key, JSON.stringify({posts, gridState}))
+    sessionStorage.setItem(key, JSON.stringify({posts, gridState, uniqueKey}))
   } catch {}
 }
 
 export default function InfiniteScrollList({
   posts: initialPosts,
   storageKey = DEFAULT_STORAGE_KEY,
+  uniqueKey,
 }: {
   posts: Post[]
   storageKey?: string
+  uniqueKey: string
 }) {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -53,10 +61,8 @@ export default function InfiniteScrollList({
 
   const [posts, setPosts] = useState<Post[]>(() => {
     const stored = getStoredState(storageKey)
-    if (stored && stored.posts.length > 0 && initialPosts.length > 0) {
-      if (stored.posts[0].fields.slug !== initialPosts[0].fields.slug) {
-        return initialPosts
-      }
+    if (stored && stored.uniqueKey !== uniqueKey) {
+      return initialPosts
     }
     return stored?.posts ?? initialPosts
   })
@@ -69,14 +75,14 @@ export default function InfiniteScrollList({
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (gridStateRef.current) {
-        saveState(storageKey, posts, gridStateRef.current)
+        saveState(storageKey, posts, gridStateRef.current, uniqueKey)
       }
     }
 
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement
       if (target.closest('a') && gridStateRef.current) {
-        saveState(storageKey, posts, gridStateRef.current)
+        saveState(storageKey, posts, gridStateRef.current, uniqueKey)
       }
     }
 
@@ -86,7 +92,7 @@ export default function InfiniteScrollList({
       window.removeEventListener('beforeunload', handleBeforeUnload)
       document.removeEventListener('click', handleClick)
     }
-  }, [posts, storageKey])
+  }, [posts, storageKey, uniqueKey])
 
   const loadMore = useCallback(async () => {
     if (loading || !hasMore) {
