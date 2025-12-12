@@ -59,13 +59,7 @@ export default function InfiniteScrollList({
   const virtuosoRef = useRef<VirtuosoGridHandle>(null)
   const gridStateRef = useRef<GridStateSnapshot | undefined>(undefined)
 
-  const [posts, setPosts] = useState<Post[]>(() => {
-    const stored = getStoredState(storageKey)
-    if (stored && stored.uniqueKey !== uniqueKey) {
-      return initialPosts
-    }
-    return stored?.posts ?? initialPosts
-  })
+  const [posts, setPosts] = useState<Post[]>(initialPosts)
   const [loading, setLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
   const loadedPageRef = useRef(
@@ -74,9 +68,13 @@ export default function InfiniteScrollList({
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    const stored = getStoredState(storageKey)
+    if (stored && stored.uniqueKey === uniqueKey) {
+      setPosts(stored.posts)
+    }
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
-  }, [])
+  }, [storageKey, uniqueKey])
 
   useEffect(() => {
     const handleBeforeUnload = () => {
