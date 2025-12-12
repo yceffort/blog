@@ -26,8 +26,8 @@ importers:
         specifier: ^2.2.0
         version: 2.3.0(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3)
       '@naverpay/markdown-lint':
-        specifier: ^0.0.3
-        version: 0.0.3
+        specifier: ^1.0.0
+        version: 1.0.0
       '@naverpay/stylelint-config':
         specifier: ^1.0.0
         version: 1.0.0(postcss-scss@4.0.9(postcss@8.5.6))(postcss@8.5.6)(typescript@5.9.3)
@@ -602,8 +602,8 @@ packages:
     peerDependencies:
       eslint: '>=8.57.0'
 
-  '@naverpay/markdown-lint@0.0.3':
-    resolution: {integrity: sha512-Hfqm/kVA7M4O2GiCggpAnunu9WYkCDoIrWvkSAJsRzTyxDN1Eg7U36813KH9h+CR3Egp2xwJk4E/zFdBBTbDwA==}
+  '@naverpay/markdown-lint@1.0.0':
+    resolution: {integrity: sha512-imCJR4MF591grnnVMJ7pLvv/tAk5avi5l9dRvfqcw5Z0DeOl6QUEgcOwEsbKNM6cxdVmOvMt+t1AjKEZLS+2Qw==}
     hasBin: true
 
   '@naverpay/stylelint-config@1.0.0':
@@ -5188,7 +5188,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@naverpay/markdown-lint@0.0.3':
+  '@naverpay/markdown-lint@1.0.0':
     dependencies:
       markdownlint-cli2: 0.11.0
 
