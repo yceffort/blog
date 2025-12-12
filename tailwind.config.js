@@ -48,7 +48,7 @@ export default {
         3: '3px',
       },
       animation: {
-        blink: 'blink 1s step-end infinite',
+        blink: 'blink 2s step-end infinite', // Changed from 1s to 2s
       },
       keyframes: {
         blink: {
