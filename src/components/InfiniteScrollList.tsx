@@ -72,7 +72,7 @@ export default function InfiniteScrollList({
     if (stored && stored.uniqueKey === uniqueKey) {
       setPosts(stored.posts)
     }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     setMounted(true)
   }, [storageKey, uniqueKey])
 

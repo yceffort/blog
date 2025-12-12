@@ -107,9 +107,13 @@ export default async function Layout({children}: {children: ReactNode}) {
               />
             </>
           )}
-          <VercelAnalytics />
-          <VercelSpeedInsights />
-          <GoogleAnalyticsWebVitalsTracker />
+          {process.env.NODE_ENV === 'production' && (
+            <>
+              <VercelAnalytics />
+              <VercelSpeedInsights />
+              <GoogleAnalyticsWebVitalsTracker />
+            </>
+          )}
         </body>
       </html>
     </>
