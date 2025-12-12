@@ -13,6 +13,11 @@ export default async function Page() {
     body: '',
   }))
 
+  const uniqueKey =
+    allPosts.length > 0
+      ? `${allPosts[0].fields.slug}-${allPosts[0].frontMatter.date}`
+      : ''
+
   return (
     <Suspense
       fallback={
@@ -39,7 +44,7 @@ export default async function Page() {
         </div>
       }
     >
-      <InfiniteScrollList posts={posts} />
+      <InfiniteScrollList posts={posts} uniqueKey={uniqueKey} />
     </Suspense>
   )
 }
