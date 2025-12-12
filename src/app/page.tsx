@@ -1,8 +1,28 @@
 import {Suspense} from 'react'
 
+import type {Metadata} from 'next'
+
 import InfiniteScrollList from '#components/InfiniteScrollList'
+import {SiteConfig} from '#src/config'
 import {DEFAULT_NUMBER_OF_POSTS} from '#src/constants'
 import {getAllPosts} from '#utils/Post'
+
+export const metadata: Metadata = {
+  title: SiteConfig.title,
+  description: SiteConfig.subtitle,
+  openGraph: {
+    title: SiteConfig.title,
+    description: SiteConfig.subtitle,
+    url: SiteConfig.url,
+    images: [
+      {
+        url: `/api/og?title=${encodeURIComponent(SiteConfig.title)}&description=${encodeURIComponent(`${SiteConfig.subtitle}'s blog`)}&path=${encodeURIComponent('/')}&type=page`,
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+}
 
 export default async function Page() {
   const allPosts = await getAllPosts()

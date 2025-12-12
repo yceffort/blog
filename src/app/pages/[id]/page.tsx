@@ -1,15 +1,33 @@
 import {redirect} from 'next/navigation'
 
+import { SiteConfig } from '#src/config'
 import {DEFAULT_NUMBER_OF_POSTS} from '#src/constants'
 import {getAllPosts} from '#utils/Post'
+import type { Metadata } from 'next'
 
 export const dynamic = 'error'
 
-export async function generateMetadata(props: {params: Promise<{id: string}>}) {
+export async function generateMetadata(props: {params: Promise<{id: string}>}): Promise<Metadata> {
   const params = await props.params
   const {id} = params
+  const pageTitle = `Page ${id} - ${SiteConfig.title}`
+  const pageDescription = `Posts list page ${id}`
+
   return {
-    title: `Page ${id}`,
+    title: pageTitle,
+    description: pageDescription,
+    openGraph: {
+      title: pageTitle,
+      description: pageDescription,
+      url: `${SiteConfig.url}/pages/${id}`,
+      images: [
+        {
+          url: `/api/og?title=${encodeURIComponent(pageTitle)}&description=${encodeURIComponent(pageDescription)}&path=${encodeURIComponent(`/pages/${id}`)}&type=page`,
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
   }
 }
 
