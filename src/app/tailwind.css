@@ -121,3 +121,42 @@ code {
         animation-timing-function: ease-in-out;
     }
 }
+
+/* Table of Contents Customization */
+.prose h2[id^="table-of-contents"] {
+    @apply mb-4 mt-8 pb-2 border-b border-gray-200 dark:border-gray-700;
+}
+
+.prose h2[id^="table-of-contents"] + ul {
+    @apply bg-gray-50 dark:bg-gray-800/50 rounded-lg p-5 border border-gray-200 dark:border-gray-700 list-none my-6 !pl-5;
+}
+
+.prose h2[id^="table-of-contents"] + ul > li {
+    @apply mt-0 !pl-0;
+}
+
+.prose h2[id^="table-of-contents"] + ul > li::before {
+    @apply hidden; /* Remove default bullet */
+}
+
+/* First level links */
+.prose h2[id^="table-of-contents"] + ul > li > a {
+    @apply font-semibold text-gray-800 dark:text-gray-200 no-underline hover:text-primary-600 dark:hover:text-primary-400 block py-1 transition-colors;
+}
+
+/* Nested lists (subheadings) */
+.prose h2[id^="table-of-contents"] + ul > li > ul {
+    @apply mt-1 pl-4 border-l-2 border-gray-200 dark:border-gray-700 list-none !mb-2;
+}
+
+.prose h2[id^="table-of-contents"] + ul > li > ul > li {
+    @apply mt-1 !pl-0;
+}
+
+.prose h2[id^="table-of-contents"] + ul > li > ul > li::before {
+    @apply hidden;
+}
+
+.prose h2[id^="table-of-contents"] + ul > li > ul > li > a {
+    @apply text-sm text-gray-600 dark:text-gray-400 no-underline hover:text-primary-600 dark:hover:text-primary-400 block py-1 transition-colors;
+}
