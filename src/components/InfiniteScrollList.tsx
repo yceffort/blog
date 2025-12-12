@@ -72,7 +72,7 @@ export default function InfiniteScrollList({
     if (stored && stored.uniqueKey === uniqueKey) {
       setPosts(stored.posts)
     }
-     
+
     setMounted(true)
   }, [storageKey, uniqueKey])
 
