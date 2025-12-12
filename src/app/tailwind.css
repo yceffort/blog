@@ -34,8 +34,19 @@
     @apply hidden;
 }
 html {
-    /* scroll-behavior: smooth; */
+    scroll-behavior: smooth;
+    scroll-padding-top: 7rem;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    scroll-margin-top: 7rem;
+}
+
 a {
     word-break: break-all;
 }
