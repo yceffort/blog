@@ -39,6 +39,19 @@ export async function generateMetadata(props: {
 
   return {
     title: post.frontMatter.title,
+    description: post.frontMatter.description,
+    openGraph: {
+      title: post.frontMatter.title,
+      description: post.frontMatter.description,
+      url: `${SiteConfig.url}/${post.fields.slug}`,
+      images: [
+        {
+          url: `/api/og?title=${encodeURIComponent(post.frontMatter.title)}&description=${encodeURIComponent(post.frontMatter.description || '')}&tags=${encodeURIComponent((post.frontMatter.tags || []).join(','))}&path=${encodeURIComponent('/' + post.fields.slug)}`,
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
   }
 }
 
