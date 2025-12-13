@@ -4,6 +4,7 @@ import {useEffect, useRef, useState} from 'react'
 
 import {useTheme} from 'next-themes'
 
+// Corrected import paths
 import Monitor from '#components/icons/themes/monitor'
 import Moon from '#components/icons/themes/moon'
 import Sun from '#components/icons/themes/sun'
