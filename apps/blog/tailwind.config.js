@@ -5,7 +5,7 @@ import defaultTheme from 'tailwindcss/defaultTheme'
 
 export default {
   mode: 'jit',
-  content: ['./src/**/*.ts*'],
+  content: ['./src/**/*.ts*', '../../packages/shared/src/**/*.tsx'],
   safelist: [
     'fixed',
     'bottom-0',
