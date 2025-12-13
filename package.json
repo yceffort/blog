@@ -83,7 +83,7 @@
   "devDependencies": {
     "@stylistic/stylelint-plugin": "^4.0.0",
     "glob": "^13.0.0",
-    "lefthook": "^2.0.8"
+    "lefthook": "^2.0.11"
   },
   "packageManager": "pnpm@10.6.5",
   "engines": {
