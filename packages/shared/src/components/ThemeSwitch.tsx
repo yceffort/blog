@@ -1,6 +1,6 @@
 'use client'
 
-import {useEffect, useRef, useState} from 'react'
+import {memo, useEffect, useRef, useState} from 'react'
 
 import {useTheme} from 'next-themes'
 
@@ -98,4 +98,6 @@ const ThemeSwitch = () => {
   )
 }
 
-export default ThemeSwitch
+ThemeSwitch.DisplayName = 'ThemeSwitch'
+
+export default memo(ThemeSwitch)
