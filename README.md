@@ -13,22 +13,30 @@ A monorepo containing yceffort's blog and research projects.
 └── package.json       # Root workspace configuration
 ```
 
+## Shared Package
+
+The `@yceffort/shared` package contains reusable components:
+
+- **Providers** - ThemeProvider wrapper
+- **ThemeSwitch** - Theme selector (Light/Dark/System)
+- **SocialIcon** - Social media link icons
+- **Icons** - Theme icons (Sun, Moon, Monitor) and social icons
+
 ## Development
 
 ```bash
 # Install dependencies
 pnpm install
 
-# Run blog dev server
-pnpm dev:blog
+# Run both dev servers (blog: 3000, research: 3001)
+pnpm dev
 
-# Run research dev server
-pnpm dev:research
+# Run individual dev servers
+pnpm dev:blog      # http://localhost:3000
+pnpm dev:research  # http://localhost:3001
 
-# Build blog
+# Build
 pnpm build:blog
-
-# Build research
 pnpm build:research
 
 # Lint all projects
@@ -40,18 +48,24 @@ pnpm lint
 This monorepo is deployed as two separate Vercel projects:
 
 ### Blog (yceffort.kr)
-- **Root Directory**: `apps/blog`
-- **Build Command**: `pnpm build`
-- **Install Command**: `pnpm install`
+
+| Setting | Value |
+|---------|-------|
+| Root Directory | `apps/blog` |
+| Build Command | `pnpm build` |
+| Install Command | `pnpm install` |
 
 ### Research (research.yceffort.kr)
-- **Root Directory**: `apps/research`
-- **Build Command**: `pnpm build`
-- **Install Command**: `pnpm install`
+
+| Setting | Value |
+|---------|-------|
+| Root Directory | `apps/research` |
+| Build Command | `pnpm build` |
+| Install Command | `pnpm install` |
 
 ## Tech Stack
 
-- **Runtime**: Node.js 22.12.0
+- **Runtime**: Node.js 24.12.0
 - **Package Manager**: pnpm 10.6.5
 - **Framework**: Next.js 16
 - **Styling**: Tailwind CSS 4
