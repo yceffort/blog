@@ -50,4 +50,4 @@ CLAUDE.md
 .claude/
 
 # Generated at build time
-.posts-cache.json
+.posts-cache.jsonnext-env.d.ts
