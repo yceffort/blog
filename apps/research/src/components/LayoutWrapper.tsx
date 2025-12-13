@@ -70,7 +70,7 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
   return (
     <SectionContainer className={containerClass}>
       <div className="flex min-h-screen flex-col justify-between">
-        <header className="sticky top-0 z-40 flex items-center justify-between border-b-2 border-black bg-white/90 py-6 backdrop-blur-none dark:border-white dark:bg-gray-800/90">
+        <header className="sticky top-0 z-40 flex items-center justify-between bg-white/90 py-6 backdrop-blur-none dark:bg-gray-800/90">
           <HeaderLogo />
           <div className="flex items-center text-base leading-5">
             <HeaderNav />
