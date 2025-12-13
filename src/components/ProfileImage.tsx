@@ -21,7 +21,6 @@ export default function ProfileImage({
   const image = (
     <Image
       src={profile}
-      placeholder="blur"
       alt="avatar"
       width={size}
       height={size}
