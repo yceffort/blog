@@ -25,10 +25,19 @@
 }
 
 .remark-code-title {
-    @apply px-5 py-3 font-mono text-sm font-bold text-gray-200 bg-gray-700 rounded-t;
+    @apply px-5 py-3 font-mono text-sm font-bold rounded-t;
+    @apply bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200;
 }
 .remark-code-title + pre {
     @apply mt-0 rounded-t-none;
+}
+
+/* Code block light/dark theme */
+pre:has(> code) {
+    @apply bg-gray-100 dark:bg-gray-800;
+}
+pre code {
+    @apply text-gray-800 dark:text-gray-100;
 }
 .task-list-item:before {
     @apply hidden;
@@ -97,20 +106,19 @@ code {
     padding-right: 16px;
     padding-left: 16px;
     border-left-width: 4px;
-    border-left-color: rgba(31, 41, 55, 0); /* Set code block color */
+    border-left-color: transparent;
 }
 .code-line.inserted {
-    background-color: rgba(16, 185, 129, 0.2); /* Set inserted line (+) color */
+    @apply bg-green-500/20;
 }
 .code-line.deleted {
-    background-color: rgba(239, 68, 68, 0.2); /* Set deleted line (-) color */
+    @apply bg-red-500/20;
 }
 .highlight-line {
     margin-right: -16px;
     margin-left: -16px;
     border-left-width: 4px;
-    border-left-color: rgb(59, 130, 246); /* Set highlight accent border color */
-    background-color: rgba(55, 65, 81, 0.5); /* Set highlight bg color */
+    @apply border-l-amber-500 bg-amber-500/20 dark:border-l-yellow-400 dark:bg-yellow-400/15;
 }
 .line-number::before {
     content: attr(line);
@@ -119,7 +127,7 @@ code {
     margin-right: 16px;
     margin-left: -8px;
     text-align: right;
-    color: rgb(156, 163, 175); /* Line number color */
+    @apply text-gray-400 dark:text-gray-500;
 }
 
 /* View Transitions */
@@ -128,6 +136,42 @@ code {
     ::view-transition-new(root) {
         animation-duration: 0.3s;
         animation-timing-function: ease-in-out;
+    }
+}
+
+/* Theme Toggle Animation */
+::view-transition-group(root) {
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+    z-index: 1;
+}
+
+::view-transition-new(root) {
+    z-index: 9999;
+}
+
+.theme-transition-circle::view-transition-new(root) {
+    animation: circle-clip 0.5s ease-in-out;
+}
+
+.theme-transition-circle::view-transition-old(root) {
+    animation: none;
+}
+
+@keyframes circle-clip {
+    from {
+        clip-path: circle(0% at var(--theme-toggle-x, 50%) var(--theme-toggle-y, 50%));
+    }
+    to {
+        clip-path: circle(150% at var(--theme-toggle-x, 50%) var(--theme-toggle-y, 50%));
     }
 }
 

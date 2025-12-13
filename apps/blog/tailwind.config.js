@@ -37,6 +37,14 @@ export default {
           blue: '#98dcff',
           white: '#ffffff',
         },
+        'code-light': {
+          green: '#16a34a',
+          yellow: '#ca8a04',
+          purple: '#9333ea',
+          red: '#dc2626',
+          blue: '#2563eb',
+          black: '#1f2937',
+        },
       },
       boxShadow: {
         brutal: '2px 2px 0px 0px #52525b', // zinc-600
