@@ -5,17 +5,12 @@ import {memo, useEffect, useState} from 'react'
 
 import {SiteConfig} from '#src/config'
 
-const MobileNav = memo(() => {
+const MobileNav = memo(function MobileNav() {
   const [navShow, setNavShow] = useState(false)
 
   const onToggleNav = () => {
     setNavShow((status) => {
-      if (status) {
-        document.body.style.overflow = 'auto'
-      } else {
-        // Prevent scrolling
-        document.body.style.overflow = 'hidden'
-      }
+      document.body.style.overflow = status ? 'auto' : 'hidden'
       return !status
     })
   }
@@ -30,64 +25,71 @@ const MobileNav = memo(() => {
     <div className="sm:hidden">
       <button
         type="button"
-        className="ml-1 mr-1 h-8 w-8 rounded-sm"
+        className="ml-1 flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-700"
         aria-label="Toggle Menu"
         onClick={onToggleNav}
       >
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="text-gray-900 dark:text-gray-100"
+          className="h-6 w-6 text-gray-700 dark:text-gray-200"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
           <path
-            fillRule="evenodd"
-            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-            clipRule="evenodd"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d={
+              navShow
+                ? 'M6 18L18 6M6 6l12 12'
+                : 'M4 6h16M4 12h16M4 18h16'
+            }
           />
         </svg>
       </button>
+
+      {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-[9999] flex h-screen w-screen items-center justify-center bg-black/50 backdrop-blur-sm duration-300 ease-in-out ${
-          navShow ? 'visible opacity-100' : 'invisible opacity-0'
+        className={`fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
+          navShow ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
         onClick={onToggleNav}
+      />
+
+      {/* Bottom Sheet */}
+      <div
+        className={`fixed inset-x-0 bottom-0 z-[101] transform transition-transform duration-300 ease-out ${
+          navShow ? 'translate-y-0' : 'translate-y-full'
+        }`}
       >
-        <div
-          className="relative mx-4 flex w-full max-w-sm flex-col items-center rounded-[2rem] border-2 border-gray-500 bg-white p-8 shadow-brutal dark:border-white dark:bg-gray-800 dark:shadow-brutal-dark"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <button
-            type="button"
-            className="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-500 bg-secondary text-black shadow-brutal-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none dark:border-white dark:bg-primary"
-            aria-label="Close Menu"
-            onClick={onToggleNav}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-6 w-6"
-            >
-              <path
-                fillRule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button>
-          <nav className="mt-8 flex w-full flex-col space-y-4">
+        <div className="rounded-t-3xl border-t border-gray-200 bg-white px-6 pb-8 pt-4 dark:border-gray-700 dark:bg-gray-900">
+          {/* Handle */}
+          <div className="mb-6 flex justify-center">
+            <div className="h-1.5 w-12 rounded-full bg-gray-300 dark:bg-gray-600" />
+          </div>
+
+          {/* Menu Items */}
+          <nav className="space-y-2">
             {SiteConfig.menu.map((link) => (
               <Link
                 key={link.path}
                 href={link.path}
-                className="w-full rounded-xl border-2 border-gray-500 bg-white py-3 text-center text-xl font-black text-black shadow-brutal-sm transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-primary hover:shadow-none dark:border-white dark:bg-gray-800 dark:text-white dark:hover:bg-secondary dark:hover:text-black"
+                className="flex items-center gap-3 rounded-xl px-4 py-3.5 text-lg font-semibold text-gray-900 transition-colors hover:bg-gray-100 active:bg-gray-200 dark:text-gray-100 dark:hover:bg-gray-800 dark:active:bg-gray-700"
                 onClick={onToggleNav}
               >
                 {link.label}
               </Link>
             ))}
           </nav>
+
+          {/* Close Button */}
+          <button
+            type="button"
+            className="mt-4 w-full rounded-xl bg-gray-100 py-3.5 text-base font-semibold text-gray-600 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700"
+            onClick={onToggleNav}
+          >
+            Close
+          </button>
         </div>
       </div>
     </div>
