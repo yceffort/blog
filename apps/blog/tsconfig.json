@@ -33,7 +33,7 @@
       }
     ]
   },
-  "exclude": ["dist", ".next", "out", "next.config.js"],
+  "exclude": ["dist", ".next", "out"],
   "include": [
     "next-env.d.ts",
     "typing/*.d.ts",
