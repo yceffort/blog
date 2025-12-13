@@ -24,7 +24,7 @@ function ResearchCard({slide}: {slide: Slide}) {
   const {slug, date, tags, description, title} = slide
 
   return (
-    <article className="flex h-[280px] flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:scale-[1.02] hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+    <article className="group flex h-[280px] flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-sky-300 hover:shadow-lg hover:shadow-sky-500/10 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-sky-500 dark:hover:shadow-sky-500/20">
       <div className="flex flex-1 flex-col justify-between p-6">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
@@ -62,10 +62,13 @@ function ResearchCard({slide}: {slide: Slide}) {
         <div className="mt-4 text-base font-black leading-6">
           <Link
             href={`/slides/${slug}`}
-            className="text-blue-600 hover:text-blue-700 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+            className="inline-flex items-center gap-1 text-sky-600 transition-colors hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300"
             aria-label={`Read "${title}"`}
           >
-            View slides &rarr;
+            View slides
+            <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+              →
+            </span>
           </Link>
         </div>
       </div>
