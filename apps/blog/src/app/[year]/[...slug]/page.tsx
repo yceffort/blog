@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
 import {ViewTransition} from 'react'
@@ -96,6 +97,8 @@ export default async function Page(props: {
   const transitionName = `post-${postSlug.replace(/\//g, '-')}`
   const link = `https://github.com/yceffort/yceffort-blog-v2/issues/new?labels=%F0%9F%92%AC%20Discussion&title=[Discussion] issue on ${title}&assignees=yceffort&body=${SiteConfig.url}/${slug}`
 
+  const ogImageUrl = `/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description || '')}&tags=${encodeURIComponent((tags || []).join(','))}&path=${encodeURIComponent('/' + postSlug)}`
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -103,7 +106,7 @@ export default async function Page(props: {
     datePublished: new Date(date).toISOString(),
     dateModified: new Date(date).toISOString(),
     description,
-    image: `${SiteConfig.url}/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description || '')}&tags=${encodeURIComponent((tags || []).join(','))}&path=${encodeURIComponent('/' + postSlug)}`,
+    image: `${SiteConfig.url}${ogImageUrl}`,
     url: `${SiteConfig.url}/${postSlug}`,
     author: {
       '@type': 'Person',
@@ -121,6 +124,18 @@ export default async function Page(props: {
       <MathLoader />
       <div className="relative">
         <article>
+          {/* Cover Image */}
+          <div className="relative mb-8 aspect-[1200/630] w-full overflow-hidden rounded-xl border border-gray-200 shadow-lg dark:border-gray-700">
+            <Image
+              src={ogImageUrl}
+              alt={title}
+              fill
+              className="object-cover"
+              priority
+              unoptimized
+            />
+          </div>
+
           <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
           <header className="pt-6 xl:pb-6">
             <div className="space-y-1 text-center">
