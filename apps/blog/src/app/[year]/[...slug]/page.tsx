@@ -16,6 +16,8 @@ import MathLoader from '#components/layouts/Post/math'
 import MDXComponents from '#components/MDXComponents'
 import PageTitle from '#components/PageTitle'
 import ProfileImage from '#components/ProfileImage'
+import ReadingProgressBar from '#components/ReadingProgressBar'
+import TableOfContents from '#components/TableOfContents'
 import Tag from '#components/Tag'
 import {SiteConfig} from '#src/config'
 import imageMetadataPlugin from '#utils/imageMetadata'
@@ -115,9 +117,11 @@ export default async function Page(props: {
         dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}
         type="application/ld+json"
       />
+      <ReadingProgressBar />
       <MathLoader />
-      <article>
-        <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
+      <div className="relative">
+        <article>
+          <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
           <header className="pt-6 xl:pb-6">
             <div className="space-y-1 text-center">
               <dl className="space-y-10">
@@ -208,7 +212,11 @@ export default async function Page(props: {
             </footer>
           </div>
         </div>
-      </article>
+        </article>
+        <aside className="fixed right-8 top-24 hidden w-64 2xl:block">
+          <TableOfContents />
+        </aside>
+      </div>
     </>
   )
 }
