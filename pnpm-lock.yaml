@@ -83,7 +83,7 @@ importers:
         version: 1.6.1(next@16.0.10(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.96.0))(react@19.2.3)
       '@vercel/speed-insights':
         specifier: ^1.2.0
-        version: 1.3.1(next@16.0.10(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.96.0))(react@19.2.3)
+        version: 1.3.1(next@16.0.10(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.96.0))(react@19.2.3)
       '@yceffort/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -119,7 +119,7 @@ importers:
         version: 2.1.7(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(unified@11.0.5)
       next-remote-watch:
         specifier: ^2.0.0
-        version: 2.0.0(next@16.0.10(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.96.0))
+        version: 2.0.0(next@16.0.10(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.96.0))
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -289,6 +289,9 @@ importers:
       '@types/react':
         specifier: ^19.1.6
         version: 19.2.7
+      next:
+        specifier: ^16.0.10
+        version: 16.0.10(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.96.0)
 
 packages:
 
@@ -6164,7 +6167,7 @@ snapshots:
       next: 16.0.10(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.96.0)
       react: 19.2.3
 
-  '@vercel/speed-insights@1.3.1(next@16.0.10(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.96.0))(react@19.2.3)':
+  '@vercel/speed-insights@1.3.1(next@16.0.10(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.96.0))(react@19.2.3)':
     optionalDependencies:
       next: 16.0.10(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.96.0)
       react: 19.2.3
@@ -8985,7 +8988,7 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  next-remote-watch@2.0.0(next@16.0.10(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.96.0)):
+  next-remote-watch@2.0.0(next@16.0.10(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.96.0)):
     dependencies:
       chalk: 4.1.2
       chokidar: 3.6.0
