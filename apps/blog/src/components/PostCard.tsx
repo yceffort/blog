@@ -17,7 +17,7 @@ export default function PostCard({post}: {post: Post}) {
   const transitionName = `post-${slug.replace(/\//g, '-')}`
 
   return (
-    <article className="flex h-[280px] flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:scale-[1.02] hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+    <article className="group flex h-[280px] flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary-300 hover:shadow-lg hover:shadow-primary-500/10 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-primary-500 dark:hover:shadow-primary-500/20">
       <div className="flex flex-1 flex-col justify-between p-6">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
@@ -58,10 +58,13 @@ export default function PostCard({post}: {post: Post}) {
         <div className="mt-4 text-base font-black leading-6">
           <Link
             href={`/${slug}`}
-            className="text-primary-600 hover:text-primary-700 hover:underline dark:text-primary-400 dark:hover:text-primary-300"
+            className="inline-flex items-center gap-1 text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
             aria-label={`Read "${title}"`}
           >
-            Read more &rarr;
+            Read more
+            <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+              →
+            </span>
           </Link>
         </div>
       </div>
