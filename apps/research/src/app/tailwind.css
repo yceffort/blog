@@ -19,6 +19,9 @@
     ::file-selector-button {
         border-color: var(--color-gray-200, currentColor);
     }
+    body {
+        @apply bg-white text-black antialiased dark:bg-gray-800 dark:text-white min-h-screen;
+    }
 }
 
 .remark-code-title {
