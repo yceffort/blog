@@ -5,9 +5,9 @@ export default {
   },
   experimental: {
     viewTransition: true,
-    outputFileTracingIncludes: {
-      '/api/**/*': ['./posts/**/*'],
-    },
+  },
+  outputFileTracingIncludes: {
+    '/api/**/*': ['./posts/**/*'],
   },
   async redirects() {
     return [
