@@ -8,7 +8,6 @@ import {format} from 'date-fns/format'
 import matter from 'gray-matter'
 
 import LayoutWrapper from '@/components/LayoutWrapper'
-import {SiteConfig} from '@/config'
 
 interface Slide {
   filename: string
@@ -108,21 +107,12 @@ export default async function Page() {
 
   return (
     <LayoutWrapper>
-      <div className="space-y-8">
-        <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-            Researches
-          </h1>
-          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            {SiteConfig.subtitle}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {slides.map((slide) => (
-            <ResearchCard key={slide.slug} slide={slide} />
-          ))}
-        </div>
+      <div className="grid grid-cols-1 pt-4 md:grid-cols-2 lg:grid-cols-3">
+        {slides.map((slide) => (
+          <div key={slide.slug} className="px-2 py-2 pb-8">
+            <ResearchCard slide={slide} />
+          </div>
+        ))}
       </div>
     </LayoutWrapper>
   )

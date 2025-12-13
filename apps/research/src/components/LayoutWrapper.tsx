@@ -1,21 +1,31 @@
-import Image from "next/image";
-import Link from "next/link";
+'use client'
 
-import ThemeSwitch from "./ThemeSwitch";
+import dynamic from 'next/dynamic'
+import Image from 'next/image'
+import Link from 'next/link'
+import {usePathname} from 'next/navigation'
 
-import type { ReactNode } from "react";
+import type {ReactNode} from 'react'
 
-import Footer from "@/components/Footer";
-import MobileNav from "@/components/MobileNav";
-import SectionContainer from "@/components/SectionContainer";
-import { SiteConfig } from "@/config";
-import profile from "@/public/profile.png";
+import Footer from '@/components/Footer'
+import MobileNav from '@/components/MobileNav'
+import SectionContainer from '@/components/SectionContainer'
+import {SiteConfig} from '@/config'
+import profile from '@/public/profile.png'
 
-const LayoutWrapper = ({ children }: { children: ReactNode }) => {
+const DynamicThemeSwitch = dynamic(() => import('./ThemeSwitch'), {
+  ssr: false,
+  loading: () => <div className="ml-1 mr-1 h-10 w-10 rounded-md sm:ml-4" />,
+})
+
+const LayoutWrapper = ({children}: {children: ReactNode}) => {
+  const pathname = usePathname()
+  const containerClass = pathname === '/' ? 'xl:max-w-7xl' : 'xl:max-w-5xl'
+
   return (
-    <SectionContainer>
-      <div className="flex h-screen flex-col justify-between">
-        <header className="flex items-center justify-between py-10">
+    <SectionContainer className={containerClass}>
+      <div className="flex min-h-screen flex-col justify-between">
+        <header className="sticky top-0 z-40 flex items-center justify-between border-b-2 border-black bg-white/90 py-6 backdrop-blur-none dark:border-white dark:bg-gray-800/90">
           <div>
             <Link href="/" aria-label="yceffort's research">
               <div className="flex items-center justify-between">
@@ -29,8 +39,11 @@ const LayoutWrapper = ({ children }: { children: ReactNode }) => {
                     className="h-10 w-10 rounded-full"
                   />
                 </div>
-                <div className="hidden h-6 text-2xl font-semibold sm:block">
-                  {SiteConfig.title}
+                <div className="h-6 text-base font-semibold sm:text-2xl">
+                  <span className="font-mono text-green-600 dark:text-green-400">
+                    $
+                  </span>{' '}
+                  <span className="hidden sm:inline">{SiteConfig.title}</span>
                 </div>
               </div>
             </Link>
@@ -47,7 +60,7 @@ const LayoutWrapper = ({ children }: { children: ReactNode }) => {
                 </Link>
               ))}
             </div>
-            <ThemeSwitch />
+            <DynamicThemeSwitch />
             <MobileNav />
           </div>
         </header>
@@ -55,7 +68,7 @@ const LayoutWrapper = ({ children }: { children: ReactNode }) => {
         <Footer />
       </div>
     </SectionContainer>
-  );
-};
+  )
+}
 
-export default LayoutWrapper;
+export default LayoutWrapper
