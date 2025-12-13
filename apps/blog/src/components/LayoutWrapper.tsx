@@ -1,6 +1,8 @@
 'use client'
 
-import dynamic from 'next/dynamic' // Import dynamic from next/dynamic
+import {memo} from 'react'
+
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 
@@ -9,98 +11,112 @@ import MobileNav from './MobileNav'
 import ProfileImage from './ProfileImage'
 import ScrollTop from './ScrollTop'
 import SectionContainer from './SectionContainer'
-// import ThemeSwitch from './ThemeSwitch' // No longer direct import
 
 import type {ReactNode} from 'react'
 
 import {SiteConfig} from '#src/config'
 
-// Dynamically import ThemeSwitch with ssr: false and a loading placeholder
 const DynamicThemeSwitch = dynamic(() => import('./ThemeSwitch'), {
   ssr: false,
-  loading: () => <div className="ml-1 mr-1 h-10 w-10 rounded-md sm:ml-4" />, // Matches dimensions and margin of ThemeSwitch button
+  loading: () => <div className="ml-1 mr-1 h-10 w-10 rounded-md sm:ml-4" />,
+})
+
+const HeaderLogo = memo(function HeaderLogo() {
+  return (
+    <div>
+      <Link href="/" aria-label="yceffort's blog">
+        <div className="flex items-center justify-between">
+          <div className="mr-3">
+            <ProfileImage size={40} />
+          </div>
+          <div className="h-6 text-base font-semibold sm:text-2xl">
+            <span className="font-mono text-green-600 dark:text-green-400">
+              $
+            </span>{' '}
+            <span className="hidden sm:inline">{SiteConfig.title}</span>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                document.dispatchEvent(new CustomEvent('open-command-palette'))
+              }}
+              className="ml-1 inline-block h-4 w-1.5 translate-y-0.5 animate-blink bg-current hover:bg-green-500 sm:h-5 sm:w-2"
+              aria-label="Open search"
+            />
+          </div>
+        </div>
+      </Link>
+    </div>
+  )
+})
+
+const SearchButton = memo(function SearchButton() {
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        document.dispatchEvent(new CustomEvent('open-command-palette'))
+      }
+      className="mr-2 flex items-center gap-1 rounded border border-gray-300 px-2 py-1 font-mono text-xs text-gray-500 transition-colors hover:border-green-500 hover:text-green-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-green-500 dark:hover:text-green-400 sm:mr-4"
+      aria-label="Open command palette"
+    >
+      <svg
+        className="h-3.5 w-3.5 sm:hidden"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+        />
+      </svg>
+      <span className="hidden sm:inline">⌘P</span>
+    </button>
+  )
+})
+
+const HeaderNav = memo(function HeaderNav() {
+  return (
+    <div className="hidden sm:block">
+      {SiteConfig.menu.map((link) => (
+        <Link
+          key={link.label}
+          href={link.path}
+          className="p-1 font-medium text-gray-900 dark:text-gray-100 sm:p-4"
+        >
+          {link.label}
+        </Link>
+      ))}
+    </div>
+  )
 })
 
 const LayoutWrapper = ({children}: {children: ReactNode}) => {
   const pathname = usePathname()
-  let containerClass = 'xl:max-w-5xl' // Default safe width for blog posts
+  let containerClass = 'xl:max-w-5xl'
   const wide = false
 
   if (pathname === '/') {
-    containerClass = 'xl:max-w-7xl' // Wider for home page list
+    containerClass = 'xl:max-w-7xl'
   } else if (pathname === '/about') {
-    containerClass = 'max-w-6xl' // About page - fixed width
+    containerClass = 'max-w-6xl'
   } else if (pathname?.startsWith('/tags')) {
-    containerClass = 'xl:max-w-7xl' // Wider for tags list
+    containerClass = 'xl:max-w-7xl'
   }
 
   return (
     <SectionContainer className={wide ? '' : containerClass} wide={wide}>
       <div className="flex min-h-screen flex-col justify-between">
         <header className="sticky top-0 z-40 flex items-center justify-between border-b-2 border-black bg-white/90 py-6 backdrop-blur-none dark:border-white dark:bg-gray-800/90">
-          <div>
-            <Link href="/" aria-label="yceffort's blog">
-              <div className="flex items-center justify-between">
-                <div className="mr-3">
-                  <ProfileImage size={40} />
-                </div>
-                <div className="h-6 text-base font-semibold sm:text-2xl">
-                  <span className="font-mono text-green-600 dark:text-green-400">
-                    $
-                  </span>{' '}
-                  <span className="hidden sm:inline">{SiteConfig.title}</span>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                      document.dispatchEvent(
-                        new CustomEvent('open-command-palette'),
-                      )
-                    }}
-                    className="ml-1 inline-block h-4 w-1.5 translate-y-0.5 animate-blink bg-current hover:bg-green-500 sm:h-5 sm:w-2"
-                    aria-label="Open search"
-                  />
-                </div>
-              </div>
-            </Link>
-          </div>
+          <HeaderLogo />
           <div className="flex items-center text-base leading-5">
-            <button
-              type="button"
-              onClick={() =>
-                document.dispatchEvent(new CustomEvent('open-command-palette'))
-              }
-              className="mr-2 flex items-center gap-1 rounded border border-gray-300 px-2 py-1 font-mono text-xs text-gray-500 transition-colors hover:border-green-500 hover:text-green-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-green-500 dark:hover:text-green-400 sm:mr-4"
-              aria-label="Open command palette"
-            >
-              <svg
-                className="h-3.5 w-3.5 sm:hidden"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-              <span className="hidden sm:inline">⌘P</span>
-            </button>
-            <div className="hidden sm:block">
-              {SiteConfig.menu.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.path}
-                  className="p-1 font-medium text-gray-900 dark:text-gray-100 sm:p-4"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-            <DynamicThemeSwitch /> {/* Use dynamic import with loading state */}
+            <SearchButton />
+            <HeaderNav />
+            <DynamicThemeSwitch />
             <MobileNav />
           </div>
         </header>
