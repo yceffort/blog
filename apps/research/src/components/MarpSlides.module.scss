@@ -1,0 +1,82 @@
+.marpSlides {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.marpSlides.multiple {
+  cursor: pointer;
+}
+
+.marpSlide {
+  cursor: inherit;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.clickArea {
+  position: absolute;
+  background: transparent;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.clickArea:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.clickAreaLeft {
+  left: 0;
+  top: 10%;
+  width: 10%;
+  height: 80%;
+}
+
+.clickAreaRight {
+  right: 0;
+  top: 10%;
+  width: 10%;
+  height: 80%;
+}
+
+.clickAreaTop {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 10%;
+}
+
+.clickAreaBottom {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 10%;
+}
+
+.pageIndicator {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.pageIndicator.visible {
+  opacity: 1;
+}
+
+.errorMessage {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+}

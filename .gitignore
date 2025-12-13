@@ -1,53 +1,53 @@
-/node_modules/*
-/.cache/*
-/.next/*
-/public/sitemap.xml
-
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
+# Dependencies
+node_modules/
+.pnp
 .pnp.js
 
-# testing
-/coverage
+# Build outputs
+.next/
+.cache/
+build/
+dist/
 
-# production
-/build
+# Testing
+coverage/
 
-# misc
-.DS_Store
+# Environment
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-.idea
-.idea/*.xml
 
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 ui-debug.log*
 firebase-debug.log*
 
-# IDE
-.vscode/
+# Next.js
+next-env.d.ts
 
-public/sw.js
-public/sw.js.map
-public/workbox-*
-public/**/*.js
-
-node_modules/
-
-functions/env.json
-.lighthouseci
+# Lighthouse
+.lighthouseci/
 
 # Claude Code
 CLAUDE.md
 .claude/
 
-# Generated at build time
-.posts-cache.jsonnext-env.d.ts
+# Generated files
+.posts-cache.json
+apps/blog/public/sitemap.xml
+apps/blog/public/sw.js
+apps/blog/public/sw.js.map
+apps/blog/public/workbox-*
