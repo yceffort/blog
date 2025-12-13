@@ -1,7 +1,9 @@
 import getContactHref from '#utils/Contact'
 
+const isDev = process.env.NODE_ENV === 'development'
+
 export const SiteConfig = {
-  url: 'https://yceffort.kr',
+  url: isDev ? 'http://localhost:3000' : 'https://yceffort.kr',
   pathPrefix: '/',
   title: 'yceffort',
   subtitle: 'yceffort',
@@ -25,7 +27,7 @@ export const SiteConfig = {
     },
     {
       label: '🧪 Research',
-      path: 'https://research.yceffort.kr',
+      path: isDev ? 'http://localhost:3001' : 'https://research.yceffort.kr',
     },
   ],
   author: {
