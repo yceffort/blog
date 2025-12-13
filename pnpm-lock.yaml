@@ -83,8 +83,8 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       lefthook:
-        specifier: ^2.0.8
-        version: 2.0.8
+        specifier: ^2.0.11
+        version: 2.0.11
       mermaid:
         specifier: ^11.12.2
         version: 11.12.2
@@ -122,8 +122,8 @@ importers:
         specifier: ^19.2.3
         version: 19.2.3(react@19.2.3)
       react-is:
-        specifier: ^19.1.0
-        version: 19.2.1
+        specifier: ^19.2.3
+        version: 19.2.3
       react-virtuoso:
         specifier: ^4.17.0
         version: 4.17.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -2934,58 +2934,58 @@ packages:
   layout-base@2.0.1:
     resolution: {integrity: sha512-dp3s92+uNI1hWIpPGH3jK2kxE2lMjdXdr+DH8ynZHpd6PUlH6x6cbuXnoMmiNumznqaNO31xu9e79F0uuZ0JFg==}
 
-  lefthook-darwin-arm64@2.0.8:
-    resolution: {integrity: sha512-Nu52qmqhSP+DKKuKYKDkMkPbgvgTZv+ueEo1LVXidTcgxEwvrbe2balcdqdulQTsPfYtm3pCPvv8ikalHrH+Qg==}
+  lefthook-darwin-arm64@2.0.11:
+    resolution: {integrity: sha512-RfpdcJJQXstdgDiIBDRffncayKiXx+0LyMUCunIxDEO2JMXPpYK2hIdpUU0rkitzptAADchG7u1OXJ31rrtIAA==}
     cpu: [arm64]
     os: [darwin]
 
-  lefthook-darwin-x64@2.0.8:
-    resolution: {integrity: sha512-EGNBw1vuXzphs/KyDchkglwnYNkKQH3EpptIPXcQCRC3WKiz87PSrwkOxjGtgDg6nLYWru3YUzgcFrIGUXjWPw==}
+  lefthook-darwin-x64@2.0.11:
+    resolution: {integrity: sha512-D013UNKQa4FKgpxDMqdaU109U2/Pidtrt9CobQoq8te4eGUglcwxMzuYVTgaYnenz0FgKxSfVaCZsZgwqeMWqA==}
     cpu: [x64]
     os: [darwin]
 
-  lefthook-freebsd-arm64@2.0.8:
-    resolution: {integrity: sha512-ZPua6y7y7l/0PpMJhU1ZAt4jl0dC3F+EGlSzy9v0vqzyoixk0HRqsz9nxN7wmJo/5vHhHJBjsE5/sEYS9Z8tsQ==}
+  lefthook-freebsd-arm64@2.0.11:
+    resolution: {integrity: sha512-mgfNqG1tiJkCuGNwPG0LEfnAHGJA+Qzl6KidOtX/Zhxmj/sM+6hxiP4LOeEAhCnaZF5kuPtQgbFzShFHc2BK6A==}
     cpu: [arm64]
     os: [freebsd]
 
-  lefthook-freebsd-x64@2.0.8:
-    resolution: {integrity: sha512-ab9M5gCsMeYzOeBoHIOz+zyVSnEZowwV2jn3Am+x625ZNcqU0T3eNf+a7ppopvkQjrehfmO3y5HiMVAkSAs1Vw==}
+  lefthook-freebsd-x64@2.0.11:
+    resolution: {integrity: sha512-rnHOlQbJfLGCibr7yHM44kPNgf/tFpEbj/cWVHRhjRdbgYSCAjJk0uKd/EVo3v/vjfId2na0AhWbLvO/aY3wQQ==}
     cpu: [x64]
     os: [freebsd]
 
-  lefthook-linux-arm64@2.0.8:
-    resolution: {integrity: sha512-BaoUKmwnAbWssSwVHoA0HyJFX3m+Mp6xJhxD4YAu8H1mo8DNOWBG5J7DGXJRIiBTm6YjAXlerq8Pjfx4lycfYQ==}
+  lefthook-linux-arm64@2.0.11:
+    resolution: {integrity: sha512-1XjDo2/4fM0TbJBwxZh8w+WMOFueg9oYHkryM8vc3vp8wTajdWBazg1K37JIS3FUco3tcOs+eWHQg0ekVjpWoA==}
     cpu: [arm64]
     os: [linux]
 
-  lefthook-linux-x64@2.0.8:
-    resolution: {integrity: sha512-oNXcoGWsGy/U9gqE6PJpLtiNlGlAgoYtVmfc2gauNPRJehaQBaifD5/5aXPiWhRukUTQ1p9kuShFDpT2jOYn5Q==}
+  lefthook-linux-x64@2.0.11:
+    resolution: {integrity: sha512-OKOcfEvozXhO7+y2xgUzvc2kkqfhluql/sjQSzd8Ka+iK3hM4KCfbfgYx9q61Pjr34a0+i03cuH5DF2dlq/rrg==}
     cpu: [x64]
     os: [linux]
 
-  lefthook-openbsd-arm64@2.0.8:
-    resolution: {integrity: sha512-pxUgnilqsnDEWF7J5uNViHJ+Q4gSEQbRbrcIEdluBzjW34E20WK4UPk0bxZDQZAeaXTubNQEvyafmfY7dWe4Gg==}
+  lefthook-openbsd-arm64@2.0.11:
+    resolution: {integrity: sha512-n1KEx196M3SKaWVNTQXGgxzBsiYAsdAy6Of6I6TAZwPhG7yoRrKGkQrhOlPgMzYl36udG1Lk4D+mfY9T0oOUYQ==}
     cpu: [arm64]
     os: [openbsd]
 
-  lefthook-openbsd-x64@2.0.8:
-    resolution: {integrity: sha512-p50cpkWImLwU330JJuJaioNVT1X/Z56iqPOLEgBt2+1BlljmPe/eGrMArF4iIKfdZ4wFJ9f2h0gq+jyvQGFjSg==}
+  lefthook-openbsd-x64@2.0.11:
+    resolution: {integrity: sha512-WAEtKpYUVvuJMVLA38IBoaPnTNSiaEzvUYxjTBlYTLHJwn7HC2GG6P1cnvoua8rfxb9/Bfi7C3D3IPa9VmB33Q==}
     cpu: [x64]
     os: [openbsd]
 
-  lefthook-windows-arm64@2.0.8:
-    resolution: {integrity: sha512-dStshOCvmg9sQSUmWNiLMLv52HFTVxC9JE2HGxCiHcK5oqVZS2v9cCZdFdiDZ1Xldi3ozLi2y7/Xpzul8Oqv5Q==}
+  lefthook-windows-arm64@2.0.11:
+    resolution: {integrity: sha512-HBqW1qfAnmmbpet7gSWatB6H5YIFdGxCqzolMCLwY/0o8oPFiMwdNE5RGp5JMmhZdz/h3XlbaUlIhnxoW8dk5g==}
     cpu: [arm64]
     os: [win32]
 
-  lefthook-windows-x64@2.0.8:
-    resolution: {integrity: sha512-2YgT6feliy6CCDwbkT3pg1ylKD1b9lj+O5NdLsrxvZGRmO6ftXleWB4xfWKGGY8FrzAD2Y3eEVDv5n3NvGHDzw==}
+  lefthook-windows-x64@2.0.11:
+    resolution: {integrity: sha512-e5TYmV5cBZfRrhPVFCqjauegLI5CjdAd8exyAbMzGHkiwp3ZK145Su/pntgEP3d+ayS9mpgYPJmXYOSL7WHlyg==}
     cpu: [x64]
     os: [win32]
 
-  lefthook@2.0.8:
-    resolution: {integrity: sha512-FozDCKeSI+m3BP0cvyPgHch+yf7ClS3hDy1JsRUrbNmlyjqBcmlygnRXsZzpH+wHoNnF2fmfhJhkx/7S7IpaVw==}
+  lefthook@2.0.11:
+    resolution: {integrity: sha512-/91k4dt9MRNkzeSr1iMjNi/z8dNuh+XvNfXrWA6PV+M1ZxiNY6uN6bGnr13n+j7N89f4h7YWBhCqhzhK33M5cA==}
     hasBin: true
 
   levn@0.4.1:
@@ -3723,8 +3723,8 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  react-is@19.2.1:
-    resolution: {integrity: sha512-L7BnWgRbMwzMAubQcS7sXdPdNLmKlucPlopgAzx7FtYbksWZgEWiuYM5x9T6UqS2Ne0rsgQTq5kY2SGqpzUkYA==}
+  react-is@19.2.3:
+    resolution: {integrity: sha512-qJNJfu81ByyabuG7hPFEbXqNcWSU3+eVus+KJs+0ncpGfMyYdvSmxiJxbWR65lYi1I+/0HBcliO029gc4F+PnA==}
 
   react-remove-scroll-bar@2.3.8:
     resolution: {integrity: sha512-9r+yi9+mgU33AKcj6IbT9oRCO78WriSj6t/cF8DWBZJ9aOGPOTEDvdUDz1FwKim7QXWwmHqtdHnRJfhAxEG46Q==}
@@ -7692,48 +7692,48 @@ snapshots:
 
   layout-base@2.0.1: {}
 
-  lefthook-darwin-arm64@2.0.8:
+  lefthook-darwin-arm64@2.0.11:
     optional: true
 
-  lefthook-darwin-x64@2.0.8:
+  lefthook-darwin-x64@2.0.11:
     optional: true
 
-  lefthook-freebsd-arm64@2.0.8:
+  lefthook-freebsd-arm64@2.0.11:
     optional: true
 
-  lefthook-freebsd-x64@2.0.8:
+  lefthook-freebsd-x64@2.0.11:
     optional: true
 
-  lefthook-linux-arm64@2.0.8:
+  lefthook-linux-arm64@2.0.11:
     optional: true
 
-  lefthook-linux-x64@2.0.8:
+  lefthook-linux-x64@2.0.11:
     optional: true
 
-  lefthook-openbsd-arm64@2.0.8:
+  lefthook-openbsd-arm64@2.0.11:
     optional: true
 
-  lefthook-openbsd-x64@2.0.8:
+  lefthook-openbsd-x64@2.0.11:
     optional: true
 
-  lefthook-windows-arm64@2.0.8:
+  lefthook-windows-arm64@2.0.11:
     optional: true
 
-  lefthook-windows-x64@2.0.8:
+  lefthook-windows-x64@2.0.11:
     optional: true
 
-  lefthook@2.0.8:
+  lefthook@2.0.11:
     optionalDependencies:
-      lefthook-darwin-arm64: 2.0.8
-      lefthook-darwin-x64: 2.0.8
-      lefthook-freebsd-arm64: 2.0.8
-      lefthook-freebsd-x64: 2.0.8
-      lefthook-linux-arm64: 2.0.8
-      lefthook-linux-x64: 2.0.8
-      lefthook-openbsd-arm64: 2.0.8
-      lefthook-openbsd-x64: 2.0.8
-      lefthook-windows-arm64: 2.0.8
-      lefthook-windows-x64: 2.0.8
+      lefthook-darwin-arm64: 2.0.11
+      lefthook-darwin-x64: 2.0.11
+      lefthook-freebsd-arm64: 2.0.11
+      lefthook-freebsd-x64: 2.0.11
+      lefthook-linux-arm64: 2.0.11
+      lefthook-linux-x64: 2.0.11
+      lefthook-openbsd-arm64: 2.0.11
+      lefthook-openbsd-x64: 2.0.11
+      lefthook-windows-arm64: 2.0.11
+      lefthook-windows-x64: 2.0.11
 
   levn@0.4.1:
     dependencies:
@@ -8753,7 +8753,7 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  react-is@19.2.1: {}
+  react-is@19.2.3: {}
 
   react-remove-scroll-bar@2.3.8(@types/react@19.2.7)(react@19.2.3):
     dependencies:
