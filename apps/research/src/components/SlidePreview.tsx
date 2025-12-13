@@ -1,6 +1,6 @@
 'use client'
 
-import {useEffect, useRef} from 'react'
+import {memo, useEffect, useMemo, useRef} from 'react'
 
 import {useFontFace} from '@/hooks/useFontFace'
 
@@ -10,10 +10,15 @@ interface SlidePreviewProps {
   fonts: string[]
 }
 
-export function SlidePreview({html, css, fonts}: SlidePreviewProps) {
+export const SlidePreview = memo(function SlidePreview({
+  html,
+  css,
+  fonts,
+}: SlidePreviewProps) {
+  const stableFonts = useMemo(() => fonts, [fonts.join(',')])
   const elementRef = useRef<HTMLSpanElement>(null)
 
-  useFontFace(fonts)
+  useFontFace(stableFonts)
 
   useEffect(() => {
     const hostEl = elementRef.current
@@ -56,4 +61,4 @@ export function SlidePreview({html, css, fonts}: SlidePreviewProps) {
       <span ref={elementRef} className="block h-full w-full" />
     </div>
   )
-}
+})
