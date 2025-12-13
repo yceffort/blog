@@ -31,9 +31,7 @@
     "@naverpay/commit-helper": "^1.2.0",
     "@naverpay/eslint-config": "^2.2.5",
     "@naverpay/eslint-plugin": "^2.2.0",
-    "@naverpay/markdown-lint": "^0.0.3",
     "@naverpay/stylelint-config": "^1.0.0",
-    "@stylistic/stylelint-plugin": "^3.1.2",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/typography": "^0.5.16",
@@ -49,9 +47,7 @@
     "date-fns": "^4.1.0",
     "eslint": "^9.27.0",
     "front-matter": "^4.0.2",
-    "glob": "^11.1.0",
     "image-size": "^2.0.2",
-    "lefthook": "^1.11.13",
     "mermaid": "^11.12.2",
     "next": "^16.0.10",
     "next-mdx-remote": "^5.0.0",
@@ -83,6 +79,11 @@
     "unist-util-visit": "^5.0.0",
     "vfile": "^6.0.3",
     "web-vitals": "^5.0.1"
+  },
+  "devDependencies": {
+    "@stylistic/stylelint-plugin": "^4.0.0",
+    "glob": "^13.0.0",
+    "lefthook": "^2.0.8"
   },
   "packageManager": "pnpm@10.6.5",
   "engines": {
