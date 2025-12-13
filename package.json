@@ -11,6 +11,7 @@
   "author": "yceffort <root@yceffort.kr>",
   "type": "module",
   "scripts": {
+    "dev": "pnpm --parallel -r dev",
     "dev:blog": "pnpm --filter blog dev",
     "dev:research": "pnpm --filter research dev",
     "build:blog": "pnpm --filter blog build",
