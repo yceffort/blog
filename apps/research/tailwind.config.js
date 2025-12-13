@@ -13,7 +13,12 @@ export default {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        blue: colors.indigo,
+        primary: colors.indigo,
+        secondary: colors.pink,
+        accent: colors.teal,
+        dark: '#09090b',
+        light: '#ffffff',
+        gray: colors.zinc,
         code: {
           green: '#a4f4c0',
           yellow: '#ffeb99',

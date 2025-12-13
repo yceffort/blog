@@ -1,35 +1,35 @@
-import "./tailwind.css";
+import './tailwind.css'
 
-import Script from "next/script";
+import Script from 'next/script'
 
-import { Analytics } from "@vercel/analytics/react";
+import {Analytics} from '@vercel/analytics/react'
 
-import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import type {Metadata} from 'next'
+import type {ReactNode} from 'react'
 
-import { Providers } from "@/components/Provider";
-import { SiteConfig } from "@/config";
+import {Providers} from '@/components/Provider'
+import {SiteConfig} from '@/config'
 
 export const metadata: Metadata = {
   title: SiteConfig.title,
   description: SiteConfig.url,
-  authors: [{ name: SiteConfig.author.name }],
-  referrer: "origin-when-cross-origin",
+  authors: [{name: SiteConfig.author.name}],
+  referrer: 'origin-when-cross-origin',
   creator: SiteConfig.author.name,
   publisher: SiteConfig.author.name,
-  metadataBase: new URL("https://research.yceffort.kr"),
+  metadataBase: new URL('https://research.yceffort.kr'),
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
   icons: {
-    icon: "/favicon/apple-icon.png",
-    shortcut: "/favicon/apple-icon.png",
-    apple: "/favicon/apple-icon.png",
+    icon: '/favicon/apple-icon.png',
+    shortcut: '/favicon/apple-icon.png',
+    apple: '/favicon/apple-icon.png',
     other: {
-      rel: "/favicon/apple-icon-precomposed",
-      url: "/favicon/apple-icon-precomposed.png",
+      rel: '/favicon/apple-icon-precomposed',
+      url: '/favicon/apple-icon-precomposed.png',
     },
   },
   robots: {
@@ -40,9 +40,9 @@ export const metadata: Metadata = {
       follow: true,
     },
   },
-};
+}
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default function Layout({children}: {children: ReactNode}) {
   return (
     <>
       <html lang="kr" suppressHydrationWarning>
@@ -62,7 +62,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           />
           <link rel="manifest" href="/site.webmanifest" />
         </head>
-        <body className="bg-white text-black antialiased dark:bg-gray-900 dark:text-white">
+        <body className="bg-white text-black antialiased dark:bg-gray-800 dark:text-white">
           <Providers>{children}</Providers>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${SiteConfig.googleAnalyticsId}`}
@@ -81,5 +81,5 @@ export default function Layout({ children }: { children: ReactNode }) {
         </body>
       </html>
     </>
-  );
+  )
 }
