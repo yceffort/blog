@@ -55,6 +55,12 @@ export default async function Layout({children}: {children: ReactNode}) {
       <html lang="kr" suppressHydrationWarning>
         <head>
           <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="RSS Feed"
+            href="/feed.xml"
+          />
+          <link
             rel="icon"
             type="image/png"
             href="/favicon/favicon-96x96.png"
