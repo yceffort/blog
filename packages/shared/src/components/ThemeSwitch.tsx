@@ -1,6 +1,6 @@
 'use client'
 
-import {memo, useEffect, useRef, useState} from 'react'
+import {memo, useCallback, useEffect, useRef, useState} from 'react'
 
 import {useTheme} from 'next-themes'
 
@@ -22,6 +22,37 @@ const ThemeSwitch = () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [])
+
+  const handleThemeChange = useCallback(
+    (newTheme: string, event: React.MouseEvent) => {
+      const x = event.clientX
+      const y = event.clientY
+
+      if (
+        !document.startViewTransition ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      ) {
+        setTheme(newTheme)
+        setMenuOpen(false)
+        return
+      }
+
+      document.documentElement.style.setProperty('--theme-toggle-x', `${x}px`)
+      document.documentElement.style.setProperty('--theme-toggle-y', `${y}px`)
+      document.documentElement.classList.add('theme-transition-circle')
+
+      const transition = document.startViewTransition(() => {
+        setTheme(newTheme)
+      })
+
+      transition.finished.then(() => {
+        document.documentElement.classList.remove('theme-transition-circle')
+      })
+
+      setMenuOpen(false)
+    },
+    [setTheme],
+  )
 
   return (
     <div ref={menuRef} className="relative ml-1 mr-1 sm:ml-4">
@@ -49,10 +80,7 @@ const ThemeSwitch = () => {
                   ? 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100'
                   : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
               }`}
-              onClick={() => {
-                setTheme('light')
-                setMenuOpen(false)
-              }}
+              onClick={(e) => handleThemeChange('light', e)}
             >
               <span className="mr-3 flex h-5 w-5 items-center justify-center">
                 <Sun />
@@ -65,10 +93,7 @@ const ThemeSwitch = () => {
                   ? 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100'
                   : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
               }`}
-              onClick={() => {
-                setTheme('dark')
-                setMenuOpen(false)
-              }}
+              onClick={(e) => handleThemeChange('dark', e)}
             >
               <span className="mr-3 flex h-5 w-5 items-center justify-center">
                 <Moon />
@@ -81,10 +106,7 @@ const ThemeSwitch = () => {
                   ? 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100'
                   : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
               }`}
-              onClick={() => {
-                setTheme('system')
-                setMenuOpen(false)
-              }}
+              onClick={(e) => handleThemeChange('system', e)}
             >
               <span className="mr-3 flex h-5 w-5 items-center justify-center">
                 <Monitor />
