@@ -84,7 +84,7 @@ export default async function Page(props: {
   }
 
   const {
-    frontMatter: {title, tags, date},
+    frontMatter: {title, tags, date, description},
     body,
     path,
     fields: {slug: postSlug},
@@ -94,8 +94,27 @@ export default async function Page(props: {
   const transitionName = `post-${postSlug.replace(/\//g, '-')}`
   const link = `https://github.com/yceffort/yceffort-blog-v2/issues/new?labels=%F0%9F%92%AC%20Discussion&title=[Discussion] issue on ${title}&assignees=yceffort&body=${SiteConfig.url}/${slug}`
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: title,
+    datePublished: new Date(date).toISOString(),
+    dateModified: new Date(date).toISOString(),
+    description,
+    image: `${SiteConfig.url}/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description || '')}&tags=${encodeURIComponent((tags || []).join(','))}&path=${encodeURIComponent('/' + postSlug)}`,
+    url: `${SiteConfig.url}/${postSlug}`,
+    author: {
+      '@type': 'Person',
+      name: SiteConfig.author.name,
+    },
+  }
+
   return (
     <>
+      <script
+        dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}
+        type="application/ld+json"
+      />
       <MathLoader />
       <article>
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
