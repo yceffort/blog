@@ -1,6 +1,6 @@
 'use client'
 
-import {useEffect, useState} from 'react'
+import {memo, useEffect, useState} from 'react'
 
 import Link from 'next/link'
 
@@ -14,7 +14,7 @@ const TYPING_TEXTS = [
   'Research Notes',
 ]
 
-export default function Hero() {
+const TypingText = memo(function TypingText() {
   const [displayText, setDisplayText] = useState('')
   const [textIndex, setTextIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -45,6 +45,17 @@ export default function Hero() {
   }, [displayText, isDeleting, textIndex])
 
   return (
+    <div className="mb-4 flex items-center text-base text-gray-700 dark:text-gray-300 sm:text-lg md:text-xl">
+      <span className="text-amber-500 dark:text-amber-400">&gt;</span>
+      <span className="ml-2">{displayText}</span>
+      <span className="ml-0.5 inline-block h-5 w-2 animate-blink bg-sky-500 dark:bg-sky-400 sm:h-6" />
+    </div>
+  )
+})
+
+export default function Hero() {
+
+  return (
     <div className="relative mb-8 overflow-hidden rounded-xl border-2 border-black bg-gradient-to-br from-gray-50 via-white to-gray-100 p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:border-gray-600 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 dark:shadow-[6px_6px_0px_0px_rgba(82,82,91,1)] sm:p-8 md:p-10">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(14,165,233,0.1),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.1),transparent_50%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(14,165,233,0.15),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.15),transparent_50%)]" />
 
@@ -72,11 +83,7 @@ export default function Hero() {
             </span>
           </h1>
 
-          <div className="mb-4 flex items-center text-base text-gray-700 dark:text-gray-300 sm:text-lg md:text-xl">
-            <span className="text-amber-500 dark:text-amber-400">&gt;</span>
-            <span className="ml-2">{displayText}</span>
-            <span className="ml-0.5 inline-block h-5 w-2 animate-blink bg-sky-500 dark:bg-sky-400 sm:h-6" />
-          </div>
+          <TypingText />
 
           <p className="mb-6 max-w-2xl text-sm text-gray-600 dark:text-gray-400 sm:text-base">
             {SiteConfig.author.name}의 발표 자료와 기술 연구 노트를 공유하는
