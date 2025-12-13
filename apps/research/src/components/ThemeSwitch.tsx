@@ -1,32 +1,20 @@
-"use client";
+'use client'
 
-import { useTheme } from "next-themes";
+import dynamic from 'next/dynamic'
 
-import Moon from "@/components/icons/themes/moon";
-import Sun from "@/components/icons/themes/sun";
+const SharedThemeSwitch = dynamic(
+  () =>
+    import('@yceffort/shared/components').then((mod) => mod.ThemeSwitch),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="ml-1 mr-1 flex h-10 w-10 items-center justify-center rounded-md p-2 sm:ml-4">
+        <div className="h-6 w-6 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+      </div>
+    ),
+  },
+)
 
-export const Theme = {
-  light: "light",
-  dark: "dark",
-} as const;
-
-const ThemeSwitch = () => {
-  const { theme, setTheme } = useTheme();
-
-  function handleButtonClick() {
-    setTheme(theme === Theme.dark ? Theme.light : Theme.dark);
-  }
-
-  return (
-    <button
-      aria-label="Toggle Dark Mode"
-      type="button"
-      className="ml-1 mr-1 h-8 w-8 rounded-sm p-1 sm:ml-4"
-      onClick={handleButtonClick}
-    >
-      {theme === Theme.light ? <Sun /> : <Moon />}
-    </button>
-  );
-};
-
-export default ThemeSwitch;
+export default function ThemeSwitch() {
+  return <SharedThemeSwitch />
+}
