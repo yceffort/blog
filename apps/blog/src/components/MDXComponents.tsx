@@ -1,8 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import type {HTMLProps} from 'react'
+import type {HTMLProps, ReactElement} from 'react'
 
+import CodeBlock from '#components/CodeBlock'
 import Mermaid from '#components/Mermaid'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -74,8 +75,11 @@ const MdxComponents = {
     )
   },
   pre: (props: HTMLProps<HTMLPreElement>) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const children = props.children as any
+    const children = props.children as ReactElement<{
+      className?: string
+      children?: React.ReactNode
+      'data-filename'?: string
+    }>
 
     if (
       children &&
@@ -87,7 +91,13 @@ const MdxComponents = {
       return <Mermaid chart={chartCode} />
     }
 
-    return <pre {...props} />
+    const filename = children?.props?.['data-filename']
+
+    return (
+      <CodeBlock className={props.className} filename={filename}>
+        {props.children}
+      </CodeBlock>
+    )
   },
 }
 

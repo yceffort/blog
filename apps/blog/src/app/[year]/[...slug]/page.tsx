@@ -21,7 +21,7 @@ import TableOfContents from '#components/TableOfContents'
 import Tag from '#components/Tag'
 import {SiteConfig} from '#src/config'
 import imageMetadataPlugin from '#utils/imageMetadata'
-import {parseCodeSnippet} from '#utils/Markdown'
+import {extractCodeFilename, parseCodeSnippet} from '#utils/Markdown'
 import {findPostByYearAndSlug, getAllPosts} from '#utils/Post'
 
 export const dynamic = 'error'
@@ -185,7 +185,8 @@ export default async function Page(props: {
                   rehypePlugins: [
                     rehypeKatex,
                     rehypeSlug,
-                    prism,
+                    extractCodeFilename,
+                    [prism, {showLineNumbers: true}],
                     parseCodeSnippet,
                     rehypeAutolinkHeadings,
                     [imageMetadataPlugin, {path}],
