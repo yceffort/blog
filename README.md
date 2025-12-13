@@ -6,13 +6,13 @@ github repository of <https://yceffort.kr>
 
 ## Dependencies
 
-- nodejs@22.11.0
+- nodejs@22.12.0
 - react@19.x
 - typescript@5.x
 - tailwindcss@4.x
-- nextjs@15.x
+- nextjs@16.x
 - next-mdx-remote@5.x
-- pnpm@10.x
+- pnpm@10.6.5
 - vercel
 
 ## Frontmatter
