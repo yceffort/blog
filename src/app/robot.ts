@@ -6,9 +6,9 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemaps: [
+    sitemap: [
       'https://yceffort.kr/sitemap.xml',
-      'https://yceffort.kr/feed.xml', // Add RSS feed to sitemaps
+      'https://yceffort.kr/feed.xml',
     ],
   }
 }
