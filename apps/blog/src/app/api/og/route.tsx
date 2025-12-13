@@ -16,6 +16,16 @@ export async function GET(request: Request) {
     const tagsParam = searchParams.get('tags')
     const pathParam = searchParams.get('path')
     const type = searchParams.get('type')
+    const size = searchParams.get('size') // 'large' for mobile cover
+
+    const isLarge = size === 'large'
+    const fontSize = {
+      title: isLarge ? 80 : 64,
+      description: isLarge ? 36 : 28,
+      tags: isLarge ? 28 : 22,
+      address: isLarge ? 32 : 26,
+    }
+    const descMaxLength = isLarge ? 60 : 80
 
     if (!title) {
       return new Response('Missing title', {status: 400})
@@ -96,14 +106,14 @@ export async function GET(request: Request) {
           <div
             style={{
               display: 'flex',
-              fontSize: 64,
+              fontSize: fontSize.title,
               fontWeight: 700,
               lineHeight: 1.2,
               color: '#fff',
               textAlign: 'left',
               wordBreak: 'keep-all',
               letterSpacing: '-0.03em',
-              marginBottom: 8,
+              marginBottom: isLarge ? 12 : 8,
               justifyContent: 'flex-start',
               textShadow: '2px 2px 8px rgba(0,0,0,0.8)',
               width: '100%',
@@ -117,22 +127,22 @@ export async function GET(request: Request) {
             <div
               style={{
                 display: 'flex',
-                fontSize: 28,
+                fontSize: fontSize.description,
                 fontWeight: 400,
                 color: '#eee',
                 lineHeight: 1.4,
                 textAlign: 'left',
                 wordBreak: 'keep-all',
                 letterSpacing: '-0.02em',
-                marginBottom: 16,
+                marginBottom: isLarge ? 20 : 16,
                 maxWidth: '90%',
                 justifyContent: 'flex-start',
                 textShadow: '1px 1px 6px rgba(0,0,0,0.7)',
                 width: '100%',
               }}
             >
-              {description.length > 80
-                ? description.slice(0, 80) + '...'
+              {description.length > descMaxLength
+                ? description.slice(0, descMaxLength) + '...'
                 : description}
             </div>
           ) : null}
@@ -157,9 +167,9 @@ export async function GET(request: Request) {
                   style={{
                     display: 'flex',
                     backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                    borderRadius: '15px',
-                    padding: '8px 15px',
-                    fontSize: 22,
+                    borderRadius: isLarge ? '18px' : '15px',
+                    padding: isLarge ? '10px 18px' : '8px 15px',
+                    fontSize: fontSize.tags,
                     color: '#fff',
                     textShadow: '1px 1px 4px rgba(0,0,0,0.6)',
                     fontWeight: 400,
@@ -176,11 +186,11 @@ export async function GET(request: Request) {
           <div
             style={{
               display: 'flex',
-              fontSize: 26,
+              fontSize: fontSize.address,
               fontWeight: 700,
               color: '#fff',
-              marginTop: 10,
-              paddingTop: 16,
+              marginTop: isLarge ? 12 : 10,
+              paddingTop: isLarge ? 20 : 16,
               width: '100%',
               justifyContent: 'flex-start',
               textShadow: '1px 1px 6px rgba(0,0,0,0.7)',
@@ -202,6 +212,9 @@ export async function GET(request: Request) {
             weight: 700,
           },
         ],
+        headers: {
+          'Cache-Control': 'public, max-age=31536000, immutable',
+        },
       },
     )
   } catch (e: unknown) {
