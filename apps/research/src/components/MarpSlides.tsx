@@ -8,8 +8,14 @@ import "swiper/css";
 import { Marp } from "./Marp";
 import styles from "./MarpSlides.module.scss";
 
-import type { MouseEvent } from "react";
+import type { MouseEvent as ReactMouseEvent } from "react";
 import type { Swiper as SwiperClass } from "swiper";
+
+interface ContextMenuState {
+  visible: boolean;
+  x: number;
+  y: number;
+}
 
 interface MarpSlidesProps {
   dataHtml: string;
@@ -60,7 +66,14 @@ export function MarpSlides({ dataHtml, dataCss, dataFonts }: MarpSlidesProps) {
   // 상태 관리
   const [activeIndex, setActiveIndex] = useState(0);
   const [isBottomHovered, setIsBottomHovered] = useState(false);
+  const [contextMenu, setContextMenu] = useState<ContextMenuState>({
+    visible: false,
+    x: 0,
+    y: 0,
+  });
+  const [goToSlideInput, setGoToSlideInput] = useState("");
   const swiperRef = useRef<SwiperClass | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   // memoized values
   const multiple = useMemo(() => html.length > 1, [html.length]);
@@ -115,9 +128,31 @@ export function MarpSlides({ dataHtml, dataCss, dataFonts }: MarpSlidesProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [multiple, html.length]);
 
+  // 휠 네비게이션
+  const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const handleWheel = useCallback(
+    (e: React.WheelEvent<HTMLDivElement>) => {
+      if (!multiple || contextMenu.visible) return;
+
+      // 디바운스 처리
+      if (wheelTimeoutRef.current) return;
+
+      if (e.deltaY > 0) {
+        swiperRef.current?.slideNext();
+      } else if (e.deltaY < 0) {
+        swiperRef.current?.slidePrev();
+      }
+
+      wheelTimeoutRef.current = setTimeout(() => {
+        wheelTimeoutRef.current = null;
+      }, 300);
+    },
+    [multiple, contextMenu.visible],
+  );
+
   // 클릭 네비게이션 (좌우/상하 10% 영역) (memoized)
   const handleSlideClick = useCallback(
-    (e: MouseEvent<HTMLDivElement>) => {
+    (e: ReactMouseEvent<HTMLDivElement>) => {
       const rect = e.currentTarget.getBoundingClientRect();
       const xPos = e.clientX - rect.left;
       const yPos = e.clientY - rect.top;
@@ -180,6 +215,83 @@ export function MarpSlides({ dataHtml, dataCss, dataFonts }: MarpSlidesProps) {
   const handleBottomEnter = useCallback(() => setIsBottomHovered(true), []);
   const handleBottomLeave = useCallback(() => setIsBottomHovered(false), []);
 
+  // 컨텍스트 메뉴 핸들러
+  const handleContextMenu = useCallback(
+    (e: ReactMouseEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      setContextMenu({
+        visible: true,
+        x: e.clientX,
+        y: e.clientY,
+      });
+    },
+    [],
+  );
+
+  const closeContextMenu = useCallback(() => {
+    setContextMenu((prev) => ({ ...prev, visible: false }));
+    setGoToSlideInput("");
+  }, []);
+
+  // 컨텍스트 메뉴 외부 클릭 시 닫기
+  useEffect(() => {
+    const handleClickOutside = () => {
+      if (contextMenu.visible) {
+        closeContextMenu();
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [contextMenu.visible, closeContextMenu]);
+
+  // 컨텍스트 메뉴 액션들
+  const menuActions = useMemo(
+    () => ({
+      prevSlide: () => {
+        swiperRef.current?.slidePrev();
+        closeContextMenu();
+      },
+      nextSlide: () => {
+        swiperRef.current?.slideNext();
+        closeContextMenu();
+      },
+      firstSlide: () => {
+        swiperRef.current?.slideTo(0);
+        closeContextMenu();
+      },
+      lastSlide: () => {
+        swiperRef.current?.slideTo(html.length - 1);
+        closeContextMenu();
+      },
+      goToSlide: (num: number) => {
+        if (num >= 1 && num <= html.length) {
+          swiperRef.current?.slideTo(num - 1);
+        }
+        closeContextMenu();
+      },
+      fullscreen: () => {
+        if (containerRef.current) {
+          if (document.fullscreenElement) {
+            document.exitFullscreen();
+          } else {
+            containerRef.current.requestFullscreen();
+          }
+        }
+        closeContextMenu();
+      },
+      goHome: () => {
+        window.location.href = "/";
+      },
+      copyLink: () => {
+        const url = `${window.location.origin}${window.location.pathname}#${activeIndex + 1}`;
+        navigator.clipboard.writeText(url);
+        closeContextMenu();
+      },
+    }),
+    [html.length, closeContextMenu, activeIndex],
+  );
+
   // Marp 렌더링 데이터 (memoized)
   const marpRenderData = useMemo(
     () => ({ html, css, fonts }),
@@ -194,7 +306,12 @@ export function MarpSlides({ dataHtml, dataCss, dataFonts }: MarpSlidesProps) {
   }
 
   return (
-    <div className={`${styles.marpSlides} ${multiple ? styles.multiple : ""}`}>
+    <div
+      ref={containerRef}
+      className={`${styles.marpSlides} ${multiple ? styles.multiple : ""}`}
+      onContextMenu={handleContextMenu}
+      onWheel={handleWheel}
+    >
       <Swiper
         enabled={multiple}
         allowTouchMove={multiple}
@@ -264,6 +381,108 @@ export function MarpSlides({ dataHtml, dataCss, dataFonts }: MarpSlidesProps) {
           className={`${styles.pageIndicator} ${isBottomHovered ? styles.visible : ""}`}
         >
           {activeIndex + 1} / {html.length}
+        </div>
+      )}
+
+      {/* 컨텍스트 메뉴 */}
+      {contextMenu.visible && (
+        <div
+          className={styles.contextMenu}
+          style={{ top: contextMenu.y, left: contextMenu.x }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className={styles.contextMenuHeader}>
+            슬라이드 {activeIndex + 1} / {html.length}
+          </div>
+          <div className={styles.contextMenuDivider} />
+          {multiple && (
+            <>
+              <button
+                className={styles.contextMenuItem}
+                onClick={menuActions.prevSlide}
+                disabled={activeIndex === 0}
+              >
+                <span className={styles.contextMenuIcon}>←</span>
+                이전 슬라이드
+                <span className={styles.contextMenuShortcut}>←</span>
+              </button>
+              <button
+                className={styles.contextMenuItem}
+                onClick={menuActions.nextSlide}
+                disabled={activeIndex === html.length - 1}
+              >
+                <span className={styles.contextMenuIcon}>→</span>
+                다음 슬라이드
+                <span className={styles.contextMenuShortcut}>→</span>
+              </button>
+              <div className={styles.contextMenuDivider} />
+              <button
+                className={styles.contextMenuItem}
+                onClick={menuActions.firstSlide}
+              >
+                <span className={styles.contextMenuIcon}>⇤</span>
+                첫 슬라이드
+                <span className={styles.contextMenuShortcut}>Home</span>
+              </button>
+              <button
+                className={styles.contextMenuItem}
+                onClick={menuActions.lastSlide}
+              >
+                <span className={styles.contextMenuIcon}>⇥</span>
+                마지막 슬라이드
+                <span className={styles.contextMenuShortcut}>End</span>
+              </button>
+              <div className={styles.contextMenuDivider} />
+              <div className={styles.contextMenuGoTo}>
+                <span>슬라이드 이동:</span>
+                <input
+                  type="number"
+                  min={1}
+                  max={html.length}
+                  value={goToSlideInput}
+                  onChange={(e) => setGoToSlideInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      menuActions.goToSlide(parseInt(goToSlideInput, 10));
+                    }
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                  placeholder={`1-${html.length}`}
+                />
+                <button
+                  onClick={() =>
+                    menuActions.goToSlide(parseInt(goToSlideInput, 10))
+                  }
+                >
+                  이동
+                </button>
+              </div>
+              <div className={styles.contextMenuDivider} />
+            </>
+          )}
+          <button
+            className={styles.contextMenuItem}
+            onClick={menuActions.fullscreen}
+          >
+            <span className={styles.contextMenuIcon}>⛶</span>
+            {document.fullscreenElement ? "전체화면 종료" : "전체화면"}
+            <span className={styles.contextMenuShortcut}>F11</span>
+          </button>
+          <button
+            className={styles.contextMenuItem}
+            onClick={menuActions.copyLink}
+          >
+            <span className={styles.contextMenuIcon}>🔗</span>
+            현재 슬라이드 링크 복사
+          </button>
+          <div className={styles.contextMenuDivider} />
+          <button
+            className={styles.contextMenuItem}
+            onClick={menuActions.goHome}
+          >
+            <span className={styles.contextMenuIcon}>🏠</span>
+            홈으로
+          </button>
         </div>
       )}
     </div>
