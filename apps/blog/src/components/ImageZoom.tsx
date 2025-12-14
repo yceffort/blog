@@ -23,7 +23,7 @@ export default function ImageZoom({
   const [isZoomed, setIsZoomed] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
   const [mounted, setMounted] = useState(false)
-  const imageRef = useRef<HTMLDivElement>(null)
+  const imageRef = useRef<HTMLSpanElement>(null)
   const [imageRect, setImageRect] = useState<DOMRect | null>(null)
 
   useEffect(() => {
@@ -118,10 +118,10 @@ export default function ImageZoom({
 
   return (
     <>
-      <div
+      <span
         ref={imageRef}
         onClick={handleOpen}
-        className="cursor-zoom-in"
+        className="block cursor-zoom-in"
         role="button"
         tabIndex={0}
         onKeyDown={(e) => {
@@ -131,7 +131,7 @@ export default function ImageZoom({
         }}
       >
         {ImageComponent}
-      </div>
+      </span>
 
       {mounted &&
         isZoomed &&
