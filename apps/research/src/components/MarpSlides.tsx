@@ -375,6 +375,16 @@ export function MarpSlides({ dataHtml, dataCss, dataFonts }: MarpSlidesProps) {
         ))}
       </Swiper>
 
+      {/* 진행률 바 */}
+      {multiple && (
+        <div className={styles.progressBar}>
+          <div
+            className={styles.progressBarFill}
+            style={{ width: `${((activeIndex + 1) / html.length) * 100}%` }}
+          />
+        </div>
+      )}
+
       {/* 페이지 인디케이터 */}
       {multiple && (
         <div
