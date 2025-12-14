@@ -93,6 +93,28 @@
   }
 }
 
+.progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(128, 128, 128, 0.3);
+  z-index: 100;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #34d399);
+  transition: width 0.3s ease-out;
+}
+
+@media (prefers-color-scheme: dark) {
+  .progressBarFill {
+    background: linear-gradient(90deg, #10b981, #6ee7b7);
+  }
+}
+
 .pageIndicator {
   position: absolute;
   bottom: 12%;
