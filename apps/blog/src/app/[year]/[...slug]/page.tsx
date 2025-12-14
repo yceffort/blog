@@ -90,6 +90,7 @@ export default async function Page(props: {
     body,
     path,
     fields: {slug: postSlug},
+    readingTime,
   } = post
 
   const updatedAt = format(new Date(date), 'yyyy-MM-dd')
@@ -155,12 +156,11 @@ export default async function Page(props: {
                 <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   {SiteConfig.author.name}
                 </p>
-                <time
-                  dateTime={updatedAt}
-                  className="text-sm text-gray-500 dark:text-gray-400"
-                >
-                  {updatedAt}
-                </time>
+                <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                  <time dateTime={updatedAt}>{updatedAt}</time>
+                  <span>·</span>
+                  <span>{readingTime}분</span>
+                </div>
               </div>
             </div>
             {tags && (

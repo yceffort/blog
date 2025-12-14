@@ -18,6 +18,7 @@ export interface Post {
   frontMatter: FrontMatter
   body: string
   path: string
+  readingTime: number
 }
 
 export interface TagWithCount {

@@ -16,7 +16,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@yceffort/shared": "workspace:*",
     "@naverpay/commit-helper": "^1.2.0",
     "@naverpay/eslint-config": "^2.2.5",
     "@naverpay/eslint-plugin": "^2.2.0",
@@ -33,6 +32,7 @@
     "@types/unist": "^3.0.3",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
+    "@yceffort/shared": "workspace:*",
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
     "eslint": "^9.27.0",
@@ -52,6 +52,7 @@
     "react-dom": "^19.2.3",
     "react-is": "^19.2.3",
     "react-virtuoso": "^4.17.0",
+    "reading-time": "^1.5.0",
     "rehype": "^13.0.2",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-katex": "^7.0.1",

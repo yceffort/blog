@@ -12,6 +12,7 @@ export default function PostCard({post}: {post: Post}) {
   const {
     fields: {slug},
     frontMatter: {date, title, description, tags},
+    readingTime,
   } = post
   const updatedAt = format(new Date(date), 'yyyy-MM-dd')
   const transitionName = `post-${slug.replace(/\//g, '-')}`
@@ -44,11 +45,13 @@ export default function PostCard({post}: {post: Post}) {
                 </Link>
               </h3>
             </ViewTransition>
-            <dl>
+            <dl className="flex items-center gap-2 text-sm font-bold leading-6 text-gray-600 dark:text-gray-400">
               <dt className="sr-only">Published on</dt>
-              <dd className="text-sm font-bold leading-6 text-gray-600 dark:text-gray-400">
+              <dd>
                 <time dateTime={updatedAt}>{updatedAt}</time>
               </dd>
+              <span>·</span>
+              <dd>{readingTime}분</dd>
             </dl>
           </div>
           <div className="prose max-w-none text-sm font-medium text-gray-800 dark:text-gray-300 line-clamp-3">
