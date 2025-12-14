@@ -1,9 +1,9 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
 import type {HTMLProps, ReactElement} from 'react'
 
 import CodeBlock from '#components/CodeBlock'
+import ImageZoom from '#components/ImageZoom'
 import Mermaid from '#components/Mermaid'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,20 +29,16 @@ function NextImage(props: HTMLProps<HTMLImageElement>) {
   const height = Number(props.height)
 
   if (src) {
-    if (src.startsWith('http')) {
-      return <img src={src} alt={src} width={width} height={height} />
-    } else {
-      return (
-        <Image
-          width={width}
-          height={height}
-          alt={props.alt || ''}
-          crossOrigin="anonymous"
-          src={src}
-          placeholder="empty"
-        />
-      )
-    }
+    const isExternal = src.startsWith('http')
+    return (
+      <ImageZoom
+        src={src}
+        alt={props.alt || ''}
+        width={width}
+        height={height}
+        isExternal={isExternal}
+      />
+    )
   } else {
     return <p>Currently, image is not available. {src}</p>
   }
