@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react'
 
 export default function ScrollTop() {
   const [show, setShow] = useState(false)
+  const [hasTOC, setHasTOC] = useState(false)
 
   useEffect(() => {
     const handleWindowScroll = () => {
@@ -14,13 +15,26 @@ export default function ScrollTop() {
       }
     }
 
+    const checkTOC = () => {
+      setHasTOC(document.body.hasAttribute('data-has-toc'))
+    }
+
+    const observer = new MutationObserver(checkTOC)
+    observer.observe(document.body, {attributes: true, attributeFilter: ['data-has-toc']})
+
+    checkTOC()
     window.addEventListener('scroll', handleWindowScroll)
-    return () => window.removeEventListener('scroll', handleWindowScroll)
+    return () => {
+      window.removeEventListener('scroll', handleWindowScroll)
+      observer.disconnect()
+    }
   }, [])
 
   const handleScrollTop = () => {
     window.scrollTo({top: 0, behavior: 'smooth'})
   }
+
+  if (hasTOC) return null
 
   return (
     <button

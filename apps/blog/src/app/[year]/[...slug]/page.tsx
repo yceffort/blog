@@ -214,7 +214,7 @@ export default async function Page(props: {
             </div>
           </footer>
         </article>
-        <aside className="fixed right-8 top-24 hidden w-64 2xl:block">
+        <aside className="fixed right-8 top-24 w-64">
           <TableOfContents />
         </aside>
       </div>
