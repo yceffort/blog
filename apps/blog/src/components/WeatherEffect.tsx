@@ -74,8 +74,13 @@ export default function WeatherEffect() {
   }, [])
 
   useEffect(() => {
-    const timer = setTimeout(fetchWeather, 2000)
-    return () => clearTimeout(timer)
+    if ('requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(fetchWeather, {timeout: 5000})
+      return () => window.cancelIdleCallback(id)
+    } else {
+      const timer = setTimeout(fetchWeather, 2000)
+      return () => clearTimeout(timer)
+    }
   }, [fetchWeather])
 
   useEffect(() => {
