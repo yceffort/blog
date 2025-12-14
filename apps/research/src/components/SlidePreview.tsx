@@ -40,11 +40,13 @@ export const SlidePreview = memo(function SlidePreview({
           display: block;
           width: 100%;
           height: 100%;
+          cursor: pointer;
         }
         :host > [data-marpit-svg] {
           vertical-align: top;
           width: 100%;
           height: 100%;
+          cursor: pointer;
         }
       </style>
     `
@@ -57,7 +59,7 @@ export const SlidePreview = memo(function SlidePreview({
   }, [html, css])
 
   return (
-    <div className="relative aspect-[16/9] w-full overflow-hidden rounded-t-lg bg-white dark:bg-gray-900">
+    <div className="relative aspect-[16/9] w-full cursor-pointer overflow-hidden rounded-t-lg bg-white dark:bg-gray-900">
       <span ref={elementRef} className="block h-full w-full" />
     </div>
   )
