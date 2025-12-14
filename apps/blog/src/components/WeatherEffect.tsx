@@ -12,7 +12,6 @@ interface Particle {
   opacity: number
 }
 
-const SEOUL_COORDS = {latitude: 37.5665, longitude: 126.978}
 const RAIN_CODES = [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82, 95, 96, 99]
 const SNOW_CODES = [71, 73, 75, 77, 85, 86]
 
@@ -39,7 +38,8 @@ export default function WeatherEffect() {
     }
 
     try {
-      let coords = SEOUL_COORDS
+      let lat: number | undefined
+      let lon: number | undefined
 
       if ('geolocation' in navigator) {
         try {
@@ -51,23 +51,22 @@ export default function WeatherEffect() {
               })
             },
           )
-          coords = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          }
+          lat = position.coords.latitude
+          lon = position.coords.longitude
         } catch {
-          // Use Seoul as fallback
+          // Use Seoul as fallback (handled by API)
         }
       }
 
-      const res = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&current=weather_code`,
-      )
-      const data = await res.json()
-      const code = data.current?.weather_code
+      const apiUrl = lat && lon
+        ? `/api/weather?lat=${lat}&lon=${lon}`
+        : '/api/weather'
 
-      if (typeof code === 'number') {
-        setWeatherType(getWeatherType(code))
+      const res = await fetch(apiUrl)
+      const data = await res.json()
+
+      if (typeof data.weatherCode === 'number') {
+        setWeatherType(getWeatherType(data.weatherCode))
       }
     } catch {
       // Silently fail
