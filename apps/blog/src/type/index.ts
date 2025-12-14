@@ -9,6 +9,8 @@ export interface FrontMatter {
   path: string
   socialImageUrl?: string
   socialImageCredit?: string
+  series?: string
+  seriesOrder?: number
 }
 
 export interface Post {

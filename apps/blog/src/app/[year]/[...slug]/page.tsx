@@ -17,12 +17,13 @@ import MathLoader from '#components/layouts/Post/math'
 import MDXComponents from '#components/MDXComponents'
 import ProfileImage from '#components/ProfileImage'
 import ReadingProgressBar from '#components/ReadingProgressBar'
+import SeriesNavigation from '#components/SeriesNavigation'
 import TableOfContents from '#components/TableOfContents'
 import Tag from '#components/Tag'
 import {SiteConfig} from '#src/config'
 import imageMetadataPlugin from '#utils/imageMetadata'
 import {extractCodeFilename, parseCodeSnippet} from '#utils/Markdown'
-import {findPostByYearAndSlug, getAllPosts} from '#utils/Post'
+import {findPostByYearAndSlug, getAllPosts, getSeriesPosts} from '#utils/Post'
 
 export const dynamic = 'error'
 
@@ -86,12 +87,14 @@ export default async function Page(props: {
   }
 
   const {
-    frontMatter: {title, tags, date, description},
+    frontMatter: {title, tags, date, description, series},
     body,
     path,
     fields: {slug: postSlug},
     readingTime,
   } = post
+
+  const seriesPosts = series ? await getSeriesPosts(series) : []
 
   const updatedAt = format(new Date(date), 'yyyy-MM-dd')
   const transitionName = `post-${postSlug.replace(/\//g, '-')}`
@@ -151,7 +154,10 @@ export default async function Page(props: {
           {/* Post Meta */}
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <ProfileImage size={32} transitionName={`${transitionName}-avatar`} />
+              <ProfileImage
+                size={32}
+                transitionName={`${transitionName}-avatar`}
+              />
               <div>
                 <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   {SiteConfig.author.name}
@@ -173,6 +179,15 @@ export default async function Page(props: {
               </ViewTransition>
             )}
           </div>
+
+          {/* Series Navigation */}
+          {series && seriesPosts.length > 1 && (
+            <SeriesNavigation
+              seriesName={series}
+              seriesPosts={seriesPosts}
+              currentSlug={postSlug}
+            />
+          )}
 
           {/* Content */}
           <div className="prose max-w-none pb-8 dark:prose-dark">

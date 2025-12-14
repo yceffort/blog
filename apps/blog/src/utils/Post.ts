@@ -79,3 +79,13 @@ export async function getAllTagsFromPosts(): Promise<TagWithCount[]> {
     .map(([tag, count]) => ({tag, count}))
     .sort((a, b) => b.count - a.count)
 }
+
+export async function getSeriesPosts(seriesName: string): Promise<Post[]> {
+  const posts = await getAllPosts()
+  return posts
+    .filter((post) => post.frontMatter.series === seriesName)
+    .sort(
+      (a, b) =>
+        (a.frontMatter.seriesOrder ?? 0) - (b.frontMatter.seriesOrder ?? 0),
+    )
+}
