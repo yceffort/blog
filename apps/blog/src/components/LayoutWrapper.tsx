@@ -21,6 +21,10 @@ const DynamicThemeSwitch = dynamic(() => import('./ThemeSwitch'), {
   loading: () => <div className="ml-1 mr-1 h-10 w-10 rounded-md sm:ml-4" />,
 })
 
+const DynamicWeatherEffect = dynamic(() => import('./WeatherEffect'), {
+  ssr: false,
+})
+
 const HeaderLogo = memo(function HeaderLogo() {
   return (
     <div>
@@ -123,6 +127,7 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
         <main className="mb-auto">{children}</main>
         <Footer />
         <ScrollTop />
+        <DynamicWeatherEffect />
       </div>
     </SectionContainer>
   )
