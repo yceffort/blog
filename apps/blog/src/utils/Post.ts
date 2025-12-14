@@ -2,6 +2,7 @@ import fs from 'fs'
 
 import frontMatter from 'front-matter'
 import {sync} from 'glob'
+import readingTime from 'reading-time'
 
 import type {FrontMatter, Post, TagWithCount} from '../type'
 
@@ -32,6 +33,7 @@ export async function getAllPosts(): Promise<Post[]> {
 
       if (published) {
         const tags: string[] = (fmTags || []).map((tag: string) => tag.trim())
+        const stats = readingTime(body, {wordsPerMinute: 250})
 
         const result: Post = {
           frontMatter: {
@@ -44,6 +46,7 @@ export async function getAllPosts(): Promise<Post[]> {
             slug,
           },
           path,
+          readingTime: Math.max(1, Math.ceil(stats.minutes)),
         }
         prev.push(result)
       }

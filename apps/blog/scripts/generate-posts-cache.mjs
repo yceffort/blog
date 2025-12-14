@@ -4,6 +4,7 @@ import {fileURLToPath} from 'url'
 
 import frontMatter from 'front-matter'
 import {sync} from 'glob'
+import readingTime from 'reading-time'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const POST_PATH = path.join(__dirname, '../posts')
@@ -15,7 +16,7 @@ function generatePostsCache() {
   const posts = files
     .reduce((prev, filePath) => {
       const file = fs.readFileSync(filePath, {encoding: 'utf8'})
-      const {attributes} = frontMatter(file)
+      const {attributes, body} = frontMatter(file)
       const {tags: fmTags, published, date} = attributes
 
       const slug = filePath
@@ -25,6 +26,7 @@ function generatePostsCache() {
 
       if (published) {
         const tags = (fmTags || []).map((tag) => tag.trim())
+        const stats = readingTime(body, {wordsPerMinute: 250})
 
         prev.push({
           frontMatter: {
@@ -35,6 +37,7 @@ function generatePostsCache() {
           body: '',
           fields: {slug},
           path: filePath,
+          readingTime: Math.max(1, Math.ceil(stats.minutes)),
         })
       }
       return prev
