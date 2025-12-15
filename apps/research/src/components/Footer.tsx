@@ -1,7 +1,7 @@
-import Link from "next/link";
+import Link from 'next/link'
 
-import SocialIcon from "@/components/icons";
-import { SiteConfig } from "@/config";
+import SocialIcon from '@/components/icons'
+import {SiteConfig} from '@/config'
 
 export default function Footer() {
   return (
@@ -33,5 +33,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  );
+  )
 }
