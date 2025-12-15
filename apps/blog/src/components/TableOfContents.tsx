@@ -25,7 +25,9 @@ function TOCList({
         <li
           key={heading.id}
           ref={(el) => {
-            if (el && itemRefs) itemRefs.current.set(heading.id, el)
+            if (el && itemRefs) {
+              itemRefs.current.set(heading.id, el)
+            }
           }}
           style={{paddingLeft: `${(heading.level - 2) * 12}px`}}
         >
@@ -105,16 +107,21 @@ function MobileTOC({
   }, [isOpen])
 
   useEffect(() => {
-    if (!isOpen || !activeId || !scrollContainerRef.current) return
+    if (!isOpen || !activeId || !scrollContainerRef.current) {
+      return
+    }
 
     const activeItem = itemRefs.current.get(activeId)
-    if (!activeItem) return
+    if (!activeItem) {
+      return
+    }
 
     const container = scrollContainerRef.current
     const containerRect = container.getBoundingClientRect()
     const itemRect = activeItem.getBoundingClientRect()
 
-    const itemTopRelative = itemRect.top - containerRect.top + container.scrollTop
+    const itemTopRelative =
+      itemRect.top - containerRect.top + container.scrollTop
     const itemHeight = itemRect.height
     const containerHeight = container.clientHeight
 
@@ -131,7 +138,10 @@ function MobileTOC({
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 2xl:hidden" ref={panelRef}>
+    <div
+      ref={panelRef}
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 2xl:hidden"
+    >
       {isOpen && (
         <div
           ref={scrollContainerRef}
@@ -156,7 +166,9 @@ function MobileTOC({
       <button
         onClick={handleScrollTop}
         className={`flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-lg transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 ${
-          showScrollTop ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0'
+          showScrollTop
+            ? 'translate-y-0 opacity-100'
+            : 'pointer-events-none translate-y-2 opacity-0'
         }`}
         aria-label="Scroll to top"
       >
@@ -217,7 +229,9 @@ export default function TableOfContents() {
 
   useEffect(() => {
     const article = document.querySelector('article')
-    if (!article) return
+    if (!article) {
+      return
+    }
 
     const elements = article.querySelectorAll('h2, h3, h4')
     const items: TOCItem[] = Array.from(elements).map((el) => ({
@@ -225,6 +239,7 @@ export default function TableOfContents() {
       text: el.textContent || '',
       level: parseInt(el.tagName[1]),
     }))
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHeadings(items)
 
     const observer = new IntersectionObserver(
@@ -244,16 +259,21 @@ export default function TableOfContents() {
   }, [])
 
   useEffect(() => {
-    if (!activeId || !tocRef.current) return
+    if (!activeId || !tocRef.current) {
+      return
+    }
 
     const activeItem = itemRefs.current.get(activeId)
-    if (!activeItem) return
+    if (!activeItem) {
+      return
+    }
 
     const container = tocRef.current
     const containerRect = container.getBoundingClientRect()
     const itemRect = activeItem.getBoundingClientRect()
 
-    const itemTopRelative = itemRect.top - containerRect.top + container.scrollTop
+    const itemTopRelative =
+      itemRect.top - containerRect.top + container.scrollTop
     const itemHeight = itemRect.height
     const containerHeight = container.clientHeight
     const scrollTop = container.scrollTop
@@ -263,7 +283,10 @@ export default function TableOfContents() {
         top: Math.max(0, itemTopRelative - 60),
         behavior: 'smooth',
       })
-    } else if (itemTopRelative + itemHeight > scrollTop + containerHeight - 60) {
+    } else if (
+      itemTopRelative + itemHeight >
+      scrollTop + containerHeight - 60
+    ) {
       container.scrollTo({
         top: itemTopRelative - containerHeight + itemHeight + 60,
         behavior: 'smooth',
@@ -278,7 +301,9 @@ export default function TableOfContents() {
     }
   }, [])
 
-  if (headings.length === 0) return null
+  if (headings.length === 0) {
+    return null
+  }
 
   return (
     <>
