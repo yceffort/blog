@@ -8,7 +8,7 @@ tags:
   - javascript
 date: 2025-03-01
 size: 4k
-description: "안녕하세요 이것은 설명입니다."
+description: '안녕하세요 이것은 설명입니다.'
 published: false
 ---
 
@@ -29,9 +29,9 @@ h1 {
 ```javascript
 // 1. 객체 생성
 const person = {
-  name: "Alice",
+  name: 'Alice',
   age: 25,
-};
+}
 ```
 
 준내게 이거 이렇게 길어지면 넘어가는구나 그냥

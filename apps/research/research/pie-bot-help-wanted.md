@@ -1,5 +1,5 @@
 ---
-title: "🥧 Pie Bot: @pie @naverpay 코드 전문가 만들기"
+title: '🥧 Pie Bot: @pie @naverpay 코드 전문가 만들기'
 marp: true
 paginate: true
 theme: default
@@ -9,7 +9,7 @@ tags:
   - VSCode
   - NaverPayDev
 date: 2025-05-26
-description: "Naver Pay 개발자를 위한 AI 코드 어시스턴트 Pie Bot 개발에 함께해주세요!"
+description: 'Naver Pay 개발자를 위한 AI 코드 어시스턴트 Pie Bot 개발에 함께해주세요!'
 published: true
 ---
 

@@ -6,7 +6,7 @@ theme: default
 tags:
   - javascript
 date: 2025-03-28
-description: "🤔"
+description: '🤔'
 published: true
 ---
 
@@ -82,21 +82,21 @@ published: true
   ```
 
   ```js
-  (function (c, x) {
-    if (typeof exports === "object" && typeof module !== "undefined") {
+  ;(function (c, x) {
+    if (typeof exports === 'object' && typeof module !== 'undefined') {
       // ✅ CommonJS 환경 (예: Node.js)
-      x(exports);
-    } else if (typeof define === "function" && define.amd) {
+      x(exports)
+    } else if (typeof define === 'function' && define.amd) {
       // ✅ AMD 환경 (예: RequireJS)
-      define(["exports"], x);
+      define(['exports'], x)
     } else {
       // ✅ 전역 환경 (예: <script> 태그로 직접 로딩하는 브라우저)
-      c = c || self;
-      x((c.React = {}));
+      c = c || self
+      x((c.React = {}))
     }
   })(this, function (c) {
     // 여기부터 실제 React 구현
-  });
+  })
   ```
 
 ---

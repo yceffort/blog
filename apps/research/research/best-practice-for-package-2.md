@@ -6,7 +6,7 @@ theme: default
 tags:
   - javascript
 date: 2025-03-25
-description: "생각보다 잘 모르고 있던 타입스크립트"
+description: '생각보다 잘 모르고 있던 타입스크립트'
 published: true
 ---
 
@@ -109,32 +109,32 @@ published: true
 - `.d.ts`가 다음과 같이 선언되어 있다고 가정
 
   ```ts
-  export declare const a: string;
-  export declare function b(): number;
+  export declare const a: string
+  export declare function b(): number
   ```
 
 - 타입스크립트는 이를 `CommonJS`로 간주하고, 자바스크립트 파일이 다음과 같이 있다고 상상해보자
 
   ```js
-  Object.defineProperty(exports, "__esModule", { value: true });
-  exports.a = "...";
+  Object.defineProperty(exports, '__esModule', {value: true})
+  exports.a = '...'
   exports.b = function b() {
     /* ... */
-  };
+  }
   ```
 
 - 그렇다면 Nodejs 에서는 다음과 같이 default import 로 불러올 수 있다고 판단할 것
 
   ```js
-  import mod from "pkg";
-  mod.a;
-  mod.b();
+  import mod from 'pkg'
+  mod.a
+  mod.b()
   ```
 
 - 하지만 실제로는 ESModule 이었고, 원래 파일은 아마 저렇게 작성되어 있을 것
 
   ```js
-  export const a = "...";
+  export const a = '...'
   export function b() {
     /* ... */
   }
@@ -149,25 +149,25 @@ published: true
 - `.d.ts`가 다음과 같이 선언되어 있다고 가정
 
   ```ts
-  declare function hello(): string;
-  export default hello;
+  declare function hello(): string
+  export default hello
   ```
 
 - 타입스크립트는 이를 `CommonJS`로 간주하고, 자바스크립트 파일이 다음과 같이 있다고 추측
 
   ```js
-  Object.defineProperty(exports, "__esModule", { value: true });
+  Object.defineProperty(exports, '__esModule', {value: true})
   exports.default = function hello() {
     /* ... */
-  };
+  }
   ```
 
 - Node.js 에서 `CommonJS`의 `default` `import` 는 `module.exports` 객체를 통채로 가져오는 것과 동일합니다. 따라서 위 구조에서 제대로 접근하기 위해서는, 실제로는 아래와 같이 접근해야 함.
 
   ```ts
-  import mod from "pkg";
-  console.log(mod);
-  mod.default();
+  import mod from 'pkg'
+  console.log(mod)
+  mod.default()
   ```
 
 - 그러나 사실은 ESModule 코드였습니다. 실제 모듈은 아래와 같이 생겼고, 실행 시점에는 에러가 발생.
@@ -177,9 +177,9 @@ published: true
     /* ... */
   }
   // ..
-  import mod from "pkg";
-  mod();
-  mod.default; // undefined
+  import mod from 'pkg'
+  mod()
+  mod.default // undefined
   ```
 
 ---
@@ -289,24 +289,23 @@ exports.default = /* ... */;
 ```
 
 ```js
-import mod from "pkg";
-console.log(mod);
+import mod from 'pkg'
+console.log(mod)
 ```
 
 - 번들러는 `__esModule`가 있다면, 위 구문에 대해서 `[Function: f]`를 가져오지만 (미리 암묵적으로 약속된 동작), Node.js 는 그런거 없이 `{ default: [Function: f] }`를 가져온다.
 - 패키지를 번들러에서 사용하는지, `Node.js`에서 직접 사용하는지에 따라서 다른 결과를 초래
 - 위와 같은 상황은 `ESModule`로 작성된 패키지를 특별한 조치 없이 `CommonJS` 로 트랜스파일 하는 경우 발생할 수 있음
-
   - 가능한 `default`대신 `named`로 내보내는 것을 권장
   - 꼭 필요하다면, 다음과 같은 내보내기를 할 수 있도록 번들
 
     ```js
-    Object.defineProperty(exports, "__esModule", { value: true });
+    Object.defineProperty(exports, '__esModule', {value: true})
     function f() {
       /* ... */
     }
-    module.exports = f;
-    module.exports.default = f;
+    module.exports = f
+    module.exports.default = f
     ```
 
 ---
@@ -344,19 +343,19 @@ console.log(mod);
 // my-class.js
 class MyClass {
   constructor() {
-    console.log("I'm MyClass!");
+    console.log("I'm MyClass!")
   }
 
   doSomething() {
-    console.log("Doing something...");
+    console.log('Doing something...')
   }
 }
 
 // CommonJS 주 내보내기
-module.exports = MyClass;
+module.exports = MyClass
 
 // 번들러/호환성 위한 패턴: default를 자기 자신으로
-MyClass.default = MyClass;
+MyClass.default = MyClass
 ```
 
 ```ts
@@ -364,13 +363,13 @@ MyClass.default = MyClass;
 declare class MyClass {
   // `static default: typeof MyClass;`
   // -> 런타임에서 MyClass.default = MyClass; 구조를 반영
-  static default: typeof MyClass;
+  static default: typeof MyClass
 
-  doSomething(): void;
+  doSomething(): void
 }
 
 // `export = MyClass;` -> "이 모듈이 CJS로 MyClass를 내보낸다"는 뜻
-export = MyClass;
+export = MyClass
 ```
 
 ---
@@ -383,39 +382,39 @@ export = MyClass;
 // my-lib.js
 class Widget {
   constructor(name) {
-    this.name = name;
+    this.name = name
   }
 
   render() {
-    console.log(`Rendering ${this.name}`);
+    console.log(`Rendering ${this.name}`)
   }
 }
 
 // 런타임에서도 추가 정보를 담고 싶다면, 예: Widget.WidgetProps 객체
 Widget.WidgetProps = {
-  color: "string",
-  size: "number",
-};
+  color: 'string',
+  size: 'number',
+}
 
-Widget.default = Widget;
-module.exports = Widget;
+Widget.default = Widget
+module.exports = Widget
 ```
 
 ```ts
 // my-lib.d.ts
 declare class Widget {
-  static default: typeof Widget; // 런타임에서 Widget.default = Widget;
+  static default: typeof Widget // 런타임에서 Widget.default = Widget;
 
-  constructor(name: string);
-  render(): void;
+  constructor(name: string)
+  render(): void
 }
 
 // "네임스페이스 병합"을 통해, Widget에 붙는 추가 타입을 함께 선언
 declare namespace Widget {
   // 인터페이스 선언 예시
   export interface WidgetProps {
-    color: string;
-    size: number;
+    color: string
+    size: number
   }
 
   // (만약 런타임에도 Widget.WidgetProps = {...}가 있다면  타입 시스템에서 이를 객체 타입으로 선언하는 것도 가능)
@@ -426,7 +425,7 @@ declare namespace Widget {
 }
 
 // CJS export
-export = Widget;
+export = Widget
 ```
 
 ---
@@ -468,16 +467,16 @@ export = Widget;
 
 ```js
 // module.cjs
-const a = "I am a";
-const b = "I am b";
+const a = 'I am a'
+const b = 'I am b'
 
 module.exports = {
   a,
   b,
-};
+}
 // index.mjs
-import { a } from "./module.cjs";
-console.log("Value of a:", a); // ok
+import {a} from './module.cjs'
+console.log('Value of a:', a) // ok
 ```
 
 > 최선의 노력으로 `module.exports`에 할당된 객체를 파싱하지만, 실제 파서가 아니므로 모든 경우를 처리할수 없으며 처리할 수 없는 코드가 발생해버리면 그냥 포기 (bailout) 해버립니다.
@@ -485,13 +484,13 @@ console.log("Value of a:", a); // ok
 ```js
 // module.cjs
 module.exports = {
-  a: "I am A!",
-  b: "I am B!",
-};
+  a: 'I am A!',
+  b: 'I am B!',
+}
 // index.mjs
-import { a } from "./module.cjs";
+import {a} from './module.cjs'
 // Named export 'a' not found..??
-console.log("Value of a:", a);
+console.log('Value of a:', a)
 ```
 
 ---
@@ -500,11 +499,11 @@ console.log("Value of a:", a);
 
 ```js
 // module.cjs
-module.exports.a = "I am a";
-module.exports.b = "I am b";
+module.exports.a = 'I am a'
+module.exports.b = 'I am b'
 // index.mjs
-import { a } from "./module.cjs";
-console.log("Value of a:", a); // ok
+import {a} from './module.cjs'
+console.log('Value of a:', a) // ok
 ```
 
 - `module.exports.a`는 `exports` 라는 객체에 `a`를 붙인다는 것을 정적으로 분석 가능하므로 파악 가능
@@ -515,18 +514,18 @@ console.log("Value of a:", a); // ok
 
 ```js
 // module.cjs
-const a = "I am a";
-const b = "I am b";
+const a = 'I am a'
+const b = 'I am b'
 
 module.exports = {
   a,
-  c: "hello",
+  c: 'hello',
   b,
-};
+}
 // index.mjs
-import { a, b } from "./module.cjs";
+import {a, b} from './module.cjs'
 // Named export 'b' not found
-console.log("Value of a:", a, b);
+console.log('Value of a:', a, b)
 ```
 
 ---

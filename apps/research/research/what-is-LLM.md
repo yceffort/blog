@@ -1,5 +1,5 @@
 ---
-title: "LLM 그것이 알고 싶다"
+title: 'LLM 그것이 알고 싶다'
 marp: true
 paginate: true
 theme: default
@@ -7,7 +7,7 @@ tags:
   - AI
   - LLM
 date: 2025-07-03
-description: "진짜로 알고 싶다"
+description: '진짜로 알고 싶다'
 published: true
 ---
 
@@ -88,7 +88,6 @@ published: true
 ## 학습은 어떻게 진행되나?
 
 - 모델에 **수십억~수조 개의 문장**을 넣고, 다음 단어를 예측하도록 학습
-
   - 예: "React는 자바스크립트 기반의" → `라이브러리` (예측)
 
 - 정답과 예측을 비교하고, 틀렸으면 모델의 내부 파라미터를 조정
@@ -111,13 +110,11 @@ published: true
 ## 인간도 모르는 AI의 결정
 
 - 우리가 **이해하는 부분**:
-
   - 데이터를 어떻게 주고 학습시키는지
   - 손실 함수(loss function)가 어떻게 작동하는지
   - 파라미터가 어떻게 업데이트되는지
 
 - 우리가 **이해하지 못하는 부분**:
-
   - 왜 이 문장에서 'React' 대신 'Vue'를 선택했는지
   - 왜 특정 어조, 표현 방식, 순서를 택했는지
 
@@ -233,17 +230,17 @@ INSERT INTO fruits VALUES ('apple', 'red', 'fruit');
 
 ```ts
 const completion = await client.chat.completions.create({
-  model: "gpt-4o",
+  model: 'gpt-4o',
   messages: [
     {
-      role: "system",
-      content: "You are a coding assistant that talks like a pirate",
+      role: 'system',
+      content: 'You are a coding assistant that talks like a pirate',
     },
-    { role: "user", content: "Are semicolons optional in JavaScript?" },
+    {role: 'user', content: 'Are semicolons optional in JavaScript?'},
   ],
-});
+})
 
-console.log(completion.choices[0].message.content);
+console.log(completion.choices[0].message.content)
 ```
 
 - `messages`: 역할 기반 대화 입력
