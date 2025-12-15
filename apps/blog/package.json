@@ -1,8 +1,8 @@
 {
   "name": "blog",
   "version": "1.0.0",
-  "description": "yceffort blog",
   "private": true,
+  "description": "yceffort blog",
   "type": "module",
   "scripts": {
     "build": "node scripts/generate-posts-cache.mjs && next build",

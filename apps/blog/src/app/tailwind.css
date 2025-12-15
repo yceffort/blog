@@ -12,39 +12,39 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
-    *,
-    ::after,
-    ::before,
-    ::backdrop,
-    ::file-selector-button {
-        border-color: var(--color-gray-200, currentColor);
-    }
-    body {
-        @apply bg-white text-black antialiased dark:bg-gray-800 dark:text-white min-h-screen;
-    }
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+  body {
+    @apply bg-white text-black antialiased dark:bg-gray-800 dark:text-white min-h-screen;
+  }
 }
 
 .remark-code-title {
-    @apply px-5 py-3 font-mono text-sm font-bold rounded-t;
-    @apply bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200;
+  @apply px-5 py-3 font-mono text-sm font-bold rounded-t;
+  @apply bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200;
 }
 .remark-code-title + pre {
-    @apply mt-0 rounded-t-none;
+  @apply mt-0 rounded-t-none;
 }
 
 /* Code block light/dark theme */
 pre:has(> code) {
-    @apply bg-gray-100 dark:bg-gray-800;
+  @apply bg-gray-100 dark:bg-gray-800;
 }
 pre code {
-    @apply text-gray-800 dark:text-gray-100;
+  @apply text-gray-800 dark:text-gray-100;
 }
 .task-list-item:before {
-    @apply hidden;
+  @apply hidden;
 }
 html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 6rem;
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 h1,
 h2,
@@ -52,41 +52,41 @@ h3,
 h4,
 h5,
 h6 {
-    scroll-margin-top: 6rem;
+  scroll-margin-top: 6rem;
 }
 a {
-    word-break: break-all;
+  word-break: break-all;
 }
 .math-display {
-    overflow-x: auto;
+  overflow-x: auto;
 }
 h2 > a > span.icon.icon-link {
-    width: 18px;
-    height: 18px;
+  width: 18px;
+  height: 18px;
 }
 h3 > a > span.icon.icon-link {
-    width: 15px;
-    height: 15px;
+  width: 15px;
+  height: 15px;
 }
 h4 > a > span.icon.icon-link {
-    width: 12px;
-    height: 12px;
+  width: 12px;
+  height: 12px;
 }
 span.icon.icon-link {
-    display: inline-block;
-    width: 0.8em;
-    height: 0.8em;
-    margin-right: 0.2em;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1'/%3E%3Cpath d='M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1'/%3E%3C/svg%3E");
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin-right: 0.2em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1'/%3E%3Cpath d='M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1'/%3E%3C/svg%3E");
 }
 .dark span.icon.icon-link {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 490 490' xml:space='preserve'%3E%3Cpath fill='white' d='M64.333 490h58.401l33.878-137.69h122.259L245.39 490h58.401l33.878-137.69h119.92v-48.162h-108.24l29.2-117.324h79.04v-48.162H390.23L424.108 0H365.31l-33.878 138.661H208.79L242.668 0h-58.415l-33.864 138.661H32.411v48.162h106.298l-28.818 117.324h-77.48v48.162h65.8L64.333 490zM197.11 186.824h122.642l-29.2 117.324h-122.26l28.818-117.324z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 490 490' xml:space='preserve'%3E%3Cpath fill='white' d='M64.333 490h58.401l33.878-137.69h122.259L245.39 490h58.401l33.878-137.69h119.92v-48.162h-108.24l29.2-117.324h79.04v-48.162H390.23L424.108 0H365.31l-33.878 138.661H208.79L242.668 0h-58.415l-33.864 138.661H32.411v48.162h106.298l-28.818 117.324h-77.48v48.162h65.8L64.333 490zM197.11 186.824h122.642l-29.2 117.324h-122.26l28.818-117.324z'/%3E%3C/svg%3E");
 }
 pre {
-    overflow-x: auto;
+  overflow-x: auto;
 }
 code {
-    word-wrap: break-word;
+  word-wrap: break-word;
 }
 
 /**
@@ -96,142 +96,155 @@ code {
  */
 
 .code-highlight {
-    float: left; /* 1 */
-    min-width: 100%; /* 2 */
+  float: left; /* 1 */
+  min-width: 100%; /* 2 */
 }
 .code-line {
-    display: block;
-    margin-right: -16px;
-    margin-left: -16px;
-    padding-right: 16px;
-    padding-left: 16px;
-    border-left-width: 4px;
-    border-left-color: transparent;
+  display: block;
+  margin-right: -16px;
+  margin-left: -16px;
+  padding-right: 16px;
+  padding-left: 16px;
+  border-left-width: 4px;
+  border-left-color: transparent;
 }
 .code-line.inserted {
-    @apply bg-green-500/20;
+  @apply bg-green-500/20;
 }
 .code-line.deleted {
-    @apply bg-red-500/20;
+  @apply bg-red-500/20;
 }
 .highlight-line {
-    margin-right: -16px;
-    margin-left: -16px;
-    border-left-width: 4px;
-    @apply border-l-amber-500 bg-amber-500/20 dark:border-l-yellow-400 dark:bg-yellow-400/15;
+  margin-right: -16px;
+  margin-left: -16px;
+  border-left-width: 4px;
+  @apply border-l-amber-500 bg-amber-500/20 dark:border-l-yellow-400 dark:bg-yellow-400/15;
 }
 .line-number::before {
-    content: attr(line);
-    display: inline-block;
-    width: 1rem;
-    margin-right: 16px;
-    margin-left: -8px;
-    text-align: right;
-    @apply text-gray-400 dark:text-gray-500;
+  content: attr(line);
+  display: inline-block;
+  width: 1rem;
+  margin-right: 16px;
+  margin-left: -8px;
+  text-align: right;
+  @apply text-gray-400 dark:text-gray-500;
 }
 
 /* View Transitions */
 @supports (view-transition-name: none) {
-    ::view-transition-old(root),
-    ::view-transition-new(root) {
-        animation-duration: 0.3s;
-        animation-timing-function: ease-in-out;
-    }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
+  }
 }
 
 /* Theme Toggle Animation */
 ::view-transition-group(root) {
-    animation-duration: 0.5s;
-    animation-timing-function: ease-in-out;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
 }
 
 ::view-transition-old(root),
 ::view-transition-new(root) {
-    mix-blend-mode: normal;
+  mix-blend-mode: normal;
 }
 
 ::view-transition-old(root) {
-    z-index: 1;
+  z-index: 1;
 }
 
 ::view-transition-new(root) {
-    z-index: 9999;
+  z-index: 9999;
 }
 
 .theme-transition-circle::view-transition-new(root) {
-    animation: circle-clip 0.5s ease-in-out;
+  animation: circle-clip 0.5s ease-in-out;
 }
 
 .theme-transition-circle::view-transition-old(root) {
-    animation: none;
+  animation: none;
 }
 
 @keyframes circle-clip {
-    from {
-        clip-path: circle(0% at var(--theme-toggle-x, 50%) var(--theme-toggle-y, 50%));
-    }
-    to {
-        clip-path: circle(150% at var(--theme-toggle-x, 50%) var(--theme-toggle-y, 50%));
-    }
+  from {
+    clip-path: circle(
+      0% at var(--theme-toggle-x, 50%) var(--theme-toggle-y, 50%)
+    );
+  }
+  to {
+    clip-path: circle(
+      150% at var(--theme-toggle-x, 50%) var(--theme-toggle-y, 50%)
+    );
+  }
 }
 
 /* Table of Contents Customization */
-.prose h2[id^="table-of-contents"] {
-    @apply mb-4 mt-8 pb-2 border-b border-gray-200 dark:border-gray-700;
+.prose h2[id^='table-of-contents'] {
+  @apply mb-4 mt-8 pb-2 border-b border-gray-200 dark:border-gray-700;
 }
-.prose h2[id^="table-of-contents"] + ul {
-    @apply bg-gray-50 dark:bg-gray-800/50 rounded-lg p-5 border border-gray-200 dark:border-gray-700 list-none my-6 !pl-5;
+.prose h2[id^='table-of-contents'] + ul {
+  @apply bg-gray-50 dark:bg-gray-800/50 rounded-lg p-5 border border-gray-200 dark:border-gray-700 list-none my-6 !pl-5;
 }
-.prose h2[id^="table-of-contents"] + ul > li {
-    @apply mt-0 !pl-0;
+.prose h2[id^='table-of-contents'] + ul > li {
+  @apply mt-0 !pl-0;
 }
-.prose h2[id^="table-of-contents"] + ul > li::before {
-    @apply hidden; /* Remove default bullet */
+.prose h2[id^='table-of-contents'] + ul > li::before {
+  @apply hidden; /* Remove default bullet */
 }
 
 /* First level links */
-.prose h2[id^="table-of-contents"] + ul > li > a {
-    @apply font-semibold text-gray-800 dark:text-gray-200 no-underline hover:text-primary-600 dark:hover:text-primary-400 block py-1 transition-colors;
+.prose h2[id^='table-of-contents'] + ul > li > a {
+  @apply font-semibold text-gray-800 dark:text-gray-200 no-underline hover:text-primary-600 dark:hover:text-primary-400 block py-1 transition-colors;
 }
 
 /* Nested lists (subheadings) */
-.prose h2[id^="table-of-contents"] + ul > li > ul {
-    @apply mt-1 pl-4 border-l-2 border-gray-200 dark:border-gray-700 list-none !mb-2;
+.prose h2[id^='table-of-contents'] + ul > li > ul {
+  @apply mt-1 pl-4 border-l-2 border-gray-200 dark:border-gray-700 list-none !mb-2;
 }
-.prose h2[id^="table-of-contents"] + ul > li > ul > li {
-    @apply mt-1 !pl-0;
+.prose h2[id^='table-of-contents'] + ul > li > ul > li {
+  @apply mt-1 !pl-0;
 }
-.prose h2[id^="table-of-contents"] + ul > li > ul > li::before {
-    @apply hidden;
+.prose h2[id^='table-of-contents'] + ul > li > ul > li::before {
+  @apply hidden;
 }
-.prose h2[id^="table-of-contents"] + ul > li > ul > li > a {
-    @apply text-sm text-gray-600 dark:text-gray-400 no-underline hover:text-primary-600 dark:hover:text-primary-400 block py-1 transition-colors;
+.prose h2[id^='table-of-contents'] + ul > li > ul > li > a {
+  @apply text-sm text-gray-600 dark:text-gray-400 no-underline hover:text-primary-600 dark:hover:text-primary-400 block py-1 transition-colors;
 }
 
 /* Third level links */
-.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul {
-    @apply mt-1 pl-4 border-l-2 border-gray-200 dark:border-gray-700 list-none !mb-2;
+.prose h2[id^='table-of-contents'] + ul > li > ul > li > ul {
+  @apply mt-1 pl-4 border-l-2 border-gray-200 dark:border-gray-700 list-none !mb-2;
 }
-.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul > li {
-    @apply mt-1 !pl-0;
+.prose h2[id^='table-of-contents'] + ul > li > ul > li > ul > li {
+  @apply mt-1 !pl-0;
 }
-.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul > li::before {
-    @apply hidden;
+.prose h2[id^='table-of-contents'] + ul > li > ul > li > ul > li::before {
+  @apply hidden;
 }
-.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul > li > a {
-    @apply text-xs text-gray-500 dark:text-gray-400 no-underline hover:text-primary-600 dark:hover:text-primary-400 block py-1 transition-colors;
+.prose h2[id^='table-of-contents'] + ul > li > ul > li > ul > li > a {
+  @apply text-xs text-gray-500 dark:text-gray-400 no-underline hover:text-primary-600 dark:hover:text-primary-400 block py-1 transition-colors;
 }
 
 /* Fourth level links */
-.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul > li > ul {
-    @apply mt-1 pl-3 border-l-2 border-gray-100 dark:border-gray-700 list-none !mb-2;
+.prose h2[id^='table-of-contents'] + ul > li > ul > li > ul > li > ul {
+  @apply mt-1 pl-3 border-l-2 border-gray-100 dark:border-gray-700 list-none !mb-2;
 }
-.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul > li > ul > li {
-    @apply mt-1 !pl-0;
+.prose h2[id^='table-of-contents'] + ul > li > ul > li > ul > li > ul > li {
+  @apply mt-1 !pl-0;
 }
-.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul > li > ul > li::before {
-    @apply hidden;
+.prose
+  h2[id^='table-of-contents']
+  + ul
+  > li
+  > ul
+  > li
+  > ul
+  > li
+  > ul
+  > li::before {
+  @apply hidden;
 }
-.prose h2[id^="table-of-contents"] + ul > li > ul > li > ul > li > ul > li > a {
-    @apply text-xs text-gray-400 dark:text-gray-500 no-underline hover:text-primary-600 dark:hover:text-primary-400 block py-0.5 transition-colors;
+.prose h2[id^='table-of-contents'] + ul > li > ul > li > ul > li > ul > li > a {
+  @apply text-xs text-gray-400 dark:text-gray-500 no-underline hover:text-primary-600 dark:hover:text-primary-400 block py-0.5 transition-colors;
 }
