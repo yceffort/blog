@@ -8,7 +8,7 @@ import {Monitor, Moon, Sun} from './icons/themes'
 
 const ThemeSwitch = () => {
   const [menuOpen, setMenuOpen] = useState(false)
-  const {theme, setTheme} = useTheme()
+  const {theme, setTheme, resolvedTheme} = useTheme()
   const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -62,13 +62,7 @@ const ThemeSwitch = () => {
         className="flex h-10 w-10 items-center justify-center rounded-md p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
         onClick={() => setMenuOpen(!menuOpen)}
       >
-        {theme === 'system' ? (
-          <Monitor />
-        ) : theme === 'dark' ? (
-          <Moon />
-        ) : (
-          <Sun />
-        )}
+        {resolvedTheme === 'dark' ? <Moon /> : <Sun />}
       </button>
 
       {menuOpen && (
