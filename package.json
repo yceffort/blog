@@ -14,6 +14,7 @@
     "dev": "pnpm --parallel -r dev",
     "dev:blog": "pnpm --filter blog dev",
     "dev:research": "pnpm --filter research dev",
+    "build": "pnpm -r build",
     "build:blog": "pnpm --filter blog build",
     "build:research": "pnpm --filter research build",
     "lint": "pnpm -r lint",
