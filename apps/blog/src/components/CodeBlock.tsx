@@ -22,6 +22,7 @@ const CopyButton = memo(function CopyButton({
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {
+      // eslint-disable-next-line no-console
       console.error('Failed to copy')
     }
   }, [getText])
@@ -79,7 +80,9 @@ const CodeBlock = memo(function CodeBlock({
   const preRef = useRef<HTMLPreElement>(null)
 
   const getCodeText = useCallback(() => {
-    if (!preRef.current) return ''
+    if (!preRef.current) {
+      return ''
+    }
     const codeElement = preRef.current.querySelector('code')
     return codeElement?.textContent || ''
   }, [])
