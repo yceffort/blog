@@ -289,9 +289,18 @@ importers:
         specifier: ^19.2.3
         version: 19.2.3
     devDependencies:
+      '@naverpay/eslint-config':
+        specifier: ^2.2.5
+        version: 2.4.0(@types/estree@1.0.8)(@typescript-eslint/eslint-plugin@8.49.0(@typescript-eslint/parser@8.49.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(@typescript-eslint/parser@8.49.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(jsonc-eslint-parser@2.4.2)(typescript@5.9.3)
+      '@naverpay/eslint-plugin':
+        specifier: ^2.2.0
+        version: 2.3.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       '@types/react':
         specifier: ^19.1.6
         version: 19.2.7
+      eslint:
+        specifier: ^9.27.0
+        version: 9.39.2(jiti@2.6.1)
       next:
         specifier: ^16.0.10
         version: 16.0.10(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.96.0)
@@ -9431,7 +9440,7 @@ snapshots:
 
   refa@0.12.1:
     dependencies:
-      '@eslint-community/regexpp': 4.12.1
+      '@eslint-community/regexpp': 4.12.2
 
   reflect.getprototypeof@1.0.10:
     dependencies:
@@ -9453,7 +9462,7 @@ snapshots:
 
   regexp-ast-analysis@0.7.1:
     dependencies:
-      '@eslint-community/regexpp': 4.12.1
+      '@eslint-community/regexpp': 4.12.2
       refa: 0.12.1
 
   regexp-tree@0.1.27: {}
@@ -9697,7 +9706,7 @@ snapshots:
 
   scslre@0.3.0:
     dependencies:
-      '@eslint-community/regexpp': 4.12.1
+      '@eslint-community/regexpp': 4.12.2
       refa: 0.12.1
       regexp-ast-analysis: 0.7.1
 
