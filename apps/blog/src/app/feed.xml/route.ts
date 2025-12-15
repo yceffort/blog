@@ -1,6 +1,5 @@
 import {NextResponse} from 'next/server'
 
-
 import {SiteConfig} from '#src/config'
 import {getAllPosts} from '#utils/Post'
 

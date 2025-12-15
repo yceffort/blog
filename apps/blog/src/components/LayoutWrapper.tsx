@@ -1,10 +1,9 @@
 'use client'
 
-import {memo} from 'react'
-
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
+import {memo} from 'react'
 
 import Footer from './Footer'
 import MobileNav from './MobileNav'

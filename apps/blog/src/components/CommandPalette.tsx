@@ -99,7 +99,9 @@ export default function CommandPalette() {
       ),
   )
 
-  if (!open) {return null}
+  if (!open) {
+    return null
+  }
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-start justify-center pt-[20%]">
