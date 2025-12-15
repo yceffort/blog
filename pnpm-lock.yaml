@@ -70,8 +70,8 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       '@types/node':
-        specifier: ^24.10.1
-        version: 24.10.3
+        specifier: ^25.0.2
+        version: 25.0.2
       '@types/react':
         specifier: ^19.1.6
         version: 19.2.7
@@ -217,8 +217,8 @@ importers:
         specifier: ^0.5.16
         version: 0.5.19(tailwindcss@4.1.18)
       '@types/node':
-        specifier: ^24.10.1
-        version: 24.10.3
+        specifier: ^25.0.2
+        version: 25.0.2
       '@types/react':
         specifier: ^19.1.6
         version: 19.2.7
@@ -1352,8 +1352,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@24.10.3':
-    resolution: {integrity: sha512-gqkrWUsS8hcm0r44yn7/xZeV1ERva/nLgrLxFRUGb7aoNMIJfZJ3AC261zDQuOAKC7MiXai1WCpYc48jAHoShQ==}
+  '@types/node@25.0.2':
+    resolution: {integrity: sha512-gWEkeiyYE4vqjON/+Obqcoeffmk0NF15WSBwSs7zwVA2bAbTaE0SJ7P0WNGoJn8uE7fiaV5a7dKYIJriEqOrmA==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -6005,7 +6005,7 @@ snapshots:
   '@types/glob@8.1.0':
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 24.10.3
+      '@types/node': 25.0.2
 
   '@types/gtag.js@0.0.20': {}
 
@@ -6037,7 +6037,7 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@24.10.3':
+  '@types/node@25.0.2':
     dependencies:
       undici-types: 7.16.0
 
