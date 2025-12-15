@@ -3,8 +3,7 @@
 import dynamic from 'next/dynamic'
 
 const SharedThemeSwitch = dynamic(
-  () =>
-    import('@yceffort/shared/components').then((mod) => mod.ThemeSwitch),
+  () => import('@yceffort/shared/components').then((mod) => mod.ThemeSwitch),
   {
     ssr: false,
     loading: () => (

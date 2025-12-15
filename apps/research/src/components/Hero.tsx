@@ -1,8 +1,7 @@
 'use client'
 
-import {memo, useEffect, useState} from 'react'
-
 import Link from 'next/link'
+import {memo, useEffect, useState} from 'react'
 
 import {SiteConfig} from '@/config'
 

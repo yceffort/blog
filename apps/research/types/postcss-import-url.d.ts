@@ -1,14 +1,14 @@
-declare module "postcss-import-url" {
-  import type { PluginCreator } from "postcss";
+declare module 'postcss-import-url' {
+  import type {PluginCreator} from 'postcss'
 
   interface Options {
-    recursive?: boolean;
-    resolveUrls?: boolean;
-    modernBrowser?: boolean;
-    userAgent?: string | null;
-    dataUrls?: boolean;
+    recursive?: boolean
+    resolveUrls?: boolean
+    modernBrowser?: boolean
+    userAgent?: string | null
+    dataUrls?: boolean
   }
 
-  const plugin: PluginCreator<Options>;
-  export default plugin;
+  const plugin: PluginCreator<Options>
+  export default plugin
 }

@@ -17,9 +17,7 @@ export async function GET(request: Request) {
       return new Response('Missing title', {status: 400})
     }
 
-    const address = pathParam
-      ? `${SiteConfig.url}${pathParam}`
-      : SiteConfig.url
+    const address = pathParam ? `${SiteConfig.url}${pathParam}` : SiteConfig.url
     const tags = tagsParam ? tagsParam.split(',') : []
 
     const protocol = request.headers.get('x-forwarded-proto') || 'http'

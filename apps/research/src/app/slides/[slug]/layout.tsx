@@ -1,7 +1,3 @@
-export default function SlideLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return children;
+export default function SlideLayout({children}: {children: React.ReactNode}) {
+  return children
 }
