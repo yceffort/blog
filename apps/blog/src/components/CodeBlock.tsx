@@ -8,18 +8,23 @@ interface CodeBlockProps {
   filename?: string
 }
 
-const CopyButton = memo(function CopyButton({text}: {text: string}) {
+const CopyButton = memo(function CopyButton({
+  getText,
+}: {
+  getText: () => string
+}) {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = useCallback(async () => {
     try {
+      const text = getText()
       await navigator.clipboard.writeText(text)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {
       console.error('Failed to copy')
     }
-  }, [text])
+  }, [getText])
 
   return (
     <button
@@ -29,14 +34,29 @@ const CopyButton = memo(function CopyButton({text}: {text: string}) {
     >
       {copied ? (
         <span className="flex items-center gap-1">
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
           </svg>
           Copied
         </span>
       ) : (
         <span className="flex items-center gap-1">
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -51,7 +71,11 @@ const CopyButton = memo(function CopyButton({text}: {text: string}) {
   )
 })
 
-const CodeBlock = memo(function CodeBlock({children, className, filename}: CodeBlockProps) {
+const CodeBlock = memo(function CodeBlock({
+  children,
+  className,
+  filename,
+}: CodeBlockProps) {
   const preRef = useRef<HTMLPreElement>(null)
 
   const getCodeText = useCallback(() => {
@@ -67,10 +91,13 @@ const CodeBlock = memo(function CodeBlock({children, className, filename}: CodeB
           {filename}
         </div>
       )}
-      <pre ref={preRef} className={`${className || ''} ${filename ? '!mt-0 rounded-t-none' : ''}`}>
+      <pre
+        ref={preRef}
+        className={`${className || ''} ${filename ? '!mt-0 rounded-t-none' : ''}`}
+      >
         {children}
       </pre>
-      <CopyButton text={getCodeText()} />
+      <CopyButton getText={getCodeText} />
     </div>
   )
 })
