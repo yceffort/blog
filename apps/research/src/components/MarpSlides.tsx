@@ -66,6 +66,7 @@ export function MarpSlides({ dataHtml, dataCss, dataFonts }: MarpSlidesProps) {
   // 상태 관리
   const [activeIndex, setActiveIndex] = useState(0);
   const [isBottomHovered, setIsBottomHovered] = useState(false);
+  const [isOverviewOpen, setIsOverviewOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState<ContextMenuState>({
     visible: false,
     x: 0,
@@ -103,11 +104,26 @@ export function MarpSlides({ dataHtml, dataCss, dataFonts }: MarpSlidesProps) {
 
   // 키보드 네비게이션
   useEffect(() => {
-    if (!multiple) {
-      return;
-    }
-
     const handleKeyDown = (e: KeyboardEvent) => {
+      // 오버뷰 토글 (G 키)
+      if (e.key === "g" || e.key === "G") {
+        if (multiple) {
+          setIsOverviewOpen((prev) => !prev);
+        }
+        return;
+      }
+
+      // ESC로 오버뷰 닫기
+      if (e.key === "Escape" && isOverviewOpen) {
+        setIsOverviewOpen(false);
+        return;
+      }
+
+      // 오버뷰가 열려있으면 슬라이드 네비게이션 비활성화
+      if (isOverviewOpen || !multiple) {
+        return;
+      }
+
       switch (e.key) {
         case "ArrowLeft":
           swiperRef.current?.slidePrev();
@@ -126,7 +142,7 @@ export function MarpSlides({ dataHtml, dataCss, dataFonts }: MarpSlidesProps) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [multiple, html.length]);
+  }, [multiple, html.length, isOverviewOpen]);
 
   // 휠 네비게이션
   const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -215,6 +231,25 @@ export function MarpSlides({ dataHtml, dataCss, dataFonts }: MarpSlidesProps) {
   const handleBottomEnter = useCallback(() => setIsBottomHovered(true), []);
   const handleBottomLeave = useCallback(() => setIsBottomHovered(false), []);
 
+  // 오버뷰 썸네일 클릭 핸들러
+  const handleOverviewSlideClick = useCallback(
+    (index: number) => {
+      swiperRef.current?.slideTo(index);
+      setIsOverviewOpen(false);
+    },
+    [],
+  );
+
+  // 오버뷰 오버레이 클릭 핸들러 (배경 클릭 시 닫기)
+  const handleOverviewOverlayClick = useCallback(
+    (e: ReactMouseEvent<HTMLDivElement>) => {
+      if (e.target === e.currentTarget) {
+        setIsOverviewOpen(false);
+      }
+    },
+    [],
+  );
+
   // 컨텍스트 메뉴 핸들러
   const handleContextMenu = useCallback(
     (e: ReactMouseEvent<HTMLDivElement>) => {
@@ -268,6 +303,10 @@ export function MarpSlides({ dataHtml, dataCss, dataFonts }: MarpSlidesProps) {
         if (num >= 1 && num <= html.length) {
           swiperRef.current?.slideTo(num - 1);
         }
+        closeContextMenu();
+      },
+      openOverview: () => {
+        setIsOverviewOpen(true);
         closeContextMenu();
       },
       fullscreen: () => {
@@ -394,6 +433,36 @@ export function MarpSlides({ dataHtml, dataCss, dataFonts }: MarpSlidesProps) {
         </div>
       )}
 
+      {/* 슬라이드 오버뷰 */}
+      {multiple && isOverviewOpen && (
+        <div
+          className={styles.overview}
+          onClick={handleOverviewOverlayClick}
+          role="dialog"
+          aria-label="슬라이드 오버뷰"
+        >
+          <div className={styles.overviewGrid}>
+            {html.map((_, i) => (
+              <button
+                key={i}
+                className={`${styles.overviewItem} ${i === activeIndex ? styles.active : ""}`}
+                onClick={() => handleOverviewSlideClick(i)}
+                aria-label={`슬라이드 ${i + 1}로 이동`}
+                aria-current={i === activeIndex ? "true" : undefined}
+              >
+                <div className={styles.overviewThumbnail}>
+                  <Marp rendered={marpRenderData} page={i + 1} />
+                </div>
+                <span className={styles.overviewNumber}>{i + 1}</span>
+              </button>
+            ))}
+          </div>
+          <div className={styles.overviewHint}>
+            ESC 또는 G 키로 닫기
+          </div>
+        </div>
+      )}
+
       {/* 컨텍스트 메뉴 */}
       {contextMenu.visible && (
         <div
@@ -467,6 +536,15 @@ export function MarpSlides({ dataHtml, dataCss, dataFonts }: MarpSlidesProps) {
                   이동
                 </button>
               </div>
+              <div className={styles.contextMenuDivider} />
+              <button
+                className={styles.contextMenuItem}
+                onClick={menuActions.openOverview}
+              >
+                <span className={styles.contextMenuIcon}>▦</span>
+                슬라이드 오버뷰
+                <span className={styles.contextMenuShortcut}>G</span>
+              </button>
               <div className={styles.contextMenuDivider} />
             </>
           )}
