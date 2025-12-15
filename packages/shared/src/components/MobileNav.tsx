@@ -1,8 +1,7 @@
 'use client'
 
-import {memo, useEffect, useState} from 'react'
-
 import Link from 'next/link'
+import {memo, useEffect, useState} from 'react'
 
 interface MenuItem {
   label: string
@@ -47,9 +46,7 @@ const MobileNav = memo(function MobileNav({menu}: MobileNavProps) {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth={2}
-            d={
-              navShow ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'
-            }
+            d={navShow ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
           />
         </svg>
       </button>
