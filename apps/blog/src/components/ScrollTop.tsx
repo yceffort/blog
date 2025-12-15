@@ -20,7 +20,10 @@ export default function ScrollTop() {
     }
 
     const observer = new MutationObserver(checkTOC)
-    observer.observe(document.body, {attributes: true, attributeFilter: ['data-has-toc']})
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['data-has-toc'],
+    })
 
     checkTOC()
     window.addEventListener('scroll', handleWindowScroll)
@@ -34,7 +37,9 @@ export default function ScrollTop() {
     window.scrollTo({top: 0, behavior: 'smooth'})
   }
 
-  if (hasTOC) return null
+  if (hasTOC) {
+    return null
+  }
 
   return (
     <button

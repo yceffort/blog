@@ -12,12 +12,18 @@ interface Particle {
   opacity: number
 }
 
-const RAIN_CODES = [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82, 95, 96, 99]
+const RAIN_CODES = [
+  51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82, 95, 96, 99,
+]
 const SNOW_CODES = [71, 73, 75, 77, 85, 86]
 
 function getWeatherType(code: number): WeatherType {
-  if (RAIN_CODES.includes(code)) return 'rain'
-  if (SNOW_CODES.includes(code)) return 'snow'
+  if (RAIN_CODES.includes(code)) {
+    return 'rain'
+  }
+  if (SNOW_CODES.includes(code)) {
+    return 'snow'
+  }
   return null
 }
 
@@ -58,9 +64,8 @@ export default function WeatherEffect() {
         }
       }
 
-      const apiUrl = lat && lon
-        ? `/api/weather?lat=${lat}&lon=${lon}`
-        : '/api/weather'
+      const apiUrl =
+        lat && lon ? `/api/weather?lat=${lat}&lon=${lon}` : '/api/weather'
 
       const res = await fetch(apiUrl)
       const data = await res.json()
@@ -89,7 +94,8 @@ export default function WeatherEffect() {
     }
 
     document.addEventListener('visibilitychange', handleVisibility)
-    return () => document.removeEventListener('visibilitychange', handleVisibility)
+    return () =>
+      document.removeEventListener('visibilitychange', handleVisibility)
   }, [])
 
   useEffect(() => {
@@ -102,7 +108,9 @@ export default function WeatherEffect() {
 
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
-    if (!ctx) return
+    if (!ctx) {
+      return
+    }
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth
@@ -118,12 +126,14 @@ export default function WeatherEffect() {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          speed: weatherType === 'snow'
-            ? 0.5 + Math.random() * 1.5
-            : 4 + Math.random() * 6,
-          size: weatherType === 'snow'
-            ? 2 + Math.random() * 3
-            : 1 + Math.random() * 1.5,
+          speed:
+            weatherType === 'snow'
+              ? 0.5 + Math.random() * 1.5
+              : 4 + Math.random() * 6,
+          size:
+            weatherType === 'snow'
+              ? 2 + Math.random() * 3
+              : 1 + Math.random() * 1.5,
           opacity: 0.3 + Math.random() * 0.5,
         })
       }
@@ -179,7 +189,9 @@ export default function WeatherEffect() {
     }
   }, [weatherType, isVisible])
 
-  if (!weatherType) return null
+  if (!weatherType) {
+    return null
+  }
 
   return (
     <canvas

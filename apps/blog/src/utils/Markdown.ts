@@ -48,23 +48,33 @@ export function parseCodeSnippet() {
 export function extractCodeFilename() {
   return (tree: Root) => {
     visit(tree, 'element', (node: Element, index, parent) => {
-      if (node.tagName !== 'pre') return
-      if (!parent || typeof index !== 'number') return
+      if (node.tagName !== 'pre') {
+        return
+      }
+      if (!parent || typeof index !== 'number') {
+        return
+      }
 
       const codeElement = node.children.find(
         (child): child is Element =>
           child.type === 'element' && child.tagName === 'code',
       )
 
-      if (!codeElement) return
+      if (!codeElement) {
+        return
+      }
 
       const className = codeElement.properties?.className
-      if (!Array.isArray(className)) return
+      if (!Array.isArray(className)) {
+        return
+      }
 
       const langClass = className.find(
         (c) => typeof c === 'string' && c.startsWith('language-'),
       )
-      if (typeof langClass !== 'string') return
+      if (typeof langClass !== 'string') {
+        return
+      }
 
       const match = langClass.match(/^language-(\w+):(.+)$/)
       if (match) {
@@ -79,18 +89,26 @@ export function extractCodeFilename() {
 export function addCodeTitle() {
   return (tree: Root) => {
     visit(tree, 'element', (node: Element, index, parent) => {
-      if (node.tagName !== 'pre') return
-      if (!parent || typeof index !== 'number') return
+      if (node.tagName !== 'pre') {
+        return
+      }
+      if (!parent || typeof index !== 'number') {
+        return
+      }
 
       const codeElement = node.children.find(
         (child): child is Element =>
           child.type === 'element' && child.tagName === 'code',
       )
 
-      if (!codeElement) return
+      if (!codeElement) {
+        return
+      }
 
       const filename = codeElement.properties?.['data-filename']
-      if (!filename) return
+      if (!filename) {
+        return
+      }
 
       const titleNode: Element = {
         type: 'element',

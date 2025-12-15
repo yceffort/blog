@@ -1,4 +1,6 @@
-import {NextRequest, NextResponse} from 'next/server'
+import {NextResponse} from 'next/server'
+
+import type {NextRequest} from 'next/server'
 
 const SEOUL_COORDS = {latitude: 37.5665, longitude: 126.978}
 const ALLOWED_ORIGINS = ['yceffort.kr', 'localhost']
@@ -21,7 +23,9 @@ function isAllowedOrigin(request: NextRequest): boolean {
   const referer = request.headers.get('referer')
 
   const checkDomain = (url: string | null) => {
-    if (!url) return false
+    if (!url) {
+      return false
+    }
     return ALLOWED_ORIGINS.some((domain) => url.includes(domain))
   }
 
@@ -58,7 +62,10 @@ export async function GET(request: NextRequest) {
     )
 
     if (!res.ok) {
-      return NextResponse.json({error: 'Failed to fetch weather'}, {status: 500})
+      return NextResponse.json(
+        {error: 'Failed to fetch weather'},
+        {status: 500},
+      )
     }
 
     const data = await res.json()
