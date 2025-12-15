@@ -1,5 +1,5 @@
 ---
-title: "RAG 그것이 알고 싶다"
+title: 'RAG 그것이 알고 싶다'
 marp: true
 paginate: true
 theme: default
@@ -7,7 +7,7 @@ tags:
   - AI
   - RAG
 date: 2025-07-03
-description: "진짜로 알고 싶다"
+description: '진짜로 알고 싶다'
 published: true
 ---
 
@@ -136,7 +136,7 @@ debounce: [0.21, -0.14, 0.85]
 ### 3️⃣ 실무에서는 이렇게 계산
 
 ```ts
-const similarity = cosineSimilarity(vec1, vec2);
+const similarity = cosineSimilarity(vec1, vec2)
 // 0~1 사이 값: 1에 가까울수록 유사
 ```
 
@@ -192,13 +192,13 @@ isEmpty 함수 (15줄) → 작은 벡터
 
 ```ts
 // 1. 사용자 질문을 벡터로 변환
-const queryVector = await generateEmbedding(userQuery);
+const queryVector = await generateEmbedding(userQuery)
 
 // 2. 가장 유사한 코드 15개 찾기
-const top15 = vectorIndex.search(queryVector, 15);
+const top15 = vectorIndex.search(queryVector, 15)
 
 // 3. 추가로 정확도 높이기 (휴리스틱)
-const reranked = applyHeuristics(top15, userQuery);
+const reranked = applyHeuristics(top15, userQuery)
 ```
 
 ---
@@ -299,22 +299,22 @@ const reranked = applyHeuristics(top15, userQuery);
 
 ```typescript
 // 시스템 프롬프트
-`당신은 Pie Bot입니다. 사내 코드 전문가로서 도움을 제공합니다.
+;`당신은 Pie Bot입니다. 사내 코드 전문가로서 도움을 제공합니다.
 
 현재 상황:
 - 파일: ${editorFilePath}
 - 코드: ${targetCode}
 
 참고 자료:
-${top3Results.map((r) => r.content).join("\n")}
+${top3Results.map((r) => r.content).join('\n')}
 
 지침:
 1. 작동하는 코드로 답변
 2. 필요한 import 명시
-3. 한국어로 설명`;
+3. 한국어로 설명`
 
 // 사용자 메시지
-userQuery: "이 버튼에 throttle 적용해줘";
+userQuery: '이 버튼에 throttle 적용해줘'
 ```
 
 ---
@@ -331,7 +331,7 @@ userQuery: "이 버튼에 throttle 적용해줘";
 
 ```ts
 const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-pro-latest",
+  model: 'gemini-1.5-pro-latest',
   safetySettings: [
     {
       category: HarmCategory.HARM_CATEGORY_HARASSMENT,
@@ -339,7 +339,7 @@ const model = genAI.getGenerativeModel({
     },
     // ... 다른 안전 설정들
   ],
-});
+})
 ```
 
 ### 2️⃣ 현재 사용 중인 모델
@@ -358,9 +358,9 @@ const model = genAI.getGenerativeModel({
 ```ts
 const chat = generativeModel.startChat({
   history: conversationHistory,
-  generationConfig: { maxOutputTokens: 8192 },
-});
-const result = await chat.sendMessage(promptForThisTurn);
+  generationConfig: {maxOutputTokens: 8192},
+})
+const result = await chat.sendMessage(promptForThisTurn)
 ```
 
 ### 2️⃣ 웹뷰로 결과 전달
@@ -368,9 +368,9 @@ const result = await chat.sendMessage(promptForThisTurn);
 ```ts
 // VSCode 웹뷰 패널에 결과 표시
 webviewPanel.webview.postMessage({
-  type: "botResponse",
+  type: 'botResponse',
   content: result.response.text(),
-});
+})
 ```
 
 ### 3️⃣ 후속 질문 지원
@@ -386,7 +386,7 @@ webviewPanel.webview.postMessage({
 
 ```ts
 // LLM이 상상으로 만든 코드
-import { superThrottle } from "@naverpay/pie"; // 없는 함수!
+import {superThrottle} from '@naverpay/pie' // 없는 함수!
 ```
 
 ### 해결책: 명시적 제약

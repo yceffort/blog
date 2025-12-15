@@ -1,8 +1,8 @@
 {
   "name": "research",
   "version": "1.0.0",
-  "description": "yceffort research",
   "private": true,
+  "description": "yceffort research",
   "type": "module",
   "scripts": {
     "build": "next build",
@@ -14,7 +14,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@yceffort/shared": "workspace:*",
     "@marp-team/marp-core": "^4.2.0",
     "@naverpay/eslint-config": "^2.2.5",
     "@naverpay/eslint-plugin": "^2.2.0",
@@ -25,6 +24,7 @@
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.0.4",
     "@vercel/analytics": "^1.5.0",
+    "@yceffort/shared": "workspace:*",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "eslint": "^9.27.0",

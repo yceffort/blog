@@ -7,7 +7,7 @@ tags:
   - javascript
   - react
 date: 2025-05-15
-description: "🤔"
+description: '🤔'
 published: true
 ---
 
@@ -24,9 +24,9 @@ published: true
 
   ```javascript
   // Client
-  fetch("/api/user", {
+  fetch('/api/user', {
     /* ... */
-  });
+  })
   ```
 
 - **분리된 프로그램:** 클라이언트와 서버는 완전히 별개의 세상
@@ -53,11 +53,11 @@ published: true
 
 ```javascript
 // /actions/updateUsername.js (Server)
-"use server";
+'use server'
 
 export async function updateUsername(userId, newName) {
   // ... DB 업데이트 로직 ...
-  return { success: true, newName };
+  return {success: true, newName}
 }
 ```
 
@@ -69,11 +69,11 @@ export async function updateUsername(userId, newName) {
 
 ```javascript
 // MyComponent.jsx (Client)
-import { updateUsername } from "./actions/updateUsername";
+import {updateUsername} from './actions/updateUsername'
 
 async function handleClick() {
-  const result = await updateUsername("user123", "새이름");
-  console.log(result.newName); // '새이름'
+  const result = await updateUsername('user123', '새이름')
+  console.log(result.newName) // '새이름'
 }
 ```
 
@@ -94,12 +94,12 @@ async function handleClick() {
 
 ```javascript
 // /components/LikeButton.jsx (Client)
-"use client";
+'use client'
 
-export function LikeButton({ initialLikes }) {
-  const [likes, setLikes] = useState(initialLikes);
+export function LikeButton({initialLikes}) {
+  const [likes, setLikes] = useState(initialLikes)
   // ... 클릭 핸들러 등 ...
-  return <button onClick={handleClick}>{likes} Likes</button>;
+  return <button onClick={handleClick}>{likes} Likes</button>
 }
 ```
 
@@ -198,14 +198,14 @@ export default function Page() {
 ## 아래 코드에서 에러가 난다면 뭐가 문젤까?
 
 ```js
-import { someServerFunction } from "./serverActions";
+import {someServerFunction} from './serverActions'
 
 try {
-  const result = await someServerFunction(data);
+  const result = await someServerFunction(data)
   // 성공 로직
 } catch (error) {
   // 오류 처리
-  console.error("서버 함수 호출 오류:", error);
+  console.error('서버 함수 호출 오류:', error)
 }
 ```
 
@@ -221,23 +221,23 @@ try {
 ```js
 // 클라이언트 측 코드
 try {
-  const response = await fetch("/api/someEndpoint", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+  const response = await fetch('/api/someEndpoint', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(data),
-  });
+  })
 
   if (!response.ok) {
     // HTTP 상태 코드가 200-299 범위가 아닐 때
     // (예: 404 Not Found, 500 Internal Server Error 등)
     // 여기서 오류는 "서버 엔드포인트" 자체와의 통신에서 발생했음을 알 수 있음
-    throw new Error(`HTTP error! status: ${response.status}`);
+    throw new Error(`HTTP error! status: ${response.status}`)
   }
-  const result = await response.json();
+  const result = await response.json()
   // 성공 로직
 } catch (error) {
   // 오류 처리
-  console.error("API 호출 오류:", error);
+  console.error('API 호출 오류:', error)
   // 만약 fetch 자체가 실패했다면 (예: 네트워크 연결 없음)
   // error 객체는 보통 TypeError를 가지고 있으며, 이걸로 파악가능
 }
