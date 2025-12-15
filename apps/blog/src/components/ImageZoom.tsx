@@ -27,6 +27,7 @@ export default function ImageZoom({
   const [imageRect, setImageRect] = useState<DOMRect | null>(null)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
   }, [])
 
@@ -49,7 +50,9 @@ export default function ImageZoom({
   }, [])
 
   useEffect(() => {
-    if (!isZoomed) return
+    if (!isZoomed) {
+      return
+    }
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -67,7 +70,9 @@ export default function ImageZoom({
   }, [isZoomed, handleClose])
 
   const calculateTransform = () => {
-    if (!imageRect) return {}
+    if (!imageRect) {
+      return {}
+    }
 
     const viewportWidth = window.innerWidth
     const viewportHeight = window.innerHeight
@@ -103,7 +108,6 @@ export default function ImageZoom({
   }
 
   const ImageComponent = isExternal ? (
-    // eslint-disable-next-line @next/next/no-img-element
     <img src={src} alt={alt} width={width} height={height} />
   ) : (
     <Image
