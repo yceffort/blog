@@ -144,24 +144,19 @@ code {
   animation-duration: 0.5s;
   animation-timing-function: ease-in-out;
 }
-
 ::view-transition-old(root),
 ::view-transition-new(root) {
   mix-blend-mode: normal;
 }
-
 ::view-transition-old(root) {
   z-index: 1;
 }
-
 ::view-transition-new(root) {
   z-index: 9999;
 }
-
 .theme-transition-circle::view-transition-new(root) {
   animation: circle-clip 0.5s ease-in-out;
 }
-
 .theme-transition-circle::view-transition-old(root) {
   animation: none;
 }
