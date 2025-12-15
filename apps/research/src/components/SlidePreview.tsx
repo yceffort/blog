@@ -15,7 +15,9 @@ export const SlidePreview = memo(function SlidePreview({
   css,
   fonts,
 }: SlidePreviewProps) {
-  const stableFonts = useMemo(() => fonts, [fonts.join(',')])
+  const fontsKey = fonts.join(',')
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const stableFonts = useMemo(() => fonts, [fontsKey])
   const elementRef = useRef<HTMLSpanElement>(null)
 
   useFontFace(stableFonts)
