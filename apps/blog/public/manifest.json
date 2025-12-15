@@ -1,7 +1,8 @@
 {
   "name": "yceffort",
   "short_name": "yceffort",
-  "icons": [{
+  "icons": [
+    {
       "src": "\/favicon\/android-icon-36x36.png",
       "sizes": "36x36",
       "type": "image\/png",
