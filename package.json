@@ -17,7 +17,9 @@
     "build:blog": "pnpm --filter blog build",
     "build:research": "pnpm --filter research build",
     "lint": "pnpm -r lint",
-    "lint:fix": "pnpm -r lint:fix"
+    "lint:fix": "pnpm -r lint:fix",
+    "prettier": "pnpm -r prettier",
+    "prettier:fix": "pnpm -r prettier:fix"
   },
   "devDependencies": {
     "@naverpay/commit-helper": "^1.2.0",
