@@ -31,7 +31,8 @@ export async function GET(request: Request) {
       return new Response('Missing title', {status: 400})
     }
 
-    const address = pathParam ? `${SiteConfig.url}${pathParam}` : SiteConfig.url
+    const urlParam = searchParams.get('url')
+    const address = urlParam || (pathParam ? `${SiteConfig.url}${pathParam}` : SiteConfig.url)
     const tags = tagsParam ? tagsParam.split(',') : []
 
     // 1. Fetch Background Image from Public URL
