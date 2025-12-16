@@ -28,6 +28,28 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
+  openGraph: {
+    title: SiteConfig.title,
+    description: 'Frontend-focused full stack engineer',
+    url: 'https://yceffort.kr',
+    siteName: SiteConfig.title,
+    images: [
+      {
+        url: '/og-default.png',
+        width: 1200,
+        height: 630,
+        alt: SiteConfig.title,
+      },
+    ],
+    locale: 'ko_KR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SiteConfig.title,
+    description: 'Frontend-focused full stack engineer',
+    images: ['/og-default.png'],
+  },
   icons: {
     icon: '/favicon/apple-touch-icon.png',
     shortcut: '/favicon/apple-touch-icon.png',
