@@ -10,7 +10,7 @@ date: 2025-03-21 22:38:46
 description: '좋은 경험이었습니다(2)'
 ---
 
-![image](/react-interview-guide.jpg)
+![image](https://wikibook.co.kr/images/cover/l/9791158395377.jpg)
 
 - https://product.kyobobook.co.kr/detail/S000214006794
 - https://wikibook.co.kr/react-interview-guide/

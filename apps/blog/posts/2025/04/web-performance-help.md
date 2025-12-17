@@ -53,7 +53,7 @@ description: '🤔'
 
 > 아래는 실제 작업 결과물 입니다.
 
-![image](/images/web-performance-notion.png)
+![image](/2025/04/images/web-performance-notion.png)
 
 문서는 링크를 아는 분만 열람할 수 있으며, 최종적으로 피드백을 받고 블로그 또는 책에 소개될 예정입니다.
 
