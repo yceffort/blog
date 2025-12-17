@@ -73,7 +73,7 @@ https://httparchive.org/reports/state-of-javascript?start=earliest&end=latest&vi
 
 2025년 4월 29일 기준으로 배포되어 있는 웹사이트를 살펴보았습니다.
 
-![image.png](/images/web-performance-analysis-1/image.png)
+![image.png](/2025/05/images/web-performance-analysis-1/image.png)
 
 분석에 사용한 도구는 다음과 같습니다.
 
@@ -121,19 +121,19 @@ LCP (Largeset Contentful Paint) 는 잘 아시는 것 처럼 핵심 웹 지표�
 
 사실 100kb 는 엄밀히 말하면 요즘 프론트엔드 트렌드 치고는 큰 파일은 아닙니다만, 문제는 이 서비스가 싱글페이지 애플리케이션이라는 것 입니다. SSR 의 혜택을 전혀 받을 수 없기 때문에 이미지를 그리는 시점은 순전히 자바스크립트에 영향을 받게 되는데, 이 자바스크립트 파싱이 지연될 수록 LCP 이미지를 그려지는게 느려지게 됩니다.
 
-![image.png](/images/web-performance-analysis-1/image1.png)
+![image.png](/2025/05/images/web-performance-analysis-1/image1.png)
 
 위 스크린샷은 해당 사이트의 성능을 크롬 개발자 도구로 측정한 모습입니다. 모든 이미지가 자바스크립트 리소스 로딩 이후에 인식되고 실행되는 것으로 보아, 이미지 렌더링에 필요한 코드가 모두 자바스크립트 다운로드 및 평가 이후에 이뤄진다는 것을 알 수 있습니다.
 
-![image.png](/images/web-performance-analysis-1/image2.png)
+![image.png](/2025/05/images/web-performance-analysis-1/image2.png)
 
 위 스크린샷은 해당 크롬 개발자 도구에서 네트워크 탭으로, 해당 이미지를 어디서 로딩했는지 확인할 수 있습니다. `initiator` 가 해당 리소스를 불러온 주체인데, 이를 누르면 어느 코드에서 이미지를 불러온지 확인할 수 있습니다.
 
-![image.png](/images/web-performance-analysis-1/image3.png)
+![image.png](/2025/05/images/web-performance-analysis-1/image3.png)
 
 그리고 여기에 크롬 디버거를 걸어둔다면, 이 함수를 호출하기 위한 콜스택을 확인할 수 있습니다.
 
-![image.png](/images/web-performance-analysis-1/image4.png)
+![image.png](/2025/05/images/web-performance-analysis-1/image4.png)
 
 콜스택이 총 18개 정도로, 해당 이미지를 그리는 과정에 이르기까지 총 18번의 함수를 호출해야한다는 것을 의미합니다. 위 라이브러리 현황, 그리고 현재 상황을 종합해 봤을때 18개 함수를 호출되기까지 이르는 과정은 아마도 다음과 같을 것입니다.
 
@@ -170,11 +170,11 @@ Next.js 나 Remix 와 같은 리액트 기반 서버사이드 렌더링 프레�
 
 LCP 이미지는 현재 프리로드 스캐너에 걸릴 수 없는 구조입니다. 왜냐하면 이미지의 존재 자체를 js 가 모두 평가한 시점에서야 비로소 알수 있기 때문입니다. 만약 HTML `<head>`에 `<link rel="preload" as="image" href="/webp/part1/time.webp">` 태그를 추가하여 브라우저가 JS 실행을 기다리지 않고 미리 이미지를 다운로드 할 수 있다면, 설령 이미지 삽입 시점은 JS 실행 이후가 될지라도 보다 빠르게 불러올 수 있습니다. 아래는 개발자님 사이트에서 link 태그를 적용하기 전 후 예시입니다.
 
-![image.png](/images/web-performance-analysis-1/image5.png)
+![image.png](/2025/05/images/web-performance-analysis-1/image5.png)
 
 적용하기전, 이미 아시는 것 처럼 이미지 다운로드는 JS 실행 시점 이후에 잡혀있습니다. 그 이유는 브라우저가 이미지가 존재한다는 것을 알아채는 시점이 그 이후이기 때문입니다.
 
-![image.png](/images/web-performance-analysis-1/image6.png)
+![image.png](/2025/05/images/web-performance-analysis-1/image6.png)
 
 하지만 프리로드 스캐너가 인식할 수 있도록 `link` 태그를 추가한 이후에는 상황이 많이 달라졌습니다. js 를 다운로드하고 파싱하고 있는 와중에도 100kb 에 달하는 이미지를 병렬로 다운로드 하는 것을 볼 수 있습니다. 이는 프리로드 스캐너에 의해 이미지가 미리 스캔되어 다운로드 되었다는 증거이며, 비록 이미지 로딩은 js 시점 이후라 할지라도 렌더링 하는 속도는 훨씬 빨라질 것입니다.
 
@@ -210,15 +210,15 @@ CLS는 웹 페이지의 시각적 안정성을 측정하는 핵심 지표입니�
 
 이 문제의 해결방안 역시 LCP , 정확히는 프리로드 스캐너와 맞닿아있습니다. 앞서 프리로드 스캐너는 미리 이미지를 스캔한다고 말씀드렸는데요, 단순히 미리 이미지를 스캔하고 다운로드 하는 것이 아니라 미리 이미지의 사이즈도 알아둡니다. 현재 CLS 가 발생하는 이유는 이미지 다운로드도 늦는데, 이미지 크기 자체도 늦게 알아채게 되서 이미지를 다운로드 한 이후에 크기를 알게 되고, 그 이후에 그 이미지 크기 만큼 HTML 크기를 확보하면서 발생하게 됩니다. 이 점은 `<img>` 태그 내에 사이즈가 없어서 더욱 부각되는 문제점 입니다.
 
-![image.png](/images/web-performance-analysis-1/image7.png)
+![image.png](/2025/05/images/web-performance-analysis-1/image7.png)
 
 하지만 프리로드 스캐너로 이미지를 미리 다운로드하고, 사이즈 까지 알아둔다면 어떨까요? `img` 에 `src` 로 해당 이미지를 넣는 순간, `img`가 DOM 에서 차지해야 할 크기를 미리 알게 되고, CLS 를 계산하기 위해 미리 이미지 다운로드 까지 기다리지 않아도 된다는 큰 장점이 생깁니다.
 
 실제로, 프리로드 스캐너에 인식되기 위해 `<link>` 태그로 해당 이미지를 넣고 라이트하우스를 비교한다면, CLS 점수가 0 로 나오는 것을 볼 수 있습니다.
 
-![image.png](/images/web-performance-analysis-1/image8.png)
+![image.png](/2025/05/images/web-performance-analysis-1/image8.png)
 
-![image.png](/images/web-performance-analysis-1/image9.png)
+![image.png](/2025/05/images/web-performance-analysis-1/image9.png)
 
 즉, 정리하자면 현재 CLS 0.272 는 `/webp/part1/time.webp` 의 크기를 분석하기 위해 다운로드하고 크기를 알아내기 위해 걸리는 시간이라고 보시면 됩니다. 따라서 CLS 해결을 하기 위해서는 다음 두 가지를 살펴보시면 됩니다.
 
@@ -235,9 +235,9 @@ CLS는 웹 페이지의 시각적 안정성을 측정하는 핵심 지표입니�
 
 [react-device-detect v2.2.3 ❘ Bundlephobia](https://bundlephobia.com/package/react-device-detect@2.2.3)
 
-![image.png](/images/web-performance-analysis-1/image10.png)
+![image.png](/2025/05/images/web-performance-analysis-1/image10.png)
 
-![image.png](/images/web-performance-analysis-1/image11.png)
+![image.png](/2025/05/images/web-performance-analysis-1/image11.png)
 
 `react-device-detect` 와 그것이 의존하고 있는 `ua-paser-js` 는 다양한 UA 분석을 위해 많은 상수들을 내장하고 있는데요. 아마 대부분의 프로젝트가 이부분 까지 모두 사용하지는 않을 것으로 보입니다. 내부 코드가 실제로도 모바일, 태블릿 분기 용도 정도로만 사용하고 있다면 `react-device-detect`를 제거 하고 직접 내재화 해보시는건 어떠실지 추천해드립니다. 아마도 `styled-components` 연동 목적이었던 것 같은데, 그러한 목적이라면 브라우저에서 네이티브로 지원하는 미디어 쿼리를 쓰시는게 훨씬 낫습니다.
 
@@ -251,7 +251,7 @@ CLS는 웹 페이지의 시각적 안정성을 측정하는 핵심 지표입니�
 
 한가지 유의미하게 사용중인 기능이 있다면 `/*` 루트에 대해서 다 `/`로 리다이렉트 시키는 코드였습니다.
 
-![image.png](/images/web-performance-analysis-1/image12.png)
+![image.png](/2025/05/images/web-performance-analysis-1/image12.png)
 
 이 기능은 `react-router` 로 위와 같이 처리할 수도 있지만, nginx, netlfiy, vercel 등 호스팅 서버에 규칙을 추가하여 서버단에서 처리하시는 것이 훨씬 더 효과적입니다. 이러한 history fallback 처리를 `react-router` 가 아닌 서버에서 처리하는 것을 검토해보시면 좋을 것 같습니다. 그렇게 함으로써 `react-router` 를 제거할 수 있고, js 번들의 크기를 줄이고 실행 속도를 향상시킬 수 있습니다.
 
