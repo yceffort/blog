@@ -63,19 +63,19 @@ https://developer.mozilla.org/ko/docs/Web/CSS/@font-face/font-display
 
 ### swap
 
-![swap](/2021/06/images/font-swap.svg)
+![swap](./images/font-swap.svg)
 
 swap이란 이름에서 느껴지는 것처럼, 웹폰트가 로딩되기 전까지 fallback 폰트로 글자를 보여주는 것이다. (FOUT) 폰트 다운로드가 끝나자마자 폰트 스왑이 일어나게 된다. 폰트가 로딩되지 않더라도 사용자들이 글자를 읽을 수 있기 때문에 좋다고 볼 수 있다. 그러나 fallback font를 웹폰트와 비슷한 것으로 설정 하지 않는다면, 화면전환이 크게 일어날 수 있으므로 조심해야 한다.
 
 ### block
 
-![block](/2021/06/images/font-block.svg)
+![block](./images/font-block.svg)
 
 웹 폰트가 로딩되기전가지 브라우저에 텍스트를 숨기기 위해서 (FOIT) 사용되는 방식이다. 그러나 웹 폰트가 다운로드될 때까지 하염없이 기다리는 것은 아니다. 글꼴이 특정 시간 (보통 3초)내에 로딩되지 않으면 브라우저는 fallback font를 사용하여 로딩 한 후에 웹 폰트로 교체한다. FOUT가 별로라고 생각한다면 아마도 이게 최선의 방법일 수도 있다. 그러나 다시한번 말하지만, 폰트가 다운로드 되기 전까지 글자가 보이지 안않는다.
 
 ### fallback
 
-![fallback](/2021/06/images/font-fallback.svg)
+![fallback](./images/font-fallback.svg)
 
 swap이랑 비슷하긴 한데, 두가지 차이점이 있다.
 
@@ -86,7 +86,7 @@ swap이랑 비슷하긴 한데, 두가지 차이점이 있다.
 
 ### optional
 
-![optional](/2021/06/images/font-optional.svg)
+![optional](./images/font-optional.svg)
 
 `fallback`과 비슷한데, `fallback`의 2번 기능이 제거된 버전이라 볼 수 있다. 여기에 추가로 폰트가 다운로드되는데 너무 오래걸린다면, 브라우저가 연결을 취소 시켜버릴 수 있는 기능까지 추가되어 있다.
 
@@ -146,7 +146,7 @@ FOIT/FOUT 기간을 최소화 하기 위해, 웹 폰트를 가능한 빠르게 �
 
 도메인 룩업을 하는데에는 시간이 소요된다. 물론 [preconnect 리소스 힌트](https://web.dev/uses-rel-preconnect/)를 사용하면 문제를 해결할 수 있지만, 어쨌건간에 새로운 도메인 연결에 TCP를 열면 항상 성능저하가 발생한다.
 
-![font-of-web-dev](/2021/06/images/font-of-web.dev.png)
+![font-of-web-dev](./images/font-of-web.dev.png)
 
 > web.dev 도 보면 폰트를 셀프 호스팅 하고 있다.
 
