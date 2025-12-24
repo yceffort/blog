@@ -37,7 +37,7 @@ export async function generateMetadata(props: {
 export async function generateStaticParams() {
   const posts = await getAllPosts()
   return [
-    ...new Array(Math.round(posts.length / DEFAULT_NUMBER_OF_POSTS)).keys(),
+    ...new Array(Math.ceil(posts.length / DEFAULT_NUMBER_OF_POSTS)).keys(),
   ].map((i) => ({id: `${i + 1}`}))
 }
 
