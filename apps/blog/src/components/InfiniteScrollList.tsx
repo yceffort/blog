@@ -65,12 +65,16 @@ export default function InfiniteScrollList({
   const loadedPageRef = useRef(
     Math.ceil(posts.length / DEFAULT_NUMBER_OF_POSTS),
   )
+  const loadingRef = useRef(false)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     const stored = getStoredState(storageKey)
     if (stored && stored.uniqueKey === uniqueKey) {
       setPosts(stored.posts)
+      loadedPageRef.current = Math.ceil(
+        stored.posts.length / DEFAULT_NUMBER_OF_POSTS,
+      )
     }
 
     setMounted(true)
@@ -99,28 +103,37 @@ export default function InfiniteScrollList({
   }, [posts, storageKey, uniqueKey])
 
   const loadMore = useCallback(async () => {
-    if (loading || !hasMore) {
+    if (loadingRef.current || !hasMore) {
       return
     }
 
+    loadingRef.current = true
+    const nextPage = loadedPageRef.current + 1
+    loadedPageRef.current = nextPage
     setLoading(true)
     try {
-      const nextPage = loadedPageRef.current + 1
       const newPosts = await fetchPosts(nextPage)
 
       if (newPosts.length === 0) {
         setHasMore(false)
       } else {
-        setPosts((prev) => [...prev, ...newPosts])
-        loadedPageRef.current = nextPage
+        setPosts((prev) => {
+          const existingSlugs = new Set(prev.map((p) => p.fields.slug))
+          const uniqueNewPosts = newPosts.filter(
+            (p) => !existingSlugs.has(p.fields.slug),
+          )
+          return [...prev, ...uniqueNewPosts]
+        })
       }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Failed to load more posts:', error)
+      loadedPageRef.current = nextPage - 1
     } finally {
+      loadingRef.current = false
       setLoading(false)
     }
-  }, [loading, hasMore])
+  }, [hasMore])
 
   return (
     <div className="divide-y divide-gray-200 px-4 dark:divide-gray-700">
