@@ -30,7 +30,7 @@ export async function generateStaticParams() {
     ).length
 
     ;[
-      ...new Array(Math.round(tagsCount / DEFAULT_NUMBER_OF_POSTS)).keys(),
+      ...new Array(Math.ceil(tagsCount / DEFAULT_NUMBER_OF_POSTS)).keys(),
     ].forEach((i) => {
       paths.push({tag, id: `${i + 1}`})
     })
