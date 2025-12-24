@@ -7,33 +7,116 @@ import SocialIcon from '#components/icons'
 import ProfileImage from '#components/ProfileImage'
 import {SiteConfig} from '#src/config'
 
+function OpenToWorkSection() {
+  return (
+    <div className="mb-8 rounded-xl border-2 border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50 p-6 dark:border-emerald-800 dark:from-emerald-950/50 dark:to-teal-950/50">
+      <div className="mb-4 flex items-center gap-2">
+        <span className="relative flex h-3 w-3">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+          <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500" />
+        </span>
+        <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+          Open to Work
+        </span>
+      </div>
+
+      <p className="mb-4 text-gray-700 dark:text-gray-300">
+        안녕하세요, 김용찬입니다. 네이버 파이낸셜에서 프론트엔드 팀 리더로
+        일하고 있고, 14명 규모의 팀을 이끌며 금융 서비스 프론트엔드 개발을
+        담당해왔습니다. 이제 새로운 환경에서 다음 챕터를 시작하려 합니다.
+      </p>
+
+      <div className="mb-4">
+        <h4 className="mb-2 font-semibold text-gray-900 dark:text-gray-100">
+          저는 이런 사람입니다
+        </h4>
+        <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-400">
+          <li>• 「모던 리액트 Deep Dive」, 「npm Deep Dive」 저자</li>
+          <li>• 웹 성능 최적화, Node.js 관련 책 집필 중</li>
+          <li>• 14명 팀의 기술 리더십과 피플 매니지먼트 경험</li>
+          <li>
+            • 대규모 금융 서비스(결제, 자산관리, 인증, 카드) 프론트엔드 아키텍처
+            설계 및 운영
+          </li>
+        </ul>
+      </div>
+
+      <div className="mb-4 grid gap-4 sm:grid-cols-2">
+        <div>
+          <h4 className="mb-2 font-semibold text-gray-900 dark:text-gray-100">
+            제가 찾는 환경
+          </h4>
+          <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-400">
+            <li>• 재택 근무가 일부 허용되는 곳</li>
+            <li>• 비금융권 선호</li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="mb-2 font-semibold text-gray-900 dark:text-gray-100">
+            관심 있는 역할
+          </h4>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            프론트엔드 개발자로서 팀원이든 매니저든 상관없이, 좋은 팀에서 함께
+            성장하고 싶습니다.
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap gap-3 border-t border-emerald-200 pt-4 dark:border-emerald-800">
+        <a
+          href="mailto:root@yceffort.kr"
+          className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-700"
+        >
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          이메일 보내기
+        </a>
+        <a
+          href="https://github.com/yceffort"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+        >
+          <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+            <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  )
+}
+
 function AboutContent() {
   return (
-    <div className="prose max-w-none pt-8 pb-8 dark:prose-dark xl:col-span-2">
-      <p>
-        I&apos;m a frontend-focused full stack engineer based in Korea, with
-        extensive experience in building scalable systems, shared UI libraries,
-        and developer tooling for large-scale teams.
-      </p>
-      <p>
-        At NAVER Financial, I lead the development of core frontend
-        infrastructure, with an emphasis on reusability, performance, and
-        long-term maintainability.
-      </p>
-      <p>
-        Outside of work, I read and write about technology, software
-        architecture, and the deeper questions that shape how we build. I
-        believe thoughtful engineering is grounded in clarity, curiosity, and
-        context — principles I aim to reflect not just in code, but also in how
-        I communicate and write.
-      </p>
-      <p>
-        I value substance over spectacle. To me, good engineering isn&apos;t
-        just about writing code, but about making intentional decisions that
-        serve both users and developers over time. In the era of AI, I believe
-        engineers matter more than ever — not for how fast we ship, but for how
-        deeply we understand what should be built, and why.
-      </p>
+    <div className="pt-8 pb-8 xl:col-span-2">
+      <OpenToWorkSection />
+
+      <div className="prose max-w-none dark:prose-dark">
+        <p>
+          한국에서 활동하는 프론트엔드 중심의 풀스택 엔지니어입니다. 확장 가능한
+          시스템, 공유 UI 라이브러리, 대규모 팀을 위한 개발자 도구를 만들어온
+          경험이 있습니다.
+        </p>
+        <p>
+          네이버 파이낸셜에서 핵심 프론트엔드 인프라 개발을 이끌며, 재사용성과
+          성능, 장기적인 유지보수성에 집중하고 있습니다.
+        </p>
+        <p>
+          업무 외에는 기술, 소프트웨어 아키텍처, 그리고 우리가 무언가를 만드는
+          방식에 영향을 미치는 근본적인 질문들에 대해 읽고 씁니다. 좋은
+          엔지니어링은 명확함, 호기심, 맥락에 기반한다고 믿으며, 이 원칙을 코드뿐
+          아니라 소통과 글쓰기에도 반영하려 합니다.
+        </p>
+        <p>
+          화려함보다는 본질을 중요하게 생각합니다. 좋은 엔지니어링이란 단순히
+          코드를 작성하는 것이 아니라, 사용자와 개발자 모두에게 오랫동안 도움이
+          되는 의도적인 결정을 내리는 것이라고 생각합니다. AI 시대에 엔지니어의
+          가치는 얼마나 빨리 배포하느냐가 아니라, 무엇을 왜 만들어야 하는지 얼마나
+          깊이 이해하느냐에 있다고 믿습니다.
+        </p>
+      </div>
     </div>
   )
 }
@@ -73,8 +156,6 @@ function ResumeContent() {
               'React',
               'Next.js',
               'Node.js',
-              'Koa',
-              'GraphQL',
             ].map((skill) => (
               <span
                 key={skill}
