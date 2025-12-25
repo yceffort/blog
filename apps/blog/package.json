@@ -39,6 +39,7 @@
     "front-matter": "^4.0.2",
     "glob": "^13.0.0",
     "image-size": "^2.0.2",
+    "isbot": "^5.1.32",
     "mermaid": "^11.12.2",
     "next": "^16.0.10",
     "next-mdx-remote": "^5.0.0",

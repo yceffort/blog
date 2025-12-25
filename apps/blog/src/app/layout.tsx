@@ -8,6 +8,7 @@ import {SpeedInsights as VercelSpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
 import type {ReactNode} from 'react'
 
+import {BotTracker} from '#components/BotTracker'
 import CommandPalette from '#components/CommandPalette'
 import {GoogleAnalyticsWebVitalsTracker} from '#components/GoogleAnalyticsWebVitalsTracker'
 import LayoutWrapper from '#components/LayoutWrapper'
@@ -129,6 +130,7 @@ export default async function Layout({children}: {children: ReactNode}) {
               <VercelAnalytics />
               <VercelSpeedInsights />
               <GoogleAnalyticsWebVitalsTracker />
+              <BotTracker />
             </>
           )}
         </body>
