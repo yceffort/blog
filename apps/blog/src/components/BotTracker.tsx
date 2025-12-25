@@ -38,38 +38,28 @@ export function BotTracker() {
       const {isBot, botName, botCategory} = detectBot(navigator.userAgent)
       const likelyBot = isLikelyBot()
 
-      const visitorType = isBot ? 'bot' : likelyBot ? 'suspicious' : 'human'
-
-      track('visitor_detected', {
-        visitor_type: visitorType,
-        bot_name: botName,
-        bot_category: botCategory,
-      })
-
       if (isBot || likelyBot) {
         track('bot_visit', {
           bot_name: botName,
           bot_category: botCategory,
           page_path: pathname,
         })
+      } else {
+        track('human_visit', {
+          page_path: pathname,
+        })
       }
 
       if (typeof window.gtag === 'function') {
-        window.gtag('event', 'visitor_detected', {
-          visitor_type: visitorType,
-          bot_name: botName,
-          bot_category: botCategory,
-          is_webdriver: navigator.webdriver ? 'yes' : 'no',
-          plugins_count: navigator.plugins?.length ?? 0,
-          page_path: pathname,
-        })
-
         if (isBot || likelyBot) {
           window.gtag('event', 'bot_visit', {
             bot_name: botName,
             bot_category: botCategory,
             page_path: pathname,
-            user_agent: navigator.userAgent.slice(0, 200),
+          })
+        } else {
+          window.gtag('event', 'human_visit', {
+            page_path: pathname,
           })
         }
       }
