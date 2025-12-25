@@ -2,6 +2,7 @@
 
 import {useEffect} from 'react'
 import {usePathname} from 'next/navigation'
+import {track} from '@vercel/analytics'
 
 import {detectBot} from '#src/constants/bot-signatures'
 
@@ -38,6 +39,20 @@ export function BotTracker() {
       const likelyBot = isLikelyBot()
 
       const visitorType = isBot ? 'bot' : likelyBot ? 'suspicious' : 'human'
+
+      track('visitor_detected', {
+        visitor_type: visitorType,
+        bot_name: botName,
+        bot_category: botCategory,
+      })
+
+      if (isBot || likelyBot) {
+        track('bot_visit', {
+          bot_name: botName,
+          bot_category: botCategory,
+          page_path: pathname,
+        })
+      }
 
       if (typeof window.gtag === 'function') {
         window.gtag('event', 'visitor_detected', {
