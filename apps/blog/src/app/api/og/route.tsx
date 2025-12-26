@@ -32,7 +32,8 @@ export async function GET(request: Request) {
     }
 
     const urlParam = searchParams.get('url')
-    const address = urlParam || (pathParam ? `${SiteConfig.url}${pathParam}` : SiteConfig.url)
+    const address =
+      urlParam || (pathParam ? `${SiteConfig.url}${pathParam}` : SiteConfig.url)
     const tags = tagsParam ? tagsParam.split(',') : []
 
     // 1. Fetch Background Image from Public URL

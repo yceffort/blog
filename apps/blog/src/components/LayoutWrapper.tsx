@@ -7,10 +7,7 @@ import {memo} from 'react'
 
 import Footer from './Footer'
 import MobileNav from './MobileNav'
-import {
-  OpenToWorkBannerProvider,
-  useBannerVisible,
-} from './OpenToWorkBanner'
+import {OpenToWorkBannerProvider, useBannerVisible} from './OpenToWorkBanner'
 import ProfileImage from './ProfileImage'
 import ScrollTop from './ScrollTop'
 import SectionContainer from './SectionContainer'
