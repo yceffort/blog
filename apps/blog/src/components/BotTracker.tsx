@@ -1,7 +1,8 @@
 'use client'
 
-import {useEffect} from 'react'
 import {usePathname} from 'next/navigation'
+import {useEffect} from 'react'
+
 import {track} from '@vercel/analytics'
 
 import {detectBot} from '#src/constants/bot-signatures'
@@ -13,11 +14,19 @@ declare global {
 }
 
 function isLikelyBot(): boolean {
-  if (typeof window === 'undefined') return false
+  if (typeof window === 'undefined') {
+    return false
+  }
 
-  if (navigator.webdriver) return true
-  if (navigator.plugins?.length === 0) return true
-  if (!navigator.language) return true
+  if (navigator.webdriver) {
+    return true
+  }
+  if (navigator.plugins?.length === 0) {
+    return true
+  }
+  if (!navigator.language) {
+    return true
+  }
 
   return false
 }

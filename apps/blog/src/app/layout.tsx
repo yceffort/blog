@@ -49,7 +49,9 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: SiteConfig.title,
     description: 'Frontend-focused full stack engineer',
-    images: [`/api/og?title=${encodeURIComponent(SiteConfig.title)}&description=${encodeURIComponent('Frontend-focused full stack engineer')}&type=page`],
+    images: [
+      `/api/og?title=${encodeURIComponent(SiteConfig.title)}&description=${encodeURIComponent('Frontend-focused full stack engineer')}&type=page`,
+    ],
   },
   icons: {
     icon: '/favicon/apple-touch-icon.png',

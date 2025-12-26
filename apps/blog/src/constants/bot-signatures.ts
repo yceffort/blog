@@ -1,6 +1,13 @@
 import {isbot} from 'isbot'
 
-export type BotCategory = 'ai' | 'search' | 'social' | 'seo' | 'feed' | 'tool' | 'unknown'
+export type BotCategory =
+  | 'ai'
+  | 'search'
+  | 'social'
+  | 'seo'
+  | 'feed'
+  | 'tool'
+  | 'unknown'
 
 const BOT_CATEGORIES: Record<string, {name: string; category: BotCategory}> = {
   // AI Crawlers
@@ -48,7 +55,10 @@ const BOT_CATEGORIES: Record<string, {name: string; category: BotCategory}> = {
   selenium: {name: 'selenium', category: 'tool'},
 }
 
-function getCategoryInfo(userAgent: string): {name: string; category: BotCategory} {
+function getCategoryInfo(userAgent: string): {
+  name: string
+  category: BotCategory
+} {
   const ua = userAgent.toLowerCase()
 
   for (const [signature, info] of Object.entries(BOT_CATEGORIES)) {

@@ -34,10 +34,7 @@ function OpenToWorkSection() {
           <li>• 「모던 리액트 Deep Dive」, 「npm Deep Dive」 저자</li>
           <li>• 웹 성능 최적화, Node.js 관련 책 집필 중</li>
           <li>• 14명 팀의 기술 리더십과 피플 매니지먼트 경험</li>
-          <li>
-            • 대규모 금융 서비스(결제, 자산관리, 인증, 카드) 프론트엔드 아키텍처
-            설계 및 운영
-          </li>
+          <li>• 대규모 금융 서비스 프론트엔드 아키텍처 설계 및 운영</li>
         </ul>
       </div>
 
@@ -67,8 +64,18 @@ function OpenToWorkSection() {
           href="mailto:root@yceffort.kr"
           className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-700"
         >
-          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+            />
           </svg>
           이메일 보내기
         </a>
@@ -79,7 +86,11 @@ function OpenToWorkSection() {
           className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
         >
           <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-            <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+            />
           </svg>
           GitHub
         </a>
@@ -106,15 +117,15 @@ function AboutContent() {
         <p>
           업무 외에는 기술, 소프트웨어 아키텍처, 그리고 우리가 무언가를 만드는
           방식에 영향을 미치는 근본적인 질문들에 대해 읽고 씁니다. 좋은
-          엔지니어링은 명확함, 호기심, 맥락에 기반한다고 믿으며, 이 원칙을 코드뿐
-          아니라 소통과 글쓰기에도 반영하려 합니다.
+          엔지니어링은 명확함, 호기심, 맥락에 기반한다고 믿으며, 이 원칙을
+          코드뿐 아니라 소통과 글쓰기에도 반영하려 합니다.
         </p>
         <p>
           화려함보다는 본질을 중요하게 생각합니다. 좋은 엔지니어링이란 단순히
           코드를 작성하는 것이 아니라, 사용자와 개발자 모두에게 오랫동안 도움이
           되는 의도적인 결정을 내리는 것이라고 생각합니다. AI 시대에 엔지니어의
-          가치는 얼마나 빨리 배포하느냐가 아니라, 무엇을 왜 만들어야 하는지 얼마나
-          깊이 이해하느냐에 있다고 믿습니다.
+          가치는 얼마나 빨리 배포하느냐가 아니라, 무엇을 왜 만들어야 하는지
+          얼마나 깊이 이해하느냐에 있다고 믿습니다.
         </p>
       </div>
     </div>
@@ -150,20 +161,16 @@ function ResumeContent() {
             Key Expertise
           </h2>
           <div className="flex flex-wrap gap-2">
-            {[
-              'JavaScript',
-              'TypeScript',
-              'React',
-              'Next.js',
-              'Node.js',
-            ].map((skill) => (
-              <span
-                key={skill}
-                className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800 dark:bg-gray-800 dark:text-gray-200"
-              >
-                {skill}
-              </span>
-            ))}
+            {['JavaScript', 'TypeScript', 'React', 'Next.js', 'Node.js'].map(
+              (skill) => (
+                <span
+                  key={skill}
+                  className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800 dark:bg-gray-800 dark:text-gray-200"
+                >
+                  {skill}
+                </span>
+              ),
+            )}
           </div>
         </section>
       </div>

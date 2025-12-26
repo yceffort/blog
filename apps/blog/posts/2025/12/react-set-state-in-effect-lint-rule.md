@@ -48,81 +48,81 @@ React Compiler는 `useMemo`, `useCallback`, `React.memo`를 수동으로 작성�
 가장 흔한 실수다.
 
 ```jsx
-function Component({ data }) {
-  const [items, setItems] = useState([]);
+function Component({data}) {
+  const [items, setItems] = useState([])
 
   useEffect(() => {
-    setItems(data);
-  }, [data]);
+    setItems(data)
+  }, [data])
 
-  return <List items={items} />;
+  return <List items={items} />
 }
 ```
 
 이 코드는 `data`가 바뀔 때마다 불필요한 추가 렌더링을 발생시킨다. 그냥 `data`를 직접 사용하면 될 일이다.
 
 ```jsx
-function Component({ data }) {
-  return <List items={data} />;
+function Component({data}) {
+  return <List items={data} />
 }
 ```
 
 ### 렌더링 중에 할 수 있는 계산을 Effect에서 하기
 
 ```jsx
-function Component({ rawData }) {
-  const [processed, setProcessed] = useState([]);
+function Component({rawData}) {
+  const [processed, setProcessed] = useState([])
 
   useEffect(() => {
-    setProcessed(rawData.map(item => transform(item)));
-  }, [rawData]);
+    setProcessed(rawData.map((item) => transform(item)))
+  }, [rawData])
 
-  return <List items={processed} />;
+  return <List items={processed} />
 }
 ```
 
 데이터 변환은 렌더링 중에 수행할 수 있다. 굳이 state로 관리할 필요가 없다.
 
 ```jsx
-function Component({ rawData }) {
-  const processed = rawData.map(item => transform(item));
-  return <List items={processed} />;
+function Component({rawData}) {
+  const processed = rawData.map((item) => transform(item))
+  return <List items={processed} />
 }
 ```
 
 만약 변환 비용이 비싸다면 `useMemo`를 사용하면 된다.
 
 ```jsx
-function Component({ rawData }) {
+function Component({rawData}) {
   const processed = useMemo(
-    () => rawData.map(item => transform(item)),
-    [rawData]
-  );
+    () => rawData.map((item) => transform(item)),
+    [rawData],
+  )
 
-  return <List items={processed} />;
+  return <List items={processed} />
 }
 ```
 
 ### Props에서 파생 가능한 값을 State로 관리하기
 
 ```jsx
-function Component({ selectedId, items }) {
-  const [selected, setSelected] = useState(null);
+function Component({selectedId, items}) {
+  const [selected, setSelected] = useState(null)
 
   useEffect(() => {
-    setSelected(items.find(item => item.id === selectedId));
-  }, [selectedId, items]);
+    setSelected(items.find((item) => item.id === selectedId))
+  }, [selectedId, items])
 
-  return <Detail item={selected} />;
+  return <Detail item={selected} />
 }
 ```
 
 `selected`는 `selectedId`와 `items`에서 언제든 계산할 수 있다. state가 필요 없다.
 
 ```jsx
-function Component({ selectedId, items }) {
-  const selected = items.find(item => item.id === selectedId);
-  return <Detail item={selected} />;
+function Component({selectedId, items}) {
+  const selected = items.find((item) => item.id === selectedId)
+  return <Detail item={selected} />
 }
 ```
 
@@ -132,15 +132,15 @@ SSR 환경에서 hydration 불일치를 피하기 위해 흔히 사용되는 패
 
 ```jsx
 function Component() {
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setMounted(true)
+  }, [])
 
-  if (!mounted) return null;
+  if (!mounted) return null
 
-  return <ClientOnlyContent />;
+  return <ClientOnlyContent />
 }
 ```
 
@@ -156,17 +156,17 @@ React 18부터 제공되는 `useSyncExternalStore`를 사용하면 Effect 없이
 function useIsMounted() {
   return useSyncExternalStore(
     () => () => {},
-    () => true,  // 클라이언트에서는 true
-    () => false  // 서버에서는 false
-  );
+    () => true, // 클라이언트에서는 true
+    () => false, // 서버에서는 false
+  )
 }
 
 function Component() {
-  const mounted = useIsMounted();
+  const mounted = useIsMounted()
 
-  if (!mounted) return null;
+  if (!mounted) return null
 
-  return <ClientOnlyContent />;
+  return <ClientOnlyContent />
 }
 ```
 
@@ -177,12 +177,11 @@ function Component() {
 Next.js를 사용한다면 `dynamic` import로 SSR 자체를 건너뛸 수 있다.
 
 ```jsx
-import dynamic from 'next/dynamic';
+import dynamic from 'next/dynamic'
 
-const ClientOnlyComponent = dynamic(
-  () => import('./ClientOnlyComponent'),
-  { ssr: false }
-);
+const ClientOnlyComponent = dynamic(() => import('./ClientOnlyComponent'), {
+  ssr: false,
+})
 ```
 
 #### 왜 useSyncExternalStore는 재렌더링을 일으키지 않는가?
@@ -203,15 +202,15 @@ const ClientOnlyComponent = dynamic(
 
 ```jsx
 useEffect(() => {
-  const article = document.querySelector('article');
-  const elements = article.querySelectorAll('h2, h3, h4');
+  const article = document.querySelector('article')
+  const elements = article.querySelectorAll('h2, h3, h4')
   const items = Array.from(elements).map((el) => ({
     id: el.id,
     text: el.textContent || '',
     level: parseInt(el.tagName[1]),
-  }));
-  setHeadings(items);
-}, []);
+  }))
+  setHeadings(items)
+}, [])
 ```
 
 이 케이스는 **DOM 요소를 조회**한 결과를 저장하는 것이다. 렌더링 시점에는 DOM이 아직 존재하지 않기 때문에 Effect에서 처리할 수밖에 없다. 이런 경우는 **규칙의 예외**에 해당한다.
@@ -220,7 +219,7 @@ useEffect(() => {
 
 ```jsx
 // eslint-disable-next-line react-hooks/set-state-in-effect
-setHeadings(items);
+setHeadings(items)
 ```
 
 ### 2. 스크롤 이벤트 핸들러 (MobileTOC)
@@ -228,12 +227,12 @@ setHeadings(items);
 ```jsx
 useEffect(() => {
   const handleWindowScroll = () => {
-    setShowScrollTop(window.scrollY > 50);
-  };
+    setShowScrollTop(window.scrollY > 50)
+  }
 
-  window.addEventListener('scroll', handleWindowScroll);
-  return () => window.removeEventListener('scroll', handleWindowScroll);
-}, []);
+  window.addEventListener('scroll', handleWindowScroll)
+  return () => window.removeEventListener('scroll', handleWindowScroll)
+}, [])
 ```
 
 이 케이스는 **이벤트 핸들러 내에서** `setState`를 호출하는 것이다. 이는 Effect 안에서 동기적으로 호출하는 것이 아니라, 나중에 이벤트가 발생했을 때 비동기적으로 호출되는 것이므로 **규칙 위반이 아니다**.
@@ -242,12 +241,12 @@ useEffect(() => {
 
 ```jsx
 useEffect(() => {
-  const stored = getStoredState(storageKey);
+  const stored = getStoredState(storageKey)
   if (stored && stored.uniqueKey === uniqueKey) {
-    setPosts(stored.posts);
+    setPosts(stored.posts)
   }
-  setMounted(true);
-}, [storageKey, uniqueKey]);
+  setMounted(true)
+}, [storageKey, uniqueKey])
 ```
 
 이 코드에는 두 가지 동기적 setState가 있다.
@@ -257,15 +256,15 @@ useEffect(() => {
 ```jsx
 const storedPosts = useSyncExternalStore(
   (callback) => {
-    window.addEventListener('storage', callback);
-    return () => window.removeEventListener('storage', callback);
+    window.addEventListener('storage', callback)
+    return () => window.removeEventListener('storage', callback)
   },
   () => {
-    const stored = getStoredState(storageKey);
-    return stored?.uniqueKey === uniqueKey ? stored.posts : initialPosts;
+    const stored = getStoredState(storageKey)
+    return stored?.uniqueKey === uniqueKey ? stored.posts : initialPosts
   },
-  () => initialPosts // SSR fallback
-);
+  () => initialPosts, // SSR fallback
+)
 ```
 
 **`setMounted(true)`**: 앞서 설명한 안티패턴이다. 상수값을 저장하는 것이므로 `useSyncExternalStore`나 `dynamic import`로 대체해야 한다.
@@ -278,12 +277,12 @@ useEffect(() => {
     fetch('/api/search')
       .then((res) => res.json())
       .then((data) => {
-        setPosts(data.posts);
-        setTags(data.tags);
-        setDataLoaded(true);
-      });
+        setPosts(data.posts)
+        setTags(data.tags)
+        setDataLoaded(true)
+      })
   }
-}, [open, dataLoaded]);
+}, [open, dataLoaded])
 ```
 
 이 케이스는 **비동기 작업의 결과**를 저장하는 것이다. `fetch`가 완료된 후에 호출되므로 동기적인 `setState`가 아니다. 이 역시 **규칙 위반이 아니다**.
@@ -305,16 +304,16 @@ useEffect(() => {
 
 ```js
 // eslint.config.js (Flat Config)
-import reactHooks from 'eslint-plugin-react-hooks';
+import reactHooks from 'eslint-plugin-react-hooks'
 
 export default [
   reactHooks.configs.flat.recommended,
   {
     rules: {
       'react-hooks/set-state-in-effect': 'warn', // 또는 'error'
-    }
-  }
-];
+    },
+  },
+]
 ```
 
 React Compiler의 모든 규칙을 활성화하려면 `recommended-latest` 설정을 사용할 수도 있다.
@@ -327,8 +326,8 @@ React Compiler의 모든 규칙을 활성화하려면 `recommended-latest` 설�
 
 ```jsx
 useEffect(() => {
-  setDidMount(true);
-}, []);
+  setDidMount(true)
+}, [])
 ```
 
 이 패턴은 hydration 불일치를 피하기 위해 과거부터 널리 사용되어 왔고, 일부 문서에서는 아직도 이 방식을 소개하고 있다. 앞서 살펴본 것처럼 `useSyncExternalStore`가 더 나은 대안이지만, 기존 코드베이스에서 흔히 발견되는 패턴이라 마이그레이션 비용이 발생할 수 있다.
@@ -337,13 +336,13 @@ useEffect(() => {
 
 ```jsx
 const fetchData = useCallback(async () => {
-  const response = await fetch('/api/data');
-  setReady(true);  // await 이후이므로 동기적 호출이 아님
-}, []);
+  const response = await fetch('/api/data')
+  setReady(true) // await 이후이므로 동기적 호출이 아님
+}, [])
 
 useEffect(() => {
-  fetchData();
-}, [fetchData]);
+  fetchData()
+}, [fetchData])
 ```
 
 `await` 이후에 호출되는 `setState`는 동기적 호출이 아니므로 cascading render 문제를 일으키지 않는다. 하지만 규칙은 이를 구분하지 못하고 경고를 띄운다.

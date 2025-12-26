@@ -3,10 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "jsx": "react-jsx",
-    "lib": [
-      "dom",
-      "es2022"
-    ],
+    "lib": ["dom", "es2022"],
     "baseUrl": "./",
     "moduleResolution": "bundler",
     "strict": true,
@@ -20,29 +17,14 @@
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "typeRoots": [
-      "./typings",
-      "./node_modules/@types"
-    ],
+    "typeRoots": ["./typings", "./node_modules/@types"],
     "paths": {
-      "#public/*": [
-        "public/*"
-      ],
-      "#commons/*": [
-        "src/type/*"
-      ],
-      "#components/*": [
-        "src/components/*"
-      ],
-      "#constants/*": [
-        "src/constants/*"
-      ],
-      "#utils/*": [
-        "src/utils/*"
-      ],
-      "#src/*": [
-        "src/*"
-      ]
+      "#public/*": ["public/*"],
+      "#commons/*": ["src/type/*"],
+      "#components/*": ["src/components/*"],
+      "#constants/*": ["src/constants/*"],
+      "#utils/*": ["src/utils/*"],
+      "#src/*": ["src/*"]
     },
     "incremental": true,
     "plugins": [
@@ -51,11 +33,7 @@
       }
     ]
   },
-  "exclude": [
-    "dist",
-    ".next",
-    "out"
-  ],
+  "exclude": ["dist", ".next", "out"],
   "include": [
     "next-env.d.ts",
     "typing/*.d.ts",

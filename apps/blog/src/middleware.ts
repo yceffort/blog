@@ -1,7 +1,8 @@
 import {NextResponse} from 'next/server'
-import type {NextRequest} from 'next/server'
 
 import {detectBot} from './constants/bot-signatures'
+
+import type {NextRequest} from 'next/server'
 
 export function middleware(request: NextRequest) {
   const userAgent = request.headers.get('user-agent') || ''
@@ -19,7 +20,10 @@ export function middleware(request: NextRequest) {
 
   if (isBot) {
     const path = request.nextUrl.pathname
-    console.log(`[Bot Visit] ${botCategory}/${botName} - ${path} - ${userAgent.slice(0, 100)}`)
+    // eslint-disable-next-line no-console
+    console.log(
+      `[Bot Visit] ${botCategory}/${botName} - ${path} - ${userAgent.slice(0, 100)}`,
+    )
   }
 
   return response

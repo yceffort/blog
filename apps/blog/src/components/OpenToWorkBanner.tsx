@@ -2,11 +2,11 @@
 
 import Link from 'next/link'
 import {
-  useState,
-  useEffect,
-  useCallback,
   createContext,
+  useCallback,
   useContext,
+  useEffect,
+  useState,
   type ReactNode,
 } from 'react'
 
@@ -33,6 +33,7 @@ export function OpenToWorkBannerProvider({children}: {children: ReactNode}) {
   const [isHidden, setIsHidden] = useState(true)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsHidden(getHideBannerPreference())
   }, [])
 
