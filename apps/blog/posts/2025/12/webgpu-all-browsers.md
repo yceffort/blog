@@ -449,7 +449,7 @@ console.log(results[0].score) // 확률 (0~1)
 
 파일 업로드, URL, 또는 canvas 요소를 넘기면 된다. 모델은 첫 로드 시 다운로드되고 (ViT-base 기준 약 350MB), 이후엔 브라우저에 캐시된다.
 
-![WebGPU 이미지 분류 데모 - 퍼그 강아지를 89.7% 확률로 정확히 분류](/2025/12/webgpu-image-classification.png)
+![WebGPU 이미지 분류 데모 - 퍼그 강아지를 89.7% 확률로 정확히 분류](webgpu-image-classification.png)
 
 ## 클라이언트 사이드 AI의 가능성
 
