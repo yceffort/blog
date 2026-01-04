@@ -6,7 +6,7 @@ tags:
   - architecture
 published: true
 date: 2026-01-04 12:00:00
-description: 'React Server Components가 PHP/JSP 시절로의 회귀인지, 아니면 나선형 발전일까? 아닐까? 뭘까'
+description: 'RSC가 PHP/JSP 시절로의 회귀인지, 아니면 나선형 발전일까? 아닐까? 뭘까'
 ---
 
 ## Table of Contents
@@ -320,11 +320,11 @@ async function BlogPost({slug}) {
 
 RSC를 채택한 Next.js App Router가 성능 면에서 최고인가? 그렇지 않다. [Builder.io의 프레임워크 벤치마크](https://github.com/BuilderIO/framework-benchmarks)를 보면 흥미로운 결과가 나온다.
 
-| 프레임워크 | TTI | FCP | LCP | TBT | Lighthouse | JS 크기 |
-| ---------- | --- | --- | --- | --- | ---------- | ------- |
-| Qwik | 0.6s | 0.6s | 1.5s | 0ms | 100 | 2 KiB |
-| Astro | 0.9s | 0.9s | 1.1s | 0ms | - | 15 KiB |
-| Next.js | 1.6s | 0.6s | 1.2s | 10ms | - | 91 KiB |
+| 프레임워크 | TTI  | FCP  | LCP  | TBT  | Lighthouse | JS 크기 |
+| ---------- | ---- | ---- | ---- | ---- | ---------- | ------- |
+| Qwik       | 0.6s | 0.6s | 1.5s | 0ms  | 100        | 2 KiB   |
+| Astro      | 0.9s | 0.9s | 1.1s | 0ms  | -          | 15 KiB  |
+| Next.js    | 1.6s | 0.6s | 1.2s | 10ms | -          | 91 KiB  |
 
 Qwik은 2KB의 JavaScript만 전송하면서 TTI 0.6초를 달성한다. Next.js는 91KB를 전송하고도 TTI가 1.6초다. Astro는 기본적으로 JavaScript를 전송하지 않고, Qwik은 resumability로 하이드레이션 자체를 없앴다. RSC가 번들 크기를 줄인다고 하지만, 여전히 React 런타임 자체의 오버헤드가 존재한다.
 
@@ -490,12 +490,12 @@ sequenceDiagram
 
 핵심 차이점은 다음과 같다.
 
-| | Hydration (React) | Resumability (Qwik) |
-|---|---|---|
-| **초기 JS 실행** | 전체 컴포넌트 트리 | 없음 (0ms) |
-| **상호작용 시점** | JS 실행 완료 후 | HTML 로드 즉시 |
-| **이벤트 핸들러** | 모두 미리 연결 | 필요할 때 lazy load |
-| **상태 복원** | 컴포넌트 재실행 | HTML에서 역직렬화 |
+|                   | Hydration (React)  | Resumability (Qwik) |
+| ----------------- | ------------------ | ------------------- |
+| **초기 JS 실행**  | 전체 컴포넌트 트리 | 없음 (0ms)          |
+| **상호작용 시점** | JS 실행 완료 후    | HTML 로드 즉시      |
+| **이벤트 핸들러** | 모두 미리 연결     | 필요할 때 lazy load |
+| **상태 복원**     | 컴포넌트 재실행    | HTML에서 역직렬화   |
 
 Qwik은 서버에서 렌더링할 때 컴포넌트의 상태와 이벤트 핸들러 위치를 HTML 속성으로 직렬화한다. 클라이언트에서는 이 정보를 읽어서 "재개(resume)"하기만 하면 된다. 사용자가 버튼을 클릭하면 그때서야 해당 이벤트 핸들러 코드만 다운로드하고 실행한다.
 
