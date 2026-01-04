@@ -6,7 +6,7 @@ tags:
   - architecture
 published: true
 date: 2026-01-04 12:00:00
-description: 'React Server Components가 PHP/JSP 시절로의 회귀인지, 아니면 나선형 발전인지 살펴본다.'
+description: 'React Server Components가 PHP/JSP 시절로의 회귀인지, 아니면 나선형 발전일까? 아닐까? 뭘까'
 ---
 
 ## Table of Contents
