@@ -29,6 +29,6 @@
     "@naverpay/eslint-plugin": "^2.2.0",
     "@types/react": "^19.1.6",
     "eslint": "^9.27.0",
-    "next": "^16.0.10"
+    "next": "^16.1.1"
   }
 }
