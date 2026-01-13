@@ -5,7 +5,7 @@ tags:
   - nodejs
   - performance
   - streaming
-published: false
+published: true
 date: 2026-01-11 15:00:00
 description: 'JSON.parse()가 버거워할 때 살아남는 법'
 ---
@@ -101,7 +101,7 @@ try {
 
 ### NDJSON이란?
 
-NDJSON(Newline Delimited JSON)은 각 줄이 독립적인 JSON 객체인 형식이다. JSON Lines(JSONL)라고도 불린다.
+[NDJSON](https://github.com/ndjson/ndjson-spec)(Newline Delimited JSON)은 각 줄이 독립적인 JSON 객체인 형식이다. JSON Lines(JSONL)라고도 불린다.
 
 ```
 {"id":1,"name":"Alice","email":"alice@example.com"}
@@ -261,149 +261,9 @@ async function fetchNDJSON(url, onData) {
 
 `TextDecoder`의 `stream: true` 옵션은 매우 중요하다. UTF-8에서 한글 같은 멀티바이트 문자는 여러 바이트로 구성되는데, 네트워크 청크가 문자 중간에서 잘릴 수 있다. `stream: true`를 설정하면 디코더가 불완전한 문자를 다음 청크와 함께 처리한다.
 
-### 진행률 표시 추가
-
-NDJSON 스트리밍의 장점 중 하나는 진행률을 쉽게 표시할 수 있다는 것이다.
-
-```javascript
-async function fetchNDJSONWithProgress(url, onData, onProgress) {
-  const response = await fetch(url)
-
-  const contentLength = response.headers.get('Content-Length')
-  const total = contentLength ? parseInt(contentLength, 10) : null
-
-  const reader = response.body.getReader()
-  const decoder = new TextDecoder()
-
-  let buffer = ''
-  let received = 0
-  let itemCount = 0
-
-  while (true) {
-    const { done, value } = await reader.read()
-
-    if (done) break
-
-    received += value.length
-    buffer += decoder.decode(value, { stream: true })
-
-    const lines = buffer.split('\n')
-    buffer = lines.pop()
-
-    for (const line of lines) {
-      if (line.trim()) {
-        itemCount++
-        onData(JSON.parse(line))
-      }
-    }
-
-    // 진행률 콜백
-    onProgress({
-      receivedBytes: received,
-      totalBytes: total,
-      percentage: total ? Math.round((received / total) * 100) : null,
-      itemCount
-    })
-  }
-
-  if (buffer.trim()) {
-    itemCount++
-    onData(JSON.parse(buffer))
-  }
-
-  return { totalItems: itemCount, totalBytes: received }
-}
-```
-
-사용 예시는 다음과 같다.
-
-```javascript
-const progressBar = document.getElementById('progress')
-const itemList = document.getElementById('items')
-
-await fetchNDJSONWithProgress(
-  '/api/users',
-  (user) => {
-    const li = document.createElement('li')
-    li.textContent = user.name
-    itemList.appendChild(li)
-  },
-  (progress) => {
-    if (progress.percentage !== null) {
-      progressBar.style.width = `${progress.percentage}%`
-    }
-    progressBar.textContent = `${progress.itemCount}개 로드됨`
-  }
-)
-```
-
-### AbortController로 취소 기능 추가
-
-대용량 데이터 로딩 중에 사용자가 다른 페이지로 이동하거나 취소 버튼을 누를 수 있다. `AbortController`를 사용하면 진행 중인 요청을 깔끔하게 취소할 수 있다.
-
-```javascript
-async function fetchNDJSONWithAbort(url, onData, signal) {
-  const response = await fetch(url, { signal })
-
-  const reader = response.body.getReader()
-  const decoder = new TextDecoder()
-
-  let buffer = ''
-
-  try {
-    while (true) {
-      const { done, value } = await reader.read()
-
-      if (done) break
-
-      buffer += decoder.decode(value, { stream: true })
-
-      const lines = buffer.split('\n')
-      buffer = lines.pop()
-
-      for (const line of lines) {
-        if (line.trim()) {
-          onData(JSON.parse(line))
-        }
-      }
-    }
-  } catch (error) {
-    if (error.name === 'AbortError') {
-      console.log('요청이 취소되었습니다')
-      return { aborted: true }
-    }
-    throw error
-  } finally {
-    reader.releaseLock()
-  }
-
-  if (buffer.trim()) {
-    onData(JSON.parse(buffer))
-  }
-
-  return { aborted: false }
-}
-```
-
-사용 예시는 다음과 같다.
-
-```javascript
-const controller = new AbortController()
-
-// 취소 버튼
-document.getElementById('cancel').onclick = () => {
-  controller.abort()
-}
-
-// 5초 후 자동 취소
-setTimeout(() => controller.abort(), 5000)
-
-await fetchNDJSONWithAbort('/api/users', handleUser, controller.signal)
-```
-
 ### can-ndjson-stream 라이브러리 활용
 
-직접 구현하기 번거롭다면 `can-ndjson-stream` 라이브러리를 사용할 수 있다.
+직접 구현하기 번거롭다면 [`can-ndjson-stream`](https://www.npmjs.com/package/can-ndjson-stream) 라이브러리를 사용할 수 있다.
 
 ```javascript
 import ndjsonStream from 'can-ndjson-stream'
@@ -424,133 +284,6 @@ async function fetchWithNDJSONStream(url, onData) {
 
 라이브러리가 내부적으로 버퍼링과 파싱을 처리해주므로 코드가 훨씬 간결해진다.
 
-### React에서 NDJSON 활용하기
-
-React 컴포넌트에서 NDJSON 스트리밍을 활용하는 커스텀 훅을 만들어보자.
-
-```javascript
-import { useState, useEffect, useCallback, useRef } from 'react'
-
-function useNDJSONStream(url) {
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const [progress, setProgress] = useState({ count: 0, bytes: 0 })
-  const abortControllerRef = useRef(null)
-
-  const startStream = useCallback(async () => {
-    setLoading(true)
-    setError(null)
-    setData([])
-    setProgress({ count: 0, bytes: 0 })
-
-    abortControllerRef.current = new AbortController()
-
-    try {
-      const response = await fetch(url, {
-        signal: abortControllerRef.current.signal
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`)
-      }
-
-      const reader = response.body.getReader()
-      const decoder = new TextDecoder()
-
-      let buffer = ''
-      let count = 0
-      let bytes = 0
-
-      while (true) {
-        const { done, value } = await reader.read()
-
-        if (done) break
-
-        bytes += value.length
-        buffer += decoder.decode(value, { stream: true })
-
-        const lines = buffer.split('\n')
-        buffer = lines.pop()
-
-        const newItems = []
-        for (const line of lines) {
-          if (line.trim()) {
-            newItems.push(JSON.parse(line))
-            count++
-          }
-        }
-
-        if (newItems.length > 0) {
-          setData((prev) => [...prev, ...newItems])
-          setProgress({ count, bytes })
-        }
-      }
-
-      if (buffer.trim()) {
-        const lastItem = JSON.parse(buffer)
-        setData((prev) => [...prev, lastItem])
-        setProgress({ count: count + 1, bytes })
-      }
-    } catch (err) {
-      if (err.name !== 'AbortError') {
-        setError(err)
-      }
-    } finally {
-      setLoading(false)
-    }
-  }, [url])
-
-  const cancel = useCallback(() => {
-    abortControllerRef.current?.abort()
-  }, [])
-
-  useEffect(() => {
-    return () => {
-      abortControllerRef.current?.abort()
-    }
-  }, [])
-
-  return { data, loading, error, progress, startStream, cancel }
-}
-```
-
-사용 예시는 다음과 같다.
-
-```jsx
-function UserList() {
-  const { data, loading, error, progress, startStream, cancel } =
-    useNDJSONStream('/api/users')
-
-  return (
-    <div>
-      <button onClick={startStream} disabled={loading}>
-        {loading ? '로딩 중...' : '사용자 불러오기'}
-      </button>
-
-      {loading && (
-        <div>
-          <button onClick={cancel}>취소</button>
-          <p>{progress.count}명 로드됨 ({progress.bytes} bytes)</p>
-        </div>
-      )}
-
-      {error && <p>에러: {error.message}</p>}
-
-      <ul>
-        {data.map((user) => (
-          <li key={user.id}>{user.name}</li>
-        ))}
-      </ul>
-    </div>
-  )
-}
-```
-
-이 패턴의 장점은 사용자가 데이터가 로드되는 것을 실시간으로 볼 수 있다는 것이다. 로딩 스피너를 3초 동안 보는 것보다, 아이템이 하나씩 추가되는 것을 보는 게 훨씬 나은 사용자 경험이다.
-
-다만 위 훅에서 `setData((prev) => [...prev, ...newItems])` 패턴은 대량 데이터에서 성능 문제가 있을 수 있다. 10만 건을 처리하면 10만 번의 배열 복사가 발생하기 때문이다. 실무에서는 아이템을 100개씩 모아서 한 번에 추가하는 배치 처리를 적용하거나, `react-window` 같은 가상화 라이브러리와 결합하는 것이 좋다. 가상화를 사용하면 10만 건의 데이터가 있어도 화면에 보이는 수십 개의 DOM 노드만 렌더링하므로 스크롤 성능이 크게 향상된다.
-
 ## 스트리밍 JSON 파서
 
 NDJSON은 훌륭하지만 서버 측 수정이 필요하다. 기존 API가 일반 JSON 배열을 반환한다면 어떻게 해야 할까? 스트리밍 JSON 파서가 해답이다.
@@ -559,7 +292,7 @@ NDJSON은 훌륭하지만 서버 측 수정이 필요하다. 기존 API가 일�
 
 ### stream-json (Node.js)
 
-`stream-json`은 Node.js에서 가장 널리 사용되는 스트리밍 JSON 파서다. 다양한 유틸리티와 스트리머를 제공한다.
+[`stream-json`](https://github.com/uhop/stream-json)은 Node.js에서 가장 널리 사용되는 스트리밍 JSON 파서다. 다양한 유틸리티와 스트리머를 제공한다.
 
 #### 기본 사용법
 
@@ -657,7 +390,7 @@ fs.createReadStream('huge-array.json')
 
 ### @streamparser/json (브라우저 + Node.js)
 
-`@streamparser/json`은 브라우저와 Node.js 모두에서 사용할 수 있는 스트리밍 파서다. 의존성이 없어서 번들 크기가 작다.
+[`@streamparser/json`](https://www.npmjs.com/package/@streamparser/json)은 브라우저와 Node.js 모두에서 사용할 수 있는 스트리밍 파서다. 의존성이 없어서 번들 크기가 작다.
 
 #### 기본 사용법
 
@@ -738,118 +471,22 @@ async function fetchAndStream(url, onItem) {
 }
 ```
 
-### Oboe.js (브라우저)
+### Oboe.js (레거시)
 
-Oboe.js는 JSONPath 스타일의 패턴 매칭을 지원하는 스트리밍 파서다. 특정 경로의 데이터만 선택적으로 처리할 수 있어서 직관적이다.
-
-```javascript
-oboe('/api/data')
-  .node('users[*]', (user) => {
-    // users 배열의 각 요소가 파싱될 때마다 호출
-    appendUserToList(user)
-
-    // oboe.drop을 반환하면 해당 노드를 메모리에서 제거
-    // 대용량 배열을 처리할 때 메모리 절약에 필수적
-    return oboe.drop
-  })
-  .node('metadata', (metadata) => {
-    // metadata 객체가 파싱되면 호출
-    updateMetadata(metadata)
-  })
-  .done((finalJson) => {
-    console.log('파싱 완료')
-  })
-  .fail((error) => {
-    if (error.thrown) {
-      console.error('파싱 에러:', error.thrown)
-    } else {
-      console.error('HTTP 에러:', error.statusCode)
-    }
-  })
-```
-
-#### 패턴 매칭 예시
-
-Oboe.js의 패턴 문법은 강력하다.
+Oboe.js는 JSONPath 스타일의 패턴 매칭을 지원하는 스트리밍 파서로, 한때 널리 사용되었다. 하지만 **2013년에 시작된 프로젝트로 더 이상 유지보수되지 않는다.** 레거시 코드베이스에서 마주칠 수 있으니 간단히 언급만 하고 넘어간다.
 
 ```javascript
-oboe('/api/data')
-  // 모든 깊이의 id 속성
-  .node('!..id', (id) => {
-    console.log('ID 발견:', id)
-  })
-
-  // users 배열에서 status가 active인 요소
-  .node('users[*]', (user) => {
-    if (user.status === 'active') {
-      return user
-    }
-    return oboe.drop
-  })
-
-  // 3단계 깊이의 모든 객체
-  .node('!.*.*.*', (obj) => {
-    console.log('3단계 객체:', obj)
-  })
-```
-
-#### 주의사항
-
-Oboe.js는 더 이상 유지보수되지 않는다. 2013년에 시작된 프로젝트로, 당시에는 혁신적이었지만 지금은 `@streamparser/json` 같은 현대적인 대안을 고려하는 것이 좋다.
-
-또한 Oboe.js는 순수 JavaScript 파서이므로 네이티브 `JSON.parse()`보다 CPU를 더 많이 사용한다. 작은 JSON에서는 오히려 느릴 수 있다.
-
-#### Oboe.js에서 @streamparser/json으로 마이그레이션
-
-기존 Oboe.js 코드를 현대적인 라이브러리로 전환하는 방법을 알아보자.
-
-```javascript
-// 기존 Oboe.js 코드
+// Oboe.js 기본 사용법 (참고용)
 oboe('/api/data')
   .node('users[*]', (user) => {
     appendUserToList(user)
-    return oboe.drop
+    return oboe.drop // 메모리에서 제거
   })
   .done(() => console.log('완료'))
   .fail((error) => console.error(error))
 ```
 
-```javascript
-// @streamparser/json으로 마이그레이션
-import { JSONParser } from '@streamparser/json'
-
-async function fetchUsers(url, onUser) {
-  const parser = new JSONParser({ paths: ['$.users.*'] })
-
-  parser.onValue = ({ value, key, stack }) => {
-    if (stack.length === 2) {
-      onUser(value)
-    }
-  }
-
-  const response = await fetch(url)
-  const reader = response.body.getReader()
-
-  try {
-    while (true) {
-      const { done, value } = await reader.read()
-      if (done) break
-      parser.write(value)
-    }
-    console.log('완료')
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-fetchUsers('/api/data', appendUserToList)
-```
-
-주요 차이점:
-- Oboe.js의 `node()` 콜백은 `onValue` 이벤트로 대체
-- `oboe.drop` 대신 파싱된 값을 별도로 저장하지 않으면 자동으로 GC 대상이 됨
-- JSONPath 문법이 약간 다름 (`users[*]` → `$.users.*`)
-- Promise/async-await 패턴 사용 가능
+새 프로젝트에서는 `@streamparser/json`을 사용하자. JSONPath 문법이 약간 다르지만(`users[*]` → `$.users.*`), 현대적인 async/await 패턴을 지원하고 활발히 유지보수되고 있다.
 
 ## Web Worker를 활용한 파싱
 
@@ -947,95 +584,9 @@ worker.onmessage = (e) => {
 
 ## 벤치마크: 실제 성능 측정
 
-이론적인 비교는 충분히 했으니, 실제로 성능을 측정해보자. 다음은 Node.js v22 환경에서 10만 개의 사용자 객체(약 29MB)를 처리하는 벤치마크 결과다.
+다음은 필자의 로컬 환경(MacBook Pro M3 Pro, 36GB RAM, Node.js v22)에서 10만 개의 사용자 객체(약 29MB)를 처리한 벤치마크 결과다.
 
-### 테스트 환경 및 데이터
-
-```javascript
-// 테스트 데이터 생성
-function generateTestData(count) {
-  return Array.from({ length: count }, (_, i) => ({
-    id: i + 1,
-    name: `User ${i + 1}`,
-    email: `user${i + 1}@example.com`,
-    address: {
-      street: `${i + 1} Main Street`,
-      city: 'Seoul',
-      zipCode: `${10000 + i}`
-    },
-    createdAt: new Date().toISOString(),
-    tags: ['tag1', 'tag2', 'tag3'],
-    metadata: {
-      lastLogin: new Date().toISOString(),
-      preferences: { theme: 'dark', language: 'ko' }
-    }
-  }))
-}
-
-const testData = generateTestData(100000)
-const jsonString = JSON.stringify(testData)
-console.log('테스트 데이터 크기:', (jsonString.length / 1024 / 1024).toFixed(2), 'MB')
-// 테스트 데이터 크기: 29.24 MB
-```
-
-### 벤치마크 코드
-
-```javascript
-// 벤치마크 유틸리티
-async function benchmark(name, fn, iterations = 5) {
-  const times = []
-
-  // 워밍업
-  await fn()
-
-  for (let i = 0; i < iterations; i++) {
-    const start = performance.now()
-    await fn()
-    const end = performance.now()
-    times.push(end - start)
-  }
-
-  return {
-    avg: times.reduce((a, b) => a + b) / times.length,
-    min: Math.min(...times),
-    max: Math.max(...times)
-  }
-}
-
-// JSON.parse()
-const jsonParseResult = await benchmark('JSON.parse()', () => {
-  return JSON.parse(jsonString)
-})
-
-// NDJSON
-const ndjsonString = testData.map(item => JSON.stringify(item)).join('\n')
-const ndjsonResult = await benchmark('NDJSON', () => {
-  const lines = ndjsonString.split('\n')
-  for (const line of lines) {
-    if (line.trim()) JSON.parse(line)
-  }
-})
-
-// stream-json
-import pkg from 'stream-json'
-import streamArrayPkg from 'stream-json/streamers/StreamArray.js'
-const { parser } = pkg
-const { streamArray } = streamArrayPkg
-
-const streamJsonResult = await benchmark('stream-json', async () => {
-  return new Promise((resolve, reject) => {
-    let count = 0
-    Readable.from(jsonString)
-      .pipe(parser())
-      .pipe(streamArray())
-      .on('data', () => { count++ })
-      .on('end', () => resolve(count))
-      .on('error', reject)
-  })
-})
-```
-
-### 결과 요약
+### 순수 파싱 속도 비교
 
 | 방식 | 평균 시간 | 최소 | 최대 | JSON.parse() 대비 |
 |------|----------|------|------|------------------|
@@ -1047,88 +598,7 @@ const streamJsonResult = await benchmark('stream-json', async () => {
 
 반면 stream-json은 순수 JavaScript로 구현된 파서라서 **약 12배 느리다**. 하지만 이 벤치마크는 데이터가 이미 메모리에 있는 상황이다. 실제 네트워크 환경에서는 완전히 다른 결과가 나온다.
 
-### 네트워크 포함 벤치마크
-
-실제 HTTP 요청을 포함한 벤치마크를 진행해보자.
-
-```javascript
-// 서버 측 (Express)
-const express = require('express')
-const app = express()
-
-// 일반 JSON 엔드포인트
-app.get('/api/json', (req, res) => {
-  res.json(testData)
-})
-
-// NDJSON 엔드포인트
-app.get('/api/ndjson', (req, res) => {
-  res.setHeader('Content-Type', 'application/x-ndjson')
-  for (const item of testData) {
-    res.write(JSON.stringify(item) + '\n')
-  }
-  res.end()
-})
-
-app.listen(3000)
-```
-
-```javascript
-// 클라이언트 측 벤치마크
-async function benchmarkNetworkJson() {
-  const start = performance.now()
-  const response = await fetch('http://localhost:3000/api/json')
-  const data = await response.json()
-  const end = performance.now()
-
-  return {
-    total: end - start,
-    firstItemAt: end - start, // 전체 완료 후에야 첫 아이템 접근 가능
-    itemCount: data.length
-  }
-}
-
-async function benchmarkNetworkNdjson() {
-  const start = performance.now()
-  let firstItemTime = null
-
-  const response = await fetch('http://localhost:3000/api/ndjson')
-  const reader = response.body.getReader()
-  const decoder = new TextDecoder()
-
-  let buffer = ''
-  let itemCount = 0
-
-  while (true) {
-    const { done, value } = await reader.read()
-    if (done) break
-
-    buffer += decoder.decode(value, { stream: true })
-    const lines = buffer.split('\n')
-    buffer = lines.pop()
-
-    for (const line of lines) {
-      if (line.trim()) {
-        JSON.parse(line)
-        itemCount++
-        if (firstItemTime === null) {
-          firstItemTime = performance.now() - start
-        }
-      }
-    }
-  }
-
-  const end = performance.now()
-
-  return {
-    total: end - start,
-    firstItemAt: firstItemTime,
-    itemCount
-  }
-}
-```
-
-### 네트워크 벤치마크 결과 (localhost)
+### 네트워크 포함 벤치마크 (localhost)
 
 | 방식 | 전체 시간 | 첫 아이템 시간 | TTFB 개선 |
 |------|----------|--------------|----------|
@@ -1148,531 +618,28 @@ Chrome DevTools의 Network Throttling을 사용하여 느린 3G 환경을 시뮬
 
 느린 네트워크에서는 차이가 더욱 극적이다. 사용자가 47초 동안 로딩 스피너를 보는 것과, 0.4초 만에 첫 데이터를 보기 시작하는 것은 완전히 다른 경험이다.
 
-## 메모리 프로파일링: 실제로 얼마나 차이나는가
+## 메모리 사용량 비교
 
-### Chrome DevTools로 메모리 측정
+29MB JSON을 처리할 때 메모리 변화를 측정했다.
 
-브라우저에서 메모리 사용량을 측정하는 방법을 알아보자.
+### JSON.parse() 방식
 
-```javascript
-// 메모리 측정 유틸리티
-function measureMemory(label) {
-  if (performance.memory) {
-    console.log(`[${label}]`)
-    console.log('  Used JS Heap:', (performance.memory.usedJSHeapSize / 1024 / 1024).toFixed(2), 'MB')
-    console.log('  Total JS Heap:', (performance.memory.totalJSHeapSize / 1024 / 1024).toFixed(2), 'MB')
-  }
-}
-
-// JSON.parse() 메모리 측정
-async function measureJsonParseMemory(url) {
-  measureMemory('시작')
-
-  const response = await fetch(url)
-  measureMemory('fetch 완료')
-
-  const text = await response.text()
-  measureMemory('text 변환 완료')
-
-  const data = JSON.parse(text)
-  measureMemory('JSON.parse 완료')
-
-  return data
-}
-```
-
-### 29MB JSON 파싱 시 메모리 변화
-
-Node.js v22에서 `--expose-gc` 플래그로 실행한 결과:
-
-```
-[초기 상태]
-  RSS: 41.28 MB
-  Heap Used: 3.68 MB
-  Heap Total: 6.33 MB
-
-[JSON 문자열 생성 후]
-  RSS: 213.63 MB
-  Heap Used: 32.97 MB
-  Heap Total: 66.33 MB
-
-[JSON.parse() 후]
-  RSS: 216.30 MB
-  Heap Used: 80.96 MB
-  Heap Total: 114.36 MB
-```
+| 단계 | Heap Used |
+|------|-----------|
+| 초기 상태 | 3.68 MB |
+| JSON 문자열 생성 후 | 32.97 MB |
+| JSON.parse() 후 | 80.96 MB |
 
 29MB JSON을 처리하는 데 약 **48MB의 힙 메모리가 증가**했다. JSON 문자열 자체(~29MB)와 파싱 결과 객체(~48MB)가 동시에 메모리에 존재하는 순간이 있다.
 
-### NDJSON 스트리밍 메모리 측정
+### NDJSON 스트리밍 방식
 
-데이터를 유지하지 않고 스트리밍 방식으로 처리할 때의 메모리 사용량을 측정했다.
+| 방식 | 피크 메모리 증가 |
+|------|-----------------|
+| 데이터 유지 안함 | ~24MB |
+| 데이터 유지 | ~19MB |
 
-```javascript
-// node --expose-gc memory-benchmark.mjs
-
-function formatMemory(bytes) {
-  return (bytes / 1024 / 1024).toFixed(2) + ' MB'
-}
-
-function logMemory(label) {
-  if (global.gc) global.gc()
-  const usage = process.memoryUsage()
-  console.log(`[${label}]`)
-  console.log(`  Heap Used: ${formatMemory(usage.heapUsed)}`)
-}
-
-// NDJSON 스트리밍 (데이터 유지 안함)
-const beforeNdjson = logMemory('NDJSON 파싱 전')
-let peakMemory = process.memoryUsage().heapUsed
-let count = 0
-
-const lines = ndjsonString.split('\n')
-for (const line of lines) {
-  if (line.trim()) {
-    const item = JSON.parse(line)
-    // 데이터 처리 후 참조 해제 (실제 스트리밍처럼)
-    count++
-
-    if (count % 20000 === 0) {
-      if (global.gc) global.gc()
-      const current = process.memoryUsage().heapUsed
-      if (current > peakMemory) peakMemory = current
-    }
-  }
-}
-
-logMemory('NDJSON 파싱 완료')
-console.log(`피크 메모리 증가: ${formatMemory(peakMemory - beforeNdjson)}`)
-```
-
-### NDJSON 스트리밍 메모리 측정 결과
-
-```
---- NDJSON 스트리밍 (데이터 유지 안함) ---
-[NDJSON 파싱 전]
-  Heap Used: 42.14 MB
-
-[NDJSON 파싱 완료]
-  Heap Used: 62.24 MB
-
-처리된 아이템: 100000
-피크 메모리 증가: 23.92 MB
-
---- NDJSON 스트리밍 (데이터 유지) ---
-[NDJSON 파싱 전]
-  Heap Used: 62.24 MB
-
-[NDJSON 파싱 완료]
-  Heap Used: 81.08 MB
-
-처리된 아이템: 100000
-메모리 증가: 18.85 MB
-```
-
-NDJSON 스트리밍은 아이템을 처리하고 참조를 해제하면 GC가 메모리를 회수한다. 피크 메모리 증가가 **~24MB**로, JSON.parse()의 **~48MB**와 비교하면 **약 50%의 메모리 절약**이다. 데이터를 배열에 유지해도 메모리 증가량이 더 적은 이유는, 한 번에 전체를 파싱하는 것보다 점진적으로 파싱하는 것이 GC에 더 유리하기 때문이다.
-
-### Node.js에서 메모리 프로파일링
-
-Node.js에서는 `--expose-gc` 플래그와 `process.memoryUsage()`를 사용한다.
-
-```javascript
-// node --expose-gc memory-benchmark.js
-
-function formatMemory(bytes) {
-  return (bytes / 1024 / 1024).toFixed(2) + ' MB'
-}
-
-function logMemory(label) {
-  const usage = process.memoryUsage()
-  console.log(`[${label}]`)
-  console.log('  RSS:', formatMemory(usage.rss))
-  console.log('  Heap Total:', formatMemory(usage.heapTotal))
-  console.log('  Heap Used:', formatMemory(usage.heapUsed))
-  console.log('  External:', formatMemory(usage.external))
-}
-
-async function compareMemoryUsage() {
-  global.gc()
-  logMemory('초기 상태')
-
-  // JSON.parse 방식
-  const jsonString = JSON.stringify(generateTestData(100000))
-  global.gc()
-  logMemory('JSON 문자열 생성 후')
-
-  const parsed = JSON.parse(jsonString)
-  logMemory('JSON.parse 후')
-
-  // 명시적으로 참조 해제
-  parsed.length = 0
-  global.gc()
-  logMemory('데이터 해제 후')
-}
-```
-
-### 메모리 힙 스냅샷 분석
-
-Chrome DevTools의 Memory 탭에서 힙 스냅샷을 찍으면 어떤 객체가 메모리를 차지하는지 자세히 볼 수 있다.
-
-```javascript
-// 스냅샷 비교를 위한 코드
-async function analyzeMemoryWithSnapshots() {
-  console.log('첫 번째 스냅샷을 찍으세요 (초기 상태)')
-  await new Promise(r => setTimeout(r, 5000))
-
-  const response = await fetch('/api/huge-data')
-  const text = await response.text()
-
-  console.log('두 번째 스냅샷을 찍으세요 (text 로드 후)')
-  await new Promise(r => setTimeout(r, 5000))
-
-  const data = JSON.parse(text)
-
-  console.log('세 번째 스냅샷을 찍으세요 (parse 후)')
-  await new Promise(r => setTimeout(r, 5000))
-
-  // 데이터 사용
-  console.log('아이템 수:', data.length)
-}
-```
-
-스냅샷을 비교하면 다음과 같은 정보를 얻을 수 있다:
-- 어떤 타입의 객체가 가장 많은 메모리를 차지하는지
-- 문자열 vs 객체 비율
-- 배열과 객체의 오버헤드
-
-## 모바일 환경 최적화
-
-모바일 환경은 데스크톱과 다른 제약이 있다. 메모리가 제한적이고, CPU도 느리며, 네트워크는 불안정하다.
-
-### 모바일 메모리 제한
-
-iOS Safari는 탭당 약 1GB의 메모리 제한이 있다. Android Chrome도 비슷하다. 하지만 백그라운드 탭은 훨씬 적은 메모리만 허용되며, 메모리 압박 시 먼저 종료된다.
-
-실제로 측정해보면:
-- iPhone 12: 약 1.2GB 제한
-- Galaxy S21: 약 1.5GB 제한
-- 저가형 Android: 약 512MB 제한
-
-100MB JSON을 파싱하면 피크 메모리가 300MB 이상 될 수 있어서, 저가형 기기에서는 탭이 크래시될 수 있다.
-
-### 모바일 최적화 전략
-
-```javascript
-// 1. 디바이스 메모리 감지
-const deviceMemory = navigator.deviceMemory || 4 // GB
-
-function getOptimalChunkSize() {
-  if (deviceMemory <= 2) return 50
-  if (deviceMemory <= 4) return 100
-  return 200
-}
-
-// 2. 연결 상태 감지
-const connection = navigator.connection || navigator.mozConnection
-
-function getOptimalStrategy() {
-  if (connection) {
-    const { effectiveType, saveData } = connection
-
-    if (saveData) {
-      return 'minimal' // 최소한의 데이터만 요청
-    }
-
-    if (effectiveType === 'slow-2g' || effectiveType === '2g') {
-      return 'paginated' // 페이지네이션 사용
-    }
-
-    if (effectiveType === '3g') {
-      return 'streaming' // NDJSON 스트리밍
-    }
-  }
-
-  return 'full' // 전체 로드
-}
-
-// 3. 적응형 데이터 로딩
-async function adaptiveDataLoader(baseUrl) {
-  const strategy = getOptimalStrategy()
-  const chunkSize = getOptimalChunkSize()
-
-  switch (strategy) {
-    case 'minimal':
-      return fetch(`${baseUrl}?fields=id,name&limit=20`)
-
-    case 'paginated':
-      return fetchPaginated(baseUrl, { pageSize: chunkSize })
-
-    case 'streaming':
-      return fetchNDJSON(`${baseUrl}/stream`, { chunkSize })
-
-    default:
-      return fetch(baseUrl).then(r => r.json())
-  }
-}
-```
-
-### 페이지 가시성 기반 최적화
-
-모바일에서는 사용자가 탭을 전환하면 리소스를 절약해야 한다.
-
-```javascript
-class SmartDataLoader {
-  constructor(url, onData) {
-    this.url = url
-    this.onData = onData
-    this.abortController = null
-    this.paused = false
-    this.pendingData = []
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        this.pause()
-      } else {
-        this.resume()
-      }
-    })
-  }
-
-  async start() {
-    this.abortController = new AbortController()
-
-    try {
-      const response = await fetch(this.url, {
-        signal: this.abortController.signal
-      })
-
-      const reader = response.body.getReader()
-      const decoder = new TextDecoder()
-      let buffer = ''
-
-      while (true) {
-        // 일시정지 상태면 대기
-        while (this.paused) {
-          await new Promise(r => setTimeout(r, 100))
-        }
-
-        const { done, value } = await reader.read()
-        if (done) break
-
-        buffer += decoder.decode(value, { stream: true })
-        const lines = buffer.split('\n')
-        buffer = lines.pop()
-
-        for (const line of lines) {
-          if (line.trim()) {
-            const data = JSON.parse(line)
-
-            if (document.hidden) {
-              // 백그라운드에서는 데이터를 버퍼에 저장
-              this.pendingData.push(data)
-            } else {
-              this.onData(data)
-            }
-          }
-        }
-      }
-    } catch (error) {
-      if (error.name !== 'AbortError') {
-        throw error
-      }
-    }
-  }
-
-  pause() {
-    this.paused = true
-  }
-
-  resume() {
-    this.paused = false
-
-    // 버퍼에 쌓인 데이터 처리
-    while (this.pendingData.length > 0) {
-      this.onData(this.pendingData.shift())
-    }
-  }
-
-  cancel() {
-    this.abortController?.abort()
-  }
-}
-```
-
-### 배터리 상태 고려
-
-```javascript
-async function getBatteryAwareStrategy() {
-  if ('getBattery' in navigator) {
-    const battery = await navigator.getBattery()
-
-    if (battery.level < 0.2 && !battery.charging) {
-      // 배터리 부족 + 충전 중 아님 -> 최소한의 처리
-      return {
-        chunkSize: 20,
-        throttle: 100, // 100ms 간격으로 처리
-        skipAnimations: true
-      }
-    }
-  }
-
-  return {
-    chunkSize: 100,
-    throttle: 0,
-    skipAnimations: false
-  }
-}
-```
-
-## 압축과 스트리밍의 조합
-
-HTTP 압축은 대용량 데이터 전송에서 필수다. 하지만 압축과 스트리밍을 함께 사용할 때 주의할 점이 있다.
-
-### 서버 측 압축 설정
-
-```javascript
-const compression = require('compression')
-const express = require('express')
-
-const app = express()
-
-// 기본 compression 미들웨어
-// threshold: 1KB 이상일 때만 압축
-app.use(compression({ threshold: 1024 }))
-
-// NDJSON 전용 압축 설정
-app.get('/api/stream', (req, res) => {
-  res.setHeader('Content-Type', 'application/x-ndjson')
-
-  // flush 옵션이 중요하다
-  // 각 청크를 즉시 클라이언트로 전송하도록 함
-  res.flush = () => {
-    if (res.socket && res.socket.writable) {
-      res.socket.uncork()
-    }
-  }
-
-  for (const item of data) {
-    res.write(JSON.stringify(item) + '\n')
-    res.flush() // 각 줄마다 flush
-  }
-
-  res.end()
-})
-```
-
-### 압축과 TTFB의 트레이드오프
-
-압축은 전체 전송 시간을 줄이지만, TTFB(Time To First Byte)를 늘릴 수 있다. 압축 버퍼가 차야 데이터가 전송되기 때문이다.
-
-```javascript
-const zlib = require('zlib')
-
-// 압축 버퍼 크기 조절
-app.get('/api/stream', (req, res) => {
-  res.setHeader('Content-Encoding', 'gzip')
-  res.setHeader('Content-Type', 'application/x-ndjson')
-
-  const gzip = zlib.createGzip({
-    flush: zlib.constants.Z_SYNC_FLUSH, // 각 write마다 flush
-    level: 1 // 빠른 압축 (낮은 압축률)
-  })
-
-  gzip.pipe(res)
-
-  for (const item of data) {
-    gzip.write(JSON.stringify(item) + '\n')
-  }
-
-  gzip.end()
-})
-```
-
-`Z_SYNC_FLUSH`를 사용하면 각 write마다 압축된 데이터를 출력하지만, 압축 효율이 떨어진다. 반면 기본 설정은 효율적인 압축을 하지만 버퍼가 차야 출력된다.
-
-### 압축률 vs 스트리밍 지연 비교
-
-| 설정 | 압축률 | 첫 바이트 시간 | 전체 시간 |
-|------|--------|--------------|----------|
-| 압축 없음 | 0% | 5ms | 2,500ms |
-| gzip level 9 (기본) | 85% | 150ms | 400ms |
-| gzip level 1 + SYNC_FLUSH | 70% | 15ms | 600ms |
-| brotli level 4 | 88% | 200ms | 380ms |
-
-일반적으로 `level 1 + SYNC_FLUSH` 조합이 스트리밍에 적합하다. 압축률은 다소 낮지만 TTFB가 매우 짧다.
-
-### 클라이언트 측에서 압축 해제 스트리밍
-
-브라우저의 Fetch API는 `Content-Encoding: gzip` 응답을 자동으로 해제한다. 별도의 처리가 필요 없다.
-
-```javascript
-// 브라우저가 자동으로 gzip 해제
-async function fetchCompressedNdjson(url, onData) {
-  const response = await fetch(url) // Accept-Encoding: gzip 자동 전송
-
-  const reader = response.body.getReader()
-  const decoder = new TextDecoder()
-
-  let buffer = ''
-
-  while (true) {
-    const { done, value } = await reader.read()
-    if (done) break
-
-    // value는 이미 압축 해제된 상태
-    buffer += decoder.decode(value, { stream: true })
-
-    const lines = buffer.split('\n')
-    buffer = lines.pop()
-
-    for (const line of lines) {
-      if (line.trim()) {
-        onData(JSON.parse(line))
-      }
-    }
-  }
-}
-```
-
-### Node.js에서 압축 스트림 처리
-
-Node.js에서는 명시적으로 압축 해제 스트림을 연결해야 한다.
-
-```javascript
-const https = require('https')
-const zlib = require('zlib')
-const { pipeline } = require('stream/promises')
-
-async function fetchCompressedStream(url) {
-  return new Promise((resolve, reject) => {
-    https.get(url, (res) => {
-      let stream = res
-
-      // Content-Encoding에 따라 압축 해제 스트림 연결
-      const encoding = res.headers['content-encoding']
-
-      if (encoding === 'gzip') {
-        stream = res.pipe(zlib.createGunzip())
-      } else if (encoding === 'br') {
-        stream = res.pipe(zlib.createBrotliDecompress())
-      } else if (encoding === 'deflate') {
-        stream = res.pipe(zlib.createInflate())
-      }
-
-      resolve(stream)
-    }).on('error', reject)
-  })
-}
-
-// 사용 예시
-const stream = await fetchCompressedStream('https://api.example.com/data')
-stream
-  .pipe(parser())
-  .pipe(streamArray())
-  .on('data', ({ value }) => {
-    processItem(value)
-  })
-```
+NDJSON 스트리밍은 아이템을 처리하고 참조를 해제하면 GC가 메모리를 회수한다. JSON.parse()의 **~48MB**와 비교하면 **약 50%의 메모리 절약**이다. 한 번에 전체를 파싱하는 것보다 점진적으로 파싱하는 것이 GC에 더 유리하기 때문이다.
 
 ## 실전 사례 연구
 
@@ -1724,48 +691,7 @@ app.get('/api/logs/:id', async (req, res) => {
 })
 ```
 
-```jsx
-// 클라이언트: 가상 스크롤과 결합
-function LogViewer() {
-  const [logs, setLogs] = useState([])
-  const [loading, setLoading] = useState(false)
-
-  const loadLogs = async (filters) => {
-    setLoading(true)
-    setLogs([])
-
-    await fetchNDJSONWithProgress(
-      `/api/logs?${new URLSearchParams(filters)}`,
-      (log) => {
-        setLogs((prev) => [...prev, log])
-      },
-      (progress) => {
-        // 진행률 표시
-      }
-    )
-
-    setLoading(false)
-  }
-
-  return (
-    <div>
-      <VirtualList
-        height={600}
-        itemCount={logs.length}
-        itemSize={40}
-      >
-        {({ index, style }) => (
-          <LogItem
-            style={style}
-            log={logs[index]}
-            onClick={() => loadLogDetail(logs[index].id)}
-          />
-        )}
-      </VirtualList>
-    </div>
-  )
-}
-```
+클라이언트에서는 NDJSON 스트림을 받아 가상 스크롤 라이브러리(react-window, vue-virtual-scroller 등)와 결합하면 된다.
 
 **결과:**
 - 첫 로그 표시: 3초 → 50ms
@@ -1996,149 +922,6 @@ Web Worker를 고려해볼 수 있다.
 
 솔직히 대부분의 웹 애플리케이션에서는 API 설계를 개선하는 것이 근본적인 해결책이다. 스트리밍은 정말로 대용량 데이터를 한 번에 처리해야 할 때만 고려하자.
 
-## TypeScript 타입 정의
-
-스트리밍 JSON 처리를 TypeScript로 작성할 때 유용한 타입 정의를 살펴보자.
-
-### NDJSON 클라이언트 타입
-
-```typescript
-interface StreamProgress {
-  receivedBytes: number
-  totalBytes: number | null
-  percentage: number | null
-  itemCount: number
-}
-
-interface StreamResult<T> {
-  data: T[]
-  totalItems: number
-  totalBytes: number
-  aborted: boolean
-}
-
-type OnDataCallback<T> = (item: T) => void
-type OnProgressCallback = (progress: StreamProgress) => void
-
-async function fetchNDJSON<T>(
-  url: string,
-  onData: OnDataCallback<T>,
-  options?: {
-    signal?: AbortSignal
-    onProgress?: OnProgressCallback
-  }
-): Promise<StreamResult<T>> {
-  const response = await fetch(url, { signal: options?.signal })
-
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status}`)
-  }
-
-  const reader = response.body!.getReader()
-  const decoder = new TextDecoder()
-
-  const contentLength = response.headers.get('Content-Length')
-  const total = contentLength ? parseInt(contentLength, 10) : null
-
-  let buffer = ''
-  let received = 0
-  let itemCount = 0
-  const data: T[] = []
-
-  while (true) {
-    const { done, value } = await reader.read()
-
-    if (done) break
-
-    received += value.length
-    buffer += decoder.decode(value, { stream: true })
-
-    const lines = buffer.split('\n')
-    buffer = lines.pop()!
-
-    for (const line of lines) {
-      if (line.trim()) {
-        const item = JSON.parse(line) as T
-        data.push(item)
-        onData(item)
-        itemCount++
-      }
-    }
-
-    options?.onProgress?.({
-      receivedBytes: received,
-      totalBytes: total,
-      percentage: total ? Math.round((received / total) * 100) : null,
-      itemCount
-    })
-  }
-
-  if (buffer.trim()) {
-    const item = JSON.parse(buffer) as T
-    data.push(item)
-    onData(item)
-    itemCount++
-  }
-
-  return {
-    data,
-    totalItems: itemCount,
-    totalBytes: received,
-    aborted: false
-  }
-}
-```
-
-### 제네릭을 활용한 타입 안전한 사용
-
-```typescript
-interface User {
-  id: number
-  name: string
-  email: string
-}
-
-interface LogEntry {
-  timestamp: string
-  level: 'info' | 'warn' | 'error'
-  message: string
-}
-
-// 타입 추론이 자동으로 적용됨
-await fetchNDJSON<User>('/api/users', (user) => {
-  console.log(user.name) // user는 User 타입
-})
-
-await fetchNDJSON<LogEntry>('/api/logs', (log) => {
-  if (log.level === 'error') {
-    console.error(log.message)
-  }
-})
-```
-
-### React 훅의 타입 정의
-
-```typescript
-interface UseNDJSONStreamResult<T> {
-  data: T[]
-  loading: boolean
-  error: Error | null
-  progress: { count: number; bytes: number }
-  startStream: () => Promise<void>
-  cancel: () => void
-}
-
-function useNDJSONStream<T>(url: string): UseNDJSONStreamResult<T> {
-  const [data, setData] = useState<T[]>([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  const [progress, setProgress] = useState({ count: 0, bytes: 0 })
-  const abortControllerRef = useRef<AbortController | null>(null)
-
-  // ... 구현
-}
-```
-
 ## 주의사항과 함정
 
 ### 스트리밍 파서의 CPU 오버헤드
@@ -2318,155 +1101,28 @@ function createDebugStream(url, onData) {
 }
 ```
 
-## 테스트 작성 가이드
-
-스트리밍 JSON 처리 코드를 테스트하는 방법을 알아보자.
-
-### Mock 스트림 생성
-
-```javascript
-function createMockReadableStream(chunks, delayMs = 10) {
-  let index = 0
-
-  return new ReadableStream({
-    async pull(controller) {
-      if (index < chunks.length) {
-        await new Promise(r => setTimeout(r, delayMs))
-        controller.enqueue(new TextEncoder().encode(chunks[index]))
-        index++
-      } else {
-        controller.close()
-      }
-    }
-  })
-}
-
-// 사용 예
-const mockStream = createMockReadableStream([
-  '{"id":1,"name":"Alice"}\n',
-  '{"id":2,"name":"Bob"}\n',
-  '{"id":3,"name":"Charlie"}\n'
-])
-```
-
-### Jest를 사용한 단위 테스트
-
-```javascript
-import { fetchNDJSON } from './ndjson-client'
-
-describe('fetchNDJSON', () => {
-  beforeEach(() => {
-    global.fetch = jest.fn()
-  })
-
-  it('should parse NDJSON stream correctly', async () => {
-    const mockData = [
-      { id: 1, name: 'Alice' },
-      { id: 2, name: 'Bob' }
-    ]
-
-    const ndjson = mockData.map(d => JSON.stringify(d)).join('\n')
-    const mockStream = createMockReadableStream([ndjson])
-
-    global.fetch.mockResolvedValue({
-      ok: true,
-      headers: new Headers(),
-      body: mockStream
-    })
-
-    const received = []
-    await fetchNDJSON('/api/test', (item) => {
-      received.push(item)
-    })
-
-    expect(received).toEqual(mockData)
-  })
-
-  it('should handle chunked data correctly', async () => {
-    // 문자 중간에서 잘린 청크 시뮬레이션
-    const mockStream = createMockReadableStream([
-      '{"id":1,"name":"홍',  // 한글이 중간에 잘림
-      '길동"}\n'
-    ])
-
-    global.fetch.mockResolvedValue({
-      ok: true,
-      headers: new Headers(),
-      body: mockStream
-    })
-
-    const received = []
-    await fetchNDJSON('/api/test', (item) => {
-      received.push(item)
-    })
-
-    expect(received[0].name).toBe('홍길동')
-  })
-
-  it('should handle abort correctly', async () => {
-    const controller = new AbortController()
-    const slowStream = createMockReadableStream(
-      Array(100).fill('{"id":1}\n'),
-      100 // 100ms 딜레이
-    )
-
-    global.fetch.mockResolvedValue({
-      ok: true,
-      headers: new Headers(),
-      body: slowStream
-    })
-
-    const received = []
-    const promise = fetchNDJSON('/api/test', (item) => {
-      received.push(item)
-      if (received.length === 5) {
-        controller.abort()
-      }
-    }, { signal: controller.signal })
-
-    await expect(promise).rejects.toThrow('aborted')
-    expect(received.length).toBeLessThanOrEqual(10)
-  })
-})
-```
-
-### E2E 테스트 (Playwright)
-
-```javascript
-import { test, expect } from '@playwright/test'
-
-test('should load large dataset progressively', async ({ page }) => {
-  await page.goto('/users')
-
-  // 로드 버튼 클릭
-  await page.click('button:has-text("사용자 불러오기")')
-
-  // 첫 번째 아이템이 빠르게 나타나는지 확인
-  await expect(page.locator('.user-item').first()).toBeVisible({
-    timeout: 1000
-  })
-
-  // 진행률 표시 확인
-  await expect(page.locator('.progress')).toContainText(/\d+개 로드됨/)
-
-  // 전체 로드 완료 대기
-  await expect(page.locator('button:has-text("사용자 불러오기")')).toBeEnabled({
-    timeout: 30000
-  })
-
-  // 전체 아이템 수 확인
-  const count = await page.locator('.user-item').count()
-  expect(count).toBeGreaterThan(1000)
-})
-```
-
 ## 마치며
 
 대용량 JSON 처리는 프론트엔드와 백엔드 모두의 협력이 필요한 문제다. NDJSON처럼 서버에서 스트리밍 친화적인 형식을 제공하면 클라이언트 구현이 훨씬 단순해진다.
 
 하지만 기존 API를 수정할 수 없는 상황도 많다. 그럴 때 스트리밍 파서들이 도움이 된다. `stream-json`, `@streamparser/json` 같은 라이브러리들은 충분히 성숙하고 실전에서 검증되었다.
 
-정리하자면:
+### 의사결정 플로차트
+
+어떤 방식을 선택해야 할지 고민된다면 다음 플로차트를 참고하자.
+
+```
+데이터 크기가 10MB 미만인가?
+├─ Yes → JSON.parse()로 충분하다
+└─ No → 서버 API를 수정할 수 있는가?
+         ├─ Yes → NDJSON 사용 (가장 추천)
+         └─ No → 실행 환경은?
+                  ├─ Node.js → stream-json
+                  ├─ 브라우저 → @streamparser/json
+                  └─ UI 블로킹만 해결하면 됨 → Web Worker
+```
+
+### 핵심 정리
 
 1. **가능하다면 NDJSON을 사용하자.** 가장 단순하고 효과적이다.
 2. **기존 API를 사용해야 한다면 환경에 맞는 스트리밍 파서를 선택하자.**
