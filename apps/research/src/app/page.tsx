@@ -7,6 +7,8 @@ import {compareDesc} from 'date-fns/compareDesc'
 import {format} from 'date-fns/format'
 import matter from 'gray-matter'
 
+import {ContributionGraph} from '@yceffort/shared'
+
 import Hero from '@/components/Hero'
 import LayoutWrapper from '@/components/LayoutWrapper'
 import {SlidePreview} from '@/components/SlidePreview'
@@ -115,7 +117,9 @@ export default async function Page() {
 
   return (
     <LayoutWrapper>
-      <Hero />
+      <Hero>
+        <ContributionGraph />
+      </Hero>
       <div className="grid grid-cols-1 gap-6 pt-4 md:grid-cols-2">
         {slides.map((slide) => (
           <ResearchCard key={slide.slug} slide={slide} />

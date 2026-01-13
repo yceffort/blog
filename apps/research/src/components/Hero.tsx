@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import {memo, useEffect, useState} from 'react'
 
+import type {ReactNode} from 'react'
+
 import {SiteConfig} from '@/config'
 
 const TYPING_TEXTS = [
@@ -93,7 +95,7 @@ const TypingText = memo(function TypingText() {
   )
 })
 
-const Hero = memo(function Hero() {
+const Hero = memo(function Hero({children}: {children?: ReactNode}) {
   return (
     <div className="relative mb-8 overflow-hidden rounded-xl border-2 border-black bg-gradient-to-br from-gray-50 via-white to-gray-100 p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:border-gray-600 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 dark:shadow-[6px_6px_0px_0px_rgba(82,82,91,1)] sm:p-8 md:p-10">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(14,165,233,0.1),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.1),transparent_50%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(14,165,233,0.15),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.15),transparent_50%)]" />
@@ -108,28 +110,32 @@ const Hero = memo(function Hero() {
           </span>
         </div>
 
-        <div className="font-mono">
-          <div className="mb-2 text-gray-500 dark:text-gray-400">
-            <span className="text-green-600 dark:text-green-400">➜</span>{' '}
-            <span className="text-sky-600 dark:text-sky-400">~</span>{' '}
-            <span className="text-gray-500">ls</span> ./slides
+        <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-start">
+          <div className="flex-1 font-mono">
+            <div className="mb-2 text-gray-500 dark:text-gray-400">
+              <span className="text-green-600 dark:text-green-400">➜</span>{' '}
+              <span className="text-sky-600 dark:text-sky-400">~</span>{' '}
+              <span className="text-gray-500">ls</span> ./slides
+            </div>
+
+            <h1 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl md:text-4xl">
+              🧪{' '}
+              <span className="bg-gradient-to-r from-sky-600 via-violet-600 to-purple-600 bg-clip-text text-transparent dark:from-sky-400 dark:via-violet-400 dark:to-purple-400">
+                Research Lab
+              </span>
+            </h1>
+
+            <TypingText />
+
+            <p className="mb-6 max-w-2xl text-sm text-gray-600 dark:text-gray-400 sm:text-base">
+              {SiteConfig.author.name}의 발표 자료와 기술 연구 노트를 공유하는
+              공간입니다.
+            </p>
+
+            <ActionButtons />
           </div>
 
-          <h1 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl md:text-4xl">
-            🧪{' '}
-            <span className="bg-gradient-to-r from-sky-600 via-violet-600 to-purple-600 bg-clip-text text-transparent dark:from-sky-400 dark:via-violet-400 dark:to-purple-400">
-              Research Lab
-            </span>
-          </h1>
-
-          <TypingText />
-
-          <p className="mb-6 max-w-2xl text-sm text-gray-600 dark:text-gray-400 sm:text-base">
-            {SiteConfig.author.name}의 발표 자료와 기술 연구 노트를 공유하는
-            공간입니다.
-          </p>
-
-          <ActionButtons />
+          {children && <div className="hidden lg:block">{children}</div>}
         </div>
       </div>
 
