@@ -51,3 +51,4 @@ apps/blog/public/sitemap.xml
 apps/blog/public/sw.js
 apps/blog/public/sw.js.map
 apps/blog/public/workbox-*
+*.tsbuildinfo
