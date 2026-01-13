@@ -2,6 +2,7 @@ import {Suspense} from 'react'
 
 import type {Metadata} from 'next'
 
+import ContributionGraph from '#components/ContributionGraph'
 import Hero from '#components/Hero'
 import InfiniteScrollList from '#components/InfiniteScrollList'
 import {SiteConfig} from '#src/config'
@@ -41,7 +42,9 @@ export default async function Page() {
 
   return (
     <>
-      <Hero />
+      <Hero>
+        <ContributionGraph />
+      </Hero>
       <Suspense
         fallback={
           <div className="divide-y divide-gray-200 px-4 dark:divide-gray-700">
