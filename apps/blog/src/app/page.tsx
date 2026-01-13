@@ -2,7 +2,8 @@ import {Suspense} from 'react'
 
 import type {Metadata} from 'next'
 
-import ContributionGraph from '#components/ContributionGraph'
+import {ContributionGraph} from '@yceffort/shared'
+
 import Hero from '#components/Hero'
 import InfiniteScrollList from '#components/InfiniteScrollList'
 import {SiteConfig} from '#src/config'
