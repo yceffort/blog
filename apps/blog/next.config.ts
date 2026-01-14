@@ -9,7 +9,7 @@ const config: NextConfig = {
     viewTransition: true,
   },
   outputFileTracingIncludes: {
-    '/api/**/*': ['./posts/**/*'],
+    '/*': ['./posts/**/*'],
   },
   async redirects() {
     return [
