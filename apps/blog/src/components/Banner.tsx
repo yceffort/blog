@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import {useState, useEffect, useCallback} from 'react'
+import {useState, useEffect, useCallback, useRef} from 'react'
 
 import {track} from '@vercel/analytics/react'
 
@@ -25,6 +25,7 @@ const FloatingBanner = ({
 }) => {
   const [isHidden, setIsHidden] = useState(true)
   const [isMounted, setIsMounted] = useState(false)
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     const shouldHide = getHideBannerPreference()
@@ -40,14 +41,18 @@ const FloatingBanner = ({
     return () => {
       clearTimeout(showTimer)
       clearTimeout(mountTimer)
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current)
+      }
     }
   }, [])
 
   const handleClose = useCallback(() => {
     track('clicked.beta_reader_banner_close')
     setIsMounted(false)
-    setTimeout(() => {
+    closeTimeoutRef.current = setTimeout(() => {
       setIsHidden(true)
+      closeTimeoutRef.current = null
       try {
         localStorage.setItem(LOCAL_STORAGE_KEY, 'true')
       } catch {
