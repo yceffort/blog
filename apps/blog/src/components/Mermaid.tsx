@@ -17,6 +17,14 @@ export default function Mermaid({chart}: {chart: string}) {
       theme: theme === 'dark' ? 'dark' : 'default',
       securityLevel: 'loose',
       fontFamily: 'inherit',
+      themeVariables:
+        theme === 'dark'
+          ? {
+              lineColor: '#9ca3af',
+              primaryBorderColor: '#6b7280',
+              primaryTextColor: '#e5e7eb',
+            }
+          : undefined,
     })
 
     const renderChart = async () => {
