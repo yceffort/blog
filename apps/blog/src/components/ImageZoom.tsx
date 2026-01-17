@@ -25,13 +25,22 @@ export default function ImageZoom({
   const [mounted, setMounted] = useState(false)
   const imageRef = useRef<HTMLSpanElement>(null)
   const [imageRect, setImageRect] = useState<DOMRect | null>(null)
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current)
+      }
+    }
   }, [])
 
   const handleOpen = useCallback(() => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current)
+      closeTimeoutRef.current = null
+    }
     if (imageRef.current) {
       setImageRect(imageRef.current.getBoundingClientRect())
     }
@@ -43,9 +52,10 @@ export default function ImageZoom({
 
   const handleClose = useCallback(() => {
     setIsAnimating(false)
-    setTimeout(() => {
+    closeTimeoutRef.current = setTimeout(() => {
       setIsZoomed(false)
       setImageRect(null)
+      closeTimeoutRef.current = null
     }, 300)
   }, [])
 
