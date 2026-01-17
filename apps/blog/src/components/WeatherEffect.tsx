@@ -34,7 +34,7 @@ export default function WeatherEffect() {
   const [weatherType, setWeatherType] = useState<WeatherType>(null)
   const [isVisible, setIsVisible] = useState(true)
 
-  const fetchWeather = useCallback(async () => {
+  const fetchWeather = useCallback(async (signal: AbortSignal) => {
     const params = new URLSearchParams(window.location.search)
     const weatherParam = params.get('weather')
 
@@ -57,6 +57,7 @@ export default function WeatherEffect() {
               })
             },
           )
+          if (signal.aborted) return
           lat = position.coords.latitude
           lon = position.coords.longitude
         } catch {
@@ -64,27 +65,40 @@ export default function WeatherEffect() {
         }
       }
 
+      if (signal.aborted) return
+
       const apiUrl =
         lat && lon ? `/api/weather?lat=${lat}&lon=${lon}` : '/api/weather'
 
-      const res = await fetch(apiUrl)
+      const res = await fetch(apiUrl, {signal})
       const data = await res.json()
 
-      if (typeof data.weatherCode === 'number') {
+      if (!signal.aborted && typeof data.weatherCode === 'number') {
         setWeatherType(getWeatherType(data.weatherCode))
       }
     } catch {
-      // Silently fail
+      // Silently fail (including AbortError)
     }
   }, [])
 
   useEffect(() => {
+    const controller = new AbortController()
+
     if ('requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(fetchWeather, {timeout: 5000})
-      return () => window.cancelIdleCallback(id)
+      const id = window.requestIdleCallback(
+        () => fetchWeather(controller.signal),
+        {timeout: 5000},
+      )
+      return () => {
+        window.cancelIdleCallback(id)
+        controller.abort()
+      }
     } else {
-      const timer = setTimeout(fetchWeather, 2000)
-      return () => clearTimeout(timer)
+      const timer = setTimeout(() => fetchWeather(controller.signal), 2000)
+      return () => {
+        clearTimeout(timer)
+        controller.abort()
+      }
     }
   }, [fetchWeather])
 
