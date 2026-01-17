@@ -52,17 +52,25 @@ export default function CommandPalette() {
 
   // Fetch data when palette is opened for the first time
   useEffect(() => {
-    if (open && !dataLoaded) {
-      fetch('/api/search')
-        .then((res) => res.json())
-        .then((data) => {
-          setPosts(data.posts)
-          setTags(data.tags)
-          setDataLoaded(true)
-        })
-        // eslint-disable-next-line no-console
-        .catch((err) => console.error('Failed to load search data:', err))
-    }
+    if (!open || dataLoaded) return
+
+    const controller = new AbortController()
+
+    fetch('/api/search', {signal: controller.signal})
+      .then((res) => res.json())
+      .then((data) => {
+        setPosts(data.posts)
+        setTags(data.tags)
+        setDataLoaded(true)
+      })
+      .catch((err) => {
+        if (err.name !== 'AbortError') {
+          // eslint-disable-next-line no-console
+          console.error('Failed to load search data:', err)
+        }
+      })
+
+    return () => controller.abort()
   }, [open, dataLoaded])
 
   // Prevent scrolling when open
