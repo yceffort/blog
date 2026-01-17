@@ -11,7 +11,9 @@ export default function Mermaid({chart}: {chart: string}) {
   const [rendered, setRendered] = useState(false)
 
   useEffect(() => {
-    // 테마 설정
+    let cancelled = false
+    setRendered(false)
+
     mermaid.initialize({
       startOnLoad: false,
       theme: theme === 'dark' ? 'dark' : 'default',
@@ -28,27 +30,29 @@ export default function Mermaid({chart}: {chart: string}) {
     })
 
     const renderChart = async () => {
-      if (!ref.current) {
-        return
-      }
+      if (!ref.current) return
 
       try {
         const id = `mermaid-${Math.random().toString(36).substring(2, 9)}`
         const {svg} = await mermaid.render(id, chart)
-        if (ref.current) {
+        if (!cancelled && ref.current) {
           ref.current.innerHTML = svg
           setRendered(true)
         }
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error('Mermaid rendering failed:', error)
-        if (ref.current) {
+        if (!cancelled && ref.current) {
           ref.current.innerText = 'Invalid Mermaid syntax'
+          setRendered(true)
         }
       }
     }
 
     renderChart()
+
+    return () => {
+      cancelled = true
+    }
   }, [chart, theme])
 
   return (
