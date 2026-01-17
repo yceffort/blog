@@ -2,7 +2,7 @@
 title: 'TypeScript에서 switch문의 모든 케이스를 빠짐없이 처리했는지 검사하는 방법'
 tags:
   - typescript
-published: false
+published: true
 date: 2026-01-17 20:00:00
 description: 'never 타입을 활용한 exhaustive check 패턴'
 ---
