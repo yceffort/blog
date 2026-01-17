@@ -210,12 +210,12 @@ function ResumeContent() {
               <ul className="list-disc space-y-2 pl-5">
                 <li>
                   <span className="font-semibold text-gray-700 dark:text-gray-200">
-                    유저dev 소속 프론트엔드 리더
+                    카드FE 리더
                   </span>
                   <ul className="mt-1 list-circle space-y-1 pl-5 text-sm">
                     <li>
                       마이데이터(은행, 카드, 증권, 보험, 연금, PFMS) 및 회원
-                      인증 등 다양한 서비스 개발
+                      인증, 카드탭, 카드 관련 서비스 등 다양한 서비스 개발
                     </li>
                     <li>
                       React, Next.js, K8S, Koa를 기반으로 모바일 지향 서비스
