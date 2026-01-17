@@ -64,31 +64,39 @@ const TypingText = memo(function TypingText() {
   const [displayText, setDisplayText] = useState('')
   const [textIndex, setTextIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [isWaiting, setIsWaiting] = useState(false)
 
   useEffect(() => {
     const currentText = TYPING_TEXTS[textIndex]
-    const timeout = setTimeout(
-      () => {
-        if (!isDeleting) {
-          if (displayText.length < currentText.length) {
-            setDisplayText(currentText.slice(0, displayText.length + 1))
-          } else {
-            setTimeout(() => setIsDeleting(true), 2000)
-          }
+
+    const getDelay = () => {
+      if (isWaiting) return 2000
+      if (isDeleting) return 50
+      return 100
+    }
+
+    const timeout = setTimeout(() => {
+      if (isWaiting) {
+        setIsWaiting(false)
+        setIsDeleting(true)
+      } else if (!isDeleting) {
+        if (displayText.length < currentText.length) {
+          setDisplayText(currentText.slice(0, displayText.length + 1))
         } else {
-          if (displayText.length > 0) {
-            setDisplayText(displayText.slice(0, -1))
-          } else {
-            setIsDeleting(false)
-            setTextIndex((prev) => (prev + 1) % TYPING_TEXTS.length)
-          }
+          setIsWaiting(true)
         }
-      },
-      isDeleting ? 50 : 100,
-    )
+      } else {
+        if (displayText.length > 0) {
+          setDisplayText(displayText.slice(0, -1))
+        } else {
+          setIsDeleting(false)
+          setTextIndex((prev) => (prev + 1) % TYPING_TEXTS.length)
+        }
+      }
+    }, getDelay())
 
     return () => clearTimeout(timeout)
-  }, [displayText, isDeleting, textIndex])
+  }, [displayText, isDeleting, isWaiting, textIndex])
 
   return (
     <div className="mb-4 flex items-center text-base text-gray-700 dark:text-gray-300 sm:text-lg md:text-xl">
