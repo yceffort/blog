@@ -6,7 +6,7 @@ tags:
   - agent
 published: true
 date: 2026-01-17 23:00:00
-description: 'Rules, Commands, MCP, Sub-agents, Hooks, Skills까지 코딩 에이전트의 핵심 개념 총정리'
+description: 'Rules, Commands, MCP, Sub-agents, Hooks, Skills, Plugins까지 코딩 에이전트의 핵심 개념 총정리'
 ---
 
 ## Table of Contents
@@ -15,7 +15,7 @@ description: 'Rules, Commands, MCP, Sub-agents, Hooks, Skills까지 코딩 에�
 
 이 글은 [leerob 채널의 영상](https://www.youtube.com/watch?v=L_p5GxGSB_I)을 번역하고, 내가 아는 선에서 내용을 덧붙이고 링크를 추가한 것이다. 원본과 다소 다를 수 있으니 참고하자.
 
-코딩 에이전트를 제대로 활용하려면 몇 가지 핵심 개념을 이해해야 한다. Rules, Commands, MCP, Sub-agents, Modes, Hooks, Skills - 이름만 들어도 복잡해 보이지만, 각각이 해결하는 문제를 파악하면 쉽게 이해할 수 있다.
+코딩 에이전트를 제대로 활용하려면 몇 가지 핵심 개념을 이해해야 한다. Rules, Commands, MCP, Sub-agents, Modes, Hooks, Skills, Plugins - 이름만 들어도 복잡해 보이지만, 각각이 해결하는 문제를 파악하면 쉽게 이해할 수 있다.
 
 ## 먼저 배워야 할 것들
 
@@ -323,9 +323,11 @@ claude mcp list
 
 ### MCP의 단점과 해결책
 
-**문제:** 도구가 많아지면 컨텍스트 사용량이 급격히 증가한다. 10개의 MCP 서버에 각각 10개의 도구가 있으면 100개의 도구 정의가 컨텍스트에 포함된다.
+**문제:** 도구가 많아지면 컨텍스트 사용량이 급격히 증가한다. 10개의 MCP 서버에 각각 10개의 도구가 있으면 100개의 도구 정의가 컨텍스트에 포함된다. 200k 컨텍스트 윈도우가 MCP를 너무 많이 활성화하면 실제로는 70k 정도만 사용 가능해질 수 있다.
 
 **해결책:** 최신 에이전트들은 Skills 패턴에서 배운 최적화를 적용한다. 모든 도구를 항상 로드하는 대신, 실제로 사용할 때만 해당 도구를 로드한다. Cursor와 Claude Code 모두 이 최적화를 구현했다.
+
+**실전 팁:** 설정 파일에 20-30개의 MCP 서버를 등록해두되, 실제로 활성화하는 것은 10개 이하, 활성 도구는 80개 이하로 유지하자. `/mcp` 명령어로 현재 상태를 확인할 수 있다.
 
 **Skills와의 차이:** OAuth가 필요한 경우에만 MCP를 사용하자. 그 외에는 Skills로 대체할 수 있다.
 
@@ -787,9 +789,77 @@ Skills는 **오픈 스탠다드**다. Anthropic이 개발하고 공개했으며,
 
 ---
 
-## 8. 개념들의 상호 관계
+## 8. Plugins (플러그인)
 
-지금까지 7가지 개념을 살펴봤다. 이들은 독립적으로 존재하는 게 아니라 서로 연결되어 있다.
+### 정의
+
+Plugins는 **도구, 스킬, MCP, 훅을 패키징해서 쉽게 설치할 수 있게 만든 확장 시스템**이다. 복잡한 설정 없이 마켓플레이스에서 설치하면 바로 사용할 수 있다.
+
+### 등장 배경
+
+MCP 서버나 스킬을 직접 설정하려면 설정 파일 수정, 환경 변수 설정, 의존성 설치 등 번거로운 과정이 필요하다. Plugins는 이런 복잡한 설정을 추상화해서 한 번의 설치로 모든 것을 자동으로 구성한다.
+
+### 플러그인 유형
+
+| 유형 | 설명 | 예시 |
+| --- | --- | --- |
+| **Skill + MCP 조합** | 스킬과 MCP를 함께 패키징 | firecrawl, supabase |
+| **LSP 플러그인** | 언어 서버 연동 | typescript-lsp, pyright-lsp |
+| **Hooks + Tools** | 훅과 도구 번들 | hookify |
+| **검색 도구** | 향상된 검색 기능 | mgrep |
+
+### 주요 플러그인
+
+**LSP 플러그인:**
+
+IDE 없이 터미널에서 Claude Code를 자주 사용한다면 LSP 플러그인이 유용하다. 실시간 타입 체킹, go-to-definition, 자동 완성을 제공한다.
+
+```bash
+# 유용한 LSP 플러그인
+typescript-lsp@claude-plugins-official  # TypeScript 지원
+pyright-lsp@claude-plugins-official     # Python 타입 체킹
+```
+
+**hookify:**
+
+JSON을 직접 작성하는 대신 대화형으로 훅을 만들 수 있다.
+
+```
+/hookify "파일 저장 후 prettier 실행해줘"
+```
+
+**mgrep:**
+
+ripgrep보다 강력한 검색 도구. 로컬 검색과 웹 검색을 모두 지원한다.
+
+```bash
+mgrep "function handleSubmit"           # 로컬 검색
+mgrep --web "Next.js 15 app router"     # 웹 검색
+```
+
+### 플러그인 설치
+
+```bash
+# 마켓플레이스 추가
+claude plugin marketplace add https://github.com/mixedbread-ai/mgrep
+
+# Claude Code 내에서
+/plugins  # 플러그인 목록 확인 및 설치
+```
+
+### 주의사항
+
+MCP와 마찬가지로 **컨텍스트 윈도우에 영향**을 준다. 필요한 플러그인만 활성화하고, 사용하지 않는 것은 비활성화하자.
+
+### 공식 문서
+
+- [Plugins 문서](https://docs.anthropic.com/en/docs/claude-code/plugins)
+
+---
+
+## 9. 개념들의 상호 관계
+
+지금까지 8가지 개념을 살펴봤다. 이들은 독립적으로 존재하는 게 아니라 서로 연결되어 있다.
 
 ### 관계 다이어그램
 
@@ -872,7 +942,7 @@ hooks:
 
 ---
 
-## 9. 실제 워크플로우 예시
+## 10. 실제 워크플로우 예시
 
 개념을 알았으니 실제로 어떻게 조합해서 쓰는지 살펴보자.
 
@@ -954,7 +1024,7 @@ flowchart LR
 
 ---
 
-## 10. 토큰과 비용 관점
+## 11. 토큰과 비용 관점
 
 코딩 에이전트는 토큰을 소비한다. 각 개념이 토큰에 미치는 영향을 이해하면 비용을 최적화할 수 있다.
 
@@ -1035,7 +1105,7 @@ Claude Code는 세션 종료 시 토큰 사용량을 보여준다. 정기적으�
 
 ---
 
-## 11. 다른 에이전트와의 비교
+## 12. 다른 에이전트와의 비교
 
 Claude Code 외에도 Cursor, Windsurf, GitHub Copilot 등 다양한 코딩 에이전트가 있다. 같은 개념이 다른 이름으로 불리기도 한다.
 
@@ -1095,7 +1165,76 @@ IDE 플러그인이 아닌 터미널에서 직접 실행된다. SSH 환경, 서�
 
 ---
 
-## 12. 흔한 문제와 해결법
+## 13. Tips and Tricks
+
+실전에서 유용한 팁들을 모았다.
+
+### 키보드 단축키
+
+| 단축키 | 기능 |
+| --- | --- |
+| `Ctrl+U` | 입력 중인 라인 전체 삭제 (백스페이스 연타보다 빠름) |
+| `!` | 빠른 bash 명령어 접두사 |
+| `@` | 파일 검색 |
+| `/` | 슬래시 명령어 시작 |
+| `Shift+Enter` | 멀티라인 입력 |
+| `Tab` | thinking 표시 토글 |
+| `Esc Esc` | Claude 중단 / 코드 복원 |
+
+### 병렬 워크플로우
+
+**/fork - 대화 분기**
+
+겹치지 않는 작업을 병렬로 진행할 때 유용하다. 메시지를 큐에 쌓는 대신 대화를 분기해서 동시에 작업할 수 있다.
+
+```bash
+/fork  # 현재 대화를 분기
+```
+
+**Git Worktrees - 병렬 Claude 인스턴스**
+
+같은 저장소에서 여러 Claude 인스턴스를 동시에 실행하면 충돌이 발생할 수 있다. Git Worktrees를 사용하면 각 worktree가 독립적인 체크아웃이 되어 충돌을 방지한다.
+
+```bash
+git worktree add ../feature-branch feature-branch
+# 각 worktree에서 별도의 Claude 인스턴스 실행
+```
+
+### tmux로 장시간 명령어 관리
+
+빌드, 테스트 같은 장시간 명령어를 실행할 때 tmux를 사용하면 세션이 유지된다. Claude가 tmux 세션에서 명령어를 실행하면 로그를 실시간으로 모니터링할 수 있다.
+
+```bash
+tmux new -s dev           # 새 세션 생성
+# Claude가 여기서 명령어 실행
+tmux attach -t dev        # 세션에 다시 연결
+```
+
+### 유용한 명령어들
+
+| 명령어 | 기능 |
+| --- | --- |
+| `/rewind` | 이전 상태로 되돌리기 |
+| `/statusline` | 브랜치, 컨텍스트 %, todo 등 상태바 커스터마이징 |
+| `/checkpoints` | 파일 수준 undo 포인트 |
+| `/compact` | 수동으로 컨텍스트 압축 |
+| `/mcp` | MCP 서버 상태 확인 |
+| `/plugins` | 플러그인 목록 및 관리 |
+
+### 에디터 연동
+
+Claude Code는 터미널에서 실행되지만 에디터와 함께 사용하면 더 효과적이다.
+
+**추천 설정:**
+
+- 화면 분할: 터미널(Claude Code) + 에디터
+- Auto-save 활성화: Claude의 파일 읽기가 항상 최신 상태 반영
+- 파일 감시(file watcher): 변경된 파일 자동 리로드 확인
+- Git 통합: 에디터의 git 기능으로 Claude 변경사항 리뷰 후 커밋
+
+---
+
+## 14. 흔한 문제와 해결법
 
 ### "에이전트가 컨텍스트 부족으로 이상한 답을 해요"
 
@@ -1127,7 +1266,7 @@ CLAUDE.md에 적어도 따르지 않는 경우가 있다.
 
 ---
 
-## 13. 실제 .claude 폴더 구조 예시
+## 15. 실제 .claude 폴더 구조 예시
 
 실제 프로젝트에서 어떻게 구성하는지 예시를 보자.
 
@@ -1172,7 +1311,7 @@ your-project/
 
 ---
 
-## 14. 요약
+## 16. 요약
 
 ### 개념 정리
 
@@ -1187,6 +1326,7 @@ flowchart TB
             Skills["Skills (필요할 때만 로드)"]
             Commands["Commands (명시적 호출)"]
             MCP["MCP Servers (외부 서비스 연동)"]
+            Plugins["Plugins (도구/스킬 패키징)"]
             SubAgents["Sub-agents (전문화된 작업 위임)"]
             Modes["Modes (작업별 최적화 환경)"]
         end
@@ -1204,6 +1344,7 @@ flowchart TB
 | 프로젝트 구조, 코딩 규칙을 알려주고 싶다               | **Rules** (CLAUDE.md) |
 | 반복되는 워크플로우를 단축키로 만들고 싶다             | **Commands**          |
 | Slack, GitHub, DB 등 외부 서비스에 연결하고 싶다       | **MCP Servers**       |
+| MCP나 스킬을 쉽게 설치하고 싶다                        | **Plugins**           |
 | 특정 작업을 별도 컨텍스트에서 전문적으로 처리하고 싶다 | **Sub-agents**        |
 | 파일 수정 후 항상 포맷팅을 실행하고 싶다               | **Hooks**             |
 | 복잡한 도메인 지식 + 스크립트를 패키징하고 싶다        | **Skills**            |
