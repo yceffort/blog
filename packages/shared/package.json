@@ -27,7 +27,7 @@
   "devDependencies": {
     "@naverpay/eslint-config": "^2.2.5",
     "@naverpay/eslint-plugin": "^2.2.0",
-    "@types/node": "^22.15.3",
+    "@types/node": "^25.0.9",
     "@types/react": "^19.1.6",
     "eslint": "^9.27.0",
     "next": "^16.0.10"
