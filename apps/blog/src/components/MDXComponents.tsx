@@ -46,6 +46,13 @@ function NextImage(props: HTMLProps<HTMLImageElement>) {
 
 const MdxComponents = {
   img: NextImage,
+  table: (props: HTMLProps<HTMLTableElement>) => {
+    return (
+      <div className="overflow-x-auto">
+        <table {...props} />
+      </div>
+    )
+  },
   a: (props: HTMLProps<HTMLAnchorElement>) => {
     const {href, ...rest} = props
 
