@@ -4,7 +4,7 @@ import {detectBot} from './constants/bot-signatures'
 
 import type {NextRequest} from 'next/server'
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const userAgent = request.headers.get('user-agent') || ''
   const {isBot, botName, botCategory} = detectBot(userAgent)
 
