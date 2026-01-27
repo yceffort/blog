@@ -63,6 +63,25 @@ a {
 .mermaid-wrapper svg {
   max-width: none !important;
 }
+.mermaid-zoom svg {
+  max-width: none !important;
+  max-height: none !important;
+}
+.mermaid-zoom-content {
+  display: inline-block;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+}
+.mermaid-zoom-content svg {
+  max-width: none !important;
+  max-height: none !important;
+}
+.mermaid-zoom-controls {
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  right: max(1rem, env(safe-area-inset-right));
+  z-index: 1;
+}
 h2 > a > span.icon.icon-link {
   width: 18px;
   height: 18px;
