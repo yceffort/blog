@@ -1315,27 +1315,21 @@ your-project/
 
 ### 개념 정리
 
-```mermaid
-flowchart TB
-    subgraph Agent["코딩 에이전트"]
-        subgraph Static["📌 정적 컨텍스트"]
-            Rules["Rules / CLAUDE.md<br/>(매 대화에 항상 포함)"]
-        end
+코딩 에이전트는 크게 **정적 컨텍스트**, **동적 컨텍스트**, **결정적 실행(Hooks)**로 구성된다.
 
-        subgraph Dynamic["⚡ 동적 컨텍스트"]
-            Skills["Skills (필요할 때만 로드)"]
-            Commands["Commands (명시적 호출)"]
-            MCP["MCP Servers (외부 서비스 연동)"]
-            Plugins["Plugins (도구/스킬 패키징)"]
-            SubAgents["Sub-agents (전문화된 작업 위임)"]
-            Modes["Modes (작업별 최적화 환경)"]
-        end
+**📌 정적 컨텍스트 (항상 포함됨)**
+- **Rules / CLAUDE.md**: 매 대화에 항상 포함되는 기본 규칙
 
-        subgraph HooksLayer["🔧 Hooks: 결정적 실행"]
-            Hooks["도구 실행 전/후 | 세션 시작/종료 | 자동화"]
-        end
-    end
-```
+**⚡ 동적 컨텍스트 (필요할 때만 로드/호출)**
+- **Skills**: 특정 작업에서만 로드되는 전문 지식/워크플로우
+- **Commands**: 명시적으로 호출하는 명령 모음
+- **MCP Servers**: 외부 서비스 연동 (Slack, GitHub, DB 등)
+- **Plugins**: 도구/스킬 설치를 쉽게 묶어 제공
+- **Sub-agents**: 전문 작업을 위임하는 하위 에이전트
+- **Modes**: 작업별 최적화된 동작 모드 (지시사항+UI+시스템 프롬프트)
+
+**🔧 Hooks (결정적 실행)**
+- **Hooks**: 도구 실행 전/후, 세션 시작/종료 등 자동화 트리거
 
 ### 언제 무엇을 사용할까?
 
