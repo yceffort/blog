@@ -60,6 +60,9 @@ a {
 .math-display {
   overflow-x: auto;
 }
+.mermaid-wrapper svg {
+  max-width: none !important;
+}
 h2 > a > span.icon.icon-link {
   width: 18px;
   height: 18px;
