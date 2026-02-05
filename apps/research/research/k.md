@@ -34,9 +34,10 @@ published: false
 
 ## 김용찬 (yceffort)
 
-- **현재:** 대형 IT 플랫폼 기업 프론트엔드 팀 리더
-- **저서:** <모던 리액트 Deep Dive> 외 기술 서적 집필
-- **블로그:** yceffort.kr 운영
+- **현재:** N사 프론트엔드 개발 리드
+- **업무:** 금융 서비스 개발 및 오픈소스 활동
+- **저서:** <모던 리액트 Deep Dive>, <npm Deep Dive>
+- **블로그:** yceffort.kr
 
 > 오늘은 면접관으로서 수백 명의 지원자를 검토하며 본 **패턴**을 공유합니다.
 
@@ -558,7 +559,7 @@ Analysis: GA, Amplitude, SQL, A/B 테스트
 ## 무엇이든 물어보세요
 
 - 블로그: **yceffort.kr**
-- 책: **<모던 리액트 Deep Dive>**
+- 책: **<모던 리액트 Deep Dive>**, **<npm Deep Dive>**
 
 ---
 
