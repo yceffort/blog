@@ -5,6 +5,8 @@ import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {Swiper, SwiperSlide} from 'swiper/react'
 
 import 'swiper/css'
+import {useBroadcastChannel} from '@/hooks/useBroadcastChannel'
+
 import {Marp} from './Marp'
 import styles from './MarpSlides.module.scss'
 
@@ -21,9 +23,10 @@ interface MarpSlidesProps {
   dataHtml: string
   dataCss: string
   dataFonts: string
+  slug: string
 }
 
-export function MarpSlides({dataHtml, dataCss, dataFonts}: MarpSlidesProps) {
+export function MarpSlides({dataHtml, dataCss, dataFonts, slug}: MarpSlidesProps) {
   // JSON 파싱에 에러 처리 추가 (memoized)
   const html = useMemo(() => {
     try {
@@ -77,6 +80,17 @@ export function MarpSlides({dataHtml, dataCss, dataFonts}: MarpSlidesProps) {
   const [goToSlideInput, setGoToSlideInput] = useState('')
   const swiperRef = useRef<SwiperClass | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const activeIndexRef = useRef(activeIndex)
+  activeIndexRef.current = activeIndex
+
+  const {sendSlideChange} = useBroadcastChannel(`marp-slides-${slug}`, {
+    onSlideChange: (index) => {
+      if (index !== activeIndexRef.current) {
+        swiperRef.current?.slideTo(index)
+      }
+    },
+    onSyncRequest: () => activeIndexRef.current,
+  })
 
   // memoized values
   const multiple = useMemo(() => html.length > 1, [html.length])
@@ -93,10 +107,11 @@ export function MarpSlides({dataHtml, dataCss, dataFonts}: MarpSlidesProps) {
   const handleActiveIndexChange = useCallback((instance: SwiperClass) => {
     const newIndex = instance.activeIndex
     setActiveIndex(newIndex)
+    sendSlideChange(newIndex, 'audience')
     if (typeof window !== 'undefined') {
       window.location.hash = `#${newIndex + 1}`
     }
-  }, [])
+  }, [sendSlideChange])
 
   // Swiper 초기화 핸들러 (memoized)
   const handleSwiper = useCallback((instance: SwiperClass) => {
@@ -111,6 +126,16 @@ export function MarpSlides({dataHtml, dataCss, dataFonts}: MarpSlidesProps) {
         if (multiple) {
           setIsOverviewOpen((prev) => !prev)
         }
+        return
+      }
+
+      // 발표자 모드 열기 (P 키)
+      if (e.key === 'p' || e.key === 'P') {
+        window.open(
+          `/slides/${slug}/presenter`,
+          'presenter',
+          'width=1200,height=800',
+        )
         return
       }
 
@@ -143,7 +168,7 @@ export function MarpSlides({dataHtml, dataCss, dataFonts}: MarpSlidesProps) {
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [multiple, html.length, isOverviewOpen])
+  }, [multiple, html.length, isOverviewOpen, slug])
 
   // 휠 네비게이션
   const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -338,6 +363,15 @@ export function MarpSlides({dataHtml, dataCss, dataFonts}: MarpSlidesProps) {
     navigator.clipboard.writeText(url)
     closeContextMenu()
   }, [activeIndex, closeContextMenu])
+
+  const handleOpenPresenter = useCallback(() => {
+    window.open(
+      `/slides/${slug}/presenter`,
+      'presenter',
+      'width=1200,height=800',
+    )
+    closeContextMenu()
+  }, [slug, closeContextMenu])
 
   // Marp 렌더링 데이터 (memoized)
   const marpRenderData = useMemo(() => ({html, css, fonts}), [html, css, fonts])
@@ -548,6 +582,11 @@ export function MarpSlides({dataHtml, dataCss, dataFonts}: MarpSlidesProps) {
               <div className={styles.contextMenuDivider} />
             </>
           )}
+          <button className={styles.contextMenuItem} onClick={handleOpenPresenter}>
+            <span className={styles.contextMenuIcon}>🎤</span>
+            발표자 모드
+            <span className={styles.contextMenuShortcut}>P</span>
+          </button>
           <button className={styles.contextMenuItem} onClick={handleFullscreen}>
             <span className={styles.contextMenuIcon}>⛶</span>
             {document.fullscreenElement ? '전체화면 종료' : '전체화면'}

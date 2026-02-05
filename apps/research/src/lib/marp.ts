@@ -4,6 +4,8 @@ import mermaidPlugin from 'markdown-it-mermaid'
 import postcss from 'postcss'
 import postcssImportUrl from 'postcss-import-url'
 
+import {parsePresenterNotes} from './parsePresenterNotes'
+
 import type {Result as PostCSSResult, AtRule} from 'postcss'
 
 const postcssStripFontFace = Object.assign(
@@ -46,11 +48,13 @@ export async function generateRenderedMarp(markdown: string) {
   const fonts: string[] = (typedResult.fonts || []).map((font) =>
     font.toString(),
   )
+  const notes = parsePresenterNotes(markdown)
 
   return {
     markdown,
     html,
     css: result.css,
     fonts,
+    notes,
   }
 }
