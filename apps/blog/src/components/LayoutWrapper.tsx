@@ -5,9 +5,9 @@ import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 import {memo} from 'react'
 
+import FloatingBanner from './Banner'
 import Footer from './Footer'
 import MobileNav from './MobileNav'
-import {OpenToWorkBannerProvider, useBannerVisible} from './OpenToWorkBanner'
 import ProfileImage from './ProfileImage'
 import ScrollTop from './ScrollTop'
 import SectionContainer from './SectionContainer'
@@ -100,11 +100,9 @@ const HeaderNav = memo(function HeaderNav() {
 })
 
 function Header() {
-  const isBannerVisible = useBannerVisible()
-
   return (
     <header
-      className={`sticky z-40 flex items-center justify-between bg-white/90 py-6 backdrop-blur-none dark:bg-gray-800/90 ${isBannerVisible ? 'top-9 mt-9' : 'top-0'}`}
+      className="sticky top-0 z-40 flex items-center justify-between bg-white/90 py-6 backdrop-blur-none dark:bg-gray-800/90"
     >
       <HeaderLogo />
       <div className="flex items-center text-base leading-5">
@@ -131,17 +129,16 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
   }
 
   return (
-    <OpenToWorkBannerProvider>
-      <SectionContainer className={wide ? '' : containerClass} wide={wide}>
-        <div className="flex min-h-screen flex-col justify-between">
-          <Header />
-          <main className="mb-auto">{children}</main>
-          <Footer />
-          <ScrollTop />
-          <DynamicWeatherEffect />
-        </div>
-      </SectionContainer>
-    </OpenToWorkBannerProvider>
+    <SectionContainer className={wide ? '' : containerClass} wide={wide}>
+      <div className="flex min-h-screen flex-col justify-between">
+        <Header />
+        <main className="mb-auto">{children}</main>
+        <Footer />
+        <ScrollTop />
+        <DynamicWeatherEffect />
+        <FloatingBanner />
+      </div>
+    </SectionContainer>
   )
 }
 

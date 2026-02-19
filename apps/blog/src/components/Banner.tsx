@@ -5,7 +5,7 @@ import {useState, useEffect, useCallback, useRef} from 'react'
 
 import {track} from '@vercel/analytics/react'
 
-const LOCAL_STORAGE_KEY = 'hideBanner_BetaReader_20251113'
+const LOCAL_STORAGE_KEY = 'hideBanner_BetaReader_20260219'
 
 function getHideBannerPreference(): boolean {
   if (typeof window === 'undefined') {
@@ -19,7 +19,7 @@ function getHideBannerPreference(): boolean {
 }
 
 const FloatingBanner = ({
-  postPath = '/2025/11/web-performance-deep-dive-beta-reader',
+  postPath = '/2026/02/nodejs-deep-dive-beta-reader',
 }: {
   postPath?: string
 }) => {
@@ -95,11 +95,10 @@ const FloatingBanner = ({
         <div className="flex flex-col sm:flex-row items-center sm:justify-between pr-8 sm:pr-10">
           <div className="flex-grow mb-3 sm:mb-0 sm:mr-4 text-center sm:text-left">
             <p className="font-bold text-lg mb-1">
-              📚 Web Performance Deep Dive 베타 리더 모집 (~11/30)
+              📚 Node.js Deep Dive 베타 리더 모집 (~2/28)
             </p>
             <p className="text-sm text-purple-100 font-bold">
-              웹 성능 최적화의 모든 것을 다룬 신간의 베타 리더를 모집합니다.
-              출판 시 책 2권 증정!
+              Node.js의 내부를 깊이 파헤치는 신간의 베타 리더를 모집합니다.
             </p>
           </div>
           <div className="flex-shrink-0 mt-2 sm:mt-0">
