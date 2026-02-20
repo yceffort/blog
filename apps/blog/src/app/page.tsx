@@ -2,9 +2,7 @@ import {Suspense} from 'react'
 
 import type {Metadata} from 'next'
 
-import {ContributionGraph} from '@yceffort/shared'
-
-import Hero from '#components/Hero'
+import Hero from '#components/HeroE'
 import InfiniteScrollList from '#components/InfiniteScrollList'
 import {SiteConfig} from '#src/config'
 import {DEFAULT_NUMBER_OF_POSTS} from '#src/constants'
@@ -43,9 +41,7 @@ export default async function Page() {
 
   return (
     <>
-      <Hero>
-        <ContributionGraph />
-      </Hero>
+      <Hero />
       <Suspense
         fallback={
           <div className="divide-y divide-gray-200 px-4 dark:divide-gray-700">

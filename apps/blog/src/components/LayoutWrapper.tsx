@@ -5,6 +5,7 @@ import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 import {memo} from 'react'
 
+import AnimatedBackground from './AnimatedBackground'
 import FloatingBanner from './Banner'
 import Footer from './Footer'
 import MobileNav from './MobileNav'
@@ -55,34 +56,6 @@ const HeaderLogo = memo(function HeaderLogo() {
   )
 })
 
-const SearchButton = memo(function SearchButton() {
-  return (
-    <button
-      type="button"
-      onClick={() =>
-        document.dispatchEvent(new CustomEvent('open-command-palette'))
-      }
-      className="mr-2 flex items-center gap-1 rounded border border-gray-300 px-2 py-1 font-mono text-xs text-gray-500 transition-colors hover:border-green-500 hover:text-green-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-green-500 dark:hover:text-green-400 sm:mr-4"
-      aria-label="Open command palette"
-    >
-      <svg
-        className="h-3.5 w-3.5 sm:hidden"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-        />
-      </svg>
-      <span className="hidden sm:inline">⌘P</span>
-    </button>
-  )
-})
-
 const HeaderNav = memo(function HeaderNav() {
   return (
     <div className="hidden sm:block">
@@ -102,11 +75,10 @@ const HeaderNav = memo(function HeaderNav() {
 function Header() {
   return (
     <header
-      className="sticky top-0 z-40 flex items-center justify-between bg-white/90 py-6 backdrop-blur-none dark:bg-gray-800/90"
+      className="sticky top-0 z-40 flex items-center justify-between py-6 backdrop-blur-sm"
     >
       <HeaderLogo />
       <div className="flex items-center text-base leading-5">
-        <SearchButton />
         <HeaderNav />
         <DynamicThemeSwitch />
         <MobileNav />
@@ -130,6 +102,7 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
 
   return (
     <SectionContainer className={wide ? '' : containerClass} wide={wide}>
+      <AnimatedBackground />
       <div className="flex min-h-screen flex-col justify-between">
         <Header />
         <main className="mb-auto">{children}</main>
