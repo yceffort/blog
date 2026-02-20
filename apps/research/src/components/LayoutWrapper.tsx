@@ -8,6 +8,7 @@ import {memo} from 'react'
 
 import type {ReactNode} from 'react'
 
+import AnimatedBackground from '@/components/AnimatedBackground'
 import Footer from '@/components/Footer'
 import MobileNav from '@/components/MobileNav'
 import SectionContainer from '@/components/SectionContainer'
@@ -68,8 +69,9 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
 
   return (
     <SectionContainer className={containerClass}>
+      <AnimatedBackground />
       <div className="flex min-h-screen flex-col justify-between">
-        <header className="sticky top-0 z-40 flex items-center justify-between bg-white/90 py-6 backdrop-blur-none dark:bg-gray-800/90">
+        <header className="sticky top-0 z-40 flex items-center justify-between py-6 backdrop-blur-sm">
           <HeaderLogo />
           <div className="flex items-center text-base leading-5">
             <HeaderNav />
