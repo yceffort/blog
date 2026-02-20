@@ -8,7 +8,7 @@ tags:
   - RAG
 date: 2025-07-03
 description: '진짜로 알고 싶다'
-published: true
+published: false
 ---
 
 # 실무에서 만드는 RAG
