@@ -56,6 +56,8 @@ export default function InfiniteScrollList({
 }) {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const searchParamsRef = useRef(searchParams)
+  searchParamsRef.current = searchParams
   const virtuosoRef = useRef<VirtuosoGridHandle>(null)
   const gridStateRef = useRef<GridStateSnapshot | undefined>(undefined)
 
@@ -67,6 +69,7 @@ export default function InfiniteScrollList({
   )
   const loadingRef = useRef(false)
   const [mounted, setMounted] = useState(false)
+  const initialGridStateRef = useRef<GridStateSnapshot | undefined>(undefined)
 
   useEffect(() => {
     const stored = getStoredState(storageKey)
@@ -75,6 +78,7 @@ export default function InfiniteScrollList({
       loadedPageRef.current = Math.ceil(
         stored.posts.length / DEFAULT_NUMBER_OF_POSTS,
       )
+      initialGridStateRef.current = stored.gridState
     }
 
     setMounted(true)
@@ -153,7 +157,7 @@ export default function InfiniteScrollList({
           data={posts}
           endReached={loadMore}
           overscan={200}
-          restoreStateFrom={getStoredState(storageKey)?.gridState}
+          restoreStateFrom={initialGridStateRef.current}
           stateChanged={(state) => {
             gridStateRef.current = state
           }}
@@ -166,7 +170,7 @@ export default function InfiniteScrollList({
           }}
           rangeChanged={({startIndex}) => {
             const page = Math.floor(startIndex / DEFAULT_NUMBER_OF_POSTS) + 1
-            const currentParams = new URLSearchParams(searchParams.toString())
+            const currentParams = new URLSearchParams(searchParamsRef.current.toString())
 
             if (page > 1) {
               currentParams.set('page', page.toString())
