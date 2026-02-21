@@ -5,7 +5,7 @@ import type {Metadata} from 'next'
 import Hero from '#components/HeroE'
 import ListLayout from '#components/layouts/ListLayout'
 import {SiteConfig} from '#src/config'
-import {POPULAR_POSTS_COUNT} from '#src/constants'
+import {POPULAR_POSTS_COUNT, RECENT_POSTS_COUNT} from '#src/constants'
 import {getPopularPostSlugs} from '#utils/analytics'
 import {getAllPosts} from '#utils/Post'
 
@@ -86,11 +86,18 @@ export default async function Page() {
     posts = allPosts.slice(0, POPULAR_POSTS_COUNT)
   }
 
+  const shown = new Set([
+    ...featuredPosts.map((p) => p.fields.slug),
+    ...posts.map((p) => p.fields.slug),
+  ])
+  const recentPosts = allPosts.filter((p) => !shown.has(p.fields.slug)).slice(0, RECENT_POSTS_COUNT)
+
   return (
     <>
       <Hero />
       {featuredPosts.length > 0 && <FeaturedCard post={featuredPosts[0]} />}
       <ListLayout posts={posts} title="Popular" />
+      {recentPosts.length > 0 && <ListLayout posts={recentPosts} title="Recent" />}
     </>
   )
 }
