@@ -297,6 +297,9 @@ importers:
       react:
         specifier: ^19.2.4
         version: 19.2.4
+      react-dom:
+        specifier: ^19.2.4
+        version: 19.2.4(react@19.2.4)
     devDependencies:
       '@naverpay/eslint-config':
         specifier: ^2.2.5
@@ -310,6 +313,9 @@ importers:
       '@types/react':
         specifier: ^19.1.6
         version: 19.2.7
+      '@types/react-dom':
+        specifier: ^19.1.6
+        version: 19.2.3(@types/react@19.2.7)
       eslint:
         specifier: ^9.27.0
         version: 9.39.2(jiti@2.6.1)
