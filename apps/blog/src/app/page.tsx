@@ -1,12 +1,13 @@
-import {Suspense} from 'react'
-
 import type {Metadata} from 'next'
 
 import Hero from '#components/HeroE'
-import InfiniteScrollList from '#components/InfiniteScrollList'
+import ListLayout from '#components/layouts/ListLayout'
 import {SiteConfig} from '#src/config'
-import {DEFAULT_NUMBER_OF_POSTS} from '#src/constants'
+import {POPULAR_POSTS_COUNT} from '#src/constants'
+import {getPopularPostSlugs} from '#utils/analytics'
 import {getAllPosts} from '#utils/Post'
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: SiteConfig.title,
@@ -28,47 +29,26 @@ export const metadata: Metadata = {
 export default async function Page() {
   const allPosts = await getAllPosts()
 
-  // Strip body to reduce payload size - load first page of posts
-  const posts = allPosts.slice(0, DEFAULT_NUMBER_OF_POSTS).map((post) => ({
-    ...post,
-    body: '',
-  }))
+  let displayPosts = allPosts.slice(0, POPULAR_POSTS_COUNT)
+  let sectionTitle = 'Latest Posts'
 
-  const uniqueKey =
-    allPosts.length > 0
-      ? `${allPosts[0].fields.slug}-${allPosts[0].frontMatter.date}`
-      : ''
+  const popularSlugs = await getPopularPostSlugs(POPULAR_POSTS_COUNT)
+
+  if (popularSlugs.length >= 3) {
+    const popularPosts = popularSlugs
+      .map((slug) => allPosts.find((p) => p.fields.slug === slug))
+      .filter((p) => p !== undefined)
+
+    if (popularPosts.length >= 3) {
+      displayPosts = popularPosts
+      sectionTitle = 'Popular Posts'
+    }
+  }
 
   return (
     <>
       <Hero />
-      <Suspense
-        fallback={
-          <div className="divide-y divide-gray-200 px-4 dark:divide-gray-700">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {Array.from({length: DEFAULT_NUMBER_OF_POSTS}).map((_, i) => (
-                <div
-                  key={i}
-                  className="animate-pulse rounded-lg border-2 border-black bg-white p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:border-gray-600 dark:bg-gray-800"
-                >
-                  <div className="mb-3 h-6 w-3/4 rounded bg-gray-200 dark:bg-gray-700" />
-                  <div className="mb-4 h-4 w-1/4 rounded bg-gray-200 dark:bg-gray-700" />
-                  <div className="space-y-2">
-                    <div className="h-3 rounded bg-gray-200 dark:bg-gray-700" />
-                    <div className="h-3 w-5/6 rounded bg-gray-200 dark:bg-gray-700" />
-                  </div>
-                  <div className="mt-4 flex gap-2">
-                    <div className="h-5 w-16 rounded bg-gray-200 dark:bg-gray-700" />
-                    <div className="h-5 w-12 rounded bg-gray-200 dark:bg-gray-700" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        }
-      >
-        <InfiniteScrollList posts={posts} uniqueKey={uniqueKey} />
-      </Suspense>
+      <ListLayout posts={displayPosts} title={sectionTitle} />
     </>
   )
 }

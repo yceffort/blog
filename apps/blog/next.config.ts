@@ -14,6 +14,12 @@ const config: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/',
+        has: [{type: 'query', key: 'page', value: '(?<page>\\d+)'}],
+        destination: '/pages/:page',
+        permanent: true,
+      },
+      {
         source: '/tag/:tag',
         destination: '/tags/:tag/pages/1',
         permanent: true,

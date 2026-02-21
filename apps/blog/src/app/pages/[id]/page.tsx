@@ -1,7 +1,9 @@
-import {redirect} from 'next/navigation'
+import {notFound} from 'next/navigation'
 
 import type {Metadata} from 'next'
 
+import ListLayout from '#components/layouts/ListLayout'
+import PageNumber from '#components/layouts/PageNumber'
 import {SiteConfig} from '#src/config'
 import {DEFAULT_NUMBER_OF_POSTS} from '#src/constants'
 import {getAllPosts} from '#utils/Post'
@@ -43,5 +45,34 @@ export async function generateStaticParams() {
 
 export default async function Page(props: {params: Promise<{id: string}>}) {
   const params = await props.params
-  redirect(`/?page=${params.id}`)
+  const allPosts = await getAllPosts()
+  const {id = '1'} = params
+  const pageNo = parseInt(id)
+
+  if (
+    isNaN(pageNo) ||
+    pageNo > Math.ceil(allPosts.length / DEFAULT_NUMBER_OF_POSTS) ||
+    pageNo < 1
+  ) {
+    return notFound()
+  }
+
+  const startIndex = (pageNo - 1) * DEFAULT_NUMBER_OF_POSTS
+  const endIndex = startIndex + DEFAULT_NUMBER_OF_POSTS
+  const posts = allPosts.slice(startIndex, endIndex)
+
+  const hasNextPage =
+    Math.ceil(allPosts.length / DEFAULT_NUMBER_OF_POSTS) > pageNo
+
+  return (
+    <>
+      <ListLayout posts={posts} title={`All Posts`} />
+      <PageNumber
+        pageNo={pageNo}
+        next={`/pages/${pageNo + 1}`}
+        prev={`/pages/${pageNo - 1}`}
+        hasNextPage={hasNextPage}
+      />
+    </>
+  )
 }
