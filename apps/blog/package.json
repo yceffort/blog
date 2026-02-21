@@ -16,6 +16,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
     "@google-analytics/data": "^5.2.1",
     "@naverpay/commit-helper": "^1.2.0",
     "@naverpay/eslint-config": "^2.2.5",
