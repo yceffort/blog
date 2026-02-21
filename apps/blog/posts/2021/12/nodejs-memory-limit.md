@@ -1,12 +1,12 @@
 ---
-title: 'nodejs의 메모리 제한'
+title: 'Node.js의 메모리 제한과 누수 추적 가이드'
 tags:
   - nodejs
-  - backend
+  - v8
   - memory
 published: true
 date: 2021-12-13 19:21:45
-description: '어디서 새고 있을까 내 메모리는'
+description: 'V8 가비지 컬렉션의 세대별 구조, 힙 메모리 제한 조정, 그리고 메모리 누수를 진단하는 실용적인 방법을 정리합니다.'
 ---
 
 ## V8 가비지 콜렉션
@@ -146,7 +146,7 @@ fs.writeFile(LOG_FILE, 'Time Alive (secs),Memory GB' + os.EOL, () => {}) // fire
 const elapsedTimeInSecs = (Date.now() - start) / 1000
 const timeRounded = Math.round(elapsedTimeInSecs * 100) / 100
 
-s.appendFile(LOG_FILE, timeRounded + ',' + gbRounded + os.EOL, () => {}) // fire-and-forget
+fs.appendFile(LOG_FILE, timeRounded + ',' + gbRounded + os.EOL, () => {}) // fire-and-forget
 ```
 
 이 코드를 사용하면 시간이 지남에 따라, 힙 사용이 증가한다면 메모리 누수를 디버깅할 수 있다.
@@ -186,13 +186,10 @@ setInterval(() => {
   const gbNow = mu[field] / 1024 / 1024 / 1024
   const gbRounded = Math.round(gbNow * 100) / 100
 
-  const start = Date.now()
-  const LOG_FILE = path.join(__dirname, 'memory-usage.csv')
-
   const elapsedTimeInSecs = (Date.now() - start) / 1000
   const timeRounded = Math.round(elapsedTimeInSecs * 100) / 100
 
-  s.appendFile(LOG_FILE, timeRounded + ',' + gbRounded + os.EOL, () => {})
+  fs.appendFile(LOG_FILE, timeRounded + ',' + gbRounded + os.EOL, () => {})
   console.log(`Heap allocated ${gbRounded} GB`)
 }, TIME_INTERVAL_IN_MSEC)
 ```
@@ -217,21 +214,59 @@ setInterval(() => {
 
 이는 운영용 코드로는 쓸 수 없지만, 적어도 로컬 에서 메모리 누수를 디버깅하는 방법을 보여주었다.실제 구현에서는 서버 디스크 공간이 부족하지 않도록 하는 설정, 비주얼, 알림, 로그 rotate 등이 필요하다.
 
+## Chrome DevTools로 힙 스냅샷 분석하기
+
+`--inspect` 플래그를 사용하면 Chrome DevTools에서 힙 스냅샷을 직접 분석할 수 있다. 이 방법이 메모리 누수를 추적하는 가장 강력한 방법이다.
+
+```bash
+node --inspect index.js
+```
+
+이후 Chrome에서 `chrome://inspect`를 열고 해당 Node.js 프로세스에 연결하면 된다. **Memory** 탭에서 힙 스냅샷을 찍고, 시간 간격을 두고 두 번째 스냅샷을 찍은 뒤 비교하면 어떤 객체가 해제되지 않고 누적되고 있는지 확인할 수 있다.
+
+## `v8.getHeapStatistics()`로 상세 힙 정보 확인
+
+`process.memoryUsage()`보다 더 상세한 V8 힙 정보가 필요하다면 `v8` 모듈을 사용할 수 있다.
+
+```javascript
+const v8 = require('v8')
+
+const heapStats = v8.getHeapStatistics()
+console.log({
+  total_heap_size: `${(heapStats.total_heap_size / 1024 / 1024).toFixed(2)} MB`,
+  used_heap_size: `${(heapStats.used_heap_size / 1024 / 1024).toFixed(2)} MB`,
+  heap_size_limit: `${(heapStats.heap_size_limit / 1024 / 1024).toFixed(2)} MB`,
+  malloced_memory: `${(heapStats.malloced_memory / 1024 / 1024).toFixed(2)} MB`,
+  external_memory: `${(heapStats.external_memory / 1024 / 1024).toFixed(2)} MB`,
+})
+```
+
+`heap_size_limit`을 확인하면 현재 프로세스의 최대 힙 크기를 알 수 있다. 참고로 Node.js의 기본 힙 크기는 버전과 시스템 메모리에 따라 다르다. Node.js 12 이후부터는 시스템 가용 메모리에 따라 동적으로 결정되며, 보통 1.5GB ~ 4GB 정도로 설정된다.
+
 ## 프로덕션 코드에서 메모리 누수 추적하기
 
-위 코드를 프로덕션에서 쓰는 것은 무리 일 것이다. 프로덕션에서는 [PM2와 같은 데몬 프로세스](https://pm2.keymetrics.io/docs/usage/restart-strategies/)를 활용하여 추적할 수 있을 것이다.
+위 코드를 프로덕션에서 그대로 쓰는 것은 무리일 것이다. 프로덕션에서는 [PM2와 같은 데몬 프로세스](https://pm2.keymetrics.io/docs/usage/restart-strategies/)를 활용하여 메모리 초과 시 자동으로 재시작하도록 설정할 수 있다.
 
 ```bash
 pm2 start index.js --max-memory-restart 8G
 ```
 
-또다른 도구로는 [node-memwatch](https://github.com/lloyd/node-memwatch)가 있다. 이 라이브러리는 메모리 누수가 발생하면 특정 코드를 실행시킬 수 있다.
+Node.js 내장 기능인 [Diagnostic Report](https://nodejs.org/api/report.html)도 유용하다. 프로세스 상태, 힙 정보, 네이티브 스택 등을 JSON 리포트로 출력한다.
 
-```javascript
-const memwatch = require('memwatch')
+```bash
+# OOM 발생 시 자동으로 리포트 생성
+node --report-on-fatalerror index.js
 
-memwatch.on('leak', function (info) {
-  // event emitted
-  console.log(info.reason)
-})
+# 시그널로 수동 트리거
+node --report-on-signal index.js
+# 다른 터미널에서: kill -USR2 <pid>
 ```
+
+리포트에는 `javascriptHeap` 섹션이 포함되어 있어 OOM 시점의 힙 상태를 사후 분석할 수 있다.
+
+## 요약
+
+- V8은 세대별 가비지 컬렉션을 사용하며, 대부분의 객체는 young generation에서 수거된다.
+- 기본 힙 크기는 시스템 메모리에 따라 동적으로 결정되며, `--max-old-space-size`로 조정할 수 있다.
+- 메모리 누수 디버깅에는 `--inspect`를 통한 Chrome DevTools 힙 스냅샷이 가장 효과적이다.
+- 프로덕션에서는 PM2 자동 재시작, Diagnostic Report, APM 도구 등을 조합하여 모니터링한다.
