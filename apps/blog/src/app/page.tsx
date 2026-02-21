@@ -2,7 +2,6 @@ import Link from 'next/link'
 
 import type {Metadata} from 'next'
 
-import Tag from '#components/Tag'
 import Hero from '#components/HeroE'
 import ListLayout from '#components/layouts/ListLayout'
 import {SiteConfig} from '#src/config'
@@ -48,7 +47,12 @@ function FeaturedCard({post}: {post: Post}) {
       >
         <div className="flex flex-wrap gap-2 mb-3">
           {tags.slice(0, 3).map((tag) => (
-            <Tag key={tag} text={tag} />
+            <span
+              key={tag}
+              className="border border-black bg-white px-3 py-1 text-xs font-bold uppercase text-black dark:border-white dark:bg-gray-800 dark:text-white"
+            >
+              {tag.split(' ').join('-')}
+            </span>
           ))}
         </div>
         <h3 className="text-xl font-black leading-tight tracking-tight text-black dark:text-white md:text-2xl">
