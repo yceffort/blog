@@ -1,5 +1,7 @@
 'use client'
 
+import {useState, useEffect} from 'react'
+
 const COLORS = [
   {bg: 'rgb(99,102,241)', opacity: 0.4, darkOpacity: 0.6},  // indigo
   {bg: 'rgb(236,72,153)', opacity: 0.4, darkOpacity: 0.6},  // pink
@@ -25,6 +27,12 @@ const DOTS = Array.from({length: 50}, (_, i) => {
 })
 
 export default function AnimatedBackground() {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
       {/* Gradient blobs */}
@@ -38,23 +46,24 @@ export default function AnimatedBackground() {
       <div className="hero-ring-2 absolute right-[10%] top-[25%] h-20 w-20 rounded-full border border-pink-300/20 dark:border-pink-500/15 sm:h-28 sm:w-28" />
       <div className="hero-ring-3 absolute bottom-[20%] left-[25%] h-16 w-16 rounded-full border-2 border-dashed border-violet-300/15 dark:border-violet-500/10 sm:h-24 sm:w-24" />
 
-      {/* Floating dots */}
-      {DOTS.map((dot, i) => (
-        <div
-          key={i}
-          className="absolute rounded-full dark:!opacity-100"
-          style={{
-            left: `${dot.x}%`,
-            top: `${dot.y}%`,
-            width: dot.size,
-            height: dot.size,
-            backgroundColor: dot.color.bg,
-            opacity: dot.color.opacity,
-            boxShadow: `0 0 ${dot.size * 3}px ${dot.color.bg.replace(')', `,${dot.color.opacity})`).replace('rgb', 'rgba')}`,
-            animation: `dot-float-${i % 5} ${dot.duration}s ease-in-out ${dot.delay}s infinite`,
-          }}
-        />
-      ))}
+      {/* Floating dots - client only to avoid hydration mismatch from inline style float values */}
+      {mounted &&
+        DOTS.map((dot, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full dark:!opacity-100"
+            style={{
+              left: `${dot.x}%`,
+              top: `${dot.y}%`,
+              width: dot.size,
+              height: dot.size,
+              backgroundColor: dot.color.bg,
+              opacity: dot.color.opacity,
+              boxShadow: `0 0 ${dot.size * 3}px ${dot.color.bg.replace(')', `,${dot.color.opacity})`).replace('rgb', 'rgba')}`,
+              animation: `dot-float-${i % 5} ${dot.duration}s ease-in-out ${dot.delay}s infinite`,
+            }}
+          />
+        ))}
     </div>
   )
 }
