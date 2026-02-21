@@ -40,13 +40,47 @@ function parseFrontmatter(content) {
   return {raw, fullMatch: match[0], title: get('title'), date: get('date'), description: get('description'), thumbnail: get('thumbnail')}
 }
 
-function buildPrompt(title, description) {
+const PALETTES = [
+  {bg: '#0c0c14', accent: '#6366f1', name: 'indigo with cool blue undertones'},
+  {bg: '#0a0f0d', accent: '#10b981', name: 'emerald with teal highlights'},
+  {bg: '#140c0c', accent: '#f59e0b', name: 'amber with warm orange glow'},
+  {bg: '#0f0a14', accent: '#a855f7', name: 'purple with violet gradients'},
+  {bg: '#0c1014', accent: '#06b6d4', name: 'cyan with electric blue accents'},
+  {bg: '#140c10', accent: '#f43f5e', name: 'rose with magenta highlights'},
+  {bg: '#0c1410', accent: '#84cc16', name: 'lime with fresh green tones'},
+  {bg: '#14100c', accent: '#e11d48', name: 'crimson with deep red warmth'},
+]
+
+const STYLES = [
+  'abstract geometric shapes with sharp angles and clean lines',
+  'organic flowing curves and smooth gradients',
+  'crystalline structures with faceted surfaces and light refraction',
+  'particle systems and scattered dot patterns',
+  'layered topographic contour lines',
+  'circuit-board inspired paths and nodes',
+  'nebula-like clouds and cosmic dust',
+  'isometric 3D blocks and architectural forms',
+]
+
+function hashCode(str) {
+  let hash = 0
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0
+  }
+  return Math.abs(hash)
+}
+
+function buildPrompt(title, description, slug) {
+  const hash = hashCode(slug || title)
+  const palette = PALETTES[hash % PALETTES.length]
+  const style = STYLES[(hash >>> 4) % STYLES.length]
+
   return [
     'Generate a 1200x630 landscape wide thumbnail image.',
-    'Dark background (#0c0c14).',
+    `Dark background (${palette.bg}).`,
     `The image should visually represent the concept of: "${title}".`,
     description ? `Context: "${description}".` : '',
-    'Use abstract, geometric, or symbolic elements. Indigo (#6366f1) as primary accent with complementary tones.',
+    `Use ${style}. ${palette.name} as the color theme with complementary tones.`,
     'Minimal, clean, abstract tech aesthetic.',
     'Absolutely NO text, NO letters, NO words, NO labels, NO numbers anywhere in the image.',
   ]
@@ -110,7 +144,7 @@ function main() {
   mkdirSync(thumbDir, {recursive: true})
 
   const apiKey = loadApiKey()
-  const prompt = customPrompt || buildPrompt(fm.title, fm.description)
+  const prompt = customPrompt || buildPrompt(fm.title, fm.description, slug)
 
   console.log(`Post: ${fm.title}`)
   console.log(`Slug: ${slug}`)
