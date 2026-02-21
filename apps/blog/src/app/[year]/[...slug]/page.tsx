@@ -49,7 +49,7 @@ export async function generateMetadata(props: {
       url: `${SiteConfig.url}/${post.fields.slug}`,
       images: [
         {
-          url: `/api/og?title=${encodeURIComponent(post.frontMatter.title)}&description=${encodeURIComponent(post.frontMatter.description || '')}&tags=${encodeURIComponent((post.frontMatter.tags || []).join(','))}&path=${encodeURIComponent('/' + post.fields.slug)}`,
+          url: `/api/og?title=${encodeURIComponent(post.frontMatter.title)}&description=${encodeURIComponent(post.frontMatter.description || '')}&tags=${encodeURIComponent((post.frontMatter.tags || []).join(','))}&path=${encodeURIComponent('/' + post.fields.slug)}${post.frontMatter.thumbnail ? `&thumbnail=${encodeURIComponent(post.frontMatter.thumbnail)}` : ''}`,
           width: 1200,
           height: 630,
         },
@@ -100,7 +100,8 @@ export default async function Page(props: {
   const transitionName = `post-${postSlug.replace(/\//g, '-')}`
   const link = `https://github.com/yceffort/yceffort-blog-v2/issues/new?labels=%F0%9F%92%AC%20Discussion&title=[Discussion] issue on ${title}&assignees=yceffort&body=${SiteConfig.url}/${slug}`
 
-  const ogImageUrl = `/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description || '')}&tags=${encodeURIComponent((tags || []).join(','))}&path=${encodeURIComponent('/' + postSlug)}`
+  const thumbnail = post.frontMatter.thumbnail
+  const ogImageUrl = `/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description || '')}&tags=${encodeURIComponent((tags || []).join(','))}&path=${encodeURIComponent('/' + postSlug)}${thumbnail ? `&thumbnail=${encodeURIComponent(thumbnail)}` : ''}`
   const ogImageUrlLarge = `${ogImageUrl}&size=large`
 
   const jsonLd = {

@@ -32,6 +32,7 @@ export async function GET(request: Request) {
     }
 
     const urlParam = searchParams.get('url')
+    const thumbnailParam = searchParams.get('thumbnail')
     const address =
       urlParam || (pathParam ? `${SiteConfig.url}${pathParam}` : SiteConfig.url)
     const tags = tagsParam ? tagsParam.split(',') : []
@@ -41,15 +42,17 @@ export async function GET(request: Request) {
     const host = request.headers.get('host')
     const baseUrl = `${protocol}://${host}`
 
-    const ogBackgroundImageName =
-      type === 'page' ? 'og-background-page.jpg' : 'og-background.jpg'
-    const imageUrl = `${baseUrl}/${ogBackgroundImageName}`
+    const hasThumbnail = !!thumbnailParam
+    const imageUrl = hasThumbnail
+      ? `${baseUrl}${thumbnailParam}`
+      : `${baseUrl}/${type === 'page' ? 'og-background-page.jpg' : 'og-background.jpg'}`
 
     const imageRes = await fetch(imageUrl)
     if (!imageRes.ok) {
       throw new Error(`Failed to fetch image: ${imageUrl}`)
     }
     const imageBuffer = await imageRes.arrayBuffer()
+    const imageMime = hasThumbnail ? 'image/png' : 'image/jpeg'
     const imageBase64 = Buffer.from(imageBuffer).toString('base64')
 
     // 2. Fetch Font directly from CDN (Reliable TTF source)
@@ -77,7 +80,7 @@ export async function GET(request: Request) {
         {/* Background Image Layer */}
         <img
           alt={title}
-          src={`data:image/jpeg;base64,${imageBase64}`}
+          src={`data:${imageMime};base64,${imageBase64}`}
           style={{
             position: 'absolute',
             top: 0,
@@ -85,7 +88,7 @@ export async function GET(request: Request) {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            filter: 'blur(3px)',
+            filter: hasThumbnail ? 'blur(1px)' : 'blur(3px)',
             transform: 'scale(1.02)',
           }}
         />
@@ -101,7 +104,12 @@ export async function GET(request: Request) {
             justifyContent: 'center',
             position: 'relative',
             padding: '50px 70px',
-            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            ...(hasThumbnail
+              ? {
+                  backgroundImage:
+                    'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.25) 100%)',
+                }
+              : {backgroundColor: 'rgba(0, 0, 0, 0.4)'}),
           }}
         >
           {/* Title */}
