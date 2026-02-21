@@ -73,8 +73,10 @@ function FeaturedCard({post}: {post: Post}) {
 }
 
 export default async function Page() {
-  const allPosts = await getAllPosts()
-  const popularSlugs = await getPopularPostSlugs(POPULAR_POSTS_COUNT)
+  const [allPosts, popularSlugs] = await Promise.all([
+    getAllPosts(),
+    getPopularPostSlugs(POPULAR_POSTS_COUNT),
+  ])
 
   const featuredPosts = allPosts.filter((p) => p.frontMatter.featured)
 
