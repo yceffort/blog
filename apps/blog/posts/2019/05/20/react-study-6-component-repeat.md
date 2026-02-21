@@ -4,7 +4,6 @@ date: 2019-05-21 12:16:08
 published: true
 tags:
   - react
-  - javascript
 description:
   "## 컴포넌트 반복해서 쓰기 ```javascript import React, {Component} from
   'react';  class IterationSample extends Component {     render ()

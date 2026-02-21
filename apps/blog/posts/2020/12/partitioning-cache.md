@@ -1,7 +1,9 @@
 ---
 title: '파티셔닝 캐시 (partitioning cache)'
 tags:
+  - web-performance
   - browser
+  - security
 published: true
 date: 2020-12-17 23:44:19
 description: 'Google Font 를 써도 이제 캐시 효과는 못받겠네요'

@@ -1,8 +1,8 @@
 ---
 title: eslint-config-yceffort, 나만의 eslint-config 만들기
 tags:
+  - eslint
   - javascript
-  - typescript
 published: true
 date: 2020-09-15 11:07:10
 description: '나만의 일관된 javascript code를 위하여 만들어보았습니다.'

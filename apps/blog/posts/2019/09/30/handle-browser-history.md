@@ -3,8 +3,8 @@ title: 브라우저 히스토리 조작
 date: 2019-09-30 06:28:48
 published: true
 tags:
-  - browser
   - javascript
+  - browser
 description: '브라우저 히스토리 조작하기'
 category: browser
 slug: /2019/09/30/handle-browser-history/

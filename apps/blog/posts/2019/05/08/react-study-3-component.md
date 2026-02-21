@@ -4,7 +4,6 @@ date: 2019-05-08 09:03:03
 published: true
 tags:
   - react
-  - javascript
 description:
   "## 컴포넌트 기본적인 컴포넌트를 만들어 보자.  ```javascript import React,
   {Component} from 'react';  class MyComponent extends Component{     render()

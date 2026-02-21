@@ -1,8 +1,8 @@
 ---
 title: '리액트와 메모이제이션'
 tags:
-  - javascript
   - react
+  - web-performance
 published: true
 date: 2020-11-12 23:34:31
 description: '블로그에서 계속 같은 글을 쓰는 것 같은데🤪'

@@ -1,9 +1,8 @@
 ---
 title: '왜 Async 보다는 Defer를 써야할까'
 tags:
-  - chrome
+  - web-performance
   - javascript
-  - browser
 published: true
 date: 2020-10-20 23:32:39
 description: '스크립트 실행 최적화를 위해 잘 고민해봐야 한다.'

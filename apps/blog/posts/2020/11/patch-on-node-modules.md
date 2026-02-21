@@ -1,8 +1,8 @@
 ---
 title: 'node_modules에 임시 패치 적용하기'
 tags:
+  - nodejs
   - javascript
-  - npm
 published: true
 date: 2020-11-23 22:41:38
 description: '이러고 있을 때가 아니고 이슈 업해서 오픈소스 컨트리뷰터가 되야 되는데'

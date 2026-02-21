@@ -1,7 +1,9 @@
 ---
 title: 'K8s 공부 (1)'
 tags:
-  - K8s
+  - kubernetes
+  - devops
+  - docker
 published: true
 date: 2021-06-09 21:52:35
 description: '무지성에서 시작하는 K8s 공부해보기 시리즈(1)'

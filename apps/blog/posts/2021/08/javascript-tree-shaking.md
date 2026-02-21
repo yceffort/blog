@@ -1,9 +1,8 @@
 ---
 title: '트리쉐이킹으로 자바스크립트 사이즈 줄이기'
 tags:
-  - web
   - javascript
-  - browser
+  - web-performance
 published: true
 date: 2021-08-24 12:47:40
 description: '트리쉐이킹은 직접 해드세요 제발'

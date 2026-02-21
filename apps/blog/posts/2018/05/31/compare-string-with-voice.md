@@ -3,7 +3,7 @@ title: 발음 기반으로 String의 유사도를 비교해 보자.
 date: 2018-05-31 09:01:45
 published: true
 tags:
-  - programming
+  - algorithm
   - java
 description: '앞선 포스팅 통해서 두 String을 문자열 기반으로 분석하였을때. 유사도를 어떻게 측정하는지 알아보았다. 그러나 음성인식으로 String을 비교 했을 때,  다음과 같은 문제에 직면하였다.'
 category: programming

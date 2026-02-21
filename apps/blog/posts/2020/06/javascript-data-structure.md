@@ -2,8 +2,8 @@
 
 title: 자바스크립트 자료 구조
 tags:
-  - javascript
   - typescript
+  - algorithm
 published: true
 date: 2020-06-29 07:42:01
 description: "`toc tight: true, from-heading: 1 to-heading: 4 ` 타입스크립트로

@@ -2,7 +2,6 @@
 title: Codility - Fish
 tags:
   - algorithm
-  - javascript
 published: true
 date: 2020-06-25 12:25:19
 description:

@@ -1,9 +1,8 @@
 ---
 title: '리액트의 렌더링은 어떻게 일어나는가?'
 tags:
-  - web
-  - javascript
   - react
+  - web-performance
 published: true
 date: 2022-04-09 23:12:56
 description: '리액트에서 메모이제이션을 언제 해야하는가 고민 하다가 여기까지 왔다'

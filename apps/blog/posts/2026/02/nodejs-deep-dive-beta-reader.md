@@ -2,7 +2,7 @@
 title: Node.js Deep Dive (가제) 베타 리더를 모십니다.
 tags:
   - nodejs
-  - book
+  - javascript
 published: true
 featured: true
 date: 2026-02-19 22:00:00

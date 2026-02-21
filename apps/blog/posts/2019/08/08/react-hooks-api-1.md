@@ -4,7 +4,6 @@ date: 2019-08-09 02:01:07
 published: true
 tags:
   - react
-  - javascript
 description:
   '# Hooks API Hook은 react 16.8에서 추가된 개념으로, Hook을 시용하면 class를 갖성하지
   않아도 state관리와 같은 react의 기능을 사용할 수 있다.  ## 기본 Hook  ### useState  ```javascript

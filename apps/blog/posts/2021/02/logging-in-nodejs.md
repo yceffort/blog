@@ -1,8 +1,8 @@
 ---
 title: 'Nodejs에서 로깅하기'
 tags:
-  - javascript
   - nodejs
+  - backend
 published: true
 date: 2021-02-26 19:56:41
 description: '어쩌다 보니 nodejs도 하고 있🤣'

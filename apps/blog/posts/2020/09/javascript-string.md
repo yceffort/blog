@@ -1,7 +1,7 @@
 ---
 title: '자바스크립트 String'
 tags:
-  - typescript
+  - javascript
 published: true
 date: 2020-09-21 22:12:37
 description: '자바스크립트의 String'

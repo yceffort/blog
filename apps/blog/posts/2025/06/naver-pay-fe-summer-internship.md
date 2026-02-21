@@ -1,7 +1,7 @@
 ---
 title: '[네이버페이] 채용 연계형 FE 개발 인턴십'
 tags:
-  - web
+  - career
 published: true
 date: 2025-06-07 17:52:22
 description: '많관부'

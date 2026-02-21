@@ -3,6 +3,7 @@ title: 'Nextjs app router의 Rendered more hooks than during the previous render
 tags:
   - nextjs
   - react
+  - debugging
 published: true
 date: 2025-06-23 23:52:14
 description: '어렵다 어려워'

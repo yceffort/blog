@@ -1,8 +1,8 @@
 ---
 title: 'EventEmitter 구현해보기'
 tags:
-  - nodejs
   - javascript
+  - design-patterns
 published: true
 date: 2020-10-21 19:30:12
 description: '면접 때 잘 대답 못했던 질문 22222'

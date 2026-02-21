@@ -1,10 +1,7 @@
 ---
 title: 'Critical Request - request 순서는 웹사이트 속도에 어떤 영향을 미치는가'
 tags:
-  - javascript
-  - browser
-  - web
-  - css
+  - web-performance
 published: true
 date: 2021-09-22 10:24:48
 description: '서순을 정확히하는게 중요하지'

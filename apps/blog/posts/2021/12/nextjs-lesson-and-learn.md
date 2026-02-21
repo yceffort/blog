@@ -1,8 +1,8 @@
 ---
 title: 'nextjs를 적용하면서 알게 된 사실들'
 tags:
-  - javascript
   - nextjs
+  - frontend
 published: true
 date: 2021-12-20 16:55:17
 description: '아 집에 가고 싶다'

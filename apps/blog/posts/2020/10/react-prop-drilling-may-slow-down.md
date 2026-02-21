@@ -2,7 +2,6 @@
 title: 'Prop drilling 해결을 위해 context를 사용하기 전에 구조를 생각해보자.'
 tags:
   - react
-  - javascript
 published: true
 date: 2020-10-19 23:59:32
 description: '처음부터 구조를 잘 생각해 둔다면 성능상 에 이점을 가져갈 수 있다.'

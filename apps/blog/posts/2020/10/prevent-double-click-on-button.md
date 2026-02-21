@@ -2,6 +2,7 @@
 title: '(함수형으로) 자바스크립트로 HTML 버튼 중복 클릭 방지하기'
 tags:
   - javascript
+  - frontend
 published: true
 date: 2020-10-22 23:04:23
 description: '어렸을 때 내가 어떻게 했더라?'

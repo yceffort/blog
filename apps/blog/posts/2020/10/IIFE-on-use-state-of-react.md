@@ -2,7 +2,6 @@
 title: '리액트의 useState와 lazy initialization'
 tags:
   - react
-  - javascript
 published: true
 date: 2020-10-18 19:19:27
 description: '리액트 최적화의 길은 멀고도 험하다'

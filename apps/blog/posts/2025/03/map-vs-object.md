@@ -2,7 +2,6 @@
 title: '맵과 객체 중 무엇을 언제 쓰는 것이 좋을까?'
 tags:
   - javascript
-  - book
 published: true
 date: 2025-03-22 21:30:10
 description: 'Map 도 씁시다'

@@ -2,8 +2,7 @@
 title: '자바스크립트의 가비지 컬렉션'
 tags:
   - javascript
-  - V8
-  - nodejs
+  - memory
 published: true
 date: 2020-12-01 20:44:19
 description: '원래 이런건 이해가 될 때 까지 하는거임'

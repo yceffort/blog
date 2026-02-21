@@ -1,8 +1,8 @@
 ---
 title: 'colors.js와 faker.js 사태가 준 교훈'
 tags:
-  - javascript
-  - node
+  - nodejs
+  - security
 published: true
 date: 2022-01-17 08:09:50
 description: '다이나믹하게 시작하는 2022년'

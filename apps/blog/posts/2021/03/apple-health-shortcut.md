@@ -1,7 +1,6 @@
 ---
 title: '애플 단축어와 GCP로 내 건강정보 업로드하기'
 tags:
-  - apple
   - gcp
   - javascript
 published: true

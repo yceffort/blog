@@ -1,9 +1,8 @@
 ---
 title: Socket.IO 공부하기 (1)
 tags:
-  - javascript
-  - typescript
-  - react
+  - nodejs
+  - websocket
 published: true
 date: 2020-03-22 03:17:25
 description:

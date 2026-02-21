@@ -1,10 +1,9 @@
 ---
 title: '서버리스로 블로그 포스트 썸네일 생성하기'
 tags:
-  - javascript
-  - firebase
-  - cloudinary
-  - puppeteer
+  - nextjs
+  - serverless
+  - backend
 published: true
 date: 2020-12-08 23:26:40
 description: '어차피 나만 볼거임 ㅋㅅㅋ'

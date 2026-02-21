@@ -1,8 +1,8 @@
 ---
 title: 'nodejs의 버퍼 이해하기'
 tags:
-  - javascript
   - nodejs
+  - backend
 published: true
 date: 2021-10-15 23:48:00
 description: 'nodejs로 백엔드하는 회사 찾습니다'

@@ -1,9 +1,8 @@
 ---
 title: 'Rust로 web assembly로 game of life 만들어보기 (1)'
 tags:
-  - web
-  - javascript
   - rust
+  - webassembly
 published: true
 date: 2022-03-18 23:56:56
 description: '코로나 휴가를 틈탄 러스트 뻘짓'

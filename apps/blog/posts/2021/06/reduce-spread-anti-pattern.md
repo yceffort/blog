@@ -2,6 +2,7 @@
 title: 'reduce에 spread 를 쓰면 안되는 이유'
 tags:
   - javascript
+  - web-performance
 published: true
 date: 2021-06-22 17:35:37
 description: '솔직히 뭔가 멋있어서 많이 쓰긴 함'

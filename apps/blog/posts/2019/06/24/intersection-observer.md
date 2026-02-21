@@ -3,6 +3,8 @@ title: Intersection Observer
 date: 2019-06-24 06:01:35
 published: true
 tags:
+  - browser
+  - web-performance
   - javascript
 description:
   '## Intersection Observer Intersection Observer는 엘리먼트가 viewport에

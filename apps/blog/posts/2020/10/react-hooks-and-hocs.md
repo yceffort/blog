@@ -2,7 +2,6 @@
 title: '리액트의 Hooks과 HOC, HOC의 사용이 복잡해지는 경우'
 tags:
   - react
-  - javascript
 published: true
 date: 2020-10-19 21:19:43
 description: 'HOC는 좋지만, hooks을 사용하는 습관을 기르자.'

@@ -2,7 +2,8 @@
 title: 'IntersectionObserver 싱글톤 패턴과 WeakMap으로 메모리 누수 방지하기'
 tags:
   - javascript
-  - typescript
+  - frontend
+  - web-performance
 published: true
 date: 2026-01-17 21:30:00
 description: '수백 개의 요소를 효율적으로 관찰하면서 메모리 누수도 방지하는 방법'

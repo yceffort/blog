@@ -1,9 +1,8 @@
 ---
 title: '브라우저 탭 사이에서 통신 하는 방법'
 tags:
-  - javascript
-  - html
   - browser
+  - javascript
 published: true
 date: 2020-11-06 21:37:40
 description: '블로그 다크모드 지원시에 고려해보겠습니다 🤔'

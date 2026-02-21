@@ -1,7 +1,6 @@
 ---
 title: '알쏭 달쏭한 자바스크립트 정규식'
 tags:
-  - regex
   - javascript
 published: true
 date: 2021-03-21 14:42:10

@@ -1,10 +1,8 @@
 ---
 title: 'Rust로 web assembly 만들어보기 (1) - Web Assembly란 무엇인가?'
 tags:
-  - web
-  - javascript
-  - html
   - rust
+  - webassembly
 published: true
 date: 2022-03-07 19:27:19
 description: '인생은 실전이다'

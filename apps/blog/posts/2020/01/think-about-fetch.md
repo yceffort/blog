@@ -1,10 +1,8 @@
 ---
 title: 자바스크립트에서 http 요청하기 - fetch에 대한 고찰
 tags:
-  - browser
-  - web
   - javascript
-  - typescript
+  - web-performance
 published: true
 date: 2020-01-22 03:57:45
 description: "`toc tight: true, from-heading: 2 to-heading: 3 ` ## 1.

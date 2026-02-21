@@ -1,9 +1,8 @@
 ---
 title: 'Nextjs 11 릴리즈 노트 살펴보고 블로그에 적용하기'
 tags:
-  - javascript
   - nextjs
-  - react
+  - web-performance
 published: true
 date: 2021-06-19 22:12:48
 description: 'nextjs 정말 열일하네2222'

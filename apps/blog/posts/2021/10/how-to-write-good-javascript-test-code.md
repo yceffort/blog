@@ -2,7 +2,7 @@
 title: '좋은 자바스크립트 테스트 코드를 짜는 방법'
 tags:
   - javascript
-  - nodejs
+  - testing
 published: true
 date: 2021-10-10 11:21:24
 description: '개발자는 코드로 돈을 벌지, 테스트로 버는 사람이 아니다. 따라서 테스트는 주어진 신뢰에 도달할 수 있게 최대한 간결하게 작성되어야 한다.'

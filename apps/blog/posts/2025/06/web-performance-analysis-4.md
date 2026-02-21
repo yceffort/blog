@@ -1,8 +1,8 @@
 ---
 title: '웹 서비스 성능 분석 (4)'
 tags:
-  - web-performance-analysis
-  - web
+  - web-performance
+  - frontend
 published: true
 date: 2025-07-19 19:20:44
 description: '나도 해볼까.. 라는 생각이 든다면 바로 지금 연락주세요!!'

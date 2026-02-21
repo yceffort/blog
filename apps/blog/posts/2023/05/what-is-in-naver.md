@@ -1,9 +1,9 @@
 ---
 title: '새로 바뀐 네이버 메인 훔쳐보기'
 tags:
-  - javascript
-  - web
-  - html
+  - frontend
+  - react
+  - web-performance
 published: true
 date: 2023-05-30 14:51:26
 description: '사실 나도 잘 몰라요'

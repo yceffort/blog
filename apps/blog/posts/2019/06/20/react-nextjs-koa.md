@@ -3,8 +3,8 @@ title: Typescript, React, NextJs, Koa, Styled Component 로 프론트엔드 환�
 date: 2019-06-21 04:07:40
 published: true
 tags:
-  - react
-  - javascript
+  - nextjs
+  - frontend
   - typescript
 description: '이 문서는 더 이상 업데이트 하지 않을 생각이다. 대신
   https://github.com/yceffort/koa-nextjs-react-typescript-boilerplate 여기에서 계속 해서

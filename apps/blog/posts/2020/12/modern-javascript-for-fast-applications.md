@@ -2,7 +2,7 @@
 title: '더 빠른 웹 애플리케이션을 위한 모던 자바스크립트'
 tags:
   - javascript
-  - browser
+  - web-performance
 published: true
 date: 2020-12-15 20:02:35
 description: '아니 그래서 IE 11 언제 없앨 건데요'

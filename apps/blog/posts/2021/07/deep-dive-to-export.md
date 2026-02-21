@@ -2,7 +2,6 @@
 title: 'Export에 숨겨져 있는 심오함'
 tags:
   - javascript
-  - nodejs
 published: true
 date: 2021-07-22 21:12:37
 description: '자바스크립트는 멋져 짜릿해 늘 새로워'

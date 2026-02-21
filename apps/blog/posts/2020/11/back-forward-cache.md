@@ -1,9 +1,8 @@
 ---
 title: '뒤로가기, 앞으로가기의 캐시 aka bfcache'
 tags:
-  - web
   - browser
-  - javascript
+  - web-performance
 published: true
 date: 2020-11-26 13:09:01
 description: '항상 브라우저에 감사하십시오 frontend developers.'

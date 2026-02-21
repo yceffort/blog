@@ -2,7 +2,6 @@
 title: Codility - Number of Disc Intersections
 tags:
   - algorithm
-  - javascript
 published: true
 date: 2020-06-23 12:25:19
 description:

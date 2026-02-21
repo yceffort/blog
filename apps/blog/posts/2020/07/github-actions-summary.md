@@ -1,7 +1,8 @@
 ---
 title: Github actions 요약
 tags:
-  - github
+  - devops
+  - ci-cd
 published: true
 date: 2020-07-23 10:13:11
 description:

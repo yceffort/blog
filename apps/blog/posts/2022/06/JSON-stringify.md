@@ -2,7 +2,6 @@
 title: 'JSON.stringify 만들어보기'
 tags:
   - javascript
-  - typescript
 published: true
 date: 2022-06-17 12:19:04
 description: 'V8로는 아니더라도 내부 동작 직접 구현해보기'

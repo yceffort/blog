@@ -1,7 +1,6 @@
 ---
 title: 'Nodejs 모듈 (CommonJS, ECMAScript) 과 패키지, 그리고 Semver'
 tags:
-  - javascript
   - nodejs
 published: true
 date: 2021-07-05 21:41:20

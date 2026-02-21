@@ -2,9 +2,7 @@
 title: 'npm, yarn, pnpm 비교해보기'
 tags:
   - javascript
-  - npm
-  - yarn
-  - pnpm
+  - nodejs
 published: true
 date: 2022-05-20 22:26:01
 description: '그리고 승자는 🤔'

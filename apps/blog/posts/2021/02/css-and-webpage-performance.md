@@ -1,9 +1,8 @@
 ---
 title: 'CSS와 웹페이지 성능과의 관계'
 tags:
-  - browser
-  - javascript
-  - CSS
+  - web-performance
+  - css
 published: true
 date: 2021-02-01 16:19:06
 description: '내 일이 아니라고 생각하면 관심이 안가더라고'

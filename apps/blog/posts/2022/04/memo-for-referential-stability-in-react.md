@@ -1,8 +1,8 @@
 ---
 title: '참조 동일성을 위한 메모이제이션'
 tags:
-  - javascript
   - react
+  - web-performance
 published: true
 date: 2022-04-16 19:42:29
 description: '세상에 나쁜 메모이제이션은 없다 🤔'

@@ -4,7 +4,6 @@ date: 2019-08-12 10:42:22
 published: true
 tags:
   - browser
-  - web
 description:
   "### 🚧작성중 🚧 [원문-How Browsers Work: Behind the scenes of modern
   web

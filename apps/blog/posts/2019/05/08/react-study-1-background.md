@@ -4,7 +4,6 @@ date: 2019-05-08 07:46:42
 published: true
 tags:
   - react
-  - javascript
 description:
   '## 리액트 요약 기존에 많은 자바스크립트 기반 프레임워크들이 있었는데, 대부분의 프레임워크들은 MVC
   (Model-View-Controller), MVVM(Model-View-View Model), MVW(Model-View-Whatever)

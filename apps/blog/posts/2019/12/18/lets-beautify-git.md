@@ -4,6 +4,7 @@ date: 2019-12-18 11:31:17
 published: true
 tags:
   - git
+  - devops
 description: '## Commit Message [좋은 git commit 메시지를 위한
   영어사전](https://blog.ull.im/engineering/2019/03/10/logs-on-git.html)  [좋은 git 커밋
   메시지를 작성하기 위한 7가지 약속](https://meetup.toast.com/posts/106)  ### 요약  Single

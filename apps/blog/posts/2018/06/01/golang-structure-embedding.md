@@ -3,7 +3,8 @@ title: GoLang) 구조체와 임베딩
 date: 2018-06-01 07:57:05
 published: true
 tags:
-  - golang
+  - go
+  - backend
 description: 'Golang에는 클래스가 없는 대신, 아래와 같은 구조체가 존재한다.'
 category: golang
 slug: /2018/06/01/golang-structure-embedding/

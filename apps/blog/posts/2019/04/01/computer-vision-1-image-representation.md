@@ -3,6 +3,7 @@ title: Computer Vision 01) - Image Representation
 date: 2019-04-01 06:35:16
 published: true
 tags:
+  - computer-vision
   - python
 description: '## Image Representation & Classification ### Images as Grids of
   Pixels  ```python import numpy as np from skimage import io import

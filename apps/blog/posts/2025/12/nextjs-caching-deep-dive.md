@@ -2,9 +2,8 @@
 title: 'Next.js 캐싱 가이드'
 tags:
   - nextjs
-  - react
-  - cache
-  - performance
+  - web-performance
+  - caching
 published: true
 date: 2025-12-24 10:00:00
 description: 'Next.js App Router의 4가지 캐시 레이어 알아보긔'

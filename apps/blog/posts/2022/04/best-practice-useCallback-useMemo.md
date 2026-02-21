@@ -1,7 +1,6 @@
 ---
 title: '리액트의 useCallback useMemo, 정확하게 사용하고 있을까'
 tags:
-  - javascript
   - react
 published: true
 date: 2022-04-16 18:51:14

@@ -1,8 +1,9 @@
 ---
 title: 'nodejs의 메모리 제한'
 tags:
-  - javascript
   - nodejs
+  - backend
+  - memory
 published: true
 date: 2021-12-13 19:21:45
 description: '어디서 새고 있을까 내 메모리는'

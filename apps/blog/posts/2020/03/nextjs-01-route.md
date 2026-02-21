@@ -1,9 +1,9 @@
 ---
 title: NextJS 1. Page & Route
 tags:
-  - typescript
-  - javascript
+  - nextjs
   - react
+  - frontend
 published: true
 date: 2020-03-12 02:39:10
 description:

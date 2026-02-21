@@ -1,10 +1,8 @@
 ---
 title: 'Rust로 web assembly 만들어보기 (2) - Rust로 간단한 Web Assembly 만들기'
 tags:
-  - web
-  - javascript
-  - html
   - rust
+  - webassembly
 published: true
 date: 2022-03-10 17:45:43
 description: '오 이거 신기하네'

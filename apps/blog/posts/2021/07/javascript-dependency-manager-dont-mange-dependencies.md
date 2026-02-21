@@ -2,8 +2,7 @@
 title: '자바스크립트 의존성 관리자(npm, yarn, pnpm)에서 보다 더 의존성 관리 잘하는 방법'
 tags:
   - javascript
-  - npm
-  - yarn
+  - dependency-management
 published: true
 date: 2021-07-28 22:17:24
 description: '일단 제목으로 어그로를 끈다.'

@@ -4,7 +4,6 @@ date: 2019-05-09 06:22:14
 published: true
 tags:
   - react
-  - javascript
 description:
   '## Reference (Ref) 특정 DOM요소에 작업을 하기 위해서 id를 부여하는 것 처럼, React에서
   DOM에 이름을 다는 방식이 있는데 이것이 바로 ref (Reference)다. 반드시, `DOM에 직접적으로 접근하여 조작이 필요할 때 만

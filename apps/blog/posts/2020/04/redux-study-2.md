@@ -1,7 +1,6 @@
 ---
 title: 리덕스 공부해보기 (2) - 리덕스의 탄생, 핵심 개념 그리고 3가지 원칙.
 tags:
-  - typescript
   - javascript
   - react
 published: true

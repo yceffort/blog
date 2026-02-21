@@ -1,9 +1,9 @@
 ---
 title: 리덕스 공부해보기 (1) - 개요
 tags:
-  - typescript
-  - javascript
+  - redux
   - react
+  - javascript
 published: true
 date: 2020-04-26 07:38:25
 description: '## 리덕스 공부해보기 1 [리덕스

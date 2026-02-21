@@ -3,7 +3,6 @@ title: 'useEffect는 라이프 사이클 메소드가 아니다.'
 category: react
 tags:
   - react
-  - javascript
 published: true
 date: 2020-10-02 22:40:20
 description: '생각없이 useEffect를 쓰지 말자'

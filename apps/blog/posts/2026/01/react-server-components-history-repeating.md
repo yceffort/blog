@@ -2,8 +2,8 @@
 title: 'React의 "서버로 회귀"는 역사의 반복인가?'
 tags:
   - react
-  - frontend
-  - architecture
+  - javascript
+  - web-performance
 published: true
 date: 2026-01-04 12:00:00
 description: 'RSC가 PHP/JSP 시절로의 회귀인지, 아니면 나선형 발전일까? 아닐까? 뭘까'

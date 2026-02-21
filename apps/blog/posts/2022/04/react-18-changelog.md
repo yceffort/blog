@@ -3,7 +3,6 @@ title: '리액트 v18 버전 톺아보기'
 tags:
   - react
   - javascript
-  - typescript
 published: true
 date: 2022-04-04 19:02:15
 description: '큰거 왔다'

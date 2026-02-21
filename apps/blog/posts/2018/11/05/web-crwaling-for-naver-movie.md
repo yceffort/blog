@@ -3,6 +3,7 @@ title: '초보를 위한 웹크롤링: 네이버 영화 댓글 크롤링하기'
 date: 2018-11-06 04:44:01
 published: true
 tags:
+  - web-scraping
   - python
 description:
   "e 파이썬과 파이썬 라이브러리 (beatifulSoup)를 활용하여 네이버 영화 댓글 크롤링 해보기 ## 1.

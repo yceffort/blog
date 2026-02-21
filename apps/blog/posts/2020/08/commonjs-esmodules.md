@@ -2,6 +2,7 @@
 title: CommonJS와 ES Modules은 왜 함께 할 수 없는가?
 tags:
   - javascript
+  - nodejs
 published: true
 date: 2020-08-11 08:48:47
 description: "[이

@@ -4,7 +4,6 @@ date: 2019-05-08 10:53:58
 published: true
 tags:
   - react
-  - javascript
 description:
   '## 이벤트 리액트의 이벤트는 기본적으로 HTML의 이벤트와 비슷하지만, 주의사항이 몇가지 있습니다.  1. 이벤트
   명은 카멜 케이스로 작성해야 한다. `onclick` → `onClick` 2. 이벤트에 실행할 자바스크립트 코드를 전달하는 것이 아니고,

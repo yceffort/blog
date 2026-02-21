@@ -4,9 +4,6 @@ date: 2019-10-15 07:51:36
 published: true
 tags:
   - react
-  - typescript
-  - algorithm
-  - javascript
 description: '리액트에서 텍스트 강조하는 방법'
 slug: /2019/10/15/react-text-highlight/
 template: post

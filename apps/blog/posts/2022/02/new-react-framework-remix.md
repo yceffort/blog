@@ -1,10 +1,9 @@
 ---
 title: 'Remix nextjs와 비교하면서 살펴보기'
 tags:
-  - javascript
   - react
-  - remix
   - nextjs
+  - javascript
 published: true
 date: 2022-02-13 14:16:40
 description: '늘 새로워 짜릿해 새로운게 또 나왔어'

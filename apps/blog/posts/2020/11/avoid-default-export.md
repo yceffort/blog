@@ -1,8 +1,8 @@
 ---
 title: 'export default를 쓰지 말아야 할 이유'
 tags:
-  - javascript
   - typescript
+  - javascript
 published: true
 date: 2020-11-09 23:05:08
 description: '근데 쓰는게 뭔가 더 안정적인 기분이야'

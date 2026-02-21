@@ -2,6 +2,7 @@
 title: 자바스크립트로 다음 사전 크롤링해보기
 tags:
   - javascript
+  - web-scraping
 published: true
 date: 2020-09-29 15:37:38
 description: '사실 이거 블로그 유입 늘리려고 하는 거임'

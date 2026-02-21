@@ -4,7 +4,6 @@ date: 2019-05-21 12:17:09
 published: true
 tags:
   - react
-  - javascript
 description:
   '## React Component Life Cycle 라이프 사이클은 총 10가지다. `Will`접두사는 어떤 작업을
   작동하기전에 실행하는 메소드가, `Did`는 어떤 작업을 한 후에 실해오디는 메서드다. 이 메서드들은 컴포넌트 클래스에서 덮어써서 선언하여

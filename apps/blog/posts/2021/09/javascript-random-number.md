@@ -2,7 +2,7 @@
 title: '자바스크립트에서 안전하게 난수 생성하는 방법'
 tags:
   - javascript
-  - nodejs
+  - security
 published: true
 date: 2021-09-01 21:19:35
 description: 'Math.random()도 잘못 사용하는 경우가 더러 있음'

@@ -1,7 +1,6 @@
 ---
 title: 'Typescript의 Immutability'
 tags:
-  - javascript
   - typescript
 published: true
 date: 2021-05-26 19:19:20

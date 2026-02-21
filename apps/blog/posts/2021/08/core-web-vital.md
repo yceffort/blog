@@ -1,9 +1,7 @@
 ---
 title: '웹사이트의 성능지표, Core Web Vital'
 tags:
-  - web
-  - javascript
-  - browser
+  - web-performance
 published: true
 date: 2021-08-06 20:32:31
 description: '조만간 웹사이트 하나씩 분석해 보겠습니다'

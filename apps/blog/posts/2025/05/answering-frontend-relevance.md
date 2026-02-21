@@ -1,9 +1,8 @@
 ---
 title: 'AI 시대 "프론트엔드, 정말 중요할까?" 라는 질문에 답합니다. (성능, AI, UI/UX, 그리고 미래)'
 tags:
-  - diary
-  - web
   - frontend
+  - career
 published: true
 date: 2025-05-24 22:30:27
 description: 'AI와 B2B 환경에서도 프론트엔드는 비즈니스 가치와 직결되는 사용자 경험의 핵심이며, 그 중요성과 역할은 변하지 않기에 끊임없이 가치를 증명하고 발전해야 합니다.'

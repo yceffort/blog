@@ -3,7 +3,8 @@ title: ReactiveX) Observable
 date: 2018-05-31 09:01:45
 published: true
 tags:
-  - programming
+  - reactive-programming
+  - javascript
 description:
   보통 일반적인 프로그램의 경우에는, 하나씩 작성된 순서에 따라 로직이 실행되고, 완료되면 또다른 로직이 실행되는 등의
   순서가 있음을 알수 있다. 그러나 이와 달리 ReactiveX는 "Observer"에 의해 임의의 순서에 따라 병렬적으로 실행되고 나중에

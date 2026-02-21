@@ -2,6 +2,7 @@
 title: 'Javascript Regex 숫자를 comma와 함께 Formatting 하기'
 tags:
   - javascript
+  - regex
 published: true
 date: 2020-03-17 04:14:07
 description: 'regex를 활용해서 숫자를 보기좋게 formatting을 해보자.'

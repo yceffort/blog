@@ -1,7 +1,6 @@
 ---
 title: 'Nodejs에 대한 잘못된 상식 몇가지'
 tags:
-  - javascript
   - nodejs
 published: true
 date: 2021-06-04 06:45:32

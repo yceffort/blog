@@ -1,9 +1,9 @@
 ---
 title: '리액트 서버사이드 렌더링과 컴포넌트'
 tags:
+  - nextjs
   - react
   - ssr
-  - javascript
 published: true
 date: 2021-03-19 19:31:14
 description: '갈길이 멀다'

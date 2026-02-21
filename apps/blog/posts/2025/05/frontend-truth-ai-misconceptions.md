@@ -1,9 +1,9 @@
 ---
 title: '"AI가 다 해주잖아?"라는 환상: FE의 본질과 AI 시대의 현실'
 tags:
-  - diary
-  - web
   - frontend
+  - ai
+  - career
 published: true
 date: 2025-05-24 22:55:11
 description: 'AI가 UI 개발을 대체할 것이라는 리더십의 환상과 프론트엔드 기술에 대한 오해, 그리고 AI 시대에도 변하지 않을 프론트엔드의 본질적인 가치'

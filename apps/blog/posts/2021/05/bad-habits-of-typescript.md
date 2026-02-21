@@ -1,7 +1,6 @@
 ---
 title: '타입스크립트에서 조심해야할 습관'
 tags:
-  - javascript
   - typescript
 published: true
 date: 2021-05-25 20:57:49

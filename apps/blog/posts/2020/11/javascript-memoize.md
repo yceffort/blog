@@ -2,6 +2,7 @@
 title: '자바스크립트로 메모이제이션 구현하기'
 tags:
   - javascript
+  - algorithm
 published: true
 date: 2020-11-23 22:47:01
 description: '까먹지 않게 기억해두기'

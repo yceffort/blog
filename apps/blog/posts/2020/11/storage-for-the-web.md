@@ -1,8 +1,8 @@
 ---
 title: '웹에서 사용 가능한 스토리지 살펴보기'
 tags:
-  - web
-  - browser
+  - web-performance
+  - pwa
 published: true
 date: 2020-11-23 23:13:53
 description: 'PWA에서 가장 적절한 것은 무엇일까'

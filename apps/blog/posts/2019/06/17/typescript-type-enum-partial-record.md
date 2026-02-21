@@ -3,8 +3,6 @@ title: Typescript Type, Enum, Partial, Record로 글로벌 변수 관리하기
 date: 2019-06-18 01:20:52
 published: true
 tags:
-  - react
-  - javascript
   - typescript
 description:
   '## 고민지점 - Global 로 관리하는 Colorset Red, Blue, Green, Black이 있다. - 이

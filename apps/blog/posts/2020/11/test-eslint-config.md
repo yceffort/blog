@@ -1,6 +1,7 @@
 ---
 title: 'eslint-config 를 위한 테스트 코드를 작성하기 (CI)'
 tags:
+  - testing
   - javascript
 published: true
 date: 2020-11-03 18:03:54

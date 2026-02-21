@@ -1,9 +1,8 @@
 ---
 title: '리액트 18에서 변경될 새로운 SSR 아키텍쳐'
 tags:
-  - javascript
   - react
-  - web
+  - web-performance
 published: true
 date: 2021-09-25 17:24:06
 description: '따라가는 것만 해도 바쁜 인생'

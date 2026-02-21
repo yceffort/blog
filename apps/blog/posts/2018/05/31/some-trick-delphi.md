@@ -3,7 +3,6 @@ title: Delphi) Some tricks
 date: 2018-05-31 08:11:51
 published: true
 tags:
-  - programming
   - delphi
 description: '첫 직장에서 델파이로 개발했을 때 유용하게 사용하던 코드 모음.'
 category: programming

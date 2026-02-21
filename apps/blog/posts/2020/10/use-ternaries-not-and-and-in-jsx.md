@@ -1,8 +1,8 @@
 ---
 title: 'JSX에서 && 대신에 3항 연산자를 더 선호하는 이유'
 tags:
-  - javascript
   - react
+  - javascript
 published: true
 date: 2020-10-30 23:51:20
 description: '사실 그냥 (몇 가지 합리적인 이유가 있는) 개인적인 취향임'

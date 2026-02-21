@@ -2,7 +2,7 @@
 title: 자바스크립트 메모리 누수와 해결 방법
 tags:
   - javascript
-  - browser
+  - web-performance
 published: true
 date: 2020-07-14 01:19:17
 description: "```toc tight: true, from-heading: 2 to-heading: 3 ``` [4 Types of

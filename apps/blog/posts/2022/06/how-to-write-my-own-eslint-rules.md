@@ -1,8 +1,8 @@
 ---
 title: '나만의 eslint 룰 만들어보기'
 tags:
-  - javascript
   - eslint
+  - javascript
 published: true
 date: 2022-06-26 20:52:14
 description: 'rust로 eslint를 만들어도 재밌겠네용'

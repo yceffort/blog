@@ -1,10 +1,9 @@
 ---
 title: '서버에서 클라이언트로의 여정 - 브라우저와 서버는 어떻게 데이터를 주고 받을까'
 tags:
-  - javascript
-  - web
-  - server
   - browser
+  - networking
+  - web-performance
 published: true
 date: 2021-11-23 23:12:01
 description: '네트워크도 공부해야하는데'

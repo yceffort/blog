@@ -1,9 +1,8 @@
 ---
 title: NextJS 2. Data Fetching
 tags:
-  - typescript
-  - javascript
-  - react
+  - nextjs
+  - frontend
 published: true
 date: 2020-03-12 02:39:10
 description: '[nextjs의 공식

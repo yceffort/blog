@@ -1,8 +1,8 @@
 ---
 title: 2020년, 매일 github에 contribution 하기
 tags:
-  - git
-  - diary
+  - github
+  - career
 published: true
 date: 2020-01-11 10:44:09
 description:

@@ -2,6 +2,7 @@
 title: '타입스크립트 성능을 위한 팁'
 tags:
   - typescript
+  - web-performance
 published: true
 date: 2021-03-22 23:14:07
 description: '아무튼 스터디 중임'

@@ -1,8 +1,8 @@
 ---
 title: 프론트엔드 사이즈 줄이기
 tags:
-  - javascript
-  - web
+  - web-performance
+  - webpack
 published: true
 date: 2020-07-01 09:45:10
 description: "[이

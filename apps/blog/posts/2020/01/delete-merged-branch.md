@@ -2,6 +2,7 @@
 title: 머지된 브랜치를 삭제하는 스크립트
 tags:
   - git
+  - devops
 published: true
 date: 2020-01-02 08:15:56
 description: '이미 머지된 브랜치를 로컬에서 삭제하기'

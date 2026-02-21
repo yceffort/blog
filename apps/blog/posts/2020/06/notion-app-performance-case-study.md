@@ -1,6 +1,7 @@
 ---
 title: Notion 성능 최적화
 tags:
+  - web-performance
   - javascript
 published: true
 date: 2020-06-29 07:42:01

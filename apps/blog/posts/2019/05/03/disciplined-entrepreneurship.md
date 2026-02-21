@@ -3,6 +3,7 @@ title: Disciplined entrepreneurship
 date: 2019-05-03 07:45:29
 published: true
 tags:
+  - career
   - entrepreneurship
 description:
   '### 작동하는 가설을 만들어라 ‘가설’이라는 단어는 기업가정신, 이노베이션경영, 그리고 지금의 파괴적혁신에 이르기까지

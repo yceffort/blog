@@ -1,9 +1,8 @@
 ---
 title: 리덕스 공부해보기 (3) - 용어
 tags:
-  - typescript
+  - redux
   - javascript
-  - react
 published: true
 date: 2020-04-29 06:09:18
 description: 'https://redux.js.org/glossary#state ## 용어 모음  ### State

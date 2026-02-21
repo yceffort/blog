@@ -2,6 +2,7 @@
 title: 'no return, await, return, await return 의 차이'
 tags:
   - javascript
+  - async
 published: true
 date: 2021-02-03 17:27:03
 description: 'try catch 블록에서는 동작이 다르네'

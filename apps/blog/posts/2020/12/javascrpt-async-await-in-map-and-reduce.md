@@ -2,6 +2,7 @@
 title: 'map과 reduce에서 async await 사용하기'
 tags:
   - javascript
+  - async
 published: true
 date: 2020-12-22 20:44:19
 description: '당연한거 아님?'

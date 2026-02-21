@@ -2,7 +2,7 @@
 title: 'CSS 성능 향상 시키기'
 tags:
   - css
-  - browser
+  - web-performance
 published: true
 date: 2021-03-26 20:43:10
 description: 'CSS의 황제가 출간한 CSS 완벽가이드를 장식용으로 구매...'

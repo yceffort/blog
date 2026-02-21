@@ -3,8 +3,9 @@ title: 리액트 면접 질문 모음 (1)
 date: 2019-08-21 01:22:35
 published: true
 tags:
-  - javascript
   - react
+  - javascript
+  - frontend
 description: '[목차](/2019/08/13/reactjs-interview-questions/)  ```toc tight:
   true, from-heading: 2 to-heading: 3 ```  ## Core React  ### What is
   React  리액트는 오픈소스 프론트엔드 자바스크립트 라이브러리로, 특히 싱글 페이지 애플리케이션의 사용자 인터페이스 구축을...'

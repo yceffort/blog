@@ -2,8 +2,8 @@
 title: 'React의 새로운 lint 규칙: set-state-in-effect'
 tags:
   - react
-  - eslint
-  - performance
+  - javascript
+  - testing
 published: true
 date: 2025-12-16 15:30:00
 description: 'Effect에서 setState를 호출하면 안 되는 이유와 대안'

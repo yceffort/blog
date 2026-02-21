@@ -1,8 +1,7 @@
 ---
 title: 'Github action cron이 제시간에 실행되지 않는 문제'
 tags:
-  - javascript
-  - firebase
+  - devops
   - github
 published: true
 date: 2021-01-24 21:16:38

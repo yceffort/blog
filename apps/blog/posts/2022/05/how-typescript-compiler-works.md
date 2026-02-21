@@ -2,7 +2,7 @@
 title: '타입스크립트 컴파일러는 어떻게 동작하는가?'
 tags:
   - typescript
-  - javascript
+  - compiler
 published: true
 date: 2022-05-15 08:32:39
 description: 'clone 받아서 읽어보세여 재밌어여 (안재밌음)'

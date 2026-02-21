@@ -4,6 +4,7 @@ date: 2019-07-17 07:22:22
 published: true
 tags:
   - javascript
+  - browser
 description: "![image](https://miro.medium.com/max/1200/1*Et5UjVPGLfF1L43T7Errx\
   Q.png) ## Javascript Event
   Capturing  https://codepen.io/yceffort/pen/GbVaaY  Event Capturing은 특정 요소에서

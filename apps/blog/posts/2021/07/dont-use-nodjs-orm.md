@@ -1,9 +1,9 @@
 ---
 title: '왜 Nodejs ORM을 쓰지 말아야 할까'
 tags:
-  - javascript
   - nodejs
-  - SQL
+  - backend
+  - database
 published: true
 date: 2021-07-02 19:29:54
 description: 'SQL 오랫만에 보니까 반갑당'

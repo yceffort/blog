@@ -1,7 +1,6 @@
 ---
 title: 'suppressImplicitAnyIndexErrors 옵션을 키기 전에'
 tags:
-  - javascript
   - typescript
 published: true
 date: 2021-05-23 22:26:52

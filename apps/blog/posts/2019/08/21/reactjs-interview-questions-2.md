@@ -3,8 +3,9 @@ title: 리액트 면접 질문 모음 (2)
 date: 2019-08-21 07:17:16
 published: true
 tags:
-  - javascript
   - react
+  - redux
+  - testing
 description: '[목차](/2019/08/13/reactjs-interview-questions/) # table of
   contents  ```toc tight: true, from-heading: 2 to-heading: 3 ```  ## React
   Router  ### What is React Router?  React Router는 리액트 최상단에 있는 강력한 라우...'

@@ -1,9 +1,8 @@
 ---
 title: 'Rust로 web assembly로 game of life 만들어보기 (2)'
 tags:
-  - web
-  - javascript
   - rust
+  - webassembly
 published: true
 date: 2022-04-08 11:45:16
 description: '사이드 프로젝트도 열심히 하고 싶은데 바쁘기도 바쁘고 체력도 안되는 것 같고 아무튼 핑계입니다.'

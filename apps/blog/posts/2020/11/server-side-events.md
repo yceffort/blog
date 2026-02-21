@@ -2,9 +2,7 @@
 title: '서버 사이드 이벤트 (Server Side Events, SSE)'
 tags:
   - javascript
-  - nodejs
-  - browser
-  - web
+  - backend
 published: true
 date: 2020-11-17 23:41:26
 description: '이거 꼭 한번 해보고 싶었는데 😭'

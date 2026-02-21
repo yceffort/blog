@@ -1,8 +1,8 @@
 ---
 title: 'React.FC를 사용하지 않는 이유'
 tags:
-  - typescript
   - react
+  - typescript
 published: true
 date: 2022-03-25 16:11:06
 description: 'React.FC가 잘못됐다는 이야기는 아닙니다'

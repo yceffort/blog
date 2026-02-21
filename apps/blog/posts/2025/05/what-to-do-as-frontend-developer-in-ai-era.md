@@ -1,8 +1,8 @@
 ---
 title: 'AI가 코드를 작성해 주는 시대, 프론트엔드 개발자인 나는 무엇을 해야 할까?'
 tags:
-  - diary
-  - web
+  - ai
+  - career
   - frontend
 published: true
 date: 2025-05-19 17:43:12

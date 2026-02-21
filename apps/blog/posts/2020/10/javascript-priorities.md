@@ -1,7 +1,7 @@
 ---
 title: '크롬에서 자바스크립트 로딩 순서'
 tags:
-  - chrome
+  - web-performance
   - javascript
   - browser
 published: true

@@ -2,7 +2,7 @@
 title: 'overflow: auto vs overflow: scroll 왜 윈도우에서만 쓸모없는 스크롤바가 노출될까'
 tags:
   - css
-  - browser
+  - frontend
 published: true
 date: 2021-01-14 22:40:55
 description: '맨날 맥만 봐서 이런 줄도 몰랐다 반성합니다'

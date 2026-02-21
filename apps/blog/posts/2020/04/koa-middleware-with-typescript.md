@@ -2,7 +2,7 @@
 title: 타입스크립트로 koa 미들웨어 만들기
 tags:
   - typescript
-  - javascript
+  - nodejs
 published: true
 date: 2020-04-15 05:46:43
 description: 'koa 미들웨어 만들기'

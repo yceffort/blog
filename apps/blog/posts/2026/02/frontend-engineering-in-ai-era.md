@@ -1,9 +1,8 @@
 ---
 title: 'AI가 코드를 짜는 시대, 프론트엔드 엔지니어링은 어디로 가는가'
 tags:
-  - frontend
   - ai
-  - web
+  - frontend
 published: true
 date: 2026-02-14 12:00:00
 description: 'AI 코딩 도구가 바꾸는 건 개발자가 아니라, 개발자가 하던 일의 형태다.'

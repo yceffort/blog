@@ -2,7 +2,8 @@
 title: '블로그 app dir 업그레이드 후기'
 tags:
   - nextjs
-  - typescript
+  - react
+  - frontend
 published: true
 date: 2023-05-23 20:52:26
 description: '😬'

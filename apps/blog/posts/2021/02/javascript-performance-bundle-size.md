@@ -2,7 +2,7 @@
 title: '자바스크립트 성능과 번들 사이즈'
 tags:
   - javascript
-  - browser
+  - web-performance
 published: true
 date: 2021-02-27 23:40:05
 description: '자바스크립트 성능에 중요한 건 번들크기 만은 아니다. 근데 개발 하느라 이것도 잘 못챙기고 있는듯.'

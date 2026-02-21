@@ -3,7 +3,7 @@ title: 'HTML과 CSS를 활용해서 콘텐츠를 숨기는 10가지 방법'
 tags:
   - html
   - css
-  - browser
+  - accessibility
 published: true
 date: 2021-03-05 21:14:45
 description: '원래 알던건 두 세가지밖에 안됨'

@@ -1,8 +1,9 @@
 ---
 title: '2021년 회고'
 tags:
-  - blog
-  - retrospective
+  - career
+  - frontend
+  - typescript
 published: true
 date: 2022-01-01 19:32:36
 description: '2022년은 더 좋은 개발자가 되길 바라며'

@@ -1,9 +1,8 @@
 ---
 title: '『npm Deep Dive』 스터디원 모집중입니다!'
 tags:
-  - book
-  - web
-  - frontend
+  - javascript
+  - nodejs
 published: true
 date: 2025-06-09 11:17:11
 description: '홍보성 글은 여기까지... 다시 공부하는 블로그로 찾아오겠습니다.'

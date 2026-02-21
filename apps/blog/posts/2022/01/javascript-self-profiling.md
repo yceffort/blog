@@ -2,8 +2,7 @@
 title: '웹 애플리케이션에서 자바스크립트 프로파일링 해보기'
 tags:
   - javascript
-  - chrome
-  - browser
+  - web-performance
 published: true
 date: 2022-01-20 21:54:46
 description: '해봤지만 해보지 않았습니다'

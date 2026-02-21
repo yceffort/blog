@@ -1,9 +1,8 @@
 ---
 title: 'Vercel에서 배포가 안됐던 이야기'
 tags:
-  - vercel
-  - next
-  - nodejs
+  - nextjs
+  - devops
 published: true
 date: 2021-05-17 20:11:42
 description: 'Vercel 고객센터랑 싸운썰 푼다.txt'

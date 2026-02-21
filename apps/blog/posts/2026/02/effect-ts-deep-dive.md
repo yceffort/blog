@@ -2,7 +2,7 @@
 title: 'Effect 시스템 심층 분석: 모나드에서 Algebraic Effects까지, 그리고 Effect-TS의 선택'
 tags:
   - typescript
-  - effect
+  - backend
 published: true
 date: 2026-02-20 10:00:00
 description: 'Effect-TS가 대체 뭔데 다들 난리인지 직접 파헤쳐봤다.'

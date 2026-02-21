@@ -2,7 +2,6 @@
 title: 'Typescript, 객체의 키와 값 타이핑하기'
 tags:
   - typescript
-  - javascript
 published: true
 date: 2021-05-27 20:43:27
 description: '아오 피곤해'

@@ -4,7 +4,6 @@ date: 2019-08-12 08:03:51
 published: true
 tags:
   - react
-  - javascript
 description: '### useReducer ```javascript const [state, dispatch] =
   useReducer(reducer, initialArg, init); ```  `useState`의 대체 함수다. 다수의 하윗 값을 만드는
   복잡한 로직, 혹은 다음 state가 이전 state의 의존적인 경우에 쓴다. 뭐가 뭔지 모르겠으니까 예제를 보자.  ...'

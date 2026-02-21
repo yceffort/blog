@@ -2,7 +2,8 @@
 title: '자바스크립트 코드가 가져야할 책임감 (1)'
 tags:
   - javascript
-  - web
+  - web-performance
+  - accessibility
 published: true
 date: 2021-11-16 19:21:28
 description: '책임감 있는 코드를 작성하고 있는지 항상 뒤돌아보기'

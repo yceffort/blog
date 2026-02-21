@@ -1,8 +1,7 @@
 ---
 title: 'HTTP1 vs HTTP2'
 tags:
-  - http
-  - web
+  - web-performance
 published: true
 date: 2021-05-12 21:04:16
 description: '공부할게 정말 많습니당'

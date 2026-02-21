@@ -1,8 +1,7 @@
 ---
 title: web performance deep dive (가제) 베타 리더를 모십니다. (마감)
 tags:
-  - web
-  - book
+  - web-performance
 published: true
 date: 2025-11-10 17:41:00
 description: '많관부'

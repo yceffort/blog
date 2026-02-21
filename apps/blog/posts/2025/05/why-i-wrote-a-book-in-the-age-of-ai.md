@@ -1,9 +1,9 @@
 ---
 title: 'AI 시대에 나는 왜 책을 썼을까'
 tags:
-  - diary
-  - web
   - frontend
+  - career
+  - react
 published: true
 date: 2025-05-30 12:00:02
 description: '🤔'

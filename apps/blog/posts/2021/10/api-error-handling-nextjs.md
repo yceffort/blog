@@ -1,9 +1,9 @@
 ---
 title: '클라이언트 서버 모두에서 nextjs에서 api에러 핸들링하기'
 tags:
-  - javascript
-  - typescript
   - nextjs
+  - error-handling
+  - typescript
 published: true
 date: 2021-10-22 18:30:22
 description: '결국 여기까지 와버렸네'

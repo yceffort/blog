@@ -1,7 +1,6 @@
 ---
 title: 블로그 gatsby에서 nextjs로 옮긴 이야기
 tags:
-  - gatsby
   - nextjs
   - react
 published: true

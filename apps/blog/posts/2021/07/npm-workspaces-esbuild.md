@@ -1,8 +1,9 @@
 ---
 title: 'npm workspace와 esbuild로 monorepo 구축해보기'
 tags:
+  - monorepo
+  - build-tools
   - javascript
-  - npm
 published: true
 date: 2021-07-06 19:34:21
 description: '계속 찍먹만 해보는 중'

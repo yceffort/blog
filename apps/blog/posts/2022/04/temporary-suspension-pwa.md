@@ -1,8 +1,8 @@
 ---
 title: '[블로그] PWA 임시 중지'
 tags:
-  - blog
-  - diary
+  - web-performance
+  - devops
 published: true
 date: 2022-04-15 13:59:25
 description: '내 돈'

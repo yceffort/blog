@@ -2,6 +2,8 @@
 title: detached window로 인한 자바스크립트 메모리 누수
 tags:
   - javascript
+  - memory
+  - browser
 published: true
 date: 2020-09-29 23:43:18
 description: '면접에서 들었던 거지같은 질문에 대한 해답'

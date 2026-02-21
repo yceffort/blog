@@ -1,6 +1,7 @@
 ---
 title: '1부) commonjs란 무엇인가?'
 tags:
+  - javascript
   - nodejs
 published: true
 date: 2023-05-26 13:52:26

@@ -1,9 +1,9 @@
 ---
 title: '2020년 사이드 프로젝트 회고'
 tags:
-  - diary
-  - TIL
-  - retrospective
+  - career
+  - nextjs
+  - typescript
 published: true
 date: 2020-12-15 23:24:36
 description: '이거 좀 재밌네여'

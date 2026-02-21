@@ -3,7 +3,8 @@ title: ReactiveX) Subject
 date: 2018-05-31 09:43:40
 published: true
 tags:
-  - programming
+  - javascript
+  - reactive-programming
 description:
   subject는 옵저버나 observable처러 행동하는 일부 ReactiveX구현체에서만 사용가능한 일종의 프록시다.
   subject는 옵저버이기 때문에 하나이상의 observable을 구독할 수 있으며, 동시에 observable 이기도 하기 때문에 항목을

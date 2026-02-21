@@ -2,7 +2,6 @@
 title: '타입스크립트의 제네릭은 적절한 네이밍과 함께 사용하자'
 tags:
   - typescript
-  - javascript
 published: true
 date: 2021-08-27 23:27:41
 description: '무지성 T, U, K 멈춰!'

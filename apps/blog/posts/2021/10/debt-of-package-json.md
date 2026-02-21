@@ -2,6 +2,8 @@
 title: 'package.json에 쌓여있는 개발 부채'
 tags:
   - javascript
+  - nodejs
+  - dependency-management
 published: true
 date: 2021-10-06 22:01:12
 description: '설치와 업데이트 시에는 신중에 신중을.'

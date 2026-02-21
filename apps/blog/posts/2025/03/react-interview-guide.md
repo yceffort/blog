@@ -2,9 +2,7 @@
 title: '리액트 인터뷰 가이드 번역본이 출간되었습니다.'
 tags:
   - react
-  - javascript
-  - typescript
-  - book
+  - career
 published: true
 date: 2025-03-21 22:38:46
 description: '좋은 경험이었습니다(2)'

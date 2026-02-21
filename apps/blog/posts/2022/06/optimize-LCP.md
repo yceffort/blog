@@ -1,8 +1,7 @@
 ---
 title: 'Largest Contentful Paint (LCP) 최적화하기'
 tags:
-  - web
-  - browser
+  - web-performance
 published: true
 date: 2022-06-09 00:21:56
 description: '브라우저 동작 방식을 이해하기'

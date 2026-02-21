@@ -1,6 +1,7 @@
 ---
 title: 'HTTP Cache로 불필요한 네트워크 요청 줄이기'
 tags:
+  - web-performance
   - browser
 published: true
 date: 2020-10-20 23:59:46

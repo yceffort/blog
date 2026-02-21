@@ -3,8 +3,7 @@ title: 타입스크립트 타입 단언
 date: 2019-08-20 06:30:52
 published: true
 tags:
-  - javascript
-  - react
+  - typescript
 description: '타입스크립트의 타입 단언'
 category: javascript
 slug: /2019/08/20/typescript-type-assertion/

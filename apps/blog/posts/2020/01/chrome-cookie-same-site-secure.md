@@ -1,9 +1,9 @@
 ---
 title: Chrome Samesite 쿠키 정책
 tags:
+  - security
   - browser
-  - web
-  - javascript
+  - backend
 published: true
 date: 2020-01-09 09:09:03
 description:

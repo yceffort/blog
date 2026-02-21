@@ -2,8 +2,6 @@
 title: 'React 19: ref를 prop으로 사용하기'
 tags:
   - react
-  - javascript
-  - typescript
 published: true
 date: 2025-12-11 10:00:00
 description: 'React 19부터는 forwardRef 없이 ref를 prop으로 전달할 수 있다.'

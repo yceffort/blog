@@ -1,8 +1,8 @@
 ---
 title: MobX를 공부하자 (1)
 tags:
-  - javascript
-  - MobX
+  - react
+  - state-management
 published: true
 date: 2020-08-21 15:54:00
 description: 'MobX 1페이지 요약에 대한 간단한 번역'

@@ -2,6 +2,7 @@
 title: '더 나은 Dockerfile 작성을 위한 best practice - 2022년 버전'
 tags:
   - docker
+  - devops
 published: true
 date: 2022-02-05 23:24:24
 description: '갑자기 docker를 파는 이유는'

@@ -1,9 +1,7 @@
 ---
 title: npm Deep Dive 온라인 저자 특강
 tags:
-  - javascript
-  - npm
-  - book
+  - nodejs
 published: true
 date: 2025-08-08 15:30:00
 description: 'npm Deep Dive 온라인 저자 특강을 진행합니다'

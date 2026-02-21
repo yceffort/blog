@@ -1,9 +1,9 @@
 ---
 title: '프론트엔드 개발 환경의 변화와 과제: AI 도입과 리더십'
 tags:
-  - diary
-  - web
   - frontend
+  - ai
+  - career
 published: true
 date: 2025-05-24 22:33:49
 description: 'AI 도입과 리더십의 기대가 맞물려 변화하는 프론트엔드 개발 환경의 주요 과제들을 진단하고, 개발자들이 이에 현실적으로 대응하며 역할을 정립해 나갈 방향을 모색합니다.'

@@ -3,9 +3,8 @@ title: Docker와 ECR, ECS 경험
 date: 2019-08-06 05:55:52
 published: true
 tags:
-  - infrastructure
   - docker
-  - aws
+  - devops
 description:
   제법 규모가 있었던 전 회사에서는 특별하게 인프라에 대해 고민을 별로 할 필요가 없었다. 많은 부분이 자동화되어 있었고,
   또 적당한 툴로 잘 만들어져 있었기 때문에 개발에 온전히 집중할 수 있었다. 하지만 새롭게 온 스타트업은 (당연하게도) 그런게 없으므로,

@@ -1,8 +1,7 @@
 ---
 title: 왜 CommonJS는 번들사이즈를 크게 하는가?
 tags:
-  - javascript
-  - web
+  - web-performance
 published: true
 date: 2020-07-05 09:23:12
 description: '[How CommonJS is making your bundles

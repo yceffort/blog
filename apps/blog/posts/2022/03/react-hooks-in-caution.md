@@ -1,8 +1,6 @@
 ---
 title: '리액트 훅을 사용할 때 조심해야 할 것'
 tags:
-  - typescript
-  - javascript
   - react
 published: true
 date: 2022-03-24 10:44:01

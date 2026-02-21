@@ -1,8 +1,8 @@
 ---
 title: 프로그래머 기초 수학 2-1 - 정수
 tags:
-  - programming
-  - math
+  - algorithm
+  - mathematics
 published: true
 mathjax: true
 date: 2020-07-23 06:39:54

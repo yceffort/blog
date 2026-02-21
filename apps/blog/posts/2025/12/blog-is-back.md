@@ -1,7 +1,8 @@
 ---
 title: '블로그 정상영업합니다'
 tags:
-  - blog
+  - career
+  - ai
 published: true
 date: 2025-12-05 23:00:00
 description: '2~3년 만에 돌아왔습니다'

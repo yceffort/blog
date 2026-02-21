@@ -1,8 +1,8 @@
 ---
 title: 'V8에서의 메모리 관리'
 tags:
-  - nodejs
-  - V8
+  - javascript
+  - browser
 published: true
 date: 2020-11-18 23:01:36
 description: 'V8의 깊고 더 어두운 곳으로...'

@@ -1,6 +1,7 @@
 ---
 title: '3부) 왜 esmodule 이어야 하는가?'
 tags:
+  - javascript
   - nodejs
 published: true
 date: 2023-06-02 14:23:28

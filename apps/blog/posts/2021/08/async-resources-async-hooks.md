@@ -1,8 +1,8 @@
 ---
 title: '비동기 리소스 (async resources)와 비동기 훅 (async hooks) 이해하기'
 tags:
-  - javascript
   - nodejs
+  - backend
 published: true
 date: 2021-08-14 00:20:56
 description: '비동기로 불타는 금요일'

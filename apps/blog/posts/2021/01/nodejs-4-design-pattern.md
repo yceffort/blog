@@ -1,8 +1,8 @@
 ---
 title: '개발자가 알아야 하는 4가지 nodejs 디자인 패턴'
 tags:
-  - javascript
   - nodejs
+  - design-patterns
 published: true
 date: 2021-01-11 23:33:24
 description: '옛날 스타일의 가능한 객체 지향 프로그래밍'

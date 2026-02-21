@@ -1,9 +1,8 @@
 ---
 title: 'requestIdleCallback으로 최적화하기'
 tags:
+  - web-performance
   - javascript
-  - nodejs
-  - browser
 published: true
 date: 2021-08-15 17:24:10
 description: '내 인생은 언제 idle 할 것인가'
