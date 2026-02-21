@@ -9,6 +9,7 @@ import type {FrontMatter, Post, TagWithCount} from '../type'
 const DIR_REPLACE_STRING = '/posts'
 
 const POST_PATH = `${process.cwd()}${DIR_REPLACE_STRING}`
+const THUMB_DIR = `${process.cwd()}/public/thumbnails`
 
 export async function findPostByYearAndSlug(year: string, slug: string[]) {
   const slugs = [year, ...slug].join('/')
@@ -35,11 +36,17 @@ export async function getAllPosts(): Promise<Post[]> {
         const tags: string[] = (fmTags || []).map((tag: string) => tag.trim())
         const stats = readingTime(body, {wordsPerMinute: 250})
 
+        const thumbPath = `${THUMB_DIR}/${slug}.png`
+        const thumbnail = fs.existsSync(thumbPath)
+          ? `/thumbnails/${slug}.png`
+          : undefined
+
         const result: Post = {
           frontMatter: {
             ...fm,
             tags,
             date: new Date(date).toISOString().substring(0, 19),
+            thumbnail,
           },
           body,
           fields: {

@@ -6,7 +6,6 @@ tags:
 published: true
 date: 2026-02-14 12:00:00
 description: 'AI 코딩 도구가 바꾸는 건 개발자가 아니라, 개발자가 하던 일의 형태다.'
-thumbnail: /thumbnails/2026/02/frontend-engineering-ai.png
 ---
 
 ## Table of Contents

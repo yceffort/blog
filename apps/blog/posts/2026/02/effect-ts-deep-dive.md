@@ -6,7 +6,6 @@ tags:
 published: true
 date: 2026-02-20 10:00:00
 description: 'Effect-TS가 대체 뭔데 다들 난리인지 직접 파헤쳐봤다.'
-thumbnail: /thumbnails/2026/02/effect-ts.png
 ---
 
 ## Table of Contents

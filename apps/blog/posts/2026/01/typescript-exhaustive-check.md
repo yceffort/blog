@@ -5,7 +5,6 @@ tags:
 published: true
 date: 2026-01-17 20:00:00
 description: 'never 타입을 활용한 exhaustive check 패턴'
-thumbnail: /thumbnails/2026/01/typescript-exhaustive.png
 ---
 
 ## Table of Contents

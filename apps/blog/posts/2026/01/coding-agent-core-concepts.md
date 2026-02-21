@@ -7,7 +7,6 @@ tags:
 published: true
 date: 2026-01-17 23:00:00
 description: 'Rules, Commands, MCP, Sub-agents, Hooks, Skills, Plugins까지 코딩 에이전트의 핵심 개념 총정리'
-thumbnail: /thumbnails/2026/01/coding-agent.png
 ---
 
 ## Table of Contents

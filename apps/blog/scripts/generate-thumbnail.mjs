@@ -7,13 +7,15 @@
  *   node scripts/generate-thumbnail.mjs <post-file-path> [--prompt "custom prompt"]
  *
  * .env.local에서 GEMINI_API_KEY를 읽어 Gemini API로 이미지를 생성하고,
- * 포스트의 date 기준 year/month 폴더에 저장한 뒤 frontmatter에 thumbnail 필드를 추가한다.
+ * 포스트 슬러그 기반 컨벤션 경로(public/thumbnails/{year}/{month}/{slug}.png)에 저장한다.
+ * 빌드 시 Post.ts가 파일 존재 여부로 자동 매칭하므로 frontmatter 수정은 불필요.
  */
 
 import {readFileSync, writeFileSync, mkdirSync, existsSync} from 'node:fs'
-import {resolve, basename, dirname} from 'node:path'
+import {resolve, basename, dirname, relative} from 'node:path'
 
 const BLOG_ROOT = resolve(dirname(new URL(import.meta.url).pathname), '..')
+const POSTS_DIR = resolve(BLOG_ROOT, 'posts')
 const THUMB_BASE = resolve(BLOG_ROOT, 'public/thumbnails')
 const ENV_PATH = resolve(BLOG_ROOT, '../../.env.local')
 
@@ -94,20 +96,16 @@ function main() {
   const content = readFileSync(absPath, 'utf-8')
   const fm = parseFrontmatter(content)
 
-  if (fm.thumbnail && existsSync(resolve(BLOG_ROOT, 'public', fm.thumbnail.slice(1)))) {
-    console.log(`Already has thumbnail: ${fm.thumbnail}`)
-    console.log('Use --force to regenerate (not implemented yet)')
+  // Derive slug from file path relative to posts dir (e.g. 2025/12/nextjs-caching-deep-dive)
+  const slug = relative(POSTS_DIR, absPath).replace(/\.mdx?$/, '')
+  const thumbFile = resolve(THUMB_BASE, `${slug}.png`)
+  const thumbDir = dirname(thumbFile)
+
+  if (existsSync(thumbFile) && !args.includes('--force')) {
+    console.log(`Already exists: ${thumbFile}`)
+    console.log('Use --force to regenerate')
     process.exit(0)
   }
-
-  // Determine output path from date
-  const dateMatch = fm.date?.match(/(\d{4})-(\d{2})/)
-  if (!dateMatch) throw new Error('Cannot parse date from frontmatter')
-  const [, year, month] = dateMatch
-  const slug = basename(absPath, '.md')
-  const thumbDir = resolve(THUMB_BASE, year, month)
-  const thumbFile = resolve(thumbDir, `${slug}.png`)
-  const thumbUrl = `/thumbnails/${year}/${month}/${slug}.png`
 
   mkdirSync(thumbDir, {recursive: true})
 
@@ -115,6 +113,7 @@ function main() {
   const prompt = customPrompt || buildPrompt(fm.title, fm.description)
 
   console.log(`Post: ${fm.title}`)
+  console.log(`Slug: ${slug}`)
   console.log(`Prompt: ${prompt.slice(0, 120)}...`)
   console.log('Generating...')
 
@@ -122,13 +121,6 @@ function main() {
     .then((buf) => {
       writeFileSync(thumbFile, buf)
       console.log(`Saved: ${thumbFile} (${buf.length} bytes)`)
-
-      // Update frontmatter
-      if (!fm.thumbnail) {
-        const updated = content.replace(fm.fullMatch, fm.fullMatch.replace(/\n---$/, `\nthumbnail: ${thumbUrl}\n---`))
-        writeFileSync(absPath, updated)
-        console.log(`Updated frontmatter: thumbnail: ${thumbUrl}`)
-      }
     })
     .catch((err) => {
       console.error(`Failed: ${err.message}`)

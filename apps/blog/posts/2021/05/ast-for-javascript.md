@@ -6,7 +6,6 @@ tags:
 published: true
 date: 2021-05-10 09:40:39
 description: 'AST의 개념부터 파싱 과정, 주요 노드 타입, 그리고 Babel·ESLint 같은 도구에서의 활용까지 정리합니다.'
-thumbnail: /thumbnails/2021/05/ast-for-javascript.png
 ---
 
 요즘 자바스크립트 프로젝트를 하다보면, `devDependencies`에 정말 많은 의존성이 있음을 알 수 있다. 자바스크립트 트랜스파일링, 코드 최소화, CSS pre-processor, eslint, prettier 등등등. 이러한 기능들은 실제 프로덕션 코드로 올라가는 것은 아니지만, 개발 과정에서 중요한 것들을 담당한다. 그리고 이러한 툴들은 AST processing을 기반으로 작동한다.
