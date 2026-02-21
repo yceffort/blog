@@ -51,6 +51,7 @@ export default {
         'brutal-lg': '4px 4px 0px 0px #52525b',
         'brutal-sm': '1px 1px 0px 0px #52525b',
         'brutal-dark': '2px 2px 0px 0px #a1a1aa', // zinc-400
+        'brutal-lg-dark': '4px 4px 0px 0px #a1a1aa', // zinc-400
       },
       borderWidth: {
         3: '3px',
