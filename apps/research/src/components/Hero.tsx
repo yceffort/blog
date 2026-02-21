@@ -1,22 +1,10 @@
 'use client'
 
-import Link from 'next/link'
 import {memo, useEffect, useState, useCallback, useRef} from 'react'
 
 import {SiteConfig} from '@/config'
 
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&'
-
-const MARQUEE_ITEMS = [
-  'Tech Talks',
-  'Conference Slides',
-  'Deep Dives',
-  'Research Notes',
-  'Knowledge Sharing',
-  'Architecture',
-  'Performance',
-  'Open Source',
-]
 
 function ScrambleText({
   text,
@@ -75,26 +63,6 @@ function ScrambleText({
   return <span className={className}>{display}</span>
 }
 
-function MarqueeStrip() {
-  const items = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS]
-  return (
-    <div className="hero-fade-3 relative overflow-hidden">
-      <div className="absolute left-0 top-0 z-10 h-full w-12 bg-gradient-to-r from-white/80 to-transparent dark:from-gray-800/80" />
-      <div className="absolute right-0 top-0 z-10 h-full w-12 bg-gradient-to-l from-white/80 to-transparent dark:from-gray-800/80" />
-      <div className="hero-marquee flex w-max gap-3">
-        {items.map((item, i) => (
-          <span
-            key={i}
-            className="whitespace-nowrap rounded-full border border-gray-200/60 bg-white/40 px-3 py-1 text-xs text-gray-500 backdrop-blur-sm dark:border-gray-700/60 dark:bg-gray-800/40 dark:text-gray-400"
-          >
-            {item}
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 const Hero = memo(function Hero() {
   return (
     <div className="relative mb-8 py-10 sm:py-14 lg:py-16">
@@ -105,7 +73,7 @@ const Hero = memo(function Hero() {
         </p>
 
         {/* Name */}
-        <h1 className="mb-4 font-black leading-[0.9] tracking-tighter sm:mb-5">
+        <h1 className="mb-4 font-black leading-tight tracking-tighter sm:mb-5">
           <span className="hero-gradient-text block bg-gradient-to-r from-sky-600 via-teal-600 via-50% to-emerald-600 bg-[length:200%_auto] bg-clip-text text-[14vw] text-transparent dark:from-sky-400 dark:via-teal-400 dark:to-emerald-400 sm:text-[11vw] md:text-[9vw] lg:text-[7vw]">
             <ScrambleText text={SiteConfig.author.name} delay={400} />
           </span>
@@ -121,29 +89,6 @@ const Hero = memo(function Hero() {
           발표 자료와 기술 연구 노트를 공유하는 공간
         </p>
 
-        {/* Buttons */}
-        <div className="hero-fade-3 mb-8 flex flex-wrap gap-3 sm:mb-10">
-          <Link
-            href={SiteConfig.menu[0].path}
-            className="group relative inline-flex items-center overflow-hidden rounded-full bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105 active:scale-95 dark:bg-white dark:text-gray-900"
-          >
-            <span className="absolute inset-0 bg-gradient-to-r from-sky-500 via-teal-500 to-emerald-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-            <span className="relative transition-colors group-hover:text-white">
-              Visit Blog
-            </span>
-          </Link>
-          <a
-            href={`https://github.com/${SiteConfig.author.contacts.github?.split('/').pop()}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center rounded-full px-5 py-2.5 text-sm font-semibold text-gray-600 ring-1 ring-gray-300 transition-all hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:ring-gray-700 dark:hover:text-white dark:hover:ring-gray-500"
-          >
-            GitHub
-          </a>
-        </div>
-
-        {/* Marquee strip */}
-        <MarqueeStrip />
       </div>
     </div>
   )
