@@ -12,6 +12,7 @@ export interface FrontMatter {
   series?: string
   seriesOrder?: number
   featured?: boolean
+  thumbnail?: string
 }
 
 export interface Post {

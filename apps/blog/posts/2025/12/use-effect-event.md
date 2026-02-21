@@ -6,6 +6,7 @@ tags:
 published: true
 date: 2025-12-15 14:30:00
 description: '3년 전 RFC가 드디어 빛을 보다'
+thumbnail: /thumbnails/2025/12/use-effect-event.png
 ---
 
 ## Table of Contents

@@ -7,6 +7,7 @@ tags:
 published: true
 date: 2025-12-30 12:00:00
 description: '2025년 7월, 14년 만에 브라우저 GPU API 세대교체가 완료됐다'
+thumbnail: /thumbnails/2025/12/webgpu-browsers.png
 ---
 
 ## Table of Contents

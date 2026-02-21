@@ -7,6 +7,7 @@ tags:
 published: true
 date: 2025-12-16 15:30:00
 description: 'Effect에서 setState를 호출하면 안 되는 이유와 대안'
+thumbnail: /thumbnails/2025/12/react-lint-rule.png
 ---
 
 ## Table of Contents

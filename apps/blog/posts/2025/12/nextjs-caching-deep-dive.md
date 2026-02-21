@@ -7,6 +7,7 @@ tags:
 published: true
 date: 2025-12-24 10:00:00
 description: 'Next.js App Router의 4가지 캐시 레이어 알아보긔'
+thumbnail: /thumbnails/2025/12/nextjs-caching.png
 ---
 
 ## Table of Contents
