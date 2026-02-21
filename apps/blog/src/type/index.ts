@@ -11,6 +11,7 @@ export interface FrontMatter {
   socialImageCredit?: string
   series?: string
   seriesOrder?: number
+  featured?: boolean
 }
 
 export interface Post {

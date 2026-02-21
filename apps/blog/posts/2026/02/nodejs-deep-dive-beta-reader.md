@@ -4,6 +4,7 @@ tags:
   - nodejs
   - book
 published: true
+featured: true
 date: 2026-02-19 22:00:00
 description: '많관부22'
 ---
