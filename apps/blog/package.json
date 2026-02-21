@@ -5,7 +5,7 @@
   "description": "yceffort blog",
   "type": "module",
   "scripts": {
-    "build": "node scripts/generate-posts-cache.mjs && next build",
+    "build": "next build",
     "dev": "next dev",
     "lint": "eslint '**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,yaml,yml,json}'",
     "lint:fix": "eslint '**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,yaml,yml,json}' --fix",
@@ -16,6 +16,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@google-analytics/data": "^5.2.1",
     "@naverpay/commit-helper": "^1.2.0",
     "@naverpay/eslint-config": "^2.2.5",
     "@naverpay/eslint-plugin": "^2.2.0",
@@ -53,7 +54,6 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-is": "^19.2.3",
-    "react-virtuoso": "^4.17.0",
     "reading-time": "^1.5.0",
     "rehype": "^13.0.2",
     "rehype-autolink-headings": "^7.1.0",
