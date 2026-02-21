@@ -59,7 +59,7 @@ const HeaderNav = memo(function HeaderNav() {
 function Header() {
   return (
     <header
-      className="sticky top-0 z-40 flex items-center justify-between py-6 backdrop-blur-sm"
+      className="sticky top-0 z-40 -mx-[calc(50vw-50%)] flex items-center justify-between px-[calc(50vw-50%)] py-6 backdrop-blur-md"
     >
       <HeaderLogo />
       <div className="flex items-center text-base leading-5">
