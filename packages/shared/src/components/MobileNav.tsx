@@ -61,8 +61,10 @@ const MobileNav = memo(function MobileNav({menu}: MobileNavProps) {
 
       {/* Bottom Sheet */}
       <div
-        className={`fixed inset-x-0 bottom-0 z-[101] transform transition-transform duration-300 ease-out ${
-          navShow ? 'translate-y-0' : 'translate-y-full'
+        className={`fixed inset-x-0 bottom-0 z-[101] transition-[translate,opacity] duration-300 ease-out ${
+          navShow
+            ? 'translate-y-0 opacity-100'
+            : 'translate-y-full opacity-0 pointer-events-none'
         }`}
       >
         <div className="rounded-t-3xl border-t border-gray-200 bg-white px-6 pb-8 pt-4 dark:border-gray-700 dark:bg-gray-900">
