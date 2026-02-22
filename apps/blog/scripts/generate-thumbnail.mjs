@@ -17,7 +17,9 @@ import {resolve, basename, dirname, relative} from 'node:path'
 const BLOG_ROOT = resolve(dirname(new URL(import.meta.url).pathname), '..')
 const POSTS_DIR = resolve(BLOG_ROOT, 'posts')
 const THUMB_BASE = resolve(BLOG_ROOT, 'public/thumbnails')
-const ENV_PATH = resolve(BLOG_ROOT, '../../.env.local')
+const ENV_PATH = existsSync(resolve(BLOG_ROOT, '.env.local'))
+  ? resolve(BLOG_ROOT, '.env.local')
+  : resolve(BLOG_ROOT, '../../.env.local')
 
 const MODEL = 'gemini-2.5-flash-image'
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`
