@@ -17,10 +17,10 @@
     "@marp-team/marp-core": "^4.2.0",
     "@naverpay/eslint-config": "^2.2.5",
     "@naverpay/eslint-plugin": "^2.2.0",
-    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/typography": "^0.5.16",
-    "@types/node": "^25.0.2",
+    "@types/node": "^25.3.0",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.0.4",
     "@vercel/analytics": "^1.5.0",
@@ -37,7 +37,7 @@
     "postcss-import-url": "^7.2.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "sass": "^1.86.0",
+    "sass": "^1.97.3",
     "swiper": "^12.1.2",
     "tailwindcss": "^4.1.17"
   }

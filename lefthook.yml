@@ -2,7 +2,7 @@ pre-commit:
   parallel: true
   commands:
     eslint:
-      glob: '*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,yaml,yml}'
+      glob: '*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}'
       run: pnpm exec eslint --fix {staged_files}
       stage_fixed: true
     prettier:
