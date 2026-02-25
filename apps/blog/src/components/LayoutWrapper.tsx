@@ -3,7 +3,6 @@
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
-import {memo} from 'react'
 
 import AnimatedBackground from './AnimatedBackground'
 import FloatingBanner from './Banner'
@@ -16,6 +15,9 @@ import SectionContainer from './SectionContainer'
 import type {ReactNode} from 'react'
 
 import {SiteConfig} from '#src/config'
+import {useLocale} from '#src/hooks/useLocale'
+
+import LanguageSwitch from './LanguageSwitch'
 
 const DynamicThemeSwitch = dynamic(() => import('./ThemeSwitch'), {
   ssr: false,
@@ -26,10 +28,11 @@ const DynamicWeatherEffect = dynamic(() => import('./WeatherEffect'), {
   ssr: false,
 })
 
-const HeaderLogo = memo(function HeaderLogo() {
+function HeaderLogo() {
+  const {pathPrefix} = useLocale()
   return (
     <div>
-      <Link href="/" aria-label="yceffort's blog">
+      <Link href={pathPrefix || '/'} aria-label="yceffort's blog">
         <div className="flex items-center justify-between">
           <div className="mr-3">
             <ProfileImage size={40} />
@@ -38,12 +41,19 @@ const HeaderLogo = memo(function HeaderLogo() {
       </Link>
     </div>
   )
-})
+}
 
-const HeaderNav = memo(function HeaderNav() {
+function HeaderNav() {
+  const {pathPrefix} = useLocale()
+  const menu = pathPrefix
+    ? SiteConfig.menu.map((link) =>
+        link.path === '/pages/1' ? {...link, path: `${pathPrefix}/pages/1`} : link,
+      )
+    : SiteConfig.menu
+
   return (
     <div className="hidden sm:block">
-      {SiteConfig.menu.map((link) => (
+      {menu.map((link) => (
         <Link
           key={link.label}
           href={link.path}
@@ -54,7 +64,7 @@ const HeaderNav = memo(function HeaderNav() {
       ))}
     </div>
   )
-})
+}
 
 function Header() {
   return (
@@ -75,6 +85,7 @@ function Header() {
             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
           </svg>
         </a>
+        <LanguageSwitch />
         <DynamicThemeSwitch />
         <MobileNav />
       </div>
@@ -87,11 +98,11 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
   let containerClass = 'xl:max-w-5xl'
   const wide = false
 
-  if (pathname === '/') {
+  if (pathname === '/' || pathname === '/en') {
     containerClass = 'xl:max-w-7xl'
   } else if (pathname === '/about') {
     containerClass = 'max-w-6xl'
-  } else if (pathname?.startsWith('/pages')) {
+  } else if (pathname?.startsWith('/pages') || pathname?.startsWith('/en/pages')) {
     containerClass = 'xl:max-w-7xl'
   } else if (pathname?.startsWith('/tags')) {
     containerClass = 'xl:max-w-7xl'
@@ -106,7 +117,7 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
         <Footer />
         <ScrollTop />
         <DynamicWeatherEffect />
-        {pathname !== '/' && <FloatingBanner />}
+        {pathname !== '/' && !pathname?.startsWith('/en') && <FloatingBanner />}
       </div>
     </SectionContainer>
   )

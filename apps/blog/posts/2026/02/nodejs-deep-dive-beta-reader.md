@@ -11,7 +11,7 @@ description: '많관부22'
 
 네번째 책을 쓰고 있습니다. 이번에는 Node.js 입니다.
 
-`require()` 한 줄이 어떤 여정을 거치는지, `setTimeout(fn, 0)`이 정말 0ms 후에 실행되는지, Stream 배압은 왜 터지는지 — 이런 질문들에 코드와 소스 레벨에서 답을 찾아보는 책입니다.
+V8의 hidden class가 깨지면 성능에 무슨 일이 생기는지, `AsyncLocalStorage`가 `async/await` 체인을 어떻게 추적하는지, Prototype Pollution이 실제로 어떻게 RCE까지 이어지는지 — 이런 질문들에 코드와 소스 레벨에서 답을 찾아보는 책입니다.
 
 현재 전체 10개 파트 중 Part 1 ~ 5 집필이 완료되었고, Part 6 ~ 10을 작성 중입니다. 현재까지 작성된 분량만으로도 전작 `<<Web Performance Deep Dive>>`의 약 65% 수준이라, 완성되면 전작보다 분량이 많아질 것으로 예상됩니다.
 

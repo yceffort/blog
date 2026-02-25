@@ -11,16 +11,26 @@ const DIR_REPLACE_STRING = '/posts'
 const POST_PATH = `${process.cwd()}${DIR_REPLACE_STRING}`
 const THUMB_DIR = `${process.cwd()}/public/thumbnails`
 
-export async function findPostByYearAndSlug(year: string, slug: string[]) {
+export type Locale = 'ko' | 'en'
+
+export async function findPostByYearAndSlug(
+  year: string,
+  slug: string[],
+  locale: Locale = 'ko',
+) {
   const slugs = [year, ...slug].join('/')
-  const posts = await getAllPosts()
+  const posts = await getAllPosts(locale)
   return posts.find((p) => p?.fields?.slug === slugs)
 }
 
-export async function getAllPosts(): Promise<Post[]> {
+export async function getAllPosts(locale: Locale = 'ko'): Promise<Post[]> {
   const files = sync(`${POST_PATH}/**/*.md*`).reverse()
 
   const posts = files
+    .filter((f) => {
+      const isEnFile = /\.en\.mdx?$/.test(f)
+      return locale === 'en' ? isEnFile : !isEnFile
+    })
     .reduce<Post[]>((prev, path) => {
       const file = fs.readFileSync(path, {encoding: 'utf8'})
       const {attributes, body} = frontMatter<FrontMatter>(file)
@@ -29,6 +39,8 @@ export async function getAllPosts(): Promise<Post[]> {
 
       const slug = path
         .slice(path.indexOf(DIR_REPLACE_STRING) + DIR_REPLACE_STRING.length + 1)
+        .replace('.en.mdx', '')
+        .replace('.en.md', '')
         .replace('.mdx', '')
         .replace('.md', '')
 
@@ -72,8 +84,10 @@ export async function getAllPosts(): Promise<Post[]> {
   return posts
 }
 
-export async function getAllTagsFromPosts(): Promise<TagWithCount[]> {
-  const posts = await getAllPosts()
+export async function getAllTagsFromPosts(
+  locale: Locale = 'ko',
+): Promise<TagWithCount[]> {
+  const posts = await getAllPosts(locale)
   const tagCountMap = new Map<string, number>()
 
   for (const post of posts) {
@@ -87,8 +101,11 @@ export async function getAllTagsFromPosts(): Promise<TagWithCount[]> {
     .sort((a, b) => b.count - a.count)
 }
 
-export async function getSeriesPosts(seriesName: string): Promise<Post[]> {
-  const posts = await getAllPosts()
+export async function getSeriesPosts(
+  seriesName: string,
+  locale: Locale = 'ko',
+): Promise<Post[]> {
+  const posts = await getAllPosts(locale)
   return posts
     .filter((post) => post.frontMatter.series === seriesName)
     .sort(

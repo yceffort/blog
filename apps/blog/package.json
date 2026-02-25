@@ -13,7 +13,8 @@
     "lint:style:fix": "stylelint --fix '**/*.{css,scss}'",
     "prettier": "prettier --check '**/*.{ts,tsx,js,mjs,cjs,jsx,json,yaml,yml,md,css,scss}'",
     "prettier:fix": "prettier --write '**/*.{ts,tsx,js,mjs,cjs,jsx,json,yaml,yml,md,css,scss}'",
-    "start": "next start"
+    "start": "next start",
+    "translate": "node scripts/translate.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",

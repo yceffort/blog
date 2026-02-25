@@ -17,13 +17,12 @@ import MathLoader from '#components/layouts/Post/math'
 import MDXComponents from '#components/MDXComponents'
 import ProfileImage from '#components/ProfileImage'
 import ReadingProgressBar from '#components/ReadingProgressBar'
-import SeriesNavigation from '#components/SeriesNavigation'
 import TableOfContents from '#components/TableOfContents'
 import Tag from '#components/Tag'
 import {SiteConfig} from '#src/config'
 import imageMetadataPlugin from '#utils/imageMetadata'
 import {extractCodeFilename, parseCodeSnippet} from '#utils/Markdown'
-import {findPostByYearAndSlug, getAllPosts, getSeriesPosts} from '#utils/Post'
+import {findPostByYearAndSlug, getAllPosts} from '#utils/Post'
 
 export const dynamic = 'error'
 
@@ -31,16 +30,12 @@ export async function generateMetadata(props: {
   params: Promise<{year: string; slug: string[]}>
 }) {
   const params = await props.params
-
   const {year, slug} = params
-
-  const post = await findPostByYearAndSlug(year, slug)
+  const post = await findPostByYearAndSlug(year, slug, 'en')
 
   if (!post) {
     return {}
   }
-
-  const enPost = await findPostByYearAndSlug(year, slug, 'en')
 
   return {
     title: post.frontMatter.title,
@@ -48,69 +43,57 @@ export async function generateMetadata(props: {
     openGraph: {
       title: post.frontMatter.title,
       description: post.frontMatter.description,
-      url: `${SiteConfig.url}/${post.fields.slug}`,
+      url: `${SiteConfig.url}/en/${post.fields.slug}`,
+      locale: 'en_US',
       images: [
         {
-          url: `/api/og?title=${encodeURIComponent(post.frontMatter.title)}&description=${encodeURIComponent(post.frontMatter.description || '')}&tags=${encodeURIComponent((post.frontMatter.tags || []).join(','))}&path=${encodeURIComponent('/' + post.fields.slug)}${post.frontMatter.thumbnail ? `&thumbnail=${encodeURIComponent(post.frontMatter.thumbnail)}` : ''}`,
+          url: `/api/og?title=${encodeURIComponent(post.frontMatter.title)}&description=${encodeURIComponent(post.frontMatter.description || '')}&tags=${encodeURIComponent((post.frontMatter.tags || []).join(','))}&path=${encodeURIComponent('/en/' + post.fields.slug)}${post.frontMatter.thumbnail ? `&thumbnail=${encodeURIComponent(post.frontMatter.thumbnail)}` : ''}`,
           width: 1200,
           height: 630,
         },
       ],
     },
-    ...(enPost && {
-      alternates: {
-        languages: {
-          en: `${SiteConfig.url}/en/${post.fields.slug}`,
-        },
+    alternates: {
+      languages: {
+        ko: `${SiteConfig.url}/${post.fields.slug}`,
       },
-    }),
+      canonical: `${SiteConfig.url}/en/${post.fields.slug}`,
+    },
   }
 }
 
 export async function generateStaticParams() {
-  const allPosts = await getAllPosts()
-  const result = allPosts.reduce<{year: string; slug: string[]}[]>(
-    (prev, {fields: {slug}}) => {
-      const [year, ...slugs] = `${slug.replace('.md', '')}`.split('/')
-
-      prev.push({year, slug: slugs})
-      return prev
-    },
-    [],
-  )
-
-  return result
+  const allPosts = await getAllPosts('en')
+  return allPosts.map(({fields: {slug}}) => {
+    const [year, ...slugs] = slug.split('/')
+    return {year, slug: slugs}
+  })
 }
 
-export default async function Page(props: {
+export default async function EnPostPage(props: {
   params: Promise<{year: string; slug: string[]}>
 }) {
   const params = await props.params
-
   const {year, slug} = params
-
-  const post = await findPostByYearAndSlug(year, slug)
+  const post = await findPostByYearAndSlug(year, slug, 'en')
 
   if (!post) {
     return notFound()
   }
 
   const {
-    frontMatter: {title, tags, date, description, series},
+    frontMatter: {title, tags, date, description},
     body,
     path,
     fields: {slug: postSlug},
     readingTime,
   } = post
 
-  const seriesPosts = series ? await getSeriesPosts(series) : []
-
   const updatedAt = format(new Date(date), 'yyyy-MM-dd')
   const transitionName = `post-${postSlug.replace(/\//g, '-')}`
-  const link = `https://github.com/yceffort/yceffort-blog-v2/issues/new?labels=%F0%9F%92%AC%20Discussion&title=[Discussion] issue on ${title}&assignees=yceffort&body=${SiteConfig.url}/${slug}`
 
   const thumbnail = post.frontMatter.thumbnail
-  const ogImageUrl = `/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description || '')}&tags=${encodeURIComponent((tags || []).join(','))}&path=${encodeURIComponent('/' + postSlug)}${thumbnail ? `&thumbnail=${encodeURIComponent(thumbnail)}` : ''}`
+  const ogImageUrl = `/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description || '')}&tags=${encodeURIComponent((tags || []).join(','))}&path=${encodeURIComponent('/en/' + postSlug)}${thumbnail ? `&thumbnail=${encodeURIComponent(thumbnail)}` : ''}`
   const ogImageUrlLarge = `${ogImageUrl}&size=large`
 
   const jsonLd = {
@@ -121,7 +104,8 @@ export default async function Page(props: {
     dateModified: new Date(date).toISOString(),
     description,
     image: `${SiteConfig.url}${ogImageUrl}`,
-    url: `${SiteConfig.url}/${postSlug}`,
+    url: `${SiteConfig.url}/en/${postSlug}`,
+    inLanguage: 'en',
     author: {
       '@type': 'Person',
       name: SiteConfig.author.name,
@@ -175,7 +159,7 @@ export default async function Page(props: {
                 <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
                   <time dateTime={updatedAt}>{updatedAt}</time>
                   <span>·</span>
-                  <span>{readingTime}분</span>
+                  <span>{readingTime} min read</span>
                 </div>
               </div>
             </div>
@@ -183,21 +167,12 @@ export default async function Page(props: {
               <ViewTransition name={`${transitionName}-tags`}>
                 <div className="flex flex-wrap gap-2">
                   {tags.slice(0, 4).map((tag) => (
-                    <Tag key={tag} text={tag} />
+                    <Tag key={tag} text={tag} linked={false} />
                   ))}
                 </div>
               </ViewTransition>
             )}
           </div>
-
-          {/* Series Navigation */}
-          {series && seriesPosts.length > 1 && (
-            <SeriesNavigation
-              seriesName={series}
-              seriesPosts={seriesPosts}
-              currentSlug={postSlug}
-            />
-          )}
 
           {/* Content */}
           <div className="prose max-w-none pb-8 dark:prose-dark">
@@ -225,16 +200,16 @@ export default async function Page(props: {
           <footer className="border-t border-gray-200 pt-6 dark:border-gray-700">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <Link
-                href="/"
+                href="/en"
                 className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
               >
                 &larr; Back to the blog
               </Link>
               <Link
-                href={link}
+                href={`/${postSlug}`}
                 className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
               >
-                Issue on GitHub
+                한국어로 읽기
               </Link>
             </div>
           </footer>

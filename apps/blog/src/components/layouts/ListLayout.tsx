@@ -5,9 +5,11 @@ import PostCard from '#components/PostCard'
 export default function ListLayout({
   posts,
   title,
+  pathPrefix = '',
 }: {
   posts: Post[]
   title: string
+  pathPrefix?: string
 }) {
   return (
     <div className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -19,7 +21,7 @@ export default function ListLayout({
       <ul className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post, index) => (
           <li key={`${post.fields.slug}_${index}`} className="py-2">
-            <PostCard post={post} />
+            <PostCard post={post} pathPrefix={pathPrefix} />
           </li>
         ))}
       </ul>

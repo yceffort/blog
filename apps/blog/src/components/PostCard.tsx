@@ -8,7 +8,7 @@ import type {Post} from '#src/type'
 
 import Tag from '#components/Tag'
 
-export default function PostCard({post}: {post: Post}) {
+export default function PostCard({post, pathPrefix = ''}: {post: Post; pathPrefix?: string}) {
   const {
     fields: {slug},
     frontMatter: {date, title, description, tags, thumbnail},
@@ -35,7 +35,7 @@ export default function PostCard({post}: {post: Post}) {
         <ViewTransition name={`${transitionName}-tags`}>
           <div className="relative z-10 flex flex-wrap gap-1.5">
             {tags.slice(0, 3).map((tag) => (
-              <Tag key={tag} text={tag} />
+              <Tag key={tag} text={tag} linked={!pathPrefix} />
             ))}
           </div>
         </ViewTransition>
@@ -43,7 +43,7 @@ export default function PostCard({post}: {post: Post}) {
         <ViewTransition name={transitionName}>
           <h3 className="mt-3 text-lg font-bold leading-snug tracking-tight line-clamp-2">
             <Link
-              href={`/${slug}`}
+              href={`${pathPrefix}/${slug}`}
               className="text-gray-900 after:absolute after:inset-0 dark:text-gray-100"
             >
               {title}
@@ -60,7 +60,7 @@ export default function PostCard({post}: {post: Post}) {
         <div className="mt-auto flex items-center gap-1.5 pt-4 text-xs text-gray-400 dark:text-gray-500">
           <time dateTime={isoDate}>{isoDate}</time>
           <span aria-hidden="true">·</span>
-          <span>{readingTime}분</span>
+          <span>{pathPrefix ? `${readingTime} min read` : `${readingTime}분`}</span>
         </div>
       </div>
     </article>
