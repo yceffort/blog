@@ -6,7 +6,7 @@ export const SiteConfig = {
   url: isDev ? 'http://localhost:3000' : 'https://yceffort.kr',
   pathPrefix: '/',
   title: 'yceffort',
-  subtitle: 'Frontend engineer who reads the source before the docs.',
+  subtitle: 'Grind. Learn. Repeat.',
   copyright: 'yceffort © All rights reserved.',
   disqusShortname: '',
   postsPerPage: 5,
