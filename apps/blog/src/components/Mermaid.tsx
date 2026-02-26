@@ -72,7 +72,8 @@ export default function Mermaid({chart}: {chart: string}) {
 
       try {
         const id = `mermaid-${Math.random().toString(36).substring(2, 9)}`
-        const {svg} = await mermaid.render(id, chart)
+        const processed = chart.replace(/\\n/g, '<br/>')
+        const {svg} = await mermaid.render(id, processed)
         if (!cancelled && ref.current) {
           ref.current.innerHTML = svg
           const svgElement = ref.current.querySelector('svg')
