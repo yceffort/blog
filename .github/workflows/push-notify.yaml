@@ -1,0 +1,93 @@
+name: Push Notification
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/blog/posts/**/*.md'
+
+jobs:
+  notify:
+    name: Detect new post & send push notification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect new published posts
+        id: detect
+        run: |
+          posts=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- 'apps/blog/posts/**/*.md')
+
+          if [ -z "$posts" ]; then
+            echo "No new posts found"
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Pick the first new post
+          post_file=$(echo "$posts" | head -1)
+          echo "New post file: $post_file"
+
+          # Check published: true in frontmatter
+          if ! grep -q 'published:\s*true' "$post_file"; then
+            echo "Post is not published"
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Extract frontmatter fields
+          title=$(sed -n 's/^title:\s*//p' "$post_file" | head -1 | sed "s/^['\"]//;s/['\"]$//")
+          description=$(sed -n 's/^description:\s*//p' "$post_file" | head -1 | sed "s/^['\"]//;s/['\"]$//")
+
+          # Derive URL slug from file path: apps/blog/posts/YYYY/MM/slug.md → /YYYY/MM/slug
+          slug=$(echo "$post_file" | sed 's|apps/blog/posts/||;s|\.md$||')
+
+          echo "title=$title" >> "$GITHUB_OUTPUT"
+          echo "description=$description" >> "$GITHUB_OUTPUT"
+          echo "slug=$slug" >> "$GITHUB_OUTPUT"
+          echo "found=true" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for Vercel deployment
+        if: steps.detect.outputs.found == 'true'
+        run: |
+          echo "Waiting for Vercel deployment..."
+          for i in $(seq 1 30); do
+            status=$(gh api repos/${{ github.repository }}/deployments \
+              --jq '.[0].statuses_url' | xargs gh api --jq '.[0].state' 2>/dev/null || echo "pending")
+
+            if [ "$status" = "success" ]; then
+              echo "Deployment succeeded"
+              break
+            fi
+
+            echo "Attempt $i: deployment status = $status"
+            sleep 20
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify post is accessible
+        if: steps.detect.outputs.found == 'true'
+        run: |
+          url="https://yceffort.kr/${{ steps.detect.outputs.slug }}"
+          for i in $(seq 1 5); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$url")
+            if [ "$code" = "200" ]; then
+              echo "Post is accessible at $url"
+              exit 0
+            fi
+            echo "Attempt $i: HTTP $code"
+            sleep 10
+          done
+          echo "::warning::Post not accessible yet, sending notification anyway"
+
+      - name: Send push notification
+        if: steps.detect.outputs.found == 'true'
+        run: |
+          curl -s -X POST "${{ secrets.BLOG_URL }}/api/push/send" \
+            -H "Authorization: Bearer ${{ secrets.PUSH_API_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"title\":\"${{ steps.detect.outputs.title }}\",\"body\":\"${{ steps.detect.outputs.description }}\",\"url\":\"/${{ steps.detect.outputs.slug }}\"}"
