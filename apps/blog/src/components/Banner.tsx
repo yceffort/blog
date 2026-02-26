@@ -75,7 +75,7 @@ const FloatingBanner = ({
           <div className="flex-grow min-w-0 text-left">
             <p className="font-bold text-sm sm:text-lg">
               📚 <span className="hidden sm:inline">Node.js Deep Dive </span>베타
-              리더 모집 (~2/28)
+              리더 모집 (~3/6)
             </p>
             <p className="hidden sm:block text-sm text-purple-700 dark:text-purple-100 font-bold">
               Node.js의 내부를 깊이 파헤치는 신간의 베타 리더를 모집합니다.

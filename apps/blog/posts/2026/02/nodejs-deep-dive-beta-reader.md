@@ -1,5 +1,5 @@
 ---
-title: Node.js Deep Dive (가제) 베타 리더를 모십니다.
+title: Node.js Deep Dive (가제) 베타 리더를 모십니다. (~26.03.06)
 tags:
   - nodejs
   - javascript
@@ -17,18 +17,18 @@ V8의 hidden class가 깨지면 성능에 무슨 일이 생기는지, `AsyncLoca
 
 ## 목차 (변경될 수 있음)
 
-| 파트 | 주제 | 진행 |
-| --- | --- | --- |
-| Part 0 | 시작하기 전에 | ✅ |
-| Part 1 | Node.js 런타임의 심장 — V8, libuv, 이벤트 루프, Task Queue, 네이티브 바인딩 | ✅ |
-| Part 2 | 모듈 시스템 — CommonJS, ESM, Dual Package Hazard, Custom Loaders | ✅ |
-| Part 3 | 메모리와 스트림 — V8 GC, Buffer, Stream 배압, Web Streams | ✅ |
-| Part 4 | 네트워크 — TCP/IP, HTTP 프로토콜의 진화, TLS/SSL, DNS, WebSocket | ✅ |
-| Part 5 | 보안 — Permission Model, vm 모듈, Prototype Pollution, 비밀번호·토큰 검증 | ✅ |
-| Part 6 | 동시성 — Worker Threads, AsyncLocalStorage, Child Process, 동시성 제어 패턴 | 🚧 |
-| Part 7 | 에러와 프로세스 — 에러 전파, uncaughtException, Cluster, 시그널, Graceful Shutdown | 🚧 |
-| Part 8 | 성능 진단 — 이벤트 루프 지연 측정, CPU 프로파일링, 메모리 누수 진단, async_hooks, diagnostics_channel | 🚧 |
-| Part 9 | 배포 환경 — 컨테이너, 서버리스, Edge Runtime | 🚧 |
+| 파트   | 주제                                                                                                  | 진행 |
+| ------ | ----------------------------------------------------------------------------------------------------- | ---- |
+| Part 0 | 시작하기 전에                                                                                         | ✅   |
+| Part 1 | Node.js 런타임의 심장 — V8, libuv, 이벤트 루프, Task Queue, 네이티브 바인딩                           | ✅   |
+| Part 2 | 모듈 시스템 — CommonJS, ESM, Dual Package Hazard, Custom Loaders                                      | ✅   |
+| Part 3 | 메모리와 스트림 — V8 GC, Buffer, Stream 배압, Web Streams                                             | ✅   |
+| Part 4 | 네트워크 — TCP/IP, HTTP 프로토콜의 진화, TLS/SSL, DNS, WebSocket                                      | ✅   |
+| Part 5 | 보안 — Permission Model, vm 모듈, Prototype Pollution, 비밀번호·토큰 검증                             | ✅   |
+| Part 6 | 동시성 — Worker Threads, AsyncLocalStorage, Child Process, 동시성 제어 패턴                           | ✅   |
+| Part 7 | 에러와 프로세스 — 에러 전파, uncaughtException, Cluster, 시그널, Graceful Shutdown                    | 🚧   |
+| Part 8 | 성능 진단 — 이벤트 루프 지연 측정, CPU 프로파일링, 메모리 누수 진단, async_hooks, diagnostics_channel | 🚧   |
+| Part 9 | 배포 환경 — 컨테이너, 서버리스, Edge Runtime                                                          | 🚧   |
 
 > 집필 과정에서 목차가 변경될 수 있습니다.
 
@@ -60,7 +60,7 @@ V8의 hidden class가 깨지면 성능에 무슨 일이 생기는지, `AsyncLoca
 
   > 베타 리더 소개에 어떤 분인지 적어야 해서 수집하게 되었습니다. 그 이외의 용도로는 사용하지 않습니다.
 
-- **모집 기간**: ~ **2026년 2월 28일**
+- **모집 기간**: **2026년 3월 6일까지** (모집이 저조하여 연장하였습니다. 🥹)
 - **인원**: 최대 10명
 
 ## FAQ
@@ -69,6 +69,6 @@ V8의 hidden class가 깨지면 성능에 무슨 일이 생기는지, `AsyncLoca
 - **모든 장을 다 읽어야 하나요?** — 네, 가능하면 모든 장을 읽어주세요. 저도 공부하면서 쓴 책이라 실수가 있을 수 있어서, 같이 꼼꼼히 봐주시면 감사하겠습니다.
 - **출판 예정 시기는?** — 2026년 내로 예상하고 있습니다.
 - **전작 베타 리더였는데 또 지원해도 되나요?** — 네, 상관 없습니다.
-- **책 샘플이 보고 싶어요!** - [여기](/2026/02/nodejs-deep-dive-sample)를 참고해주세요.
+- **책 샘플이 보고 싶어요!** — [여기](/2026/02/nodejs-deep-dive-sample)를 참고해주세요.
 
 감사합니다 🙇🏻‍♂️
