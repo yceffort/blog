@@ -41,7 +41,7 @@
     "date-fns": "^4.1.0",
     "eslint": "^9.27.0",
     "front-matter": "^4.0.2",
-    "glob": "^13.0.0",
+    "glob": "^13.0.6",
     "image-size": "^2.0.2",
     "isbot": "^5.1.32",
     "mermaid": "^11.12.2",
