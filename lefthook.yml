@@ -1,7 +1,18 @@
 pre-commit:
   parallel: true
   commands:
-    eslint:
+    eslint-blog:
+      root: 'apps/blog/'
+      glob: '*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}'
+      run: pnpm exec eslint --fix {staged_files}
+      stage_fixed: true
+    eslint-research:
+      root: 'apps/research/'
+      glob: '*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}'
+      run: pnpm exec eslint --fix {staged_files}
+      stage_fixed: true
+    eslint-shared:
+      root: 'packages/shared/'
       glob: '*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}'
       run: pnpm exec eslint --fix {staged_files}
       stage_fixed: true
