@@ -27,7 +27,7 @@
     "@yceffort/shared": "workspace:*",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
-    "eslint": "^9.27.0",
+    "eslint": "^10.0.2",
     "gray-matter": "^4.0.3",
     "markdown-it-mermaid": "^0.2.5",
     "mermaid": "^11.12.2",
