@@ -1,4 +1,5 @@
 import {NextResponse} from 'next/server'
+
 import webpush from 'web-push'
 
 import {withRedis} from '#utils/redis'

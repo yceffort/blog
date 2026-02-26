@@ -1,8 +1,6 @@
 'use client'
 
-import {useEffect, useState} from 'react'
-
-type Status = 'loading' | 'unsupported' | 'denied' | 'subscribed' | 'unsubscribed'
+import {useSyncExternalStore} from 'react'
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
@@ -15,28 +13,52 @@ function urlBase64ToUint8Array(base64String: string) {
   return arr
 }
 
-export default function PushSubscribeButton() {
-  const [status, setStatus] = useState<Status>('loading')
+type Status =
+  | 'loading'
+  | 'unsupported'
+  | 'denied'
+  | 'subscribed'
+  | 'unsubscribed'
 
-  useEffect(() => {
-    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-      setStatus('unsupported')
-      return
-    }
+let pushStatus: Status = 'loading'
+const listeners = new Set<() => void>()
 
-    if (Notification.permission === 'denied') {
-      setStatus('denied')
-      return
-    }
+function getStatus() {
+  return pushStatus
+}
 
+function subscribe(cb: () => void) {
+  listeners.add(cb)
+  return () => listeners.delete(cb)
+}
+
+function setStatus(s: Status) {
+  pushStatus = s
+  listeners.forEach((cb) => cb())
+}
+
+if (typeof window !== 'undefined') {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    pushStatus = 'unsupported'
+  } else if (Notification.permission === 'denied') {
+    pushStatus = 'denied'
+  } else {
     navigator.serviceWorker.ready.then((reg) => {
       reg.pushManager.getSubscription().then((sub) => {
         setStatus(sub ? 'subscribed' : 'unsubscribed')
       })
     })
-  }, [])
+  }
+}
 
-  async function toggle() {
+export default function PushSubscribeButton() {
+  const status = useSyncExternalStore(
+    subscribe,
+    getStatus,
+    () => 'loading' as const,
+  )
+
+  async function handleToggle() {
     const reg = await navigator.serviceWorker.ready
 
     if (status === 'subscribed') {
@@ -75,9 +97,13 @@ export default function PushSubscribeButton() {
   return (
     <button
       type="button"
-      onClick={toggle}
+      onClick={handleToggle}
       className="ml-1 flex h-10 w-10 items-center justify-center rounded-md p-2 text-gray-900 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-800 sm:ml-4"
-      aria-label={subscribed ? 'Unsubscribe from notifications' : 'Subscribe to notifications'}
+      aria-label={
+        subscribed
+          ? 'Unsubscribe from notifications'
+          : 'Subscribe to notifications'
+      }
     >
       {subscribed ? (
         <svg

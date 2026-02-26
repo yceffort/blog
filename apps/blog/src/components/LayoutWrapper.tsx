@@ -3,30 +3,31 @@
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
+import {useEffect, type ReactNode} from 'react'
 
 import AnimatedBackground from './AnimatedBackground'
 import FloatingBanner from './Banner'
 import Footer from './Footer'
+import LanguageSwitch from './LanguageSwitch'
 import MobileNav from './MobileNav'
 import ProfileImage from './ProfileImage'
 import ScrollTop from './ScrollTop'
 import SectionContainer from './SectionContainer'
 
-import {useEffect, type ReactNode} from 'react'
-
 import {SiteConfig} from '#src/config'
 import {useLocale} from '#src/hooks/useLocale'
-
-import LanguageSwitch from './LanguageSwitch'
 
 const DynamicThemeSwitch = dynamic(() => import('./ThemeSwitch'), {
   ssr: false,
   loading: () => <div className="ml-1 mr-1 h-10 w-10 rounded-md sm:ml-4" />,
 })
 
-const DynamicPushSubscribeButton = dynamic(() => import('./PushSubscribeButton'), {
-  ssr: false,
-})
+const DynamicPushSubscribeButton = dynamic(
+  () => import('./PushSubscribeButton'),
+  {
+    ssr: false,
+  },
+)
 
 function HeaderLogo() {
   const {pathPrefix} = useLocale()
@@ -47,7 +48,9 @@ function HeaderNav() {
   const {pathPrefix} = useLocale()
   const menu = pathPrefix
     ? SiteConfig.menu.map((link) =>
-        link.path === '/pages/1' ? {...link, path: `${pathPrefix}/pages/1`} : link,
+        link.path === '/pages/1'
+          ? {...link, path: `${pathPrefix}/pages/1`}
+          : link,
       )
     : SiteConfig.menu
 
@@ -74,9 +77,7 @@ function Header() {
   }, [])
 
   return (
-    <header
-      className="sticky top-0 z-40 -mx-[calc(50vw-50%)] flex items-center justify-between px-[calc(50vw-50%)] py-6 backdrop-blur-md"
-    >
+    <header className="sticky top-0 z-40 -mx-[calc(50vw-50%)] flex items-center justify-between px-[calc(50vw-50%)] py-6 backdrop-blur-md">
       <HeaderLogo />
       <div className="flex items-center text-base leading-5">
         <HeaderNav />
@@ -109,7 +110,10 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
     containerClass = 'xl:max-w-7xl'
   } else if (pathname === '/about') {
     containerClass = 'max-w-6xl'
-  } else if (pathname?.startsWith('/pages') || pathname?.startsWith('/en/pages')) {
+  } else if (
+    pathname?.startsWith('/pages') ||
+    pathname?.startsWith('/en/pages')
+  ) {
     containerClass = 'xl:max-w-7xl'
   } else if (pathname?.startsWith('/tags')) {
     containerClass = 'xl:max-w-7xl'
