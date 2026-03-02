@@ -8,7 +8,13 @@ import type {Post} from '#src/type'
 
 import Tag from '#components/Tag'
 
-export default function PostCard({post, pathPrefix = ''}: {post: Post; pathPrefix?: string}) {
+export default function PostCard({
+  post,
+  pathPrefix = '',
+}: {
+  post: Post
+  pathPrefix?: string
+}) {
   const {
     fields: {slug},
     frontMatter: {date, title, description, tags, thumbnail},
@@ -21,14 +27,16 @@ export default function PostCard({post, pathPrefix = ''}: {post: Post; pathPrefi
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-xl bg-white ring-1 ring-gray-200 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:ring-primary-300 dark:bg-gray-800/80 dark:ring-gray-700/60 dark:hover:ring-primary-500/50 dark:hover:shadow-primary-500/5">
       {thumbnail && (
-        <div className="relative h-44 overflow-hidden">
-          <Image
-            src={thumbnail}
-            alt=""
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        </div>
+        <ViewTransition name={`${transitionName}-thumbnail`}>
+          <div className="relative h-44 overflow-hidden">
+            <Image
+              src={thumbnail}
+              alt=""
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+        </ViewTransition>
       )}
 
       <div className="flex flex-1 flex-col p-5">
@@ -60,7 +68,9 @@ export default function PostCard({post, pathPrefix = ''}: {post: Post; pathPrefi
         <div className="mt-auto flex items-center gap-1.5 pt-4 text-xs text-gray-400 dark:text-gray-500">
           <time dateTime={isoDate}>{isoDate}</time>
           <span aria-hidden="true">·</span>
-          <span>{pathPrefix ? `${readingTime} min read` : `${readingTime}분`}</span>
+          <span>
+            {pathPrefix ? `${readingTime} min read` : `${readingTime}분`}
+          </span>
         </div>
       </div>
     </article>

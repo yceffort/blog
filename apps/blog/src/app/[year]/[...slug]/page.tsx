@@ -138,28 +138,27 @@ export default async function Page(props: {
       <MathLoader />
       <div className="relative">
         <article>
-          {/* Cover Image - Large font for mobile */}
-          <div className="relative mb-6 aspect-[1200/630] w-full overflow-hidden rounded-xl border border-gray-200 shadow-lg md:hidden dark:border-gray-700">
-            <Image
-              src={ogImageUrlLarge}
-              alt={title}
-              fill
-              className="object-cover"
-              priority
-              unoptimized
-            />
-          </div>
-          {/* Cover Image - Normal font for desktop */}
-          <div className="relative mb-6 hidden aspect-[1200/630] w-full overflow-hidden rounded-xl border border-gray-200 shadow-lg md:block dark:border-gray-700">
-            <Image
-              src={ogImageUrl}
-              alt={title}
-              fill
-              className="object-cover"
-              priority
-              unoptimized
-            />
-          </div>
+          {/* Cover Image */}
+          <ViewTransition name={`${transitionName}-thumbnail`}>
+            <div className="relative mb-6 aspect-[1200/630] w-full overflow-hidden rounded-xl border border-gray-200 shadow-lg dark:border-gray-700">
+              <Image
+                src={ogImageUrlLarge}
+                alt={title}
+                fill
+                className="object-cover md:hidden"
+                priority
+                unoptimized
+              />
+              <Image
+                src={ogImageUrl}
+                alt={title}
+                fill
+                className="hidden object-cover md:block"
+                priority
+                unoptimized
+              />
+            </div>
+          </ViewTransition>
 
           {/* Post Meta */}
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
