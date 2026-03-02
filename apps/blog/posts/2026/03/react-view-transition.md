@@ -696,14 +696,65 @@ export default function RootLayout({children}) {
 
 ## 주의사항
 
-### 이것은 모든 애니메이션의 해결책이 아니다
+### `<ViewTransition>`이 모든 애니메이션의 해결책은 아니다
 
-React 팀이 명확히 밝힌 부분이다. View Transition은 **UI 상태 전환**에 특화되어 있다.
+React 팀이 명확히 밝힌 부분이다. React의 `<ViewTransition>`은 **React 상태 변경에 의한 UI 전환**에 특화되어 있다. 브라우저의 View Transition API 자체는 더 넓은 범위에서 쓸 수 있지만(아래에서 다룬다), React 컴포넌트로서의 `<ViewTransition>`은 다음과 같은 경계가 있다.
 
 - ✅ 페이지 네비게이션, 모달 열기/닫기, 리스트 재정렬, 아코디언 확장
 - ❌ 좋아요 버튼 하트 애니메이션, 로딩 시머, 타이핑 효과, 인터랙티브 드래그
 
 후자는 기존처럼 CSS `animation`/`transition`이나 Framer Motion 같은 라이브러리를 사용하는 것이 맞다.
+
+### 상태 변경 없이도 View Transition을 쓸 수 있다
+
+React의 `<ViewTransition>`은 **React의 상태 변경**(`startTransition`, `useDeferredValue`, `Suspense`)에 의해서만 발동된다. React가 렌더링 전후의 DOM 스냅샷을 비교해야 하기 때문이다. 그래서 "상태 변경 없이 그냥 애니메이션만 넣고 싶다"는 경우에는 `<ViewTransition>`이 적합하지 않다.
+
+하지만 **브라우저 네이티브 `document.startViewTransition()`은 아무 제약 없이 쓸 수 있다.** React 상태와 무관하게 DOM 클래스를 바꾸거나, 인라인 스타일을 토글하거나, 외부 라이브러리가 DOM을 조작하는 등 어떤 변경이든 감쌀 수 있다.
+
+대표적인 예가 **테마 토글**이다. 다크/라이트 모드 전환은 보통 `<html>` 요소의 클래스를 바꾸는 것인데, React 상태 변경이 아닌 직접적인 DOM 조작이므로 `<ViewTransition>`으로는 애니메이션할 수 없다. 이 경우 네이티브 API를 직접 사용한다.
+
+```tsx
+function toggleTheme(e: React.MouseEvent) {
+  const x = e.clientX
+  const y = e.clientY
+
+  document.startViewTransition(() => {
+    // React state가 아닌 직접적인 DOM 조작
+    document.documentElement.classList.toggle('dark')
+  })
+
+  // circle-clip 애니메이션을 위한 CSS 변수 설정
+  document.documentElement.style.setProperty('--theme-toggle-x', `${x}px`)
+  document.documentElement.style.setProperty('--theme-toggle-y', `${y}px`)
+}
+```
+
+```css
+/* 테마 토글 시 클릭 위치에서 원형으로 퍼지는 애니메이션 */
+.theme-transition-circle::view-transition-new(root) {
+  animation: circle-clip 0.5s ease-in-out;
+}
+
+@keyframes circle-clip {
+  from {
+    clip-path: circle(0% at var(--theme-toggle-x) var(--theme-toggle-y));
+  }
+  to {
+    clip-path: circle(150% at var(--theme-toggle-x) var(--theme-toggle-y));
+  }
+}
+```
+
+정리하면:
+
+| 상황                                                  | 사용할 API                       |
+| ----------------------------------------------------- | -------------------------------- |
+| React 상태 변경에 의한 UI 전환                        | `<ViewTransition>`               |
+| React 외부의 DOM 조작 (테마 토글, 외부 라이브러리 등) | `document.startViewTransition()` |
+| Suspense fallback → 실제 콘텐츠 전환                  | `<ViewTransition>`               |
+| 스크롤 기반 애니메이션, 마우스 추적 등                | CSS `animation`/`transition`     |
+
+두 API는 배타적이지 않다. 같은 앱에서 페이지 전환은 `<ViewTransition>`으로, 테마 토글은 `document.startViewTransition()`으로 처리하는 것이 자연스럽다. 실제로 이 블로그가 그렇게 구현되어 있다.
 
 ### prefers-reduced-motion은 직접 처리해야 한다
 

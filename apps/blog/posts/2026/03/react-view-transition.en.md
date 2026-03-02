@@ -696,14 +696,65 @@ export default function RootLayout({children}) {
 
 ## Caveats
 
-### This Is Not a Solution for All Animations
+### `<ViewTransition>` Is Not a Solution for All Animations
 
-This is a point the React team has made clear. View Transition is specialized for **UI state transitions**.
+This is a point the React team has made clear. React's `<ViewTransition>` is specialized for **UI transitions driven by React state changes**. While the browser's View Transition API itself can be used more broadly (covered below), the React component has clear boundaries:
 
 - ✅ Page navigation, modal open/close, list reordering, accordion expansion
 - ❌ Like button heart animation, loading shimmer, typing effects, interactive drag
 
 For the latter, continue using CSS `animation`/`transition` or libraries like Framer Motion.
+
+### You Can Use View Transitions Without State Changes
+
+React's `<ViewTransition>` only triggers on **React state changes** (`startTransition`, `useDeferredValue`, `Suspense`). This is because React needs to compare DOM snapshots before and after rendering. So if you want "just an animation without changing state," `<ViewTransition>` isn't the right tool.
+
+However, **the browser's native `document.startViewTransition()` can be used without any constraints.** You can wrap any DOM change — toggling a class, changing inline styles, or letting an external library manipulate the DOM — regardless of React state.
+
+A great example is **theme toggling**. Dark/light mode switching typically toggles a class on the `<html>` element. Since this is direct DOM manipulation rather than a React state change, `<ViewTransition>` can't animate it. Use the native API instead:
+
+```tsx
+function toggleTheme(e: React.MouseEvent) {
+  const x = e.clientX
+  const y = e.clientY
+
+  document.startViewTransition(() => {
+    // Direct DOM manipulation, not React state
+    document.documentElement.classList.toggle('dark')
+  })
+
+  // Set CSS variables for circle-clip animation origin
+  document.documentElement.style.setProperty('--theme-toggle-x', `${x}px`)
+  document.documentElement.style.setProperty('--theme-toggle-y', `${y}px`)
+}
+```
+
+```css
+/* Circle-expand animation from click position on theme toggle */
+.theme-transition-circle::view-transition-new(root) {
+  animation: circle-clip 0.5s ease-in-out;
+}
+
+@keyframes circle-clip {
+  from {
+    clip-path: circle(0% at var(--theme-toggle-x) var(--theme-toggle-y));
+  }
+  to {
+    clip-path: circle(150% at var(--theme-toggle-x) var(--theme-toggle-y));
+  }
+}
+```
+
+In summary:
+
+| Scenario                                                     | API to Use                       |
+| ------------------------------------------------------------ | -------------------------------- |
+| UI transitions driven by React state                         | `<ViewTransition>`               |
+| DOM manipulation outside React (theme toggle, external libs) | `document.startViewTransition()` |
+| Suspense fallback → actual content                           | `<ViewTransition>`               |
+| Scroll-based animations, mouse tracking, etc.                | CSS `animation`/`transition`     |
+
+The two APIs are not mutually exclusive. It's perfectly natural to use `<ViewTransition>` for page transitions and `document.startViewTransition()` for theme toggles in the same app. In fact, this very blog does exactly that.
 
 ### prefers-reduced-motion Must Be Handled Manually
 
