@@ -53,6 +53,11 @@ export async function generateMetadata(props: {
         },
       ],
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.frontMatter.title,
+      description: post.frontMatter.description,
+    },
     alternates: {
       languages: {
         ko: `${SiteConfig.url}/${post.fields.slug}`,
