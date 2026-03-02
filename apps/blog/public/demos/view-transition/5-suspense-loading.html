@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Transition Demo 5: Loading to Content Transition</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f0f0f;
+    color: #e0e0e0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 24px;
+  }
+  h1 {
+    font-size: 14px;
+    color: #888;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: #666;
+    margin-top: -12px;
+  }
+  .demo-area {
+    display: flex;
+    gap: 40px;
+  }
+  .demo-box {
+    width: 340px;
+  }
+  .demo-box h2 {
+    font-size: 14px;
+    color: #a78bfa;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 16px;
+  }
+  button:hover { background: #1d4ed8; }
+
+  /* Skeleton */
+  .skeleton {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .skeleton .skel-img {
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(90deg, #2a2a4a 25%, #3a3a5a 50%, #2a2a4a 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  .skeleton .skel-line {
+    height: 14px;
+    background: linear-gradient(90deg, #2a2a4a 25%, #3a3a5a 50%, #2a2a4a 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .skeleton .skel-line:nth-child(2) { width: 80%; }
+  .skeleton .skel-line:nth-child(3) { width: 60%; }
+  .skeleton .skel-line:last-child { width: 90%; margin-bottom: 0; }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Content */
+  .content {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .content img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    background: #1e3a5f;
+  }
+  .content h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  .content p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #aaa;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+
+  /* Method A: pure cross-fade — old/new overlap at the same position */
+  ::view-transition-old(loading-a) {
+    animation: 600ms ease-out both fade-out;
+  }
+  ::view-transition-new(loading-a) {
+    animation: 600ms ease-in both fade-in;
+  }
+
+  /* Method B: slide — old exits downward, then new enters from below (sequential) */
+  ::view-transition-old(loading-b) {
+    animation:
+      250ms ease-in both fade-out,
+      250ms ease-in both slide-out-down;
+  }
+  ::view-transition-new(loading-b) {
+    animation:
+      300ms ease-out 250ms both fade-in,
+      500ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both slide-in-up;
+  }
+
+  @keyframes fade-in { from { opacity: 0; } }
+  @keyframes fade-out { to { opacity: 0; } }
+  @keyframes slide-out-down {
+    from { transform: translateY(0); }
+    to { transform: translateY(30px); }
+  }
+  @keyframes slide-in-up {
+    from { transform: translateY(40px); }
+    to { transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+  <h1>Demo 5 &mdash; Loading Transition</h1>
+  <p class="subtitle">Simulating Suspense fallback → actual content transition</p>
+
+  <div class="demo-area">
+    <div class="demo-box">
+      <h2>Method A: Cross-fade (update)</h2>
+      <button id="btn-a">Load Data</button>
+      <div id="area-a" style="view-transition-name: loading-a"></div>
+    </div>
+    <div class="demo-box">
+      <h2>Method B: Slide (enter/exit)</h2>
+      <button id="btn-b">Load Data</button>
+      <div id="area-b" style="view-transition-name: loading-b"></div>
+    </div>
+  </div>
+
+  <script>
+    function makePlaceholder(color, text) {
+      return `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320"><rect fill="${color}" width="640" height="320"/><text fill="white" font-family="sans-serif" font-size="20" x="50%" y="50%" text-anchor="middle" dy=".35em">${text}</text></svg>`)}`;
+    }
+
+    const skeletonHTML = `
+      <div class="skeleton">
+        <div class="skel-img"></div>
+        <div class="skel-line"></div>
+        <div class="skel-line"></div>
+        <div class="skel-line"></div>
+        <div class="skel-line"></div>
+      </div>`;
+
+    const contentHTML = `
+      <div class="content">
+        <img src="${makePlaceholder('#1e3a5f', 'Loaded Image')}" alt="loaded">
+        <h3>Data Loaded</h3>
+        <p>After fetching data from the network, the skeleton transitions to actual content. In React, Suspense handles this process automatically.</p>
+      </div>`;
+
+    function setupDemo(btnId, areaId) {
+      const btn = document.getElementById(btnId);
+      const area = document.getElementById(areaId);
+      let state = 'idle';
+
+      btn.addEventListener('click', () => {
+        if (state === 'loaded') {
+          // Reset
+          if (!document.startViewTransition) { area.innerHTML = ''; state = 'idle'; btn.textContent = 'Load Data'; return; }
+          document.startViewTransition(() => { area.innerHTML = ''; });
+          state = 'idle';
+          btn.textContent = 'Load Data';
+          return;
+        }
+
+        // Show skeleton
+        area.innerHTML = skeletonHTML;
+        state = 'loading';
+        btn.textContent = 'Loading...';
+        btn.disabled = true;
+
+        // Simulate network delay, then transition to content
+        setTimeout(() => {
+          btn.disabled = false;
+          state = 'loaded';
+          btn.textContent = 'Reset';
+          if (!document.startViewTransition) { area.innerHTML = contentHTML; return; }
+          document.startViewTransition(() => { area.innerHTML = contentHTML; });
+        }, 2000);
+      });
+    }
+
+    setupDemo('btn-a', 'area-a');
+    setupDemo('btn-b', 'area-b');
+  </script>
+</body>
+</html>

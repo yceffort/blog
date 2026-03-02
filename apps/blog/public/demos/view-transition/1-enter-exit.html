@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Transition Demo 1: Enter/Exit Animation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f0f0f;
+    color: #e0e0e0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40vh;
+    gap: 24px;
+  }
+  h1 {
+    font-size: 14px;
+    color: #888;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  button {
+    padding: 12px 32px;
+    font-size: 16px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  button:hover { background: #1d4ed8; }
+  .panel {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 24px;
+    width: 360px;
+    view-transition-name: panel;
+  }
+  .panel h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: #a78bfa;
+  }
+  .panel p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #aaa;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+
+  ::view-transition-new(panel) {
+    animation: 300ms ease-out both slide-in-up, 300ms ease-out both fade-in;
+  }
+  ::view-transition-old(panel) {
+    animation: 200ms ease-in both slide-out-down, 200ms ease-in both fade-out;
+  }
+
+  @keyframes slide-in-up {
+    from { transform: translateY(20px); }
+    to { transform: translateY(0); }
+  }
+  @keyframes slide-out-down {
+    from { transform: translateY(0); }
+    to { transform: translateY(20px); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+  }
+  @keyframes fade-out {
+    to { opacity: 0; }
+  }
+</style>
+</head>
+<body>
+  <h1>Demo 1 &mdash; Enter / Exit</h1>
+  <button id="toggle">Open</button>
+  <div id="container"></div>
+
+  <script>
+    const btn = document.getElementById('toggle');
+    const container = document.getElementById('container');
+    let show = false;
+
+    btn.addEventListener('click', () => {
+      if (!document.startViewTransition) {
+        alert('This browser does not support the View Transition API.');
+        return;
+      }
+      document.startViewTransition(() => {
+        show = !show;
+        if (show) {
+          container.innerHTML = `
+            <div class="panel">
+              <h3>Panel Content</h3>
+              <p>This panel appears and disappears with animation. It slides up with a fade-in on open, and slides down with a fade-out on close.</p>
+            </div>`;
+          btn.textContent = 'Close';
+        } else {
+          container.innerHTML = '';
+          btn.textContent = 'Open';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

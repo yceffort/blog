@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Transition Demo 2: Shared Element Transition</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f0f0f;
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  h1 {
+    font-size: 14px;
+    color: #888;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  /* Grid View */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .card {
+    cursor: pointer;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    transition: border-color 0.15s;
+  }
+  .card:hover { border-color: #4a4a7a; }
+  .card img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+  }
+  .card h3 {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Detail View */
+  .detail {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .detail img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+  }
+  .detail h2 {
+    margin-top: 20px;
+    font-size: 24px;
+  }
+  .detail p {
+    margin-top: 12px;
+    line-height: 1.7;
+    color: #aaa;
+  }
+  .back-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 8px 20px;
+    background: #2a2a4a;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .back-btn:hover { background: #3a3a5a; }
+</style>
+</head>
+<body>
+  <h1>Demo 2 &mdash; Shared Element</h1>
+  <div id="app"></div>
+
+  <script>
+    const items = [
+      { id: 1, title: 'Mountain Lake', color: '#1e3a5f', desc: 'A tranquil lake nestled in the mountains. The reflection of peaks shimmers on the crystal-clear water.' },
+      { id: 2, title: 'Urban Night', color: '#3d1f56', desc: 'City lights at night. Neon signs and streetlamps paint the urban skyline with color.' },
+      { id: 3, title: 'Forest Path', color: '#1a3d2e', desc: 'A peaceful trail through the woods. Sunlight filters through the canopy of leaves.' },
+      { id: 4, title: 'Ocean Sunset', color: '#5f3a1e', desc: 'Sunset over the ocean. The sky glows with warm colors as the sun dips below the horizon.' },
+      { id: 5, title: 'Snow Peak', color: '#2a3d5f', desc: 'A snow-covered summit rising above the clouds. The peak glistens in the sunlight.' },
+      { id: 6, title: 'Cherry Blossom', color: '#5f2a4a', desc: 'A path lined with cherry trees. Pink petals drift gently in the spring breeze.' },
+    ];
+
+    const app = document.getElementById('app');
+    let currentView = 'grid';
+
+    function makePlaceholder(color, text) {
+      return `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360"><rect fill="${color}" width="640" height="360"/><text fill="white" font-family="sans-serif" font-size="24" x="50%" y="50%" text-anchor="middle" dy=".35em">${text}</text></svg>`)}`;
+    }
+
+    function renderGrid() {
+      currentView = 'grid';
+      app.innerHTML = `<div class="grid">${items.map(item => `
+        <div class="card" data-id="${item.id}">
+          <img src="${makePlaceholder(item.color, item.title)}" alt="${item.title}" style="view-transition-name: hero-${item.id}">
+          <h3 style="view-transition-name: title-${item.id}">${item.title}</h3>
+        </div>`).join('')}</div>`;
+
+      app.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', () => {
+          const id = Number(card.dataset.id);
+          if (!document.startViewTransition) { renderDetail(id); return; }
+          document.startViewTransition(() => renderDetail(id));
+        });
+      });
+    }
+
+    function renderDetail(id) {
+      currentView = 'detail';
+      const item = items.find(i => i.id === id);
+      app.innerHTML = `
+        <div class="detail">
+          <button class="back-btn" id="back">&larr; Back</button>
+          <img src="${makePlaceholder(item.color, item.title)}" alt="${item.title}" style="view-transition-name: hero-${item.id}">
+          <h2 style="view-transition-name: title-${item.id}">${item.title}</h2>
+          <p>${item.desc}</p>
+        </div>`;
+      document.getElementById('back').addEventListener('click', () => {
+        if (!document.startViewTransition) { renderGrid(); return; }
+        document.startViewTransition(() => renderGrid());
+      });
+    }
+
+    renderGrid();
+  </script>
+</body>
+</html>

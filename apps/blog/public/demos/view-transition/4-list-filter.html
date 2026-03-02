@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Transition Demo 4: List Filter &amp; Sort Animation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f0f0f;
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  h1 {
+    font-size: 14px;
+    color: #888;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .controls {
+    max-width: 600px;
+    margin: 0 auto 24px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  input[type="text"] {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 15px;
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 8px;
+    color: #e0e0e0;
+    outline: none;
+  }
+  input:focus { border-color: #4a4a8a; }
+  .sort-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+    background: #2a2a4a;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .sort-btn:hover { background: #3a3a5a; }
+  .sort-btn.active { background: #2563eb; }
+  .list {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .list-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 10px;
+  }
+  .list-item .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .list-item .info { flex: 1; }
+  .list-item .name {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .list-item .meta {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+  }
+  .list-item .score {
+    font-size: 20px;
+    font-weight: 700;
+    color: #a78bfa;
+  }
+  .empty {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+  }
+</style>
+</head>
+<body>
+  <h1>Demo 4 &mdash; List Filter &amp; Sort</h1>
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search by name...">
+    <button class="sort-btn active" id="sort-name">By Name</button>
+    <button class="sort-btn" id="sort-score">By Score</button>
+  </div>
+  <div class="list" id="list"></div>
+
+  <script>
+    const data = [
+      { id: 1, name: 'Alice', emoji: '👩‍💻', role: 'Frontend', score: 92 },
+      { id: 2, name: 'Bob', emoji: '👨‍🔬', role: 'Backend', score: 87 },
+      { id: 3, name: 'Charlie', emoji: '👨‍🎨', role: 'Design', score: 95 },
+      { id: 4, name: 'Diana', emoji: '👩‍🚀', role: 'DevOps', score: 88 },
+      { id: 5, name: 'Eve', emoji: '👩‍🔧', role: 'Security', score: 91 },
+      { id: 6, name: 'Frank', emoji: '👨‍💼', role: 'PM', score: 83 },
+      { id: 7, name: 'Grace', emoji: '👩‍🏫', role: 'QA', score: 96 },
+      { id: 8, name: 'Henry', emoji: '👨‍🍳', role: 'Data', score: 89 },
+    ];
+
+    let query = '';
+    let sortBy = 'name';
+    const list = document.getElementById('list');
+    const searchInput = document.getElementById('search');
+    const sortName = document.getElementById('sort-name');
+    const sortScore = document.getElementById('sort-score');
+
+    function getFiltered() {
+      let filtered = data.filter(d =>
+        d.name.toLowerCase().includes(query.toLowerCase())
+      );
+      if (sortBy === 'name') {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      } else {
+        filtered.sort((a, b) => b.score - a.score);
+      }
+      return filtered;
+    }
+
+    function render() {
+      const items = getFiltered();
+      if (items.length === 0) {
+        list.innerHTML = '<div class="empty">No results found</div>';
+        return;
+      }
+      list.innerHTML = items.map(item => `
+        <div class="list-item" style="view-transition-name: item-${item.id}">
+          <div class="avatar" style="background: ${['#1e3a5f','#3d1f56','#1a3d2e','#5f3a1e','#2a3d5f','#5f2a4a','#2a5f3d','#4a2a5f'][item.id-1]}">${item.emoji}</div>
+          <div class="info">
+            <div class="name">${item.name}</div>
+            <div class="meta">${item.role}</div>
+          </div>
+          <div class="score">${item.score}</div>
+        </div>`).join('');
+    }
+
+    function update() {
+      if (!document.startViewTransition) { render(); return; }
+      document.startViewTransition(() => render());
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      query = e.target.value;
+      update();
+    });
+
+    sortName.addEventListener('click', () => {
+      sortBy = 'name';
+      sortName.classList.add('active');
+      sortScore.classList.remove('active');
+      update();
+    });
+
+    sortScore.addEventListener('click', () => {
+      sortBy = 'score';
+      sortScore.classList.add('active');
+      sortName.classList.remove('active');
+      update();
+    });
+
+    render();
+  </script>
+</body>
+</html>
