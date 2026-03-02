@@ -43,7 +43,6 @@ pre code {
   @apply hidden;
 }
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 6rem;
 }
 h1,

@@ -78,7 +78,7 @@ const GA_MEASUREMENT_ID = SiteConfig.googleAnalyticsId
 export default async function Layout({children}: {children: ReactNode}) {
   return (
     <>
-      <html lang="ko" suppressHydrationWarning>
+      <html lang="ko" data-scroll-behavior="smooth" suppressHydrationWarning>
         <head>
           <link
             rel="alternate"
