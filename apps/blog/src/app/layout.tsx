@@ -12,6 +12,7 @@ import {BotTracker} from '#components/BotTracker'
 import CommandPalette from '#components/CommandPalette'
 import {GoogleAnalyticsWebVitalsTracker} from '#components/GoogleAnalyticsWebVitalsTracker'
 import LayoutWrapper from '#components/LayoutWrapper'
+import NavigationDirection from '#components/NavigationDirection'
 import {Providers} from '#components/Provider'
 import {SiteConfig} from '#src/config'
 // import {getAllPosts, getAllTagsFromPosts} from '#utils/Post'
@@ -101,6 +102,7 @@ export default async function Layout({children}: {children: ReactNode}) {
           <link rel="manifest" href="/favicon/site.webmanifest" />
         </head>
         <body className="bg-white text-black antialiased dark:bg-gray-800 dark:text-white">
+          <NavigationDirection />
           <Providers>
             <LayoutWrapper>{children}</LayoutWrapper>
             <CommandPalette />
