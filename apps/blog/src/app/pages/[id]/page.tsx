@@ -6,6 +6,7 @@ import ListLayout from '#components/layouts/ListLayout'
 import PageNumber from '#components/layouts/PageNumber'
 import {SiteConfig} from '#src/config'
 import {DEFAULT_NUMBER_OF_POSTS} from '#src/constants'
+import {buildOgImageUrl} from '#utils/og'
 import {getAllPosts} from '#utils/Post'
 
 export const dynamic = 'error'
@@ -27,7 +28,12 @@ export async function generateMetadata(props: {
       url: `${SiteConfig.url}/pages/${id}`,
       images: [
         {
-          url: `/api/og?title=${encodeURIComponent(pageTitle)}&description=${encodeURIComponent(pageDescription)}&path=${encodeURIComponent(`/pages/${id}`)}&type=page`,
+          url: buildOgImageUrl({
+            title: pageTitle,
+            description: pageDescription,
+            path: `/pages/${id}`,
+            type: 'page',
+          }),
           width: 1200,
           height: 630,
         },

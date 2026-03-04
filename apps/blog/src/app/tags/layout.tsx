@@ -2,6 +2,7 @@ import type {Metadata} from 'next'
 import type {ReactNode} from 'react'
 
 import {SiteConfig} from '#src/config'
+import {buildOgImageUrl} from '#utils/og'
 
 export const metadata: Metadata = {
   title: 'Tags - ' + SiteConfig.title,
@@ -12,7 +13,12 @@ export const metadata: Metadata = {
     url: `${SiteConfig.url}/tags`,
     images: [
       {
-        url: `/api/og?title=${encodeURIComponent('Tags - ' + SiteConfig.title)}&description=${encodeURIComponent('All posts by tags')}&path=${encodeURIComponent('/tags')}&type=page`,
+        url: buildOgImageUrl({
+          title: 'Tags - ' + SiteConfig.title,
+          description: 'All posts by tags',
+          path: '/tags',
+          type: 'page',
+        }),
         width: 1200,
         height: 630,
       },

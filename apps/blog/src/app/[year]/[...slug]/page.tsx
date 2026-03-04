@@ -23,6 +23,7 @@ import Tag from '#components/Tag'
 import {SiteConfig} from '#src/config'
 import imageMetadataPlugin from '#utils/imageMetadata'
 import {extractCodeFilename, parseCodeSnippet} from '#utils/Markdown'
+import {buildOgImageUrl} from '#utils/og'
 import {findPostByYearAndSlug, getAllPosts, getSeriesPosts} from '#utils/Post'
 
 export const dynamic = 'error'
@@ -51,7 +52,13 @@ export async function generateMetadata(props: {
       url: `${SiteConfig.url}/${post.fields.slug}`,
       images: [
         {
-          url: `/api/og?title=${encodeURIComponent(post.frontMatter.title)}&description=${encodeURIComponent(post.frontMatter.description || '')}&tags=${encodeURIComponent((post.frontMatter.tags || []).join(','))}&path=${encodeURIComponent('/' + post.fields.slug)}${post.frontMatter.thumbnail ? `&thumbnail=${encodeURIComponent(post.frontMatter.thumbnail)}` : ''}`,
+          url: buildOgImageUrl({
+            title: post.frontMatter.title,
+            description: post.frontMatter.description,
+            tags: post.frontMatter.tags,
+            path: '/' + post.fields.slug,
+            thumbnail: post.frontMatter.thumbnail,
+          }),
           width: 1200,
           height: 630,
         },
@@ -115,8 +122,21 @@ export default async function Page(props: {
   const link = `https://github.com/yceffort/yceffort-blog-v2/issues/new?labels=%F0%9F%92%AC%20Discussion&title=[Discussion] issue on ${title}&assignees=yceffort&body=${SiteConfig.url}/${slug}`
 
   const thumbnail = post.frontMatter.thumbnail
-  const ogImageUrl = `/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description || '')}&tags=${encodeURIComponent((tags || []).join(','))}&path=${encodeURIComponent('/' + postSlug)}${thumbnail ? `&thumbnail=${encodeURIComponent(thumbnail)}` : ''}`
-  const ogImageUrlLarge = `${ogImageUrl}&size=large`
+  const ogImageUrl = buildOgImageUrl({
+    title,
+    description,
+    tags,
+    path: '/' + postSlug,
+    thumbnail,
+  })
+  const ogImageUrlLarge = buildOgImageUrl({
+    title,
+    description,
+    tags,
+    path: '/' + postSlug,
+    thumbnail,
+    size: 'large',
+  })
 
   const jsonLd = {
     '@context': 'https://schema.org',

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import type {Post} from '#src/type'
 import type {Metadata} from 'next'
 
 import Hero from '#components/HeroE'
@@ -7,9 +8,9 @@ import ListLayout from '#components/layouts/ListLayout'
 import {SiteConfig} from '#src/config'
 import {POPULAR_POSTS_COUNT, RECENT_POSTS_COUNT} from '#src/constants'
 import {getPopularPostSlugs} from '#utils/analytics'
+import {buildOgImageUrl} from '#utils/og'
 import {getAllPosts} from '#utils/Post'
 
-import type {Post} from '#src/type'
 
 export const revalidate = 3600
 
@@ -22,7 +23,12 @@ export const metadata: Metadata = {
     url: SiteConfig.url,
     images: [
       {
-        url: `/api/og?title=${encodeURIComponent(SiteConfig.title)}&description=${encodeURIComponent(`${SiteConfig.subtitle}'s blog`)}&path=${encodeURIComponent('/')}&type=page`,
+        url: buildOgImageUrl({
+          title: SiteConfig.title,
+          description: `${SiteConfig.subtitle}'s blog`,
+          path: '/',
+          type: 'page',
+        }),
         width: 1200,
         height: 630,
       },
@@ -92,14 +98,18 @@ export default async function Page() {
     ...featuredPosts.map((p) => p.fields.slug),
     ...posts.map((p) => p.fields.slug),
   ])
-  const recentPosts = allPosts.filter((p) => !shown.has(p.fields.slug)).slice(0, RECENT_POSTS_COUNT)
+  const recentPosts = allPosts
+    .filter((p) => !shown.has(p.fields.slug))
+    .slice(0, RECENT_POSTS_COUNT)
 
   return (
     <>
       <Hero />
       {featuredPosts.length > 0 && <FeaturedCard post={featuredPosts[0]} />}
       <ListLayout posts={posts} title="Popular" />
-      {recentPosts.length > 0 && <ListLayout posts={recentPosts} title="Recent" />}
+      {recentPosts.length > 0 && (
+        <ListLayout posts={recentPosts} title="Recent" />
+      )}
     </>
   )
 }

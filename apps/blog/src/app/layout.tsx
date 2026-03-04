@@ -15,6 +15,7 @@ import LayoutWrapper from '#components/LayoutWrapper'
 import NavigationDirection from '#components/NavigationDirection'
 import {Providers} from '#components/Provider'
 import {SiteConfig} from '#src/config'
+import {buildOgImageUrl} from '#utils/og'
 // import {getAllPosts, getAllTagsFromPosts} from '#utils/Post'
 
 export const metadata: Metadata = {
@@ -37,7 +38,11 @@ export const metadata: Metadata = {
     siteName: SiteConfig.title,
     images: [
       {
-        url: `/api/og?title=${encodeURIComponent(SiteConfig.title)}&description=${encodeURIComponent('Frontend-focused full stack engineer')}&type=page`,
+        url: buildOgImageUrl({
+          title: SiteConfig.title,
+          description: 'Frontend-focused full stack engineer',
+          type: 'page',
+        }),
         width: 1200,
         height: 630,
         alt: SiteConfig.title,
@@ -51,7 +56,11 @@ export const metadata: Metadata = {
     title: SiteConfig.title,
     description: 'Frontend-focused full stack engineer',
     images: [
-      `/api/og?title=${encodeURIComponent(SiteConfig.title)}&description=${encodeURIComponent('Frontend-focused full stack engineer')}&type=page`,
+      buildOgImageUrl({
+        title: SiteConfig.title,
+        description: 'Frontend-focused full stack engineer',
+        type: 'page',
+      }),
     ],
   },
   icons: {

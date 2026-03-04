@@ -22,6 +22,7 @@ import Tag from '#components/Tag'
 import {SiteConfig} from '#src/config'
 import imageMetadataPlugin from '#utils/imageMetadata'
 import {extractCodeFilename, parseCodeSnippet} from '#utils/Markdown'
+import {buildOgImageUrl} from '#utils/og'
 import {findPostByYearAndSlug, getAllPosts} from '#utils/Post'
 
 export const dynamic = 'error'
@@ -47,7 +48,13 @@ export async function generateMetadata(props: {
       locale: 'en_US',
       images: [
         {
-          url: `/api/og?title=${encodeURIComponent(post.frontMatter.title)}&description=${encodeURIComponent(post.frontMatter.description || '')}&tags=${encodeURIComponent((post.frontMatter.tags || []).join(','))}&path=${encodeURIComponent('/en/' + post.fields.slug)}${post.frontMatter.thumbnail ? `&thumbnail=${encodeURIComponent(post.frontMatter.thumbnail)}` : ''}`,
+          url: buildOgImageUrl({
+            title: post.frontMatter.title,
+            description: post.frontMatter.description,
+            tags: post.frontMatter.tags,
+            path: '/en/' + post.fields.slug,
+            thumbnail: post.frontMatter.thumbnail,
+          }),
           width: 1200,
           height: 630,
         },
@@ -98,8 +105,21 @@ export default async function EnPostPage(props: {
   const transitionName = `post-${postSlug.replace(/\//g, '-')}`
 
   const thumbnail = post.frontMatter.thumbnail
-  const ogImageUrl = `/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description || '')}&tags=${encodeURIComponent((tags || []).join(','))}&path=${encodeURIComponent('/en/' + postSlug)}${thumbnail ? `&thumbnail=${encodeURIComponent(thumbnail)}` : ''}`
-  const ogImageUrlLarge = `${ogImageUrl}&size=large`
+  const ogImageUrl = buildOgImageUrl({
+    title,
+    description,
+    tags,
+    path: '/en/' + postSlug,
+    thumbnail,
+  })
+  const ogImageUrlLarge = buildOgImageUrl({
+    title,
+    description,
+    tags,
+    path: '/en/' + postSlug,
+    thumbnail,
+    size: 'large',
+  })
 
   const jsonLd = {
     '@context': 'https://schema.org',
