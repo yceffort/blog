@@ -4,10 +4,10 @@ import {ViewTransition} from 'react'
 
 import {format} from 'date-fns'
 
-import type {Post} from '#src/type'
+import type {Post} from '@/type'
 
-import Tag from '#components/Tag'
-import {buildOgImageUrl} from '#utils/og'
+import Tag from '@/components/Tag'
+import {buildOgImageUrl} from '@/utils/og'
 
 export default function PostCard({
   post,

@@ -6,7 +6,7 @@ import {onCLS, onFCP, onINP, onLCP, onTTFB} from 'web-vitals'
 
 import type {Metric} from 'web-vitals'
 
-import {SiteConfig} from '#src/config'
+import {SiteConfig} from '@/config'
 
 const GA_MEASUREMENT_ID = SiteConfig.googleAnalyticsId
 

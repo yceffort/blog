@@ -2,9 +2,9 @@ import Link from 'next/link'
 
 import type {HTMLProps, ReactElement} from 'react'
 
-import CodeBlock from '#components/CodeBlock'
-import ImageZoom from '#components/ImageZoom'
-import Mermaid from '#components/Mermaid'
+import CodeBlock from '@/components/CodeBlock'
+import ImageZoom from '@/components/ImageZoom'
+import Mermaid from '@/components/Mermaid'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function extractText(node: any): string {

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import {ViewTransition} from 'react'
 
-import profile from '#public/profile.jpeg'
+import profile from '@/public/profile.jpeg'
 
 type ProfileImageSize = 32 | 40 | 192
 

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 
-import {useLocale} from '#src/hooks/useLocale'
+import {useLocale} from '@/hooks/useLocale'
 
 export default function LanguageSwitch() {
   const {locale, alternatePath} = useLocale()

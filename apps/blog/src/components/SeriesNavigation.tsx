@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import type {Post} from '#src/type'
+import type {Post} from '@/type'
 
 interface SeriesNavigationProps {
   seriesName: string

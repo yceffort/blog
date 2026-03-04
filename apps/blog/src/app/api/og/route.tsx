@@ -1,6 +1,6 @@
 import {ImageResponse} from 'next/og'
 
-import {SiteConfig} from '#src/config'
+import {SiteConfig} from '@/config'
 
 // Remove fs/path imports to use pure fetch approach
 

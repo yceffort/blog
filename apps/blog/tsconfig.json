@@ -19,12 +19,8 @@
     "resolveJsonModule": true,
     "typeRoots": ["./typings", "./node_modules/@types"],
     "paths": {
-      "#public/*": ["public/*"],
-      "#commons/*": ["src/type/*"],
-      "#components/*": ["src/components/*"],
-      "#constants/*": ["src/constants/*"],
-      "#utils/*": ["src/utils/*"],
-      "#src/*": ["src/*"]
+      "@/public/*": ["./public/*"],
+      "@/*": ["./src/*"]
     },
     "incremental": true,
     "plugins": [

@@ -1,8 +1,8 @@
 'use client'
 
-import {memo, useEffect, useState, useCallback, useRef} from 'react'
+import {memo, useEffect, useState} from 'react'
 
-import {SiteConfig} from '#src/config'
+import {SiteConfig} from '@/config'
 
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&'
 
@@ -17,44 +17,45 @@ function ScrambleText({
 }) {
   const [display, setDisplay] = useState('')
   const [started, setStarted] = useState(false)
-  const frameRef = useRef(0)
-  const startTimeRef = useRef(0)
-
-  const animate = useCallback(() => {
-    const elapsed = Date.now() - startTimeRef.current
-    const duration = 1200
-    const progress = Math.min(elapsed / duration, 1)
-
-    const revealed = Math.floor(progress * text.length)
-    let result = ''
-    for (let i = 0; i < text.length; i++) {
-      if (text[i] === ' ') {
-        result += ' '
-      } else if (i < revealed) {
-        result += text[i]
-      } else {
-        result += CHARS[Math.floor(Math.random() * CHARS.length)]
-      }
-    }
-    setDisplay(result)
-
-    if (progress < 1) {
-      frameRef.current = requestAnimationFrame(animate)
-    }
-  }, [text])
 
   useEffect(() => {
+    let frameId = 0
+    let startTime = 0
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime
+      const duration = 1200
+      const progress = Math.min(elapsed / duration, 1)
+
+      const revealed = Math.floor(progress * text.length)
+      let result = ''
+      for (let i = 0; i < text.length; i++) {
+        if (text[i] === ' ') {
+          result += ' '
+        } else if (i < revealed) {
+          result += text[i]
+        } else {
+          result += CHARS[Math.floor(Math.random() * CHARS.length)]
+        }
+      }
+      setDisplay(result)
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(animate)
+      }
+    }
+
     const timer = setTimeout(() => {
       setStarted(true)
-      startTimeRef.current = Date.now()
-      frameRef.current = requestAnimationFrame(animate)
+      startTime = Date.now()
+      frameId = requestAnimationFrame(animate)
     }, delay)
 
     return () => {
       clearTimeout(timer)
-      cancelAnimationFrame(frameRef.current)
+      cancelAnimationFrame(frameId)
     }
-  }, [animate, delay])
+  }, [text, delay])
 
   if (!started) {
     return <span className={`${className} invisible`}>{text}</span>
@@ -88,7 +89,6 @@ const Hero = memo(function Hero() {
         <p className="hero-fade-2 mb-5 max-w-md text-sm text-gray-600 dark:text-gray-400 sm:mb-6 sm:text-base">
           {SiteConfig.subtitle}
         </p>
-
       </div>
     </div>
   )

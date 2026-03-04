@@ -1,9 +1,9 @@
 import {notFound} from 'next/navigation'
 
-import ListLayout from '#components/layouts/ListLayout'
-import PageNumber from '#components/layouts/PageNumber'
-import {DEFAULT_NUMBER_OF_POSTS} from '#src/constants'
-import {getAllPosts, getAllTagsFromPosts} from '#utils/Post'
+import ListLayout from '@/components/layouts/ListLayout'
+import PageNumber from '@/components/layouts/PageNumber'
+import {DEFAULT_NUMBER_OF_POSTS} from '@/constants'
+import {getAllPosts, getAllTagsFromPosts} from '@/utils/Post'
 
 export const dynamic = 'error'
 

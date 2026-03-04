@@ -1,8 +1,8 @@
 import type {Metadata} from 'next'
 import type {ReactNode} from 'react'
 
-import {SiteConfig} from '#src/config'
-import {buildOgImageUrl} from '#utils/og'
+import {SiteConfig} from '@/config'
+import {buildOgImageUrl} from '@/utils/og'
 
 export const metadata: Metadata = {
   title: 'Tags - ' + SiteConfig.title,

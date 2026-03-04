@@ -2,7 +2,7 @@ import {NextResponse} from 'next/server'
 
 import webpush from 'web-push'
 
-import {withRedis} from '#utils/redis'
+import {withRedis} from '@/utils/redis'
 
 const HASH_KEY = 'push:subscriptions'
 

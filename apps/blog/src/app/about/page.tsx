@@ -3,9 +3,9 @@
 import {useSearchParams} from 'next/navigation'
 import {Suspense} from 'react'
 
-import SocialIcon from '#components/icons'
-import ProfileImage from '#components/ProfileImage'
-import {SiteConfig} from '#src/config'
+import SocialIcon from '@/components/icons'
+import ProfileImage from '@/components/ProfileImage'
+import {SiteConfig} from '@/config'
 
 function AboutContent() {
   return (

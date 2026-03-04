@@ -5,7 +5,7 @@ import {useEffect} from 'react'
 
 import {track} from '@vercel/analytics'
 
-import {detectBot} from '#src/constants/bot-signatures'
+import {detectBot} from '@/constants/bot-signatures'
 
 declare global {
   interface Window {

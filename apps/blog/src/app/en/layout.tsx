@@ -1,7 +1,7 @@
 import type {Metadata} from 'next'
 import type {ReactNode} from 'react'
 
-import SetHtmlLang from '#components/SetHtmlLang'
+import SetHtmlLang from '@/components/SetHtmlLang'
 
 export const metadata: Metadata = {
   openGraph: {

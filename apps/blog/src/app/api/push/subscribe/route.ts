@@ -1,6 +1,6 @@
 import {NextResponse} from 'next/server'
 
-import {withRedis} from '#utils/redis'
+import {withRedis} from '@/utils/redis'
 
 const HASH_KEY = 'push:subscriptions'
 
@@ -12,7 +12,9 @@ export async function POST(request: Request) {
     return NextResponse.json({error: 'Invalid subscription'}, {status: 400})
   }
 
-  await withRedis((client) => client.hSet(HASH_KEY, endpoint, JSON.stringify(subscription)))
+  await withRedis((client) =>
+    client.hSet(HASH_KEY, endpoint, JSON.stringify(subscription)),
+  )
 
   return NextResponse.json({ok: true})
 }

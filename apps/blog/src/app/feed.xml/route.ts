@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server'
 
-import {SiteConfig} from '#src/config'
-import {getAllPosts} from '#utils/Post'
+import {SiteConfig} from '@/config'
+import {getAllPosts} from '@/utils/Post'
 
 export async function GET() {
   const allPosts = await getAllPosts()

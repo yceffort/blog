@@ -1,4 +1,4 @@
-import getContactHref from '#utils/Contact'
+import getContactHref from '@/utils/Contact'
 
 const isDev = process.env.NODE_ENV === 'development'
 

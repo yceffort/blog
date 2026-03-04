@@ -1,6 +1,6 @@
-import type {Post} from '#src/type'
+import type {Post} from '@/type'
 
-import PostCard from '#components/PostCard'
+import PostCard from '@/components/PostCard'
 
 export default function ListLayout({
   posts,

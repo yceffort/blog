@@ -1,6 +1,6 @@
 import {NextResponse} from 'next/server'
 
-import {getAllPosts, getAllTagsFromPosts} from '#utils/Post'
+import {getAllPosts, getAllTagsFromPosts} from '@/utils/Post'
 
 export const dynamic = 'force-dynamic'
 

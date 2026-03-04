@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import type {Metadata} from 'next'
 
-import {getAllTagsFromPosts} from '#utils/Post'
+import {getAllTagsFromPosts} from '@/utils/Post'
 
 export const metadata: Metadata = {
   title: 'Tags',

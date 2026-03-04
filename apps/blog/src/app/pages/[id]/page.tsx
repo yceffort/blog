@@ -2,12 +2,12 @@ import {notFound} from 'next/navigation'
 
 import type {Metadata} from 'next'
 
-import ListLayout from '#components/layouts/ListLayout'
-import PageNumber from '#components/layouts/PageNumber'
-import {SiteConfig} from '#src/config'
-import {DEFAULT_NUMBER_OF_POSTS} from '#src/constants'
-import {buildOgImageUrl} from '#utils/og'
-import {getAllPosts} from '#utils/Post'
+import ListLayout from '@/components/layouts/ListLayout'
+import PageNumber from '@/components/layouts/PageNumber'
+import {SiteConfig} from '@/config'
+import {DEFAULT_NUMBER_OF_POSTS} from '@/constants'
+import {buildOgImageUrl} from '@/utils/og'
+import {getAllPosts} from '@/utils/Post'
 
 export const dynamic = 'error'
 

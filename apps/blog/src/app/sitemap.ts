@@ -1,6 +1,6 @@
 import type {MetadataRoute} from 'next'
 
-import {getAllPosts, getAllTagsFromPosts} from '#utils/Post'
+import {getAllPosts, getAllTagsFromPosts} from '@/utils/Post'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getAllPosts()

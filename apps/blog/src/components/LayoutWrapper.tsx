@@ -14,8 +14,8 @@ import ProfileImage from './ProfileImage'
 import ScrollTop from './ScrollTop'
 import SectionContainer from './SectionContainer'
 
-import {SiteConfig} from '#src/config'
-import {useLocale} from '#src/hooks/useLocale'
+import {SiteConfig} from '@/config'
+import {useLocale} from '@/hooks/useLocale'
 
 const DynamicThemeSwitch = dynamic(() => import('./ThemeSwitch'), {
   ssr: false,

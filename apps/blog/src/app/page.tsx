@@ -1,16 +1,15 @@
 import Link from 'next/link'
 
-import type {Post} from '#src/type'
+import type {Post} from '@/type'
 import type {Metadata} from 'next'
 
-import Hero from '#components/HeroE'
-import ListLayout from '#components/layouts/ListLayout'
-import {SiteConfig} from '#src/config'
-import {POPULAR_POSTS_COUNT, RECENT_POSTS_COUNT} from '#src/constants'
-import {getPopularPostSlugs} from '#utils/analytics'
-import {buildOgImageUrl} from '#utils/og'
-import {getAllPosts} from '#utils/Post'
-
+import Hero from '@/components/HeroE'
+import ListLayout from '@/components/layouts/ListLayout'
+import {SiteConfig} from '@/config'
+import {POPULAR_POSTS_COUNT, RECENT_POSTS_COUNT} from '@/constants'
+import {getPopularPostSlugs} from '@/utils/analytics'
+import {buildOgImageUrl} from '@/utils/og'
+import {getAllPosts} from '@/utils/Post'
 
 export const revalidate = 3600
 

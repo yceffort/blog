@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
-import SocialIcon from '#components/icons'
-import {SiteConfig} from '#src/config'
+import SocialIcon from '@/components/icons'
+import {SiteConfig} from '@/config'
 
 export default function Footer() {
   return (
