@@ -52,24 +52,9 @@ importers:
       '@google-analytics/data':
         specifier: ^5.2.1
         version: 5.2.1
-      '@naverpay/commit-helper':
-        specifier: ^1.2.0
-        version: 1.2.1(husky@8.0.3)(typescript@5.9.3)
-      '@naverpay/eslint-config':
-        specifier: ^2.2.5
-        version: 2.4.0(@types/estree@1.0.8)(@typescript-eslint/eslint-plugin@8.49.0(@typescript-eslint/parser@8.49.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(@typescript-eslint/parser@8.49.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(jsonc-eslint-parser@2.4.2)(typescript@5.9.3)
-      '@naverpay/eslint-plugin':
-        specifier: ^2.2.0
-        version: 2.3.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
-      '@naverpay/stylelint-config':
-        specifier: ^1.0.0
-        version: 1.0.0(postcss-scss@4.0.9(postcss@8.5.6))(postcss@8.5.6)(typescript@5.9.3)
       '@panzoom/panzoom':
         specifier: ^4.6.1
         version: 4.6.1
-      '@stylistic/stylelint-plugin':
-        specifier: ^4.0.0
-        version: 4.0.0(stylelint@16.26.1(typescript@5.9.3))
       '@tailwindcss/forms':
         specifier: ^0.5.11
         version: 0.5.11(tailwindcss@4.1.18)
@@ -79,24 +64,6 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.16
         version: 0.5.19(tailwindcss@4.1.18)
-      '@types/glob':
-        specifier: ^8.1.0
-        version: 8.1.0
-      '@types/gtag.js':
-        specifier: ^0.0.20
-        version: 0.0.20
-      '@types/hast':
-        specifier: ^3.0.4
-        version: 3.0.4
-      '@types/node':
-        specifier: ^25.3.0
-        version: 25.3.0
-      '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
-      '@types/unist':
-        specifier: ^3.0.3
-        version: 3.0.3
       '@vercel/analytics':
         specifier: ^1.5.0
         version: 1.6.1(next@16.1.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.97.3))(react@19.2.4)
@@ -112,9 +79,6 @@ importers:
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
-      eslint:
-        specifier: ^9.39.2
-        version: 9.39.2(jiti@2.6.1)
       front-matter:
         specifier: ^4.0.2
         version: 4.0.2
@@ -199,9 +163,6 @@ importers:
       sharp:
         specifier: ^0.34.5
         version: 0.34.5
-      stylelint:
-        specifier: ^16.26.1
-        version: 16.26.1(typescript@5.9.3)
       tailwindcss:
         specifier: ^4.1.17
         version: 4.1.18
@@ -221,21 +182,54 @@ importers:
         specifier: ^5.0.1
         version: 5.1.0
     devDependencies:
-      '@types/web-push':
-        specifier: ^3.6.4
-        version: 3.6.4
-
-  apps/research:
-    dependencies:
-      '@marp-team/marp-core':
-        specifier: ^4.2.0
-        version: 4.2.0
+      '@naverpay/commit-helper':
+        specifier: ^1.2.0
+        version: 1.2.1(husky@8.0.3)(typescript@5.9.3)
       '@naverpay/eslint-config':
         specifier: ^2.2.5
         version: 2.4.0(@types/estree@1.0.8)(@typescript-eslint/eslint-plugin@8.49.0(@typescript-eslint/parser@8.49.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(@typescript-eslint/parser@8.49.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(jsonc-eslint-parser@2.4.2)(typescript@5.9.3)
       '@naverpay/eslint-plugin':
         specifier: ^2.2.0
         version: 2.3.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      '@naverpay/stylelint-config':
+        specifier: ^1.0.0
+        version: 1.0.0(postcss-scss@4.0.9(postcss@8.5.6))(postcss@8.5.6)(typescript@5.9.3)
+      '@stylistic/stylelint-plugin':
+        specifier: ^4.0.0
+        version: 4.0.0(stylelint@16.26.1(typescript@5.9.3))
+      '@types/glob':
+        specifier: ^8.1.0
+        version: 8.1.0
+      '@types/gtag.js':
+        specifier: ^0.0.20
+        version: 0.0.20
+      '@types/hast':
+        specifier: ^3.0.4
+        version: 3.0.4
+      '@types/node':
+        specifier: ^25.3.0
+        version: 25.3.0
+      '@types/react':
+        specifier: ^19.2.14
+        version: 19.2.14
+      '@types/unist':
+        specifier: ^3.0.3
+        version: 3.0.3
+      '@types/web-push':
+        specifier: ^3.6.4
+        version: 3.6.4
+      eslint:
+        specifier: ^9.39.2
+        version: 9.39.2(jiti@2.6.1)
+      stylelint:
+        specifier: ^16.26.1
+        version: 16.26.1(typescript@5.9.3)
+
+  apps/research:
+    dependencies:
+      '@marp-team/marp-core':
+        specifier: ^4.2.0
+        version: 4.2.0
       '@tailwindcss/forms':
         specifier: ^0.5.11
         version: 0.5.11(tailwindcss@4.1.18)
@@ -245,15 +239,6 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.16
         version: 0.5.19(tailwindcss@4.1.18)
-      '@types/node':
-        specifier: ^25.3.0
-        version: 25.3.0
-      '@types/react':
-        specifier: ^19.1.6
-        version: 19.2.7
-      '@types/react-dom':
-        specifier: ^19.0.4
-        version: 19.2.3(@types/react@19.2.7)
       '@vercel/analytics':
         specifier: ^1.5.0
         version: 1.6.1(next@16.1.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.97.3))(react@19.2.4)
@@ -266,9 +251,6 @@ importers:
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
-      eslint:
-        specifier: ^9.27.0
-        version: 9.39.2(jiti@2.6.1)
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -305,6 +287,25 @@ importers:
       tailwindcss:
         specifier: ^4.1.17
         version: 4.1.18
+    devDependencies:
+      '@naverpay/eslint-config':
+        specifier: ^2.2.5
+        version: 2.4.0(@types/estree@1.0.8)(@typescript-eslint/eslint-plugin@8.49.0(@typescript-eslint/parser@8.49.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(@typescript-eslint/parser@8.49.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(jsonc-eslint-parser@2.4.2)(typescript@5.9.3)
+      '@naverpay/eslint-plugin':
+        specifier: ^2.2.0
+        version: 2.3.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      '@types/node':
+        specifier: ^25.3.0
+        version: 25.3.0
+      '@types/react':
+        specifier: ^19.1.6
+        version: 19.2.7
+      '@types/react-dom':
+        specifier: ^19.0.4
+        version: 19.2.3(@types/react@19.2.7)
+      eslint:
+        specifier: ^9.27.0
+        version: 9.39.2(jiti@2.6.1)
 
   packages/shared:
     dependencies:
