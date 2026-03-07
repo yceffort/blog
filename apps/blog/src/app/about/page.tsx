@@ -12,10 +12,10 @@ function AboutContent() {
     <div className="pt-8 pb-8 xl:col-span-2">
       <div className="prose max-w-none dark:prose-dark">
         <p>
-          한국에서 활동하는 프론트엔드 엔지니어입니다. 네이버 파이낸셜에서 14명
-          규모의 프론트엔드 팀을 이끌며 금융 서비스 개발과 공통 인프라 구축을
-          담당해왔습니다. 「모던 리액트 Deep Dive」, 「npm Deep Dive」를
-          집필했고, 현재도 기술 서적을 쓰고 있습니다.
+          한국에서 활동하는 프론트엔드 엔지니어입니다. 네이버 파이낸셜에서 약
+          4년 반 동안 14명 규모의 프론트엔드 팀을 이끌며 금융 서비스 개발과 공통
+          인프라 구축을 담당했습니다. 「모던 리액트 Deep Dive」, 「npm Deep
+          Dive」를 집필했고, 현재도 기술 서적을 쓰고 있습니다.
         </p>
         <p>
           확장 가능한 시스템, 공유 라이브러리, 개발자 도구처럼 팀의 생산성을
@@ -83,8 +83,8 @@ function ResumeContent() {
           10년 이상의 프론트엔드 개발 경험을 보유한 엔지니어로, React와
           TypeScript를 기반으로 네이버 파이낸셜에서 대규모 금융 서비스를
           설계·운영하며, 조직의 기술 표준과 공통 라이브러리를 구축하여 개발
-          생산성 향상에 기여하고 있습니다. 또한 기술 서적 집필과 오픈소스 활동을
-          통해 개발 커뮤니티에 적극적으로 기여하고 있습니다.
+          생산성 향상에 기여했습니다. 또한 기술 서적 집필과 오픈소스 활동을 통해
+          개발 커뮤니티에 적극적으로 기여하고 있습니다.
         </p>
       </section>
 
@@ -94,17 +94,14 @@ function ResumeContent() {
         </h2>
         <ol className="relative border-l border-gray-200 dark:border-gray-700">
           <li className="mb-10 ml-6">
-            <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-primary-100 ring-8 ring-white dark:bg-primary-900 dark:ring-gray-800">
-              <span className="h-3 w-3 rounded-full bg-primary-600 dark:bg-primary-400" />
+            <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-800">
+              <span className="h-3 w-3 rounded-full bg-gray-400 dark:bg-gray-500" />
             </span>
             <h3 className="mb-1 flex items-center text-lg font-semibold text-gray-900 dark:text-gray-100">
               Frontend Engineer, NAVER Financial Corp.
-              <span className="ml-3 mr-2 rounded bg-primary-100 px-2.5 py-0.5 text-sm font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
-                Current
-              </span>
             </h3>
             <time className="mb-2 block text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-              2020.09 ~ 현재
+              2020.09 ~ 2026.03
             </time>
             <div className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
               <ul className="list-disc space-y-2 pl-5">
