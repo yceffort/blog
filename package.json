@@ -23,7 +23,6 @@
     "prettier:fix": "pnpm -r prettier:fix"
   },
   "devDependencies": {
-    "@naverpay/commit-helper": "^1.2.0",
     "eslint": "^9.39.2",
     "lefthook": "^2.1.1",
     "prettier": "^3.5.3",

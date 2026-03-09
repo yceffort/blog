@@ -28,9 +28,6 @@ importers:
 
   .:
     devDependencies:
-      '@naverpay/commit-helper':
-        specifier: ^1.2.0
-        version: 1.2.1(husky@8.0.3)(typescript@5.9.3)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)

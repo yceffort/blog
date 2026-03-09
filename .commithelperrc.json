@@ -1,7 +1,0 @@
-{
-  "protect": ["main"],
-  "rules": {
-    "feature": null,
-    "post": null
-  }
-}
