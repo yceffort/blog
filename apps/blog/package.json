@@ -68,7 +68,7 @@
     "@naverpay/eslint-config": "^2.2.5",
     "@naverpay/eslint-plugin": "^2.2.0",
     "@naverpay/stylelint-config": "^1.0.0",
-    "@stylistic/stylelint-plugin": "^4.0.0",
+    "@stylistic/stylelint-plugin": "^5.0.1",
     "@types/glob": "^8.1.0",
     "@types/gtag.js": "^0.0.20",
     "@types/hast": "^3.0.4",
