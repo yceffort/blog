@@ -16,7 +16,7 @@
   "dependencies": {
     "@marp-team/marp-core": "^4.2.0",
     "@tailwindcss/forms": "^0.5.11",
-    "@tailwindcss/postcss": "^4.1.17",
+    "@tailwindcss/postcss": "^4.2.1",
     "@tailwindcss/typography": "^0.5.16",
     "@vercel/analytics": "^1.5.0",
     "@yceffort/shared": "workspace:*",
