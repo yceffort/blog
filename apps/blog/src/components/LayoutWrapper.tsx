@@ -6,7 +6,6 @@ import {usePathname} from 'next/navigation'
 import {useEffect, type ReactNode} from 'react'
 
 import AnimatedBackground from './AnimatedBackground'
-import FloatingBanner from './Banner'
 import Footer from './Footer'
 import LanguageSwitch from './LanguageSwitch'
 import MobileNav from './MobileNav'
@@ -127,7 +126,6 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
         <main className="mb-auto">{children}</main>
         <Footer />
         <ScrollTop />
-        {pathname !== '/' && !pathname?.startsWith('/en') && <FloatingBanner />}
       </div>
     </SectionContainer>
   )
