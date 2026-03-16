@@ -25,12 +25,19 @@ export default async function EnPage() {
     getPopularPostSlugs(POPULAR_POSTS_COUNT),
   ])
 
-  let popular = popularSlugs
+  const popular = popularSlugs
     .map((slug) => allPosts.find((p) => p.fields.slug === slug))
     .filter((p): p is NonNullable<typeof p> => p != null)
 
-  if (popular.length === 0) {
-    popular = allPosts.slice(0, POPULAR_POSTS_COUNT)
+  if (popular.length < POPULAR_POSTS_COUNT) {
+    const slugSet = new Set(popular.map((p) => p.fields.slug))
+    for (const p of allPosts) {
+      if (popular.length >= POPULAR_POSTS_COUNT) {break}
+      if (!slugSet.has(p.fields.slug)) {
+        popular.push(p)
+        slugSet.add(p.fields.slug)
+      }
+    }
   }
 
   const shown = new Set(popular.map((p) => p.fields.slug))
