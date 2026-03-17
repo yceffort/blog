@@ -9,6 +9,8 @@ tags:
 published: true
 date: 2026-03-16 16:24:02
 description: 'Edge Middleware 야 잘 살고 있니?'
+series: 'Next.js의 현주소'
+seriesOrder: 1
 ---
 
 ## Table of Contents
