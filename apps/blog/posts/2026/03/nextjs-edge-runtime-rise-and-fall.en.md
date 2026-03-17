@@ -9,6 +9,8 @@ tags:
 published: true
 date: 2026-03-16 16:24:02
 description: 'Hey Edge Middleware, how have you been?'
+series: 'The State of Next.js'
+seriesOrder: 1
 ---
 
 ## Table of Contents
