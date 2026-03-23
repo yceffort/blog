@@ -77,6 +77,6 @@
     "@types/unist": "^3.0.3",
     "@types/web-push": "^3.6.4",
     "eslint": "^9.39.2",
-    "stylelint": "^17.4.0"
+    "stylelint": "^17.5.0"
   }
 }
