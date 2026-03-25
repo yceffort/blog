@@ -6,7 +6,7 @@ tags:
   - vercel
   - frontend
   - web
-published: false
+published: true
 date: 2026-03-23 22:00:00
 description: '기술 우위보다 강한 전환 비용'
 thumbnail: /thumbnails/2026/03/why-still-nextjs.png
