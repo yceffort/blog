@@ -6,7 +6,7 @@ tags:
   - vercel
   - frontend
   - web
-published: false
+published: true
 date: 2026-03-23 22:00:00
 description: 'Switching costs stronger than technical superiority'
 thumbnail: /thumbnails/2026/03/why-still-nextjs.png
@@ -35,14 +35,7 @@ What matters is that this structure creates both strengths and weaknesses simult
 
 ### The Ecosystem in Numbers
 
-The most direct indicator of Next.js's dominance is the scale of its ecosystem.
-
-| Metric                          | Next.js | 2nd place    | Notes                                    |
-| ------------------------------- | ------- | ------------ | ---------------------------------------- |
-| npm weekly downloads[^1]        | ~9M     | Nuxt ~2M     | Roughly 4.5x                             |
-| GitHub stars                    | 133k+   | Nuxt 56k+    |                                          |
-| Stack Overflow questions[^2]    | 60,000+ | Nuxt ~15,000 | Indicator of accumulated learning assets |
-| Official examples/templates[^3] | 400+    | —            | vercel/next.js/examples                  |
+Let us start with the numbers. Next.js's weekly npm downloads sit at roughly 9 million — 4.5 times those of second-place Nuxt (roughly 2 million)[^1]. GitHub stars have surpassed 133k, more than double Nuxt's 56k. Over 60,000 questions carry the `[next.js]` tag on Stack Overflow[^2], which is not merely a popularity indicator but a measure of accumulated learning assets — the kind where "searching yields answers." The official examples directory alone contains over 400 templates[^3].
 
 These metrics do not measure the same thing. What they collectively show, however, is that Next.js is less a framework being newly chosen and more the default with the most accumulated materials and case studies. TanStack Start and React Router v7 have not even entered this numbers game. TanStack Start's weekly npm downloads have yet to surpass 50,000, and while React Router's downloads as a router (14M weekly) are overwhelming, its adoption as a meta-framework in v7 is still in its early stages.
 
@@ -112,13 +105,17 @@ Yet these users paradoxically face the **greatest difficulty in leaving.** The m
 
 ### Self-Hosted Infrastructure Users
 
-Users running Next.js on Docker, Kubernetes, AWS ECS, and similar platforms have been paying the "non-Vercel tax" from the start.
+Many teams run Next.js on Docker, Kubernetes, AWS ECS, and similar platforms. Given the gap between Next.js's 9 million weekly downloads and Vercel's paying customer base, it is reasonable to assume that a significant share runs Next.js outside Vercel.
 
-**Departure trigger: accumulated operational pain.** Without access to `minimalMode`, Middleware runs inside the server process; the build output structure must be tracked with every version change; and in high-load environments without caching, they experience OOMKilled errors and latency spikes. This is not a single catastrophic event but a process of small daily frictions accumulating.
+These users chose Next.js not for the Vercel platform but for the Next.js ecosystem itself. The perception that "if you want full-stack React, it is basically Next.js," the practical reality that Next.js-experienced developers are easy to hire, and the vast troubleshooting assets accumulated on Stack Overflow and blogs. Of the three layers of path dependence, "infrastructure coupling" was never part of their equation. Instead, "learning investment" and "ecosystem dependency" are the entirety of their lock-in — and that alone is powerful enough.
+
+The problem is that parts of Next.js's DX were designed with Vercel deployment as an implicit assumption, and those parts become direct friction on self-hosted infrastructure. `next/image` defaults to Vercel's image optimization, requiring a separate loader configuration for self-hosting. ISR cache invalidation requires implementing a custom `cacheHandler`. In `output: 'standalone'` mode, static file serving and CDN uploads must be configured manually. A "Self-Hosting" page exists in the official docs, but production-level edge cases are mostly scattered across GitHub issues and community blogs.
+
+**The departure trigger is the accumulation of this operational pain.** Without access to `minimalMode`, Middleware runs inside the server process; the build output structure changes with every major version; and in high-load environments without caching, they experience OOMKilled errors and latency spikes. This is not a single catastrophic event but a process of small daily frictions accumulating.
 
 [Northflank](https://northflank.com/blog/why-we-ditched-next-js-and-never-looked-back) is a representative case. Northflank, an infrastructure company, cited "daily pain" as the reason for switching from the Next.js App Router to Remix. It was not a specific benchmark or security incident but the friction of fighting the framework every day that crossed the threshold.
 
-This group is already decoupled from the Vercel platform, so the "infrastructure coupling" component of switching cost is absent. The only remaining barriers are learning investment and third-party ecosystem dependency.
+This group is already decoupled from the Vercel platform, so there is no need to rebuild infrastructure. The only remaining barriers are learning investment and third-party ecosystem dependency. That is why they are most likely to evaluate alternatives first.
 
 In summary, the order of departure differs by team profile.
 
@@ -147,12 +144,7 @@ Even if the conditions for departure are met, you cannot leave if there is nowhe
 
 As of March 2026, alternatives among React SSR frameworks have moved beyond the level of "uninspectable experimental projects." However, technical feasibility and organizational safety are separate matters.
 
-| Framework           | Characteristics                              | Maturity                                                   |
-| ------------------- | -------------------------------------------- | ---------------------------------------------------------- |
-| **TanStack Start**  | React 19, SSR without RSC, Vite-based        | 30x+ faster SSR than Next.js in the Platformatic benchmark |
-| **React Router v7** | Successor to Remix, backed by Shopify        | Production-validated in Shopify's Hydrogen                 |
-| **Remix 3**         | Exploring rendering layers outside React[^7] | Early in its pivot, production adoption uncertain          |
-| **Astro**           | Content-first, Islands Architecture          | 4.x stable, strong in documentation sites and blogs        |
+**TanStack Start** runs on React 19 and provides Vite-based SSR without RSC. It recorded over 30x faster SSR throughput than Next.js in the Platformatic benchmark. **React Router v7** is the successor to Remix, backed by Shopify, and has been production-validated in Shopify's Hydrogen. **Remix 3** is exploring rendering layers outside React[^7], but it is still early in its pivot. **Astro** takes a content-first Islands Architecture approach, has reached a stable 4.x release, and shows particular strength in documentation sites and blogs.
 
 The scenarios where "it has to be Next.js" are shrinking. Thanks to architectures that do not presuppose RSC, TanStack Start and React Router v7 offer simpler execution models in certain SSR scenarios. Of course, no one chooses a framework based on runtime architecture alone. When you factor in documentation, the hiring market, third-party integrations, and troubleshooting resources, Next.js's advantage remains significant.
 
@@ -168,13 +160,9 @@ A framework switch is simultaneously a technical decision and a social decision.
 
 The transition from jQuery to React did not happen because jQuery died, but when React became an organizationally justifiable choice. The migration from Angular 1 to React accelerated not because Angular was terrible, but when React could be written into job postings.
 
-**The maturation of alternatives is not about "better technology has arrived" but about "choosing it is no longer considered unusual."** Specifically, the tipping point is when the following three conditions are simultaneously met.
+**The maturation of alternatives is not about "better technology has arrived" but about "choosing it is no longer considered unusual."** The signals look like this: "React Router v7 / TanStack Start experience preferred" appearing in job postings at major companies; third parties like Sanity and Clerk releasing alternative framework SDKs at parity with Next.js; and the question "Why aren't you using Next.js?" simply ceasing to be asked when a team picks a different framework.
 
-1. **Alternative frameworks appear in job postings.** The point when "React Router v7 / TanStack Start experience preferred" starts appearing in major company job listings.
-2. **Third parties provide official support.** The point when major services like Sanity and Clerk offer alternative framework SDKs at parity with Next.js.
-3. **The "Why aren't you using it?" question disappears.** The point when the justification cost approaches zero for a team that chose TanStack Start over Next.js.
-
-As of March 2026, none of these three conditions have been met. This is Next.js's most powerful line of defense — not technology, but social inertia.
+As of March 2026, none of these have happened. There are virtually no job postings requiring TanStack Start experience, major third-party SDKs remain Next.js-first, and Next.js is still the only framework choice that requires no justification. This is Next.js's most powerful line of defense — not technology, but social inertia.
 
 That said, transitions like this typically unfold over years, not months. The inertia of the hiring market and third-party ecosystem moves far more slowly than technological change.
 
@@ -188,6 +176,10 @@ ChatGPT, Claude, GitHub Copilot — today's major coding AIs generate Next.js co
 
 In an era where a framework's AI compatibility directly impacts development productivity, **AI is a new increasing returns mechanism that reinforces Next.js's path dependence.**
 
+Seen from the other side, this increasing returns effect is a vicious cycle. When you ask AI to write TanStack Start code, it is likely to produce inaccurate output due to insufficient training data. A poor developer experience slows adoption; slow adoption means fewer blog posts, Stack Overflow answers, and GitHub repositories; and without that data, the next generation of AI cannot learn either. The structure itself makes it progressively harder for new frameworks to enter this loop.
+
+This does not mean permanent lock-in, of course. As TanStack Start gains users and its ecosystem matures, training data will follow. The issue is that the gap is more likely to narrow slower than the Next.js corpus expands. **Not "impossible," but "slower"** — AI affects not the direction of transition but its speed.
+
 ### The Opposite Direction Exists — But Only in Limited Ways
 
 The same reasoning can work in the opposite direction. The fact that AI understands Next.js well means it can also lower the cost of translating Next.js code to other frameworks. vinext from [Part 2](/2026/03/why-cloudflare-rebuilt-nextjs) is a case in point. Cloudflare's Igor Minar stated that "Claude wrote most of the code for this project"[^5]. The existing test suite served as a specification, AI wrote the code, and the tests verified correctness.
@@ -195,6 +187,8 @@ The same reasoning can work in the opposite direction. The fact that AI understa
 However, what vinext demonstrated was "reimplementation of a public API surface," which is different from automatically migrating an arbitrary production app. Next.js's complex caching strategies (nested dependencies of `revalidateTag` and `revalidatePath`), the implicit execution order of Middleware, and server state captured via closures in Server Actions — these patterns are not in the domain of mechanical translation. It is too early to generalize from a single case.
 
 **Is AI creating new lock-in faster than it is breaking existing lock-in?** For now, the former prevails. The quality difference in AI code generation is felt daily, while AI-assisted migration still requires human intervention once it goes beyond simple routing transformations.
+
+For this balance to shift, the AI tools themselves need to change. Instead of relying on training corpora, approaches like RAG-based code generation that indexes official documentation in real time, and initiatives like `llms.txt` where framework authors provide standardized AI context, are already emerging. If these approaches become widespread, the "bigger corpus wins" dynamic could weaken. However, as of 2026, this direction is still in its early stages, and the AI tools most developers use still operate on top of training data bias.
 
 ## Conclusion
 
@@ -217,6 +211,12 @@ What breaks that inertia is not a single benchmark or a single scandal. It is th
 
 Each of these frictions is bearable on its own. But the moment their sum exceeds a threshold — and the moment alternatives become socially legitimate — the transition begins. In path dependence theory, this is called "lock-in break," and it tends to happen not gradually but nonlinearly[^6]. Things remain unchanged for a long time, then shift abruptly.
 
+Factoring in AI's default reproduction effect, however, that "abrupt shift" is likely to arrive later than previous framework transitions. The transition from jQuery to React took five to six years. The transition away from Next.js, compounded by AI lock-in, could take longer still.
+
+The most likely scenario is not one framework replacing Next.js, but **use-case segmentation**. Content-centric sites move to Astro, high-load dynamic SSR to TanStack Start or React Router, enterprise and large-team projects remain on Next.js. The era of "one default" ends, giving way to a structure where choices diverge based on requirements. The fact that TanStack Start, React Router v7, and Remix 3 all sit on Vite is a factor that could accelerate this segmentation — even if each framework's individual market share is small, the category of "Vite-based React SSR" as a whole becomes a meaningful alternative.
+
+Vercel, of course, will not stand still. Next.js 16's `proxy` mode, Turbopack stabilization, and similar efforts are aimed at reducing friction for self-hosted users. If the pace of these improvements outstrips the pace of accumulated dissatisfaction, the point of segmentation could be pushed back considerably.
+
 ### Judgment Based on Three Conditions
 
 If a reader of this series asks "So what should I do?" — the answer depends on the circumstances.
@@ -233,7 +233,7 @@ This series was not written to declare the end of Next.js. Next.js still functio
 
 However, we should recognize that the honest answer to "Why do you use Next.js?" is increasingly approaching **"because we're already using it."** That in itself is not a bad thing — switching costs are real, and maintaining an existing choice is often rational. But inertia and intentional choice are different. **You should be able to distinguish whether you "chose" Next.js or whether path dependence "chose for you."**
 
-What is more dangerous than continuing to use a framework is not examining why you continue to use it. I hope this series has been of some help in that examination.
+What is more dangerous than continuing to use a framework is not examining why you continue to use it.
 
 ## References
 
