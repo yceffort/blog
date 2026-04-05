@@ -5,13 +5,14 @@ import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {Swiper, SwiperSlide} from 'swiper/react'
 
 import 'swiper/css'
-import {useBroadcastChannel} from '@/hooks/useBroadcastChannel'
 
 import {Marp} from './Marp'
 import styles from './MarpSlides.module.scss'
 
 import type {MouseEvent as ReactMouseEvent} from 'react'
 import type {Swiper as SwiperClass} from 'swiper'
+
+import {useBroadcastChannel} from '@/hooks/useBroadcastChannel'
 
 interface ContextMenuState {
   visible: boolean
@@ -26,7 +27,12 @@ interface MarpSlidesProps {
   slug: string
 }
 
-export function MarpSlides({dataHtml, dataCss, dataFonts, slug}: MarpSlidesProps) {
+export function MarpSlides({
+  dataHtml,
+  dataCss,
+  dataFonts,
+  slug,
+}: MarpSlidesProps) {
   // JSON 파싱에 에러 처리 추가 (memoized)
   const html = useMemo(() => {
     try {
@@ -66,10 +72,8 @@ export function MarpSlides({dataHtml, dataCss, dataFonts, slug}: MarpSlidesProps
     return 0
   }, [])
 
-  // 상태 관리
-  const [activeIndex, setActiveIndex] = useState(() =>
-    getInitialIndex(html.length),
-  )
+  // 상태 관리 — SSR과 동일한 초기값(0)으로 시작하여 hydration mismatch 방지
+  const [activeIndex, setActiveIndex] = useState(0)
   const [isBottomHovered, setIsBottomHovered] = useState(false)
   const [isOverviewOpen, setIsOverviewOpen] = useState(false)
   const [contextMenu, setContextMenu] = useState<ContextMenuState>({
@@ -95,23 +99,28 @@ export function MarpSlides({dataHtml, dataCss, dataFonts, slug}: MarpSlidesProps
   // memoized values
   const multiple = useMemo(() => html.length > 1, [html.length])
 
-  // 클라이언트에서만 실행되는 초기화 - Swiper 동기화
+  // 클라이언트에서만 실행되는 초기화 - hash에서 초기 슬라이드 동기화
   useEffect(() => {
-    if (activeIndex > 0 && swiperRef.current) {
-      swiperRef.current.slideTo(activeIndex, 0)
+    const initialIndex = getInitialIndex(html.length)
+    if (initialIndex > 0) {
+      setActiveIndex(initialIndex)
+      swiperRef.current?.slideTo(initialIndex, 0)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // 슬라이드 변경 핸들러 (memoized)
-  const handleActiveIndexChange = useCallback((instance: SwiperClass) => {
-    const newIndex = instance.activeIndex
-    setActiveIndex(newIndex)
-    sendSlideChange(newIndex, 'audience')
-    if (typeof window !== 'undefined') {
-      window.location.hash = `#${newIndex + 1}`
-    }
-  }, [sendSlideChange])
+  const handleActiveIndexChange = useCallback(
+    (instance: SwiperClass) => {
+      const newIndex = instance.activeIndex
+      setActiveIndex(newIndex)
+      sendSlideChange(newIndex, 'audience')
+      if (typeof window !== 'undefined') {
+        window.location.hash = `#${newIndex + 1}`
+      }
+    },
+    [sendSlideChange],
+  )
 
   // Swiper 초기화 핸들러 (memoized)
   const handleSwiper = useCallback((instance: SwiperClass) => {
@@ -582,7 +591,10 @@ export function MarpSlides({dataHtml, dataCss, dataFonts, slug}: MarpSlidesProps
               <div className={styles.contextMenuDivider} />
             </>
           )}
-          <button className={styles.contextMenuItem} onClick={handleOpenPresenter}>
+          <button
+            className={styles.contextMenuItem}
+            onClick={handleOpenPresenter}
+          >
             <span className={styles.contextMenuIcon}>🎤</span>
             발표자 모드
             <span className={styles.contextMenuShortcut}>P</span>
