@@ -60,7 +60,7 @@ export default function Layout({children}: {children: ReactNode}) {
             sizes="180x180"
             href="/apple-touch-icon.png"
           />
-          <link rel="manifest" href="/site.webmanifest" />
+          <link rel="manifest" href="/favicon/site.webmanifest" />
         </head>
         <body className="bg-white text-black antialiased dark:bg-gray-800 dark:text-white">
           <Providers>{children}</Providers>
