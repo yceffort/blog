@@ -49,11 +49,14 @@ export function Marp({
       ${slideHtml}
       <style>${css}</style>
       <style>
-        :host { 
-          all: initial; 
+        :host {
+          all: initial;
         }
         :host > [data-marpit-svg] {
           vertical-align: top;
+        }
+        section {
+          padding: 30px 40px !important;
         }
       </style>
     `
