@@ -2,6 +2,7 @@
 
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 
+import {Virtual} from 'swiper/modules'
 import {Swiper, SwiperSlide} from 'swiper/react'
 
 import 'swiper/css'
@@ -403,6 +404,8 @@ export function MarpSlides({
       onWheel={handleWheel}
     >
       <Swiper
+        modules={[Virtual]}
+        virtual={{enabled: multiple, addSlidesBefore: 1, addSlidesAfter: 1}}
         enabled={multiple}
         allowTouchMove={multiple}
         speed={300}
@@ -419,7 +422,7 @@ export function MarpSlides({
         }}
       >
         {html.map((_, i) => (
-          <SwiperSlide key={i}>
+          <SwiperSlide key={i} virtualIndex={i}>
             <div
               onClick={handleSlideClick}
               className={styles.marpSlide}
