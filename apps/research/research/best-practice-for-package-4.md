@@ -730,16 +730,44 @@ npm explain react         # 왜 이 버전이 설치되었는지 추적
 
 ## Q. `--legacy-peer-deps` 대신 쓸 수 있는 것은?
 
-<style scoped>section { font-size: 22px; }</style>
+<style scoped>section { font-size: 18px; }</style>
 
-`overrides`로 버전을 **명시적으로 고정**:
+`overrides`(npm) / `resolutions`(yarn) / `pnpm.overrides`(pnpm)로 버전을 **명시적으로 해소**:
 
 ```json
-{"overrides": {"react": "^19.0.0"}}
+// npm (package.json) — npm 8.3+
+{
+  "overrides": {
+    "react": "^19.0.0",
+    // 특정 패키지의 의존성만 교체할 수도 있음
+    "some-ui-lib": {"react": "^19.0.0"}
+  }
+}
 ```
 
-- npm 8.3+: `overrides` / yarn berry: `resolutions` / pnpm: `pnpm.overrides`
-- `--legacy-peer-deps`는 충돌을 **무시**, `overrides`는 충돌을 **해소** — 결정적 차이
+```json
+// pnpm (package.json)
+{
+  "pnpm": {
+    "overrides": {"react": "^19.0.0"},
+    // peerDep 충돌만 허용하고 싶을 때 (설치 버전은 건드리지 않음)
+    "peerDependencyRules": {
+      "allowedVersions": {"react": "19"}
+    }
+  }
+}
+```
+
+```json
+// yarn berry (package.json)
+{"resolutions": {"react": "^19.0.0"}}
+```
+
+핵심 차이:
+
+- `--legacy-peer-deps`는 충돌을 **무시** — 어떤 버전이 설치될지 비결정적
+- `overrides`는 충돌을 **해소** — "이 버전을 써라"고 명시적으로 선언
+- `overrides`는 `package.json`에 남으므로 **의도가 코드로 추적** 가능
 
 ---
 
