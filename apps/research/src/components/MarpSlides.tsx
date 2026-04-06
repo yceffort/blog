@@ -116,7 +116,10 @@ export function MarpSlides({
       setActiveIndex(newIndex)
       sendSlideChange(newIndex, 'audience')
       if (typeof window !== 'undefined') {
-        window.location.hash = `#${newIndex + 1}`
+        const newHash = `#${newIndex + 1}`
+        if (window.location.hash !== newHash) {
+          window.location.hash = newHash
+        }
       }
     },
     [sendSlideChange],
@@ -257,14 +260,14 @@ export function MarpSlides({
       }
 
       const newIndex = pageNum - 1
-      if (newIndex !== activeIndex) {
+      if (newIndex !== activeIndexRef.current) {
         swiperRef.current?.slideTo(newIndex)
       }
     }
 
     window.addEventListener('hashchange', handleHashChange)
     return () => window.removeEventListener('hashchange', handleHashChange)
-  }, [multiple, html.length, activeIndex])
+  }, [multiple, html.length])
 
   // 하단 호버 핸들러 (memoized)
   const handleBottomEnter = useCallback(() => setIsBottomHovered(true), [])
