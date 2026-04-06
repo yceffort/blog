@@ -822,27 +822,51 @@ npm warn peer react@"^18.0.0" from some-ui-lib@3.2.1
 
 ### `optionalDependencies` — 설치 실패를 허용
 
+**"실패"란 구체적으로 무엇인가?**
+
+- 현재 OS/아키텍처에 해당하는 바이너리가 **존재하지 않음** (예: Linux ARM용 패키지를 macOS에서 설치)
+- 네이티브 애드온 **컴파일 실패** (예: `node-gyp` 빌드에 필요한 C++ 컴파일러가 없음)
+- npm registry에서 해당 패키지를 **다운로드할 수 없음** (네트워크, 프라이빗 레지스트리 등)
+
+이 중 하나라도 발생하면, `dependencies`는 전체 설치가 실패하지만, `optionalDependencies`는 **해당 패키지만 건너뛰고 설치를 계속**한다.
+
+**`@swc/core`가 대표적 사례:**
+
 ```json
-{"optionalDependencies": {"fsevents": "^2.3.0"}}
-```
-
-- npm이 설치를 **시도**하되, 실패해도 에러 없이 넘어감
-- 주로 **플랫폼 종속** 네이티브 바이너리에 사용 (예: `fsevents`는 macOS 전용)
-- 코드에서 `try { require('fsevents') } catch {}` 패턴으로 분기해야 함
-- 패키지가 **직접 설치 책임**을 지되, 환경에 따라 없을 수 있음을 인정
-
-### `peerDependenciesMeta.optional` — 호스트에게 선택권 부여
-
-```json
+// @swc/core의 package.json (실제)
 {
-  "peerDependencies": {"react-native": ">=0.70"},
-  "peerDependenciesMeta": {"react-native": {"optional": true}}
+  "optionalDependencies": {
+    "@swc/core-darwin-arm64": "1.15.24", // macOS Apple Silicon
+    "@swc/core-darwin-x64": "1.15.24", // macOS Intel
+    "@swc/core-linux-x64-gnu": "1.15.24", // Linux x64 (glibc)
+    "@swc/core-linux-x64-musl": "1.15.24", // Linux x64 (musl/Alpine)
+    "@swc/core-linux-arm64-gnu": "1.15.24", // Linux ARM64
+    "@swc/core-win32-x64-msvc": "1.15.24" // Windows x64
+    // ... 12개 플랫폼별 바이너리
+  }
 }
 ```
 
-- 호스트에게 "있으면 활용하고, 없어도 동작한다"고 알림
-- 없어도 **peerDeps 경고/에러가 발생하지 않음**
-- 주로 **멀티 플랫폼 지원** 패키지에서 사용 (예: web + react-native 동시 지원)
+- `npm install @swc/core` → 12개 바이너리를 **모두 시도**하되, 현재 플랫폼과 맞지 않는 건 실패해도 넘어감
+- macOS ARM에서 설치하면 `@swc/core-darwin-arm64`만 성공, 나머지 11개는 조용히 스킵
+- 코드에서는 런타임에 맞는 바이너리를 `require()`로 로드하고, 없으면 fallback 처리
+
+### `peerDependenciesMeta.optional` — 호스트에게 선택권 부여
+
+**같은 `@swc/core`에서 이것도 사용:**
+
+```json
+// @swc/core의 package.json (실제)
+{
+  "peerDependencies": {"@swc/helpers": ">=0.5.17"},
+  "peerDependenciesMeta": {"@swc/helpers": {"optional": true}}
+}
+```
+
+- `@swc/helpers`는 SWC가 트랜스파일할 때 주입하는 런타임 헬퍼 (`_async_to_generator` 등)
+- 모든 프로젝트가 이 헬퍼를 쓰는 건 아님 → **optional**로 선언
+- 호스트가 `@swc/helpers`를 설치하지 않아도 경고/에러 없음
+- 설치되어 있으면 SWC가 활용하고, 없으면 헬퍼를 인라인으로 생성
 
 ---
 
@@ -857,19 +881,23 @@ npm warn peer react@"^18.0.0" from some-ui-lib@3.2.1
 | 주요 용도 | 플랫폼 종속 바이너리   | 선택적 통합                     |
 | 버전 통제 | 패키지 팀              | 호스트(서비스 팀)               |
 
-### 실전 예시
+### `@swc/core`로 보는 실전 예시
 
 ```json
-// @my-company/analytics — web, react-native, node 모두 지원
 {
-  "peerDependencies": {"react": "^18 || ^19", "react-native": ">=0.70"},
-  "peerDependenciesMeta": {"react-native": {"optional": true}},
-  "optionalDependencies": {"@my-company/analytics-native": "^1.0.0"}
+  // 플랫폼별 네이티브 바이너리 — 패키지가 설치를 시도하고, 실패하면 스킵
+  "optionalDependencies": {
+    "@swc/core-darwin-arm64": "1.15.24",
+    "@swc/core-linux-x64-gnu": "1.15.24"
+  },
+  // 런타임 헬퍼 — 호스트가 설치 여부를 결정
+  "peerDependencies": {"@swc/helpers": ">=0.5.17"},
+  "peerDependenciesMeta": {"@swc/helpers": {"optional": true}}
 }
 ```
 
-- `react`: 필수. `react-native`: 있으면 활용, 없어도 동작
-- `@my-company/analytics-native`: 설치 시도하되, 네이티브 아니면 실패해도 OK
+- `optionalDependencies`: "내가 깔아볼 테니, 안 되면 말고" (설치 주체 = 패키지)
+- `peerDependenciesMeta.optional`: "필요하면 네가 깔아, 안 깔아도 됨" (설치 주체 = 호스트)
 
 ---
 
