@@ -73,6 +73,12 @@ export async function generateMetadata(props: {
         },
       ],
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: data.title,
+      description: data.description,
+      images: [ogImageUrl],
+    },
   }
 }
 

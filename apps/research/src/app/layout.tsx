@@ -12,12 +12,34 @@ import {SiteConfig} from '@/config'
 
 export const metadata: Metadata = {
   title: SiteConfig.title,
-  description: SiteConfig.url,
+  description: 'yceffort research — 프론트엔드 딥다이브 슬라이드',
   authors: [{name: SiteConfig.author.name}],
   referrer: 'origin-when-cross-origin',
   creator: SiteConfig.author.name,
   publisher: SiteConfig.author.name,
   metadataBase: new URL('https://research.yceffort.kr'),
+  openGraph: {
+    title: SiteConfig.title,
+    description: 'yceffort research — 프론트엔드 딥다이브 슬라이드',
+    url: SiteConfig.url,
+    siteName: SiteConfig.title,
+    images: [
+      {
+        url: `/api/og?title=${encodeURIComponent(SiteConfig.title)}&description=${encodeURIComponent('프론트엔드 딥다이브 슬라이드')}`,
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SiteConfig.title,
+    description: 'yceffort research — 프론트엔드 딥다이브 슬라이드',
+    images: [
+      `/api/og?title=${encodeURIComponent(SiteConfig.title)}&description=${encodeURIComponent('프론트엔드 딥다이브 슬라이드')}`,
+    ],
+  },
   formatDetection: {
     email: false,
     address: false,

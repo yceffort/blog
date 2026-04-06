@@ -187,6 +187,9 @@ export async function GET(request: Request) {
             weight: 700,
           },
         ],
+        headers: {
+          'Cache-Control': 'public, max-age=31536000, immutable',
+        },
       },
     )
   } catch (e: unknown) {
