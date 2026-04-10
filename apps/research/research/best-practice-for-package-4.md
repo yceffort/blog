@@ -176,6 +176,28 @@ describe('add 함수', () => {
 
 ---
 
+## 왜 import 없이 글로벌 주입이었을까?
+
+<style scoped>section { font-size: 20px; }</style>
+
+mocha는 Ruby의 **RSpec**에서 영향을 받았음. Ruby에서 `describe`, `it`은 그냥 메서드 호출:
+
+```ruby
+# Ruby — 괄호 없이 메서드 호출 + 블록(do...end) = 자연어처럼 읽힘
+describe "Calculator" do
+  it "adds numbers" do
+    expect(1 + 2).to eq(3)
+  end
+end
+```
+
+- Ruby는 최상위 스코프가 `Object` 인스턴스 → 어디서든 메서드 주입 가능 → **import 개념 자체가 불필요**
+- 언어 설계 철학이 "코드가 영어 문장처럼 읽혀야 한다"(Matz) → 글로벌 DSL이 안티패턴이 아니라 **관용적 Ruby**
+- mocha, Jasmine이 이 패턴을 JS로 그대로 가져옴
+- 현대 JS에서는 글로벌 오염이 안티패턴이므로, `vitest`나 `node:test`는 **명시적 import** 방식으로 전환
+
+---
+
 ## mocha 플러그인의 문제
 
 <style scoped>section { font-size: 18px; }</style>
@@ -282,6 +304,10 @@ flat 구조는 디스크를 절약하지만, **최상위에 어떤 버전을 올
 <style scoped>section { font-size: 22px; }</style>
 
 flat 구조에서 peerDeps까지 자동으로 끼워넣으면 호이스팅 충돌이 더 심해짐
+
+- nested 시절에는 각 패키지가 자기 `node_modules` 안에 독립적으로 의존성을 가졌으므로, peerDeps를 자동 설치해도 **다른 패키지에 영향이 없었음**
+- flat에서는 최상위 `node_modules`에 **하나의 버전만** 올라가야 하는데, peerDeps가 요구하는 버전까지 끼워넣으면 "최상위에 어떤 버전을 올릴지" 판단이 **더 복잡해지고 충돌 확률이 급증**
+- 예: A가 `react@16`을 peerDep으로, B가 `react@15`를 peerDep으로 요구 → 둘 다 최상위에 올릴 수 없음
 
 → **자동 설치를 제거하고 경고만 출력**하는 것으로 후퇴
 
@@ -849,9 +875,7 @@ npm warn peer react@"^18.0.0" from some-ui-lib@3.2.1
 }
 ```
 
-- 패키지 매니저마다 세부 동작이 다르지만, 대부분 **의도가 불명확한 안티패턴**
-- 보통은 **peer + dev 조합**이 맞음: peerDeps로 호스트에 요구하고, devDeps로 로컬 개발에 사용
-- dependencies + peerDeps 동시 선언이 필요한 경우는 극히 드묾
+**안티패턴이다.** peer + dev 조합을 사용할 것
 
 ---
 
@@ -1015,6 +1039,130 @@ function usePromise(promise) {
 - **README / CHANGELOG**에 "X 버전에 알려진 이슈가 있으니 Y 이상으로 업데이트를 권장합니다" 안내
 - 심각한 경우 **GitHub 이슈에 pinned comment**로 고정
 - peerDeps는 넓게 유지하되, **문서로 소통**하는 것이 올바른 접근
+
+---
+
+## Q. 한 패키지가 여러 버전으로 설치되면 번들러는 어떤 버전을 선택하나요?
+
+<style scoped>section { font-size: 18px; }</style>
+
+번들러는 Node.js module resolution 알고리즘을 따름 — `import`하는 파일 위치에서 **가장 가까운 `node_modules`** 의 버전을 선택
+
+```
+node_modules/
+├── lodash@4.17.21/          ← 최상위에 hoisting된 버전
+├── A/                       ← lodash@4를 import → 최상위 4.17.21 사용
+└── B/
+    └── node_modules/
+        └── lodash@3.10.0/   ← B가 lodash@3을 import → 이 버전 사용
+```
+
+- flat hoisting(npm/yarn)에서는 먼저 설치된 버전이 최상위에 올라감 → 나머지는 nested
+- pnpm은 symlink 구조라 각 패키지가 **자기 peerDeps에 맞는 버전만** 접근 가능하므로 더 명확
+- **번들 크기 외 문제**: React가 두 벌이면 hooks 에러, context 공유 불가 등 **런타임 버그** 발생 (앞서 mocha 사례 참고)
+- 싱글턴이어야 하는 패키지가 두 벌 → **디버깅이 극히 어려운** 유형의 버그
+
+---
+
+## Q. `bundleDependencies`는 실제로 사용한 적 있나요?
+
+<style scoped>section { font-size: 20px; }</style>
+
+**사용한 적 없다.** 현대 패키지 개발에서 쓸 일이 거의 없는 레거시 기능
+
+```json
+{
+  "bundleDependencies": ["lodash", "express"]
+}
+```
+
+- `npm pack` 시 해당 의존성을 tarball 안에 **함께 포함**시키는 기능
+- 용도: 프라이빗 레지스트리 접근 불가 환경, 오프라인 설치, 특정 버전 고정이 필수인 극단적 상황
+- npm, yarn, pnpm 모두 lockfile과 `overrides`가 충분히 발전하여 **이 기능 없이도 버전 통제가 가능**
+- 패키지 tarball 크기만 키우므로 일반적으로 권장하지 않음
+
+---
+
+## Q. peerDependencies 경고를 모두 해결하는 게 현실적으로 가능한가요?
+
+<style scoped>section { font-size: 18px; }</style>
+
+**가능하다.** 다만 참여자 모두의 책임이 전제되어야 한다
+
+### 원칙 1 — 패키지 개발자의 책임
+
+- peerDeps **버전 범위를 최대한 넓게** 잡아야 함 (`^17 || ^18 || ^19`)
+- 새 메이저가 나오면 CI에서 검증 후 **빠르게 범위에 추가**
+- 좁은 범위는 소비자에게 불필요한 충돌을 강요하는 것
+
+### 원칙 2 — 소비자(서비스 개발자)의 책임
+
+- peerDeps 경고를 **무시하지 않고** 항상 의구심을 가질 것
+- 범위가 좁거나 업데이트가 안 된 패키지에는 **적극적으로 이슈/PR 제기**
+- "경고니까 괜찮겠지"가 아니라, "왜 이 경고가 뜨는지" 추적
+
+### 원칙 3 — 그럼에도 해결 안 되면
+
+- `overrides`(npm) / `resolutions`(yarn) / `pnpm.overrides`로 **명시적으로 해소**
+- 이는 `--legacy-peer-deps`와 달리 의도가 코드에 남고, 추적 가능
+
+---
+
+## Q. 라이브러리에서 peerDeps를 정의해도 사용처 npm 버전에 따라 강제가 안 되지 않나요?
+
+<style scoped>section { font-size: 20px; }</style>
+
+**맞다. 그리고 그건 라이브러리의 책임 범위가 아니다.**
+
+- npm 3~6은 경고만, npm 7+는 에러, yarn은 또 다름 — 패키지 매니저별 동작 차이표 참고
+- `engines`로 npm 버전을 강제하거나 `postinstall`로 체크하는 방법이 있긴 하지만:
+  - `engines`는 패키지 매니저 버전을 강제하는 것이지, peerDeps 자체를 강제하는 게 아님
+  - `postinstall` 스크립트는 사용자 경험이 나쁘고, 보안상 꺼져 있는 환경도 많음
+- **라이브러리가 할 수 있는 것**: peerDeps를 정확하게 선언하고, README에 명시하는 것까지
+- **사용처의 패키지 매니저 동작까지 통제하는 것은 범위 밖**
+
+---
+
+## Q. `--legacy-peer-deps`를 어쩔 수 없이 사용한 경험이 있나요?
+
+<style scoped>section { font-size: 22px; }</style>
+
+**없다.**
+
+- 충돌이 발생하면 원인을 추적해서 `overrides`로 해소하거나, 라이브러리에 이슈를 올려 해결해왔음
+- `--legacy-peer-deps`는 충돌을 **무시**하는 것이므로, 어떤 버전이 설치될지 비결정적
+- 당장 돌아가더라도 **시한폭탄**을 심는 것과 같음
+
+앞서 설명한 대안을 다시 정리하면:
+
+| 상황                          | 해결 방법                              |
+| ----------------------------- | -------------------------------------- |
+| 라이브러리가 peerDeps 안 올림 | upstream에 이슈/PR                     |
+| 기다릴 수 없음                | `overrides`로 명시적 해소              |
+| pnpm 환경                     | `peerDependencyRules.allowedVersions`  |
+| 근본적으로                    | 충돌 원인을 `npm ls`/`pnpm why`로 추적 |
+
+---
+
+## Q. `@types/react`가 여러 메이저 버전으로 설치되면 문제가 되나요?
+
+<style scoped>section { font-size: 18px; }</style>
+
+**된다.** `@types/react`도 사실상 **싱글턴이 보장되어야 하는 패키지**
+
+```
+node_modules/
+├── @types/react@19/          ← 내 프로젝트
+└── some-ui-lib/
+    └── node_modules/
+        └── @types/react@18/  ← 라이브러리가 가져온 다른 버전
+```
+
+- **타입 충돌**: `@types/react@18`과 `@types/react@19`의 인터페이스 시그니처가 다름 → duplicate identifier 에러
+- **API 유무 불일치**: `@types/react@18`에는 `React.use()`가 없고, `@types/react@19`에는 있음 → 어떤 파일에서 어떤 버전이 잡히느냐에 따라 타입 체크 결과가 달라짐
+- **비결정적**: hoisting 결과에 따라 **환경마다 다른 에러**가 발생할 수 있어 디버깅이 극히 어려움
+
+런타임이 아니라 **타입 레벨에서 깨지는 문제**이므로, 앞서 설명한 "`@types/*`를 `dependencies`에 넣지 말 것" 원칙과 직결됨
 
 ---
 
