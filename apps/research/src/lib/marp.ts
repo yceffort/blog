@@ -5,6 +5,7 @@ import postcss from 'postcss'
 import postcssImportUrl from 'postcss-import-url'
 
 import {parsePresenterNotes} from './parsePresenterNotes'
+import {yceffortTheme} from './themes/yceffort'
 
 import type {Result as PostCSSResult, AtRule} from 'postcss'
 
@@ -36,6 +37,8 @@ export async function generateRenderedMarp(markdown: string) {
 
   // Mermaid 플러그인 추가
   marp.use(mermaidPlugin)
+
+  marp.themeSet.add(yceffortTheme)
 
   const {html, css} = marp.render(markdown, {htmlAsArray: true})
 
