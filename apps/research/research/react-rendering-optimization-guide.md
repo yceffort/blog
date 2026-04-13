@@ -2,7 +2,7 @@
 title: 리액트 렌더링 최적화 가이드
 marp: true
 paginate: true
-theme: default
+theme: yceffort
 tags:
   - react
   - performance
@@ -581,7 +581,15 @@ function ColorPicker({children}) {
     </div>
   )
 }
+```
 
+`HeavyContent`를 자식으로 받도록 바꾼다.
+
+---
+
+## 패턴 2: Children as props — 호출부
+
+```jsx
 // ✅ App에서 children으로 넘긴다
 ;<ColorPicker>
   <HeavyContent />
@@ -924,3 +932,11 @@ React 공식 문서에 명시되어 있다:
 즉, `useMemo`는 **성능 힌트**이지 **보장**이 아니다. 캐시가 날아가도 앱이 정상 동작해야 한다.
 
 실무적으로는 거의 일어나지 않지만, `useMemo`를 **정확성을 위한 수단**(같은 참조 보장)으로 쓰면 안 된다는 의미다. 정확성이 필요하면 `useRef` + 직접 비교를 쓰자.
+
+---
+
+# 감사합니다
+
+<!-- _class: invert -->
+
+@yceffort
