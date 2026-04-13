@@ -801,3 +801,126 @@ function Price({ticker}) {
 > memo, useMemo, useCallback은 도구다. 진짜 실력은 **쓰지 않아도 되는 구조를 만드는 것**이다.
 
 <!-- _class: invert -->
+
+---
+
+## Q&A
+
+<!-- _class: invert -->
+
+---
+
+## Q. memo를 모든 컴포넌트에 걸면 안 되나요?
+
+걸 수는 있다. 비교 비용은 대부분 무시할 수준이니까.
+
+하지만 그게 답이 아닌 이유:
+
+- 인라인 객체/함수를 넘기면 어차피 매번 뚫림 → **memo만 걸어선 의미 없음**
+- 모든 props를 안정시키려면 부모에 useMemo/useCallback이 줄줄이 붙음
+- 결국 "모든 곳에 memo" → "모든 곳에 useMemo/useCallback" → **코드 복잡도만 올라감**
+
+memo는 **필요한 곳에, props 안정성이 보장된 상태에서** 거는 것이다.
+
+---
+
+## Q. useCallback 안에서 state를 쓰면 deps에 넣어야 하는데, 그러면 매번 바뀌지 않나요?
+
+```jsx
+// ❌ count가 바뀔 때마다 새 함수
+const increment = useCallback(() => {
+  setCount(count + 1)
+}, [count])
+
+// ✅ updater function으로 deps에서 state 제거
+const increment = useCallback(() => {
+  setCount((prev) => prev + 1)
+}, [])
+```
+
+`useState`의 setter(`setCount`)는 React가 항상 같은 참조를 보장한다. 그래서 deps에 안 넣어도 된다. 문제는 `count` 값을 클로저로 캡처하는 것인데, `setState(prev => ...)` 패턴을 쓰면 현재 state를 React가 넘겨주므로 `count`를 deps에서 뺄 수 있다.
+
+---
+
+## Q. children as props가 왜 리렌더를 막는지 직관적으로 이해가 안 돼요
+
+Part 0을 떠올려보자. **리렌더링 = 함수를 다시 실행하는 것.**
+
+```jsx
+function App() {
+  // ← 이 함수가 실행돼야
+  return (
+    <ColorPicker>
+      <HeavyContent /> // ← 이 JSX가 새로 만들어짐
+    </ColorPicker>
+  )
+}
+```
+
+`color` state가 바뀌면 `ColorPicker` 함수만 다시 실행된다. `App` 함수는 다시 실행되지 않는다. 그러면 `<HeavyContent />`는 이전 렌더에서 만들어진 그대로다. **함수가 실행 안 됐으니 새 JSX도 안 만들어진 것.**
+
+---
+
+## Q. Context를 쓰면 무조건 전체가 리렌더되나요?
+
+전체는 아니고, 해당 context를 **`useContext`로 구독하는 컴포넌트만** 리렌더된다.
+
+문제는 context value가 객체일 때:
+
+```jsx
+// ❌ Provider가 리렌더되면 매번 새 객체
+<AuthContext.Provider value={{ user, login, logout }}>
+```
+
+Provider의 부모가 리렌더 → value 객체가 새 참조 → 모든 consumer 리렌더.
+
+```jsx
+// ✅ value를 memo
+const value = useMemo(() => ({ user, login, logout }), [user, login, logout])
+<AuthContext.Provider value={value}>
+```
+
+그리고 자주 바뀌는 값과 안 바뀌는 값은 **context 자체를 분리**하는 게 낫다.
+
+---
+
+## Q. React Compiler 나오면 이 내용 다 필요 없어지는 거 아닌가요?
+
+React Compiler는 useMemo/useCallback을 **자동으로 삽입**해준다. Part 3~4의 수동 메모이제이션은 대부분 불필요해질 수 있다.
+
+하지만:
+
+- **Part 0** (리렌더링의 원리) — 여전히 알아야 함
+- **Part 2** (훅 deps에 객체 넣지 않기) — 컴파일러가 해결해주지 않음
+- **Part 5** (구조적 최적화) — 컴파일러와 무관, 여전히 유효
+- **Part 6** (Profiler) — 측정은 항상 필요
+
+도구가 자동화해주는 부분과, 설계로 해결해야 하는 부분은 다르다.
+
+---
+
+## Q. 직접 DOM 업데이트하면 React 상태와 꼬이지 않나요?
+
+꼬일 수 있다. 핵심은 **React가 관리하는 영역과 분리**하는 것.
+
+```jsx
+// ✅ React는 span의 children을 모름 — 충돌 없음
+<span ref={priceRef} />
+
+// ❌ React도 이 값을 관리하고 있음 — 충돌
+<span ref={priceRef}>{price}</span>
+```
+
+`ref`로 업데이트하는 요소는 **React가 내용을 제어하지 않는 빈 요소**여야 한다. React가 children을 렌더하는 요소에 직접 DOM 조작을 하면 다음 리렌더 시 React가 덮어쓴다.
+
+---
+
+## Q. useMemo의 캐시가 날아가는 경우가 있다던데?
+
+React 공식 문서에 명시되어 있다:
+
+> React will throw away the cached value if it needs to free memory for offscreen components.
+
+즉, `useMemo`는 **성능 힌트**이지 **보장**이 아니다. 캐시가 날아가도 앱이 정상 동작해야 한다.
+
+실무적으로는 거의 일어나지 않지만, `useMemo`를 **정확성을 위한 수단**(같은 참조 보장)으로 쓰면 안 된다는 의미다. 정확성이 필요하면 `useRef` + 직접 비교를 쓰자.
