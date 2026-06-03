@@ -32,7 +32,7 @@
     "glob": "^13.0.6",
     "image-size": "^2.0.2",
     "isbot": "^5.1.35",
-    "mermaid": "^11.12.2",
+    "mermaid": "^11.15.0",
     "minisearch": "^7.2.0",
     "next": "^16.2.7",
     "next-mdx-remote-client": "^2.1.9",

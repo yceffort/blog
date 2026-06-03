@@ -24,7 +24,7 @@
     "date-fns": "^4.1.0",
     "gray-matter": "^4.0.3",
     "markdown-it-mermaid": "^0.2.5",
-    "mermaid": "^11.12.2",
+    "mermaid": "^11.15.0",
     "next": "^16.2.6",
     "next-themes": "^0.4.6",
     "postcss": "^8.5.10",
