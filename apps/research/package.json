@@ -37,7 +37,7 @@
     "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
-    "@naverpay/eslint-config": "^2.2.5",
+    "@naverpay/eslint-config": "^2.4.2",
     "@naverpay/eslint-plugin": "^2.2.0",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
