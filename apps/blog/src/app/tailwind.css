@@ -2044,20 +2044,22 @@ body[data-minimal='true'] .hero-title .accent {
   border-bottom: 1px solid var(--border);
   gap: 0;
 }
-.tabs button {
+.tabs a {
   position: relative;
   flex: 1;
   padding: 12px 24px;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: -0.01em;
+  text-align: center;
+  text-decoration: none;
   color: var(--ink-3);
   transition: color 180ms;
 }
-.tabs button[data-active='true'] {
+.tabs a[data-active='true'] {
   color: var(--ink);
 }
-.tabs button::after {
+.tabs a::after {
   content: '';
   position: absolute;
   right: 0;
@@ -2068,7 +2070,7 @@ body[data-minimal='true'] .hero-title .accent {
   transform: scaleX(0);
   transition: transform 240ms cubic-bezier(0.2, 0.9, 0.2, 1);
 }
-.tabs button[data-active='true']::after {
+.tabs a[data-active='true']::after {
   transform: scaleX(1);
 }
 
