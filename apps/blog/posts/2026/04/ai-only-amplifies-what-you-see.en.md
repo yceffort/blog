@@ -1,6 +1,7 @@
 ---
 title: '<em>AI</em> Only Amplifies Me to the Level I Can See'
 tags:
+  - essay
   - ai
   - learning
   - career

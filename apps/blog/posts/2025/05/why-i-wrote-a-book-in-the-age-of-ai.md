@@ -1,6 +1,7 @@
 ---
 title: 'AI 시대에 나는 왜 책을 썼을까'
 tags:
+  - essay
   - frontend
   - career
   - react

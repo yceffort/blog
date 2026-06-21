@@ -1,6 +1,7 @@
 ---
 title: 'In an Era Where AI Writes Code, What Should I Do as a Frontend Developer?'
 tags:
+  - essay
   - ai
   - career
   - frontend

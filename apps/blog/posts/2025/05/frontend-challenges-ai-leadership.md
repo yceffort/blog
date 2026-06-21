@@ -1,6 +1,7 @@
 ---
 title: '프론트엔드 개발 환경의 변화와 과제: AI 도입과 리더십'
 tags:
+  - essay
   - frontend
   - ai
   - career

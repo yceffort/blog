@@ -1,6 +1,7 @@
 ---
 title: '"AI가 다 해주잖아?"라는 환상: FE의 본질과 AI 시대의 현실'
 tags:
+  - essay
   - frontend
   - ai
   - career

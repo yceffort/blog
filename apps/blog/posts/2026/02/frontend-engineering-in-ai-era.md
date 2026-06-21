@@ -1,6 +1,7 @@
 ---
 title: 'AI가 코드를 짜는 시대, 프론트엔드 엔지니어링은 어디로 가는가'
 tags:
+  - essay
   - ai
   - frontend
 published: true

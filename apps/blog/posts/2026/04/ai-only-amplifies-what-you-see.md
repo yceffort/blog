@@ -1,6 +1,7 @@
 ---
 title: '<em>AI</em>는 내가 보이는 수준까지만 나를 증폭한다'
 tags:
+  - essay
   - ai
   - learning
   - career

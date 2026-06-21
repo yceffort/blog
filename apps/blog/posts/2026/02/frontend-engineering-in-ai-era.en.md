@@ -1,6 +1,7 @@
 ---
 title: 'In the Age of AI-Generated Code, Where is Frontend Engineering Headed?'
 tags:
+  - essay
   - ai
   - frontend
 published: true

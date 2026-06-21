@@ -1,6 +1,7 @@
 ---
 title: '프론트엔드 개발자, 3년차의 벽을 넘어: 성장의 악순환을 끊고 목표와 성취감을 찾는 법'
 tags:
+  - essay
   - frontend
   - career
 published: true
