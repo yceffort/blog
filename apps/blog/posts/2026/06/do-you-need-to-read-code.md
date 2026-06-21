@@ -9,6 +9,8 @@ tags:
 published: true
 date: 2026-06-12
 description: '스펙을 만족하고 버그를 고칠 수 있다면 코드를 읽을 줄 몰라도 될까. 이해는 사라지는 게 아니라 어디로 이동하는지를 따진다.'
+series: 'AI 시대의 판단'
+seriesOrder: 1
 thumbnail: /thumbnails/2026/06/do-you-need-to-read-code.png
 ---
 
@@ -194,9 +196,9 @@ AI 이전에는 코드를 만드는 게 사람이었고, 사람이 어떻게 실
 
 ## 참고 자료
 
-- [Linus Torvalds Talks AI, Vibe Coding and Programmer Productivity](https://thenewstack.io/torvalds-ai-programming-productivity/) - The New Stack
-- [Software Design in the Age of AI](https://self-service.mirdin.com/software-design-in-the-age-of-ai) - Jimmy Koppel
-- [Is AI Actually Making Developers More Productive?](https://joshcollinsworth.com/blog/productivity) - Josh Collinsworth
-- [Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity](https://arxiv.org/abs/2507.09089) - METR
-- [Expectations, Outcomes, and Challenges of Modern Code Review](https://dl.acm.org/doi/10.5555/2486788.2486882) - Bacchelli & Bird (ICSE 2013)
-- [Zero Trust for AI Agents](https://claude.com/blog/zero-trust-for-ai-agents) - Anthropic
+- [Linus Torvalds Talks AI, Vibe Coding and Programmer Productivity](https://thenewstack.io/torvalds-ai-programming-productivity/) (리누스 토르발스가 말하는 AI, 바이브 코딩, 그리고 프로그래머 생산성) - The New Stack
+- [Software Design in the Age of AI](https://self-service.mirdin.com/software-design-in-the-age-of-ai) (AI 시대의 소프트웨어 설계) - Jimmy Koppel
+- [Is AI Actually Making Developers More Productive?](https://joshcollinsworth.com/blog/productivity) (AI는 정말 개발자를 더 생산적으로 만드는가?) - Josh Collinsworth
+- [Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity](https://arxiv.org/abs/2507.09089) (2025년 초의 AI가 숙련 오픈소스 개발자의 생산성에 미친 영향) - METR
+- [Expectations, Outcomes, and Challenges of Modern Code Review](https://dl.acm.org/doi/10.5555/2486788.2486882) (현대 코드 리뷰의 기대, 결과, 그리고 과제) - Bacchelli & Bird (ICSE 2013)
+- [Zero Trust for AI Agents](https://claude.com/blog/zero-trust-for-ai-agents) (AI 에이전트를 위한 제로 트러스트) - Anthropic

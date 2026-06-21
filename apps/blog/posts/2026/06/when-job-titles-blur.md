@@ -9,6 +9,8 @@ tags:
 published: true
 date: 2026-06-12
 description: '직군의 경계가 무너진다는 말은 절반만 맞다. 무너지는 건 생산이고, 판단과 책임은 오히려 남는다.'
+series: 'AI 시대의 판단'
+seriesOrder: 2
 thumbnail: /thumbnails/2026/06/when-job-titles-blur.png
 ---
 
@@ -163,16 +165,16 @@ thumbnail: /thumbnails/2026/06/when-job-titles-blur.png
 ## 참고 자료
 
 - [코드를 읽거나 설명할 줄 몰라도, 스펙을 만족하고 버그를 고칠 수 있다면 상관없을까](https://yceffort.kr/2026/06/do-you-need-to-read-code) - 이 글의 1탄
-- [Nvidia CEO: 'Everyone is a programmer' with A.I.](https://fortune.com/2023/05/30/nvidia-ceo-jensen-huang-everyone-programmer-with-ai-chipmaker-taipei-computex/) - Fortune
-- [Sam Altman wants AI to create a one-person unicorn](https://fortune.com/2024/02/04/sam-altman-one-person-unicorn-silicon-valley-founder-myth/) - Fortune
-- [The Knowledge Economy Is Over. Welcome to the Allocation Economy](https://every.to/chain-of-thought/the-knowledge-economy-is-over-welcome-to-the-allocation-economy) - Dan Shipper
-- [Product Management Is Dead](https://www.chatprd.ai/blog/product-management-is-dead) - Claire Vo
-- [A Conversation with Werner Vogels](https://queue.acm.org/detail.cfm?id=1142065) - ACM Queue (2006)
-- [How Linear builds product](https://www.lennysnewsletter.com/p/how-linear-builds-product) - Lenny's Newsletter
-- [Design Engineering at Vercel](https://vercel.com/blog/design-engineering-at-vercel) - Vercel
-- [Are Roles and Responsibilities a Thing of the Past?](https://www.figma.com/blog/2025-shifting-roles-report/) - Figma (2025)
-- [Why Demand for Designers Is on the Rise](https://www.figma.com/reports/design-hiring-study-2026/) - Figma (2026)
-- [Designer and Developer Trends Report](https://www.figma.com/reports/designer-developer-trends/) - Figma (2025)
-- [The Anthropic Economic Index](https://www.anthropic.com/news/the-anthropic-economic-index) - Anthropic
-- ['Guys, I'm under attack' — AI vibe coding in the wild](https://pivot-to-ai.com/2025/03/18/guys-im-under-attack-ai-vibe-coding-in-the-wild/) - Pivot to AI
-- [The hunt is on for the Renaissance Man of computing](https://wow.agiledata.io/wp-content/uploads/2022/10/David-Guest-1991-The-hunt-is-on-for-the-Renaissance-Man-of-computing.pdf) - David Guest, The Independent (1991)
+- [Nvidia CEO: 'Everyone is a programmer' with A.I.](https://fortune.com/2023/05/30/nvidia-ceo-jensen-huang-everyone-programmer-with-ai-chipmaker-taipei-computex/) (엔비디아 CEO: AI와 함께라면 '누구나 프로그래머다') - Fortune
+- [Sam Altman wants AI to create a one-person unicorn](https://fortune.com/2024/02/04/sam-altman-one-person-unicorn-silicon-valley-founder-myth/) (샘 올트먼은 AI로 1인 유니콘 기업이 나오길 바란다) - Fortune
+- [The Knowledge Economy Is Over. Welcome to the Allocation Economy](https://every.to/chain-of-thought/the-knowledge-economy-is-over-welcome-to-the-allocation-economy) (지식 경제는 끝났다. 배분 경제에 온 것을 환영한다) - Dan Shipper
+- [Product Management Is Dead](https://www.chatprd.ai/blog/product-management-is-dead) (프로덕트 매니지먼트는 죽었다) - Claire Vo
+- [A Conversation with Werner Vogels](https://queue.acm.org/detail.cfm?id=1142065) (베르너 포겔스와의 대화) - ACM Queue (2006)
+- [How Linear builds product](https://www.lennysnewsletter.com/p/how-linear-builds-product) (Linear는 어떻게 제품을 만드는가) - Lenny's Newsletter
+- [Design Engineering at Vercel](https://vercel.com/blog/design-engineering-at-vercel) (Vercel의 디자인 엔지니어링) - Vercel
+- [Are Roles and Responsibilities a Thing of the Past?](https://www.figma.com/blog/2025-shifting-roles-report/) (직무와 역할 구분은 과거의 유물인가?) - Figma (2025)
+- [Why Demand for Designers Is on the Rise](https://www.figma.com/reports/design-hiring-study-2026/) (디자이너 수요가 늘고 있는 이유) - Figma (2026)
+- [Designer and Developer Trends Report](https://www.figma.com/reports/designer-developer-trends/) (디자이너·개발자 트렌드 리포트) - Figma (2025)
+- [The Anthropic Economic Index](https://www.anthropic.com/news/the-anthropic-economic-index) (앤트로픽 경제 지수) - Anthropic
+- ['Guys, I'm under attack' — AI vibe coding in the wild](https://pivot-to-ai.com/2025/03/18/guys-im-under-attack-ai-vibe-coding-in-the-wild/) (실전에서 벌어진 AI 바이브 코딩 사고) - Pivot to AI
+- [The hunt is on for the Renaissance Man of computing](https://wow.agiledata.io/wp-content/uploads/2022/10/David-Guest-1991-The-hunt-is-on-for-the-Renaissance-Man-of-computing.pdf) (컴퓨팅 분야의 르네상스적 인재를 찾아서) - David Guest, The Independent (1991)
