@@ -113,7 +113,7 @@ export const appConfig: ApplicationConfig = {
 }
 ```
 
-**Nuxt (Vue)**는 설정 한 줄(`experimental.viewTransition: true`)로 끝난다. Vue의 반응성 시스템은 마이크로태스크 큐에서 배치 업데이트하지만, `nextTick`으로 DOM 변경 완료 시점을 예측할 수 있다.
+**Nuxt (Vue)** 는 설정 한 줄(`experimental.viewTransition: true`)로 끝난다. Vue의 반응성 시스템은 마이크로태스크 큐에서 배치 업데이트하지만, `nextTick`으로 DOM 변경 완료 시점을 예측할 수 있다.
 
 React는 가상 DOM 디핑, Concurrent Rendering, Suspense, 자동 배칭이 결합되어 "DOM이 언제 바뀌는지"를 프레임워크만 알고 개발자에게 노출하지 않는다. View Transition API는 정확히 그 타이밍에 개입해야 하므로, 전용 컴포넌트가 필요했다.
 
