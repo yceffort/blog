@@ -2,7 +2,7 @@
 title: '『프런트엔드 성능 최적화 Deep Dive』가 출간되었습니다.'
 tags:
   - web-performance
-published: false
+published: true
 date: 2026-07-22 12:00:00
 description: '🙇🏻‍♂️'
 ---
