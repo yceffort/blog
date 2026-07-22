@@ -12,7 +12,11 @@ import {POST_ROOT, isLocaleFile, pathToSlug} from './postPaths'
 import type {Locale} from './postPaths'
 import type {FrontMatter, Post, TagWithCount} from '../type'
 
-import {POPULAR_POSTS_COUNT, RECENT_POSTS_COUNT} from '@/constants'
+import {
+  PINNED_POPULAR_SLUG,
+  POPULAR_POSTS_COUNT,
+  RECENT_POSTS_COUNT,
+} from '@/constants'
 
 const THUMB_DIR = `${process.cwd()}/public/thumbnails`
 
@@ -153,17 +157,25 @@ export const getFeaturedPosts = cache(async function getFeaturedPosts(
   locale: Locale = 'ko',
 ): Promise<{popular: Post[]; recent: Post[]}> {
   const allPosts = await getAllPosts(locale)
+  const pinned = allPosts.find((p) => p.fields.slug === PINNED_POPULAR_SLUG)
+  const popularCount = pinned ? POPULAR_POSTS_COUNT - 1 : POPULAR_POSTS_COUNT
   const popularSlugs =
     locale === 'ko' ? await getPopularPostSlugs(POPULAR_POSTS_COUNT) : []
 
   const popular = popularSlugs
     .map((slug) => allPosts.find((p) => p.fields.slug === slug))
-    .filter((p): p is Post => p != null)
+    .filter(
+      (p): p is Post => p != null && p.fields.slug !== PINNED_POPULAR_SLUG,
+    )
+    .slice(0, popularCount)
 
-  if (popular.length < POPULAR_POSTS_COUNT) {
+  if (popular.length < popularCount) {
     const slugSet = new Set(popular.map((p) => p.fields.slug))
+    if (pinned) {
+      slugSet.add(pinned.fields.slug)
+    }
     for (const p of allPosts) {
-      if (popular.length >= POPULAR_POSTS_COUNT) {
+      if (popular.length >= popularCount) {
         break
       }
       if (!slugSet.has(p.fields.slug)) {
@@ -171,6 +183,10 @@ export const getFeaturedPosts = cache(async function getFeaturedPosts(
         slugSet.add(p.fields.slug)
       }
     }
+  }
+
+  if (pinned) {
+    popular.push(pinned)
   }
 
   const shown = new Set(popular.map((p) => p.fields.slug))
