@@ -349,6 +349,15 @@ export function Resume() {
               wikibook.co.kr
             </a>
           </li>
+          <li>
+            프런트엔드 성능 최적화 Deep Dive (단독 저자) -{' '}
+            <a
+              href="https://wikibook.co.kr/frontend-optimization/"
+              className="text-primary-600 hover:underline dark:text-primary-400"
+            >
+              wikibook.co.kr
+            </a>
+          </li>
         </ul>
       </section>
     </div>
