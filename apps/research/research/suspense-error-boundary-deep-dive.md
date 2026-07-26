@@ -570,6 +570,8 @@ render 중 throw 발생
 
 목표는 함수 이름 암기가 아니라, "**두 경계가 정말 한 곳에서 갈라진다**"를 눈으로 확인하는 것.
 
+다 소화하지 못해도 괜찮다 — **Part 4의 실무는 이 파트 없이도 따라갈 수 있다.** 챙길 것은 마지막의 대칭 구조 한 장이다.
+
 ---
 
 ## 입구: workLoop의 try/catch
@@ -588,9 +590,7 @@ do {
 } while (true)
 ```
 
-컴포넌트가 무엇을 던지든 — Error든 promise든 — **일단 전부 여기서 잡힌다.**
-
-`handleThrow`는 던져진 값이 "대기"인지 "실패"인지 **분류표를 붙인다** — 판별 기준은 다음 장에서.
+> 코드를 건너뛰어도 이것만 — 무엇을 던지든 **일단 전부 여기서 잡히고**, `handleThrow`가 "대기"인지 "실패"인지 분류표를 붙인다. 판별 기준은 다음 장에서.
 
 <!-- 분류명: use()의 센티널이면 SuspendedOnImmediate, thenable 직접 throw면 SuspendedOnDeprecatedThrowPromise, 아니면 SuspendedOnError. 직접 throw 경로의 분류명에 'Deprecated'가 박혀 있다 — promise 직접 throw는 레거시 경로이고 use()가 공식 경로라는 것이 소스 레벨에 새겨져 있는 셈. -->
 
@@ -612,9 +612,9 @@ if (
 ```
 
 - 덕 타이핑이다 — `then` 메서드가 있으면 thenable
-- React 19에서 `use()`는 내부적으로 `SuspenseException`이라는 센티널 값(정상 값과 구분하기 위한 표식용 고유 객체)을 던지고, 진짜 thenable은 따로 보관해 두는 식으로 정리됐지만, "**던져진 것이 '대기'인지 '실패'인지 분류한다**"는 본질은 같다
+- React 19의 `use()`는 `SuspenseException`이라는 센티널 값(정상 값과 구분하는 표식용 고유 객체)을 던지고 진짜 thenable은 따로 보관하지만, "**대기인지 실패인지 분류한다**"는 본질은 같다
 
-Part 0에서 본 대칭표가 여기서 코드로 실현된다.
+> 코드를 건너뛰어도 이것만 — 판별 기준은 단 하나, **`.then`이 있는가**. Part 0의 대칭표가 여기서 코드가 된다.
 
 ---
 
@@ -634,6 +634,8 @@ if (suspenseBoundary !== null) {
 - 렌더가 Suspense 컴포넌트를 지날 때마다 **핸들러 스택**에 쌓아둔다 — `getSuspenseHandler()`는 그 스택의 맨 위, 즉 **가장 가까운 조상 Suspense**를 돌려준다
 - 그 경계에 `ShouldCapture` 표시 → 다음 렌더 패스에서 fallback을 그린다
 
+> 코드를 건너뛰어도 이것만 — **가장 가까운 Suspense를 찾아 "네가 fallback을 그려라" 표시**를 해 둔다.
+
 ---
 
 ## Suspense 경로: ping과 재시도
@@ -648,7 +650,7 @@ wakeable.then(ping, ping)
 - resolve되면 `pingSuspendedRoot` → 스케줄러에 **해당 렌더를 다시 예약**
 - 새 렌더에서 컴포넌트 함수가 처음부터 다시 실행되고, 이번엔 값이 준비돼 있으니 통과
 
-Part 2에서 말한 "재개가 아니라 재시도"의 실체가 이 `ping`이다. resolve와 reject **양쪽에** ping을 거는 것도 포인트 — 실패했더라도 다시 렌더해봐야 (이번엔 error가 throw되어) ErrorBoundary로 보낼 수 있기 때문.
+> 코드를 건너뛰어도 이것만 — promise가 끝나면 **처음부터 다시 렌더**한다(재개가 아니라 재시도). reject여도 다시 렌더해야, 이번엔 Error가 던져져 ErrorBoundary로 간다.
 
 ---
 
@@ -672,7 +674,7 @@ do {
 } while (workInProgress !== null)
 ```
 
-**fiber의 `return` 포인터를 따라 한 칸씩 올라가며** 에러 라이프사이클을 가진 클래스를 찾는다. 못 찾고 루트에 닿으면 → 트리 전체 언마운트.
+> 코드를 건너뛰어도 이것만 — `return` 포인터로 **부모 방향으로 한 칸씩 올라가며** 에러 라이프사이클을 가진 클래스를 찾고, 루트까지 못 찾으면 트리 전체 언마운트.
 
 ---
 
