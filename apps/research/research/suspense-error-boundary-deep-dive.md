@@ -560,12 +560,12 @@ function Page() {
 
 이제 React 소스에서 이 흐름을 직접 따라간다. (이하 **react@19.2.0** 태그 기준, `packages/react-reconciler/src/`)
 
-```
-render 중 throw 발생
-  └─ workLoop의 try/catch가 잡는다        … ReactFiberWorkLoop.js
-      └─ handleThrow: 던져진 값 분류
-          ├─ thenable  → Suspense 경로     … ReactFiberThrow.js
-          └─ Error     → ErrorBoundary 경로
+```mermaid
+flowchart LR
+    A["render 중 throw 발생"] --> B["workLoop의 try/catch (ReactFiberWorkLoop.js)"]
+    B --> C{"handleThrow: 값 분류"}
+    C -->|thenable| D["Suspense 경로 (ReactFiberThrow.js)"]
+    C -->|Error| E["ErrorBoundary 경로 (ReactFiberThrow.js)"]
 ```
 
 목표는 함수 이름 암기가 아니라, "**두 경계가 정말 한 곳에서 갈라진다**"를 눈으로 확인하는 것.
@@ -680,22 +680,13 @@ do {
 
 ## 대칭 구조 — 한 장으로
 
-```
-                 컴포넌트가 throw
-                       │
-              workLoop try/catch
-                       │
-                  handleThrow
-                       │
-             ┌─── thenable? ───┐
-             ▼                 ▼
-       Suspense 경로      Error 경로
-   가장 가까운 Suspense   가장 가까운 ErrorBoundary
-   에 ShouldCapture       에 ShouldCapture
-   promise에 ping 예약    getDerivedStateFromError 예약
-             │                 │
-       fallback 커밋      fallback 커밋
-       resolve → 재시도    리셋 → 재시도 (수동)
+```mermaid
+flowchart LR
+    T["컴포넌트가 throw"] --> W["workLoop try/catch"] --> H{"thenable?"}
+    H -->|promise| S["가장 가까운 Suspense + ping 예약"]
+    H -->|Error| E["가장 가까운 ErrorBoundary + getDerivedStateFromError 예약"]
+    S --> SF["fallback 커밋"] --> SR["resolve → 재시도 (자동)"]
+    E --> EF["fallback 커밋"] --> ER["리셋 → 재시도 (수동)"]
 ```
 
 > 아래에서 무언가를 요청하면, 위 어딘가의 핸들러가 응답한다.
