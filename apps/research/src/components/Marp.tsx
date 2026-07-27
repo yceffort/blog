@@ -74,6 +74,10 @@ export function Marp({
 
       for (let i = 0; i < mermaidElements.length; i++) {
         const element = mermaidElements[i] as HTMLElement
+        // 이미 렌더된 요소를 다시 파싱하면 SVG 내부 텍스트가 정의로 넘어가 에러가 난다
+        if (element.querySelector('svg')) {
+          continue
+        }
         const graphDefinition = element.textContent || ''
 
         if (graphDefinition.trim()) {
@@ -95,9 +99,12 @@ export function Marp({
     const cleanup = browser(shadowRoot)
 
     // Mermaid 초기화는 DOM이 준비된 후 실행
-    setTimeout(initMermaid, 0)
+    const mermaidTimeout = setTimeout(initMermaid, 0)
 
-    return cleanup
+    return () => {
+      clearTimeout(mermaidTimeout)
+      cleanup()
+    }
   }, [html, css, page])
 
   return (
