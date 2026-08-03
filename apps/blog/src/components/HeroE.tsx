@@ -10,7 +10,7 @@ interface HeroProps {
   yearsWriting: number
 }
 
-const Hero = memo(function Hero({
+const Hero = memo(function HeroBase({
   postCount,
   tagCount,
   yearsWriting,

@@ -98,7 +98,9 @@ export function MarpSlides({
   const swiperRef = useRef<SwiperClass | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const activeIndexRef = useRef(activeIndex)
-  activeIndexRef.current = activeIndex
+  useEffect(() => {
+    activeIndexRef.current = activeIndex
+  }, [activeIndex])
 
   const laserRef = useLaserPointer(isLaserMode)
   const {
@@ -165,9 +167,11 @@ export function MarpSlides({
   useEffect(() => {
     const initialIndex = getInitialIndex(html.length)
     if (initialIndex > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveIndex(initialIndex)
       swiperRef.current?.slideTo(initialIndex, 0)
     }
+     
     setTransition(readTransition())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

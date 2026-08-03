@@ -12,7 +12,7 @@ import TweaksPanel from '@/components/TweaksPanel'
 import {SiteConfig} from '@/config'
 import profile from '@/public/profile.png'
 
-const HeaderLogo = memo(function HeaderLogo() {
+const HeaderLogo = memo(function HeaderLogoBase() {
   return (
     <Link
       href="/"
@@ -37,7 +37,7 @@ const HeaderLogo = memo(function HeaderLogo() {
   )
 })
 
-const HeaderNav = memo(function HeaderNav() {
+const HeaderNav = memo(function HeaderNavBase() {
   const pathname = usePathname() ?? '/'
   const isActive = (path: string) => {
     if (path.startsWith('http')) {

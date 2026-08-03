@@ -57,6 +57,7 @@ export default function TweaksPanel({open, onClose}: Props) {
   const [minimal, setMinimal] = useState<boolean>(false)
   const [tilt, setTilt] = useState<number>(8)
 
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     setAccent(getCookie('tw-accent') || 'default')
     setGrain(getCookie('tw-grain') !== 'false')
@@ -65,6 +66,7 @@ export default function TweaksPanel({open, onClose}: Props) {
     setTilt(Number.isFinite(t) ? t : 8)
     setMounted(true)
   }, [])
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   useEffect(() => {
     if (!mounted) {

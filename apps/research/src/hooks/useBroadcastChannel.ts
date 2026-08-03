@@ -19,10 +19,14 @@ export function useBroadcastChannel(
 ) {
   const channelRef = useRef<BroadcastChannel | null>(null)
   const optionsRef = useRef(options)
-  optionsRef.current = options
+  useEffect(() => {
+    optionsRef.current = options
+  })
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined') {
+      return
+    }
 
     const channel = new BroadcastChannel(channelName)
     channelRef.current = channel

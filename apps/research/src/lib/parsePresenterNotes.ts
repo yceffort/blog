@@ -10,8 +10,12 @@ export function parsePresenterNotes(markdown: string): string[] {
 
     while ((match = commentRegex.exec(slide)) !== null) {
       const content = match[1].trim()
-      if (directiveRegex.test(content)) continue
-      if (!content) continue
+      if (directiveRegex.test(content)) {
+        continue
+      }
+      if (!content) {
+        continue
+      }
       notes.push(content)
     }
 

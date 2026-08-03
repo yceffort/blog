@@ -16,7 +16,7 @@ interface MobileNavProps {
 
 const EXIT_MS = 280
 
-const MobileNav = memo(function MobileNav({menu}: MobileNavProps) {
+const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
   const pathname = usePathname() ?? '/'
   const [mounted, setMounted] = useState(false)
   const [rendered, setRendered] = useState(false)
@@ -25,7 +25,6 @@ const MobileNav = memo(function MobileNav({menu}: MobileNavProps) {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
   }, [])
 

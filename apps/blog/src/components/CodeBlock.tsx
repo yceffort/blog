@@ -8,7 +8,7 @@ interface CodeBlockProps {
   filename?: string
 }
 
-const CopyButton = memo(function CopyButton({
+const CopyButton = memo(function CopyButtonBase({
   getText,
 }: {
   getText: () => string
@@ -72,7 +72,7 @@ const CopyButton = memo(function CopyButton({
   )
 })
 
-const CodeBlock = memo(function CodeBlock({
+const CodeBlock = memo(function CodeBlockBase({
   children,
   className,
   filename,

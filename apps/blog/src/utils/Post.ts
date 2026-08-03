@@ -22,7 +22,7 @@ const THUMB_DIR = `${process.cwd()}/public/thumbnails`
 
 export type {Locale}
 
-export const getAllPosts = cache(async function getAllPosts(
+export const getAllPosts = cache(async function getAllPostsImpl(
   locale: Locale = 'ko',
 ): Promise<Post[]> {
   const files = sync(`${POST_ROOT}/**/*.md*`).reverse()
@@ -78,17 +78,19 @@ export const getAllPosts = cache(async function getAllPosts(
   return posts
 })
 
-export const findPostByYearAndSlug = cache(async function findPostByYearAndSlug(
-  year: string,
-  slug: string[],
-  locale: Locale = 'ko',
-) {
-  const slugs = [year, ...slug].join('/')
-  const posts = await getAllPosts(locale)
-  return posts.find((p) => p?.fields?.slug === slugs)
-})
+export const findPostByYearAndSlug = cache(
+  async function findPostByYearAndSlugImpl(
+    year: string,
+    slug: string[],
+    locale: Locale = 'ko',
+  ) {
+    const slugs = [year, ...slug].join('/')
+    const posts = await getAllPosts(locale)
+    return posts.find((p) => p?.fields?.slug === slugs)
+  },
+)
 
-export const getAllTagsFromPosts = cache(async function getAllTagsFromPosts(
+export const getAllTagsFromPosts = cache(async function getAllTagsFromPostsImpl(
   locale: Locale = 'ko',
 ): Promise<TagWithCount[]> {
   const posts = await getAllPosts(locale)
@@ -105,7 +107,7 @@ export const getAllTagsFromPosts = cache(async function getAllTagsFromPosts(
     .sort((a, b) => b.count - a.count)
 })
 
-export const getSeriesPosts = cache(async function getSeriesPosts(
+export const getSeriesPosts = cache(async function getSeriesPostsImpl(
   seriesName: string,
   locale: Locale = 'ko',
 ): Promise<Post[]> {
@@ -153,7 +155,7 @@ export async function getRelatedPosts(
     .map(({post}) => post)
 }
 
-export const getFeaturedPosts = cache(async function getFeaturedPosts(
+export const getFeaturedPosts = cache(async function getFeaturedPostsImpl(
   locale: Locale = 'ko',
 ): Promise<{popular: Post[]; recent: Post[]}> {
   const allPosts = await getAllPosts(locale)
@@ -197,7 +199,7 @@ export const getFeaturedPosts = cache(async function getFeaturedPosts(
   return {popular, recent}
 })
 
-export const getFeaturedSlugs = cache(async function getFeaturedSlugs(
+export const getFeaturedSlugs = cache(async function getFeaturedSlugsImpl(
   locale: Locale = 'ko',
 ): Promise<string[]> {
   const {popular, recent} = await getFeaturedPosts(locale)

@@ -23,6 +23,7 @@ export function useTimer() {
         clearInterval(intervalRef.current)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning])
 
   const start = useCallback(() => setIsRunning(true), [])

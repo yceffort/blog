@@ -4,7 +4,7 @@ import {memo, useEffect, useRef} from 'react'
 
 const YEAR = new Date().getFullYear()
 
-const Hero = memo(function Hero() {
+const Hero = memo(function HeroBase() {
   const titleRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {

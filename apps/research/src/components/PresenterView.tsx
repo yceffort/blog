@@ -2,11 +2,11 @@
 
 import {useCallback, useEffect, useMemo, useState} from 'react'
 
-import {useBroadcastChannel} from '@/hooks/useBroadcastChannel'
-import {useTimer} from '@/hooks/useTimer'
-
 import {Marp} from './Marp'
 import styles from './PresenterView.module.scss'
+
+import {useBroadcastChannel} from '@/hooks/useBroadcastChannel'
+import {useTimer} from '@/hooks/useTimer'
 
 interface PresenterViewProps {
   dataHtml: string

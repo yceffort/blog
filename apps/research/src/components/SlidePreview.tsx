@@ -10,7 +10,7 @@ interface SlidePreviewProps {
   fonts: string[]
 }
 
-export const SlidePreview = memo(function SlidePreview({
+export const SlidePreview = memo(function SlidePreviewBase({
   html,
   css,
   fonts,
