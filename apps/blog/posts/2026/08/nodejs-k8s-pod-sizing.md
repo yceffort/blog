@@ -6,7 +6,7 @@ tags:
   - v8
   - performance
   - frontend
-published: false
+published: true
 date: 2026-08-03 21:00:00
 description: '같은 워크로드에 GC 튜닝 플래그 한 줄을 붙였더니 peak RSS가 201MB에서 593MB로 뛰었다. 살아있는 데이터는 그대로였다. 왜 그게 당연한 결과인지 V8 New Space를 직접 측정해 역추적하고, 프론트엔드 개발자가 Node.js 파드를 사이징하는 세 축을 정리한다.'
 thumbnail: /thumbnails/2026/08/nodejs-k8s-pod-sizing.png
