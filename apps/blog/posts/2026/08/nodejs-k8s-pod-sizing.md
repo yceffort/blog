@@ -1,5 +1,5 @@
 ---
-title: '<em>NODE_OPTIONS</em> 한 줄이 파드 메모리를 3배로 부풀리는 이유'
+title: 'Node.js 파드는 왜 그 크기인가: <em>NODE_OPTIONS</em>부터 파드 수까지 직접 재본 사이징'
 tags:
   - nodejs
   - kubernetes
