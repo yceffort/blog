@@ -520,7 +520,7 @@ kubectl get deploy my-app -o yaml | grep -A6 "lifecycle:"
 
 `preStop`의 sleep 없이 `server.close()`만 있다면 롤아웃 때 5xx가 섞일 수 있다. `preStop sleep + 드레인 시간 < terminationGracePeriodSeconds`가 성립하는지도 함께 확인한다.
 
-## 복사하기 전에
+## 복사 대신 측정
 
 한 줄의 플래그가 메모리를 세 배로 만드는 데에 트릭은 없었다. 런타임에 원래 있던 동작들이 설정값을 정직하게 따라갔을 뿐이고, 문제는 그 동작을 모른 채 값만 옮겨 적는 복사에 있었다. 글에서 확인한 것들을 풀어놓으면 이렇게 남는다.
 
