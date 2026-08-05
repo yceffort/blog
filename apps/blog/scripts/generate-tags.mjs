@@ -44,8 +44,9 @@ async function generateTags(apiKey, content, existingTags) {
   const client = new Anthropic({apiKey})
 
   const msg = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
+    model: 'claude-sonnet-5',
     max_tokens: 256,
+    thinking: {type: 'disabled'},
     messages: [
       {
         role: 'user',
@@ -65,7 +66,7 @@ ${content.slice(0, 8000)}`,
     ],
   })
 
-  const text = msg.content[0].text.trim()
+  const text = msg.content.find((b) => b.type === 'text').text.trim()
   const jsonMatch = text.match(/\[[\s\S]*?\]/)
   if (!jsonMatch) {throw new Error(`Unexpected response: ${text}`)}
   return JSON.parse(jsonMatch[0])
