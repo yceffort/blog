@@ -5,6 +5,7 @@ import postcss from 'postcss'
 import postcssImportUrl from 'postcss-import-url'
 
 import {parsePresenterNotes} from './parsePresenterNotes'
+import {midnightTheme} from './themes/midnight'
 import {yceffortTheme} from './themes/yceffort'
 
 import type {Result as PostCSSResult, AtRule} from 'postcss'
@@ -59,6 +60,7 @@ async function renderMarp(markdown: string): Promise<RenderedMarp> {
   marp.use(mermaidPlugin)
 
   marp.themeSet.add(yceffortTheme)
+  marp.themeSet.add(midnightTheme)
 
   const {html, css} = marp.render(markdown, {htmlAsArray: true})
 
