@@ -7,9 +7,9 @@ tags:
   - vite
   - rolldown
   - performance
-date: 2026-08-06
-description: '내 앱의 번들은 무엇으로 결정되는가 — 네 개의 축으로 나눠서 점검하고 고치는 법'
-published: false
+date: 2025-01-01
+description: '내 앱의 번들은 무엇으로 결정되는가: 네 개의 축으로 나눠서 점검하고 고치는 법'
+published: true
 ---
 
 # Vite 번들 최적화 실전 가이드
@@ -26,46 +26,54 @@ published: false
 
 번들이 크다는 건 알겠는데, **뭘 건드려야 줄어드는가?**
 
-흔한 답 — "코드 스플리팅 하세요", "트리셰이킹 되게 하세요" — 는 대부분 순서가 틀렸거나, 그 기법이 실제로 무엇을 줄이는지 오해하고 있다.
+흔한 답("코드 스플리팅 하세요", "트리셰이킹 되게 하세요")은 대부분 순서가 틀렸거나, 그 기법이 실제로 무엇을 줄이는지 오해하고 있다.
 
-이 글은 번들 크기를 **네 개의 독립된 축**으로 분해하고, 축마다 무엇을 점검하고 어떤 규모의 이득을 기대할 수 있는지 정리한다.
+이 글은 번들 크기를 **네 개의 축**으로 분해하고, 축마다 무엇을 점검하고 어떤 규모의 이득을 기대할 수 있는지 정리한다.
 
 수치는 두 개의 Vite 앱 **A**(라우트 23개 게시판형)와 **B**(단일 스크롤 화면)를 `vite build` before/after로 잰 값이다. **절대값이 아니라 "이 기법은 이 정도 규모"라는 감각으로 보면 된다.**
+
+측정 환경: Vite 8 (Rolldown 기반). 이 글의 옵션 이름은 rolldown의 `codeSplitting` rename 이후 기준이라 버전에 민감하다. Q&A에 Vite 7 이하 대응표가 있다.
 
 ---
 
 ## 번들 크기를 결정하는 네 개의 축
 
-| 축                       | 질문                       | 주요 수단                 |
-| ------------------------ | -------------------------- | ------------------------- |
-| **1. 무엇이 들어오는가** | 이 모듈이 왜 번들에 있나   | 의존성 선택, `external`   |
-| **2. 얼마나 걷히는가**   | 안 쓰는 코드가 남아 있나   | 트리셰이킹, `sideEffects` |
-| **3. 어떻게 압축되는가** | 압축이 제대로 되고 있나    | `minify`, gzip/brotli     |
-| **4. 언제 받는가**       | 첫 화면에 필요한 것만 받나 | 코드 스플리팅, entry 분리 |
+| 축                       | 질문                       | 주요 수단                          | 단독 SPA라면                |
+| ------------------------ | -------------------------- | ---------------------------------- | --------------------------- |
+| **1. 무엇이 들어오는가** | 이 모듈이 왜 번들에 있나   | `external`, dedupe, `define`, 타깃 | 부분 해당 (`external` 제외) |
+| **2. 얼마나 걷히는가**   | 안 쓰는 JS가 남아 있나     | 트리셰이킹, `sideEffects`          | 해당                        |
+| **3. CSS**               | 안 쓰는 스타일이 남아 있나 | subpath import, entry CSS          | 해당                        |
+| **4. 언제 받는가**       | 첫 화면에 필요한 것만 받나 | 코드 스플리팅, entry 분리          | 해당                        |
 
-**4번은 크기를 줄이지 않는다.** 받는 시점을 옮길 뿐이다. 이걸 크기 최적화로 착각하는 게 가장 흔한 실수다.
+---
+
+## 축에 들어가기 전에 못 박아둘 것
+
+- **압축(minify·gzip)은 축이 아니라 측정의 전제다.** Part 0에서 다룬다
+- **네 축은 서로 독립이 아니다.** 같은 바이트를 겨냥한 기법끼리는 이득이 합산되지 않는다 (Part 5)
+- **축 4는 크기를 줄이지 않는다.** 받는 시점을 옮길 뿐이다. 이걸 크기 최적화로 착각하는 게 가장 흔한 실수다
 
 ---
 
 ## 어느 축부터 봐야 하나
 
 ```
-0. 측정 환경이 맞는지 확인      ← 여기서 틀리면 나머지가 전부 무의미
+0. 측정 환경이 맞는지 확인 (미니파이·gz)  ← 여기서 틀리면 나머지가 전부 무의미
    ↓
-1. 압축이 켜져 있나              (축 3)  — 확인 1초, 효과 최대
+1. 안 들어와도 되는 게 있나      (축 1)  : 코드 한 줄, 효과 큼
    ↓
-2. 안 들어와도 되는 게 있나      (축 1)  — 코드 한 줄, 효과 큼
+2. 들어온 것 중 안 쓰는 게 있나  (축 2)  : 설정 몇 줄, 효과 큼
    ↓
-3. 들어온 것 중 안 쓰는 게 있나  (축 2)  — 설정 몇 줄, 효과 큼
+3. 안 쓰는 CSS가 통째로 오나     (축 3)  : import 경로 변경, 효과 중간
    ↓
-4. 받는 시점을 옮길 수 있나      (축 4)  — 구조 변경, 크기 이득 없음
+4. 받는 시점을 옮길 수 있나      (축 4)  : 구조 변경, 크기 이득 없음
 ```
 
 **위에서부터 내려온다.** 4번부터 시작하는 팀이 많은데, 가장 비싸고 크기 이득은 0이다.
 
 ---
 
-# Part 0 — 측정
+# Part 0. 측정
 
 무엇을 재고 있는지부터 확인한다
 
@@ -76,15 +84,15 @@ published: false
 같은 코드가 **두 배 차이로 측정된다.** 여기서 틀리면 뒤의 모든 비교가 무의미하다.
 
 ```bash
-head -c 200 dist/index.js     # 변수명이 길면 미니파이 안 된 것
-wc -l dist/index.js           # 수천 줄이면 안 된 것
+head -c 200 dist/assets/index-*.js   # 변수명이 길면 미니파이 안 된 것
+wc -l dist/assets/index-*.js         # 수천 줄이면 안 된 것
 ```
 
-Vite 8의 `build.minify` 기본값은 `'oxc'`다. **그냥 두면 mode와 무관하게 항상 켜져 있다.** 그런데도 이 함정에 빠지는 팀이 많다.
+Vite 8의 `build.minify` 기본값은 `'oxc'`다(CSS는 lightningcss). **그냥 두면 mode와 무관하게 항상 켜져 있다.** 그런데도 이 함정에 빠지는 팀이 많다.
 
 ---
 
-## 왜 꺼지는가 — config가 기본값을 덮는다
+## 왜 꺼지는가: config가 기본값을 덮는다
 
 ```ts
 export default defineConfig(({mode}) => {
@@ -100,7 +108,9 @@ export default defineConfig(({mode}) => {
 
 배포 환경이 하나면 드러나지 않는다. `vite build`의 mode 기본값이 `production`이라 `isProd`가 항상 참이기 때문이다.
 
-환경이 늘어나는 순간 갈라진다.
+---
+
+## mode가 늘어나는 순간 갈라진다
 
 ```bash
 vite build                      # mode=production → minify O
@@ -125,39 +135,50 @@ build: {
 
 두 가지가 따라온다.
 
-- **측정 신뢰성** — 어느 모드로 빌드하든 같은 조건으로 잰다
-- **QA 정합성** — QA가 스테이징을 본다면, 프로덕션과 같은 크기의 번들을 받게 된다
+- **측정 신뢰성**: 어느 모드로 빌드하든 같은 조건으로 잰다
+- **QA 정합성**: QA가 스테이징을 본다면, 프로덕션과 같은 크기의 번들을 받게 된다
+
+참고로 `'hidden'`은 **`.map` 파일을 생성하되 JS 끝의 참조 주석만 뺀 것**이다. 파일은 나오므로, 뒤에서 볼 소스맵 귀속 분석의 재료가 된다.
 
 ---
 
 ## 재기 전 확인 ②: raw가 아니라 gz로 본다
+
+- **raw**: 디스크에 놓인 파일 크기
+- **gz**: gzip 압축 후 크기. 사용자가 실제로 받는 양에 가깝다 (서버·CDN이 압축해서 보내므로)
 
 의존성 중복 버전을 정리한 실측이다.
 
 ```
 before  패키지 A ×4 · B ×3 · C ×2      합계 232.0 kB raw
 after                                  합계  79.8 kB raw   (−152.2 kB)
+gz 이득                                −2.25 kB
 ```
 
-raw로 152KB를 걷어냈다. gzip 후 이득은?
+**raw로 세운 기대치는 거의 항상 과대평가다.** 이 사례는 raw Δ의 1/60만 전송량에 반영됐다.
 
-```
-−2.25 kB gz
-```
+---
 
-**중복 코드는 gzip이 매우 잘 먹는다.** 같은 바이트열의 반복은 압축 알고리즘이 가장 잘하는 일이다.
+## 단, 두 가지로 일반화하면 안 된다
 
-> 사용자가 실제로 받는 건 gz(또는 brotli)다. **raw로 세운 기대치는 거의 항상 과대평가다.**
+**① "중복은 gzip이 알아서 지워주니 dedupe는 무의미하다" (✗)**
+
+gzip의 참조 윈도우는 **32KB**다. 사본이 청크 안에서 멀리 떨어져 있으면 반복이어도 압축되지 않는다. raw Δ와 gz Δ의 비율은 사본의 배치에 따라 케이스마다 다르다. 그래서 결론은 "dedupe 하지 마라"가 아니라 **"기대치를 gz로 재고 나서 판단하라"**다.
+
+**② 크기가 0이어도 정리해야 하는 중복이 있다 (✗)**
+
+`react`처럼 **상태를 가진 패키지의 중복은 크기가 아니라 정합성 문제**다. 두 벌 로드되면 훅이 깨진다. 이건 gz 이득과 무관하게 정리 대상이다. 축 1의 external 절에서 다시 나온다.
 
 ---
 
 ## 재기 전 확인 ③: "왜 들어왔는지"를 볼 수 있는가
 
-`rollup-plugin-visualizer`류의 트리맵은 기본이 raw 면적이라 위 함정을 재현한다. 그리고 더 큰 한계가 있다 — **모듈이 왜 들어왔는지 알려주지 않는다.**
+`rollup-plugin-visualizer`류의 트리맵은 기본이 raw 면적이라 위 함정을 재현한다. 그리고 더 큰 한계가 있다. **모듈이 왜 들어왔는지 알려주지 않는다.**
 
-크기를 줄이려면 "이게 왜 있지?"에 답할 수 있어야 한다. 소스맵이 그걸 해준다.
+크기를 줄이려면 "이게 왜 있지?"에 답할 수 있어야 한다. 소스맵이 그 출발점이다.
 
 ```js
+// 이 청크에 어느 패키지의 모듈이 몇 개 들어갔는지 1차 스캔
 const map = JSON.parse(fs.readFileSync('dist/chunks/foo.js.map'))
 const byPkg = {}
 for (const src of map.sources) {
@@ -168,7 +189,13 @@ for (const src of map.sources) {
 }
 ```
 
-어느 청크가 어느 패키지로 채워져 있는지 바이트 단위로 귀속된다.
+---
+
+## 주의: 이 스캔은 모듈 개수지, 바이트가 아니다
+
+바이트 단위 귀속은 소스맵 `mappings` 디코딩이 필요하고, `source-map-explorer`·`sonda` 같은 도구가 해준다.
+
+**앞 스크립트로 수상한 청크를 찾고, 도구로 바이트를 확인하는 순서다.**
 
 ---
 
@@ -188,24 +215,42 @@ vite build --mode production
 node scripts/diff-dist.mjs /tmp/baseline dist
 ```
 
-**한 번에 레버 하나씩.** 두 개를 같이 적용하면 어느 쪽이 효과를 냈는지 모른다. 합산 가능 여부도 따로 확인해야 한다 — **두 기법이 같은 바이트를 겨냥하면 합산되지 않는다.**
+**한 번에 레버 하나씩.** 두 개를 같이 적용하면 어느 쪽이 효과를 냈는지 모른다. 합산 가능 여부도 따로 확인해야 한다. **두 기법이 같은 바이트를 겨냥하면 합산되지 않는다.**
 
 ---
 
-## diff 스크립트
+## diff 스크립트 ①: 해시 정규화와 스캔
+
+산출물 파일명에는 content hash가 들어가서(`index-Ab3xK9.js`) **이름 그대로는 before/after가 매칭되지 않는다.** 해시를 정규화하고 디렉토리를 스캔한다.
 
 ```js
 import {gzipSync} from 'node:zlib'
-import {readFileSync, readdirSync} from 'node:fs'
+import {readFileSync, readdirSync, statSync} from 'node:fs'
 
-const size = (p) => {
-  const buf = readFileSync(p)
-  return [buf.length / 1024, gzipSync(buf).length / 1024]
+const norm = (f) => f.replace(/-[\w-]{8,}(?=\.\w+$)/, '') // index-Ab3xK9.js → index.js
+
+const scan = (dir) => {
+  const out = {}
+  for (const f of readdirSync(dir, {recursive: true})) {
+    if (!statSync(`${dir}/${f}`).isFile()) continue
+    const buf = readFileSync(`${dir}/${f}`)
+    out[norm(String(f))] = [buf.length / 1024, gzipSync(buf).length / 1024]
+  }
+  return out
 }
+```
 
-for (const f of readdirSync(after, {recursive: true})) {
-  const [rawA, gzA] = size(`${before}/${f}`)
-  const [rawB, gzB] = size(`${after}/${f}`)
+---
+
+## diff 스크립트 ②: 비교
+
+한쪽에만 있는 파일(신규·삭제)은 0으로 친다.
+
+```js
+const [a, b] = [scan(before), scan(after)]
+for (const f of new Set([...Object.keys(a), ...Object.keys(b)])) {
+  const [rawA = 0, gzA = 0] = a[f] ?? []
+  const [rawB = 0, gzB = 0] = b[f] ?? []
   console.log(f, (rawB - rawA).toFixed(2), (gzB - gzA).toFixed(2))
 }
 ```
@@ -214,7 +259,7 @@ Vite 콘솔의 gz 값과 `zlib` 기본 레벨 값은 1~2KB 다르다. **절대�
 
 ---
 
-# 축 1 — 무엇이 들어오는가
+# 축 1. 무엇이 들어오는가
 
 가장 싸고 가장 확실한 축
 
@@ -222,19 +267,20 @@ Vite 콘솔의 gz 값과 `zlib` 기본 레벨 값은 1~2KB 다르다. **절대�
 
 ## 번들에 안 들어와도 되는 것들
 
-같은 코드를 두 번 넣고 있지 않은지 본다. 세 가지 패턴이 흔하다.
+같은 코드를 두 번 넣고 있지 않은지 본다. 네 가지 패턴이 흔하다.
 
-| 패턴                  | 증상                            | 수단                     |
-| --------------------- | ------------------------------- | ------------------------ |
-| 런타임이 이미 제공    | CDN·호스트 앱이 주는 걸 또 번들 | `external`               |
-| 같은 패키지 여러 버전 | `react@18`과 `react@19`가 공존  | `overrides` / `dedupe`   |
-| 개발 전용 코드        | mock, 디버그 패널이 프로덕션에  | 조건부 import + `define` |
+| 패턴                  | 증상                              | 수단                     |
+| --------------------- | --------------------------------- | ------------------------ |
+| 런타임이 이미 제공    | CDN·호스트 앱이 주는 걸 또 번들   | `external`               |
+| 같은 패키지 여러 버전 | `react@18`과 `react@19`가 공존    | `overrides` / `dedupe`   |
+| 개발 전용 코드        | mock, 디버그 패널이 프로덕션에    | 조건부 import + `define` |
+| 타깃·폴리필 과잉      | 안 쓰는 legacy 번들·폴리필을 서빙 | browserslist 정책        |
 
-**첫 번째가 압도적으로 이득이 크다.** 코드 변경량은 배열에 문자열 하나다.
+**첫 번째가 압도적으로 이득이 크다.** 코드 변경량은 배열에 문자열 하나다. 다만 성립 조건이 있어서, 단독 SPA라면 두 번째부터 보면 된다.
 
 ---
 
-## `external` — 런타임이 주는 건 빼기
+## `external`: 런타임이 주는 건 빼기
 
 ```ts
 build: {
@@ -246,13 +292,15 @@ build: {
 
 번들에서 빠지고, 런타임이 제공하는 인스턴스를 쓴다. 이게 성립하려면 **런타임에 그 모듈이 실제로 있어야 한다.**
 
-성립하는 상황:
+---
 
-- **마이크로 프론트엔드** — 호스트 셸이 import map으로 공통 의존성을 싱글톤 제공
-- **라이브러리 빌드** — `peerDependencies`는 소비자가 갖고 있음
-- **CDN import map** — `<script type="importmap">`으로 직접 선언
+## external이 성립하는 상황
 
-일반 SPA 단독 배포라면 이 축은 대부분 해당이 없다. 대신 아래 두 패턴을 본다.
+- **마이크로 프론트엔드(MFE)**: 호스트 셸 하나가 여러 리모트 앱을 조립하는 구조. 호스트가 import map으로 공통 의존성을 싱글톤 제공
+- **라이브러리 빌드**: `peerDependencies`(소비자가 직접 설치해서 제공하는 의존성)는 소비자가 갖고 있음
+- **CDN import map**: `<script type="importmap">`으로 bare import(`'react'`)를 URL에 직접 매핑
+
+일반 SPA 단독 배포라면 이 절은 대부분 해당이 없다. 뒤의 dedupe·개발 전용 코드부터 보면 된다.
 
 ---
 
@@ -297,12 +345,14 @@ external에 있을 때   shared.js   43.08 kB gz
 
 이 조합에서 `external`로 빼면 앱은 **0.19.0을 쓰게 된다.** 빌드는 통과하고, 런타임에 없는 API를 호출하다 터진다.
 
-체크리스트:
+---
+
+## external 체크리스트
 
 1. 런타임이 실제 제공하는 버전 확인 (기록 말고 실물)
 2. 로컬 버전과 semver 정합성 확인
-3. **개발 서버에는 `external`이 안 걸린다** — `vite serve`는 alias가 우선이라 dev에서 재현 안 됨
-4. 배포 전 런타임 스모크
+3. **`external`은 빌드 옵션이다.** dev 서버는 번들링을 하지 않으므로 `build.rolldownOptions.external`이 적용되지 않는다. dev에서 멀쩡했다는 건 아무것도 검증하지 않은 것이다
+4. 그러므로 반드시 **빌드 산출물로** 배포 전 런타임 스모크
 
 ---
 
@@ -317,7 +367,7 @@ external + 런타임 싱글톤                    → 연결 1개
 
 React가 `external` 1순위인 것도 같은 이유다. **두 벌 로드되면 훅이 깨진다.** 상태를 가진 라이브러리(라우터, 쿼리 클라이언트, 스토어)는 크기와 무관하게 싱글톤이어야 한다.
 
-> 크기 이득은 부수 효과로 따라온다.
+> 크기 이득은 부수 효과로 따라온다. Part 0에서 본 "gz가 0이어도 정리해야 하는 중복"이 바로 이것이다.
 
 ---
 
@@ -330,15 +380,41 @@ pnpm why react
 pnpm dedupe --check
 ```
 
-정리하면 raw는 확실히 준다. 하지만 앞서 봤듯 **gz 이득은 그 1/60 수준일 수 있다.**
+정리하면 raw는 확실히 준다. 하지만 Part 0에서 봤듯 **gz 이득은 그 1/60 수준일 수 있다.**
 
 모노레포에서 `overrides`로 강제 정렬하면 **전체 패키지의 의존성 해석이 바뀐다.** 전 패키지 typecheck·build를 다시 돌려야 하고 런타임 회귀 위험을 떠안는다.
 
-**먼저 gz로 재고, 그 값이 비용을 정당화하는지 보고 결정한다.**
+**먼저 gz로 재고, 그 값이 비용을 정당화하는지 보고 결정한다.** 단, 상태를 가진 패키지(react, 스토어류)의 중복은 gz와 무관하게 정리한다.
 
 ---
 
-# 축 2 — 얼마나 걷히는가
+## 개발 전용 코드: 조건부 동적 import + 상수 치환
+
+mock 서버, 디버그 패널, 데모 데이터가 프로덕션 번들에 들어 있는 경우가 있다.
+
+```ts
+// entry
+if (import.meta.env.DEV) {
+  const {worker} = await import('./mocks/browser')
+  await worker.start()
+}
+```
+
+- `import.meta.env.DEV`는 빌드 시 `false` 리터럴로 치환된다 → 조건문째 데드 코드로 제거되고, **동적 import라 청크도 아예 안 생긴다**
+- 최상단에 정적 `import {worker} from './mocks/browser'`로 올려두면, 조건문이 지워져도 모듈 평가가 남아 번들에 포함될 수 있다. **반드시 조건부 동적 import로**
+- 커스텀 플래그가 필요하면 `define: {__DEBUG_PANEL__: 'false'}`로 같은 효과를 낸다
+
+---
+
+## 타깃·폴리필: 조용히 두 배가 되는 지점
+
+- **`@vitejs/plugin-legacy`**: 번들을 modern/legacy 두 벌로 만들고 core-js 폴리필까지 얹는다. 지원 브라우저 정책이 정말 legacy 빌드를 요구하는지부터 확인한다. 정책에 없는 브라우저를 위해 전 사용자가 두 벌 분량의 빌드를 유지하는 경우가 있다
+- **`build.target` 하향**: 문법 다운레벨링으로 코드가 팽창한다. 반대로 상향의 이득은 실측 −0.48 kB에 그쳤다 (Part 5). **어느 방향이든 지원 브라우저 정책 결정이 먼저다**
+- **수동 폴리필 import**: 타깃 브라우저가 이미 지원하는 폴리필을 들고 있지 않은지 본다
+
+---
+
+# 축 2. 얼마나 걷히는가
 
 트리셰이킹이 왜 안 되는가
 
@@ -363,7 +439,7 @@ import './styles.css' // 스타일시트 주입
 export function Button(props) { ... }
 ```
 
-**부수효과가 없는 모듈은 export를 아무도 안 쓰면 통째로 지워도 된다.** 있는 모듈은 지우면 안 된다 — 폴리필이 사라지고 스타일이 없어진다.
+**부수효과가 없는 모듈은 export를 아무도 안 쓰면 통째로 지워도 된다.** 있는 모듈은 지우면 안 된다. 폴리필이 사라지고 스타일이 없어진다.
 
 ---
 
@@ -380,9 +456,9 @@ export function Button(props) { ... }
 }
 ```
 
-webpack이 도입했고 지금은 Rollup·Rolldown·esbuild가 모두 존중한다.
+webpack이 도입했고, esbuild·Rolldown은 네이티브로, Rollup은 `@rollup/plugin-node-resolve` 계층에서 존중한다. Vite를 쓴다면 버전과 무관하게 동작한다고 보면 된다.
 
-**문제는 기본값이다. 필드가 없으면 `true`로 간주한다** — "전부 부수효과 있음, 아무것도 지우지 마."
+**문제는 기본값이다. 필드가 없으면 `true`로 간주한다.** "전부 부수효과 있음, 아무것도 지우지 마."
 
 ---
 
@@ -401,6 +477,10 @@ export {Badge} from './badge'
 import {Button} from '@ds/ui' // 하나만 썼는데
 ```
 
+---
+
+## 하나만 썼는데 100개가 남는 과정
+
 1. `Button`을 쓰려면 번들러는 배럴 `index.js`를 평가해야 한다
 2. 배럴은 100개 하위 모듈을 참조한다
 3. `sideEffects` 선언이 없으니 **하위 모듈 100개가 전부 "부수효과 있음"**
@@ -418,8 +498,8 @@ import {Button} from '@ds/ui' // 하나만 썼는데
 cat node_modules/@ds/ui/package.json | grep -A3 sideEffects
 # → 아무것도 안 나오면 = 전부 부수효과 있음으로 취급됨
 
-# 2. 그 패키지가 번들에서 차지하는 비중 확인 (소스맵 귀속)
-# 3. 실제 사용 컴포넌트 수 세기
+# 2. 그 패키지가 번들에서 차지하는 비중 확인 (소스맵 귀속, Part 0)
+# 3. 배럴 import 지점 세기
 grep -roh "from '@ds/ui'" src | wc -l
 ```
 
@@ -446,36 +526,24 @@ build: {
 
 **CSS만은 부수효과로 남겨야 한다.** `import '@ds/ui/css'` 같은 bare import가 드롭되면 스타일이 통째로 사라진다.
 
-실측: 이 오버라이드를 끄면 **+38.65 KB gz.**
-
-> 전제: 그 패키지 JS에 진짜 부수효과가 없는지 먼저 확인해야 한다. bare import와 JS 내 CSS import를 grep으로 세어보는 정도면 충분하다.
+실측: 이 오버라이드를 끄면 **+38.65 kB gz.**
 
 ---
 
-## 함수형보다 룰 배열
+## 오버라이드 전에 확인할 것
 
-```ts
-// 동작하지만 느림 — 모듈마다 Rust→JS 왕복
-moduleSideEffects: (id, external) => { ... }
-
-// 권장 — 네이티브에서 매칭
-moduleSideEffects: [
-  { test: /.../, sideEffects: true },
-  { test: /.../, sideEffects: false },
-]
-```
-
-rolldown 타입 정의에 명시돼 있다: _"`ModuleSideEffectsRule[]` provides better performance by avoiding Rust-JavaScript runtime calls."_
+- **그 패키지 JS에 진짜 부수효과가 없는지 먼저 확인한다.** bare import와 JS 내 CSS import를 grep으로 세어보는 정도면 충분하다
+- 함수형 `moduleSideEffects: (id) => ...`도 동작하지만 모듈마다 Rust→JS 왕복이 생긴다. rolldown 타입 정의가 룰 배열을 권장한다
 
 ---
 
-## 수단 ②: subpath import — 되면 가장 깔끔
+## 수단 ②: subpath import, 되면 가장 깔끔
 
 ```ts
 // before
 import {Button} from '@ds/ui'
 
-// after — 배럴을 거치지 않음
+// after: 배럴을 거치지 않음
 import {Button} from '@ds/ui/button'
 ```
 
@@ -522,13 +590,19 @@ export const Icon = ({ icon: Svg, size, color }) => (
   <Svg width={size} height={size} className={`ds-color-${color}`} />
 )
 
-// 사용처 — 문자열이 아니라 컴포넌트를 넘긴다
+// 사용처: 문자열이 아니라 컴포넌트를 넘긴다
 <Icon icon={Navigation.ArrowRight} size={16} />
 ```
 
 실측: 아이콘 120개 → **실제 번들 13개.**
 
-> 이 수단은 수단 ①과 짝이다. 동적 참조를 없애도 `sideEffects` 선언이 없으면 안 걷히고, 오버라이드만 있고 `registry[icon]`이 남아 있어도 안 걷힌다. **그래서 개별 기여도를 분리 측정하기 어렵다** — 위의 `+38.65 KB`에도 아이콘 몫이 섞여 있다.
+---
+
+## 왜 이 어댑터는 걷히는가
+
+`@ds/icon`이 `export * as Navigation`처럼 네임스페이스로 내보내고, 번들러는 네임스페이스에 대한 **정적 property access**(`Navigation.ArrowRight`)를 추적할 수 있다. 패키지 내부가 런타임 객체 리터럴 레지스트리(`const Navigation = {ArrowRight, ...}`)라면 같은 코드를 써도 안 걷힌다. 따라 하기 전에 패키지의 export 형태부터 확인한다.
+
+> 이 수단은 수단 ①과 짝이다. 동적 참조를 없애도 `sideEffects` 선언이 없으면 안 걷히고, 오버라이드만 있고 `registry[icon]`이 남아 있어도 안 걷힌다. **그래서 개별 기여도를 분리 측정하기 어렵다.** 위의 `+38.65 kB`에도 아이콘 몫이 섞여 있다.
 
 ---
 
@@ -542,6 +616,10 @@ export const Icon = ({ icon: Svg, size, color }) => (
 ```
 
 "미사용 Carousel이 끌고 온 죽은 코드"라고 결론 내리기 쉽다. 그렇게 판단하고 −29 KB를 기대했다가, 빌드해보니 **−7 KB**였다.
+
+---
+
+## 누가 끌고 왔는지 추적한다
 
 ```bash
 grep -rl "embla" node_modules/@ds/headless/dist/
@@ -560,7 +638,7 @@ TabGroup          ← 앱이 실제로 쓰는 컴포넌트
 
 ---
 
-## 잠깐 — 지금까지의 수단은 전부 워크어라운드다
+## 잠깐, 지금까지의 수단은 전부 워크어라운드다
 
 이 축에서 쓴 기법들을 다시 보자.
 
@@ -581,9 +659,8 @@ TabGroup          ← 앱이 실제로 쓰는 컴포넌트
 
 ```jsonc
 {
-  // ① CSS만 부수효과로 선언 — 가장 중요
+  // ① CSS만 부수효과로 선언: 가장 중요
   "sideEffects": ["**/*.css"],
-
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -601,17 +678,29 @@ TabGroup          ← 앱이 실제로 쓰는 컴포넌트
 }
 ```
 
-**④ 런타임 export는 named로.** subpath가 `default`만 내보내면 타입은 배럴에서 오고 값은 default라 어긋난다. 이게 `TS2613` / 런타임 `undefined`의 정체다.
+---
+
+## 조건 ④: 런타임 export는 named로
+
+subpath가 `default`만 내보내면 타입은 배럴에서 오고 값은 default라 어긋난다. 이게 앞에서 본 `TS2613` / 런타임 `undefined`의 정체다.
+
+```ts
+// ✗ subpath가 default만 내보냄: 배럴 타입과 어긋난다
+export default Button
+
+// ✓ named export
+export {Button}
+```
 
 ---
 
 ## 아이콘·아이콘류는 특히 조심
 
 ```tsx
-// ✗ 문자열 키 — 정적 분석 불가, 전체 레지스트리가 번들에 남음
+// ✗ 문자열 키: 정적 분석 불가, 전체 레지스트리가 번들에 남음
 ;<Icon name="arrow-right" />
 
-// ✓ 컴포넌트 export — 쓴 것만 남음
+// ✓ 컴포넌트 export: 쓴 것만 남음
 import {ArrowRight} from '@ds/icon'
 ;<ArrowRight size={16} />
 ```
@@ -633,7 +722,7 @@ import {ArrowRight} from '@ds/icon'
 
 ---
 
-# 축 3 — CSS
+# 축 3. CSS
 
 JS와 다른 파이프라인, 다른 함정
 
@@ -642,12 +731,14 @@ JS와 다른 파이프라인, 다른 함정
 ## CSS에는 트리셰이킹이 없다
 
 ```scss
-@use '@ds/ui/css'; // dist/index.css — 492 KB raw
+@use '@ds/ui/css'; // dist/index.css (492 KB raw)
 ```
 
 번들러는 어떤 셀렉터가 실제로 쓰이는지 알 수 없다. 클래스명이 런타임에 조합될 수도 있기 때문이다. **그래서 CSS 배럴은 통째로 남는다.**
 
 실제로 쓰는 컴포넌트가 15~24개인데 안 쓰는 `app-bar`(75KB), `textfield`, `chip`, `dialog`, `snackbar` … **~208 KB가 죽은 CSS**였다.
+
+축 2의 배럴 문제와 같은 모양이지만, JS와 달리 `sideEffects`로 풀 수 없어서 축을 따로 뒀다.
 
 ---
 
@@ -656,10 +747,10 @@ JS와 다른 파이프라인, 다른 함정
 축 2에서 JS subpath 스왑이 `exports.types` 때문에 막혔다. **CSS는 뚫린다.**
 
 ```scss
-// 안 됨 — exports에 선언된 CSS subpath는 ./css 하나뿐
+// 안 됨: exports에 선언된 CSS subpath는 ./css 하나뿐
 @use '@ds/ui/button/css';
 
-// 됨 — sass는 exports를 거치지 않고 파일 경로로 resolve
+// 됨: sass는 exports를 거치지 않고 파일 경로로 resolve
 @use '@ds/ui/dist/button/index.css';
 @use '@ds/ui/dist/badge/index.css';
 ```
@@ -718,7 +809,7 @@ detail.js / detail.css   ← 상세 화면
 
 ---
 
-# 축 4 — 언제 받는가
+# 축 4. 언제 받는가
 
 크기는 안 줄어든다
 
@@ -733,7 +824,7 @@ detail.js / detail.css   ← 상세 화면
 끔:  index 57.60 +                shared 50.58              = 108.18 gz
 ```
 
-**전송량은 사실상 동일하다 (−0.22 KB).** 당연하다 — 같은 모듈을 어느 파일에 담느냐의 문제이지 모듈이 없어지는 게 아니다.
+**전송량은 사실상 동일하다 (−0.22 KB).** 당연하다. 같은 모듈을 어느 파일에 담느냐의 문제이지 모듈이 없어지는 게 아니다.
 
 그럼 왜 하는가. 두 가지다.
 
@@ -777,9 +868,9 @@ Rolldown(과 Rollup)의 기본 청킹은 **"동일한 동적 진입점 집합에
 
 ---
 
-## 파편의 정체 — vendor가 아니다
+## 파편의 정체: vendor가 아니다
 
-앱 A의 163개 청크를 소스맵으로 분류했다.
+앱 A의 청크 중 소스맵으로 귀속 가능한 161개를 분류했다.
 
 ```
 node_modules 전용 : 50개 / 2,792 KB
@@ -807,9 +898,12 @@ node_modules 전용 : 50개 / 2,792 KB
 게시글 상세         +66개 파일 / 3,075 KB
 ```
 
-HTTP/2 멀티플렉싱이 있어도 공짜가 아니다.
+HTTP/2 멀티플렉싱이 있어도 공짜가 아니다. 정확히 하자.
 
-**의존 그래프가 깊으면 워터폴이 생긴다** — A를 받아야 A가 import하는 B를 알고, B를 받아야 C를 안다. 모바일 네트워크에서 RTT가 곱해진다.
+- Vite는 동적 청크의 **정적 의존 청크 목록을 빌드 타임에 알고**, 프리로드 헬퍼로 병렬 fetch한다. "받아봐야 다음 파일을 안다"式 워터폴은 생각보다 얕다
+- 그래도 남는 비용: **요청 시작 자체가 클릭 이후**라는 것, **동적 import가 중첩된 체인**은 병렬화가 안 된다는 것, 그리고 요청 수십 개 분량의 스케줄링·캐시 조회 오버헤드
+
+모바일 네트워크에서는 이 남은 왕복이 그대로 체감이 된다.
 
 ---
 
@@ -820,11 +914,11 @@ HTTP/2 멀티플렉싱이 있어도 공짜가 아니다.
 **① 요청이 사용자 클릭 이후에 시작된다**
 
 ```
-정적 import : 앱 로드 시점에 이미 받아둠 → 클릭 즉시 렌더
-lazy        : 클릭 → 청크 요청 → 그 청크의 공유 청크들 요청 → 렌더
+정적 import : 앱 로드 시점에 이미 받아둠     → 클릭 즉시 렌더
+lazy        : 클릭 → 청크 요청(정적 의존은 병렬) → 렌더
 ```
 
-라우트 전환마다 네트워크 왕복이 끼어든다. 첫 로드를 줄인 만큼 **전환이 느려진다.**
+라우트 전환마다 최소 한 번의 네트워크 왕복이 낀다. 첫 로드를 줄인 만큼 **전환이 느려진다.**
 
 **② 조합 폭발**
 
@@ -864,9 +958,16 @@ lazy        : 클릭 → 청크 요청 → 그 청크의 공유 청크들 요청
 | PDF 뷰어           | ✅   | 첨부 열 때만                   |
 | 결제 모듈          | ✅   | 구매 플로우에서만              |
 | 관리자 전용 화면   | ✅   | 대부분의 사용자가 안 감        |
-| 목록 / 상세 / 작성 | ❌   | 앱의 주 동선                   |
-| 첫 진입 화면       | ❌   | 무조건 2-hop 손해              |
-| 상시 노출 섹션     | ❌   | 청크만 늘고 전송량 동일        |
+
+---
+
+## 반대로 lazy가 손해인 곳
+
+| 대상               | lazy | 이유                    |
+| ------------------ | ---- | ----------------------- |
+| 목록 / 상세 / 작성 | ❌   | 앱의 주 동선            |
+| 첫 진입 화면       | ❌   | 무조건 2-hop 손해       |
+| 상시 노출 섹션     | ❌   | 청크만 늘고 전송량 동일 |
 
 **"무겁고, 일부만 쓰고, 지연돼도 되는 것."** 셋 다 맞을 때만.
 
@@ -877,13 +978,13 @@ lazy        : 클릭 → 청크 요청 → 그 청크의 공유 청크들 요청
 entry를 나눌 수 없는 구조에서는 lazy를 쓰되 **경계를 굵게** 잡는다.
 
 ```ts
-// ✗ 라우트마다 — 진입점 23개
+// ✗ 라우트마다: 진입점 23개
 const BoardList = lazy(() => import('./pages/board/list'))
 const BoardDetail = lazy(() => import('./pages/board/detail'))
 const BoardWrite = lazy(() => import('./pages/board/write'))
 // ... 20개 더
 
-// ✓ 기능 묶음마다 — 진입점 3개
+// ✓ 기능 묶음마다: 진입점 3개
 const BoardRoutes = lazy(() => import('./features/board/routes'))
 const ProfileRoutes = lazy(() => import('./features/profile/routes'))
 const AdminRoutes = lazy(() => import('./features/admin/routes'))
@@ -892,6 +993,24 @@ const AdminRoutes = lazy(() => import('./features/admin/routes'))
 게시판에 들어온 사용자는 목록·상세·작성을 다 볼 가능성이 높다. **함께 쓰이는 것은 함께 받는 게 낫다.**
 
 조합의 밑이 23에서 3으로 줄고, 전환 시 네트워크 왕복도 사라진다.
+
+---
+
+## 남은 전환 지연은 prefetch로 상쇄한다
+
+경계를 굵게 잡았어도 lazy 경계를 넘는 첫 전환에는 왕복 한 번이 남는다. 이건 숨길 수 있다.
+
+```tsx
+const preloadBoard = () => import('./features/board/routes')
+
+<Link to="/board" onMouseEnter={preloadBoard} onFocus={preloadBoard}>
+  게시판
+</Link>
+```
+
+- `import()`는 같은 청크를 두 번 받지 않는다. **hover 시점에 미리 불러두면 클릭 시점엔 이미 캐시에 있다**
+- 링크가 뷰포트에 들어올 때(IntersectionObserver) 미리 부르는 것도 같은 원리다
+- 단, 첫 화면에서 전부 preload하면 lazy를 한 의미가 없다. **다음에 갈 확률이 높은 경계만** 골라서 건다
 
 ---
 
@@ -911,6 +1030,10 @@ build: {
 ```
 
 각 entry는 **독립된 번들 그래프의 루트**다. `admin.ts`에서 도달할 수 없는 코드는 `admin.js`에 없다. 반대도 마찬가지다.
+
+---
+
+## entry 분리의 산출물
 
 ```
 dist/
@@ -933,7 +1056,7 @@ dist/
 | **어드민·유저 분리 SPA**   | ✅    | 도메인·경로로 갈리므로 HTML을 나눌 수 있음  |
 | **단일 SPA (라우터 하나)** | ❌    | 진입 HTML이 하나라 나눌 축이 없음           |
 
-**마지막 줄이 중요하다.** `index.html` 하나로 서비스되는 일반 SPA는 entry를 나눠도 브라우저가 결국 하나만 로드한다. 그 경우엔 앞 슬라이드의 **묶음 단위 lazy**가 답이다.
+**마지막 줄이 중요하다.** `index.html` 하나로 서비스되는 일반 SPA는 entry를 나눠도 브라우저가 결국 하나만 로드한다. 그 경우엔 앞 슬라이드의 **묶음 단위 lazy + prefetch**가 답이다.
 
 ---
 
@@ -945,7 +1068,7 @@ build: {
     output: {
       codeSplitting: {
         minSize: 20 * 1024,      // 이보다 작으면 청크로 안 뺌
-        minShareCount: 2,        // N개 이상 entry가 참조할 때만 분리
+        minShareCount: 2,        // N개 이상 진입점이 참조할 때만 분리
         maxSize: 200 * 1024,     // 이보다 크면 다시 쪼갬
       },
     },
@@ -955,7 +1078,7 @@ build: {
 
 6KB짜리 조합 청크가 100개라면 이게 가장 직접적이다.
 
-`minSize`에 걸려 탈락한 모듈은 사라지는 게 아니라 **자동 청킹으로 폴백**한다 — 자기를 쓰는 청크로 흡수된다.
+`minSize`에 걸려 탈락한 모듈은 사라지는 게 아니라 **자동 청킹으로 폴백**한다. 자기를 쓰는 청크로 흡수된다.
 
 ---
 
@@ -1000,6 +1123,7 @@ Windows 대응으로 경로 구분자는 `[\\/]`를 쓰라고 rolldown 문서가
 | 진입 HTML이 갈리는 구조 (MPA·MFE·어드민 분리) | **entry 분리**                          |
 | 단일 SPA, 라우트가 많음                       | **기능 묶음 단위 lazy** (라우트 단위 ✗) |
 | 무겁고 일부만 쓰는 라이브러리                 | 그 지점만 `lazy`                        |
+| lazy 전환이 느리다는 불만                     | hover·뷰포트 **prefetch**               |
 | 전 화면 공통 vendor                           | `groups`로 캐시 분리                    |
 | 6KB짜리 파편이 100개                          | `minSize` / `minShareCount`             |
 
@@ -1007,7 +1131,7 @@ Windows 대응으로 경로 구분자는 `[\\/]`를 쓰라고 rolldown 문서가
 
 ---
 
-# Part 5 — 기대치 관리
+# Part 5. 기대치 관리
 
 측정해서 기각한 것들
 
@@ -1040,14 +1164,14 @@ Windows 대응으로 경로 구분자는 `[\\/]`를 쓰라고 rolldown 문서가
 
 ## 효과가 없는 것들
 
-- **상시 노출 컴포넌트 `lazy`** — 첫 화면에 무조건 보이는 걸 lazy로 만들면 청크만 늘고 전송량은 그대로다. 오히려 워터폴이 한 단계 깊어진다
-- **이미 트리셰이킹된 패키지에 추가 조치** — `sideEffects: false`가 선언된 패키지는 그냥 두면 된다
+- **상시 노출 컴포넌트 `lazy`**: 첫 화면에 무조건 보이는 걸 lazy로 만들면 청크만 늘고 전송량은 그대로다. 오히려 요청 시작만 늦어진다
+- **이미 트리셰이킹된 패키지에 추가 조치**: `sideEffects: false`가 선언된 패키지는 그냥 두면 된다
 
 ---
 
 ## 레버는 서로 독립이 아니다
 
-디자인시스템을 통째로 `external`로 빼는 계획의 기대치가 처음엔 **−89 KB gz**였다. 나중에 실제로 재보니 **−31.81 KB**였다.
+도입부에서 예고한 그 얘기다. 디자인시스템을 통째로 `external`로 빼는 계획의 기대치가 처음엔 **−89 KB gz**였다. 나중에 실제로 재보니 **−31.81 KB**였다.
 
 계획을 세운 시점과 실행 시점 사이에 **트리셰이킹(축 2)을 먼저 적용했기 때문이다.**
 
@@ -1088,7 +1212,7 @@ Windows 대응으로 경로 구분자는 `[\\/]`를 쓰라고 rolldown 문서가
 
 ---
 
-# Part 6 — 검증
+# Part 6. 검증
 
 "줄었다"를 어떻게 증명하나
 
@@ -1134,9 +1258,9 @@ ds-size-compact, ds-text-size-*       → textfield (미사용)
 
 > **확인이 남은 불확실성**
 >
-> 1. CSS 변경의 시각 회귀 미실시 — 셀렉터 diff 정적 분석만
-> 2. 두 기법의 개별 기여도 미분리 — 커플링돼 있어 합산치만 측정
-> 3. 런타임 스모크 미실시 — 빌드 + `tsc --noEmit`까지
+> 1. CSS 변경의 시각 회귀 미실시: 셀렉터 diff 정적 분석만
+> 2. 두 기법의 개별 기여도 미분리: 커플링돼 있어 합산치만 측정
+> 3. 런타임 스모크 미실시: 빌드 + `tsc --noEmit`까지
 
 **"−19 KB 줄었다"와 "−19 KB 줄어드는 것으로 측정됐고 시각 검증은 안 했다"는 다른 문장이다.**
 
@@ -1146,7 +1270,7 @@ ds-size-compact, ds-text-size-*       → textfield (미사용)
 
 | 순서 | 축          | 확인                               | 기대 규모       |
 | ---- | ----------- | ---------------------------------- | --------------- |
-| 0    | 측정        | 미니파이 켜져 있나, gz로 보고 있나 | —               |
+| 0    | 측정        | 미니파이 켜져 있나, gz로 보고 있나 | -               |
 | 1    | 들어오는 것 | 런타임이 주는 걸 또 번들하나       | **수십 KB**     |
 | 2    | 걷히는 것   | 배럴 + `sideEffects` 미선언        | **수십 KB**     |
 | 3    | CSS         | CSS 배럴을 통째로 로드하나         | **십수 KB**     |
@@ -1178,9 +1302,9 @@ ds-size-compact, ds-text-size-*       → textfield (미사용)
 
 ## 이 표에서 읽어야 할 것
 
-- **첫 두 줄이 전체 이득의 37%** — 앱 단독 변경만으로
+- **첫 두 줄이 전체 이득의 37%**: 앱 단독 변경만으로
 - 마지막 한 줄이 나머지의 대부분인데, **런타임과 전 소비자의 버전 단일화**가 선행돼야 한다
-- 축 4(코드 스플리팅)는 이 표에 **한 줄도 없다** — 크기를 안 줄이니까
+- 축 4(코드 스플리팅)는 이 표에 **한 줄도 없다**: 크기를 안 줄이니까
 
 > 조직에 "번들 42% 줄입니다"를 약속하기 전에, 그 42% 중 얼마가 내 결정권 안에 있는지부터 본다.
 
@@ -1194,9 +1318,9 @@ ds-size-compact, ds-text-size-*       → textfield (미사용)
 
 아니다. 축이 세 개다.
 
-- **전송량** — 청크 개수와 무관
-- **캐시 효율** — 자주 바뀌는 앱 코드와 안 바뀌는 vendor를 분리하면 이득
-- **요청 수 / 워터폴** — 너무 잘게 쪼개면 손해
+- **전송량**: 청크 개수와 무관
+- **캐시 효율**: 자주 바뀌는 앱 코드와 안 바뀌는 vendor를 분리하면 이득
+- **요청 수 / 왕복**: 너무 잘게 쪼개면 손해
 
 "5개가 164개보다 좋다"가 아니라 **164개가 될 만한 이유가 있었는지**를 물어야 한다. 라우트를 전부 lazy로 만든 결과라면, 그건 의도가 아니라 관성인 경우가 많다.
 
@@ -1211,10 +1335,10 @@ ds-size-compact, ds-text-size-*       → textfield (미사용)
 | `build.rollupOptions`             | `build.rolldownOptions`       |
 | `output.manualChunks`             | `output.codeSplitting`        |
 | `output.experimentalMinChunkSize` | `codeSplitting.minSize`       |
-| —                                 | `codeSplitting.minShareCount` |
+| (없음)                            | `codeSplitting.minShareCount` |
 | `treeshake.moduleSideEffects`     | 동일 (룰 배열 형태 추가)      |
 
-`manualChunks`와 `advancedChunks`는 rolldown 타입 정의에 `@deprecated`로 명시돼 있다. 새로 쓴다면 `codeSplitting`이다.
+`manualChunks`와 `advancedChunks`는 rolldown 타입 정의에 `@deprecated`로 명시돼 있다. `codeSplitting`은 `advancedChunks`를 rename한 최근 옵션이므로, **rolldown 버전이 오래됐다면 이름부터 확인한다.** 새로 쓴다면 `codeSplitting`이다.
 
 ---
 
@@ -1222,7 +1346,7 @@ ds-size-compact, ds-text-size-*       → textfield (미사용)
 
 CDN이 brotli를 서빙한다면 그쪽이 실제 전송량에 가깝다. 다만:
 
-- **Δ의 방향과 상대 크기는 gz와 거의 같다** — 판단이 뒤집히는 경우는 드물다
+- **Δ의 방향과 상대 크기는 gz와 거의 같다**: 판단이 뒤집히는 경우는 드물다
 - gz는 `zlib` 내장이라 스크립트가 간단하다
 - Vite 콘솔 출력이 gz 기준이라 눈으로 대조하기 쉽다
 
@@ -1234,12 +1358,7 @@ CDN이 brotli를 서빙한다면 그쪽이 실제 전송량에 가깝다. 다만
 
 **목표는 KB가 아니라 사용자 지표여야 한다.** LCP, TBT, 첫 상호작용까지의 시간.
 
-번들 최적화는 그 지표를 개선하는 여러 수단 중 하나다. 크기 축을 다 훑고 나면 대개 병목은 다른 쪽에 있다.
-
-- API 워터폴 (순차 2-hop 요청)
-- 캐시 설정 누락으로 인한 불필요한 refetch
-- `loading="lazy"` / `decoding="async"` 미적용
-- `content-visibility` 미적용
+번들 최적화는 그 지표를 개선하는 여러 수단 중 하나다. 크기 축을 다 훑고 나면 대개 병목은 다른 쪽(API 워터폴, 캐시 설정 누락)에 있다.
 
 **165 KB를 145 KB로 줄이는 것보다, 순차 요청 하나를 병렬로 바꾸는 게 체감이 클 수 있다.** 크기만 보다 보면 이걸 놓친다.
 
