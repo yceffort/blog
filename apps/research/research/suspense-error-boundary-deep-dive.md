@@ -427,16 +427,16 @@ function createResource(promise) {
 
 ```
 1. Profile 렌더 → throw promise
-2. React: 가장 가까운 Suspense를 찾아 fallback 커밋
-3. React: 그 promise에 .then(재시도 예약)을 걸어둔다
-4. promise resolve
-5. React: 해당 경계부터 렌더를 다시 시도
-6. 이번엔 read()가 값을 반환 → 진짜 콘텐츠 커밋
+2. React: 가장 가까운 Suspense를 찾아 fallback을 화면에 표시
+3. React: 잡아둔 promise에 "끝나면 알려줘"라고 .then을 걸어둠
+4. 데이터 도착 (promise resolve)
+5. React: Profile을 처음부터 다시 렌더링
+6. 이번엔 read()가 값을 반환 → fallback 대신 진짜 콘텐츠 표시
 ```
 
-핵심: **"재개"가 아니라 "재시도"다.**
+핵심: **멈춘 곳에서 이어지는 게 아니라, 처음부터 다시 실행된다.**
 
-컴포넌트 함수가 멈췄다 이어지는 게 아니라, **처음부터 다시 실행**된다. 그래서 결과를 캐시해두는 리소스/라이브러리가 필요한 것 — 다시 실행됐을 때 이번엔 값을 돌려줘야 하니까.
+자바스크립트 함수는 중간에 일시정지했다가 재개할 수 없다. 그래서 React가 할 수 있는 일은 컴포넌트 함수를 한 번 더 호출하는 것뿐이다. 이때 리소스가 결과를 기억해두지 않았다면 read()는 또 promise를 던지고, 화면은 fallback에서 벗어나지 못한다. 결과를 캐시하는 리소스/라이브러리가 필요한 이유가 이것이다.
 
 ---
 
@@ -724,7 +724,8 @@ function handleChange(e) {
 }
 ```
 
-- transition 중 suspend는 **보이는 콘텐츠를 fallback으로 되돌리지 않는다** — 이전 화면 유지, 준비되면 교체, 진행은 `isPending`으로
+- `startTransition`으로 감싼 업데이트가 **transition**이다. React에 "급하지 않다"고 표시해 두는 것
+- 이 표시가 Suspense의 동작을 바꾼다. transition이 일으킨 렌더가 suspend하면, React는 **보이던 화면을 fallback으로 되돌리지 않고 그대로 둔다**. 준비되면 교체하고, 기다리는 중이라는 표시는 `isPending`으로 하면 된다
 - 퀴즈 2라면? `setSubmitted(...)`를 `startTransition`으로 감싸면 Spinner 후퇴가 사라진다
 - 값 단위 버전인 `useDeferredValue(query)`도 있다 — **원인이 값 하나면** 더 간단하다
 
