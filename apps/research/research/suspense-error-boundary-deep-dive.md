@@ -733,6 +733,26 @@ function handleChange(e) {
 
 ---
 
+## 곁가지: transition이 열어둔 문, tearing
+
+transition 렌더는 화면을 유지한 채 뒤에서, 중간중간 브라우저에 양보(yield)하며 **끊어서** 진행된다. 그 틈에 값이 바뀌면?
+
+```
+1. 렌더 시작: <A>가 store를 읽음 → 1
+2. React가 잠시 양보 → 그 틈에 이벤트가 store를 2로 변경
+3. 렌더 재개: <B>가 같은 store를 읽음 → 2
+4. 커밋: 한 화면에 A는 1, B는 2 (tearing)
+```
+
+- `useState`·props는 안전하다. React가 렌더 한 번 동안 **일관된 스냅샷을 보장**한다
+- 문제는 **React 바깥의 가변 store**를 렌더 중 직접 읽을 때다 (모듈 변수, 직접 만든 store)
+- 해법이 **useSyncExternalStore**다. 렌더 중 store가 바뀐 것을 감지하면 동기 재렌더로 화면을 맞춘다
+- Redux(v8+)·Zustand는 내부에서 이미 이것을 쓴다. store를 직접 만들 때만 기억하면 된다
+
+<!-- 곁가지임을 밝히고 시작: transition을 쓰는 순간 렌더가 "끊길 수 있는 것"이 되면서 생기는 부작용이라는 연결만 전달. uSES는 일관성을 위해 감지 시 동기(블로킹) 재렌더로 후퇴한다 = 동시성 이득 일부를 포기하는 트레이드오프라는 점을 구두로. 상세는 reactwg 'What is tearing?' 참고. -->
+
+---
+
 ## fallback 깜빡임과 300ms 스로틀
 
 중첩된 Suspense가 차례로 준비되면, fallback → 콘텐츠 → 또 fallback… 화면이 연쇄적으로 튄다.
@@ -1249,6 +1269,7 @@ const {data, error} = useQuery({
 
 - [Algebraic Effects for the Rest of Us — Dan Abramov](https://overreacted.io/algebraic-effects-for-the-rest-of-us/)
 - [New Suspense SSR Architecture in React 18 — reactwg](https://github.com/reactwg/react-18/discussions/37)
+- [What is tearing? — reactwg](https://github.com/reactwg/react-18/discussions/69)
 
 ---
 
