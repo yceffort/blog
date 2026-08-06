@@ -7,7 +7,7 @@ tags:
   - vite
   - rolldown
   - performance
-date: 2025-01-01
+date: 2026-08-05
 description: '내 앱의 번들은 무엇으로 결정되는가: 네 가지 질문으로 나눠서 점검하고 고치는 법'
 published: true
 ---
