@@ -1,7 +1,7 @@
 import {readFileSync} from 'fs'
 
 import type {Root, Element} from 'hast'
-import {imageSize} from 'image-size'
+import sharp from 'sharp'
 import type {Plugin} from 'unified'
 import {visit} from 'unist-util-visit'
 import type {VFile} from 'vfile'
@@ -44,10 +44,10 @@ async function addMetadata(node: ImageElement, postPath: string) {
 
   try {
     const image = readFileSync(`public${imageUrl}`)
-    const size = await imageSize(image)
-    if (size) {
-      node.properties.width = size.width
-      node.properties.height = size.height
+    const {width, height} = await sharp(image).metadata()
+    if (width && height) {
+      node.properties.width = width
+      node.properties.height = height
     }
   } catch {
     // nothing to do
