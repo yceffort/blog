@@ -31,7 +31,7 @@ export function useBroadcastChannel(
     const channel = new BroadcastChannel(channelName)
     channelRef.current = channel
 
-    channel.onmessage = (event: MessageEvent<SlideMessage>) => {
+    channel.addEventListener('message', (event: MessageEvent<SlideMessage>) => {
       const data = event.data
       if (data.type === 'SLIDE_CHANGE' && optionsRef.current.onSlideChange) {
         optionsRef.current.onSlideChange(data.index)
@@ -47,7 +47,7 @@ export function useBroadcastChannel(
       if (data.type === 'SYNC_RESPONSE' && optionsRef.current.onSlideChange) {
         optionsRef.current.onSlideChange(data.index)
       }
-    }
+    })
 
     return () => channel.close()
   }, [channelName])

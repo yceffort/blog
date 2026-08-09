@@ -2,13 +2,12 @@ import fs from 'fs'
 
 import frontMatter from 'front-matter'
 
-import {pathToSlug} from './postPaths'
-import {getAllPostFiles} from './postsRaw'
-
-import type {Locale} from './postPaths'
+import {SiteConfig} from '@/config'
 import type {FrontMatter} from '@/type'
 
-import {SiteConfig} from '@/config'
+import {pathToSlug} from './postPaths'
+import type {Locale} from './postPaths'
+import {getAllPostFiles} from './postsRaw'
 
 export function buildLlmsFullResponse(locale: Locale): Response {
   const files = getAllPostFiles(locale)
@@ -28,7 +27,7 @@ export function buildLlmsFullResponse(locale: Locale): Response {
       return {slug: pathToSlug(file), body, attributes}
     })
     .filter(({attributes}) => attributes.published)
-    .sort(
+    .toSorted(
       (a, b) =>
         new Date(b.attributes.date).getTime() -
         new Date(a.attributes.date).getTime(),

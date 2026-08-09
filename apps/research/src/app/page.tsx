@@ -1,11 +1,10 @@
 import fs from 'fs'
 import path from 'path'
 
-import {cacheLife, cacheTag} from 'next/cache'
-
 import {compareDesc} from 'date-fns/compareDesc'
 import {format} from 'date-fns/format'
 import matter from 'gray-matter'
+import {cacheLife, cacheTag} from 'next/cache'
 
 import Hero from '@/components/Hero'
 import LayoutWrapper from '@/components/LayoutWrapper'
@@ -70,7 +69,7 @@ async function getHomeSlides(): Promise<Slide[]> {
   const isDev = process.env.NODE_ENV !== 'production'
   return allSlides
     .filter((slide) => isDev || slide.published)
-    .sort((a, b) => compareDesc(a.date, b.date))
+    .toSorted((a, b) => compareDesc(a.date, b.date))
 }
 
 export default async function Page() {

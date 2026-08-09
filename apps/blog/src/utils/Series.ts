@@ -1,16 +1,14 @@
 import fs from 'fs'
 import path from 'path'
 
-import {cache} from 'react'
-
 import frontMatter from 'front-matter'
 import {sync} from 'glob'
+import {cache} from 'react'
 
+import type {Series} from '../type'
 import {getPopularPostViews} from './analytics'
 import {getSeriesPosts} from './Post'
-
 import type {Locale} from './postPaths'
-import type {Series} from '../type'
 
 const SERIES_ROOT = path.join(process.cwd(), 'series')
 
@@ -51,7 +49,7 @@ export const getAllSeries = cache(async function getAllSeriesImpl(
 
   return series
     .filter((s) => s.posts.length > 0)
-    .sort((a, b) => (latestPostDate(a) < latestPostDate(b) ? 1 : -1))
+    .toSorted((a, b) => (latestPostDate(a) < latestPostDate(b) ? 1 : -1))
 })
 
 export const findSeriesBySlug = cache(async function findSeriesBySlugImpl(

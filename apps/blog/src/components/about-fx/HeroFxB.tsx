@@ -76,7 +76,7 @@ export default function HeroFxB() {
     img.src = '/profile.jpeg'
     img.crossOrigin = 'anonymous'
 
-    img.onload = () => {
+    img.addEventListener('load', () => {
       const sample = document.createElement('canvas')
       sample.width = SIZE
       sample.height = SIZE
@@ -116,7 +116,7 @@ export default function HeroFxB() {
       }
       particlesRef.current = particles
       tick()
-    }
+    })
 
     const onMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect()

@@ -1,9 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 
-import {cache} from 'react'
-
 import matter from 'gray-matter'
+import {cache} from 'react'
 
 export interface SlideIndexEntry {
   slug: string
@@ -36,7 +35,7 @@ export const getAllSlides = cache(
           markdown,
         }
       })
-      .sort((a, b) => {
+      .toSorted((a, b) => {
         const ad = a.date ?? ''
         const bd = b.date ?? ''
         return bd.localeCompare(ad)

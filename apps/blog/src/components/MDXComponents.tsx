@@ -1,5 +1,4 @@
 import Link from 'next/link'
-
 import type {HTMLProps, ReactElement} from 'react'
 
 import CodeBlock from '@/components/CodeBlock'
@@ -54,14 +53,18 @@ const MdxComponents = {
     )
   },
   a: (props: HTMLProps<HTMLAnchorElement>) => {
-    const {href, ...rest} = props
+    const {href, children, ...rest} = props
 
     if (!href) {
       return null
     }
 
     if (href.startsWith('#')) {
-      return <a href={href} {...rest} />
+      return (
+        <a href={href} {...rest}>
+          {children}
+        </a>
+      )
     }
 
     const isExternal =
@@ -76,7 +79,9 @@ const MdxComponents = {
           className={className ? `${className} external-link` : 'external-link'}
           target="_blank"
           rel="noopener noreferrer"
-        />
+        >
+          {children}
+        </a>
       )
     }
 
@@ -87,7 +92,7 @@ const MdxComponents = {
         target={rest.target}
         rel={rest.rel}
       >
-        {rest.children}
+        {children}
       </Link>
     )
   },

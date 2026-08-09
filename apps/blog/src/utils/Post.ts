@@ -1,18 +1,16 @@
 import fs from 'fs'
 
-import {cache} from 'react'
-
 import frontMatter from 'front-matter'
 import {sync} from 'glob'
+import {cache} from 'react'
 import readingTime from 'reading-time'
 
+import {POPULAR_POSTS_COUNT, RECENT_POSTS_COUNT} from '@/constants'
+
+import type {FrontMatter, Post, TagWithCount} from '../type'
 import {getPopularPostSlugs} from './analytics'
 import {POST_ROOT, isLocaleFile, pathToSlug} from './postPaths'
-
 import type {Locale} from './postPaths'
-import type {FrontMatter, Post, TagWithCount} from '../type'
-
-import {POPULAR_POSTS_COUNT, RECENT_POSTS_COUNT} from '@/constants'
 
 const THUMB_DIR = `${process.cwd()}/public/thumbnails`
 
@@ -28,7 +26,7 @@ export type {Locale}
 export const getAllPosts = cache(async function getAllPostsImpl(
   locale: Locale = 'ko',
 ): Promise<Post[]> {
-  const files = sync(`${POST_ROOT}/**/*.md*`).reverse()
+  const files = sync(`${POST_ROOT}/**/*.md*`).toReversed()
 
   const posts = files
     .filter((f) => isLocaleFile(f, locale))
@@ -68,7 +66,7 @@ export const getAllPosts = cache(async function getAllPostsImpl(
       }
       return prev
     }, [])
-    .sort((a, b) => {
+    .toSorted((a, b) => {
       if (a.frontMatter.date < b.frontMatter.date) {
         return 1
       }
@@ -107,7 +105,7 @@ export const getAllTagsFromPosts = cache(async function getAllTagsFromPostsImpl(
 
   return Array.from(tagCountMap.entries())
     .map(([tag, count]) => ({tag, count}))
-    .sort((a, b) => b.count - a.count)
+    .toSorted((a, b) => b.count - a.count)
 })
 
 export const getSeriesPosts = cache(async function getSeriesPostsImpl(
@@ -117,7 +115,7 @@ export const getSeriesPosts = cache(async function getSeriesPostsImpl(
   const posts = await getAllPosts(locale)
   return posts
     .filter((post) => post.frontMatter.series === seriesName)
-    .sort(
+    .toSorted(
       (a, b) =>
         (a.frontMatter.seriesOrder ?? 0) - (b.frontMatter.seriesOrder ?? 0),
     )
@@ -147,7 +145,7 @@ export async function getRelatedPosts(
       ),
     }))
     .filter(({score}) => score > 0)
-    .sort((a, b) =>
+    .toSorted((a, b) =>
       b.score !== a.score
         ? b.score - a.score
         : a.post.frontMatter.date < b.post.frontMatter.date

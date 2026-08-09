@@ -26,6 +26,7 @@ export default function OfflinePage() {
           인터넷 연결이 끊어졌습니다. 이전에 방문한 페이지는 오프라인에서도 읽을
           수 있습니다.
         </p>
+        {/* oxlint-disable-next-line next/no-html-link-for-pages -- 오프라인 폴백에서는 라우터 없이 전체 리로드가 필요하다 */}
         <a
           href="/"
           className="rounded-lg bg-gray-900 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200"

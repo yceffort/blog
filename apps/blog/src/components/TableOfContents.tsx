@@ -8,6 +8,10 @@ interface TOCItem {
   level: number
 }
 
+const handleScrollTop = () => {
+  window.scrollTo({top: 0, behavior: 'smooth'})
+}
+
 function TOCList({
   headings,
   activeId,
@@ -135,10 +139,6 @@ function FloatingTOC({
   }, [isOpen, activeId])
 
   const rounded = Math.round(progress)
-
-  const handleScrollTop = () => {
-    window.scrollTo({top: 0, behavior: 'smooth'})
-  }
 
   return (
     <div ref={panelRef} className="floating-toc">

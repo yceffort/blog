@@ -33,9 +33,9 @@ export async function generateStaticParams() {
       post.frontMatter.tags.find((t) => t === tag),
     ).length
 
-    ;[
-      ...new Array(Math.ceil(tagsCount / DEFAULT_NUMBER_OF_POSTS)).keys(),
-    ].forEach((i) => {
+    Array.from({
+      length: Math.ceil(tagsCount / DEFAULT_NUMBER_OF_POSTS),
+    }).forEach((_, i) => {
       paths.push({tag, id: `${i + 1}`})
     })
   })

@@ -1,10 +1,9 @@
 'use client'
 
-import {useCallback, useEffect, useRef, useState} from 'react'
-import {createPortal} from 'react-dom'
-
 import Panzoom from '@panzoom/panzoom'
 import {useTheme} from 'next-themes'
+import {useCallback, useEffect, useRef, useState} from 'react'
+import {createPortal} from 'react-dom'
 
 function readTokenColor(
   style: CSSStyleDeclaration,
@@ -234,6 +233,7 @@ export default function Mermaid({chart}: {chart: string}) {
         }}
         onClick={handleOpen}
         role="button"
+        aria-label="다이어그램 확대"
         tabIndex={0}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') {

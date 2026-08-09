@@ -1,11 +1,9 @@
+import {stripTitleEmphasis} from '@yceffort/shared/utils'
+import type {Metadata} from 'next'
 import Link from 'next/link'
 
-import {stripTitleEmphasis} from '@yceffort/shared/utils'
-
-import type {Post} from '@/type'
-import type {Metadata} from 'next'
-
 import {SiteConfig} from '@/config'
+import type {Post} from '@/type'
 import {getAllPosts} from '@/utils/Post'
 
 export const metadata: Metadata = {
@@ -29,7 +27,7 @@ export default async function ArchivePage() {
       byYear.set(year, [post])
     }
   }
-  const years = [...byYear.keys()].sort((a, b) => b - a)
+  const years = [...byYear.keys()].toSorted((a, b) => b - a)
 
   return (
     <div className="page-view archive-view">

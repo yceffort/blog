@@ -1,6 +1,5 @@
-import {permanentRedirect} from 'next/navigation'
-
 import type {Metadata} from 'next'
+import {permanentRedirect} from 'next/navigation'
 
 import ListLayout from '@/components/layouts/ListLayout'
 import PageNumber from '@/components/layouts/PageNumber'
@@ -30,9 +29,10 @@ export async function generateMetadata(props: {
 
 export async function generateStaticParams() {
   const posts = await getAllPosts('en')
-  return [
-    ...new Array(Math.ceil(posts.length / DEFAULT_NUMBER_OF_POSTS)).keys(),
-  ].map((i) => ({id: `${i + 1}`}))
+  return Array.from(
+    {length: Math.ceil(posts.length / DEFAULT_NUMBER_OF_POSTS)},
+    (_, i) => ({id: `${i + 1}`}),
+  )
 }
 
 export default async function EnPagesPage(props: {

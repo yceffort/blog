@@ -1,10 +1,9 @@
 'use client'
 
-import {useEffect, useState} from 'react'
-
 import {Monitor, Moon, Sun} from '@yceffort/shared/components'
 import {getCookie, setCookie} from '@yceffort/shared/utils'
 import {useTheme} from 'next-themes'
+import {useEffect, useState} from 'react'
 
 const ACCENTS: {
   name: string
@@ -119,7 +118,7 @@ export default function TweaksPanel({open, onClose}: Props) {
     const viewTransition = document.startViewTransition(() => {
       setTheme(next)
     })
-    viewTransition.finished.then(() => {
+    viewTransition.finished.finally(() => {
       document.documentElement.classList.remove('theme-transition-circle')
     })
   }
@@ -199,6 +198,7 @@ export default function TweaksPanel({open, onClose}: Props) {
         <div
           className="tweaks-switch"
           role="switch"
+          aria-label="film grain"
           aria-checked={grain}
           tabIndex={0}
           data-on={grain}
@@ -218,6 +218,7 @@ export default function TweaksPanel({open, onClose}: Props) {
         <div
           className="tweaks-switch"
           role="switch"
+          aria-label="minimal mode"
           aria-checked={minimal}
           tabIndex={0}
           data-on={minimal}

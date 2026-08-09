@@ -118,6 +118,7 @@ export default function ImageZoom({
   }
 
   const ImageComponent = isExternal ? (
+    // oxlint-disable-next-line next/no-img-element -- 외부 이미지는 next/image 최적화 대상이 아니다
     <img src={src} alt={alt} width={width} height={height} />
   ) : (
     <Image

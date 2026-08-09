@@ -22,22 +22,33 @@ const POST_PATH = resolve(BLOG_ROOT, 'posts')
 function loadApiKey() {
   const env = readFileSync(ENV_PATH, 'utf-8')
   const match = env.match(/ANTHROPIC_API_KEY=(.+)/)
-  if (!match) {throw new Error('ANTHROPIC_API_KEY not found in .env.local')}
+  if (!match) {
+    throw new Error('ANTHROPIC_API_KEY not found in .env.local')
+  }
   return match[1].trim()
 }
 
 function parseFrontmatter(content) {
   const match = content.match(/^---\n([\s\S]*?)\n---/)
-  if (!match) {throw new Error('No frontmatter found')}
-  return {raw: match[1], fullMatch: match[0], body: content.slice(match[0].length).trim()}
+  if (!match) {
+    throw new Error('No frontmatter found')
+  }
+  return {
+    raw: match[1],
+    fullMatch: match[0],
+    body: content.slice(match[0].length).trim(),
+  }
 }
 
 function fixFrontmatterQuotes(content) {
   const match = content.match(/^---\n([\s\S]*?)\n---/)
-  if (!match) {return content}
+  if (!match) {
+    return content
+  }
   const fixed = match[1].replace(
     /^(title|description):\s*'(.*)'$/gm,
-    (_, key, val) => val.includes("'") ? `${key}: "${val}"` : `${key}: '${val}'`,
+    (_, key, val) =>
+      val.includes("'") ? `${key}: "${val}"` : `${key}: '${val}'`,
   )
   return content.replace(match[1], fixed)
 }
@@ -50,8 +61,8 @@ function getEnPath(mdPath) {
 function getRecentPosts(count) {
   const files = sync(`${POST_PATH}/**/*.md*`)
     .filter((f) => !/\.en\.mdx?$/.test(f))
-    .sort()
-    .reverse()
+    .toSorted()
+    .toReversed()
 
   // Parse and sort by date
   const posts = files.map((f) => {
@@ -93,7 +104,9 @@ function splitIntoChunks(content) {
       current += section
     }
   }
-  if (current) {chunks.push(current)}
+  if (current) {
+    chunks.push(current)
+  }
 
   // Prepend frontmatter to first chunk
   chunks[0] = fullMatch + '\n\n' + chunks[0]
@@ -133,7 +146,9 @@ ${content}`,
 
   const results = []
   for (let i = 0; i < chunks.length; i++) {
-    console.log(`  Translating chunk ${i + 1}/${chunks.length} (${chunks[i].length} chars)`)
+    console.log(
+      `  Translating chunk ${i + 1}/${chunks.length} (${chunks[i].length} chars)`,
+    )
     const isFirst = i === 0
     const prompt = isFirst
       ? `You are a professional translator specializing in frontend/web development technical blogs. Translate this Korean blog post section into natural, fluent English.

@@ -2,6 +2,10 @@
 
 import {useEffect, useState} from 'react'
 
+const handleScrollTop = () => {
+  window.scrollTo({top: 0, behavior: 'smooth'})
+}
+
 export default function ScrollTop() {
   const [show, setShow] = useState(false)
   const [hasTOC, setHasTOC] = useState(false)
@@ -32,10 +36,6 @@ export default function ScrollTop() {
       observer.disconnect()
     }
   }, [])
-
-  const handleScrollTop = () => {
-    window.scrollTo({top: 0, behavior: 'smooth'})
-  }
 
   if (hasTOC) {
     return null

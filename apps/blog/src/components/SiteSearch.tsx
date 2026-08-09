@@ -1,10 +1,8 @@
 'use client'
 
+import MiniSearch from 'minisearch'
 import Link from 'next/link'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
-
-import MiniSearch from 'minisearch'
-
 import type {ReactNode} from 'react'
 
 import {useLocale} from '@/hooks/useLocale'
@@ -27,7 +25,7 @@ function escapeRegExp(s: string): string {
 function highlight(text: string, terms: string[]): ReactNode {
   const cleaned = terms
     .filter(Boolean)
-    .sort((a, b) => b.length - a.length)
+    .toSorted((a, b) => b.length - a.length)
     .map(escapeRegExp)
   if (cleaned.length === 0) {
     return text
