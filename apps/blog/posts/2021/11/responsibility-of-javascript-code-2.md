@@ -39,7 +39,7 @@ description: '알지만 왠지 선뜻 내키지 않는 최적화, 이유가 무�
 https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting/
 
 1. 코드 [entry point](https://webpack.js.org/concepts/entry-points/) 간에 중복 코드를 제거 하고 있는지?
-2. [dymaic import()]()를 사용하여 레이지 로딩을 하고 있는지?
+2. dymaic import()를 사용하여 레이지 로딩을 하고 있는지?
 
 중복 코드를 줄이는 것은 성능에 매우 필수적이므로 꼭 해야 한다. 레이지 로딩은 첫 페이지의 초기 자바스크립트 용량을 줄임으로써 성능을 향상 시킨다. 또한 [Bundle Buddy](https://github.com/samccone/bundle-buddy)와 같은 도구를 사용하면 문제가 있는지 확인할 수도 있다.
 

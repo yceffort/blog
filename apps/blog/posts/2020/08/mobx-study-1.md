@@ -168,7 +168,7 @@ ReactDOM.render(
 
 #### Custom Reaction
 
-사용자정의 Reaction은 상황에 맞게 [autorun](http://mobxjs.github.io/mobx/refguide/autorun.html) [reaction](http://mobxjs.github.io/mobx/refguide/reaction.html) [when]()를 사용하면 간단하게 만들 수 있다.
+사용자정의 Reaction은 상황에 맞게 [autorun](http://mobxjs.github.io/mobx/refguide/autorun.html) [reaction](http://mobxjs.github.io/mobx/refguide/reaction.html) when를 사용하면 간단하게 만들 수 있다.
 
 예를 들어 `autorun`을 아래와 같이 활용하면, `unfinishedTodoCount`값이 바뀔 때마다 로그를 찍는다.
 

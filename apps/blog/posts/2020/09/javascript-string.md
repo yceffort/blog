@@ -40,7 +40,7 @@ hello.length // 5
 
 이 `\u0048\u0065\u006C\u006C\u006F`가 자바스크립트가 string을 보는 방법이다. 그리고 이것이 앞서 언급한 코드 시퀀스의 집합이다.
 
-한가지 알아둬야 할 것은, 이렇게 UTF-16의 한 비트로 표현할 수 있는 문자들은 [Basic Multilangual Plane]()에 한정되어 있다는 것이다. 그 외에 언어들에는
+한가지 알아둬야 할 것은, 이렇게 UTF-16의 한 비트로 표현할 수 있는 문자들은 Basic Multilangual Plane에 한정되어 있다는 것이다. 그 외에 언어들에는
 
 - [Supplementary Multilingual Plane](<https://en.wikipedia.org/wiki/Plane_(Unicode)#Supplementary_Multilingual_Plane>)
 - [Supplementary Ideographic Plane](<https://en.wikipedia.org/wiki/Plane_(Unicode)#Supplementary_Ideographic_Plane>)
