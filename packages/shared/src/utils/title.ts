@@ -4,7 +4,10 @@ export function stripTitleEmphasis(title: string): string {
   return title.replace(EM_PATTERN, '$1')
 }
 
-export interface TitlePart {text: string; emphasis: boolean}
+export interface TitlePart {
+  text: string
+  emphasis: boolean
+}
 
 export function parseTitleEmphasis(title: string): TitlePart[] {
   if (!title.includes('<em>')) {
