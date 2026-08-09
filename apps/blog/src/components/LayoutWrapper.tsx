@@ -200,6 +200,8 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
     containerClass = 'xl:max-w-7xl'
   } else if (pathname?.startsWith('/tags')) {
     containerClass = 'xl:max-w-7xl'
+  } else if (pathname === '/series') {
+    containerClass = 'xl:max-w-7xl'
   }
 
   return (

@@ -1458,6 +1458,61 @@ body[data-minimal='true'] .hero-title .accent {
   margin-right: auto;
   margin-left: auto;
 }
+.series-view .post-masthead,
+.series-view .post-article {
+  max-width: none;
+}
+.series-view .post-title,
+.series-view .page-sub {
+  word-break: keep-all;
+}
+.series-view .page-sub {
+  max-width: none;
+  font-size: 16px;
+  text-wrap: pretty;
+}
+.series-readme {
+  margin-top: 8px;
+  padding: 18px 22px 6px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--surface) 70%, transparent);
+}
+.series-readme .post-article {
+  font-size: 15px;
+}
+.series-thread .rec-row {
+  padding-left: 36px;
+}
+.series-thread .rec-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 12px;
+  width: 1px;
+  background: var(--border);
+}
+.series-thread .rec-row:first-child::before {
+  top: 50%;
+}
+.series-thread .rec-row:last-child::before {
+  bottom: 50%;
+}
+.series-thread .rec-row::after {
+  content: '◆';
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  font-size: 9px;
+  line-height: 1;
+  color: var(--ink-4);
+  transform: translate(-50%, -50%);
+  transition: color 180ms;
+}
+.series-thread .rec-row:hover::after {
+  color: var(--primary);
+}
 .post-article {
   font-size: 16px;
   line-height: 1.8;
