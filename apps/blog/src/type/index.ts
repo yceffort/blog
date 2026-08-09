@@ -29,3 +29,13 @@ export interface TagWithCount {
   tag: string
   count: number
 }
+
+export interface Series {
+  slug: string
+  name: string
+  title: string
+  description: string
+  body: string
+  path: string
+  posts: Post[]
+}
