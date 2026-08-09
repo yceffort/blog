@@ -108,6 +108,24 @@ async function HomeContent() {
         nowSeries={nowSeries}
       />
 
+      <div className="sec-head">
+        <div>
+          <span className="sec-count">
+            {String(posts.length).padStart(2, '0')} ITEMS
+          </span>
+          <h2>
+            Popular <em>this season</em>
+          </h2>
+        </div>
+        <div className="line" />
+        <div className="hint">hover · tilt · open</div>
+      </div>
+      <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => (
+          <PostCard key={post.fields.slug} post={post} />
+        ))}
+      </section>
+
       {series.length > 0 && (
         <>
           <div className="sec-head">
@@ -131,24 +149,6 @@ async function HomeContent() {
           </section>
         </>
       )}
-
-      <div className="sec-head">
-        <div>
-          <span className="sec-count">
-            {String(posts.length).padStart(2, '0')} ITEMS
-          </span>
-          <h2>
-            Popular <em>this season</em>
-          </h2>
-        </div>
-        <div className="line" />
-        <div className="hint">hover · tilt · open</div>
-      </div>
-      <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => (
-          <PostCard key={post.fields.slug} post={post} />
-        ))}
-      </section>
 
       {recentPosts.length > 0 && (
         <>
