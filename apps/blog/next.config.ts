@@ -57,9 +57,6 @@ const config: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
-  experimental: {
-    viewTransition: true,
-  },
   outputFileTracingIncludes: {
     '/*': ['./posts/**/*'],
   },

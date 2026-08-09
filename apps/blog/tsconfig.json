@@ -4,7 +4,6 @@
     "module": "esnext",
     "jsx": "react-jsx",
     "lib": ["dom", "es2022"],
-    "baseUrl": "./",
     "moduleResolution": "bundler",
     "strict": true,
     "allowJs": true,
