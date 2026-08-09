@@ -10,6 +10,8 @@ published: true
 date: 2026-08-03 21:00:00
 description: '같은 워크로드에 GC 튜닝 플래그 한 줄을 붙였더니 peak RSS가 201MB에서 593MB로 뛰었다. 살아있는 데이터는 그대로였다. 왜 그게 당연한 결과인지 V8 New Space를 직접 측정해 역추적하고, 프론트엔드 개발자가 Node.js 파드를 사이징하는 세 축을 정리한다.'
 thumbnail: /thumbnails/2026/08/nodejs-k8s-pod-sizing.png
+series: '프론트엔드 개발자가 알아야 할 쿠버네티스'
+seriesOrder: 6
 ---
 
 ## Table of Contents
@@ -29,6 +31,8 @@ NODE_OPTIONS="--max-semi-space-size=256 --max-old-space-size=3072"
 사실 이 글은 그 복사가 실제로 사고를 낸 뒤에 썼다. 컨테이너 메모리는 그대로인데 저 GC 플래그만 어딘가에서 복사돼 들어간 SSR 서비스가 있었고, 배포 직후엔 멀쩡하다가 트래픽이 붙자 파드 메모리가 limit에 차오르며 경보가 울렸다. 살아있는 데이터가 늘어난 게 아니었다. 컨테이너에 맞지 않게 부푼 GC 버퍼가 그대로 메모리로 올라온 것뿐이었다. 왜 그게 당연한 결과인지가 이 글의 절반이고, 나머지 절반은 그래서 파드를 어떻게 사이징하느냐다.
 
 프론트엔드 개발자에게 이건 남 얘기가 아니다. Next.js든 Remix든 BFF(Backend For Frontend, 프론트엔드 팀이 직접 관리하는 API 중간 서버)든, SSR을 하는 순간 우리는 Node.js 프로세스를 컨테이너에 담아 쿠버네티스에 올린다. 그리고 `request`, `limit`, `NODE_OPTIONS` 같은 손잡이들을 누군가의 설정에서 복사해 온다. 손잡이가 무슨 일을 하는지는 모른 채로.
+
+이 글은 처음에 혼자 서 있다가, 이후에 쓴 "프론트엔드 개발자가 알아야 할 쿠버네티스" 시리즈의 심화 종착점(6편)으로 편입되었다. 파드와 컨테이너, 트래픽 경로, 파드의 종료 같은 배경이 낯설다면 [1편의 개념 지도](/2026/08/k8s-for-frontend-1)부터 시작하는 길도 있다.
 
 이 글은 저 한 줄이 **왜** 메모리를 세 배로 만드는지 V8 힙 내부에서 역추적한다. 추측이 아니라 **Node.js v24.14.1로 직접 측정**해서, `--max-semi-space-size`가 New Space를 어떻게 부풀리는지, 단일 프로세스의 CPU 천장이 어디인지, cluster를 쓰면 그 비용이 어떻게 곱해지는지를 수치로 본다. 그리고 그 이해 위에서 CPU, 메모리, 파드 수라는 세 축으로 파드를 사이징하는 법을 정리한다.
 
@@ -344,7 +348,7 @@ pm2를 정당화하는 논거로 자주 나오는 "PID 1 문제"는 진짜지만
 
 여기서 PID 1 함정이 다시 나온다. `CMD npm start`나 셸 형식 CMD로 띄우면 PID 1이 `sh`나 `npm`이 되는데, **이들은 SIGTERM을 자식에게 전달하지 않는다.** 그래서 앱은 종료 신호를 영영 못 받고, 파드는 30초를 꽉 채워 매달렸다가 SIGKILL된다. 롤아웃마다 반복된다. `node`를 직접 PID 1로 띄우면 신호는 닿지만 기본 처리가 없어서, 핸들러를 명시하지 않으면 SIGTERM을 조용히 무시한다. 해법은 **exec 형식 JSON CMD와 명시적 핸들러**, 또는 `tini`/`--init`이다.
 
-테스트에서는 안 보이는 함정이 하나 더 있다. 종료 시 API 서버는 kubelet(SIGTERM)과 엔드포인트 컨트롤러에 **동시에, 순서 없이** 신호를 보낸다. 그래서 SIGTERM을 받은 뒤에도 iptables·로드밸런서가 수렴할 때까지 **새 요청이 계속 들어온다.** `server.close()`만으로는 부족하다. `preStop` 훅(kubelet이 SIGTERM을 보내기 직전에 컨테이너 안에서 실행해 주는 명령)에 `sleep 10~20초`를 걸어 라우팅이 먼저 빠지게 한 뒤 드레인을 시작하는 패턴이 필요하다(AWS 문서도 `sleep`을 예시로 든다). 그리고 `terminationGracePeriodSeconds`는 `preStop sleep + 최장 in-flight drain + 버퍼`보다 크게 잡는다.
+테스트에서는 안 보이는 함정이 하나 더 있다. 종료 시 API 서버는 kubelet(SIGTERM)과 엔드포인트 컨트롤러에 **동시에, 순서 없이** 신호를 보낸다. 그래서 SIGTERM을 받은 뒤에도 iptables·로드밸런서가 수렴할 때까지 **새 요청이 계속 들어온다**(이 수렴의 정체는 이후에 쓴 [트래픽 편](/2026/08/k8s-for-frontend-3)에서 실측으로 채웠다. 그 환경에서 평균 0.76초였다). `server.close()`만으로는 부족하다(닫히지 않는 바쁜 keep-alive 커넥션이라는 더 깊은 함정도 있는데, [파드의 삶과 죽음 편](/2026/08/k8s-for-frontend-4)에서 재현했다). `preStop` 훅에 sleep을 걸어 라우팅이 먼저 빠지게 한 뒤 드레인을 시작하는 패턴이 필요하다. 처음 쓸 당시에는 컨테이너 안에서 `sleep` 명령을 실행하는 방식으로 10~20초를 관례처럼 걸었는데(AWS 문서도 `sleep`을 예시로 든다), v1.34부터는 sleep 바이너리 없이 매니페스트만으로 되는 네이티브 sleep 액션이 GA이고, 초수도 관례 대신 클러스터의 전파 지연을 재서 정할 수 있다([삶과 죽음 편](/2026/08/k8s-for-frontend-4)은 실측 0.76초를 근거로 3초를 걸어 수렴 창의 거부를 0으로 만들었다). 그리고 `terminationGracePeriodSeconds`는 `preStop sleep + 최장 in-flight drain + 버퍼`보다 크게 잡는다.
 
 pm2를 쓴다면 이 절의 함정(신호, kill_timeout, PID 1)이 전부 앞 절에서 본 pm2 설정 문제로 되돌아온다. 프로세스를 하나만 두면 애초에 없다.
 
@@ -532,7 +536,7 @@ Node 서비스인데 memory 기반이라면 스케일이 제대로 동작하지 
 kubectl get deploy my-app -o yaml | grep -A6 "lifecycle:"
 ```
 
-`preStop`의 sleep 없이 `server.close()`만 있다면 롤아웃 때 5xx가 섞일 수 있다. `preStop sleep + 드레인 시간 < terminationGracePeriodSeconds`가 성립하는지도 함께 확인한다.
+`preStop`의 sleep 없이 `server.close()`만 있다면 롤아웃 때 5xx가 섞일 수 있다(설정 조합별 실패 계수는 [삶과 죽음 편](/2026/08/k8s-for-frontend-4)의 계단 표에 실측으로 있다). `preStop sleep + 드레인 시간 < terminationGracePeriodSeconds`가 성립하는지도 함께 확인한다.
 
 ## 복사 대신 측정
 

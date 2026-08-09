@@ -10,6 +10,8 @@ published: true
 date: 2026-08-03 21:00:00
 description: 'I added one GC tuning flag to the same workload and peak RSS jumped from 201MB to 593MB, while the live data stayed the same. This post traces back through V8 New Space with direct measurements to show why that result is exactly what should happen, and lays out the three axes frontend developers can use to size a Node.js pod.'
 thumbnail: /thumbnails/2026/08/nodejs-k8s-pod-sizing.png
+series: 'Kubernetes for Frontend Developers'
+seriesOrder: 6
 ---
 
 ## Table of Contents
@@ -27,6 +29,8 @@ Without this line, peak RSS was 201MB. With it, 593MB. The memory nearly tripled
 That combination of flags may look familiar. It is a stock recommendation that comes up when you search for Node GC tuning, the kind of setting that gets passed from team to team along with testimonials about reduced latency in heavy data-processing services. The problem is that the same value is tuning for one service and pure waste for another, and it is often copied without knowing which side you are on.
 
 For frontend developers, this is not someone else's problem. Whether it is Next.js, Remix, or a BFF (Backend For Frontend, an API middle-tier server managed directly by the frontend team), the moment we do SSR, we are putting a Node.js process into a container and running it on Kubernetes. And we copy knobs like `request`, `limit`, and `NODE_OPTIONS` from someone else's configuration, without knowing what those knobs actually do.
+
+This post stood alone at first, and was later folded into the "Kubernetes for Frontend Developers" series as its deep-dive terminus (Part 6). If the background feels unfamiliar (pods and containers, the traffic path, pod termination), starting from [Part 1's concept map](/en/2026/08/k8s-for-frontend-1) is also an option.
 
 This post traces back through the V8 heap internals to explain **why** that one line triples memory. Not by guessing, but by **measuring directly on Node.js v24.14.1**: how `--max-semi-space-size` inflates New Space, where the CPU ceiling of a single process sits, and how the cost multiplies when you use cluster, all in numbers. On top of that understanding, I lay out how to size a pod along three axes: CPU, memory, and pod count.
 
@@ -342,7 +346,7 @@ The order in which a pod dies goes like this. When a deletion request arrives, t
 
 Here the PID 1 trap reappears. Launch with `CMD npm start` or a shell-form CMD and PID 1 becomes `sh` or `npm`, and **these do not forward SIGTERM to their children.** The app never receives the termination signal, and the pod hangs for the full 30 seconds before being SIGKILLed. It repeats on every rollout. Launch `node` directly as PID 1 and the signal arrives, but with no default handling, SIGTERM is silently ignored unless you install a handler explicitly. The fix is an **exec-form JSON CMD with an explicit handler**, or `tini`/`--init`.
 
-There is one more trap that never shows up in testing. At termination, the API server signals the kubelet (SIGTERM) and the endpoint controllers **simultaneously, with no ordering.** So even after receiving SIGTERM, **new requests keep arriving** until iptables and load balancers converge. `server.close()` alone is not enough. You need the pattern of putting a `sleep 10-20 seconds` in the `preStop` hook (a command the kubelet runs inside the container just before sending SIGTERM) so routing drains out first, and only then starting the drain (AWS documentation also uses `sleep` as its example). And set `terminationGracePeriodSeconds` larger than `preStop sleep + longest in-flight drain + buffer`.
+There is one more trap that never shows up in testing. At termination, the API server signals the kubelet (SIGTERM) and the endpoint controllers **simultaneously, with no ordering.** So even after receiving SIGTERM, **new requests keep arriving** until iptables and load balancers converge (what that convergence actually is was later filled in with measurements in [the traffic part](/en/2026/08/k8s-for-frontend-3); in that environment it averaged 0.76 seconds). `server.close()` alone is not enough (there is an even deeper trap, busy keep-alive connections that close() cannot end, reproduced in [the life and death part](/en/2026/08/k8s-for-frontend-4)). You need the pattern of putting a sleep in the `preStop` hook so routing drains out first, and only then starting the drain. When this was first written, the convention was running a `sleep` command inside the container for 10-20 seconds (AWS documentation also uses `sleep` as its example); since v1.34 the native sleep action has been GA, needing no sleep binary and only the manifest, and the seconds can be derived from your cluster's measured propagation latency instead of convention ([the life and death part](/en/2026/08/k8s-for-frontend-4) used the measured 0.76s to set 3 seconds and drove convergence-window refusals to zero). And set `terminationGracePeriodSeconds` larger than `preStop sleep + longest in-flight drain + buffer`.
 
 If you use pm2, all of this section's traps (signals, kill_timeout, PID 1) circle back into the pm2 configuration problems of the previous section. With a single process, they never exist in the first place.
 
@@ -518,7 +522,7 @@ Check the code and manifests for `-i max` (pm2) or forks based on `os.availableP
 kubectl get deploy my-app -o yaml | grep -A6 "lifecycle:"
 ```
 
-If there is only `server.close()` with no `preStop` sleep, 5xx can slip in during rollouts. Also confirm that `preStop sleep + drain time < terminationGracePeriodSeconds` holds.
+If there is only `server.close()` with no `preStop` sleep, 5xx can slip in during rollouts (per-configuration failure counts are measured in [the life and death part](/en/2026/08/k8s-for-frontend-4)'s staircase table). Also confirm that `preStop sleep + drain time < terminationGracePeriodSeconds` holds.
 
 ## Measure, Don't Copy
 
