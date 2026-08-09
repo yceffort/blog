@@ -3,6 +3,8 @@ import Link from 'next/link'
 import {connection} from 'next/server'
 import {Suspense} from 'react'
 
+import {stripTitleEmphasis} from '@yceffort/shared/utils'
+
 import type {Metadata} from 'next'
 
 import Hero from '@/components/HeroE'
@@ -83,31 +85,27 @@ async function HomeContent() {
   const {posts, recentPosts, series, postCount, tagCount, yearsWriting} =
     homeData
 
+  const now = series[0]
+  const nowSeries = now && {
+    slug: now.slug,
+    title: now.title,
+    latestSlug: now.posts.reduce((a, b) =>
+      b.frontMatter.date > a.frontMatter.date ? b : a,
+    ).fields.slug,
+    posts: now.posts.map((p) => ({
+      slug: p.fields.slug,
+      title: stripTitleEmphasis(p.frontMatter.title),
+    })),
+  }
+
   return (
     <div className="page-view">
       <Hero
         postCount={postCount}
         tagCount={tagCount}
         yearsWriting={yearsWriting}
+        nowSeries={nowSeries}
       />
-
-      <div className="sec-head">
-        <div>
-          <span className="sec-count">
-            {String(posts.length).padStart(2, '0')} ITEMS
-          </span>
-          <h2>
-            Popular <em>this season</em>
-          </h2>
-        </div>
-        <div className="line" />
-        <div className="hint">hover · tilt · open</div>
-      </div>
-      <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => (
-          <PostCard key={post.fields.slug} post={post} />
-        ))}
-      </section>
 
       {series.length > 0 && (
         <>
@@ -132,6 +130,24 @@ async function HomeContent() {
           </section>
         </>
       )}
+
+      <div className="sec-head">
+        <div>
+          <span className="sec-count">
+            {String(posts.length).padStart(2, '0')} ITEMS
+          </span>
+          <h2>
+            Popular <em>this season</em>
+          </h2>
+        </div>
+        <div className="line" />
+        <div className="hint">hover · tilt · open</div>
+      </div>
+      <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => (
+          <PostCard key={post.fields.slug} post={post} />
+        ))}
+      </section>
 
       {recentPosts.length > 0 && (
         <>
