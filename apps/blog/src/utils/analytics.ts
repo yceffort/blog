@@ -16,7 +16,9 @@ function getClient(): BetaAnalyticsDataClient | null {
   }
 }
 
-export async function getPopularPostSlugs(count: number): Promise<string[]> {
+export async function getPopularPostViews(
+  limit: number,
+): Promise<{slug: string; views: number}[]> {
   const client = getClient()
   if (!client) {
     return []
@@ -35,7 +37,7 @@ export async function getPopularPostSlugs(count: number): Promise<string[]> {
           stringFilter: {matchType: 'BEGINS_WITH', value: '/20'},
         },
       },
-      limit: count * 2,
+      limit,
     })
 
     if (!response.rows) {
@@ -43,10 +45,17 @@ export async function getPopularPostSlugs(count: number): Promise<string[]> {
     }
 
     return response.rows
-      .map((row) => row.dimensionValues?.[0]?.value?.replace(/^\//, '') ?? '')
-      .filter(Boolean)
-      .slice(0, count)
+      .map((row) => ({
+        slug: row.dimensionValues?.[0]?.value?.replace(/^\//, '') ?? '',
+        views: Number(row.metricValues?.[0]?.value ?? 0),
+      }))
+      .filter((row) => row.slug !== '')
   } catch {
     return []
   }
+}
+
+export async function getPopularPostSlugs(count: number): Promise<string[]> {
+  const views = await getPopularPostViews(count * 2)
+  return views.map((row) => row.slug).slice(0, count)
 }
