@@ -13,12 +13,15 @@ export function MarpHelpModal({onClose, onOverlayClick}: MarpHelpModalProps) {
   return (
     <div
       className={styles.helpOverlay}
+      role="presentation"
       onClick={onOverlayClick}
-      role="dialog"
-      aria-label="키보드 단축키 도움말"
-      aria-modal="true"
     >
-      <div className={styles.helpDialog}>
+      <dialog
+        open
+        className={styles.helpDialog}
+        aria-label="키보드 단축키 도움말"
+        aria-modal="true"
+      >
         <div className={styles.helpHeader}>
           <h2>키보드 단축키</h2>
           <button
@@ -49,7 +52,7 @@ export function MarpHelpModal({onClose, onOverlayClick}: MarpHelpModalProps) {
           ))}
         </div>
         <div className={styles.helpHint}>ESC 또는 ? 로 닫기</div>
-      </div>
+      </dialog>
     </div>
   )
 }

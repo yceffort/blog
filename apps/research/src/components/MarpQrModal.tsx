@@ -13,12 +13,15 @@ export function MarpQrModal({qrUrl, onOverlayClick, onCopy}: MarpQrModalProps) {
   return (
     <div
       className={styles.qrOverlay}
+      role="presentation"
       onClick={onOverlayClick}
-      role="dialog"
-      aria-label="QR 코드"
-      aria-modal="true"
     >
-      <div className={styles.qrDialog}>
+      <dialog
+        open
+        className={styles.qrDialog}
+        aria-label="QR 코드"
+        aria-modal="true"
+      >
         <div className={styles.qrCode}>
           <QRCodeSVG
             value={qrUrl}
@@ -35,7 +38,7 @@ export function MarpQrModal({qrUrl, onOverlayClick, onCopy}: MarpQrModalProps) {
         <div className={styles.qrHint}>
           클릭하여 URL 복사 · ESC 또는 Q로 닫기
         </div>
-      </div>
+      </dialog>
     </div>
   )
 }

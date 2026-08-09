@@ -32,11 +32,7 @@
     "react/react-in-jsx-scope": "off",
     "import/no-unassigned-import": "off",
     "no-underscore-dangle": "off",
-    "unicorn/require-post-message-target-origin": "off",
-    "jsx-a11y/prefer-tag-over-role": "off",
-    "jsx-a11y/click-events-have-key-events": "off",
-    "jsx-a11y/no-static-element-interactions": "off",
-    "jsx-a11y/no-noninteractive-element-interactions": "off"
+    "unicorn/require-post-message-target-origin": "off"
   },
   "overrides": [
     {

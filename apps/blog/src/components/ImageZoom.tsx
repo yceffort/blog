@@ -22,7 +22,7 @@ export default function ImageZoom({
   const [isZoomed, setIsZoomed] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
   const [mounted, setMounted] = useState(false)
-  const imageRef = useRef<HTMLSpanElement>(null)
+  const imageRef = useRef<HTMLButtonElement>(null)
   const [imageRect, setImageRect] = useState<DOMRect | null>(null)
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -133,25 +133,24 @@ export default function ImageZoom({
 
   return (
     <>
-      <span
+      <button
+        type="button"
         ref={imageRef}
         onClick={handleOpen}
-        className="block cursor-zoom-in"
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            handleOpen()
-          }
-        }}
+        className="block w-full cursor-zoom-in"
+        aria-label="이미지 확대"
       >
         {ImageComponent}
-      </span>
+      </button>
 
       {mounted &&
         isZoomed &&
         createPortal(
-          <div className="fixed inset-0 z-[9999]" onClick={handleClose}>
+          <div
+            className="fixed inset-0 z-[9999]"
+            role="presentation"
+            onClick={handleClose}
+          >
             <div
               className={`absolute inset-0 bg-black transition-opacity duration-300 ${
                 isAnimating ? 'opacity-90' : 'opacity-0'
@@ -168,11 +167,8 @@ export default function ImageZoom({
                   height: imageRect.height,
                   ...calculateTransform(),
                 }}
-                onClick={(e) => e.stopPropagation()}
               >
-                <div className="cursor-zoom-out" onClick={handleClose}>
-                  {ImageComponent}
-                </div>
+                <div className="cursor-zoom-out">{ImageComponent}</div>
               </div>
             )}
 

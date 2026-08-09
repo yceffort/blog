@@ -27,12 +27,15 @@ export function MarpSearchModal({
   return (
     <div
       className={styles.searchOverlay}
+      role="presentation"
       onClick={onOverlayClick}
-      role="dialog"
-      aria-label="슬라이드 검색"
-      aria-modal="true"
     >
-      <div className={styles.searchDialog}>
+      <dialog
+        open
+        className={styles.searchDialog}
+        aria-label="슬라이드 검색"
+        aria-modal="true"
+      >
         <input
           ref={inputRef}
           type="text"
@@ -67,7 +70,7 @@ export function MarpSearchModal({
             ? `${results.length}건 일치 · Enter로 첫 결과 이동 · ESC로 닫기`
             : '/ 또는 Cmd/Ctrl+F로 열기 · ESC로 닫기'}
         </div>
-      </div>
+      </dialog>
     </div>
   )
 }

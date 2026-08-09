@@ -662,13 +662,15 @@ export function MarpSlides({
         {html.map((_, i) => (
           <SwiperSlide key={i} virtualIndex={i}>
             <div
-              onClick={handleSlideClick}
               className={styles.marpSlide}
-              role={multiple ? 'button' : undefined}
-              tabIndex={multiple ? 0 : undefined}
-              aria-label={
-                multiple ? `슬라이드 ${i + 1}/${html.length}` : undefined
-              }
+              {...(multiple
+                ? {
+                    onClick: handleSlideClick,
+                    role: 'button',
+                    tabIndex: 0,
+                    'aria-label': `슬라이드 ${i + 1}/${html.length}`,
+                  }
+                : {})}
             >
               <Marp border rendered={marpRenderData} page={i + 1} />
 
@@ -729,11 +731,14 @@ export function MarpSlides({
       {multiple && isOverviewOpen && (
         <div
           className={styles.overview}
+          role="presentation"
           onClick={handleOverviewOverlayClick}
-          role="dialog"
-          aria-label="슬라이드 오버뷰"
         >
-          <div className={styles.overviewGrid}>
+          <dialog
+            open
+            className={styles.overviewGrid}
+            aria-label="슬라이드 오버뷰"
+          >
             {html.map((_, i) => (
               <button
                 key={i}
@@ -748,7 +753,7 @@ export function MarpSlides({
                 <span className={styles.overviewNumber}>{i + 1}</span>
               </button>
             ))}
-          </div>
+          </dialog>
           <div className={styles.overviewHint}>ESC 또는 G 키로 닫기</div>
         </div>
       )}
@@ -771,6 +776,7 @@ export function MarpSlides({
           />
           <div
             className={styles.drawToolbar}
+            role="presentation"
             onClick={(e) => e.stopPropagation()}
           >
             <div className={styles.drawToolGroup}>
@@ -875,6 +881,7 @@ export function MarpSlides({
         <div
           className={styles.contextMenu}
           style={{top: contextMenu.y, left: contextMenu.x}}
+          role="presentation"
           onClick={(e) => e.stopPropagation()}
         >
           <div className={styles.contextMenuHeader}>

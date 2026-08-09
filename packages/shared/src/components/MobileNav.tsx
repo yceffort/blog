@@ -133,6 +133,7 @@ const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
                 backdropFilter: 'blur(6px) saturate(130%)',
                 WebkitBackdropFilter: 'blur(6px) saturate(130%)',
               }}
+              role="presentation"
               onClick={closeNav}
             />
 
@@ -143,14 +144,14 @@ const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
                   : 'pointer-events-none translate-y-full opacity-0'
               }`}
             >
-              <div
-                className="rounded-t-[28px] px-5 pb-7 pt-3"
+              <dialog
+                open
+                className="block w-full rounded-t-[28px] px-5 pb-7 pt-3"
                 style={{
                   background: 'var(--surface)',
                   borderTop: '1px solid var(--border-2)',
                   boxShadow: '0 -24px 60px -20px rgba(0, 0, 0, 0.45)',
                 }}
-                role="dialog"
                 aria-modal="true"
                 aria-label="Navigation menu"
               >
@@ -284,7 +285,7 @@ const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
                 >
                   Close
                 </button>
-              </div>
+              </dialog>
             </div>
           </>,
           document.body,

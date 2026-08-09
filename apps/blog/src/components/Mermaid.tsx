@@ -225,32 +225,30 @@ export default function Mermaid({chart}: {chart: string}) {
 
   return (
     <>
-      <div
-        className="my-8 overflow-x-auto mermaid-wrapper cursor-zoom-in"
+      <button
+        type="button"
+        className="my-8 block w-full overflow-x-auto text-left mermaid-wrapper cursor-zoom-in"
         style={{
           WebkitOverflowScrolling: 'touch',
           overscrollBehaviorX: 'contain',
         }}
         onClick={handleOpen}
-        role="button"
         aria-label="다이어그램 확대"
-        tabIndex={0}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            handleOpen()
-          }
-        }}
       >
         <div
           ref={ref}
           className={`mermaid ${rendered ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
         />
-      </div>
+      </button>
 
       {mounted &&
         isZoomed &&
         createPortal(
-          <div className="fixed inset-0 z-[9999]" onClick={handleClose}>
+          <div
+            className="fixed inset-0 z-[9999]"
+            role="presentation"
+            onClick={handleClose}
+          >
             <div
               className={`absolute inset-0 bg-black transition-opacity duration-200 ${
                 isAnimating ? 'opacity-90' : 'opacity-0'
@@ -258,6 +256,7 @@ export default function Mermaid({chart}: {chart: string}) {
             />
             <div
               className="absolute inset-0 flex items-center justify-center p-4"
+              role="presentation"
               onClick={(event) => event.stopPropagation()}
             >
               <div

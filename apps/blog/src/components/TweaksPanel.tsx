@@ -144,10 +144,10 @@ export default function TweaksPanel({open, onClose}: Props) {
       : undefined
 
   return (
-    <div
+    <dialog
+      open
       className="tweaks-panel"
       data-open={open ? 'true' : 'false'}
-      role="dialog"
       aria-label="Tweaks"
       aria-hidden={!open}
       inert={!open}
@@ -163,19 +163,9 @@ export default function TweaksPanel({open, onClose}: Props) {
       />
       <h3>
         Tweaks
-        <span
-          className="x"
-          role="button"
-          tabIndex={0}
-          onClick={onClose}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              onClose()
-            }
-          }}
-        >
+        <button type="button" className="x" onClick={onClose} aria-label="닫기">
           ×
-        </span>
+        </button>
       </h3>
 
       <div className="tweaks-row">
@@ -269,6 +259,6 @@ export default function TweaksPanel({open, onClose}: Props) {
           }}
         />
       </div>
-    </div>
+    </dialog>
   )
 }

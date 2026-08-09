@@ -134,12 +134,19 @@ export default function SiteSearch() {
       {open && (
         <div
           className="search-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label={locale === 'en' ? 'Search posts' : '글 검색'}
-          onClick={handleClose}
+          role="presentation"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              handleClose()
+            }
+          }}
         >
-          <div className="search-panel" onClick={(e) => e.stopPropagation()}>
+          <dialog
+            open
+            className="search-panel"
+            aria-modal="true"
+            aria-label={locale === 'en' ? 'Search posts' : '글 검색'}
+          >
             <div className="search-input-row">
               <svg
                 width="18"
@@ -223,7 +230,7 @@ export default function SiteSearch() {
                 </Link>
               </div>
             )}
-          </div>
+          </dialog>
         </div>
       )}
     </>
