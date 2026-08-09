@@ -6,12 +6,14 @@ import type {Post} from '@/type'
 
 interface SeriesNavigationProps {
   seriesName: string
+  seriesSlug?: string
   seriesPosts: Post[]
   currentSlug: string
 }
 
 export default function SeriesNavigation({
   seriesName,
+  seriesSlug,
   seriesPosts,
   currentSlug,
 }: SeriesNavigationProps) {
@@ -26,7 +28,13 @@ export default function SeriesNavigation({
     <div className="post-series-nav">
       <div className="series-nav-head">
         <span className="series-nav-kicker">시리즈</span>
-        <h3 className="series-nav-title">{seriesName}</h3>
+        <h3 className="series-nav-title">
+          {seriesSlug ? (
+            <Link href={`/series/${seriesSlug}`}>{seriesName}</Link>
+          ) : (
+            seriesName
+          )}
+        </h3>
         <span className="series-nav-progress">
           {currentIndex + 1} / {seriesPosts.length}
         </span>

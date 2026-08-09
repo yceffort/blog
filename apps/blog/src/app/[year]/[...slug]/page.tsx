@@ -24,6 +24,7 @@ import {
   getRelatedPosts,
   getSeriesPosts,
 } from '@/utils/Post'
+import {findSeriesSlugByName} from '@/utils/Series'
 
 export async function generateMetadata(props: {
   params: Promise<{year: string; slug: string[]}>
@@ -131,6 +132,7 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
   } = post
 
   const seriesPosts = series ? await getSeriesPosts(series) : []
+  const seriesSlug = series ? await findSeriesSlugByName(series) : undefined
   const relatedPosts = await getRelatedPosts(postSlug, tags, 'ko', series)
 
   const updatedAt = format(new Date(date), 'yyyy-MM-dd')
@@ -204,7 +206,16 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
             </div>
           )}
           <div className="post-eyebrow">
-            ◆ {series ? `SERIES · ${series}` : 'ESSAY'}
+            ◆{' '}
+            {series ? (
+              seriesSlug ? (
+                <Link href={`/series/${seriesSlug}`}>SERIES · {series}</Link>
+              ) : (
+                `SERIES · ${series}`
+              )
+            ) : (
+              'ESSAY'
+            )}
           </div>
           <ViewTransition name={transitionName}>
             <h1 className="post-title">
@@ -252,6 +263,7 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
         {series && seriesPosts.length > 1 && (
           <SeriesNavigation
             seriesName={series}
+            seriesSlug={seriesSlug}
             seriesPosts={seriesPosts}
             currentSlug={postSlug}
           />
