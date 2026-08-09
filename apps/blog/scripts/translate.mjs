@@ -102,11 +102,11 @@ function splitIntoChunks(content) {
 
 async function callTranslate(client, prompt) {
   const msg = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
+    model: 'claude-sonnet-5',
     max_tokens: 16384,
     messages: [{role: 'user', content: prompt}],
   })
-  return msg.content[0].text.trim()
+  return msg.content.find((block) => block.type === 'text').text.trim()
 }
 
 async function translatePost(apiKey, content) {
