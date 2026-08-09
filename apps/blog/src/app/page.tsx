@@ -89,6 +89,7 @@ async function HomeContent() {
   const nowSeries = now && {
     slug: now.slug,
     title: now.title,
+    description: now.description,
     latestSlug: now.posts.reduce((a, b) =>
       b.frontMatter.date > a.frontMatter.date ? b : a,
     ).fields.slug,

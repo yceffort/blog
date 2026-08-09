@@ -10,6 +10,7 @@ const YEAR = new Date().getFullYear()
 export interface HeroNowSeries {
   slug: string
   title: string
+  description: string
   latestSlug: string
   posts: {slug: string; title: string}[]
 }
@@ -120,6 +121,7 @@ const Hero = memo(function HeroBase({
             <Link href={`/series/${nowSeries.slug}`} className="hero-now-title">
               <EmphasizedTitle title={nowSeries.title} />
             </Link>
+            <p className="hero-now-desc">{nowSeries.description}</p>
             <ol className="hero-now-list">
               {nowSeries.posts.map((post, index) => (
                 <li

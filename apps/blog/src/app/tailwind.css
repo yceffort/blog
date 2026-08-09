@@ -670,8 +670,8 @@ body[data-minimal='true'] .hero-title .accent {
   display: grid;
   align-items: center;
   transform-style: preserve-3d;
-  grid-template-columns: minmax(0, 1fr) 400px;
-  gap: 56px;
+  grid-template-columns: minmax(0, 1fr) minmax(400px, 42%);
+  gap: 64px;
 }
 
 @media (max-width: 1100px) {
@@ -792,9 +792,9 @@ body[data-minimal='true'] .hero-title .accent {
 
 /* ========= HERO NOW READING ========= */
 .hero-now {
-  padding: 18px 20px 14px;
+  padding: 26px 28px 20px;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 14px;
   background: color-mix(in oklab, var(--surface) 70%, transparent);
 }
 .hero-now-head {
@@ -805,10 +805,11 @@ body[data-minimal='true'] .hero-title .accent {
 }
 .hero-now-title {
   display: block;
-  margin-top: 12px;
-  font-size: 17px;
+  margin-top: 16px;
+  font-size: clamp(20px, 1.8vw, 26px);
   font-weight: 800;
-  letter-spacing: -0.01em;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
   word-break: keep-all;
   color: var(--ink);
   transition: color 160ms ease;
@@ -816,15 +817,22 @@ body[data-minimal='true'] .hero-title .accent {
 .hero-now-title:hover {
   color: var(--primary);
 }
+.hero-now-desc {
+  margin-top: 10px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  word-break: keep-all;
+  color: var(--ink-3);
+}
 .hero-now-list {
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
+  margin-top: 14px;
   list-style: none;
 }
 .hero-now-list li {
   position: relative;
-  padding-left: 20px;
+  padding-left: 22px;
 }
 .hero-now-list li::before {
   content: '';
@@ -846,7 +854,7 @@ body[data-minimal='true'] .hero-title .accent {
   position: absolute;
   top: 50%;
   left: 4px;
-  font-size: 7px;
+  font-size: 8px;
   line-height: 1;
   color: var(--ink-4);
   transform: translate(-50%, -50%);
@@ -860,11 +868,11 @@ body[data-minimal='true'] .hero-title .accent {
   display: flex;
   align-items: baseline;
   min-width: 0;
-  padding: 5px 0;
-  font-size: 12.5px;
+  padding: 7px 0;
+  font-size: 13.5px;
   color: var(--ink-3);
   transition: color 160ms ease;
-  gap: 8px;
+  gap: 10px;
 }
 .hero-now-list li a:hover {
   color: var(--ink);
@@ -872,7 +880,7 @@ body[data-minimal='true'] .hero-title .accent {
 .hero-now-list li em {
   flex-shrink: 0;
   font-family: var(--font-mono), monospace;
-  font-size: 10px;
+  font-size: 11px;
   font-style: normal;
   letter-spacing: 0.06em;
   color: var(--ink-4);
