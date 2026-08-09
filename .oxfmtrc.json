@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "singleQuote": true,
+  "semi": false,
+  "useTabs": false,
+  "tabWidth": 2,
+  "bracketSpacing": false,
+  "arrowParens": "always",
+  "bracketSameLine": false,
+  "printWidth": 80,
+  "trailingComma": "all",
+  "sortImports": true,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "**/public/**",
+    "**/node_modules/**",
+    "**/.cache/**",
+    "**/.next/**",
+    "**/.lighthouseci/**",
+    "pnpm-lock.yaml",
+    "**/*.css",
+    "labs/"
+  ]
+}

@@ -10,12 +10,7 @@
     "./components": "./src/components/index.ts",
     "./utils": "./src/utils/index.ts"
   },
-  "scripts": {
-    "lint": "eslint '**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,json}'",
-    "lint:fix": "eslint '**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,json}' --fix",
-    "prettier": "prettier --check '**/*.{ts,tsx,js,mjs,cjs,jsx,json}'",
-    "prettier:fix": "prettier --write '**/*.{ts,tsx,js,mjs,cjs,jsx,json}'"
-  },
+  "scripts": {},
   "dependencies": {
     "date-fns": "^4.4.0",
     "next-themes": "^0.4.6",
@@ -26,12 +21,9 @@
     "next": ">=14.0.0"
   },
   "devDependencies": {
-    "@naverpay/eslint-config": "^2.4.3",
-    "@naverpay/eslint-plugin": "^2.3.2",
     "@types/node": "^25.9.5",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
-    "eslint": "^9.39.5",
     "next": "^16.3.0",
     "typescript": "^7.0.2"
   }

@@ -1,24 +1,13 @@
 pre-commit:
   parallel: true
   commands:
-    eslint-blog:
-      root: 'apps/blog/'
+    oxlint:
       glob: '*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}'
-      run: pnpm exec eslint --fix {staged_files}
+      run: pnpm exec oxlint --fix {staged_files}
       stage_fixed: true
-    eslint-research:
-      root: 'apps/research/'
-      glob: '*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}'
-      run: pnpm exec eslint --fix {staged_files}
-      stage_fixed: true
-    eslint-shared:
-      root: 'packages/shared/'
-      glob: '*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}'
-      run: pnpm exec eslint --fix {staged_files}
-      stage_fixed: true
-    prettier:
+    oxfmt:
       glob: '*.{ts,cts,tsx,js,cjs,jsx,json,md,yaml,yml}'
-      run: pnpm exec prettier --write {staged_files}
+      run: pnpm exec oxfmt {staged_files}
       stage_fixed: true
     stylelint:
       root: 'apps/blog/'
