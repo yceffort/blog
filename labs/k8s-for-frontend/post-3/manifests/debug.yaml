@@ -1,0 +1,12 @@
+# 3편: 디버그 파드 (ping/curl/dig). Dockerfile.debug로 빌드해 kind load 해 둔다.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug
+  labels:
+    app: debug
+spec:
+  containers:
+    - name: debug
+      image: k8s-fe-debug:latest
+      imagePullPolicy: Never

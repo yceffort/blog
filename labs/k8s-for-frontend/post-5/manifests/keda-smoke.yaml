@@ -1,0 +1,36 @@
+# 5편 사전 검증: KEDA cron 트리거 동작 확인용 (검증 후 삭제)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keda-smoke
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: keda-smoke}
+  template:
+    metadata:
+      labels: {app: keda-smoke}
+    spec:
+      containers:
+        - name: app
+          image: k8s-fe-lab:standalone
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests: {cpu: '50m', memory: '64Mi'}
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: keda-smoke
+spec:
+  scaleTargetRef:
+    name: keda-smoke
+  minReplicaCount: 1
+  maxReplicaCount: 3
+  triggers:
+    - type: cron
+      metadata:
+        timezone: Asia/Seoul
+        start: 56 * * * *
+        end: 59 * * * *
+        desiredReplicas: '3'

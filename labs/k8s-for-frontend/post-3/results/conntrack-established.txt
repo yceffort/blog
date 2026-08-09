@@ -1,0 +1,3 @@
+# re-measurement 2026-08-06 14:26:21: conntrack ESTABLISHED (요청 진행 중 캡처)
+--- conntrack -L -d 10.96.35.226 (2초 간격 fetch 루프 진행 중, keep-alive 커넥션 유지 상태)
+tcp      6 86399 ESTABLISHED src=10.244.1.9 dst=10.96.35.226 sport=45364 dport=80 src=10.244.1.13 dst=10.244.1.9 sport=3000 dport=45364 [ASSURED] mark=0 use=1

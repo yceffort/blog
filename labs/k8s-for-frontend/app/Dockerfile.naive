@@ -1,0 +1,9 @@
+# 1편 비교용: 흔히 처음 쓰는 형태. 풀 이미지 + 전체 node_modules + npm start
+FROM node:24
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "start"]

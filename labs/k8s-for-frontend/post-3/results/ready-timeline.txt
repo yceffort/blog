@@ -1,0 +1,13 @@
+# target: k8s-fe-lab-5cfb6b8744-hbvq2 (10.244.2.11), measured at 2026-08-06 13:46:32
+T0_ms=1785991596311 toggle_off={"ready":false,"pod":"k8s-fe-lab-5cfb6b8744-hbvq2","at":"2026-08-06T04:46:36.386Z"}
+--- after ready=false
+pod Ready condition: False 2026-08-06T04:46:47Z
+slice trigger-time: 2026-08-06T04:46:47Z
+probe events:
+2026-08-06T04:42:27Z   1     Readiness probe failed: Get "http://10.244.2.11:3000/api/health": dial tcp 10.244.2.11:3000: connect: connection refused
+2026-08-06T04:47:07Z   8     Readiness probe failed: HTTP probe failed with statuscode: 503
+T1_ms=1785991628481 toggle_on={"ready":true,"pod":"k8s-fe-lab-5cfb6b8744-hbvq2","at":"2026-08-06T04:47:08.543Z"}
+--- after ready=true
+pod Ready condition: True 2026-08-06T04:47:12Z
+slice trigger-time: 2026-08-06T04:47:12Z
+done. raw: ready-traffic-samples.txt ready-slice-poll.txt ready-iptables-poll.txt

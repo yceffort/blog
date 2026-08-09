@@ -1,0 +1,10 @@
+# 4편: PDB 실증용. graceful-lab 3레플리카 전부를 요구해 자발적 축출(eviction)이 거부되게 한다.
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: graceful-lab-pdb
+spec:
+  minAvailable: 3
+  selector:
+    matchLabels:
+      app: graceful-lab

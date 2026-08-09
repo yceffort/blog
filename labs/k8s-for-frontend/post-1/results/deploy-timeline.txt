@@ -1,0 +1,53 @@
+== apply → ready: .970389000s ==
+
+== events (chronological) ==
+2026-08-05T02:07:11Z   Normal    Starting                  k8s-fe-lab-control-plane      Starting kubelet.
+2026-08-05T02:07:11Z   Normal    NodeHasSufficientPID      k8s-fe-lab-control-plane      Node k8s-fe-lab-control-plane status is now: NodeHasSufficientPID
+2026-08-05T02:07:11Z   Normal    NodeHasNoDiskPressure     k8s-fe-lab-control-plane      Node k8s-fe-lab-control-plane status is now: NodeHasNoDiskPressure
+2026-08-05T02:07:11Z   Normal    NodeHasSufficientMemory   k8s-fe-lab-control-plane      Node k8s-fe-lab-control-plane status is now: NodeHasSufficientMemory
+2026-08-05T02:07:11Z   Normal    NodeAllocatableEnforced   k8s-fe-lab-control-plane      Updated Node Allocatable limit across pods
+2026-08-05T02:07:17Z   Normal    RegisteredNode            k8s-fe-lab-control-plane      Node k8s-fe-lab-control-plane event: Registered Node k8s-fe-lab-control-plane in Controller
+<nil>                  Normal    Starting                  k8s-fe-lab-control-plane      <none>
+2026-08-05T02:07:23Z   Normal    Starting                  k8s-fe-lab-worker2            Starting kubelet.
+2026-08-05T02:07:23Z   Normal    NodeHasNoDiskPressure     k8s-fe-lab-worker2            Node k8s-fe-lab-worker2 status is now: NodeHasNoDiskPressure
+2026-08-05T02:07:23Z   Normal    NodeAllocatableEnforced   k8s-fe-lab-worker2            Updated Node Allocatable limit across pods
+2026-08-05T02:07:23Z   Normal    NodeHasSufficientPID      k8s-fe-lab-worker2            Node k8s-fe-lab-worker2 status is now: NodeHasSufficientPID
+2026-08-05T02:07:23Z   Normal    NodeHasSufficientMemory   k8s-fe-lab-worker2            Node k8s-fe-lab-worker2 status is now: NodeHasSufficientMemory
+2026-08-05T02:07:23Z   Normal    NodeAllocatableEnforced   k8s-fe-lab-worker             Updated Node Allocatable limit across pods
+2026-08-05T02:07:23Z   Normal    NodeHasSufficientPID      k8s-fe-lab-worker             Node k8s-fe-lab-worker status is now: NodeHasSufficientPID
+2026-08-05T02:07:23Z   Normal    NodeHasNoDiskPressure     k8s-fe-lab-worker             Node k8s-fe-lab-worker status is now: NodeHasNoDiskPressure
+2026-08-05T02:07:23Z   Normal    NodeHasSufficientMemory   k8s-fe-lab-worker             Node k8s-fe-lab-worker status is now: NodeHasSufficientMemory
+<nil>                  Normal    Starting                  k8s-fe-lab-worker2            <none>
+<nil>                  Normal    Starting                  k8s-fe-lab-worker             <none>
+2026-08-05T02:07:27Z   Normal    RegisteredNode            k8s-fe-lab-worker2            Node k8s-fe-lab-worker2 event: Registered Node k8s-fe-lab-worker2 in Controller
+2026-08-05T02:07:27Z   Normal    RegisteredNode            k8s-fe-lab-worker             Node k8s-fe-lab-worker event: Registered Node k8s-fe-lab-worker in Controller
+2026-08-05T02:07:29Z   Normal    NodeReady                 k8s-fe-lab-control-plane      Node k8s-fe-lab-control-plane status is now: NodeReady
+2026-08-05T02:07:35Z   Normal    NodeReady                 k8s-fe-lab-worker2            Node k8s-fe-lab-worker2 status is now: NodeReady
+2026-08-05T02:07:36Z   Normal    NodeReady                 k8s-fe-lab-worker             Node k8s-fe-lab-worker status is now: NodeReady
+2026-08-05T02:09:48Z   Normal    Scheduled                 k8s-fe-lab-6c8fb44888-wvx2x   Successfully assigned default/k8s-fe-lab-6c8fb44888-wvx2x to k8s-fe-lab-worker
+2026-08-05T02:09:48Z   Normal    Created                   k8s-fe-lab-6c8fb44888-wvx2x   Container created
+2026-08-05T02:09:48Z   Normal    Pulled                    k8s-fe-lab-6c8fb44888-wvx2x   Container image "k8s-fe-lab:standalone" already present on machine and can be accessed by the pod
+2026-08-05T02:09:48Z   Normal    Started                   k8s-fe-lab-6c8fb44888-nm5h4   Container started
+2026-08-05T02:09:48Z   Normal    Scheduled                 k8s-fe-lab-6c8fb44888-nm5h4   Successfully assigned default/k8s-fe-lab-6c8fb44888-nm5h4 to k8s-fe-lab-worker2
+2026-08-05T02:09:48Z   Normal    SuccessfulCreate          k8s-fe-lab-6c8fb44888         Created pod: k8s-fe-lab-6c8fb44888-nm5h4
+2026-08-05T02:09:48Z   Normal    Started                   k8s-fe-lab-6c8fb44888-wvx2x   Container started
+2026-08-05T02:09:48Z   Normal    SuccessfulCreate          k8s-fe-lab-6c8fb44888         Created pod: k8s-fe-lab-6c8fb44888-wvx2x
+2026-08-05T02:09:48Z   Warning   Unhealthy                 k8s-fe-lab-6c8fb44888-wvx2x   Readiness probe failed: Get "http://10.244.1.2:3000/api/health": dial tcp 10.244.1.2:3000: connect: connection refused
+2026-08-05T02:09:48Z   Warning   Unhealthy                 k8s-fe-lab-6c8fb44888-nm5h4   Readiness probe failed: Get "http://10.244.2.3:3000/api/health": dial tcp 10.244.2.3:3000: connect: connection refused
+2026-08-05T02:09:48Z   Normal    Pulled                    k8s-fe-lab-6c8fb44888-nm5h4   Container image "k8s-fe-lab:standalone" already present on machine and can be accessed by the pod
+2026-08-05T02:09:48Z   Normal    Created                   k8s-fe-lab-6c8fb44888-nm5h4   Container created
+2026-08-05T02:09:48Z   Normal    ScalingReplicaSet         k8s-fe-lab                    Scaled up replica set k8s-fe-lab-6c8fb44888 from 0 to 2
+
+== pod conditions ==
+k8s-fe-lab-6c8fb44888-nm5h4
+  PodReadyToStartContainers: 2026-08-05T02:09:48Z
+  Initialized: 2026-08-05T02:09:48Z
+  Ready: 2026-08-05T02:09:49Z
+  ContainersReady: 2026-08-05T02:09:49Z
+  PodScheduled: 2026-08-05T02:09:48Z
+k8s-fe-lab-6c8fb44888-wvx2x
+  PodReadyToStartContainers: 2026-08-05T02:09:48Z
+  Initialized: 2026-08-05T02:09:48Z
+  Ready: 2026-08-05T02:09:49Z
+  ContainersReady: 2026-08-05T02:09:49Z
+  PodScheduled: 2026-08-05T02:09:48Z

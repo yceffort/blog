@@ -1,0 +1,182 @@
+1786183363112 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183363301 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183363486 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183363677 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183363866 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183364061 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183364256 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183364444 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183364638 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183364822 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183365022 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183365212 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183365396 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183365587 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183365773 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183365964 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183366157 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183366354 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183366546 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183366734 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183366931 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183367119 10.244.2.81=rtrue/strue/tfalse 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183367311 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183367505 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 
+1786183367695 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rfalse/sfalse/tfalse 
+1786183367883 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rfalse/sfalse/tfalse 
+1786183368073 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rfalse/sfalse/tfalse 
+1786183368258 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rfalse/sfalse/tfalse 
+1786183368444 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183368628 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183368812 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183368998 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183369184 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183369372 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183369559 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183369756 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183369949 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183370138 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183370330 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183370525 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183370714 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183370901 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183371094 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183371282 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183371469 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183371656 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183371844 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183372037 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183372231 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183372428 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183372621 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183372808 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183373002 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183373194 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183373383 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183373574 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183373759 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183373948 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183374143 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183374328 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183374514 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183374705 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183374897 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183375089 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183375276 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183375471 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183375663 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183375855 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183376046 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183376236 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183376425 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183376614 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183376811 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183376999 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183377192 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183377386 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183377578 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183377769 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183377965 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183378151 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183378340 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183378535 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183378734 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183378923 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183379112 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183379302 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183379486 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183379676 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183379871 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183380065 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183380260 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183380444 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183380635 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183380826 10.244.2.81=rfalse/strue/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183381016 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183381209 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183381394 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183381587 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183381776 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183381962 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183382148 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183382340 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183382533 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183382718 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183382905 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183383090 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183383284 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183383475 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183383660 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183383850 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183384040 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183384234 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183384424 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183384618 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183384811 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183384998 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183385187 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183385372 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183385564 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183385764 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183385956 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183386149 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183386336 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183386527 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183386713 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183386908 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183387095 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183387297 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183387490 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183387680 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183387871 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183388056 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183388245 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183388442 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183388639 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183388835 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183389027 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183389224 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183389417 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183389610 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183389798 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183389995 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183390182 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183390369 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183390552 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183390737 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183390925 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183391111 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183391297 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183391491 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183391688 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183391879 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183392079 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183392265 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183392452 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183392645 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183392839 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183393032 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183393220 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183393420 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183393605 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183393792 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183393987 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183394174 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183394367 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183394561 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183394750 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183394938 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183395126 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183395310 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183395497 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183395688 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183395876 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183396062 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183396250 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183396441 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183396626 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183396814 10.244.2.81=rfalse/sfalse/ttrue 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183397006 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183397191 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183397377 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 
+1786183397568 10.244.2.82=rtrue/strue/tfalse 10.244.1.55=rtrue/strue/tfalse 10.244.2.83=rtrue/strue/tfalse 

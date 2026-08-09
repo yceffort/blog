@@ -1,0 +1,46 @@
+# 5편: CPU HPA 스케일 아웃 타임라인 실측용. 4편 최종 조립본(preStop 3s, 결원 없는 보폭)을 계승한다.
+# requests 200m/limit 400m: 물리 4코어 안에서 '스케일 아웃이 실제로 p95를 회복시키는' 규모를 만들기 위한 값 (NOTES 함정 2)
+apiVersion: v1
+kind: Service
+metadata:
+  name: autoscale-lab
+spec:
+  selector:
+    app: autoscale-lab
+  ports:
+    - port: 80
+      targetPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autoscale-lab
+spec:
+  replicas: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: autoscale-lab
+  template:
+    metadata:
+      labels:
+        app: autoscale-lab
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: app
+          image: localhost:5001/k8s-fe-lab:standalone
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests: {cpu: '200m', memory: '256Mi'}
+            limits: {cpu: '400m', memory: '512Mi'}
+          readinessProbe:
+            httpGet: {path: /api/health, port: 3000}
+            periodSeconds: 5
+          lifecycle:
+            preStop:
+              sleep:
+                seconds: 3

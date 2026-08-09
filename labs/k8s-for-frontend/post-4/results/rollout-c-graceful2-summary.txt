@@ -1,0 +1,5 @@
+# scenario=c-graceful2 repeat=4 measured=2026-08-08 18:49:49
+run1 rollout=3s drained=34s new[372] err=4 retried_ok=0 ECONNREFUSED=4 | ka[372] err=4 retried_ok=0 ECONNRESET=3 ECONNREFUSED=1
+run2 rollout=3s drained=33s new[377] err=1 retried_ok=0 ECONNREFUSED=1 | ka[377] err=3 retried_ok=0 ECONNRESET=3
+run3 rollout=3s drained=33s new[376] err=2 retried_ok=0 ECONNREFUSED=2 | ka[376] err=4 retried_ok=0 ECONNRESET=3 ECONNREFUSED=1
+run4 rollout=4s drained=34s new[377] err=1 retried_ok=0 ECONNREFUSED=1 | ka[377] err=3 retried_ok=0 ECONNRESET=3

@@ -1,0 +1,12 @@
+== app 컨테이너의 eth0 ==
+10.244.1.5
+== sidecar 컨테이너의 eth0 ==
+10.244.1.5
+== sidecar → localhost:3000 (standalone 기본 바인딩) ==
+FAIL ECONNREFUSED
+== sidecar → 파드이름:3000 ==
+OK {"ok":true,"pod":"sidecar-demo"}
+== (ENV HOSTNAME=0.0.0.0 적용 후) sidecar → localhost:3000 ==
+OK {"ok":true,"pod":"0.0.0.0"}
+== (적용 후) 앱이 보는 HOSTNAME env vs os.hostname() ==
+env HOSTNAME: 0.0.0.0 / os.hostname(): sidecar-demo-fixed

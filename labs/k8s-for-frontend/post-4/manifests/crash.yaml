@@ -1,0 +1,13 @@
+# CrashLoopBackOff 백오프 간격 실측용: 시작 즉시 exit 1
+apiVersion: v1
+kind: Pod
+metadata:
+  name: crash
+  labels:
+    app: crash
+spec:
+  restartPolicy: Always
+  containers:
+    - name: app
+      image: k8s-fe-lab:standalone
+      command: ['node', '-e', 'process.exit(1)']

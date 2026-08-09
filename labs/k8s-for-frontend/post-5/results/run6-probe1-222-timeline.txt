@@ -1,0 +1,74 @@
+=== pod conditions (creation/scheduled/ready) ===
+autoscale-lab-8895948d-f8g82 created=2026-08-09T10:20:16Z started=2026-08-09T10:20:16Z PodReadyToStartContainers=2026-08-09T10:20:16Z Initialized=2026-08-09T10:20:16Z Ready=2026-08-09T10:20:16Z ContainersReady=2026-08-09T10:20:16Z PodScheduled=2026-08-09T10:20:16Z
+autoscale-lab-8895948d-fjlzm created=2026-08-09T10:20:01Z started=2026-08-09T10:20:01Z PodReadyToStartContainers=2026-08-09T10:20:01Z Initialized=2026-08-09T10:20:01Z Ready=2026-08-09T10:20:07Z ContainersReady=2026-08-09T10:20:07Z PodScheduled=2026-08-09T10:20:01Z
+autoscale-lab-8895948d-g6gmv created=2026-08-09T10:20:16Z started=2026-08-09T10:20:16Z PodReadyToStartContainers=2026-08-09T10:20:16Z Initialized=2026-08-09T10:20:16Z Ready=2026-08-09T10:20:16Z ContainersReady=2026-08-09T10:20:16Z PodScheduled=2026-08-09T10:20:16Z
+autoscale-lab-8895948d-hv64c created=2026-08-09T10:14:56Z started=2026-08-09T10:14:56Z PodReadyToStartContainers=2026-08-09T10:14:57Z Initialized=2026-08-09T10:14:56Z Ready=2026-08-09T10:18:51Z ContainersReady=2026-08-09T10:18:51Z PodScheduled=2026-08-09T10:14:56Z
+autoscale-lab-8895948d-pznwm created=2026-08-09T10:20:00Z started=2026-08-09T10:20:01Z PodReadyToStartContainers=2026-08-09T10:20:01Z Initialized=2026-08-09T10:20:01Z Ready=2026-08-09T10:20:07Z ContainersReady=2026-08-09T10:20:07Z PodScheduled=2026-08-09T10:20:01Z
+autoscale-lab-8895948d-rbcfc created=2026-08-09T10:20:01Z started=2026-08-09T10:20:01Z PodReadyToStartContainers=2026-08-09T10:20:01Z Initialized=2026-08-09T10:20:01Z Ready=2026-08-09T10:20:02Z ContainersReady=2026-08-09T10:20:02Z PodScheduled=2026-08-09T10:20:01Z
+autoscale-lab-8895948d-vj24c created=2026-08-09T10:20:16Z started=2026-08-09T10:20:16Z PodReadyToStartContainers=2026-08-09T10:20:16Z Initialized=2026-08-09T10:20:16Z Ready=2026-08-09T10:20:16Z ContainersReady=2026-08-09T10:20:16Z PodScheduled=2026-08-09T10:20:16Z
+autoscale-lab-8895948d-xhpl6 created=2026-08-09T10:06:51Z started=2026-08-09T10:06:51Z PodReadyToStartContainers=2026-08-09T10:06:51Z Initialized=2026-08-09T10:06:51Z Ready=2026-08-09T10:18:53Z ContainersReady=2026-08-09T10:18:53Z PodScheduled=2026-08-09T10:06:51Z
+autoscale-lab-8895948d-zvv8s created=2026-08-09T10:14:55Z started=2026-08-09T10:14:55Z PodReadyToStartContainers=2026-08-09T10:14:56Z Initialized=2026-08-09T10:14:55Z Ready=2026-08-09T10:18:28Z ContainersReady=2026-08-09T10:18:28Z PodScheduled=2026-08-09T10:14:55Z
+=== events ===
+5m20s       Normal    Killing                        pod/autoscale-lab-778657c646-bv6qv      Stopping container app
+5m20s       Warning   Unhealthy                      pod/autoscale-lab-8895948d-zvv8s        Readiness probe failed: Get "http://10.244.2.26:3000/api/health": dial tcp 10.244.2.26:3000: connect: connection refused
+5m20s       Normal    SuccessfulDelete               replicaset/autoscale-lab-778657c646     Deleted pod: autoscale-lab-778657c646-bv6qv
+5m20s       Normal    SuccessfulCreate               replicaset/autoscale-lab-8895948d       Created pod: autoscale-lab-8895948d-hv64c
+5m20s       Normal    Pulled                         pod/autoscale-lab-8895948d-zvv8s        Container image "localhost:5001/k8s-fe-lab:standalone" already present on machine and can be accessed by the pod
+5m20s       Normal    Scheduled                      pod/autoscale-lab-8895948d-hv64c        Successfully assigned default/autoscale-lab-8895948d-hv64c to k8s-fe-lab-worker2
+5m20s       Normal    Started                        pod/autoscale-lab-8895948d-zvv8s        Container started
+5m19s       Normal    Started                        pod/autoscale-lab-8895948d-hv64c        Container started
+5m19s       Normal    Created                        pod/autoscale-lab-8895948d-hv64c        Container created
+5m19s       Normal    Pulled                         pod/autoscale-lab-8895948d-hv64c        Container image "localhost:5001/k8s-fe-lab:standalone" already present on machine and can be accessed by the pod
+5m14s       Normal    Killing                        pod/autoscale-lab-778657c646-gpqdp      Stopping container app
+16s         Warning   Unhealthy                      pod/autoscale-lab-8895948d-zvv8s        Readiness probe failed: Get "http://10.244.2.26:3000/api/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+88s         Warning   Unhealthy                      pod/autoscale-lab-8895948d-xhpl6        Readiness probe failed: Get "http://10.244.1.125:3000/api/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+90s         Warning   Unhealthy                      pod/autoscale-lab-8895948d-hv64c        Readiness probe failed: Get "http://10.244.2.27:3000/api/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+15s         Normal    Pulled                         pod/autoscale-lab-8895948d-fjlzm        Container image "localhost:5001/k8s-fe-lab:standalone" already present on machine and can be accessed by the pod
+15s         Normal    Scheduled                      pod/autoscale-lab-8895948d-fjlzm        Successfully assigned default/autoscale-lab-8895948d-fjlzm to k8s-fe-lab-worker
+15s         Normal    SuccessfulCreate               replicaset/autoscale-lab-8895948d       Created pod: autoscale-lab-8895948d-pznwm
+15s         Normal    Scheduled                      pod/autoscale-lab-8895948d-pznwm        Successfully assigned default/autoscale-lab-8895948d-pznwm to k8s-fe-lab-worker
+15s         Normal    Started                        pod/autoscale-lab-8895948d-pznwm        Container started
+14s         Warning   Unhealthy                      pod/autoscale-lab-8895948d-pznwm        Readiness probe failed: Get "http://10.244.1.126:3000/api/health": dial tcp 10.244.1.126:3000: connect: connection refused
+15s         Normal    Scheduled                      pod/autoscale-lab-8895948d-rbcfc        Successfully assigned default/autoscale-lab-8895948d-rbcfc to k8s-fe-lab-worker2
+15s         Normal    Pulled                         pod/autoscale-lab-8895948d-rbcfc        Container image "localhost:5001/k8s-fe-lab:standalone" already present on machine and can be accessed by the pod
+15s         Normal    Created                        pod/autoscale-lab-8895948d-rbcfc        Container created
+15s         Normal    Started                        pod/autoscale-lab-8895948d-rbcfc        Container started
+15s         Warning   Unhealthy                      pod/autoscale-lab-8895948d-rbcfc        Readiness probe failed: Get "http://10.244.2.28:3000/api/health": dial tcp 10.244.2.28:3000: connect: connection refused
+15s         Normal    Pulled                         pod/autoscale-lab-8895948d-pznwm        Container image "localhost:5001/k8s-fe-lab:standalone" already present on machine and can be accessed by the pod
+15s         Normal    Created                        pod/autoscale-lab-8895948d-pznwm        Container created
+15s         Normal    Created                        pod/autoscale-lab-8895948d-fjlzm        Container created
+15s         Normal    Started                        pod/autoscale-lab-8895948d-fjlzm        Container started
+14s         Warning   Unhealthy                      pod/autoscale-lab-8895948d-fjlzm        Readiness probe failed: Get "http://10.244.1.127:3000/api/health": dial tcp 10.244.1.127:3000: connect: connection refused
+3s          Warning   Unhealthy                      pod/autoscale-lab-8895948d-rbcfc        Readiness probe failed: Get "http://10.244.2.28:3000/api/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+0s          Normal    Pulled                         pod/autoscale-lab-8895948d-vj24c        Container image "localhost:5001/k8s-fe-lab:standalone" already present on machine and can be accessed by the pod
+0s          Normal    Scheduled                      pod/autoscale-lab-8895948d-vj24c        Successfully assigned default/autoscale-lab-8895948d-vj24c to k8s-fe-lab-worker
+0s          Normal    Created                        pod/autoscale-lab-8895948d-g6gmv        Container created
+0s          Normal    Created                        pod/autoscale-lab-8895948d-f8g82        Container created
+0s          Normal    Pulled                         pod/autoscale-lab-8895948d-f8g82        Container image "localhost:5001/k8s-fe-lab:standalone" already present on machine and can be accessed by the pod
+0s          Normal    Scheduled                      pod/autoscale-lab-8895948d-f8g82        Successfully assigned default/autoscale-lab-8895948d-f8g82 to k8s-fe-lab-worker
+0s          Normal    Created                        pod/autoscale-lab-8895948d-vj24c        Container created
+0s          Normal    Scheduled                      pod/autoscale-lab-8895948d-g6gmv        Successfully assigned default/autoscale-lab-8895948d-g6gmv to k8s-fe-lab-worker2
+0s          Normal    Pulled                         pod/autoscale-lab-8895948d-g6gmv        Container image "localhost:5001/k8s-fe-lab:standalone" already present on machine and can be accessed by the pod
+=== hpa describe ===
+Metrics:                                               ( current / target )
+  resource cpu on pods  (as a percentage of request):  199% (398m) / 70%
+Min replicas:                                          3
+Max replicas:                                          12
+Deployment pods:                                       6 current / 9 desired
+Conditions:
+  Type            Status  Reason              Message
+  ----            ------  ------              -------
+  AbleToScale     True    SucceededRescale    the HPA controller was able to update the target scale to 9
+  ScalingActive   True    ValidMetricFound    the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)
+  ScalingLimited  False   DesiredWithinRange  the desired count is within the acceptable range
+Events:
+  Type     Reason                        Age                  From                       Message
+  ----     ------                        ----                 ----                       -------
+  Normal   SuccessfulRescale             41m                  horizontal-pod-autoscaler  New size: 4; reason: cpu resource utilization (percentage of request) above target
+  Warning  FailedGetResourceMetric       19m (x2 over 42m)    horizontal-pod-autoscaler  failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API
+  Warning  FailedComputeMetricsReplicas  19m (x2 over 42m)    horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API
+  Warning  FailedComputeMetricsReplicas  15m (x11 over 19m)   horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+  Warning  FailedGetResourceMetric       15m (x12 over 19m)   horizontal-pod-autoscaler  failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+  Normal   SuccessfulRescale             9m16s (x3 over 53m)  horizontal-pod-autoscaler  New size: 3; reason: All metrics below target
+  Normal   SuccessfulRescale             16s (x3 over 40m)    horizontal-pod-autoscaler  New size: 6; reason: cpu resource utilization (percentage of request) above target
+  Normal   SuccessfulRescale             0s (x3 over 40m)     horizontal-pod-autoscaler  New size: 9; reason: cpu resource utilization (percentage of request) above target

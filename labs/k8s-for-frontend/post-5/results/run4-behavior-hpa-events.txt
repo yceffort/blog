@@ -1,0 +1,12 @@
+2026-08-09T07:56:00Z   New size: 3; reason: external metric s0-cron-Asia-Seoul-56xxxx-59xxxx(&LabelSelector{MatchLabels:map[string]string{scaledobject.keda.sh/name: keda-smoke,},MatchExpressions:[]LabelSelectorRequirement{},}) above target
+2026-08-09T08:08:57Z   failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+2026-08-09T08:08:57Z   invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+2026-08-09T08:15:49Z   New size: 8; reason: All metrics below target
+2026-08-09T08:30:50Z   New size: 6; reason: All metrics below target
+2026-08-09T08:32:35Z   New size: 8; reason: cpu resource utilization (percentage of request) above target
+2026-08-09T08:34:35Z   New size: 9; reason: cpu resource utilization (percentage of request) above target
+2026-08-09T08:40:52Z   New size: 3; reason: All metrics below target
+2026-08-09T08:42:22Z   New size: 5; reason: cpu resource utilization (percentage of request) above target
+2026-08-09T08:42:37Z   New size: 7; reason: cpu resource utilization (percentage of request) above target
+2026-08-09T08:43:22Z   New size: 10; reason: cpu resource utilization (percentage of request) above target
+2026-08-09T08:44:07Z   New size: 12; reason: cpu resource utilization (percentage of request) above target

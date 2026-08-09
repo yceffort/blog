@@ -1,0 +1,33 @@
+# measured at 2026-08-06 14:00:37
+--- [1] kubectl port-forward -v=6 핸드셰이크 (WebSocket 101)
+I0806 14:00:37.764400     996 round_trippers.go:632] "Response" verb="GET" url="https://127.0.0.1:58150/api/v1/namespaces/default/pods/k8s-fe-lab-5cfb6b8744-lhlf9/portforward" status="101 Switching Protocols" milliseconds=6
+I0806 14:00:37.764413     996 tunneling_dialer.go:85] negotiated protocol: portforward.k8s.io
+--- [2] svc/이름으로 포워드해도 파드 하나 고정 (10회 요청의 pod 필드)
+   1 k8s-fe-lab-5cfb6b8744-lhlf9k8s-fe-lab-5cfb6b8744-lhlf9k8s-fe-lab-5cfb6b8744-lhlf9k8s-fe-lab-5cfb6b8744-lhlf9k8s-fe-lab-5cfb6b8744-lhlf9k8s-fe-lab-5cfb6b8744-lhlf9k8s-fe-lab-5cfb6b8744-lhlf9k8s-fe-lab-5cfb6b8744-lhlf9k8s-fe-lab-5cfb6b8744-lhlf9k8s-fe-lab-5cfb6b8744-lhlf9
+--- [3] readiness가 꺼진 파드: Service는 피하지만 port-forward는 닿는다
+target: k8s-fe-lab-5cfb6b8744-hbvq2 (10.244.2.11)
+toggle off: {"ready":false,"pod":"k8s-fe-lab-5cfb6b8744-hbvq2","at":"2026-08-06T05:00:44.909Z"}
+(probe 실패 3회 + 전파 대기: 25초)
+slice ready 상태: 10.244.1.12=true 10.244.2.11=false 10.244.1.13=true 
+Service 경유 20회의 파드 분포 (새 커넥션, k8s-fe-lab-5cfb6b8744-hbvq2 는 나오지 않아야 함):
+  11 k8s-fe-lab-5cfb6b8744-lhlf9
+   9 k8s-fe-lab-5cfb6b8744-qppld
+같은 파드로 port-forward:
+  http status: 200 (/api/info는 readiness와 무관하게 응답)
+toggle on: {"ready":true,"pod":"k8s-fe-lab-5cfb6b8744-hbvq2","at":"2026-08-06T05:01:13.172Z"}
+--- [4] 역방향 함정: HOSTNAME이 파드 이름인 앱 (hostname-trap)
+Service 경유: {"ok":true,"pod":"hostname-trap-749f6cfdd9-mcmd6"}
+파드 안 localhost: FAIL ECONNREFUSED
+port-forward 경유: 000 (curl exit 52)
+--- [2 재기록] svc/이름 포워드 10회의 파드 분포 (줄바꿈 정리)
+  10 k8s-fe-lab-5cfb6b8744-lhlf9
+# re-measurement 2026-08-06 14:27:27: NotReady 파드의 파드 IP 직접 호출 (target: k8s-fe-lab-5cfb6b8744-hbvq2 10.244.2.11)
+toggle off: {"ready":false,"pod":"k8s-fe-lab-5cfb6b8744-hbvq2","at":"2026-08-06T05:27:27.919Z"}
+--- EndpointSlice: 10.244.1.12=true 10.244.2.11=false 10.244.1.13=true 
+--- 파드 IP 직접 /api/info (debug 파드에서):
+HTTP 200
+toggle on: {"ready":true,"pod":"k8s-fe-lab-5cfb6b8744-hbvq2","at":"2026-08-06T05:27:50.101Z"}
+
+# hostname-trap 파드의 Ready 상태 (raw 보관용)
+NAME                             READY_COND   IP
+hostname-trap-749f6cfdd9-mcmd6   True         10.244.1.11

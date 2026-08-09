@@ -1,0 +1,12 @@
+2026-08-09T09:44:44Z   failed to get memory utilization: unable to get metrics for resource memory: no metrics returned from resource metrics API
+2026-08-09T09:46:44Z   New size: 3; reason: memory resource utilization (percentage of request) above target
+2026-08-09T09:47:14Z   New size: 5; reason: memory resource utilization (percentage of request) above target
+2026-08-09T09:47:44Z   New size: 7; reason: memory resource utilization (percentage of request) above target
+2026-08-09T09:48:14Z   New size: 8; reason: memory resource utilization (percentage of request) above target
+2026-08-09T10:00:30Z   invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API
+2026-08-09T10:00:30Z   failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API
+2026-08-09T10:04:30Z   invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+2026-08-09T10:04:45Z   failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+2026-08-09T10:11:00Z   New size: 3; reason: All metrics below target
+2026-08-09T10:20:00Z   New size: 6; reason: cpu resource utilization (percentage of request) above target
+2026-08-09T10:20:16Z   New size: 9; reason: cpu resource utilization (percentage of request) above target

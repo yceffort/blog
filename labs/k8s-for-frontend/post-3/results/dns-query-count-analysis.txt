@@ -1,0 +1,13 @@
+# CoreDNS 쿼리 로그 계수 결과 (2026-08-06, search 3개 + ndots:5 환경 기준)
+# 표기별: 이름 시도 횟수 / 총 쿼리 수(A+AAAA 병렬) / NXDOMAIN 수 / dns.lookup 지연
+internal-api                                : 1시도 / 2쿼리 / NX 0 / 2.43ms
+internal-api.default                        : 2시도 / 4쿼리 / NX 2 / 2.53ms
+internal-api.default.svc.cluster.local      : 4시도 / 8쿼리 / NX 6 / 2.84ms  <- '정식' 이름이 가장 많다
+internal-api.default.svc.cluster.local.     : 1시도 / 2쿼리 / NX 0 / 2.27ms
+www.example.com                             : 4시도 / 8쿼리 / NX 6 / 73.87ms (콜드, 업스트림 포함)
+www.example.com.                            : 1시도 / 2쿼리 / NX 0 / 2.29ms  (직전 조회로 CoreDNS 캐시 히트)
+# 주의: 내부 이름의 지연 차이는 로컬 권위 응답이라 ms 단위에서는 안 보인다. 증폭의 실체는 쿼리 수.
+# 외부 이름 콜드 73.87ms는 업스트림 왕복이 지배. 후행 점 2.29ms는 캐시 히트가 섞인 값(정직하게 서술할 것).
+# 보너스: fetch('https://external-api.default.svc.cluster.local/')의 이름(점 4개)도 search를 순회했다
+#   -> external-api...{default.svc,svc,cluster.local} NXDOMAIN 6쿼리 + 절대 이름 2쿼리 = 8쿼리 (로그 원문 참조)
+

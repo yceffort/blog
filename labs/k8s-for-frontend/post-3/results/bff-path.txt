@@ -1,0 +1,15 @@
+# measured at 2026-08-06 13:52:34, app pod=k8s-fe-lab-5cfb6b8744-lhlf9(10.244.1.12) on k8s-fe-lab-worker, internal-api ClusterIP=10.96.135.219, chain=KUBE-SVC-ZCGFEH4CYCKORWXX
+--- [1] 카운터 초기화 후 bff 5회 (새 프로세스로 매번 새 커넥션)
+{"via":"k8s-fe-lab-5cfb6b8744-lhlf9","target":"http://internal-api","ms":9.3,"upstream":{"pod":"internal-api-678dfc65c7-2j92t"}}
+{"via":"k8s-fe-lab-5cfb6b8744-lhlf9","target":"http://internal-api","ms":3,"upstream":{"pod":"internal-api-678dfc65c7-2j92t"}}
+{"via":"k8s-fe-lab-5cfb6b8744-lhlf9","target":"http://internal-api","ms":3.7,"upstream":{"pod":"internal-api-678dfc65c7-2j92t"}}
+{"via":"k8s-fe-lab-5cfb6b8744-lhlf9","target":"http://internal-api","ms":2.8,"upstream":{"pod":"internal-api-678dfc65c7-2j92t"}}
+{"via":"k8s-fe-lab-5cfb6b8744-lhlf9","target":"http://internal-api","ms":3.1,"upstream":{"pod":"internal-api-678dfc65c7-2j92t"}}
+--- [2] KUBE-SVC-ZCGFEH4CYCKORWXX 패킷 카운터 (bff 5회 후)
+Chain KUBE-SVC-ZCGFEH4CYCKORWXX (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 KUBE-MARK-MASQ  tcp  --  any    any    !10.244.0.0/16        10.96.135.219        /* default/internal-api cluster IP */ tcp dpt:http
+       1       60 KUBE-SEP-QWUN2MAM2QS2M3ZK  all  --  any    any     anywhere             anywhere             /* default/internal-api -> 10.244.1.10:3000 */ statistic mode random probability 0.50000000000
+       0        0 KUBE-SEP-SVEDRGALHP5YTEPO  all  --  any    any     anywhere             anywhere             /* default/internal-api -> 10.244.2.8:3000 */
+--- [3] conntrack: 앱 파드 -> internal-api ClusterIP 변환 엔트리
+tcp      6 86399 ESTABLISHED src=10.244.1.12 dst=10.96.135.219 sport=51166 dport=80 src=10.244.1.10 dst=10.244.1.12 sport=3000 dport=51166 [ASSURED] mark=0 use=1

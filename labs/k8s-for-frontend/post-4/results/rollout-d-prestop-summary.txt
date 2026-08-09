@@ -1,0 +1,6 @@
+# scenario=d-prestop repeat=5 measured=2026-08-08 18:52:58
+run1 rollout=3s drained=34s new[373] err=0 retried_ok=0 | ka[373] err=3 retried_ok=0 ECONNRESET=3
+run2 rollout=3s drained=33s new[373] err=0 retried_ok=0 | ka[373] err=3 retried_ok=0 ECONNRESET=3
+run3 rollout=3s drained=32s new[359] err=0 retried_ok=0 | ka[359] err=3 retried_ok=0 ECONNRESET=3
+run4 rollout=3s drained=32s new[362] err=0 retried_ok=0 | ka[362] err=3 retried_ok=0 ECONNRESET=3
+run5 rollout=3s drained=34s new[377] err=0 retried_ok=0 | ka[377] err=3 retried_ok=0 ECONNRESET=3

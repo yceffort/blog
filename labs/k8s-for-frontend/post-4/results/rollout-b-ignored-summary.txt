@@ -1,0 +1,4 @@
+# scenario=b-ignored repeat=3 measured=2026-08-08 18:47:21
+run1 rollout=3s drained=34s new[371] err=0 | ka[371] err=3 ECONNRESET=3
+run2 rollout=3s drained=34s new[378] err=0 | ka[378] err=3 ECONNRESET=3
+run3 rollout=8s drained=38s new[414] err=0 | ka[414] err=3 ECONNRESET=3

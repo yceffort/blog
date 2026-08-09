@@ -1,0 +1,34 @@
+# 시나리오 D: C + preStop 네이티브 sleep(v1.34 GA).
+# SIGTERM 자체를 라우팅 수렴(3편 실측 평균 0.76초) 뒤로 미뤄, 드레인 중 신규 유입 절단까지 막는다.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graceful-lab
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: graceful-lab
+  template:
+    metadata:
+      labels:
+        app: graceful-lab
+      annotations:
+        scenario: d-prestop
+    spec:
+      containers:
+        - name: app
+          image: k8s-fe-lab:standalone
+          env:
+            - name: RESPONSE_DELAY_MS
+              value: '400'
+          lifecycle:
+            preStop:
+              sleep:
+                seconds: 3
+          resources:
+            requests: {cpu: '300m', memory: '256Mi'}
+            limits: {cpu: '1', memory: '512Mi'}
+          readinessProbe:
+            httpGet: {path: /api/health, port: 3000}
+            periodSeconds: 5

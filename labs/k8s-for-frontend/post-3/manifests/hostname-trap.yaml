@@ -1,0 +1,43 @@
+# 3편: port-forward 역방향 함정 재현용.
+# 이미지의 ENV HOSTNAME=0.0.0.0을 파드 이름으로 덮어써서, 쿠버네티스 기본 동작
+# (이미지가 HOSTNAME을 정의하지 않으면 파드 이름이 주입됨)을 의도적으로 재현한다.
+# 결과: 서버가 파드 IP에만 바인드 → Service/probe는 정상, 127.0.0.1로 들어가는 port-forward만 거부.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostname-trap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hostname-trap
+  template:
+    metadata:
+      labels:
+        app: hostname-trap
+    spec:
+      containers:
+        - name: app
+          image: k8s-fe-lab:standalone
+          imagePullPolicy: Never
+          env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          ports:
+            - containerPort: 3000
+          readinessProbe:
+            httpGet: {path: /api/health, port: 3000}
+            periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hostname-trap
+spec:
+  selector:
+    app: hostname-trap
+  ports:
+    - port: 80
+      targetPort: 3000

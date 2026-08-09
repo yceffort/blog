@@ -1,0 +1,2 @@
+# scenario=a-naive-drained repeat=1 measured=2026-08-08 19:00:50
+run1 rollout=3s drained=4s new[130] err=7 retried_ok=0 ECONNRESET=6 ECONNREFUSED=1 | ka[130] err=5 retried_ok=0 ECONNRESET=5

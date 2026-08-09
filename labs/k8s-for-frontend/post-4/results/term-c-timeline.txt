@@ -1,0 +1,10 @@
+# target: graceful-lab-644ddcd9c9-5lgj4 (10.244.1.54), scenario=c, measured=2026-08-08 19:01:12
+T0_ms=1786183276805 (delete 발행)
+T_gone_ms=1786183278469 (오브젝트 소멸, T0+1600ms대)
+deletionTimestamp/Killing event:
+2026-08-08T10:01:07Z   Pulled      Container image "k8s-fe-lab:standalone" already present on machine and can be accessed by the pod
+2026-08-08T10:01:07Z   Created     Container created
+2026-08-08T10:01:07Z   Started     Container started
+2026-08-08T10:01:07Z   Unhealthy   Readiness probe failed: Get "http://10.244.1.54:3000/api/health": dial tcp 10.244.1.54:3000: connect: connection refused
+2026-08-08T10:01:16Z   Killing     Stopping container app
+done. raw: term-c-{traffic,slice,iptables}.txt

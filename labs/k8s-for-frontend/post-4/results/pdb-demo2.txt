@@ -1,0 +1,13 @@
+# pdb-demo2: PDB(minAvailable:3) + strategy(maxSurge:0, maxUnavailable:1) — 롤링 업데이트가 예산을 실제로 위반하는 조건. measured=2026-08-09 15:30:45
+--- 사전 상태
+minAvailable=3 currentHealthy=3 disruptionsAllowed=0
+strategy={"maxSurge":0,"maxUnavailable":1}
+--- eviction 시도 (자발적 중단)
+Error from server (TooManyRequests): Cannot evict pod as it would violate the pod's disruption budget.
+--- rollout restart (Ready 수를 0.2초 간격 폴링)
+poll1 /3 ready=3 min_so_far=3
+poll2 2/3 ready=2 min_so_far=2
+poll3 3/3 ready=2 min_so_far=2
+poll4 3/3 ready=3 min_so_far=2
+--- 결과: 교체 중 최소 Ready=2 (PDB minAvailable=3 위반) / rollout은 그대로 완료
+deployment "graceful-lab" successfully rolled out

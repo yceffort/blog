@@ -1,0 +1,6 @@
+T                      MSG
+2026-08-09T10:27:16Z   New size: 3; reason: All metrics below target
+2026-08-09T11:12:10Z   Unauthorized
+2026-08-09T11:26:11Z   New size: 6; reason: cpu resource utilization (percentage of request) above target
+2026-08-09T11:26:26Z   New size: 9; reason: cpu resource utilization (percentage of request) above target
+2026-08-09T11:26:57Z   New size: 12; reason: cpu resource utilization (percentage of request) above target

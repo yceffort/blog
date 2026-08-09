@@ -1,0 +1,29 @@
+# measured at 2026-08-06 13:59:24, chain=KUBE-SVC-ISVZ3COTGREXVRO2, gw=172.18.0.6 lb=172.18.0.7 clusterip=10.96.35.226
+--- [0] gateway envoy의 업스트림 (admin /clusters 발췌)
+default_k8s-fe-lab_core_Service_80::10.96.35.226:80::cx_total::1
+default_k8s-fe-lab_core_Service_80::10.96.35.226:80::rq_total::1
+--- [1] Gateway 경유 10회 후 노드별 KUBE-SVC-ISVZ3COTGREXVRO2 패킷
+    k8s-fe-lab-control-plane: 8 pkts
+    k8s-fe-lab-worker: 0 pkts
+    k8s-fe-lab-worker2: 0 pkts
+--- [2] LoadBalancer(EXTERNAL-IP) 경유 10회 후
+    k8s-fe-lab-control-plane: 0 pkts
+    k8s-fe-lab-worker: 0 pkts
+    k8s-fe-lab-worker2: 0 pkts
+--- [3] ClusterIP 직접 10회 후 (debug 파드는 worker2에 있다)
+    k8s-fe-lab-control-plane: 0 pkts
+    k8s-fe-lab-worker: 0 pkts
+    k8s-fe-lab-worker2: 10 pkts
+--- [4] LB Service의 세 층 (한 Service가 세 주소를 갖는다)
+NAME            TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+k8s-fe-lab-lb   LoadBalancer   10.96.83.209   172.18.0.7    80:30562/TCP   111s
+--- [5] KUBE-NODEPORTS가 같은 KUBE-SVC 체인으로 합류하는 규칙
+:KUBE-EXT-IM3TYL3WPKNHWP3C - [0:0]
+-A KUBE-EXT-IM3TYL3WPKNHWP3C -m comment --comment "masquerade traffic for default/k8s-fe-lab-lb external destinations" -j KUBE-MARK-MASQ
+-A KUBE-EXT-IM3TYL3WPKNHWP3C -j KUBE-SVC-IM3TYL3WPKNHWP3C
+-A KUBE-NODEPORTS -d 127.0.0.0/8 -p tcp -m comment --comment "default/k8s-fe-lab-lb" -m tcp --dport 30562 -m nfacct --nfacct-name  localhost_nps_accepted_pkts -j KUBE-EXT-IM3TYL3WPKNHWP3C
+-A KUBE-NODEPORTS -p tcp -m comment --comment "default/k8s-fe-lab-lb" -m tcp --dport 30562 -j KUBE-EXT-IM3TYL3WPKNHWP3C
+--- [2 재측정] LB(EXTERNAL-IP) 경유 10회 후, LB 자신의 체인 KUBE-SVC-IM3TYL3WPKNHWP3C
+    k8s-fe-lab-control-plane: 0 pkts
+    k8s-fe-lab-worker: 3 pkts
+    k8s-fe-lab-worker2: 7 pkts
