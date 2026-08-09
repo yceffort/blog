@@ -308,7 +308,7 @@ The whole post's vocabulary in one table, for returning to from anywhere in the 
 | Pending / ImagePullBackOff / Evicted | Awaiting placement / image pull failing / expelled by node pressure       | This post                                             |
 | Namespace (Kubernetes)               | Logical partition dividing a cluster                                      | -                                                     |
 | ConfigMap / Secret                   | The channel injecting config and secrets from outside the image           | -                                                     |
-| HPA                                  | The autoscaler adjusting pod count from metrics                           | Autoscaling part                                      |
+| HPA                                  | The autoscaler adjusting pod count from metrics                           | [Autoscaling part](/en/2026/08/k8s-for-frontend-5)    |
 | Cluster Autoscaler / Karpenter       | The autoscalers adjusting node count                                      | Sizing post                                           |
 | stdout logs / `logs --previous`      | Logs go to stdout, not files / reading the previous container's log       | This post                                             |
 | Prometheus / Grafana                 | Metrics time-series store / the dashboard that displays it                | -                                                     |
