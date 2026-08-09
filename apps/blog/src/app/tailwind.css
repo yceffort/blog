@@ -655,7 +655,7 @@ body[data-minimal='true'] .hero-title .accent {
 /* ========= HERO (home) ========= */
 .home-hero {
   position: relative;
-  padding: 72px 0 56px;
+  padding: 48px 0 40px;
   perspective: 1400px;
 }
 
@@ -701,7 +701,7 @@ body[data-minimal='true'] .hero-title .accent {
 
 .hero-title {
   position: relative;
-  font-size: clamp(56px, 12vw, 180px);
+  font-size: clamp(48px, 9vw, 120px);
   font-weight: 900;
   line-height: 0.88;
   letter-spacing: -0.045em;
@@ -749,7 +749,7 @@ body[data-minimal='true'] .hero-title .accent {
   flex-wrap: wrap;
   align-items: center;
   max-width: 720px;
-  margin-top: 36px;
+  margin-top: 28px;
   gap: 28px;
 }
 .hero-sub p {
