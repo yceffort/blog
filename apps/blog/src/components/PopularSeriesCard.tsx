@@ -1,12 +1,11 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
-import {useRef} from 'react'
-
 import {EmphasizedTitle} from '@yceffort/shared/components'
 import {stripTitleEmphasis} from '@yceffort/shared/utils'
 import {format} from 'date-fns'
+import Image from 'next/image'
+import Link from 'next/link'
+import {useRef} from 'react'
 
 import type {Series} from '@/type'
 

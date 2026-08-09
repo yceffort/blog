@@ -1,13 +1,10 @@
 import './tailwind.css'
-
-import {Fraunces, Inter, JetBrains_Mono} from 'next/font/google'
-import Script from 'next/script'
-
 import {Analytics as VercelAnalytics} from '@vercel/analytics/react'
 import {SpeedInsights as VercelSpeedInsights} from '@vercel/speed-insights/next'
 import {Providers} from '@yceffort/shared/components'
-
 import type {Metadata} from 'next'
+import {Fraunces, Inter, JetBrains_Mono} from 'next/font/google'
+import Script from 'next/script'
 import type {ReactNode} from 'react'
 
 const inter = Inter({

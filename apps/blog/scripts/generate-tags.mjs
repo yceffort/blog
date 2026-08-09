@@ -21,19 +21,25 @@ const ENV_PATH = resolve(BLOG_ROOT, '.env.local')
 function loadApiKey() {
   const env = readFileSync(ENV_PATH, 'utf-8')
   const match = env.match(/ANTHROPIC_API_KEY=(.+)/)
-  if (!match) {throw new Error('ANTHROPIC_API_KEY not found in .env.local')}
+  if (!match) {
+    throw new Error('ANTHROPIC_API_KEY not found in .env.local')
+  }
   return match[1].trim()
 }
 
 function parseFrontmatter(content) {
   const match = content.match(/^---\n([\s\S]*?)\n---/)
-  if (!match) {throw new Error('No frontmatter found')}
+  if (!match) {
+    throw new Error('No frontmatter found')
+  }
   return {raw: match[1], fullMatch: match[0]}
 }
 
 function extractExistingTags(raw) {
   const tagsMatch = raw.match(/^tags:\n((?:\s+- .+\n?)*)/m)
-  if (!tagsMatch) {return []}
+  if (!tagsMatch) {
+    return []
+  }
   return tagsMatch[1]
     .split('\n')
     .map((l) => l.replace(/^\s+- /, '').trim())
@@ -68,7 +74,9 @@ ${content.slice(0, 8000)}`,
 
   const text = msg.content.find((b) => b.type === 'text').text.trim()
   const jsonMatch = text.match(/\[[\s\S]*?\]/)
-  if (!jsonMatch) {throw new Error(`Unexpected response: ${text}`)}
+  if (!jsonMatch) {
+    throw new Error(`Unexpected response: ${text}`)
+  }
   return JSON.parse(jsonMatch[0])
 }
 
@@ -78,7 +86,10 @@ function updateTags(content, tags) {
 
   let newRaw
   if (fm.raw.match(/^tags:/m)) {
-    newRaw = fm.raw.replace(/^tags:\n((?:\s+- .+\n?)*)/m, `tags:\n${tagsYaml}\n`)
+    newRaw = fm.raw.replace(
+      /^tags:\n((?:\s+- .+\n?)*)/m,
+      `tags:\n${tagsYaml}\n`,
+    )
   } else {
     newRaw = fm.raw + `\ntags:\n${tagsYaml}`
   }
@@ -100,7 +111,9 @@ async function main() {
   const existingTags = extractExistingTags(fm.raw)
 
   console.log(`Post: ${absPath}`)
-  if (existingTags.length) {console.log(`Existing tags: ${existingTags.join(', ')}`)}
+  if (existingTags.length) {
+    console.log(`Existing tags: ${existingTags.join(', ')}`)
+  }
   console.log('Generating tags...')
 
   const apiKey = loadApiKey()

@@ -23,16 +23,19 @@ This article covers each stage of the compilation pipeline, actual transformatio
 Let's briefly touch on the problems React Compiler aims to solve. React re-executes a component and **all its child components** when state changes. To prevent this, we use `React.memo`, `useMemo`, and `useCallback`, but this manual memoization has well-known pitfalls.
 
 ```tsx
-const ExpensiveList = memo(function ExpensiveList({ data, onClick }) {
+const ExpensiveList = memo(function ExpensiveList({data, onClick}) {
   const processed = useMemo(() => expensiveProcessing(data), [data])
 
-  const handleClick = useCallback((item) => {
-    onClick(item.id)
-  }, [onClick])
+  const handleClick = useCallback(
+    (item) => {
+      onClick(item.id)
+    },
+    [onClick],
+  )
 
   return (
     <ul>
-      {processed.map(item => (
+      {processed.map((item) => (
         <Item key={item.id} onClick={() => handleClick(item)} />
       ))}
     </ul>
@@ -45,13 +48,13 @@ This code appears well-optimized, but `onClick={() => handleClick(item)}` create
 React Compiler automates all these decisions. Developers just write code.
 
 ```tsx
-function ExpensiveList({ data, onClick }) {
+function ExpensiveList({data, onClick}) {
   const processed = expensiveProcessing(data)
   const handleClick = (item) => onClick(item.id)
 
   return (
     <ul>
-      {processed.map(item => (
+      {processed.map((item) => (
         <Item key={item.id} onClick={() => handleClick(item)} />
       ))}
     </ul>
@@ -92,7 +95,7 @@ You can see the output of each step directly by enabling "Show Internals" in the
 This article focuses on the major steps, tracking how the following example code is transformed at each stage.
 
 ```tsx
-function List({ items }) {
+function List({items}) {
   const [selItem, setSelItem] = useState(null)
   const [sort, setSort] = useState(0)
 
@@ -210,13 +213,13 @@ Having identified types, next we analyze "how does this code handle data?" This 
 
 Major Effect types tracked by the compiler:
 
-| Effect | Meaning | Impact on Memoization |
-|--------|---------|----------------------|
-| **Read** | Only reads values | Tracked as dependency |
-| **Store** | Stores values | Marks creation of new values |
+| Effect      | Meaning                           | Impact on Memoization                       |
+| ----------- | --------------------------------- | ------------------------------------------- |
+| **Read**    | Only reads values                 | Tracked as dependency                       |
+| **Store**   | Stores values                     | Marks creation of new values                |
 | **Capture** | Closures capture value references | Opens possibility of captured value changes |
-| **Mutate** | Changes values | Extends scope until mutation completes |
-| **Freeze** | Values become immutable | Safe to cache from this point |
+| **Mutate**  | Changes values                    | Extends scope until mutation completes      |
+| **Freeze**  | Values become immutable           | Safe to cache from this point               |
 
 The table might look similar, but specifically **the difference between Capture and Freeze** and **how Mutate extends scope** are key to determining actual compilation results. Let's examine with concrete examples.
 
@@ -225,8 +228,8 @@ The table might look similar, but specifically **the difference between Capture 
 Consider this component:
 
 ```tsx
-function CaptureExample({ onClick, label }) {
-  const data = { count: 0 }
+function CaptureExample({onClick, label}) {
+  const data = {count: 0}
   const handler = () => {
     onClick(data)
   }
@@ -267,12 +270,12 @@ This analysis is directly reflected in the compilation result:
 // Playground output
 function CaptureExample(t0) {
   const $ = _c(6)
-  const { onClick, label } = t0
+  const {onClick, label} = t0
 
   // data object — literal so created only once (sentinel pattern)
   let t1
-  if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
-    t1 = { count: 0 }
+  if ($[0] === Symbol.for('react.memo_cache_sentinel')) {
+    t1 = {count: 0}
     $[0] = t1
   } else {
     t1 = $[0]
@@ -282,7 +285,9 @@ function CaptureExample(t0) {
   // handler — captures onClick, so recreated when onClick changes
   let t2
   if ($[1] !== onClick) {
-    t2 = () => { onClick(data) }
+    t2 = () => {
+      onClick(data)
+    }
     $[1] = onClick
     $[2] = t2
   } else {
@@ -311,7 +316,7 @@ function CaptureExample(t0) {
 Mutate Effects play a decisive role in determining scope boundaries. Consider this example:
 
 ```tsx
-function MutateExample({ items, title }) {
+function MutateExample({items, title}) {
   const result = []
   for (const item of items) {
     result.push(<li key={item.id}>{item.name}</li>)
@@ -336,17 +341,17 @@ This principle is clearly shown in the compilation result:
 // Playground output
 function MutateExample(t0) {
   const $ = _c(5)
-  const { items, title } = t0
+  const {items, title} = t0
 
   // result creation + all pushes in one scope
   let result
   if ($[0] !== items) {
-    result = []                                         // Create
+    result = [] // Create
     for (const item of items) {
-      result.push(<li key={item.id}>{item.name}</li>)   // Mutate
+      result.push(<li key={item.id}>{item.name}</li>) // Mutate
     }
-    $[0] = items                                        // Only after all mutations complete
-    $[1] = result                                       // Save to cache
+    $[0] = items // Only after all mutations complete
+    $[1] = result // Save to cache
   } else {
     result = $[1]
   }
@@ -354,7 +359,7 @@ function MutateExample(t0) {
   // JSX — point where result freezes
   let t1
   if ($[2] !== result || $[3] !== title) {
-    t1 = <ul title={title}>{result}</ul>                // Freeze
+    t1 = <ul title={title}>{result}</ul> // Freeze
     $[2] = result
     $[3] = title
     $[4] = t1
@@ -425,11 +430,11 @@ function CaptureExample(t0) {
 
 Three scopes were created. Each becomes one `if` block in the final output. **Why were they split this way?**
 
-| Scope | Dependencies | Final Cache Pattern | Reason for Separation |
-|-------|-------------|-------------------|----------------------|
-| @1 `data` | `0` (primitive) | sentinel check | Depends only on literal → once created, valid forever |
-| @2 `handler` | `onClick`, `data` | `$[1] !== onClick` | `onClick` is reactive. Since `data` is immutable from @1, actual dependency is only `onClick` |
-| @3 JSX | `handler`, `label` | `$[3] !== handler \|\| $[4] !== label` | Both are reactive. If either changes, JSX recreates |
+| Scope        | Dependencies       | Final Cache Pattern                    | Reason for Separation                                                                         |
+| ------------ | ------------------ | -------------------------------------- | --------------------------------------------------------------------------------------------- |
+| @1 `data`    | `0` (primitive)    | sentinel check                         | Depends only on literal → once created, valid forever                                         |
+| @2 `handler` | `onClick`, `data`  | `$[1] !== onClick`                     | `onClick` is reactive. Since `data` is immutable from @1, actual dependency is only `onClick` |
+| @3 JSX       | `handler`, `label` | `$[3] !== handler \|\| $[4] !== label` | Both are reactive. If either changes, JSX recreates                                           |
 
 The key criterion for scope separation is **independence of dependencies**. If only `onClick` changes, only @2 re-executes while @1's `data` is reused. If only `label` changes, @2's `handler` also comes from cache and only @3 re-executes. If @2 and @3 were merged into one scope, changing only `label` would unnecessarily recreate the handler.
 
@@ -489,12 +494,12 @@ export default function MyApp() {
 Compilation result:
 
 ```tsx
-import { c as _c } from "react/compiler-runtime"
+import {c as _c} from 'react/compiler-runtime'
 
 export default function MyApp() {
   const $ = _c(1)
   let t0
-  if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
+  if ($[0] === Symbol.for('react.memo_cache_sentinel')) {
     t0 = <div>Hello World</div>
     $[0] = t0
   } else {
@@ -515,7 +520,7 @@ Since there are no props or state, the entire JSX is created once and returned f
 ### Props Dependencies: Dependency Comparison Pattern
 
 ```tsx
-function Greeting({ name }) {
+function Greeting({name}) {
   const text = `Hello, ${name}!`
   return <p>{text}</p>
 }
@@ -526,7 +531,7 @@ Compilation result:
 ```tsx
 function Greeting(t0) {
   const $ = _c(2)
-  const { name } = t0
+  const {name} = t0
   let t1
   if ($[0] !== name) {
     t1 = <p>{`Hello, ${name}!`}</p>
@@ -546,11 +551,11 @@ Dependencies (`name`) are stored in `$[0]`, results (JSX) in `$[1]`. If `name` i
 Let's look at the compilation result of the `List` component we tracked in the pipeline. This is from the [Playground](https://playground.react.dev/).
 
 ```tsx
-import { c as _c } from "react/compiler-runtime"
+import {c as _c} from 'react/compiler-runtime'
 
 function List(t0) {
   const $ = _c(4)
-  const { items } = t0
+  const {items} = t0
   useState(null)
   useState(0)
 
@@ -589,14 +594,14 @@ Several notable points:
 
 Breaking down the 4 cache slots:
 
-| Slot | Pattern | Stores | Invalidated When |
-|------|---------|---------|------------------|
-| `$[0]` | Dependency | `items` (for comparison) | `items` reference changes |
-| `$[1]` | Result | `pItems.map(_temp)` result | `items` changes |
+| Slot   | Pattern    | Stores                       | Invalidated When              |
+| ------ | ---------- | ---------------------------- | ----------------------------- |
+| `$[0]` | Dependency | `items` (for comparison)     | `items` reference changes     |
+| `$[1]` | Result     | `pItems.map(_temp)` result   | `items` changes               |
 | `$[2]` | Dependency | `listItems` (for comparison) | `listItems` reference changes |
-| `$[3]` | Result | `<ul>{listItems}</ul>` JSX | `listItems` changes |
+| `$[3]` | Result     | `<ul>{listItems}</ul>` JSX   | `listItems` changes           |
 
-Each scope operates **independently**. When `items` changes, both `$[0]`~`$[1]` and `$[2]`~`$[3]` are updated. While manual `useMemo` would only cache the `processItems(items)` result, the compiler caches the dependent `<ul>` JSX as a separate scope.
+Each scope operates **independently**. When `items` changes, both `$[0]`~~`$[1]` and `$[2]`~~`$[3]` are updated. While manual `useMemo` would only cache the `processItems(items)` result, the compiler caches the dependent `<ul>` JSX as a separate scope.
 
 ### Cache Storage Location: Fiber Tree
 
@@ -615,7 +620,7 @@ React Compiler output **still contains JSX**. The code browsers actually execute
 t0 = <div>Hello World</div>
 
 // After JSX transpilation (browser executes)
-t0 = _jsx("div", { children: "Hello World" })
+t0 = _jsx('div', {children: 'Hello World'})
 ```
 
 It's important to be aware during debugging that **two transformation steps** exist between written code and execution code.
@@ -640,11 +645,11 @@ Meta reported up to 12% improvement in initial load/navigation and up to 2.5x fa
 
 9 notable re-rendering cases:
 
-| Result | Count | Characteristics |
-|--------|--------|-----------------|
-| Complete resolution | 2 | Non-primitive props passing, children patterns |
-| Partial improvement | 5 | Some re-rendering reduction |
-| No improvement | 2 | Always new object references, library bailouts |
+| Result              | Count | Characteristics                                |
+| ------------------- | ----- | ---------------------------------------------- |
+| Complete resolution | 2     | Non-primitive props passing, children patterns |
+| Partial improvement | 5     | Some re-rendering reduction                    |
+| No improvement      | 2     | Always new object references, library bailouts |
 
 ## Limitations and Considerations
 
@@ -653,7 +658,7 @@ Meta reported up to 12% improvement in initial load/navigation and up to 2.5x fa
 The compiler uses `!==` comparison to determine cache validity. Data that returns new objects every time (like API responses) invalidates cache even with same content.
 
 ```tsx
-function UserProfile({ userId }) {
+function UserProfile({userId}) {
   const user = useFetchUser(userId)
   // If user object reference changes every time, everything below recalculates
   return <ProfileCard user={user} />
@@ -691,14 +696,14 @@ Frameworks like Solid.js, Preact Signals, and Angular Signals implement **fine-g
 
 ### Approach Differences
 
-| | Signals | React Compiler |
-|---|---------|---------------|
-| **Timing** | Runtime | Build time |
-| **Tracking** | Automatic dependency tracking during execution | Static analysis to infer dependencies |
-| **Granularity** | Expression-level (direct DOM node updates) | Component/hook level (maintains Virtual DOM diffing) |
-| **Runtime cost** | Maintain subscriber Set per signal, graph ordering | Cache array comparison (proportional to dependencies) |
-| **Bundle addition** | Runtime library needed (~1KB+) | 0 (included in existing React) |
-| **API changes** | `.value` reading, Signal object management | None (existing React code as-is) |
+|                     | Signals                                            | React Compiler                                        |
+| ------------------- | -------------------------------------------------- | ----------------------------------------------------- |
+| **Timing**          | Runtime                                            | Build time                                            |
+| **Tracking**        | Automatic dependency tracking during execution     | Static analysis to infer dependencies                 |
+| **Granularity**     | Expression-level (direct DOM node updates)         | Component/hook level (maintains Virtual DOM diffing)  |
+| **Runtime cost**    | Maintain subscriber Set per signal, graph ordering | Cache array comparison (proportional to dependencies) |
+| **Bundle addition** | Runtime library needed (~1KB+)                     | 0 (included in existing React)                        |
+| **API changes**     | `.value` reading, Signal object management         | None (existing React code as-is)                      |
 
 ### Why React Chose a Compiler
 
@@ -724,9 +729,7 @@ Svelte 5's compiler takes `.svelte` files and generates **imperative JavaScript 
   const doubled = $derived(count * 2)
 </script>
 
-<button onclick={() => count++}>
-  {count} x 2 = {doubled}
-</button>
+<button onclick="{()" ="">count++}> {count} x 2 = {doubled}</button>
 ```
 
 Svelte compiler output (simplified):
@@ -747,7 +750,7 @@ export default function Counter($$anchor) {
 
   // Only this callback re-executes on state changes
   $.template_effect(() =>
-    $.set_text(text, `${$.get(count)} x 2 = ${$.get(doubled)}`)
+    $.set_text(text, `${$.get(count)} x 2 = ${$.get(doubled)}`),
   )
 
   $.append($$anchor, button)
@@ -758,14 +761,14 @@ export default function Counter($$anchor) {
 
 ### Core Difference: What Gets Compiled
 
-| | Svelte 5 | React Compiler |
-|---|---------|---------------|
-| **Compilation goal** | Remove the framework | Optimize within the framework |
-| **Runtime** | ~1.6KB (signal system only) | ~42KB (React + ReactDOM) |
-| **Virtual DOM** | None — direct DOM manipulation | Maintained — diffing unchanged |
-| **Update granularity** | Individual DOM nodes (`set_text`, `set_attribute`) | Component subtrees (skip via memoization) |
-| **Component re-execution** | No (execute once, then only effects) | Yes (but skip children on cache hit) |
-| **Reactivity model** | Signal-based (`$state`, `$derived`) | Immutable state + automatic memoization |
+|                            | Svelte 5                                           | React Compiler                            |
+| -------------------------- | -------------------------------------------------- | ----------------------------------------- |
+| **Compilation goal**       | Remove the framework                               | Optimize within the framework             |
+| **Runtime**                | ~1.6KB (signal system only)                        | ~42KB (React + ReactDOM)                  |
+| **Virtual DOM**            | None — direct DOM manipulation                     | Maintained — diffing unchanged            |
+| **Update granularity**     | Individual DOM nodes (`set_text`, `set_attribute`) | Component subtrees (skip via memoization) |
+| **Component re-execution** | No (execute once, then only effects)               | Yes (but skip children on cache hit)      |
+| **Reactivity model**       | Signal-based (`$state`, `$derived`)                | Immutable state + automatic memoization   |
 
 React Compiler is like "using the same engine but automating gear shifts," while Svelte "replaced the engine entirely."
 
@@ -907,7 +910,7 @@ If applying to the entire project at once feels overwhelming, you can adopt prog
 
 ```tsx
 export default function Page() {
-  'use memo'  // Only compile this component
+  'use memo' // Only compile this component
   // ...
 }
 ```
@@ -916,7 +919,7 @@ export default function Page() {
 
 ```tsx
 function ProblematicComponent() {
-  'use no memo'  // Skip compiling this component
+  'use no memo' // Skip compiling this component
   // ...
 }
 ```

@@ -1,12 +1,11 @@
+import {parseTitleEmphasis, stripTitleEmphasis} from '@yceffort/shared/utils'
+import {format} from 'date-fns'
 import {cacheLife, cacheTag} from 'next/cache'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
 import Script from 'next/script'
 import {connection} from 'next/server'
 import {ViewTransition} from 'react'
-
-import {parseTitleEmphasis, stripTitleEmphasis} from '@yceffort/shared/utils'
-import {format} from 'date-fns'
 
 import MathLoader from '@/components/layouts/Post/math'
 import {PostArticle} from '@/components/PostArticle'

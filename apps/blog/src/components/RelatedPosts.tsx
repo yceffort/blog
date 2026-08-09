@@ -1,6 +1,5 @@
-import type {Post} from '@/type'
-
 import PostRow from '@/components/PostRow'
+import type {Post} from '@/type'
 
 export default function RelatedPosts({
   posts,

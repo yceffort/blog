@@ -732,9 +732,7 @@ export async function decryptActionBoundArgs(actionId, encryptedPromise) {
       },
     }),
     {
-      serverConsumerManifest: {
-        /* module maps */
-      },
+      serverConsumerManifest: {/* module maps */},
     },
   )
 }

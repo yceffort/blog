@@ -1,9 +1,8 @@
 'use client'
 
+import {Canvas, useFrame, useThree} from '@react-three/fiber'
 /* eslint-disable react/no-unknown-property, react-hooks/purity, react-hooks/immutability */
 import {useEffect, useMemo, useRef, useState} from 'react'
-
-import {Canvas, useFrame, useThree} from '@react-three/fiber'
 import * as THREE from 'three'
 
 const TEXT = 'yceffort.'

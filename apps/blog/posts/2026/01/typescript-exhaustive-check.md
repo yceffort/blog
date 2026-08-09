@@ -166,21 +166,21 @@ TypeScript에서 `A`를 `B`에 할당할 수 있다는 것은, 집합 `A`가 집
 type A = 'card'
 type B = 'card' | 'bank'
 
-let b: B = 'card' as A  // ✅ { 'card' } ⊆ { 'card', 'bank' }
+let b: B = 'card' as A // ✅ { 'card' } ⊆ { 'card', 'bank' }
 ```
 
 `never`는 공집합이므로, `never`는 모든 타입의 부분집합이다. 따라서 `never`는 어디에든 할당할 수 있다.
 
 ```typescript
 declare const n: never
-const a: string = n  // ✅ 공집합은 모든 집합의 부분집합
-const b: number = n  // ✅
+const a: string = n // ✅ 공집합은 모든 집합의 부분집합
+const b: number = n // ✅
 ```
 
 반대로, 공집합이 아닌 집합은 공집합의 부분집합이 될 수 없다. 따라서 어떤 값도 `never`에 할당할 수 없다.
 
 ```typescript
-const x: never = 'card'  // ❌ { 'card' } ⊄ { }
+const x: never = 'card' // ❌ { 'card' } ⊄ { }
 ```
 
 ### 4. 컴파일러의 타입 검사 과정
@@ -200,8 +200,8 @@ function processPayment(method: PaymentMethod) {
       break
     default:
       const _check: never = method
-      //    ^^^^^^^^^^^^^^^^^^^^^^^
-      //    컴파일러가 이 할당문을 검사한다
+    //    ^^^^^^^^^^^^^^^^^^^^^^^
+    //    컴파일러가 이 할당문을 검사한다
   }
 }
 ```
@@ -243,11 +243,13 @@ const method = apiResponse.paymentMethod as PaymentMethod
 ```typescript
 function getLabel(method: PaymentMethod): string {
   switch (method) {
-    case 'card': return '카드'
-    case 'bank': return '계좌이체'
+    case 'card':
+      return '카드'
+    case 'bank':
+      return '계좌이체'
     default:
       const _: never = method
-      throw new Error()  // 이 줄이 없으면 "모든 경로에서 반환하지 않음" 경고
+      throw new Error() // 이 줄이 없으면 "모든 경로에서 반환하지 않음" 경고
   }
 }
 ```
@@ -341,9 +343,7 @@ Redux 패턴에서 액션 타입을 처리할 때 유용하다.
 
 ```typescript
 type Action =
-  | {type: 'INCREMENT'}
-  | {type: 'DECREMENT'}
-  | {type: 'RESET'; payload: number}
+  {type: 'INCREMENT'} | {type: 'DECREMENT'} | {type: 'RESET'; payload: number}
 
 function reducer(state: number, action: Action): number {
   switch (action.type) {

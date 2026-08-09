@@ -1,9 +1,8 @@
 'use client'
 
+import {EmphasizedTitle} from '@yceffort/shared/components'
 import Link from 'next/link'
 import {memo, useEffect, useRef} from 'react'
-
-import {EmphasizedTitle} from '@yceffort/shared/components'
 
 const YEAR = new Date().getFullYear()
 

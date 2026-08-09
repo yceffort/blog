@@ -111,9 +111,9 @@ try {
 
 ```json
 [
-  {"id":1,"name":"Alice","email":"alice@example.com"},
-  {"id":2,"name":"Bob","email":"bob@example.com"},
-  {"id":3,"name":"Charlie","email":"charlie@example.com"}
+  {"id": 1, "name": "Alice", "email": "alice@example.com"},
+  {"id": 2, "name": "Bob", "email": "bob@example.com"},
+  {"id": 3, "name": "Charlie", "email": "charlie@example.com"}
 ]
 ```
 
@@ -147,13 +147,13 @@ app.get('/api/users', async (req, res) => {
 하지만 이 방식은 모든 데이터를 먼저 메모리에 로드한다는 문제가 있다. 데이터베이스 커서나 스트림을 활용하면 서버 메모리도 절약할 수 있다.
 
 ```javascript
-const { Transform } = require('stream')
+const {Transform} = require('stream')
 
 const toNDJSON = new Transform({
   objectMode: true,
   transform(chunk, encoding, callback) {
     callback(null, JSON.stringify(chunk) + '\n')
-  }
+  },
 })
 
 app.get('/api/users', (req, res) => {
@@ -179,7 +179,7 @@ app.get('/api/users', (req, res) => {
 실시간 데이터가 아니라 기존 데이터를 스트리밍하는 경우, 의도적으로 전송 속도를 조절할 수 있다. 이렇게 하면 클라이언트가 데이터를 처리하는 동안 새 데이터가 도착하므로 더 부드러운 사용자 경험을 제공할 수 있다.
 
 ```javascript
-const { Readable } = require('stream')
+const {Readable} = require('stream')
 
 app.get('/api/users', async (req, res) => {
   res.setHeader('Content-Type', 'application/x-ndjson')
@@ -196,7 +196,7 @@ app.get('/api/users', async (req, res) => {
       } else {
         this.push(null)
       }
-    }
+    },
   })
 
   readable.pipe(res)
@@ -221,13 +221,13 @@ async function fetchNDJSON(url, onData) {
   let buffer = ''
 
   while (true) {
-    const { done, value } = await reader.read()
+    const {done, value} = await reader.read()
 
     if (done) break
 
     // stream: true 옵션이 중요하다
     // 멀티바이트 문자가 청크 경계에서 잘릴 수 있기 때문
-    buffer += decoder.decode(value, { stream: true })
+    buffer += decoder.decode(value, {stream: true})
 
     const lines = buffer.split('\n')
     // 마지막 줄은 아직 완성되지 않았을 수 있으므로 버퍼에 유지
@@ -271,7 +271,7 @@ async function fetchWithNDJSONStream(url, onData) {
   const reader = ndjsonStream(response.body).getReader()
 
   while (true) {
-    const { done, value } = await reader.read()
+    const {done, value} = await reader.read()
 
     if (done) break
 
@@ -295,14 +295,14 @@ NDJSON은 훌륭하지만 서버 측 수정이 필요하다. 기존 API가 일�
 #### 기본 사용법
 
 ```javascript
-const { parser } = require('stream-json')
-const { streamArray } = require('stream-json/streamers/StreamArray')
+const {parser} = require('stream-json')
+const {streamArray} = require('stream-json/streamers/StreamArray')
 const fs = require('fs')
 
 fs.createReadStream('huge-data.json')
   .pipe(parser())
   .pipe(streamArray())
-  .on('data', ({ key, value }) => {
+  .on('data', ({key, value}) => {
     // key는 배열 인덱스, value는 각 요소
     console.log(`[${key}]`, value)
   })
@@ -319,12 +319,12 @@ fs.createReadStream('huge-data.json')
 배열이 아닌 객체의 속성을 스트리밍하려면 `streamObject`를 사용한다.
 
 ```javascript
-const { streamObject } = require('stream-json/streamers/StreamObject')
+const {streamObject} = require('stream-json/streamers/StreamObject')
 
 fs.createReadStream('config.json')
   .pipe(parser())
   .pipe(streamObject())
-  .on('data', ({ key, value }) => {
+  .on('data', ({key, value}) => {
     console.log(`${key}:`, value)
   })
 ```
@@ -334,15 +334,15 @@ fs.createReadStream('config.json')
 대용량 JSON에서 특정 경로의 데이터만 필요한 경우 `pick`을 사용한다.
 
 ```javascript
-const { pick } = require('stream-json/filters/Pick')
-const { streamArray } = require('stream-json/streamers/StreamArray')
+const {pick} = require('stream-json/filters/Pick')
+const {streamArray} = require('stream-json/streamers/StreamArray')
 
 // { "metadata": {...}, "items": [...] } 구조에서 items만 추출
 fs.createReadStream('data.json')
   .pipe(parser())
-  .pipe(pick({ filter: 'items' }))
+  .pipe(pick({filter: 'items'}))
   .pipe(streamArray())
-  .on('data', ({ key, value }) => {
+  .on('data', ({key, value}) => {
     processItem(value)
   })
 ```
@@ -353,14 +353,14 @@ fs.createReadStream('data.json')
 
 ```javascript
 const https = require('https')
-const { parser } = require('stream-json')
-const { streamArray } = require('stream-json/streamers/StreamArray')
+const {parser} = require('stream-json')
+const {streamArray} = require('stream-json/streamers/StreamArray')
 
 https.get('https://api.example.com/data', (res) => {
   res
     .pipe(parser())
     .pipe(streamArray())
-    .on('data', ({ key, value }) => {
+    .on('data', ({key, value}) => {
       processItem(value)
     })
     .on('end', () => {
@@ -374,12 +374,12 @@ https.get('https://api.example.com/data', (res) => {
 아이템을 하나씩 처리하는 것보다 일정 개수를 모아서 처리하는 것이 효율적인 경우가 있다. `batch`를 사용하면 된다.
 
 ```javascript
-const { batch } = require('stream-json/utils/Batch')
+const {batch} = require('stream-json/utils/Batch')
 
 fs.createReadStream('huge-array.json')
   .pipe(parser())
   .pipe(streamArray())
-  .pipe(batch({ batchSize: 100 }))
+  .pipe(batch({batchSize: 100}))
   .on('data', (items) => {
     // 100개씩 묶어서 처리
     bulkInsert(items.map((item) => item.value))
@@ -393,11 +393,11 @@ fs.createReadStream('huge-array.json')
 #### 기본 사용법
 
 ```javascript
-import { JSONParser } from '@streamparser/json'
+import {JSONParser} from '@streamparser/json'
 
 const parser = new JSONParser()
 
-parser.onValue = ({ value, key, parent, stack }) => {
+parser.onValue = ({value, key, parent, stack}) => {
   // stack.length로 현재 깊이를 알 수 있다
   if (stack.length === 1 && Array.isArray(parent)) {
     // 최상위 배열의 요소
@@ -423,12 +423,12 @@ parser.write(']}')
 #### Fetch API와 함께 사용
 
 ```javascript
-import { JSONParser } from '@streamparser/json'
+import {JSONParser} from '@streamparser/json'
 
 async function fetchAndParse(url, onItem) {
-  const parser = new JSONParser({ paths: ['$.items.*'] })
+  const parser = new JSONParser({paths: ['$.items.*']})
 
-  parser.onValue = ({ value }) => {
+  parser.onValue = ({value}) => {
     onItem(value)
   }
 
@@ -436,7 +436,7 @@ async function fetchAndParse(url, onItem) {
   const reader = response.body.getReader()
 
   while (true) {
-    const { done, value } = await reader.read()
+    const {done, value} = await reader.read()
     if (done) break
     parser.write(value)
   }
@@ -450,19 +450,17 @@ async function fetchAndParse(url, onItem) {
 `@streamparser/json-whatwg`를 사용하면 웹 표준 스트림 API와 통합할 수 있다.
 
 ```javascript
-import { JSONParser } from '@streamparser/json-whatwg'
+import {JSONParser} from '@streamparser/json-whatwg'
 
 async function fetchAndStream(url, onItem) {
   const response = await fetch(url)
 
-  const parser = new JSONParser({ paths: ['$.*'] })
+  const parser = new JSONParser({paths: ['$.*']})
 
-  const reader = response.body
-    .pipeThrough(parser)
-    .getReader()
+  const reader = response.body.pipeThrough(parser).getReader()
 
   while (true) {
-    const { done, value } = await reader.read()
+    const {done, value} = await reader.read()
     if (done) break
     onItem(value.value)
   }
@@ -495,7 +493,7 @@ oboe('/api/data')
 ```javascript
 // json-worker.js
 self.onmessage = async (e) => {
-  const { url } = e.data
+  const {url} = e.data
 
   try {
     const response = await fetch(url)
@@ -504,9 +502,9 @@ self.onmessage = async (e) => {
     // 파싱을 Worker에서 수행
     const data = JSON.parse(text)
 
-    self.postMessage({ success: true, data })
+    self.postMessage({success: true, data})
   } catch (error) {
-    self.postMessage({ success: false, error: error.message })
+    self.postMessage({success: false, error: error.message})
   }
 }
 ```
@@ -523,7 +521,7 @@ worker.onmessage = (e) => {
   }
 }
 
-worker.postMessage({ url: '/api/huge-data' })
+worker.postMessage({url: '/api/huge-data'})
 ```
 
 ### 청크 단위 전송
@@ -533,7 +531,7 @@ Worker에서 메인 스레드로 대용량 데이터를 한 번에 전송하면 
 ```javascript
 // json-worker.js
 self.onmessage = async (e) => {
-  const { url, chunkSize = 100 } = e.data
+  const {url, chunkSize = 100} = e.data
 
   const response = await fetch(url)
   const data = await response.json()
@@ -545,12 +543,12 @@ self.onmessage = async (e) => {
       self.postMessage({
         type: 'chunk',
         data: chunk,
-        progress: Math.min(i + chunkSize, data.length) / data.length
+        progress: Math.min(i + chunkSize, data.length) / data.length,
       })
     }
-    self.postMessage({ type: 'done' })
+    self.postMessage({type: 'done'})
   } else {
-    self.postMessage({ type: 'data', data })
+    self.postMessage({type: 'data', data})
   }
 }
 ```
@@ -586,11 +584,11 @@ worker.onmessage = (e) => {
 
 ### 순수 파싱 속도 비교
 
-| 방식 | 평균 시간 | 최소 | 최대 | JSON.parse() 대비 |
-|------|----------|------|------|------------------|
-| JSON.parse() | 101.28ms | 96.83ms | 113.83ms | 1.0x |
-| NDJSON | 102.66ms | 101.19ms | 105.63ms | 1.01x |
-| stream-json | 1243.56ms | 1178.23ms | 1287.88ms | 12.28x |
+| 방식         | 평균 시간 | 최소      | 최대      | JSON.parse() 대비 |
+| ------------ | --------- | --------- | --------- | ----------------- |
+| JSON.parse() | 101.28ms  | 96.83ms   | 113.83ms  | 1.0x              |
+| NDJSON       | 102.66ms  | 101.19ms  | 105.63ms  | 1.01x             |
+| stream-json  | 1243.56ms | 1178.23ms | 1287.88ms | 12.28x            |
 
 흥미롭게도 **JSON.parse()와 NDJSON의 순수 파싱 속도는 거의 동일**하다. V8 엔진의 JSON.parse()가 워낙 최적화되어 있고, NDJSON도 결국 같은 엔진을 사용하기 때문이다.
 
@@ -598,10 +596,10 @@ worker.onmessage = (e) => {
 
 ### 네트워크 포함 벤치마크 (localhost)
 
-| 방식 | 전체 시간 | 첫 아이템 시간 | TTFB 개선 |
-|------|----------|--------------|----------|
-| JSON | 1,247ms | 1,247ms | - |
-| NDJSON | 1,389ms | 12ms | 99% |
+| 방식   | 전체 시간 | 첫 아이템 시간 | TTFB 개선 |
+| ------ | --------- | -------------- | --------- |
+| JSON   | 1,247ms   | 1,247ms        | -         |
+| NDJSON | 1,389ms   | 12ms           | 99%       |
 
 전체 완료 시간은 NDJSON이 약간 더 느리다(줄 단위 파싱 오버헤드). 하지만 **첫 번째 아이템이 화면에 나타나는 시간**은 NDJSON이 100배 이상 빠르다. 사용자 체감 성능 면에서 엄청난 차이다.
 
@@ -609,10 +607,10 @@ worker.onmessage = (e) => {
 
 Chrome DevTools의 Network Throttling을 사용하여 느린 3G 환경을 시뮬레이션한 결과:
 
-| 방식 | 전체 시간 | 첫 아이템 시간 |
-|------|----------|--------------|
-| JSON | 47.2초 | 47.2초 |
-| NDJSON | 48.1초 | 0.4초 |
+| 방식   | 전체 시간 | 첫 아이템 시간 |
+| ------ | --------- | -------------- |
+| JSON   | 47.2초    | 47.2초         |
+| NDJSON | 48.1초    | 0.4초          |
 
 느린 네트워크에서는 차이가 더욱 극적이다. 사용자가 47초 동안 로딩 스피너를 보는 것과, 0.4초 만에 첫 데이터를 보기 시작하는 것은 완전히 다른 경험이다.
 
@@ -622,20 +620,20 @@ Chrome DevTools의 Network Throttling을 사용하여 느린 3G 환경을 시뮬
 
 ### JSON.parse() 방식
 
-| 단계 | Heap Used |
-|------|-----------|
-| 초기 상태 | 3.68 MB |
-| JSON 문자열 생성 후 | 32.97 MB |
-| JSON.parse() 후 | 80.96 MB |
+| 단계                | Heap Used |
+| ------------------- | --------- |
+| 초기 상태           | 3.68 MB   |
+| JSON 문자열 생성 후 | 32.97 MB  |
+| JSON.parse() 후     | 80.96 MB  |
 
 29MB JSON을 처리하는 데 약 **48MB의 힙 메모리가 증가**했다. JSON 문자열 자체(~29MB)와 파싱 결과 객체(~48MB)가 동시에 메모리에 존재하는 순간이 있다.
 
 ### NDJSON 스트리밍 방식
 
-| 방식 | 피크 메모리 증가 |
-|------|-----------------|
-| 데이터 유지 안함 | ~24MB |
-| 데이터 유지 | ~19MB |
+| 방식             | 피크 메모리 증가 |
+| ---------------- | ---------------- |
+| 데이터 유지 안함 | ~24MB            |
+| 데이터 유지      | ~19MB            |
 
 NDJSON 스트리밍은 아이템을 처리하고 참조를 해제하면 GC가 메모리를 회수한다. JSON.parse()의 **~48MB**와 비교하면 **약 50%의 메모리 절약**이다. 한 번에 전체를 파싱하는 것보다 점진적으로 파싱하는 것이 GC에 더 유리하기 때문이다.
 
@@ -644,6 +642,7 @@ NDJSON 스트리밍은 아이템을 처리하고 참조를 해제하면 GC가 �
 ### 사례 1: 로그 뷰어 대시보드
 
 **문제 상황:**
+
 - 하루 로그 데이터: 약 500만 건, 2GB
 - 기존: 페이지네이션으로 100건씩 로드
 - 사용자 불만: "전체 로그를 한눈에 보고 싶다"
@@ -655,24 +654,27 @@ NDJSON 스트리밍은 아이템을 처리하고 참조를 해제하면 GC가 �
 app.get('/api/logs', async (req, res) => {
   res.setHeader('Content-Type', 'application/x-ndjson')
 
-  const { startDate, endDate, level } = req.query
+  const {startDate, endDate, level} = req.query
 
   // 커서 기반 스트리밍
-  const cursor = db.collection('logs')
+  const cursor = db
+    .collection('logs')
     .find({
-      timestamp: { $gte: startDate, $lte: endDate },
-      level: level || { $exists: true }
+      timestamp: {$gte: startDate, $lte: endDate},
+      level: level || {$exists: true},
     })
-    .sort({ timestamp: -1 })
+    .sort({timestamp: -1})
     .stream()
 
   cursor.on('data', (doc) => {
-    res.write(JSON.stringify({
-      id: doc._id,
-      timestamp: doc.timestamp,
-      level: doc.level,
-      message: doc.message.substring(0, 200) // 요약만 전송
-    }) + '\n')
+    res.write(
+      JSON.stringify({
+        id: doc._id,
+        timestamp: doc.timestamp,
+        level: doc.level,
+        message: doc.message.substring(0, 200), // 요약만 전송
+      }) + '\n',
+    )
   })
 
   cursor.on('end', () => res.end())
@@ -684,7 +686,7 @@ app.get('/api/logs', async (req, res) => {
 
 // 상세 정보는 별도 API
 app.get('/api/logs/:id', async (req, res) => {
-  const log = await db.collection('logs').findOne({ _id: req.params.id })
+  const log = await db.collection('logs').findOne({_id: req.params.id})
   res.json(log)
 })
 ```
@@ -692,6 +694,7 @@ app.get('/api/logs/:id', async (req, res) => {
 클라이언트에서는 NDJSON 스트림을 받아 가상 스크롤 라이브러리(react-window, vue-virtual-scroller 등)와 결합하면 된다.
 
 **결과:**
+
 - 첫 로그 표시: 3초 → 50ms
 - 메모리 사용량: 800MB → 150MB (가상 스크롤 덕분)
 - 전체 로드 시간: 45초 → 30초 (요약 데이터만 전송)
@@ -699,6 +702,7 @@ app.get('/api/logs/:id', async (req, res) => {
 ### 사례 2: 지도 좌표 데이터 로딩
 
 **문제 상황:**
+
 - 전국 편의점 좌표: 5만 개, 8MB JSON
 - 지도 로딩 시 전체 데이터 필요
 - 모바일에서 초기 로딩 7초
@@ -721,9 +725,9 @@ async function loadStoresForMap(map) {
       north: bounds.north,
       south: bounds.south,
       east: bounds.east,
-      west: bounds.west
-    })}`
-  ).then(r => r.json())
+      west: bounds.west,
+    })}`,
+  ).then((r) => r.json())
 
   // 마커 즉시 표시
   addMarkersToMap(visibleStores)
@@ -732,29 +736,27 @@ async function loadStoresForMap(map) {
   const nearbyRegions = getNearbyRegions(center)
 
   for (const region of nearbyRegions) {
-    await fetchNDJSON(
-      `/api/stores/region/${region}.ndjson`,
-      (store) => {
-        if (!isInBounds(store, bounds)) {
-          // 아직 화면에 안 보이면 버퍼에만 저장
-          storeBuffer.push(store)
-        } else {
-          addMarkerToMap(store)
-        }
+    await fetchNDJSON(`/api/stores/region/${region}.ndjson`, (store) => {
+      if (!isInBounds(store, bounds)) {
+        // 아직 화면에 안 보이면 버퍼에만 저장
+        storeBuffer.push(store)
+      } else {
+        addMarkerToMap(store)
       }
-    )
+    })
   }
 }
 
 // 지도 이동 시 버퍼에서 마커 추가
 map.on('moveend', () => {
   const bounds = map.getBounds()
-  const newlyVisible = storeBuffer.filter(s => isInBounds(s, bounds))
+  const newlyVisible = storeBuffer.filter((s) => isInBounds(s, bounds))
   addMarkersToMap(newlyVisible)
 })
 ```
 
 **결과:**
+
 - 초기 마커 표시: 7초 → 800ms
 - 체감 로딩 시간: "지도와 마커가 동시에 나타남"
 - 전체 데이터 로드: 백그라운드에서 완료
@@ -762,6 +764,7 @@ map.on('moveend', () => {
 ### 사례 3: 대용량 CSV를 JSON으로 변환
 
 **문제 상황:**
+
 - 사용자가 업로드한 1GB CSV 파일
 - JSON으로 변환 후 처리 필요
 - 서버 메모리 2GB 제한
@@ -769,15 +772,15 @@ map.on('moveend', () => {
 **해결책:**
 
 ```javascript
-const { parse } = require('csv-parse')
-const { Transform } = require('stream')
+const {parse} = require('csv-parse')
+const {Transform} = require('stream')
 
 app.post('/api/csv-to-json', (req, res) => {
   res.setHeader('Content-Type', 'application/x-ndjson')
 
   const csvParser = parse({
     columns: true,
-    skip_empty_lines: true
+    skip_empty_lines: true,
   })
 
   const toNdjson = new Transform({
@@ -786,13 +789,10 @@ app.post('/api/csv-to-json', (req, res) => {
       // CSV 레코드를 JSON으로 변환
       const jsonLine = JSON.stringify(record) + '\n'
       callback(null, jsonLine)
-    }
+    },
   })
 
-  req
-    .pipe(csvParser)
-    .pipe(toNdjson)
-    .pipe(res)
+  req.pipe(csvParser).pipe(toNdjson).pipe(res)
 
   csvParser.on('error', (err) => {
     console.error('CSV 파싱 에러:', err)
@@ -806,8 +806,8 @@ async function convertCsvToJson(file, onRecord) {
     method: 'POST',
     body: file,
     headers: {
-      'Content-Type': 'text/csv'
-    }
+      'Content-Type': 'text/csv',
+    },
   })
 
   const reader = response.body.getReader()
@@ -816,10 +816,10 @@ async function convertCsvToJson(file, onRecord) {
   let count = 0
 
   while (true) {
-    const { done, value } = await reader.read()
+    const {done, value} = await reader.read()
     if (done) break
 
-    buffer += decoder.decode(value, { stream: true })
+    buffer += decoder.decode(value, {stream: true})
     const lines = buffer.split('\n')
     buffer = lines.pop()
 
@@ -831,25 +831,26 @@ async function convertCsvToJson(file, onRecord) {
     }
   }
 
-  return { totalRecords: count }
+  return {totalRecords: count}
 }
 ```
 
 **결과:**
+
 - 서버 메모리 사용량: 최대 50MB (스트림 버퍼만 사용)
 - 1GB CSV 처리 시간: 45초
 - 첫 레코드 수신: 200ms
 
 ## 각 방식의 상세 비교
 
-| 방식 | 서버 수정 | 브라우저 | Node.js | 메모리 | CPU | 복잡도 | 에러 복구 |
-|------|---------|---------|---------|-------|-----|-------|---------|
-| JSON.parse() | 불필요 | O | O | 높음 | 낮음 | 낮음 | 어려움 |
-| NDJSON | 필요 | O | O | 낮음 | 낮음 | 중간 | 쉬움 |
-| stream-json | 불필요 | X | O | 낮음 | 중간 | 중간 | 중간 |
-| @streamparser/json | 불필요 | O | O | 낮음 | 중간 | 중간 | 중간 |
-| Oboe.js | 불필요 | O | O | 중간 | 높음 | 낮음 | 중간 |
-| Web Worker | 불필요 | O | X | 높음 | 낮음 | 중간 | 어려움 |
+| 방식               | 서버 수정 | 브라우저 | Node.js | 메모리 | CPU  | 복잡도 | 에러 복구 |
+| ------------------ | --------- | -------- | ------- | ------ | ---- | ------ | --------- |
+| JSON.parse()       | 불필요    | O        | O       | 높음   | 낮음 | 낮음   | 어려움    |
+| NDJSON             | 필요      | O        | O       | 낮음   | 낮음 | 중간   | 쉬움      |
+| stream-json        | 불필요    | X        | O       | 낮음   | 중간 | 중간   | 중간      |
+| @streamparser/json | 불필요    | O        | O       | 낮음   | 중간 | 중간   | 중간      |
+| Oboe.js            | 불필요    | O        | O       | 중간   | 높음 | 낮음   | 중간      |
+| Web Worker         | 불필요    | O        | X       | 높음   | 낮음 | 중간   | 어려움    |
 
 ### 메모리 사용량 비교
 
@@ -889,11 +890,13 @@ NDJSON을 강력히 추천한다.
 환경에 따라 선택한다.
 
 **Node.js 서버/스크립트:**
+
 - `stream-json`이 가장 성숙하고 안정적이다
 - 다양한 유틸리티(필터, 배치 등)를 제공한다
 - 메모리가 제한된 환경에서 대용량 파일을 처리할 때 필수
 
 **브라우저:**
+
 - `@streamparser/json`을 사용한다
 - 번들 크기가 작고 의존성이 없다
 - WHATWG Streams와 통합 가능
@@ -951,10 +954,9 @@ oboe('/api/data')
 
 ```javascript
 // 잘못된 예
-oboe('/api/data')
-  .node('items[*]', async (item) => {
-    await processAsync(item) // 순서 보장 안됨
-  })
+oboe('/api/data').node('items[*]', async (item) => {
+  await processAsync(item) // 순서 보장 안됨
+})
 ```
 
 순서가 중요하다면 동기적으로 처리하거나, 큐를 사용해야 한다.
@@ -964,6 +966,7 @@ oboe('/api/data')
 Fetch API의 스트리밍 기능은 모든 브라우저에서 지원되지 않는다. 특히 `response.body`가 `ReadableStream`을 반환하는 기능은 IE에서 지원되지 않는다.
 
 2024년 기준 주요 브라우저의 지원 현황:
+
 - Chrome: 43+
 - Firefox: 65+
 - Safari: 10.1+
@@ -985,7 +988,7 @@ const decoder = new TextDecoder()
 buffer += decoder.decode(value) // stream 옵션 누락
 
 // 올바른 예
-buffer += decoder.decode(value, { stream: true })
+buffer += decoder.decode(value, {stream: true})
 ```
 
 `stream: true` 옵션을 사용하면 디코더가 불완전한 멀티바이트 문자를 버퍼에 유지하고, 다음 청크와 함께 처리한다.
@@ -997,10 +1000,10 @@ NDJSON 파일이 개행 문자로 끝나지 않으면 마지막 줄이 버퍼에
 ```javascript
 // 잘못된 예
 while (true) {
-  const { done, value } = await reader.read()
+  const {done, value} = await reader.read()
   if (done) break
 
-  buffer += decoder.decode(value, { stream: true })
+  buffer += decoder.decode(value, {stream: true})
   const lines = buffer.split('\n')
   buffer = lines.pop()
 
@@ -1049,12 +1052,12 @@ app.get('/api/stream', (req, res) => {
 
 ```javascript
 async function fetchWithCleanup(url, onData, signal) {
-  const response = await fetch(url, { signal })
+  const response = await fetch(url, {signal})
   const reader = response.body.getReader()
 
   try {
     while (true) {
-      const { done, value } = await reader.read()
+      const {done, value} = await reader.read()
       if (done) break
       // ... 처리
     }
@@ -1076,26 +1079,30 @@ function createDebugStream(url, onData) {
   let totalBytes = 0
   let itemCount = 0
 
-  return fetchNDJSON(url, (item) => {
-    itemCount++
+  return fetchNDJSON(
+    url,
+    (item) => {
+      itemCount++
 
-    if (itemCount % 1000 === 0) {
-      const elapsed = performance.now() - startTime
-      console.log(`[Stream Debug]
+      if (itemCount % 1000 === 0) {
+        const elapsed = performance.now() - startTime
+        console.log(`[Stream Debug]
         경과 시간: ${(elapsed / 1000).toFixed(2)}s
         받은 청크: ${chunkCount}
         처리된 아이템: ${itemCount}
-        처리 속도: ${(itemCount / elapsed * 1000).toFixed(0)} items/sec
+        처리 속도: ${((itemCount / elapsed) * 1000).toFixed(0)} items/sec
       `)
-    }
+      }
 
-    onData(item)
-  }, {
-    onProgress: (progress) => {
-      chunkCount++
-      totalBytes = progress.receivedBytes
-    }
-  })
+      onData(item)
+    },
+    {
+      onProgress: (progress) => {
+        chunkCount++
+        totalBytes = progress.receivedBytes
+      },
+    },
+  )
 }
 ```
 

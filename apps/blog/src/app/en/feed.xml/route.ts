@@ -1,6 +1,5 @@
-import {NextResponse} from 'next/server'
-
 import {stripTitleEmphasis} from '@yceffort/shared/utils'
+import {NextResponse} from 'next/server'
 
 import {SiteConfig} from '@/config'
 import {getAllPosts} from '@/utils/Post'

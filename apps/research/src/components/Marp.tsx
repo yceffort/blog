@@ -1,9 +1,8 @@
 'use client'
 
-import {useEffect, useRef} from 'react'
-
 import classNames from 'classnames'
 import mermaid from 'mermaid'
+import {useEffect, useRef} from 'react'
 
 import {useFontFace} from '@/hooks/useFontFace'
 

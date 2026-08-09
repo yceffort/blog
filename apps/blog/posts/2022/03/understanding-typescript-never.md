@@ -228,8 +228,7 @@ type ExtractedType = ExtractTypeByName<All, 'foo'> // the result type is Foo
 type ExtractedType = ExtractTypeByName<All, Name>
 type ExtractedType = ExtractTypeByName<Foo | Bar, 'foo'>
 type ExtractedType =
-  | ExtractTypeByName<Foo, 'foo'>
-  | ExtractTypeByName<Bar, 'foo'>
+  ExtractTypeByName<Foo, 'foo'> | ExtractTypeByName<Bar, 'foo'>
 ```
 
 ```typescript

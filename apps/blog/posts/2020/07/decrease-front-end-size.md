@@ -52,7 +52,7 @@ function map(array, iteratee) {
 // minified
 function map(n, r) {
   let t = -1
-  for (const a = null == n ? 0 : n.length, l = Array(a); ++t < a; )
+  for (const a = null == n ? 0 : n.length, l = Array(a); ++t < a;)
     l[t] = r(n[t], t, n)
   return l
 }

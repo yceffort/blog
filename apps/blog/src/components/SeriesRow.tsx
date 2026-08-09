@@ -1,7 +1,6 @@
-import Link from 'next/link'
-
 import {EmphasizedTitle} from '@yceffort/shared/components'
 import {format} from 'date-fns'
+import Link from 'next/link'
 
 import type {Series} from '@/type'
 

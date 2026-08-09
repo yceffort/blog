@@ -1,10 +1,9 @@
 import {readFileSync} from 'fs'
 
-import {imageSize} from 'image-size'
-import {visit} from 'unist-util-visit'
-
 import type {Root, Element} from 'hast'
+import {imageSize} from 'image-size'
 import type {Plugin} from 'unified'
+import {visit} from 'unist-util-visit'
 import type {VFile} from 'vfile'
 
 interface ImageElement extends Element {

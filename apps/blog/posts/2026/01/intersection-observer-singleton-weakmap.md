@@ -43,7 +43,7 @@ scroll 이벤트 핸들러는 **메인 스레드에서 동기적으로** 실행�
 ```typescript
 // 스크롤 중에 100개 요소 검사 → 100번의 reflow 유발 가능
 elements.forEach((el) => {
-  const rect = el.getBoundingClientRect()  // reflow!
+  const rect = el.getBoundingClientRect() // reflow!
   // ...
 })
 ```
@@ -92,11 +92,11 @@ const prefetchObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        prefetchNextPage()  // 다음 페이지 데이터 미리 로드
+        prefetchNextPage() // 다음 페이지 데이터 미리 로드
       }
     })
   },
-  { rootMargin: '500px 0px' }  // 끝에서 500px 전에 미리 감지
+  {rootMargin: '500px 0px'}, // 끝에서 500px 전에 미리 감지
 )
 
 // 리스트 마지막 요소를 관찰
@@ -139,7 +139,7 @@ const observer = new IntersectionObserver(
       updateProgressBar(progress)
     })
   },
-  { threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] }
+  {threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]},
 )
 ```
 
@@ -155,7 +155,7 @@ const adObserver = new IntersectionObserver(
       }
     })
   },
-  { threshold: 0.5 }
+  {threshold: 0.5},
 )
 ```
 
@@ -285,7 +285,7 @@ IntersectionObserver 콜백은 `IntersectionObserverEntry` 배열을 전달하�
 ```typescript
 new IntersectionObserver((entries) => {
   for (const entry of entries) {
-    console.log(entry.target)  // Element만 알 수 있음
+    console.log(entry.target) // Element만 알 수 있음
     // entry.key?  → 없음
     // entry.callback?  → 없음
   }
@@ -308,6 +308,7 @@ unobserve(key: string): void {
 ```
 
 정리하면:
+
 - `entries`: key로 element를 찾을 때 (unobserve)
 - `entriesByElement`: element로 callback을 찾을 때 (IntersectionObserver 콜백)
 
@@ -321,7 +322,7 @@ new IntersectionObserver((entries) => {
   for (const entry of entries) {
     // isIntersecting이 true인 상태로 여러 번 호출됨
     if (entry.isIntersecting) {
-      loadImage()  // 중복 호출!
+      loadImage() // 중복 호출!
     }
   }
 })
@@ -332,7 +333,7 @@ new IntersectionObserver((entries) => {
 ```typescript
 if (observed.previousVisibility !== entry.isIntersecting) {
   observed.previousVisibility = entry.isIntersecting
-  observed.callback(entry.isIntersecting)  // 변경된 경우에만 호출
+  observed.callback(entry.isIntersecting) // 변경된 경우에만 호출
 }
 ```
 
@@ -345,14 +346,14 @@ if (observed.previousVisibility !== entry.isIntersecting) {
 React에서 컴포넌트가 리렌더링되면 ref가 새로운 DOM 요소를 가리킬 수 있다. 특히 조건부 렌더링이나 리스트에서 이런 일이 자주 발생한다.
 
 ```tsx
-function Item({ id }: { id: string }) {
+function Item({id}: {id: string}) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // 리렌더링될 때마다 ref.current가 바뀔 수 있음
     observer.observe(id, ref.current, callback)
     return () => observer.unobserve(id)
-  }, [id])  // id는 그대로, element만 바뀜
+  }, [id]) // id는 그대로, element만 바뀜
 
   return <div ref={ref}>...</div>
 }

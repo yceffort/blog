@@ -1,8 +1,7 @@
+import type {Metadata} from 'next'
 import {cacheLife, cacheTag} from 'next/cache'
 import {connection} from 'next/server'
 import {Suspense} from 'react'
-
-import type {Metadata} from 'next'
 
 import Hero from '@/components/HeroE'
 import PostCard from '@/components/PostCard'

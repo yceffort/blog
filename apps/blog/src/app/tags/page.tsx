@@ -1,6 +1,5 @@
-import Link from 'next/link'
-
 import type {Metadata} from 'next'
+import Link from 'next/link'
 
 import {SiteConfig} from '@/config'
 import {getAllTagsFromPosts} from '@/utils/Post'

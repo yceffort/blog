@@ -121,7 +121,7 @@ Canary 채널은 기술적으로 모든 프레임워크에 열려 있다. 하지
 
 ### Canary의 불안정성: 숫자로 보기
 
-npm 레지스트리 기준, 2023년 5월 공식화 이후 React Canary 버전은 **542개** 이상 발행되었다(18.x canary 202개, 19.x canary 340개). 월 15~29개 꼴이다. 같은 기간 React 18.x의 안정 릴리스는 **5개**(18.0.0~18.3.1)뿐이었다. [React 공식 버전 정책](https://react.dev/community/versioning-policy)은 이렇게 밝힌다:
+npm 레지스트리 기준, 2023년 5월 공식화 이후 React Canary 버전은 **542개** 이상 발행되었다(18.x canary 202개, 19.x canary 340개). 월 15~~29개 꼴이다. 같은 기간 React 18.x의 안정 릴리스는 **5개**(18.0.0~~18.3.1)뿐이었다. [React 공식 버전 정책](https://react.dev/community/versioning-policy)은 이렇게 밝힌다:
 
 > Canary releases... may include breaking changes.
 >

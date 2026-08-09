@@ -1,6 +1,5 @@
-import Link from 'next/link'
-
 import {stripTitleEmphasis} from '@yceffort/shared/utils'
+import Link from 'next/link'
 
 import type {Post} from '@/type'
 

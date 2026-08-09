@@ -1,8 +1,7 @@
-import Link from 'next/link'
-
 import {EmphasizedTitle} from '@yceffort/shared/components'
 import {stripTitleEmphasis} from '@yceffort/shared/utils'
 import {format} from 'date-fns'
+import Link from 'next/link'
 
 import type {Post} from '@/type'
 

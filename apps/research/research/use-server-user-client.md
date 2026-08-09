@@ -24,9 +24,7 @@ published: true
 
   ```javascript
   // Client
-  fetch('/api/user', {
-    /* ... */
-  })
+  fetch('/api/user', {/* ... */})
   ```
 
 - **분리된 프로그램:** 클라이언트와 서버는 완전히 별개의 세상

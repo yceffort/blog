@@ -52,8 +52,8 @@ Program
   "body": [
     {
       "type": "FunctionDeclaration",
-      "id": { "type": "Identifier", "name": "square" },
-      "params": [{ "type": "Identifier", "name": "n" }],
+      "id": {"type": "Identifier", "name": "square"},
+      "params": [{"type": "Identifier", "name": "n"}],
       "body": {
         "type": "BlockStatement",
         "body": [
@@ -62,8 +62,8 @@ Program
             "argument": {
               "type": "BinaryExpression",
               "operator": "*",
-              "left": { "type": "Identifier", "name": "n" },
-              "right": { "type": "Identifier", "name": "n" }
+              "left": {"type": "Identifier", "name": "n"},
+              "right": {"type": "Identifier", "name": "n"}
             }
           }
         ]
@@ -131,13 +131,13 @@ function tokenize(code) {
       while (i < code.length && /[0-9]/.test(code[i])) {
         value += code[i++]
       }
-      tokens.push({ type: 'number', value })
+      tokens.push({type: 'number', value})
       continue
     }
 
     // 연산자
     if ('+-*/'.includes(char)) {
-      tokens.push({ type: 'operator', value: char })
+      tokens.push({type: 'operator', value: char})
       i++
       continue
     }
@@ -187,13 +187,13 @@ BinaryExpression (+)
 
 자바스크립트 생태계에는 여러 파서가 존재한다. 대부분 [ESTree](https://github.com/estree/estree) 라는 AST 스펙을 따르기 때문에, 기본적인 노드 구조는 파서가 달라도 호환된다.
 
-| 파서 | 언어 | 특징 |
-|------|------|------|
-| [acorn](https://github.com/acornjs/acorn) | JS | 가볍고 빠름. webpack, eslint의 기본 파서 |
-| [@babel/parser](https://github.com/babel/babel/tree/master/packages/babel-parser) | JS | JSX, TypeScript, Stage 0 제안까지 지원. ESTree 호환 모드 제공 |
-| [typescript](https://github.com/microsoft/TypeScript) | TS | TypeScript 컴파일러 내장 파서. 자체 AST 포맷 사용 (ESTree 아님) |
-| [SWC](https://swc.rs/) | Rust | Rust로 작성. Babel 대비 수십 배 빠름 |
-| [oxc](https://oxc-project.github.io/) | Rust | Rust로 작성. ESLint 대체를 목표로 하는 프로젝트의 파서 |
+| 파서                                                                              | 언어 | 특징                                                            |
+| --------------------------------------------------------------------------------- | ---- | --------------------------------------------------------------- |
+| [acorn](https://github.com/acornjs/acorn)                                         | JS   | 가볍고 빠름. webpack, eslint의 기본 파서                        |
+| [@babel/parser](https://github.com/babel/babel/tree/master/packages/babel-parser) | JS   | JSX, TypeScript, Stage 0 제안까지 지원. ESTree 호환 모드 제공   |
+| [typescript](https://github.com/microsoft/TypeScript)                             | TS   | TypeScript 컴파일러 내장 파서. 자체 AST 포맷 사용 (ESTree 아님) |
+| [SWC](https://swc.rs/)                                                            | Rust | Rust로 작성. Babel 대비 수십 배 빠름                            |
+| [oxc](https://oxc-project.github.io/)                                             | Rust | Rust로 작성. ESLint 대체를 목표로 하는 프로젝트의 파서          |
 
 어떤 파서를 쓰든 "코드 → 토큰 → AST" 파이프라인의 기본 구조는 같다. 다만 지원하는 문법 범위, 성능, 에러 복구 능력 등에서 차이가 난다.
 
@@ -216,8 +216,9 @@ AST를 다루려면 주요 노드 타입을 알아야 한다. [ESTree 스펙](ht
 
 ```javascript
 // Statement: 값을 만들지 않는다 (변수에 담을 수 없다)
-if (true) { }
-for (let i = 0; i < 10; i++) { }
+if (true) {
+}
+for (let i = 0; i < 10; i++) {}
 
 // Expression: 값을 만든다 (변수에 담을 수 있다)
 const x = 1 + 2
@@ -239,7 +240,9 @@ const x = 1
 //     id: Identifier("x"), init: NumericLiteral(1) }] }
 
 // FunctionDeclaration
-function foo(a, b) { return a + b }
+function foo(a, b) {
+  return a + b
+}
 // { type: "FunctionDeclaration", id: Identifier("foo"),
 //   params: [Identifier("a"), Identifier("b")],
 //   body: BlockStatement }
@@ -270,7 +273,11 @@ a ? b : c
 //   alternate: Identifier("c") }
 
 // IfStatement
-if (condition) { doA() } else { doB() }
+if (condition) {
+  doA()
+} else {
+  doB()
+}
 // { type: "IfStatement",
 //   test: Identifier("condition"),
 //   consequent: BlockStatement,
@@ -352,21 +359,21 @@ console.log(output.code)
 ```javascript
 traverse(ast, {
   Identifier(path) {
-    path.node             // 현재 AST 노드 자체
-    path.parent           // 부모 노드
-    path.parentPath       // 부모의 path 객체
-    path.scope            // 현재 스코프 정보
+    path.node // 현재 AST 노드 자체
+    path.parent // 부모 노드
+    path.parentPath // 부모의 path 객체
+    path.scope // 현재 스코프 정보
 
     // 조작 메서드
-    path.replaceWith(newNode)    // 현재 노드를 다른 노드로 교체
-    path.remove()                // 현재 노드 삭제
-    path.insertBefore(newNode)   // 현재 노드 앞에 새 노드 삽입
-    path.insertAfter(newNode)    // 현재 노드 뒤에 새 노드 삽입
+    path.replaceWith(newNode) // 현재 노드를 다른 노드로 교체
+    path.remove() // 현재 노드 삭제
+    path.insertBefore(newNode) // 현재 노드 앞에 새 노드 삽입
+    path.insertAfter(newNode) // 현재 노드 뒤에 새 노드 삽입
 
     // 탐색 메서드
-    path.findParent(p => p.isFunction())  // 조건에 맞는 부모 찾기
-    path.getSibling(0)                     // 형제 노드 접근
-  }
+    path.findParent((p) => p.isFunction()) // 조건에 맞는 부모 찾기
+    path.getSibling(0) // 형제 노드 접근
+  },
 })
 ```
 
@@ -377,12 +384,12 @@ traverse(ast, {
   Identifier(path) {
     const binding = path.scope.getBinding(path.node.name)
     if (binding) {
-      console.log(binding.kind)           // 'const', 'let', 'var', 'param' 등
-      console.log(binding.referenced)     // 참조되고 있는지
-      console.log(binding.references)     // 참조 횟수
+      console.log(binding.kind) // 'const', 'let', 'var', 'param' 등
+      console.log(binding.referenced) // 참조되고 있는지
+      console.log(binding.references) // 참조 횟수
       console.log(binding.referencePaths) // 참조 위치들
     }
-  }
+  },
 })
 ```
 
@@ -398,7 +405,7 @@ export default function () {
   return {
     visitor: {
       CallExpression(path) {
-        const { callee } = path.node
+        const {callee} = path.node
         if (
           callee.type === 'MemberExpression' &&
           callee.object.name === 'console' &&
@@ -444,13 +451,10 @@ export default function transformer(file, api) {
   return j(file.source)
     .find(j.FunctionExpression)
     .replaceWith((path) => {
-      const { params, body } = path.node
+      const {params, body} = path.node
 
       // body가 return 문 하나뿐이면 간결한 arrow function으로
-      if (
-        body.body.length === 1 &&
-        body.body[0].type === 'ReturnStatement'
-      ) {
+      if (body.body.length === 1 && body.body[0].type === 'ReturnStatement') {
         return j.arrowFunctionExpression(params, body.body[0].argument)
       }
 
@@ -543,11 +547,7 @@ group([
 foo(arg1, arg2, arg3)
 
 // printWidth를 초과할 때 → 여러 줄
-foo(
-  arg1,
-  arg2,
-  arg3,
-)
+foo(arg1, arg2, arg3)
 ```
 
 이 판단을 단순히 문자열 길이만 보고 하는 게 아니라, AST 구조를 이해한 상태에서 하기 때문에 중첩된 구조에서도 일관된 결과를 만들어낸다.

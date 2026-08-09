@@ -98,9 +98,7 @@ db.findAll('SELECT ...', function (err, results) {
 nodejs는 이벤트 큐의 다음 코드블록을, 이전 코드블록의 실행이 완료될 때까지 평가하지 않는다. 그래서 할 수 있는 간단한 방법 중 하나는, 코드를 작은 동기식 코드로 나누고, nodejs에 이 작업이 끝났다고 전달한 이후에 큐에서 보류 중인 것들을 계속해서 실행할 수 있도록 하는 것이다.
 
 ```javascript
-const arr = [
-  /*겁나 큰 배열*/
-]
+const arr = [/*겁나 큰 배열*/]
 for (const item of arr) {
   // 무거운 작업
 }

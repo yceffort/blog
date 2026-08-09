@@ -1,9 +1,7 @@
 'use client'
 
 import {useEffect} from 'react'
-
 import {onCLS, onFCP, onINP, onLCP, onTTFB} from 'web-vitals'
-
 import type {Metric} from 'web-vitals'
 
 import {SiteConfig} from '@/config'

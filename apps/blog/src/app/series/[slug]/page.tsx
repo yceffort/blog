@@ -1,6 +1,5 @@
-import {notFound} from 'next/navigation'
-
 import {EmphasizedTitle} from '@yceffort/shared/components'
+import {notFound} from 'next/navigation'
 
 import {PostArticle} from '@/components/PostArticle'
 import RecentRow from '@/components/RecentRow'

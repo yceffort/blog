@@ -1,11 +1,9 @@
-import {NextResponse} from 'next/server'
-
 import {stripTitleEmphasis} from '@yceffort/shared/utils'
 import MiniSearch from 'minisearch'
-
-import type {Locale} from '@/utils/postPaths'
+import {NextResponse} from 'next/server'
 
 import {getAllPosts} from '@/utils/Post'
+import type {Locale} from '@/utils/postPaths'
 import {miniSearchOptions, type SearchDoc} from '@/utils/search'
 
 const norm = (s: string) => s.normalize('NFC')

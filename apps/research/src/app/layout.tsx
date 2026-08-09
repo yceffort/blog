@@ -1,12 +1,9 @@
 import './tailwind.css'
-
-import {Fraunces, Inter, JetBrains_Mono} from 'next/font/google'
-import Script from 'next/script'
-
 import {Analytics} from '@vercel/analytics/react'
 import {Providers} from '@yceffort/shared/components'
-
 import type {Metadata} from 'next'
+import {Fraunces, Inter, JetBrains_Mono} from 'next/font/google'
+import Script from 'next/script'
 import type {ReactNode} from 'react'
 
 import AmbientEffects from '@/components/AmbientEffects'

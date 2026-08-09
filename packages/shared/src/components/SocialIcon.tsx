@@ -1,3 +1,5 @@
+import type {FC} from 'react'
+
 import {
   FacebookIcon,
   GithubIcon,
@@ -7,10 +9,13 @@ import {
   YoutubeIcon,
 } from './icons/social'
 
-import type {FC} from 'react'
-
 type IconType =
-  'mail' | 'github' | 'facebook' | 'youtube' | 'linkedin' | 'twitter'
+  | 'mail'
+  | 'github'
+  | 'facebook'
+  | 'youtube'
+  | 'linkedin'
+  | 'twitter'
 
 const Components: Record<IconType, FC<{className: string}>> = {
   mail: MailIcon,

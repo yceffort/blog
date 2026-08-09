@@ -679,34 +679,34 @@ function SearchResults({query}) {
 
 The key is to judge based on **"Should the Effect re-run when this value changes?"**
 
-| Situation                                                 | Handling Method            |
-| --------------------------------------------------------- | -------------------------- |
-| Effect should re-run when value changes                  | Include in dependency array |
-| Effect doesn't need to re-run when value changes         | Separate with `useEffectEvent` |
+| Situation                                        | Handling Method                |
+| ------------------------------------------------ | ------------------------------ |
+| Effect should re-run when value changes          | Include in dependency array    |
+| Effect doesn't need to re-run when value changes | Separate with `useEffectEvent` |
 
 ## useEffectEvent vs useCallback Comparison
 
-| Feature               | useCallback               | useEffectEvent     |
-| --------------------- | ------------------------- | ------------------ |
-| Dependency array      | Required                  | None               |
-| Function identity stability | Changes when deps change | Always stable      |
-| Latest value access   | Only values in deps are latest | Always latest      |
-| Usage location        | Anywhere possible         | Only within Effects |
-| Status                | Stable API                | Stable API (19.2.0+) |
+| Feature                     | useCallback                    | useEffectEvent       |
+| --------------------------- | ------------------------------ | -------------------- |
+| Dependency array            | Required                       | None                 |
+| Function identity stability | Changes when deps change       | Always stable        |
+| Latest value access         | Only values in deps are latest | Always latest        |
+| Usage location              | Anywhere possible              | Only within Effects  |
+| Status                      | Stable API                     | Stable API (19.2.0+) |
 
 ## Why Did it Take 3 Years?
 
 The RFC came out in May 2022, but why was it only officially released in October 2025? Looking at the timeline reveals the reasons.
 
-| Time           | Event                                                                                        |
-| -------------- | -------------------------------------------------------------------------------------------- |
-| May 2022       | [useEvent RFC](https://github.com/reactjs/rfcs/pull/220) proposed                          |
-| Sep-Dec 2022   | experimental implementation, [renamed to useEffectEvent](https://github.com/facebook/react/pull/25881) |
-| Dec 2022       | Original RFC abandoned ("That RFC is defunct")                                              |
-| 2023           | React 19 development (focusing on RSC, Compiler, etc.)                                      |
-| Apr 2024       | React 19 beta                                                                               |
-| Dec 2024       | React 19 stable                                                                             |
-| Oct 2025       | useEffectEvent officially released in React 19.2                                            |
+| Time         | Event                                                                                                  |
+| ------------ | ------------------------------------------------------------------------------------------------------ |
+| May 2022     | [useEvent RFC](https://github.com/reactjs/rfcs/pull/220) proposed                                      |
+| Sep-Dec 2022 | experimental implementation, [renamed to useEffectEvent](https://github.com/facebook/react/pull/25881) |
+| Dec 2022     | Original RFC abandoned ("That RFC is defunct")                                                         |
+| 2023         | React 19 development (focusing on RSC, Compiler, etc.)                                                 |
+| Apr 2024     | React 19 beta                                                                                          |
+| Dec 2024     | React 19 stable                                                                                        |
+| Oct 2025     | useEffectEvent officially released in React 19.2                                                       |
 
 There seem to be two factors:
 

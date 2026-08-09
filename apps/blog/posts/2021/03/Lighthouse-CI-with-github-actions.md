@@ -26,12 +26,8 @@ Lighthouse는 웹사이트의 성능을 측정하는 유명한 도구중 하나�
    ```javascript
    module.exports = {
      ci: {
-       collect: {
-         /* Add configuration here */
-       },
-       upload: {
-         /* Add configuration here */
-       },
+       collect: {/* Add configuration here */},
+       upload: {/* Add configuration here */},
      },
    }
    ```

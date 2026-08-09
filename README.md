@@ -49,19 +49,19 @@ This monorepo is deployed as two separate Vercel projects:
 
 ### Blog (yceffort.kr)
 
-| Setting | Value |
-|---------|-------|
-| Root Directory | `apps/blog` |
-| Build Command | `pnpm build` |
+| Setting         | Value          |
+| --------------- | -------------- |
+| Root Directory  | `apps/blog`    |
+| Build Command   | `pnpm build`   |
 | Install Command | `pnpm install` |
 
 ### Research (research.yceffort.kr)
 
-| Setting | Value |
-|---------|-------|
-| Root Directory | `apps/research` |
-| Build Command | `pnpm build` |
-| Install Command | `pnpm install` |
+| Setting         | Value           |
+| --------------- | --------------- |
+| Root Directory  | `apps/research` |
+| Build Command   | `pnpm build`    |
+| Install Command | `pnpm install`  |
 
 ## Tech Stack
 

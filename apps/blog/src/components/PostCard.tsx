@@ -1,15 +1,13 @@
 'use client'
 
+import {EmphasizedTitle} from '@yceffort/shared/components'
+import {stripTitleEmphasis} from '@yceffort/shared/utils'
+import {format} from 'date-fns'
 import Image from 'next/image'
 import Link from 'next/link'
 import {useRef, ViewTransition} from 'react'
 
-import {EmphasizedTitle} from '@yceffort/shared/components'
-import {stripTitleEmphasis} from '@yceffort/shared/utils'
-import {format} from 'date-fns'
-
 import type {Post} from '@/type'
-
 import {buildOgImageUrl} from '@/utils/og'
 
 export default function PostCard({

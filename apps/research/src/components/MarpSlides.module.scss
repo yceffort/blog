@@ -27,7 +27,7 @@
   justify-content: center;
 
   &::after {
-    content: "";
+    content: '';
     width: 32px;
     height: 32px;
     opacity: 0;
@@ -603,7 +603,7 @@
     color: white;
   }
 
-  &[data-on="true"] {
+  &[data-on='true'] {
     background: rgba(255, 255, 255, 0.15);
     border-color: rgba(255, 255, 255, 0.25);
     color: white;
@@ -624,7 +624,7 @@
     transform: scale(1.1);
   }
 
-  &[data-on="true"] {
+  &[data-on='true'] {
     border-color: white;
     transform: scale(1.15);
   }

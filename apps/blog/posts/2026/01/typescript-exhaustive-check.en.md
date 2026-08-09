@@ -343,9 +343,7 @@ This is useful when handling action types in the Redux pattern.
 
 ```typescript
 type Action =
-  | {type: 'INCREMENT'}
-  | {type: 'DECREMENT'}
-  | {type: 'RESET'; payload: number}
+  {type: 'INCREMENT'} | {type: 'DECREMENT'} | {type: 'RESET'; payload: number}
 
 function reducer(state: number, action: Action): number {
   switch (action.type) {

@@ -4,7 +4,6 @@ import path from 'path'
 import {sync} from 'glob'
 
 import {POST_ROOT, isLocaleFile} from './postPaths'
-
 import type {Locale} from './postPaths'
 
 export function getPostRawBySlug(

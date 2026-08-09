@@ -23,16 +23,19 @@ React Compiler는 이 수동 메모이제이션의 고통을 빌드 타임에 �
 React Compiler가 해결하려는 문제를 간단히 짚고 넘어가자. React는 state가 변경되면 해당 컴포넌트와 **모든 자식 컴포넌트를 다시 실행**한다. 이를 방지하기 위해 `React.memo`, `useMemo`, `useCallback`을 사용하는데, 이 수동 메모이제이션에는 잘 알려진 함정들이 있다.
 
 ```tsx
-const ExpensiveList = memo(function ExpensiveList({ data, onClick }) {
+const ExpensiveList = memo(function ExpensiveList({data, onClick}) {
   const processed = useMemo(() => expensiveProcessing(data), [data])
 
-  const handleClick = useCallback((item) => {
-    onClick(item.id)
-  }, [onClick])
+  const handleClick = useCallback(
+    (item) => {
+      onClick(item.id)
+    },
+    [onClick],
+  )
 
   return (
     <ul>
-      {processed.map(item => (
+      {processed.map((item) => (
         <Item key={item.id} onClick={() => handleClick(item)} />
       ))}
     </ul>
@@ -45,13 +48,13 @@ const ExpensiveList = memo(function ExpensiveList({ data, onClick }) {
 React Compiler는 이 모든 판단을 자동화한다. 개발자는 그냥 코드를 작성하면 된다.
 
 ```tsx
-function ExpensiveList({ data, onClick }) {
+function ExpensiveList({data, onClick}) {
   const processed = expensiveProcessing(data)
   const handleClick = (item) => onClick(item.id)
 
   return (
     <ul>
-      {processed.map(item => (
+      {processed.map((item) => (
         <Item key={item.id} onClick={() => handleClick(item)} />
       ))}
     </ul>
@@ -92,7 +95,7 @@ React Compiler의 [공식 설계 문서](https://github.com/facebook/react/blob/
 이 글에서는 주요 단계를 중심으로, 다음 예시 코드가 각 단계에서 어떻게 변환되는지 추적한다.
 
 ```tsx
-function List({ items }) {
+function List({items}) {
   const [selItem, setSelItem] = useState(null)
   const [sort, setSort] = useState(0)
 
@@ -210,13 +213,13 @@ bb0 (block):
 
 컴파일러가 추적하는 주요 Effect 종류:
 
-| Effect | 의미 | 메모이제이션에 미치는 영향 |
-|--------|------|---------------------------|
-| **Read** | 값을 읽기만 한다 | 의존성으로 추적 |
-| **Store** | 값을 저장한다 | 새 값의 생성을 표시 |
+| Effect      | 의미                          | 메모이제이션에 미치는 영향     |
+| ----------- | ----------------------------- | ------------------------------ |
+| **Read**    | 값을 읽기만 한다              | 의존성으로 추적                |
+| **Store**   | 값을 저장한다                 | 새 값의 생성을 표시            |
 | **Capture** | 클로저가 값의 참조를 붙잡는다 | 캡처된 값이 변경될 가능성 열림 |
-| **Mutate** | 값을 변경한다 | mutation 완료까지 scope 확장 |
-| **Freeze** | 값이 불변으로 굳어진다 | 이 시점부터 안전하게 캐시 가능 |
+| **Mutate**  | 값을 변경한다                 | mutation 완료까지 scope 확장   |
+| **Freeze**  | 값이 불변으로 굳어진다        | 이 시점부터 안전하게 캐시 가능 |
 
 표만 보면 비슷해 보이지만, 특히 **Capture와 Freeze의 차이**, 그리고 **Mutate가 scope를 확장하는 방식**이 실제 컴파일 결과를 결정짓는 핵심이다. 구체적 예시로 살펴보자.
 
@@ -225,8 +228,8 @@ bb0 (block):
 다음 컴포넌트를 보자.
 
 ```tsx
-function CaptureExample({ onClick, label }) {
-  const data = { count: 0 }
+function CaptureExample({onClick, label}) {
+  const data = {count: 0}
   const handler = () => {
     onClick(data)
   }
@@ -267,12 +270,12 @@ Playground에서 Show Internals를 켜고 InferMutationAliasingEffects 패스를
 // Playground 출력
 function CaptureExample(t0) {
   const $ = _c(6)
-  const { onClick, label } = t0
+  const {onClick, label} = t0
 
   // data 객체 — 리터럴이므로 한 번만 생성 (sentinel 패턴)
   let t1
-  if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
-    t1 = { count: 0 }
+  if ($[0] === Symbol.for('react.memo_cache_sentinel')) {
+    t1 = {count: 0}
     $[0] = t1
   } else {
     t1 = $[0]
@@ -282,7 +285,9 @@ function CaptureExample(t0) {
   // handler — onClick을 capture하므로, onClick이 바뀌면 재생성
   let t2
   if ($[1] !== onClick) {
-    t2 = () => { onClick(data) }
+    t2 = () => {
+      onClick(data)
+    }
     $[1] = onClick
     $[2] = t2
   } else {
@@ -311,7 +316,7 @@ function CaptureExample(t0) {
 Mutate Effect는 scope 경계를 결정하는 데 결정적인 역할을 한다. 다음 예시를 보자.
 
 ```tsx
-function MutateExample({ items, title }) {
+function MutateExample({items, title}) {
   const result = []
   for (const item of items) {
     result.push(<li key={item.id}>{item.name}</li>)
@@ -336,17 +341,17 @@ function MutateExample({ items, title }) {
 // Playground 출력
 function MutateExample(t0) {
   const $ = _c(5)
-  const { items, title } = t0
+  const {items, title} = t0
 
   // result 생성 + 모든 push가 하나의 scope
   let result
   if ($[0] !== items) {
-    result = []                                         // Create
+    result = [] // Create
     for (const item of items) {
-      result.push(<li key={item.id}>{item.name}</li>)   // Mutate
+      result.push(<li key={item.id}>{item.name}</li>) // Mutate
     }
-    $[0] = items                                        // mutation이 모두 끝난 후에야
-    $[1] = result                                       // 캐시에 저장
+    $[0] = items // mutation이 모두 끝난 후에야
+    $[1] = result // 캐시에 저장
   } else {
     result = $[1]
   }
@@ -354,7 +359,7 @@ function MutateExample(t0) {
   // JSX — result가 freeze되는 지점
   let t1
   if ($[2] !== result || $[3] !== title) {
-    t1 = <ul title={title}>{result}</ul>                // Freeze
+    t1 = <ul title={title}>{result}</ul> // Freeze
     $[2] = result
     $[3] = title
     $[4] = t1
@@ -425,11 +430,11 @@ function CaptureExample(t0) {
 
 3개의 scope가 만들어졌다. 각각이 최종 출력에서 하나의 `if` 블록이 된다. **왜 이렇게 나뉘었는가?**
 
-| Scope | 의존성 | 최종 캐시 패턴 | 분리 이유 |
-|-------|--------|---------------|-----------|
-| @1 `data` | `0` (primitive) | sentinel 체크 | 리터럴에만 의존 → 한 번 생성하면 영원히 유효 |
-| @2 `handler` | `onClick`, `data` | `$[1] !== onClick` | `onClick`이 reactive. `data`는 @1에서 불변이므로 실질적 의존성은 `onClick`뿐 |
-| @3 JSX | `handler`, `label` | `$[3] !== handler \|\| $[4] !== label` | 둘 다 reactive. 하나라도 변하면 JSX 재생성 |
+| Scope        | 의존성             | 최종 캐시 패턴                         | 분리 이유                                                                    |
+| ------------ | ------------------ | -------------------------------------- | ---------------------------------------------------------------------------- |
+| @1 `data`    | `0` (primitive)    | sentinel 체크                          | 리터럴에만 의존 → 한 번 생성하면 영원히 유효                                 |
+| @2 `handler` | `onClick`, `data`  | `$[1] !== onClick`                     | `onClick`이 reactive. `data`는 @1에서 불변이므로 실질적 의존성은 `onClick`뿐 |
+| @3 JSX       | `handler`, `label` | `$[3] !== handler \|\| $[4] !== label` | 둘 다 reactive. 하나라도 변하면 JSX 재생성                                   |
 
 scope가 분리되는 핵심 기준은 **의존성의 독립성**이다. `onClick`만 변경되면 @2만 재실행되고, @1의 `data`는 재사용된다. `label`만 변경되면 @2의 `handler`도 캐시에서 나오고, @3만 재실행된다. 만약 @2와 @3이 하나의 scope로 합쳐졌다면, `label`만 변경되어도 handler를 불필요하게 새로 만들게 된다.
 
@@ -489,12 +494,12 @@ export default function MyApp() {
 컴파일 결과:
 
 ```tsx
-import { c as _c } from "react/compiler-runtime"
+import {c as _c} from 'react/compiler-runtime'
 
 export default function MyApp() {
   const $ = _c(1)
   let t0
-  if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
+  if ($[0] === Symbol.for('react.memo_cache_sentinel')) {
     t0 = <div>Hello World</div>
     $[0] = t0
   } else {
@@ -515,7 +520,7 @@ Props도 state도 없으므로, JSX 전체를 한 번만 생성하고 이후에�
 ### props 의존: 의존성 비교 패턴
 
 ```tsx
-function Greeting({ name }) {
+function Greeting({name}) {
   const text = `Hello, ${name}!`
   return <p>{text}</p>
 }
@@ -526,7 +531,7 @@ function Greeting({ name }) {
 ```tsx
 function Greeting(t0) {
   const $ = _c(2)
-  const { name } = t0
+  const {name} = t0
   let t1
   if ($[0] !== name) {
     t1 = <p>{`Hello, ${name}!`}</p>
@@ -546,11 +551,11 @@ function Greeting(t0) {
 앞서 파이프라인에서 추적한 `List` 컴포넌트의 컴파일 결과를 보자. [Playground](https://playground.react.dev/)에서 직접 확인한 결과다.
 
 ```tsx
-import { c as _c } from "react/compiler-runtime"
+import {c as _c} from 'react/compiler-runtime'
 
 function List(t0) {
   const $ = _c(4)
-  const { items } = t0
+  const {items} = t0
   useState(null)
   useState(0)
 
@@ -589,12 +594,12 @@ function _temp(item) {
 
 4개의 캐시 슬롯이 각각 어떤 역할을 하는지 분석하면:
 
-| 슬롯 | 패턴 | 저장 내용 | 무효화 조건 |
-|------|------|-----------|------------|
-| `$[0]` | 의존성 | `items` (비교용) | `items` 참조 변경 시 |
-| `$[1]` | 결과 | `pItems.map(_temp)` 결과 | `items` 변경 시 |
-| `$[2]` | 의존성 | `listItems` (비교용) | `listItems` 참조 변경 시 |
-| `$[3]` | 결과 | `<ul>{listItems}</ul>` JSX | `listItems` 변경 시 |
+| 슬롯   | 패턴   | 저장 내용                  | 무효화 조건              |
+| ------ | ------ | -------------------------- | ------------------------ |
+| `$[0]` | 의존성 | `items` (비교용)           | `items` 참조 변경 시     |
+| `$[1]` | 결과   | `pItems.map(_temp)` 결과   | `items` 변경 시          |
+| `$[2]` | 의존성 | `listItems` (비교용)       | `listItems` 참조 변경 시 |
+| `$[3]` | 결과   | `<ul>{listItems}</ul>` JSX | `listItems` 변경 시      |
 
 각 scope가 **독립적으로 작동**한다. `items`가 바뀌면 `$[0]`\~`$[1]`과 `$[2]`\~`$[3]`이 갱신된다. 수동으로 `useMemo`를 사용했다면 `processItems(items)` 결과만 캐싱하겠지만, 컴파일러는 그 결과에 의존하는 `<ul>` JSX까지 별도의 scope로 캐싱한다.
 
@@ -615,7 +620,7 @@ React Compiler의 출력에는 **아직 JSX가 포함**되어 있다. 실제로 
 t0 = <div>Hello World</div>
 
 // JSX 트랜스파일 후 (브라우저가 실행)
-t0 = _jsx("div", { children: "Hello World" })
+t0 = _jsx('div', {children: 'Hello World'})
 ```
 
 작성한 코드와 실행 코드 사이에 **두 단계의 변환**이 존재한다는 점을 디버깅 시 인식하고 있어야 한다.
@@ -640,11 +645,11 @@ Meta에서는 Quest Store에서 초기 로드/내비게이션 최대 12% 개선,
 
 눈에 띄는 9개의 리렌더링 케이스:
 
-| 결과 | 건수 | 특징 |
-|------|------|------|
-| 완전 해결 | 2 | 비-프리미티브 props 전달, children 패턴 |
-| 부분 개선 | 5 | 일부 리렌더링 감소 |
-| 개선 없음 | 2 | 매번 새 객체 참조, 라이브러리 bailout |
+| 결과      | 건수 | 특징                                    |
+| --------- | ---- | --------------------------------------- |
+| 완전 해결 | 2    | 비-프리미티브 props 전달, children 패턴 |
+| 부분 개선 | 5    | 일부 리렌더링 감소                      |
+| 개선 없음 | 2    | 매번 새 객체 참조, 라이브러리 bailout   |
 
 ## 한계와 주의사항
 
@@ -653,7 +658,7 @@ Meta에서는 Quest Store에서 초기 로드/내비게이션 최대 12% 개선,
 컴파일러는 `!==` 비교로 캐시 유효성을 판단한다. API 응답처럼 매번 새 객체를 반환하는 데이터는 내용이 같아도 캐시가 무효화된다.
 
 ```tsx
-function UserProfile({ userId }) {
+function UserProfile({userId}) {
   const user = useFetchUser(userId)
   // user 객체의 참조가 매번 바뀌면, 아래 전체가 매번 재계산된다
   return <ProfileCard user={user} />
@@ -691,14 +696,14 @@ Solid.js, Preact Signals, Angular Signals 같은 프레임워크는 **Signals**�
 
 ### 접근법의 차이
 
-| | Signals | React Compiler |
-|---|---------|---------------|
-| **시점** | 런타임 | 빌드 타임 |
-| **추적 방식** | 실행 시 의존성 자동 추적 | 정적 분석으로 의존성 추론 |
-| **정밀도** | 표현식 단위 (DOM 노드 직접 업데이트) | 컴포넌트/훅 단위 (Virtual DOM diffing 유지) |
-| **런타임 비용** | Signal당 구독자 Set 유지, 그래프 정렬 | 캐시 배열 비교 (의존성 수에 비례) |
-| **번들 추가** | 런타임 라이브러리 필요 (~1KB+) | 0 (기존 React에 포함) |
-| **API 변경** | `.value` 읽기, Signal 객체 관리 | 없음 (기존 React 코드 그대로) |
+|                 | Signals                               | React Compiler                              |
+| --------------- | ------------------------------------- | ------------------------------------------- |
+| **시점**        | 런타임                                | 빌드 타임                                   |
+| **추적 방식**   | 실행 시 의존성 자동 추적              | 정적 분석으로 의존성 추론                   |
+| **정밀도**      | 표현식 단위 (DOM 노드 직접 업데이트)  | 컴포넌트/훅 단위 (Virtual DOM diffing 유지) |
+| **런타임 비용** | Signal당 구독자 Set 유지, 그래프 정렬 | 캐시 배열 비교 (의존성 수에 비례)           |
+| **번들 추가**   | 런타임 라이브러리 필요 (~1KB+)        | 0 (기존 React에 포함)                       |
+| **API 변경**    | `.value` 읽기, Signal 객체 관리       | 없음 (기존 React 코드 그대로)               |
 
 ### React가 컴파일러를 선택한 이유
 
@@ -724,9 +729,7 @@ Svelte 5의 컴파일러는 `.svelte` 파일을 받아서, Virtual DOM 없이 **
   const doubled = $derived(count * 2)
 </script>
 
-<button onclick={() => count++}>
-  {count} x 2 = {doubled}
-</button>
+<button onclick="{()" ="">count++}> {count} x 2 = {doubled}</button>
 ```
 
 Svelte 컴파일러의 출력(단순화):
@@ -747,7 +750,7 @@ export default function Counter($$anchor) {
 
   // 이 콜백만 state 변경 시 재실행된다
   $.template_effect(() =>
-    $.set_text(text, `${$.get(count)} x 2 = ${$.get(doubled)}`)
+    $.set_text(text, `${$.get(count)} x 2 = ${$.get(doubled)}`),
   )
 
   $.append($$anchor, button)
@@ -758,14 +761,14 @@ export default function Counter($$anchor) {
 
 ### 핵심 차이: 무엇을 컴파일하는가
 
-| | Svelte 5 | React Compiler |
-|---|---------|---------------|
-| **컴파일 목표** | 프레임워크를 없앤다 | 프레임워크 안에서 최적화한다 |
-| **런타임** | ~1.6KB (신호 시스템만) | ~42KB (React + ReactDOM) |
-| **Virtual DOM** | 없음 — DOM 직접 조작 | 유지 — diffing은 그대로 |
-| **업데이트 단위** | 개별 DOM 노드 (`set_text`, `set_attribute`) | 컴포넌트 서브트리 (메모이제이션으로 skip) |
-| **컴포넌트 재실행** | 안 함 (한 번 실행 후 effect만 재실행) | 함 (다만 캐시 hit 시 자식은 skip) |
-| **반응성 모델** | Signal 기반 (`$state`, `$derived`) | 불변 state + 자동 메모이제이션 |
+|                     | Svelte 5                                    | React Compiler                            |
+| ------------------- | ------------------------------------------- | ----------------------------------------- |
+| **컴파일 목표**     | 프레임워크를 없앤다                         | 프레임워크 안에서 최적화한다              |
+| **런타임**          | ~1.6KB (신호 시스템만)                      | ~42KB (React + ReactDOM)                  |
+| **Virtual DOM**     | 없음 — DOM 직접 조작                        | 유지 — diffing은 그대로                   |
+| **업데이트 단위**   | 개별 DOM 노드 (`set_text`, `set_attribute`) | 컴포넌트 서브트리 (메모이제이션으로 skip) |
+| **컴포넌트 재실행** | 안 함 (한 번 실행 후 effect만 재실행)       | 함 (다만 캐시 hit 시 자식은 skip)         |
+| **반응성 모델**     | Signal 기반 (`$state`, `$derived`)          | 불변 state + 자동 메모이제이션            |
 
 React Compiler를 비유하면 "같은 엔진을 쓰되 기어 변속을 자동으로" 해주는 것이고, Svelte는 "엔진 자체를 다른 것으로 교체"한 것이다.
 
@@ -907,7 +910,7 @@ npx react-compiler-healthcheck@latest
 
 ```tsx
 export default function Page() {
-  'use memo'  // 이 컴포넌트만 컴파일
+  'use memo' // 이 컴포넌트만 컴파일
   // ...
 }
 ```
@@ -916,7 +919,7 @@ export default function Page() {
 
 ```tsx
 function ProblematicComponent() {
-  'use no memo'  // 이 컴포넌트는 컴파일 건너뜀
+  'use no memo' // 이 컴포넌트는 컴파일 건너뜀
   // ...
 }
 ```

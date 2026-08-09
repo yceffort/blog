@@ -1,8 +1,7 @@
 import {NextResponse} from 'next/server'
+import type {NextRequest} from 'next/server'
 
 import {detectBot} from './constants/bot-signatures'
-
-import type {NextRequest} from 'next/server'
 
 export function proxy(request: NextRequest) {
   const userAgent = request.headers.get('user-agent') || ''

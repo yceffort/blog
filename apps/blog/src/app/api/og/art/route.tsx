@@ -1,7 +1,5 @@
-import {ImageResponse} from 'next/og'
-
 import {parseTitleEmphasis} from '@yceffort/shared/utils'
-
+import {ImageResponse} from 'next/og'
 import type {ReactNode} from 'react'
 
 const WIDTH = 1200

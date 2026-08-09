@@ -9,6 +9,8 @@ export function useLocale() {
   return {
     locale: (isEn ? 'en' : 'ko') as 'en' | 'ko',
     pathPrefix: isEn ? '/en' : '',
-    alternatePath: isEn ? pathname.replace(/^\/en/, '') || '/' : `/en${pathname}`,
+    alternatePath: isEn
+      ? pathname.replace(/^\/en/, '') || '/'
+      : `/en${pathname}`,
   }
 }

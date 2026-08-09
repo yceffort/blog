@@ -1,9 +1,8 @@
 'use client'
 
+import {track} from '@vercel/analytics'
 import {usePathname} from 'next/navigation'
 import {useEffect} from 'react'
-
-import {track} from '@vercel/analytics'
 
 import {detectBot} from '@/constants/bot-signatures'
 

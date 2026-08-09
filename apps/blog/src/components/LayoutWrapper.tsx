@@ -5,6 +5,10 @@ import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 import {useEffect, useState, type ReactNode} from 'react'
 
+import {SiteConfig} from '@/config'
+import {useLocale} from '@/hooks/useLocale'
+import profile from '@/public/profile.jpeg'
+
 import Footer from './Footer'
 import LanguageSwitch from './LanguageSwitch'
 import MobileNav from './MobileNav'
@@ -12,10 +16,6 @@ import ScrollTop from './ScrollTop'
 import SectionContainer from './SectionContainer'
 import SiteSearch from './SiteSearch'
 import TweaksPanel from './TweaksPanel'
-
-import {SiteConfig} from '@/config'
-import {useLocale} from '@/hooks/useLocale'
-import profile from '@/public/profile.jpeg'
 
 function HeaderLogo() {
   const {pathPrefix} = useLocale()

@@ -97,17 +97,17 @@ The `portfolio-amber-mu-57.vercel.app` website is a single-page portfolio built 
 The main findings are as follows.
 
 - **The main content is dynamically rendered and mounted via JavaScript after the intro animation**  
-   → Causes delayed LCP measurement and distorted content-exposure timing
+  → Causes delayed LCP measurement and distorted content-exposure timing
 - **The entire application logic is contained in a single `index.js` bundle**  
-   → JavaScript parsing and execution delays, reduced cache reuse
+  → JavaScript parsing and execution delays, reduced cache reuse
 - **The GSAP-based transition animation removes content and then re-introduces it**  
-   → The actual content is recognized late by both browsers and crawlers
+  → The actual content is recognized late by both browsers and crawlers
 - **External libraries such as `react`, `react-dom`, `emotion`, and `gsap` are included in one bundle**  
-   → Increased initial chunk size and loading delays
+  → Increased initial chunk size and loading delays
 - **Core content is not included in the initial HTML**  
-   → Disadvantageous for SEO and accessibility
+  → Disadvantageous for SEO and accessibility
 - **LCP measurements differ between Lighthouse and the Performance tab**  
-   → Caused by structural differences in how measurement end points are determined
+  → Caused by structural differences in how measurement end points are determined
 
 Accordingly, I suggest prioritizing the following improvements.
 
@@ -453,13 +453,13 @@ This approach can be a compromise that reduces user fatigue while maintaining vi
 When applying the improvements suggested above to a real project, how about using the following items as a checklist to review up front whether there are structural issues in code quality, performance, and accessibility?
 
 - **Is all text content included in the initial HTML?**  
-   → Ensures performance measurement tools and search engines can recognize the content accurately.
+  → Ensures performance measurement tools and search engines can recognize the content accurately.
 - **Is the content visible even with JavaScript disabled?**  
-   → Verifies you're following the Progressive Enhancement principle.
+  → Verifies you're following the Progressive Enhancement principle.
 - **Are animations optimized with the `will-change` property?**  
-   → `will-change` is a CSS property that hints to the browser that "this property is about to change." For example, setting `will-change: transform` lets the browser prepare layer separation or GPU-accelerated handling for that element in advance, which **can reduce layout calculation and repaint costs**. However, excessive use can actually degrade performance, so it's best to limit it to the key elements where changes are concentrated.
+  → `will-change` is a CSS property that hints to the browser that "this property is about to change." For example, setting `will-change: transform` lets the browser prepare layer separation or GPU-accelerated handling for that element in advance, which **can reduce layout calculation and repaint costs**. However, excessive use can actually degrade performance, so it's best to limit it to the key elements where changes are concentrated.
 - **Did you consider the `prefers-reduced-motion` media query?**  
-   → `prefers-reduced-motion` is a CSS media query that can detect **when a user has explicitly indicated in their OS or browser that they prefer minimized animation**. Using it, you can minimize or skip animations and transition effects out of consideration for motion-sensitive users.
+  → `prefers-reduced-motion` is a CSS media query that can detect **when a user has explicitly indicated in their OS or browser that they prefer minimized animation**. Using it, you can minimize or skip animations and transition effects out of consideration for motion-sensitive users.
   ```css
   @media (prefers-reduced-motion: reduce) {
     .animated {
@@ -469,7 +469,7 @@ When applying the improvements suggested above to a real project, how about usin
   }
   ```
 - **Is animation performance sufficient on mobile devices?**  
-   → Verify it operates without rendering bottlenecks or frame drops even on low-end devices. In particular, I recommend using only GPU-optimizable properties like `opacity` and `transform`, and avoiding properties that trigger layout/paint/reflow (`top`, `left`, `height`, etc.).
+  → Verify it operates without rendering bottlenecks or frame drops even on low-end devices. In particular, I recommend using only GPU-optimizable properties like `opacity` and `transform`, and avoiding properties that trigger layout/paint/reflow (`top`, `left`, `height`, etc.).
 
 This checklist serves as a standard for evaluating not just whether the animation looks good, but web accessibility, performance stability, and maintainability as a whole. Especially for websites like portfolios that demand both content delivery and visual polish, these criteria become the very standard of quality.
 

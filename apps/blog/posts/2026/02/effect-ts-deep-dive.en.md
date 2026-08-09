@@ -133,13 +133,13 @@ An important distinction needs to be made here. **Effect-TS does not implement a
 
 ### Fundamental Differences
 
-| Aspect | Real Algebraic Effects (Koka, OCaml 5) | Effect-TS |
-| --- | --- | --- |
-| Base mechanism | Runtime continuation capture | Monad `flatMap` chaining |
-| Effect occurrence | `perform` (handled by runtime) | `Effect.fail`, `yield*` (type-level tracking) |
-| Handler resumption | Can resume continuations | Impossible — can only catch or transform errors |
-| Function coloring | None — effects can occur in regular functions | Yes — effectful functions must return `Effect<A, E, R>` |
-| Impact on intermediate functions | No changes needed | All intermediate functions must participate in Effect chain |
+| Aspect                           | Real Algebraic Effects (Koka, OCaml 5)        | Effect-TS                                                   |
+| -------------------------------- | --------------------------------------------- | ----------------------------------------------------------- |
+| Base mechanism                   | Runtime continuation capture                  | Monad `flatMap` chaining                                    |
+| Effect occurrence                | `perform` (handled by runtime)                | `Effect.fail`, `yield*` (type-level tracking)               |
+| Handler resumption               | Can resume continuations                      | Impossible — can only catch or transform errors             |
+| Function coloring                | None — effects can occur in regular functions | Yes — effectful functions must return `Effect<A, E, R>`     |
+| Impact on intermediate functions | No changes needed                             | All intermediate functions must participate in Effect chain |
 
 The biggest difference is **resumption is impossible**. Algebraic effect handlers can send values back to the point where effects occurred to resume execution. In Effect-TS, this is impossible. You can catch errors with `catchTag` and replace them with other values, but you cannot return to the exact point where the error occurred to continue execution.
 
@@ -291,12 +291,12 @@ function runGen(genFn) {
   let result = gen.next()
 
   while (!result.done) {
-    const effect = result.value  // yielded Effect object
-    const value = runEffect(effect)  // execute Effect
-    result = gen.next(value)  // inject result into generator, proceed to next yield
+    const effect = result.value // yielded Effect object
+    const value = runEffect(effect) // execute Effect
+    result = gen.next(value) // inject result into generator, proceed to next yield
   }
 
-  return result.value  // generator's return value = final success value
+  return result.value // generator's return value = final success value
 }
 ```
 
@@ -794,14 +794,14 @@ Thanks to these boundary APIs, you can gradually introduce Effect into existing 
 
 What Effect gains compared to Promise can be summarized like this:
 
-| Aspect | Promise | Effect |
-| --- | --- | --- |
-| Error types | `unknown` (untrackable) | Generic `E` (compile-time tracking) |
-| Dependencies | Implicit (imports, global state) | Explicit `R` parameter |
-| Execution timing | Execute immediately on creation (eager) | Execute when instructed (lazy) |
-| Cancellation | AbortController (manual) | Structured concurrency (automatic) |
-| Resource management | try-finally (manual) | acquireRelease (automatic) |
-| Retry | Direct implementation | Schedule (declarative) |
+| Aspect              | Promise                                 | Effect                              |
+| ------------------- | --------------------------------------- | ----------------------------------- |
+| Error types         | `unknown` (untrackable)                 | Generic `E` (compile-time tracking) |
+| Dependencies        | Implicit (imports, global state)        | Explicit `R` parameter              |
+| Execution timing    | Execute immediately on creation (eager) | Execute when instructed (lazy)      |
+| Cancellation        | AbortController (manual)                | Structured concurrency (automatic)  |
+| Resource management | try-finally (manual)                    | acquireRelease (automatic)          |
+| Retry               | Direct implementation                   | Schedule (declarative)              |
 
 **Lazy evaluation** is particularly important. Promises execute immediately upon creation, but Effects are just "execution plans." This property allows effects to be freely composed, retried, and scheduled.
 

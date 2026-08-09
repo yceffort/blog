@@ -4,12 +4,18 @@ import {useEffect} from 'react'
 
 export default function AmbientEffects() {
   useEffect(() => {
-    if (typeof window === 'undefined') {return}
+    if (typeof window === 'undefined') {
+      return
+    }
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
-    if (media.matches) {return}
+    if (media.matches) {
+      return
+    }
 
     const glow = document.getElementById('cursor-glow')
-    if (!glow) {return}
+    if (!glow) {
+      return
+    }
 
     let raf = 0
     let nextX = window.innerWidth / 2
@@ -30,7 +36,9 @@ export default function AmbientEffects() {
     window.addEventListener('pointermove', onMove, {passive: true})
     return () => {
       window.removeEventListener('pointermove', onMove)
-      if (raf) {window.cancelAnimationFrame(raf)}
+      if (raf) {
+        window.cancelAnimationFrame(raf)
+      }
     }
   }, [])
 

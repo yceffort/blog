@@ -291,12 +291,12 @@ function runGen(genFn) {
   let result = gen.next()
 
   while (!result.done) {
-    const effect = result.value  // yield된 Effect 객체
-    const value = runEffect(effect)  // Effect 실행
-    result = gen.next(value)  // 결과를 generator에 주입, 다음 yield로 진행
+    const effect = result.value // yield된 Effect 객체
+    const value = runEffect(effect) // Effect 실행
+    result = gen.next(value) // 결과를 generator에 주입, 다음 yield로 진행
   }
 
-  return result.value  // generator의 return 값 = 최종 성공 값
+  return result.value // generator의 return 값 = 최종 성공 값
 }
 ```
 

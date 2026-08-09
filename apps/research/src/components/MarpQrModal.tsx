@@ -1,8 +1,7 @@
 import {QRCodeSVG} from 'qrcode.react'
+import type {MouseEvent as ReactMouseEvent} from 'react'
 
 import styles from './MarpSlides.module.scss'
-
-import type {MouseEvent as ReactMouseEvent} from 'react'
 
 interface MarpQrModalProps {
   qrUrl: string

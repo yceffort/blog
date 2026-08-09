@@ -1492,9 +1492,7 @@ es6
 class MyComponent extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      /* initial state */
-    }
+    this.state = {/* initial state */}
   }
 }
 ```
@@ -1504,9 +1502,7 @@ class MyComponent extends React.Component {
 ```javascript
 const MyComponent = React.createClass({
   getInitialState() {
-    return {
-      /* initial state */
-    }
+    return {/* initial state */}
   },
 })
 ```

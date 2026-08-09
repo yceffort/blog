@@ -1,28 +1,26 @@
 'use client'
 
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
-
-import {EffectCreative, EffectFade, Virtual} from 'swiper/modules'
-import {Swiper, SwiperSlide} from 'swiper/react'
-
+import type {MouseEvent as ReactMouseEvent} from 'react'
+import type {Swiper as SwiperClass} from 'swiper'
 import 'swiper/css'
 import 'swiper/css/effect-creative'
 import 'swiper/css/effect-fade'
+import {EffectCreative, EffectFade, Virtual} from 'swiper/modules'
+import {Swiper, SwiperSlide} from 'swiper/react'
+
+import {useBroadcastChannel} from '@/hooks/useBroadcastChannel'
+import {useDrawing} from '@/hooks/useDrawing'
+import {useLaserPointer} from '@/hooks/useLaserPointer'
 
 import {Marp} from './Marp'
 import {MarpHelpModal} from './MarpHelpModal'
 import {MarpQrModal} from './MarpQrModal'
 import {MarpSearchModal} from './MarpSearchModal'
 import {readTransition} from './MarpSlides.constants'
-import styles from './MarpSlides.module.scss'
-
 import type {ContextMenuState, TransitionType} from './MarpSlides.constants'
-import type {MouseEvent as ReactMouseEvent} from 'react'
-import type {Swiper as SwiperClass} from 'swiper'
 
-import {useBroadcastChannel} from '@/hooks/useBroadcastChannel'
-import {useDrawing} from '@/hooks/useDrawing'
-import {useLaserPointer} from '@/hooks/useLaserPointer'
+import styles from './MarpSlides.module.scss'
 
 interface MarpSlidesProps {
   dataHtml: string
@@ -171,7 +169,7 @@ export function MarpSlides({
       setActiveIndex(initialIndex)
       swiperRef.current?.slideTo(initialIndex, 0)
     }
-     
+
     setTransition(readTransition())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

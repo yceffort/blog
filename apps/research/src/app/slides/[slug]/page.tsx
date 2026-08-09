@@ -1,10 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 
+import matter from 'gray-matter'
 import {cacheLife, cacheTag} from 'next/cache'
 import {notFound} from 'next/navigation'
-
-import matter from 'gray-matter'
 
 import {MarpSlides} from '@/components/MarpSlides'
 import {SiteConfig} from '@/config'

@@ -176,7 +176,7 @@ function o(r) {
   if (typeof r == 'string' && isNaN(+r)) return r
   let t = `${r}`,
     e = /(^[+-]?\d+)(\d{3})/
-  for (; e.test(t); ) t = t.replace(e, '$1,$2')
+  for (; e.test(t);) t = t.replace(e, '$1,$2')
   return t
 }
 export {o as formatNumberWithComma, m as sum}

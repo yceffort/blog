@@ -116,13 +116,9 @@ interface Promise<T> {
    */
   then<TResult1 = T, TResult2 = never>(
     onfulfilled?:
-      | ((value: T) => TResult1 | PromiseLike<TResult1>)
-      | undefined
-      | null,
+      ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
     onrejected?:
-      | ((reason: any) => TResult2 | PromiseLike<TResult2>)
-      | undefined
-      | null,
+      ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
   ): Promise<TResult1 | TResult2>
 
   /**
@@ -132,9 +128,7 @@ interface Promise<T> {
    */
   catch<TResult = never>(
     onrejected?:
-      | ((reason: any) => TResult | PromiseLike<TResult>)
-      | undefined
-      | null,
+      ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null,
   ): Promise<T | TResult>
 }
 ```
@@ -151,13 +145,9 @@ interface PromiseLike<T> {
    */
   then<TResult1 = T, TResult2 = never>(
     onfulfilled?:
-      | ((value: T) => TResult1 | PromiseLike<TResult1>)
-      | undefined
-      | null,
+      ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
     onrejected?:
-      | ((reason: any) => TResult2 | PromiseLike<TResult2>)
-      | undefined
-      | null,
+      ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
   ): PromiseLike<TResult1 | TResult2>
 }
 ```

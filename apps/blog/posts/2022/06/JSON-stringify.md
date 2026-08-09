@@ -15,12 +15,7 @@ JSON 무려 [공식 홈페이지](https://www.json.org/json-en.html)가 존재�
 
 ```typescript
 type JSONType =
-  | null
-  | boolean
-  | number
-  | string
-  | JSONType[]
-  | {[key: string]: JSONType}
+  null | boolean | number | string | JSONType[] | {[key: string]: JSONType}
 ```
 
 JSON은 언어에 종속적이지 않기 때문에, 자바스크립트에만 있는 고유의 타입, `undefined` `Symbol` `BigInt` 등과 `Function` `Class` `Map` 등도 지원하지 않는다.

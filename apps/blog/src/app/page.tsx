@@ -1,11 +1,9 @@
+import {stripTitleEmphasis} from '@yceffort/shared/utils'
+import type {Metadata} from 'next'
 import {cacheLife, cacheTag} from 'next/cache'
 import Link from 'next/link'
 import {connection} from 'next/server'
 import {Suspense} from 'react'
-
-import {stripTitleEmphasis} from '@yceffort/shared/utils'
-
-import type {Metadata} from 'next'
 
 import Hero from '@/components/HeroE'
 import PopularSeriesCard from '@/components/PopularSeriesCard'

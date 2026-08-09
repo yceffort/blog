@@ -1,7 +1,8 @@
-import {SHORTCUT_GROUPS} from './MarpSlides.constants'
-import styles from './MarpSlides.module.scss'
-
 import type {MouseEvent as ReactMouseEvent} from 'react'
+
+import {SHORTCUT_GROUPS} from './MarpSlides.constants'
+
+import styles from './MarpSlides.module.scss'
 
 interface MarpHelpModalProps {
   onClose: () => void

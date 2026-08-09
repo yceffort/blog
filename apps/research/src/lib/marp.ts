@@ -2,13 +2,12 @@ import {Marp as MarpCore} from '@marp-team/marp-core'
 // @ts-expect-error - markdown-it-mermaid doesn't have types
 import mermaidPlugin from 'markdown-it-mermaid'
 import postcss from 'postcss'
+import type {Result as PostCSSResult, AtRule} from 'postcss'
 import postcssImportUrl from 'postcss-import-url'
 
 import {parsePresenterNotes} from './parsePresenterNotes'
 import {midnightTheme} from './themes/midnight'
 import {yceffortTheme} from './themes/yceffort'
-
-import type {Result as PostCSSResult, AtRule} from 'postcss'
 
 const postcssStripFontFace = Object.assign(
   () => ({

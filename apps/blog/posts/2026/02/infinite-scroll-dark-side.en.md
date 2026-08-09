@@ -27,7 +27,7 @@ This article examines why infinite scroll was adopted, where it failed, what tec
 
 Infinite scroll isn't inherently bad. In specific contexts, it remains the most effective pattern.
 
-According to Nielsen Norman Group's analysis, infinite scroll works well in **discovery-focused experiences**. When users browse content without specific goals, removing the friction of page transitions increases dwell time and reduces bounce rates. Research published in *Information Systems Journal* also found that "even brief interruptions like clicking next buttons can cause users to abandon tasks on social commerce platforms."
+According to Nielsen Norman Group's analysis, infinite scroll works well in **discovery-focused experiences**. When users browse content without specific goals, removing the friction of page transitions increases dwell time and reduces bounce rates. Research published in _Information Systems Journal_ also found that "even brief interruptions like clicking next buttons can cause users to abandon tasks on social commerce platforms."
 
 This is why Twitter (X), Instagram, and TikTok still maintain infinite scroll as a core pattern. These services share clear commonalities:
 
@@ -47,12 +47,12 @@ In 2012, Etsy introduced infinite scroll to search results. Dan McKinley, who wa
 
 The A/B test results were the complete opposite.
 
-| Metric | Pagination (Control) | Infinite Scroll (Test) | Change |
-|--------|---------------------|------------------------|--------|
-| Items viewed per visitor | 80 | 40 | **-50.0%** |
-| Clicks per visitor | 0.6520 | 0.5811 | **-10.87%** |
-| Favorites per visitor | 0.0752 | 0.0689 | **-8.38%** |
-| Purchases per visitor | 0.0164 | 0.0127 | **-22.5%** |
+| Metric                   | Pagination (Control) | Infinite Scroll (Test) | Change      |
+| ------------------------ | -------------------- | ---------------------- | ----------- |
+| Items viewed per visitor | 80                   | 40                     | **-50.0%**  |
+| Clicks per visitor       | 0.6520               | 0.5811                 | **-10.87%** |
+| Favorites per visitor    | 0.0752               | 0.0689                 | **-8.38%**  |
+| Purchases per visitor    | 0.0164               | 0.0127                 | **-22.5%**  |
 
 McKinley summarized this as having "failed in every major way." The causes discovered in post-mortem analysis were:
 
@@ -138,13 +138,13 @@ TikTok's 60-minute limit for minors, Instagram's "Take a Break," YouTube Shorts'
 
 Here's a comparison of patterns that can replace infinite scroll and their trade-offs:
 
-| Pattern | Pros | Cons | Suitable Context |
-|---------|------|------|-----------------|
-| **Pagination** | Maintains spatial awareness, good SEO, accessible | Page transition friction, high user frustration | Search results, admin lists |
-| **Infinite Scroll** | Removes friction, increases dwell time, mobile-friendly | Spatial loss, worsens CLS, destroys accessibility | Social feeds, image galleries |
-| **Load More button** | User control, avoids CLS, good accessibility | Requires clicks, simple initial implementation but difficult scroll restoration | E-commerce, blog lists |
-| **Hybrid** (auto-load N times then Load More) | Initial friction removal + later control | Increased implementation complexity | Lists with large content volumes |
-| **Virtualized Infinite Scroll** | Memory/DOM efficient, handles large datasets | SSR compatibility, complex variable height handling, same accessibility issues | Dashboards, data tables |
+| Pattern                                       | Pros                                                    | Cons                                                                            | Suitable Context                 |
+| --------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------- | -------------------------------- |
+| **Pagination**                                | Maintains spatial awareness, good SEO, accessible       | Page transition friction, high user frustration                                 | Search results, admin lists      |
+| **Infinite Scroll**                           | Removes friction, increases dwell time, mobile-friendly | Spatial loss, worsens CLS, destroys accessibility                               | Social feeds, image galleries    |
+| **Load More button**                          | User control, avoids CLS, good accessibility            | Requires clicks, simple initial implementation but difficult scroll restoration | E-commerce, blog lists           |
+| **Hybrid** (auto-load N times then Load More) | Initial friction removal + later control                | Increased implementation complexity                                             | Lists with large content volumes |
+| **Virtualized Infinite Scroll**               | Memory/DOM efficient, handles large datasets            | SSR compatibility, complex variable height handling, same accessibility issues  | Dashboards, data tables          |
 
 Baymard Institute's e-commerce UX research recommends the **"Load More" button + lazy loading** combination. In this approach, users explore more products than with pagination while examining individual products more carefully than with infinite scroll. However, at the time of the study, only **8%** of the top 50 US e-commerce sites adopted this pattern.
 

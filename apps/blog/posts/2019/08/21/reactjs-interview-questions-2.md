@@ -572,9 +572,7 @@ export default connect(mapStateToProps)(App)
 예를 들어, `USER_LOGOUT` 액션에 초기 state값을 리턴하는 `rootReducer()`를 예로 들어보자. 알다시피, reducer는 action에 상관없이 첫 번째 매개변수가 undefined로 호출된다면, 초기 상태값을 반환한다.
 
 ```javascript
-const appReducer = combineReducers({
-  /* your app's top-level reducers */
-})
+const appReducer = combineReducers({/* your app's top-level reducers */})
 
 const rootReducer = (state, action) => {
   if (action.type === 'USER_LOGOUT') {
