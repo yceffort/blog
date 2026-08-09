@@ -21,13 +21,84 @@ const DUOS: [string, string][] = [
   ['#c084fc', '#7c3aed'],
   ['#f472b6', '#be185d'],
   ['#22d3ee', '#0e7490'],
+  ['#fb923c', '#b45309'],
+  ['#818cf8', '#ec4899'],
+  ['#2dd4bf', '#0f766e'],
+  ['#facc15', '#ea580c'],
+  ['#e879f9', '#4c1d95'],
+  ['#94a3b8', '#334155'],
 ]
 
 const INK = '#0a0a0f'
-const PAPER_LIGHT =
-  'linear-gradient(160deg, #fdfbf7 0%, #faf5ec 55%, #f9f0f2 100%)'
-const PAPER_DARK =
-  'linear-gradient(160deg, #14141d 0%, #0d0d14 60%, #12101a 100%)'
+
+interface Paper {
+  bg: string
+  scrim: string
+  dark: boolean
+}
+
+const PAPERS: {paper: Paper; weight: number}[] = [
+  {
+    paper: {
+      bg: 'linear-gradient(160deg, #fdfbf7 0%, #faf5ec 55%, #f9f0f2 100%)',
+      scrim: '253, 251, 247',
+      dark: false,
+    },
+    weight: 25,
+  },
+  {
+    paper: {
+      bg: 'linear-gradient(160deg, #fdf8f6 0%, #fbeee9 60%, #f9edf1 100%)',
+      scrim: '253, 246, 243',
+      dark: false,
+    },
+    weight: 15,
+  },
+  {
+    paper: {
+      bg: 'linear-gradient(160deg, #f7fbf7 0%, #ecf6ef 60%, #eaf4f2 100%)',
+      scrim: '245, 250, 246',
+      dark: false,
+    },
+    weight: 15,
+  },
+  {
+    paper: {
+      bg: 'linear-gradient(160deg, #f9f8fd 0%, #f0eefa 60%, #f2edf7 100%)',
+      scrim: '248, 247, 252',
+      dark: false,
+    },
+    weight: 15,
+  },
+  {
+    paper: {
+      bg: 'linear-gradient(160deg, #14141d 0%, #0d0d14 60%, #12101a 100%)',
+      scrim: '13, 13, 20',
+      dark: true,
+    },
+    weight: 20,
+  },
+  {
+    paper: {
+      bg: 'linear-gradient(160deg, #1a1218 0%, #120c12 60%, #170f19 100%)',
+      scrim: '18, 12, 18',
+      dark: true,
+    },
+    weight: 10,
+  },
+]
+
+function pickPaper(rand: () => number): Paper {
+  const total = PAPERS.reduce((sum, p) => sum + p.weight, 0)
+  let roll = rand() * total
+  for (const {paper, weight} of PAPERS) {
+    roll -= weight
+    if (roll <= 0) {
+      return paper
+    }
+  }
+  return PAPERS[0].paper
+}
 
 function hashCode(str: string): number {
   let hash = 0
@@ -470,15 +541,152 @@ function glyphLayout(ctx: Ctx) {
   ]
 }
 
+function halftoneLayout(ctx: Ctx) {
+  const {rand, c1, c2} = ctx
+  const gap = 66 + rand() * 14
+  const cols = Math.ceil(WIDTH / gap) + 1
+  const rows = Math.ceil(HEIGHT / gap) + 1
+  const angle = rand() * Math.PI * 2
+  const dx = Math.cos(angle)
+  const dy = Math.sin(angle)
+  const dots: ReactNode[] = []
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+      const x = i * gap
+      const y = j * gap
+      const t =
+        (x * dx + y * dy) / (WIDTH * Math.abs(dx) + HEIGHT * Math.abs(dy) || 1)
+      const tt = Math.min(1, Math.max(0, (t + 1) / 2))
+      dots.push(
+        <circle
+          key={`${i}-${j}`}
+          cx={x}
+          cy={y}
+          r={2 + tt * 17}
+          fill={tt < 0.5 ? c1 : c2}
+          opacity={0.5}
+        />,
+      )
+    }
+  }
+  return [
+    svgWrap(dots, 'halftone'),
+    rand() < 0.5 && band(ctx, 'accent', {thin: true}),
+  ]
+}
+
+function stripesLayout(ctx: Ctx) {
+  const {rand, c1, c2, dark} = ctx
+  const angle = -38 + rand() * 76
+  const count = 6 + Math.floor(rand() * 5)
+  const spacing = 90 + rand() * 60
+  const startX = -100 + rand() * 300
+  return [
+    ...Array.from({length: count}, (_, i) => {
+      const w = 10 + rand() * 64
+      const roll = rand()
+      const color = roll < 0.4 ? c1 : roll < 0.75 ? c2 : dark ? '#e8e8f0' : INK
+      return (
+        <div
+          key={`stripe-${i}`}
+          style={{
+            position: 'absolute',
+            left: startX + i * spacing + (rand() - 0.5) * 40,
+            top: -320,
+            width: w,
+            height: HEIGHT + 640,
+            borderRadius: w,
+            background: color,
+            opacity: roll < 0.75 ? 0.55 + rand() * 0.35 : 0.25,
+            transform: `rotate(${angle}deg)`,
+          }}
+        />
+      )
+    }),
+    rand() < 0.6 && threadSvg(ctx, 3 + Math.floor(rand() * 2), 120, 500),
+  ]
+}
+
+function bauhausLayout(ctx: Ctx) {
+  const {rand, c1, c2} = ctx
+  const count = 3 + Math.floor(rand() * 2)
+  return [
+    svgWrap(
+      Array.from({length: count}, (_, i) => {
+        const r = 130 + rand() * 190
+        const cx = 150 + rand() * (WIDTH - 300)
+        const cy = 80 + rand() * (HEIGHT - 160)
+        const solid = rand() < 0.6
+        const color = i % 2 === 0 ? c1 : c2
+        return solid ? (
+          <circle
+            key={i}
+            cx={cx}
+            cy={cy}
+            r={r}
+            fill={alpha(color, 0.32 + rand() * 0.2)}
+          />
+        ) : (
+          <circle
+            key={i}
+            cx={cx}
+            cy={cy}
+            r={r}
+            fill="none"
+            stroke={alpha(color, 0.55)}
+            strokeWidth={10 + rand() * 20}
+          />
+        )
+      }),
+      'bauhaus',
+    ),
+    threadSvg(ctx, 3, 120, 520),
+  ]
+}
+
+function stepsLayout(ctx: Ctx) {
+  const {rand, c1, c2} = ctx
+  const count = 5 + Math.floor(rand() * 3)
+  const stepW = (WIDTH - 200) / count
+  const rising = rand() < 0.7
+  const baseY = 500 + rand() * 60
+  return [
+    ...Array.from({length: count}, (_, i) => {
+      const level = rising ? i : count - 1 - i
+      const h = 70 + level * (46 + rand() * 22)
+      return (
+        <div
+          key={`step-${i}`}
+          style={{
+            position: 'absolute',
+            left: 100 + i * stepW + 8,
+            top: baseY - h,
+            width: stepW - 16,
+            height: h,
+            borderRadius: 14,
+            background: `linear-gradient(175deg, ${i % 2 === 0 ? c1 : c2} 0%, ${i % 2 === 0 ? c2 : c1} 140%)`,
+            opacity: 0.5 + (level / count) * 0.45,
+          }}
+        />
+      )
+    }),
+    threadSvg(ctx, count, 90, 300),
+  ]
+}
+
 const LAYOUTS = [
-  {fn: bandsLayout, canDark: true},
-  {fn: ringsLayout, canDark: true},
-  {fn: fieldLayout, canDark: true},
-  {fn: columnsLayout, canDark: false},
-  {fn: codePanelLayout, canDark: true, forceDarkBias: true},
-  {fn: contoursLayout, canDark: true},
-  {fn: gridChartLayout, canDark: true},
-  {fn: glyphLayout, canDark: false},
+  bandsLayout,
+  ringsLayout,
+  fieldLayout,
+  columnsLayout,
+  codePanelLayout,
+  contoursLayout,
+  gridChartLayout,
+  glyphLayout,
+  halftoneLayout,
+  stripesLayout,
+  bauhausLayout,
+  stepsLayout,
 ]
 
 interface Frag {
@@ -512,11 +720,11 @@ export async function GET(request: Request) {
   const [c1, c2] = DUOS[hash % DUOS.length]
 
   const layout = LAYOUTS[Math.floor(rand() * LAYOUTS.length)]
-  const dark = layout.canDark
-    ? rand() < (layout.forceDarkBias ? 0.7 : 0.18)
-    : false
+  const paper = pickPaper(rand)
+  const dark = paper.dark
   const ctx: Ctx = {rand, c1, c2, dark}
 
+  const blobCorner = Math.floor(rand() * 4)
   const dot = {
     x: 60 + rand() * (WIDTH - 240),
     y: 60 + rand() * (HEIGHT - 220),
@@ -531,11 +739,8 @@ export async function GET(request: Request) {
     }
   }
 
-  const paper = dark ? PAPER_DARK : PAPER_LIGHT
   const inkColor = dark ? '#f2f2f7' : INK
-  const scrim = dark
-    ? 'linear-gradient(180deg, rgba(13,13,20,0) 0%, rgba(13,13,20,0.88) 45%, rgba(13,13,20,0.97) 100%)'
-    : 'linear-gradient(180deg, rgba(253,251,247,0) 0%, rgba(253,251,247,0.86) 45%, rgba(253,251,247,0.96) 100%)'
+  const scrim = `linear-gradient(180deg, rgba(${paper.scrim}, 0) 0%, rgba(${paper.scrim}, 0.88) 45%, rgba(${paper.scrim}, 0.97) 100%)`
 
   return new ImageResponse(
     <div
@@ -544,22 +749,22 @@ export async function GET(request: Request) {
         width: '100%',
         height: '100%',
         position: 'relative',
-        background: paper,
+        background: paper.bg,
         overflow: 'hidden',
       }}
     >
       <div
         style={{
           position: 'absolute',
-          top: -180,
-          right: -160,
+          top: blobCorner < 2 ? -180 : HEIGHT - 380,
+          left: blobCorner % 2 === 0 ? -160 : WIDTH - 400,
           width: 560,
           height: 560,
           borderRadius: 9999,
           background: `radial-gradient(circle at center, ${alpha(c1, dark ? 0.28 : 0.22)} 0%, ${alpha(c1, 0)} 70%)`,
         }}
       />
-      {layout.fn(ctx)}
+      {layout(ctx)}
       <div
         style={{
           position: 'absolute',
