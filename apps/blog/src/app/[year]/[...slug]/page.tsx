@@ -13,6 +13,7 @@ import {PostArticle} from '@/components/PostArticle'
 import ProfileImage from '@/components/ProfileImage'
 import RelatedPosts from '@/components/RelatedPosts'
 import SeriesNavigation from '@/components/SeriesNavigation'
+import SeriesPrevNext from '@/components/SeriesPrevNext'
 import TableOfContents from '@/components/TableOfContents'
 import Tag from '@/components/Tag'
 import {SiteConfig} from '@/config'
@@ -270,6 +271,10 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
         )}
 
         <PostArticle body={body} path={path} />
+
+        {series && seriesPosts.length > 1 && (
+          <SeriesPrevNext seriesPosts={seriesPosts} currentSlug={postSlug} />
+        )}
 
         <RelatedPosts posts={relatedPosts} title="관련 글" />
 
