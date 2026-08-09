@@ -12,16 +12,16 @@ import {POST_ROOT, isLocaleFile, pathToSlug} from './postPaths'
 import type {Locale} from './postPaths'
 import type {FrontMatter, Post, TagWithCount} from '../type'
 
-import {
-  PINNED_POPULAR_SLUG,
-  POPULAR_POSTS_COUNT,
-  RECENT_POSTS_COUNT,
-} from '@/constants'
+import {POPULAR_POSTS_COUNT, RECENT_POSTS_COUNT} from '@/constants'
 
 const THUMB_DIR = `${process.cwd()}/public/thumbnails`
 
 // 코드 생성 썸네일(api/og/art) 캐시 무효화용 버전. 아트 디자인이 바뀌면 올린다.
 const ART_VERSION = 4
+
+export function buildArtThumbnail(seed: string): string {
+  return `/api/og/art?v=${ART_VERSION}&slug=${encodeURIComponent(seed)}`
+}
 
 export type {Locale}
 
@@ -48,7 +48,7 @@ export const getAllPosts = cache(async function getAllPostsImpl(
         // 실사 썸네일(책 표지 등)이 public/thumbnails에 있으면 우선, 없으면 생성 아트
         const thumbnail = fs.existsSync(`${THUMB_DIR}/${slug}.png`)
           ? `/thumbnails/${slug}.png`
-          : `/api/og/art?v=${ART_VERSION}&slug=${encodeURIComponent(slug)}`
+          : buildArtThumbnail(slug)
 
         const result: Post = {
           frontMatter: {
@@ -160,25 +160,20 @@ export async function getRelatedPosts(
 
 export const getFeaturedPosts = cache(async function getFeaturedPostsImpl(
   locale: Locale = 'ko',
+  reservedSlots = 0,
 ): Promise<{popular: Post[]; recent: Post[]}> {
   const allPosts = await getAllPosts(locale)
-  const pinned = allPosts.find((p) => p.fields.slug === PINNED_POPULAR_SLUG)
-  const popularCount = pinned ? POPULAR_POSTS_COUNT - 1 : POPULAR_POSTS_COUNT
+  const popularCount = POPULAR_POSTS_COUNT - reservedSlots
   const popularSlugs =
     locale === 'ko' ? await getPopularPostSlugs(POPULAR_POSTS_COUNT) : []
 
   const popular = popularSlugs
     .map((slug) => allPosts.find((p) => p.fields.slug === slug))
-    .filter(
-      (p): p is Post => p != null && p.fields.slug !== PINNED_POPULAR_SLUG,
-    )
+    .filter((p): p is Post => p != null)
     .slice(0, popularCount)
 
   if (popular.length < popularCount) {
     const slugSet = new Set(popular.map((p) => p.fields.slug))
-    if (pinned) {
-      slugSet.add(pinned.fields.slug)
-    }
     for (const p of allPosts) {
       if (popular.length >= popularCount) {
         break
@@ -188,10 +183,6 @@ export const getFeaturedPosts = cache(async function getFeaturedPostsImpl(
         slugSet.add(p.fields.slug)
       }
     }
-  }
-
-  if (pinned) {
-    popular.push(pinned)
   }
 
   const shown = new Set(popular.map((p) => p.fields.slug))

@@ -15,9 +15,11 @@ import {buildOgImageUrl} from '@/utils/og'
 export default function PostCard({
   post,
   pathPrefix = '',
+  badge,
 }: {
   post: Post
   pathPrefix?: string
+  badge?: string
 }) {
   const {
     fields: {slug},
@@ -113,7 +115,11 @@ export default function PostCard({
         )}
 
         <div className="body">
-          {series && <span className="series">◆ {series}</span>}
+          {badge ? (
+            <span className="series">◆ {badge}</span>
+          ) : (
+            series && <span className="series">◆ {series}</span>
+          )}
           <ViewTransition name={`${transitionName}-tags`}>
             <div className="tag-row">
               {tags.slice(0, 3).map((tag) => (

@@ -8,13 +8,19 @@ import {stripTitleEmphasis} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 
 import Hero from '@/components/HeroE'
+import PopularSeriesCard from '@/components/PopularSeriesCard'
 import PostCard from '@/components/PostCard'
 import RecentRow from '@/components/RecentRow'
 import SeriesRow from '@/components/SeriesRow'
 import {SiteConfig} from '@/config'
 import {buildOgImageUrl} from '@/utils/og'
-import {getAllPosts, getAllTagsFromPosts, getFeaturedPosts} from '@/utils/Post'
-import {getAllSeries} from '@/utils/Series'
+import {
+  buildArtThumbnail,
+  getAllPosts,
+  getAllTagsFromPosts,
+  getFeaturedPosts,
+} from '@/utils/Post'
+import {getAllSeries, getPopularSeries} from '@/utils/Series'
 
 export const metadata: Metadata = {
   title: SiteConfig.title,
@@ -47,9 +53,10 @@ async function getCachedHomeData() {
 }
 
 async function getHomeData() {
+  const popularSeries = await getPopularSeries('ko')
   const [{popular: posts, recent: recentPosts}, allPosts, tags, series] =
     await Promise.all([
-      getFeaturedPosts('ko'),
+      getFeaturedPosts('ko', popularSeries ? 1 : 0),
       getAllPosts('ko'),
       getAllTagsFromPosts('ko'),
       getAllSeries('ko'),
@@ -62,7 +69,15 @@ async function getHomeData() {
     .reduce((a, b) => Math.min(a, b), new Date().getFullYear())
   const yearsWriting = Math.max(1, new Date().getFullYear() - earliestYear + 1)
 
-  return {posts, recentPosts, series, postCount, tagCount, yearsWriting}
+  return {
+    posts,
+    recentPosts,
+    series,
+    popularSeries,
+    postCount,
+    tagCount,
+    yearsWriting,
+  }
 }
 
 export default function Page() {
@@ -82,8 +97,15 @@ async function HomeContent() {
       ? await getCachedHomeData()
       : await getHomeData()
 
-  const {posts, recentPosts, series, postCount, tagCount, yearsWriting} =
-    homeData
+  const {
+    posts,
+    recentPosts,
+    series,
+    popularSeries,
+    postCount,
+    tagCount,
+    yearsWriting,
+  } = homeData
 
   const now = series[0]
   const nowSeries = now && {
@@ -111,7 +133,8 @@ async function HomeContent() {
       <div className="sec-head">
         <div>
           <span className="sec-count">
-            {String(posts.length).padStart(2, '0')} ITEMS
+            {String(posts.length + (popularSeries ? 1 : 0)).padStart(2, '0')}{' '}
+            ITEMS
           </span>
           <h2>
             Popular <em>this season</em>
@@ -122,8 +145,14 @@ async function HomeContent() {
       </div>
       <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
-          <PostCard key={post.fields.slug} post={post} />
+          <PostCard key={post.fields.slug} post={post} badge="인기 포스트" />
         ))}
+        {popularSeries && (
+          <PopularSeriesCard
+            series={popularSeries}
+            thumbnail={buildArtThumbnail(`series/${popularSeries.slug}`)}
+          />
+        )}
       </section>
 
       {series.length > 0 && (
