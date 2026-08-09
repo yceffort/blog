@@ -18,7 +18,8 @@ import {
   RECENT_POSTS_COUNT,
 } from '@/constants'
 
-const THUMB_DIR = `${process.cwd()}/public/thumbnails`
+// 코드 생성 썸네일(api/og/art) 캐시 무효화용 버전. 아트 디자인이 바뀌면 올린다.
+const ART_VERSION = 4
 
 export type {Locale}
 
@@ -42,10 +43,7 @@ export const getAllPosts = cache(async function getAllPostsImpl(
         const tags: string[] = (fmTags || []).map((tag: string) => tag.trim())
         const stats = readingTime(body, {wordsPerMinute: 250})
 
-        const thumbPath = `${THUMB_DIR}/${slug}.png`
-        const thumbnail = fs.existsSync(thumbPath)
-          ? `/thumbnails/${slug}.png`
-          : undefined
+        const thumbnail = `/api/og/art?v=${ART_VERSION}&slug=${encodeURIComponent(slug)}`
 
         const result: Post = {
           frontMatter: {

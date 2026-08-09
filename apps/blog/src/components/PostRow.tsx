@@ -54,6 +54,7 @@ export default function PostRow({
               alt=""
               fill
               sizes="(min-width: 768px) 120px, 84px"
+              unoptimized
             />
           </div>
         </ViewTransition>
