@@ -11,6 +11,8 @@ import MathLoader from '@/components/layouts/Post/math'
 import {PostArticle} from '@/components/PostArticle'
 import ProfileImage from '@/components/ProfileImage'
 import RelatedPosts from '@/components/RelatedPosts'
+import SeriesNavigation from '@/components/SeriesNavigation'
+import SeriesPrevNext from '@/components/SeriesPrevNext'
 import TableOfContents from '@/components/TableOfContents'
 import Tag from '@/components/Tag'
 import {SiteConfig} from '@/config'
@@ -20,6 +22,7 @@ import {
   findPostByYearAndSlug,
   getFeaturedSlugs,
   getRelatedPosts,
+  getSeriesPosts,
 } from '@/utils/Post'
 
 export async function generateMetadata(props: {
@@ -115,7 +118,7 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
   }
 
   const {
-    frontMatter: {title, tags, date, description},
+    frontMatter: {title, tags, date, description, series},
     body,
     path,
     fields: {slug: postSlug},
@@ -123,6 +126,7 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
   } = post
 
   const relatedPosts = await getRelatedPosts(postSlug, tags, 'en')
+  const seriesPosts = series ? await getSeriesPosts(series, 'en') : []
 
   const updatedAt = format(new Date(date), 'yyyy-MM-dd')
   const transitionName = `post-${postSlug.replace(/\//g, '-')}`
@@ -231,7 +235,26 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
           </ViewTransition>
         </section>
 
+        {series && seriesPosts.length > 1 && (
+          <SeriesNavigation
+            seriesName={series}
+            seriesPosts={seriesPosts}
+            currentSlug={postSlug}
+            pathPrefix="/en"
+            locale="en"
+          />
+        )}
+
         <PostArticle body={body} path={path} />
+
+        {series && seriesPosts.length > 1 && (
+          <SeriesPrevNext
+            seriesPosts={seriesPosts}
+            currentSlug={postSlug}
+            pathPrefix="/en"
+            locale="en"
+          />
+        )}
 
         <RelatedPosts
           posts={relatedPosts}
