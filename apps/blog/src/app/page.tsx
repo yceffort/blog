@@ -1,4 +1,5 @@
 import {cacheLife, cacheTag} from 'next/cache'
+import Link from 'next/link'
 import {connection} from 'next/server'
 import {Suspense} from 'react'
 
@@ -7,9 +8,11 @@ import type {Metadata} from 'next'
 import Hero from '@/components/HeroE'
 import PostCard from '@/components/PostCard'
 import RecentRow from '@/components/RecentRow'
+import SeriesRow from '@/components/SeriesRow'
 import {SiteConfig} from '@/config'
 import {buildOgImageUrl} from '@/utils/og'
 import {getAllPosts, getAllTagsFromPosts, getFeaturedPosts} from '@/utils/Post'
+import {getAllSeries} from '@/utils/Series'
 
 export const metadata: Metadata = {
   title: SiteConfig.title,
@@ -42,11 +45,12 @@ async function getCachedHomeData() {
 }
 
 async function getHomeData() {
-  const [{popular: posts, recent: recentPosts}, allPosts, tags] =
+  const [{popular: posts, recent: recentPosts}, allPosts, tags, series] =
     await Promise.all([
       getFeaturedPosts('ko'),
       getAllPosts('ko'),
       getAllTagsFromPosts('ko'),
+      getAllSeries('ko'),
     ])
 
   const postCount = allPosts.length
@@ -56,7 +60,7 @@ async function getHomeData() {
     .reduce((a, b) => Math.min(a, b), new Date().getFullYear())
   const yearsWriting = Math.max(1, new Date().getFullYear() - earliestYear + 1)
 
-  return {posts, recentPosts, postCount, tagCount, yearsWriting}
+  return {posts, recentPosts, series, postCount, tagCount, yearsWriting}
 }
 
 export default function Page() {
@@ -76,7 +80,8 @@ async function HomeContent() {
       ? await getCachedHomeData()
       : await getHomeData()
 
-  const {posts, recentPosts, postCount, tagCount, yearsWriting} = homeData
+  const {posts, recentPosts, series, postCount, tagCount, yearsWriting} =
+    homeData
 
   return (
     <div className="page-view">
@@ -103,6 +108,30 @@ async function HomeContent() {
           <PostCard key={post.fields.slug} post={post} />
         ))}
       </section>
+
+      {series.length > 0 && (
+        <>
+          <div className="sec-head">
+            <div>
+              <span className="sec-count">
+                {String(series.length).padStart(2, '0')} ITEMS
+              </span>
+              <h2>
+                Series <em>one thread</em>
+              </h2>
+            </div>
+            <div className="line" />
+            <div className="hint">
+              <Link href="/series">view all →</Link>
+            </div>
+          </div>
+          <section className="rec-list">
+            {series.map((s, i) => (
+              <SeriesRow key={s.slug} series={s} index={i} />
+            ))}
+          </section>
+        </>
+      )}
 
       {recentPosts.length > 0 && (
         <>

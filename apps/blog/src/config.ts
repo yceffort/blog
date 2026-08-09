@@ -18,6 +18,10 @@ export const SiteConfig = {
       path: '/pages/1',
     },
     {
+      label: 'Series',
+      path: '/series',
+    },
+    {
       label: 'Tags',
       path: '/tags',
     },
