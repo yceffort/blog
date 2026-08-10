@@ -32,7 +32,8 @@
     "react/react-in-jsx-scope": "off",
     "import/no-unassigned-import": "off",
     "no-underscore-dangle": "off",
-    "unicorn/require-post-message-target-origin": "off"
+    "unicorn/require-post-message-target-origin": "off",
+    "typescript/no-unsafe-type-assertion": "off"
   },
   "overrides": [
     {

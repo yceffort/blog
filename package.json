@@ -17,8 +17,8 @@
     "build": "pnpm -r build",
     "build:blog": "pnpm --filter blog build",
     "build:research": "pnpm --filter research build",
-    "lint": "oxlint",
-    "lint:fix": "oxlint --fix",
+    "lint": "oxlint --type-aware",
+    "lint:fix": "oxlint --type-aware --fix",
     "prettier": "oxfmt --check .",
     "prettier:fix": "oxfmt ."
   },
@@ -26,6 +26,7 @@
     "lefthook": "^2.1.10",
     "oxfmt": "^0.62.0",
     "oxlint": "^1.77.0",
+    "oxlint-tsgolint": "^7.0.2001",
     "typescript": "^7.0.2"
   },
   "packageManager": "pnpm@11.20.0",
