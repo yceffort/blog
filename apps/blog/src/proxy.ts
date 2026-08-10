@@ -3,6 +3,20 @@ import type {NextRequest} from 'next/server'
 
 import {detectBot} from './constants/bot-signatures'
 
+const YEAR_RE = /^(19|20)\d{2}$/
+// [year]/[...slug] 라우트가 아무 문자열이나 연도로 받아 PPR 셸을 200으로 반환하므로,
+// 유효할 수 없는 경로는 라우팅 전에 걸러 진짜 404를 반환한다
+const MULTI_SEGMENT_PREFIXES = new Set([
+  'tags',
+  'pages',
+  'series',
+  'demos',
+  'LCP',
+  'splash',
+  'thumbnails',
+])
+const EN_PREFIXES = new Set(['pages', 'feed.xml'])
+
 export function proxy(request: NextRequest) {
   const userAgent = request.headers.get('user-agent') || ''
   const {isBot, botName, botCategory} = detectBot(userAgent)
@@ -37,6 +51,17 @@ export function proxy(request: NextRequest) {
         })
         return response
       }
+    }
+  }
+
+  const segments = pathname.split('/').filter(Boolean)
+  const isEnPath = segments[0] === 'en'
+  const rest = isEnPath ? segments.slice(1) : segments
+  if (rest.length >= (isEnPath ? 1 : 2)) {
+    const prefixes = isEnPath ? EN_PREFIXES : MULTI_SEGMENT_PREFIXES
+    if (!YEAR_RE.test(rest[0]) && !prefixes.has(rest[0])) {
+      // 어떤 라우트에도 매칭되지 않는 경로로 rewrite하면 not-found가 404 상태 코드와 함께 렌더링된다
+      return NextResponse.rewrite(new URL('/__not-found', request.url))
     }
   }
 
