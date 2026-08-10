@@ -7,7 +7,7 @@ export function useLocale() {
   const isEn = pathname.startsWith('/en')
 
   return {
-    locale: (isEn ? 'en' : 'ko') as 'en' | 'ko',
+    locale: isEn ? 'en' : 'ko',
     pathPrefix: isEn ? '/en' : '',
     alternatePath: isEn
       ? pathname.replace(/^\/en/, '') || '/'

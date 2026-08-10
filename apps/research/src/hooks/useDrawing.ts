@@ -13,11 +13,11 @@ export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
   // 드로잉 캔버스 크기 동기화
   useEffect(() => {
     if (!isDrawingMode) {
-      return
+      return undefined
     }
     const canvas = canvasRef.current
     if (!canvas) {
-      return
+      return undefined
     }
     const resize = () => {
       const rect = canvas.getBoundingClientRect()

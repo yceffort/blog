@@ -25,7 +25,7 @@ export const SlidePreview = memo(function SlidePreviewBase({
   useEffect(() => {
     const hostEl = elementRef.current
     if (!hostEl) {
-      return
+      return undefined
     }
 
     if (!hostEl.shadowRoot) {

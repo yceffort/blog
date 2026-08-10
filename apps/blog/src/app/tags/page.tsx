@@ -63,14 +63,12 @@ export default async function TagsPage() {
               key={tag}
               href={`/tags/${tag}/pages/1`}
               className="tchip"
-              style={
-                {
-                  fontSize: `${14 * size}px`,
-                  padding: `${8 * Math.sqrt(size)}px ${16 * Math.sqrt(size)}px`,
-                  ['--c1' as never]: c1,
-                  animationDelay: `${i * 32}ms`,
-                } as React.CSSProperties
-              }
+              style={{
+                fontSize: `${14 * size}px`,
+                padding: `${8 * Math.sqrt(size)}px ${16 * Math.sqrt(size)}px`,
+                ['--c1' as never]: c1,
+                animationDelay: `${i * 32}ms`,
+              }}
             >
               <span className="n">{tag}</span>
               <span className="c">{count}</span>

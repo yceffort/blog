@@ -9,16 +9,16 @@ const Hero = memo(function HeroBase() {
 
   useEffect(() => {
     if (typeof window === 'undefined') {
-      return
+      return undefined
     }
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
     if (media.matches) {
-      return
+      return undefined
     }
 
     const el = titleRef.current
     if (!el) {
-      return
+      return undefined
     }
     const lines = el.querySelectorAll<HTMLSpanElement>('.ln')
 

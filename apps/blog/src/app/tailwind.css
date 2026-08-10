@@ -683,15 +683,17 @@ body[data-minimal='true'] .hero-title .accent {
 
 .home-hero-inner {
   position: relative;
+  transform-style: preserve-3d;
+}
+.home-hero-inner:has(> aside) {
   display: grid;
   align-items: center;
-  transform-style: preserve-3d;
   grid-template-columns: minmax(0, 1fr) minmax(400px, 42%);
   gap: 64px;
 }
 
 @media (max-width: 1100px) {
-  .home-hero-inner {
+  .home-hero-inner:has(> aside) {
     grid-template-columns: minmax(0, 1fr);
     gap: 32px;
   }
@@ -806,112 +808,80 @@ body[data-minimal='true'] .hero-title .accent {
   color: var(--ink);
 }
 
-/* ========= HERO NOW READING ========= */
-.hero-now {
-  padding: 26px 28px 20px;
+/* ========= HERO ASIDE PANELS ========= */
+.hero-heatmap,
+.hero-art {
+  padding: 26px 28px 22px;
   border: 1px solid var(--border);
   border-radius: 14px;
   background: color-mix(in oklab, var(--surface) 70%, transparent);
 }
-.hero-now-head {
+.hero-heatmap-head,
+.hero-art-head {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 10px;
 }
-.hero-now-title {
-  display: block;
-  margin-top: 16px;
-  font-size: clamp(20px, 1.8vw, 26px);
-  font-weight: 800;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  word-break: keep-all;
-  color: var(--ink);
-  transition: color 160ms ease;
-}
-.hero-now-title:hover {
-  color: var(--primary);
-}
-.hero-now-desc {
-  margin-top: 10px;
-  font-size: 13.5px;
-  line-height: 1.6;
-  word-break: keep-all;
-  color: var(--ink-3);
-}
-.hero-now-list {
+.hero-heatmap-grid {
   display: flex;
   flex-direction: column;
-  margin-top: 14px;
-  list-style: none;
+  margin-top: 18px;
+  gap: 4px;
 }
-.hero-now-list li {
-  position: relative;
-  padding-left: 22px;
+.hero-heatmap-row {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 40px repeat(12, 1fr);
+  gap: 4px;
 }
-.hero-now-list li::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 4px;
-  width: 1px;
-  background: var(--border);
-}
-.hero-now-list li:first-child::before {
-  top: 50%;
-}
-.hero-now-list li:last-child::before {
-  bottom: 50%;
-}
-.hero-now-list li::after {
-  content: '◆';
-  position: absolute;
-  top: 50%;
-  left: 4px;
-  font-size: 8px;
-  line-height: 1;
-  color: var(--ink-4);
-  transform: translate(-50%, -50%);
-  transition: color 180ms;
-}
-.hero-now-list li[data-latest='true']::after,
-.hero-now-list li:hover::after {
-  color: var(--primary);
-}
-.hero-now-list li a {
-  display: flex;
-  align-items: baseline;
-  min-width: 0;
-  padding: 7px 0;
-  font-size: 13.5px;
-  color: var(--ink-3);
-  transition: color 160ms ease;
-  gap: 10px;
-}
-.hero-now-list li a:hover {
-  color: var(--ink);
-}
-.hero-now-list li em {
-  flex-shrink: 0;
+.hero-heatmap-row em {
   font-family: var(--font-mono), monospace;
-  font-size: 11px;
+  font-size: 10px;
   font-style: normal;
   letter-spacing: 0.06em;
   color: var(--ink-4);
 }
-.hero-now-list li a span {
+.hero-heatmap-row > span {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  background: color-mix(in oklab, var(--ink) 6%, transparent);
+}
+.hero-heatmap-row > span[data-level='1'] {
+  background: color-mix(in oklab, var(--primary) 25%, transparent);
+}
+.hero-heatmap-row > span[data-level='2'] {
+  background: color-mix(in oklab, var(--primary) 50%, transparent);
+}
+.hero-heatmap-row > span[data-level='3'] {
+  background: color-mix(in oklab, var(--primary) 75%, transparent);
+}
+.hero-heatmap-row > span[data-level='4'] {
+  background: var(--primary);
+}
+.hero-heatmap-months > span {
+  background: none;
+  font-family: var(--font-mono), monospace;
+  font-size: 9px;
+  text-align: center;
+  color: var(--ink-4);
+  aspect-ratio: auto;
+}
+.hero-art-frame {
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  position: relative;
+  margin-top: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  aspect-ratio: 1200 / 630;
 }
-.hero-now-list li[data-latest='true'] a {
-  font-weight: 600;
-  color: var(--ink);
-}
-.hero-now-list li[data-latest='true'] em {
-  color: var(--primary);
+.hero-art-caption {
+  margin-top: 12px;
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-4);
 }
 
 /* ========= SECTION HEAD ========= */
@@ -1535,8 +1505,7 @@ body[data-minimal='true'] .hero-title .accent {
 .post-title em,
 .post-card h3 em,
 .rec-row h4 em,
-.post-row-title em,
-.hero-now-title em {
+.post-row-title em {
   background: linear-gradient(
     120deg,
     var(--primary) 0%,

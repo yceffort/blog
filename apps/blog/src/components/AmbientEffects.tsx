@@ -5,16 +5,16 @@ import {useEffect} from 'react'
 export default function AmbientEffects() {
   useEffect(() => {
     if (typeof window === 'undefined') {
-      return
+      return undefined
     }
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
     if (media.matches) {
-      return
+      return undefined
     }
 
     const glow = document.getElementById('cursor-glow')
     if (!glow) {
-      return
+      return undefined
     }
 
     let raf = 0

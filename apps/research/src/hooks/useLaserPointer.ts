@@ -6,7 +6,7 @@ export function useLaserPointer(isLaserMode: boolean) {
 
   useEffect(() => {
     if (!isLaserMode) {
-      return
+      return undefined
     }
     let targetX = window.innerWidth / 2
     let targetY = window.innerHeight / 2

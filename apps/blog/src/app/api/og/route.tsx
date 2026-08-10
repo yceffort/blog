@@ -1,9 +1,11 @@
 import {ImageResponse} from 'next/og'
 
 import {SiteConfig} from '@/config'
+import {unblockSvgLoader} from '@/utils/ogSharpUnblock'
 
 export async function GET(request: Request) {
   try {
+    unblockSvgLoader()
     const {searchParams} = new URL(request.url)
 
     const title = searchParams.get('title')

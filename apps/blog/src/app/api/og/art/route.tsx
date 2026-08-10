@@ -2,6 +2,8 @@ import {parseTitleEmphasis} from '@yceffort/shared/utils'
 import {ImageResponse} from 'next/og'
 import type {ReactNode} from 'react'
 
+import {unblockSvgLoader} from '@/utils/ogSharpUnblock'
+
 const WIDTH = 1200
 const HEIGHT = 630
 
@@ -406,7 +408,7 @@ function contoursLayout(ctx: Ctx) {
         const y = baseY + i * (46 + rand() * 14)
         const a = amp * (0.7 + rand() * 0.6)
         const p = phase + i * 90
-        const d = `M -50 ${y} Q ${300 - p / 4} ${y - a}, ${600} ${y} T ${1250} ${y}`
+        const d = `M -50 ${y} Q ${300 - p / 4} ${y - a}, 600 ${y} T 1250 ${y}`
         const color =
           i % 3 === 0 ? c1 : i % 3 === 1 ? c2 : dark ? '#f5f5fa' : INK
         return (
@@ -708,6 +710,7 @@ function toWords(title: string): Frag[][] {
 }
 
 export async function GET(request: Request) {
+  unblockSvgLoader()
   const {searchParams} = new URL(request.url)
   const slug = searchParams.get('slug') ?? 'yceffort'
   const title = searchParams.get('title')

@@ -1,10 +1,10 @@
-import {stripTitleEmphasis} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 import {cacheLife, cacheTag} from 'next/cache'
 import Link from 'next/link'
 import {connection} from 'next/server'
 import {Suspense} from 'react'
 
+import HeroArt from '@/components/HeroArt'
 import Hero from '@/components/HeroE'
 import PopularSeriesCard from '@/components/PopularSeriesCard'
 import PostCard from '@/components/PostCard'
@@ -62,10 +62,31 @@ async function getHomeData() {
 
   const postCount = allPosts.length
   const tagCount = tags.length
+  const currentYear = new Date().getFullYear()
   const earliestYear = allPosts
     .map((p) => new Date(p.frontMatter.date).getFullYear())
-    .reduce((a, b) => Math.min(a, b), new Date().getFullYear())
-  const yearsWriting = Math.max(1, new Date().getFullYear() - earliestYear + 1)
+    .reduce((a, b) => Math.min(a, b), currentYear)
+  const yearsWriting = Math.max(1, currentYear - earliestYear + 1)
+
+  const byMonth = new Map<string, number>()
+  for (const post of allPosts) {
+    const key = post.frontMatter.date.slice(0, 7)
+    byMonth.set(key, (byMonth.get(key) ?? 0) + 1)
+  }
+  const heatmapYears = Array.from(
+    {length: currentYear - earliestYear + 1},
+    (_, i) => {
+      const year = earliestYear + i
+      return {
+        year,
+        counts: Array.from(
+          {length: 12},
+          (__, m) =>
+            byMonth.get(`${year}-${String(m + 1).padStart(2, '0')}`) ?? 0,
+        ),
+      }
+    },
+  )
 
   return {
     posts,
@@ -75,6 +96,7 @@ async function getHomeData() {
     postCount,
     tagCount,
     yearsWriting,
+    heatmapYears,
   }
 }
 
@@ -105,28 +127,15 @@ async function HomeContent() {
     yearsWriting,
   } = homeData
 
-  const now = series[0]
-  const nowSeries = now && {
-    slug: now.slug,
-    title: now.title,
-    description: now.description,
-    latestSlug: now.posts.reduce((a, b) =>
-      b.frontMatter.date > a.frontMatter.date ? b : a,
-    ).fields.slug,
-    posts: now.posts.map((p) => ({
-      slug: p.fields.slug,
-      title: stripTitleEmphasis(p.frontMatter.title),
-    })),
-  }
-
   return (
     <div className="page-view">
       <Hero
         postCount={postCount}
         tagCount={tagCount}
         yearsWriting={yearsWriting}
-        nowSeries={nowSeries}
-      />
+      >
+        <HeroArt seed={new Date().toISOString().slice(0, 10)} />
+      </Hero>
 
       <div className="sec-head">
         <div>

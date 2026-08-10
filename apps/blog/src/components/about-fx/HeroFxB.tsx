@@ -30,7 +30,7 @@ export default function HeroFxB() {
     const canvas = canvasRef.current
     const wrap = wrapRef.current
     if (!canvas || !wrap) {
-      return
+      return undefined
     }
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2)

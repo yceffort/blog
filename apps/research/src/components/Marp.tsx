@@ -33,7 +33,7 @@ export function Marp({
   useEffect(() => {
     const hostEl = elementRef.current
     if (!hostEl) {
-      return
+      return undefined
     }
 
     if (!hostEl.shadowRoot) {

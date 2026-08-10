@@ -48,7 +48,7 @@ export default async function Page(props: {
 }) {
   const params = await props.params
   const allPosts = await getAllPosts()
-  const {tag = 'javascript', id = '1'} = params
+  const {tag, id} = params
   const pageNo = Number(id)
 
   const postsWithTag = allPosts.filter((post) =>

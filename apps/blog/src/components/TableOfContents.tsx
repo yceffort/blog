@@ -98,6 +98,7 @@ function FloatingTOC({
       document.addEventListener('mousedown', handleClickOutside)
       return () => document.removeEventListener('mousedown', handleClickOutside)
     }
+    return undefined
   }, [isOpen])
 
   useEffect(() => {
@@ -111,6 +112,7 @@ function FloatingTOC({
       document.addEventListener('keydown', handleEscape)
       return () => document.removeEventListener('keydown', handleEscape)
     }
+    return undefined
   }, [isOpen])
 
   useEffect(() => {
@@ -239,7 +241,7 @@ export default function TableOfContents() {
   useEffect(() => {
     const article = document.querySelector('article')
     if (!article) {
-      return
+      return undefined
     }
 
     const elements = article.querySelectorAll('h2, h3, h4')
@@ -269,7 +271,7 @@ export default function TableOfContents() {
 
   useEffect(() => {
     if (headings.length === 0) {
-      return
+      return undefined
     }
     document.body.setAttribute('data-has-toc', 'true')
     return () => {

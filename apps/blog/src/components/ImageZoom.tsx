@@ -61,7 +61,7 @@ export default function ImageZoom({
 
   useEffect(() => {
     if (!isZoomed) {
-      return
+      return undefined
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {

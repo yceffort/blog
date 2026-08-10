@@ -398,7 +398,7 @@ export function MarpSlides({
   // 해시 변경 감지
   useEffect(() => {
     if (!multiple) {
-      return
+      return undefined
     }
 
     const handleHashChange = () => {
@@ -511,9 +511,9 @@ export function MarpSlides({
   const handleFullscreen = useCallback(() => {
     if (containerRef.current) {
       if (document.fullscreenElement) {
-        document.exitFullscreen()
+        void document.exitFullscreen()
       } else {
-        containerRef.current.requestFullscreen()
+        void containerRef.current.requestFullscreen()
       }
     }
     closeContextMenu()
@@ -525,7 +525,7 @@ export function MarpSlides({
 
   const handleCopyLink = useCallback(() => {
     const url = `${window.location.origin}${window.location.pathname}#${activeIndex + 1}`
-    navigator.clipboard.writeText(url)
+    void navigator.clipboard.writeText(url)
     closeContextMenu()
   }, [activeIndex, closeContextMenu])
 
@@ -561,7 +561,7 @@ export function MarpSlides({
 
   const handleCopyQrUrl = useCallback(() => {
     if (qrUrl) {
-      navigator.clipboard.writeText(qrUrl)
+      void navigator.clipboard.writeText(qrUrl)
     }
   }, [qrUrl])
 
@@ -572,7 +572,7 @@ export function MarpSlides({
 
   useEffect(() => {
     if (!isPrinting) {
-      return
+      return undefined
     }
     const handleAfterPrint = () => setIsPrinting(false)
     window.addEventListener('afterprint', handleAfterPrint)

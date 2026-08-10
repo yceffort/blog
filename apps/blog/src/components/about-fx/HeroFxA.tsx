@@ -183,7 +183,7 @@ export default function HeroFxA() {
   useEffect(() => {
     const el = wrapRef.current
     if (!el) {
-      return
+      return undefined
     }
     const activate = (e: PointerEvent) => {
       if (e.pointerType === 'touch' || e.pointerType === 'pen') {

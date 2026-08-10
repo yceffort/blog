@@ -5,7 +5,7 @@ import {useEffect} from 'react'
 export function useFontFace(fonts: string[]) {
   useEffect(() => {
     if (!fonts || fonts.length === 0) {
-      return
+      return undefined
     }
 
     const styleEl = document.createElement('style')

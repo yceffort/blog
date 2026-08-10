@@ -1,46 +1,36 @@
 'use client'
 
-import {EmphasizedTitle} from '@yceffort/shared/components'
-import Link from 'next/link'
-import {memo, useEffect, useRef} from 'react'
+import {memo, useEffect, useRef, type ReactNode} from 'react'
 
 const YEAR = new Date().getFullYear()
-
-export interface HeroNowSeries {
-  slug: string
-  title: string
-  description: string
-  latestSlug: string
-  posts: {slug: string; title: string}[]
-}
 
 interface HeroProps {
   postCount: number
   tagCount: number
   yearsWriting: number
-  nowSeries?: HeroNowSeries
+  children?: ReactNode
 }
 
 const Hero = memo(function HeroBase({
   postCount,
   tagCount,
   yearsWriting,
-  nowSeries,
+  children,
 }: HeroProps) {
   const titleRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
     if (typeof window === 'undefined') {
-      return
+      return undefined
     }
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
     if (media.matches) {
-      return
+      return undefined
     }
 
     const el = titleRef.current
     if (!el) {
-      return
+      return undefined
     }
     const lines = el.querySelectorAll<HTMLSpanElement>('.ln')
 
@@ -91,9 +81,9 @@ const Hero = memo(function HeroBase({
           </h1>
           <div className="hero-sub">
             <p>
-              A blog by <b style={{color: 'var(--ink)'}}>yceffort</b> — a
-              frontend engineer writing about the shape of software, one week at
-              a time.
+              A blog by <b style={{color: 'var(--ink)'}}>yceffort</b>, a
+              frontend engineer taking software apart to see how it works:
+              framework internals, performance, and lessons from production.
             </p>
             <div className="hero-stats">
               <span>
@@ -109,33 +99,7 @@ const Hero = memo(function HeroBase({
           </div>
         </div>
 
-        {nowSeries && (
-          <aside className="hero-now" aria-label="지금 진행 중인 시리즈">
-            <div className="hero-now-head">
-              <span className="series-nav-kicker">NOW READING</span>
-              <span className="series-nav-progress">
-                {String(nowSeries.posts.length).padStart(2, '0')} POSTS
-              </span>
-            </div>
-            <Link href={`/series/${nowSeries.slug}`} className="hero-now-title">
-              <EmphasizedTitle title={nowSeries.title} />
-            </Link>
-            <p className="hero-now-desc">{nowSeries.description}</p>
-            <ol className="hero-now-list">
-              {nowSeries.posts.map((post, index) => (
-                <li
-                  key={post.slug}
-                  data-latest={post.slug === nowSeries.latestSlug}
-                >
-                  <Link href={`/${post.slug}`} prefetch={false}>
-                    <em>{String(index + 1).padStart(2, '0')}</em>
-                    <span>{post.title}</span>
-                  </Link>
-                </li>
-              ))}
-            </ol>
-          </aside>
-        )}
+        {children}
       </div>
     </section>
   )

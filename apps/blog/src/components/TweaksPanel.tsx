@@ -104,7 +104,7 @@ export default function TweaksPanel({open, onClose}: Props) {
     const transition = document.startViewTransition(() => {
       setTheme(next)
     })
-    transition.finished.finally(() => {
+    void transition.finished.finally(() => {
       document.documentElement.classList.remove('theme-transition-circle')
     })
   }

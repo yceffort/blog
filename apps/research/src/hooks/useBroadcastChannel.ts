@@ -25,7 +25,7 @@ export function useBroadcastChannel(
 
   useEffect(() => {
     if (typeof window === 'undefined') {
-      return
+      return undefined
     }
 
     const channel = new BroadcastChannel(channelName)

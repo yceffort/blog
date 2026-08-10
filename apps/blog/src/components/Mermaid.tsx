@@ -145,7 +145,7 @@ export default function Mermaid({chart}: {chart: string}) {
       }
     }
 
-    run()
+    void run()
 
     return () => {
       cancelled = true
@@ -159,7 +159,7 @@ export default function Mermaid({chart}: {chart: string}) {
 
   useEffect(() => {
     if (!isZoomed) {
-      return
+      return undefined
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -180,7 +180,7 @@ export default function Mermaid({chart}: {chart: string}) {
 
   useEffect(() => {
     if (!isZoomed || !zoomContainerRef.current || !zoomContentRef.current) {
-      return
+      return undefined
     }
 
     const contentElement = zoomContentRef.current

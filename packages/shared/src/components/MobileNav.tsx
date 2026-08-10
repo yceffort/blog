@@ -73,7 +73,7 @@ const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
 
   useEffect(() => {
     if (!open) {
-      return
+      return undefined
     }
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {

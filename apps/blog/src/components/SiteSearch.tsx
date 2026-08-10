@@ -66,7 +66,7 @@ export default function SiteSearch() {
 
   const handleOpen = useCallback(() => {
     setOpen(true)
-    loadIndex()
+    void loadIndex()
   }, [loadIndex])
 
   const handleClose = useCallback(() => {
@@ -79,7 +79,7 @@ export default function SiteSearch() {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault()
         setOpen((v) => !v)
-        loadIndex()
+        void loadIndex()
       } else if (e.key === 'Escape') {
         handleClose()
       }
@@ -96,6 +96,7 @@ export default function SiteSearch() {
         document.body.style.overflow = ''
       }
     }
+    return undefined
   }, [open])
 
   const trimmed = query.normalize('NFC').trim()
