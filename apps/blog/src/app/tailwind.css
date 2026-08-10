@@ -671,13 +671,13 @@ body[data-minimal='true'] .hero-title .accent {
 /* ========= HERO (home) ========= */
 .home-hero {
   position: relative;
-  padding: 48px 0 40px;
+  padding: 32px 0 28px;
   perspective: 1400px;
 }
 
 @media (max-width: 640px) {
   .home-hero {
-    padding: 24px 0 20px;
+    padding: 20px 0 16px;
   }
 }
 
@@ -717,16 +717,16 @@ body[data-minimal='true'] .hero-title .accent {
 
 .hero-title {
   position: relative;
-  font-size: clamp(48px, 9vw, 120px);
+  font-size: clamp(40px, 6.5vw, 92px);
   font-weight: 900;
-  line-height: 0.88;
+  line-height: 1;
   letter-spacing: -0.045em;
   color: var(--ink);
   transform-style: preserve-3d;
 }
 .hero-title .ln {
   position: relative;
-  display: block;
+  display: inline-block;
   transition: transform 120ms ease-out;
   will-change: transform;
 }
@@ -743,6 +743,9 @@ body[data-minimal='true'] .hero-title .accent {
   background-size: 200% 100%;
   color: transparent;
   animation: hero-hue 10s ease-in-out infinite;
+.hero-title .ln:not(:last-child) {
+  margin-right: 0.22em;
+}
 }
 
 @keyframes hero-hue {
@@ -764,12 +767,12 @@ body[data-minimal='true'] .hero-title .accent {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  max-width: 720px;
-  margin-top: 28px;
+  justify-content: space-between;
+  margin-top: 22px;
   gap: 28px;
 }
 .hero-sub p {
-  max-width: 420px;
+  max-width: 560px;
   font-size: 15px;
   line-height: 1.6;
   color: var(--ink-2);
