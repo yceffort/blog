@@ -1,6 +1,6 @@
 'use client'
 
-import {memo, useEffect, useRef, type ReactNode} from 'react'
+import {memo, useEffect, useRef} from 'react'
 
 const YEAR = new Date().getFullYear()
 
@@ -8,14 +8,12 @@ interface HeroProps {
   postCount: number
   tagCount: number
   yearsWriting: number
-  children?: ReactNode
 }
 
 const Hero = memo(function HeroBase({
   postCount,
   tagCount,
   yearsWriting,
-  children,
 }: HeroProps) {
   const titleRef = useRef<HTMLHeadingElement>(null)
 
@@ -98,8 +96,6 @@ const Hero = memo(function HeroBase({
             </div>
           </div>
         </div>
-
-        {children}
       </div>
     </section>
   )

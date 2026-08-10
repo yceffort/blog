@@ -4,7 +4,6 @@ import Link from 'next/link'
 import {connection} from 'next/server'
 import {Suspense} from 'react'
 
-import HeroArt from '@/components/HeroArt'
 import Hero from '@/components/HeroE'
 import PopularSeriesCard from '@/components/PopularSeriesCard'
 import PostCard from '@/components/PostCard'
@@ -68,26 +67,6 @@ async function getHomeData() {
     .reduce((a, b) => Math.min(a, b), currentYear)
   const yearsWriting = Math.max(1, currentYear - earliestYear + 1)
 
-  const byMonth = new Map<string, number>()
-  for (const post of allPosts) {
-    const key = post.frontMatter.date.slice(0, 7)
-    byMonth.set(key, (byMonth.get(key) ?? 0) + 1)
-  }
-  const heatmapYears = Array.from(
-    {length: currentYear - earliestYear + 1},
-    (_, i) => {
-      const year = earliestYear + i
-      return {
-        year,
-        counts: Array.from(
-          {length: 12},
-          (__, m) =>
-            byMonth.get(`${year}-${String(m + 1).padStart(2, '0')}`) ?? 0,
-        ),
-      }
-    },
-  )
-
   return {
     posts,
     recentPosts,
@@ -96,7 +75,6 @@ async function getHomeData() {
     postCount,
     tagCount,
     yearsWriting,
-    heatmapYears,
   }
 }
 
@@ -133,9 +111,7 @@ async function HomeContent() {
         postCount={postCount}
         tagCount={tagCount}
         yearsWriting={yearsWriting}
-      >
-        <HeroArt seed={new Date().toISOString().slice(0, 10)} />
-      </Hero>
+      />
 
       <div className="sec-head">
         <div>
