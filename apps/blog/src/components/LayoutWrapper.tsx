@@ -9,6 +9,7 @@ import {SiteConfig} from '@/config'
 import {useLocale} from '@/hooks/useLocale'
 import profile from '@/public/profile.jpeg'
 
+import AnnouncementBanner from './AnnouncementBanner'
 import Footer from './Footer'
 import LanguageSwitch from './LanguageSwitch'
 import MobileNav from './MobileNav'
@@ -217,6 +218,7 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
         <Footer />
       </SectionContainer>
       <ScrollTop />
+      <AnnouncementBanner />
     </>
   )
 }

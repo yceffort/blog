@@ -2689,6 +2689,29 @@ code {
   }
 }
 
+/* Announcement Banner */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-new(announcement-banner):only-child {
+    animation: 0.3s ease-out both vt-banner-in;
+  }
+  ::view-transition-old(announcement-banner):only-child {
+    animation: 0.2s ease-in both vt-banner-out;
+  }
+}
+
+@keyframes vt-banner-in {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+}
+@keyframes vt-banner-out {
+  to {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+}
+
 .theme-transition-circle::view-transition-new(root) {
   animation: circle-clip 0.5s ease-in-out;
 }
