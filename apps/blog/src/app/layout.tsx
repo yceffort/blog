@@ -5,7 +5,7 @@ import {Providers} from '@yceffort/shared/components'
 import type {Metadata} from 'next'
 import {Fraunces, Inter, JetBrains_Mono} from 'next/font/google'
 import Script from 'next/script'
-import type {ReactNode} from 'react'
+import {Suspense, type ReactNode} from 'react'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -142,10 +142,14 @@ export default async function Layout({children}: {children: ReactNode}) {
           <meta name="mobile-web-app-capable" content="yes" />
         </head>
         <body className="antialiased">
-          <NavigationDirection />
+          <Suspense fallback={null}>
+            <NavigationDirection />
+          </Suspense>
           <AmbientEffects />
           <Providers>
-            <LayoutWrapper>{children}</LayoutWrapper>
+            <Suspense fallback={null}>
+              <LayoutWrapper>{children}</LayoutWrapper>
+            </Suspense>
           </Providers>
           {GA_MEASUREMENT_ID && (
             <>
@@ -167,7 +171,9 @@ export default async function Layout({children}: {children: ReactNode}) {
                 `,
                 }}
               />
-              <GoogleAnalyticsPageViewTracker />
+              <Suspense fallback={null}>
+                <GoogleAnalyticsPageViewTracker />
+              </Suspense>
             </>
           )}
           {process.env.NODE_ENV === 'production' && (
