@@ -13,14 +13,7 @@ A monorepo containing yceffort's blog and research projects.
 └── package.json       # Root workspace configuration
 ```
 
-## Shared Package
-
-The `@yceffort/shared` package contains reusable components:
-
-- **Providers** - ThemeProvider wrapper
-- **ThemeSwitch** - Theme selector (Light/Dark/System)
-- **SocialIcon** - Social media link icons
-- **Icons** - Theme icons (Sun, Moon, Monitor) and social icons
+The `@yceffort/shared` package holds components used by both apps (Providers, MobileNav, EmphasizedTitle, SocialIcon, icons) and utilities (cookie, contact, title).
 
 ## Development
 
@@ -39,37 +32,34 @@ pnpm dev:research  # http://localhost:3001
 pnpm build:blog
 pnpm build:research
 
-# Lint all projects
+# Lint (oxlint, type-aware)
 pnpm lint
+pnpm lint:fix
+
+# Format (oxfmt)
+pnpm prettier
+pnpm prettier:fix
 ```
 
 ## Deployment (Vercel)
 
 This monorepo is deployed as two separate Vercel projects:
 
-### Blog (yceffort.kr)
+| Project  | Domain               | Root Directory  |
+| -------- | -------------------- | --------------- |
+| Blog     | yceffort.kr          | `apps/blog`     |
+| Research | research.yceffort.kr | `apps/research` |
 
-| Setting         | Value          |
-| --------------- | -------------- |
-| Root Directory  | `apps/blog`    |
-| Build Command   | `pnpm build`   |
-| Install Command | `pnpm install` |
-
-### Research (research.yceffort.kr)
-
-| Setting         | Value           |
-| --------------- | --------------- |
-| Root Directory  | `apps/research` |
-| Build Command   | `pnpm build`    |
-| Install Command | `pnpm install`  |
+Both use `pnpm build` / `pnpm install` as build and install commands.
 
 ## Tech Stack
 
-- **Runtime**: Node.js 24.12.0
-- **Package Manager**: pnpm 10.6.5
-- **Framework**: Next.js 16
+- **Runtime**: Node.js 24 (see `.nvmrc`)
+- **Package Manager**: pnpm 11
+- **Framework**: Next.js 16, React 19
 - **Styling**: Tailwind CSS 4
-- **Language**: TypeScript 5
+- **Language**: TypeScript 7
+- **Lint/Format**: oxlint, oxfmt
 
 ## Author
 
