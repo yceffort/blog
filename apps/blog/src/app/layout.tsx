@@ -35,7 +35,7 @@ import NavigationDirection from '@/components/NavigationDirection'
 import {ServiceWorkerRegistration} from '@/components/ServiceWorkerRegistration'
 import {SiteConfig} from '@/config'
 import {buildOgImageUrl} from '@/utils/og'
-// import {getAllPosts, getAllTagsFromPosts} from '@/utils/Post'
+import {getAllPosts} from '@/utils/Post'
 
 export const metadata: Metadata = {
   title: SiteConfig.title,
@@ -104,6 +104,8 @@ export const metadata: Metadata = {
 const GA_MEASUREMENT_ID = SiteConfig.googleAnalyticsId
 
 export default async function Layout({children}: {children: ReactNode}) {
+  const enSlugs = (await getAllPosts('en')).map((post) => post.fields.slug)
+
   return (
     <>
       <html
@@ -148,7 +150,7 @@ export default async function Layout({children}: {children: ReactNode}) {
           <AmbientEffects />
           <Providers>
             <Suspense fallback={null}>
-              <LayoutWrapper>{children}</LayoutWrapper>
+              <LayoutWrapper enSlugs={enSlugs}>{children}</LayoutWrapper>
             </Suspense>
           </Providers>
           {GA_MEASUREMENT_ID && (
