@@ -13,6 +13,7 @@ import ProfileImage from '@/components/ProfileImage'
 import RelatedPosts from '@/components/RelatedPosts'
 import SeriesNavigation from '@/components/SeriesNavigation'
 import SeriesPrevNext from '@/components/SeriesPrevNext'
+import SubscribeCta from '@/components/SubscribeCta'
 import TableOfContents from '@/components/TableOfContents'
 import Tag from '@/components/Tag'
 import {SiteConfig} from '@/config'
@@ -276,6 +277,8 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
         )}
 
         <RelatedPosts posts={relatedPosts} title="관련 글" />
+
+        <SubscribeCta />
 
         <footer className="post-footer">
           <Link href="/">&larr; Back to the blog</Link>

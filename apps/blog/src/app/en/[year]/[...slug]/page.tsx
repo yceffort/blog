@@ -12,6 +12,7 @@ import ProfileImage from '@/components/ProfileImage'
 import RelatedPosts from '@/components/RelatedPosts'
 import SeriesNavigation from '@/components/SeriesNavigation'
 import SeriesPrevNext from '@/components/SeriesPrevNext'
+import SubscribeCta from '@/components/SubscribeCta'
 import TableOfContents from '@/components/TableOfContents'
 import Tag from '@/components/Tag'
 import {SiteConfig} from '@/config'
@@ -260,6 +261,8 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
           pathPrefix="/en"
           title="Related posts"
         />
+
+        <SubscribeCta lang="en" />
 
         <footer className="post-footer">
           <Link href="/en">&larr; Back to the blog</Link>
