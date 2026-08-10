@@ -2,7 +2,7 @@ import {parseTitleEmphasis, stripTitleEmphasis} from '@yceffort/shared/utils'
 import {format} from 'date-fns'
 import {cacheLife, cacheTag} from 'next/cache'
 import Link from 'next/link'
-import {notFound} from 'next/navigation'
+import {notFound, permanentRedirect} from 'next/navigation'
 import Script from 'next/script'
 import {ViewTransition} from 'react'
 
@@ -93,6 +93,11 @@ export default async function EnPostPage(props: {
 
   const post = await findPostByYearAndSlug(year, slug, 'en')
   if (!post) {
+    // 번역이 없는 글은 404 대신 한국어 원문으로 보낸다
+    const koPost = await findPostByYearAndSlug(year, slug)
+    if (koPost) {
+      permanentRedirect(`/${koPost.fields.slug}`)
+    }
     return notFound()
   }
 
