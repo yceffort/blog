@@ -138,7 +138,7 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
   const updatedAt = format(new Date(date), 'yyyy-MM-dd')
   const transitionName = `post-${postSlug.replace(/\//g, '-')}`
   const plainTitle = stripTitleEmphasis(title)
-  const link = `https://github.com/yceffort/yceffort-blog-v2/issues/new?labels=%F0%9F%92%AC%20Discussion&title=[Discussion] issue on ${plainTitle}&assignees=yceffort&body=${SiteConfig.url}/${slug}`
+  const link = `https://github.com/yceffort/yceffort-blog-v2/issues/new?labels=%F0%9F%92%AC%20Discussion&title=[Discussion] issue on ${plainTitle}&assignees=yceffort&body=${SiteConfig.url}/${postSlug}`
 
   const thumbnail = post.frontMatter.thumbnail
   const ogImageUrl = buildOgImageUrl({

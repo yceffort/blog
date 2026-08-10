@@ -52,7 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
       },
     })),
-    ...tags.map((tag) => ({
+    ...tags.map(({tag}) => ({
       url: `https://yceffort.kr/tags/${tag}`,
     })),
     {
