@@ -162,8 +162,10 @@ export const getFeaturedPosts = cache(async function getFeaturedPostsImpl(
 ): Promise<{popular: Post[]; recent: Post[]}> {
   const allPosts = await getAllPosts(locale)
   const popularCount = POPULAR_POSTS_COUNT - reservedSlots
-  const popularSlugs =
-    locale === 'ko' ? await getPopularPostSlugs(POPULAR_POSTS_COUNT) : []
+  // en은 번역이 없는 인기글이 걸러지므로 후보를 넉넉히 가져온다
+  const popularSlugs = await getPopularPostSlugs(
+    locale === 'ko' ? POPULAR_POSTS_COUNT : POPULAR_POSTS_COUNT * 3,
+  )
 
   const popular = popularSlugs
     .map((slug) => allPosts.find((p) => p.fields.slug === slug))
