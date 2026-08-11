@@ -380,3 +380,42 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(networkFirst(event, PAGES_CACHE))
   }
 })
+
+self.addEventListener('push', (event) => {
+  if (!event.data) {
+    return
+  }
+  let payload
+  try {
+    payload = event.data.json()
+  } catch {
+    return
+  }
+  event.waitUntil(
+    self.registration.showNotification(payload.title || 'yceffort', {
+      body: payload.body || '',
+      icon: '/favicon/web-app-manifest-192x192.png',
+      badge: '/favicon/favicon-96x96.png',
+      data: {url: payload.url || '/'},
+      // 같은 글의 알림이 중복으로 오면 하나로 병합한다
+      tag: payload.url || 'yceffort',
+    }),
+  )
+})
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close()
+  const url = event.notification.data?.url || '/'
+  event.waitUntil(
+    self.clients
+      .matchAll({type: 'window', includeUncontrolled: true})
+      .then((clients) => {
+        for (const client of clients) {
+          if (new URL(client.url).pathname === url && 'focus' in client) {
+            return client.focus()
+          }
+        }
+        return self.clients.openWindow(url)
+      }),
+  )
+})
