@@ -1,0 +1,40 @@
+name: Notify new posts
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/blog/posts/**/*.md'
+      - 'apps/blog/series/*.md'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect added posts
+        id: added
+        run: |
+          files=$(git diff --name-only --diff-filter=A HEAD^ HEAD -- 'apps/blog/posts/**/*.md' 'apps/blog/series/*.md' | grep -v '\.en\.md$' || true)
+          echo "files<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$files" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v4
+        if: steps.added.outputs.files != ''
+        with:
+          node-version: 24
+
+      - name: Send push notifications
+        if: steps.added.outputs.files != ''
+        env:
+          KV_REST_API_URL: ${{ secrets.KV_REST_API_URL }}
+          KV_REST_API_TOKEN: ${{ secrets.KV_REST_API_TOKEN }}
+          VAPID_PUBLIC_KEY: ${{ secrets.VAPID_PUBLIC_KEY }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          FILES: ${{ steps.added.outputs.files }}
+        run: |
+          npm install --no-save web-push
+          echo "$FILES" | xargs node apps/blog/scripts/notify-push.mjs

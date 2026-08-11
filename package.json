@@ -27,7 +27,8 @@
     "oxfmt": "^0.62.0",
     "oxlint": "^1.77.0",
     "oxlint-tsgolint": "^7.0.2001",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "web-push": "^3.6.7"
   },
   "packageManager": "pnpm@11.20.0",
   "engines": {
