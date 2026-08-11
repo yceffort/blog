@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v3'
+const CACHE_VERSION = 'v4'
 const STATIC_CACHE = `static-${CACHE_VERSION}`
 const PAGES_CACHE = `pages-${CACHE_VERSION}`
 const IMAGES_CACHE = `images-${CACHE_VERSION}`
@@ -18,12 +18,24 @@ const MAX_ENTRIES = {
 }
 
 const FONT_HOSTS = ['fonts.gstatic.com', 'cdn.jsdelivr.net']
+const SKIP_HOSTS = [
+  'google-analytics.com',
+  'analytics.google.com',
+  'googletagmanager.com',
+  'vercel-insights.com',
+  'va.vercel-scripts.com',
+]
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(PAGES_CACHE)
-      .then((cache) => cache.addAll(PRECACHE_URLS))
+      .then((cache) =>
+        cache.addAll(PRECACHE_URLS).then(() => cache.match('/')),
+      )
+      // 페이지 로드 중에 SW가 설치되면 이미 로드된 이미지는 fetch 이벤트를
+      // 거치지 않으므로, 프리캐시한 홈의 이미지를 여기서 직접 저장한다
+      .then((home) => (home ? saveImagesFromHTML(home.clone()) : null))
       .then(() => self.skipWaiting()),
   )
 })
@@ -54,6 +66,8 @@ function isFontRequest(url) {
 function isImageRequest(url) {
   return (
     url.pathname === '/_next/image' ||
+    // 코드 생성 썸네일 (?v= 파라미터가 캐시 버스팅을 담당한다)
+    url.pathname.startsWith('/api/og/') ||
     /\.(?:png|jpe?g|gif|webp|avif|svg|ico)$/.test(url.pathname)
   )
 }
@@ -68,6 +82,104 @@ function isPrefetchRequest(request) {
     request.headers.has('next-router-prefetch') ||
     request.headers.has('next-router-segment-prefetch')
   )
+}
+
+// HTML의 img 태그에서 이미지 URL을 추출한다. 포스트 본문 이미지는 대부분
+// 외부 도메인이므로 절대 URL도 포함한다. next/image의 srcset은 원본당
+// 여러 너비를 포함하므로, 원본(url 파라미터)별로 1080에 가장 가까운 하나만 고른다
+function extractImageUrls(html) {
+  const found = new Set()
+  const tagRe = /<img\b[^>]*>/g
+  const attrRe = /(?:src|srcset)="([^"]+)"/g
+  let tag
+  while ((tag = tagRe.exec(html))) {
+    let match
+    while ((match = attrRe.exec(tag[0]))) {
+      for (const candidate of match[1].split(',')) {
+        const u = candidate.trim().split(' ')[0].replaceAll('&amp;', '&')
+        if (
+          u.startsWith('/_next/image?') ||
+          u.startsWith('/api/og/') ||
+          u.startsWith('https://') ||
+          /^\/[^\s"]+\.(?:png|jpe?g|gif|webp|avif|svg)$/.test(u)
+        ) {
+          found.add(u)
+        }
+      }
+    }
+    attrRe.lastIndex = 0
+  }
+
+  const bySource = new Map()
+  const plain = []
+  for (const u of found) {
+    if (!u.startsWith('/_next/image?')) {
+      plain.push(u)
+      continue
+    }
+    const params = new URLSearchParams(u.slice('/_next/image?'.length))
+    const source = params.get('url')
+    const width = Number(params.get('w')) || 0
+    const current = bySource.get(source)
+    if (!current || Math.abs(width - 1080) < Math.abs(current.width - 1080)) {
+      bySource.set(source, {url: u, width})
+    }
+  }
+  return [...plain, ...[...bySource.values()].map((v) => v.url)]
+}
+
+async function saveImagesFromHTML(response) {
+  try {
+    const html = await response.text()
+    const urls = extractImageUrls(html).slice(0, 50)
+    const cache = await caches.open(IMAGES_CACHE)
+    await Promise.all(
+      urls.map(async (url) => {
+        try {
+          if (await cache.match(url)) {
+            return
+          }
+          // 외부 이미지는 no-cors로 가져와 opaque 응답을 그대로 저장한다
+          const external = url.startsWith('https://')
+          const imageResponse = await fetch(
+            url,
+            external ? {mode: 'no-cors'} : undefined,
+          )
+          if (imageResponse.ok || imageResponse.type === 'opaque') {
+            await putWithTrim(IMAGES_CACHE, url, imageResponse)
+          }
+        } catch {
+          // 개별 이미지 실패는 무시한다
+        }
+      }),
+    )
+  } catch {
+    // 오프라인이거나 파싱에 실패하면 저장을 생략한다
+  }
+}
+
+// 오프라인에서 srcset이 캐시에 없는 너비를 요청하면, 같은 원본의
+// 캐시된 다른 변형이라도 찾아서 돌려준다
+async function matchImageVariant(requestUrl) {
+  const url = new URL(requestUrl)
+  if (url.pathname !== '/_next/image') {
+    return null
+  }
+  const source = url.searchParams.get('url')
+  if (!source) {
+    return null
+  }
+  const cache = await caches.open(IMAGES_CACHE)
+  for (const request of await cache.keys()) {
+    const cachedUrl = new URL(request.url)
+    if (
+      cachedUrl.pathname === '/_next/image' &&
+      cachedUrl.searchParams.get('url') === source
+    ) {
+      return cache.match(request)
+    }
+  }
+  return null
 }
 
 async function putWithTrim(cacheName, request, response) {
@@ -136,7 +248,8 @@ async function savePageHTML(request, clientId) {
     if (!response.ok) {
       return
     }
-    await putWithTrim(PAGES_CACHE, url.href, response)
+    await putWithTrim(PAGES_CACHE, url.href, response.clone())
+    await saveImagesFromHTML(response)
 
     // 처음 저장된 페이지만 클라이언트에 알린다 (토스트 표시용)
     if (!alreadySaved && clientId) {
@@ -145,6 +258,40 @@ async function savePageHTML(request, clientId) {
     }
   } catch {
     // 오프라인이면 저장을 생략한다
+  }
+}
+
+// 하드 내비게이션한 페이지도 본문 이미지(뷰포트 밖 lazy 이미지 포함)를
+// 함께 저장한다
+async function handleNavigation(event) {
+  const response = await networkFirst(event, PAGES_CACHE)
+  if (
+    response.ok &&
+    (response.headers.get('content-type') || '').includes('text/html')
+  ) {
+    event.waitUntil(saveImagesFromHTML(response.clone()))
+  }
+  return response
+}
+
+async function handleImage(event) {
+  const cached = await caches.match(event.request)
+  if (cached) {
+    return cached
+  }
+
+  try {
+    const response = await fetch(event.request)
+    if (response.ok || response.type === 'opaque') {
+      event.waitUntil(putWithTrim(IMAGES_CACHE, event.request, response.clone()))
+    }
+    return response
+  } catch {
+    const fallback = await matchImageVariant(event.request.url)
+    if (fallback) {
+      return fallback
+    }
+    return new Response('', {status: 408})
   }
 }
 
@@ -187,14 +334,21 @@ self.addEventListener('fetch', (event) => {
   }
 
   if (url.origin !== self.location.origin) {
-    // KaTeX(cdn.jsdelivr.net)·구글 폰트만 캐시하고 나머지 외부 요청은 넘긴다
+    if (SKIP_HOSTS.some((host) => url.hostname.includes(host))) {
+      return
+    }
     if (FONT_HOSTS.includes(url.hostname)) {
       event.respondWith(cacheFirst(event, STATIC_CACHE))
+      return
+    }
+    // 포스트 본문 이미지는 대부분 외부 도메인이라 함께 캐시한다
+    if (request.destination === 'image') {
+      event.respondWith(handleImage(event))
     }
     return
   }
 
-  if (url.pathname.startsWith('/api/')) {
+  if (url.pathname.startsWith('/api/') && !isImageRequest(url)) {
     return
   }
 
@@ -206,7 +360,7 @@ self.addEventListener('fetch', (event) => {
 
   // Page navigations: network-first, offline fallback
   if (request.mode === 'navigate') {
-    event.respondWith(networkFirst(event, PAGES_CACHE))
+    event.respondWith(handleNavigation(event))
     return
   }
 
@@ -217,7 +371,7 @@ self.addEventListener('fetch', (event) => {
 
   // Images (including the /_next/image optimizer): cache-first
   if (isImageRequest(url)) {
-    event.respondWith(cacheFirst(event, IMAGES_CACHE))
+    event.respondWith(handleImage(event))
     return
   }
 
