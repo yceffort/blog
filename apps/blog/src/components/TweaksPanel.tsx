@@ -43,6 +43,14 @@ const THEMES = [
   {key: 'system', label: 'System', Icon: Monitor},
 ] as const
 
+function urlBase64ToUint8Array(base64: string) {
+  const padding = '='.repeat((4 - (base64.length % 4)) % 4)
+  const raw = atob((base64 + padding).replaceAll('-', '+').replaceAll('_', '/'))
+  return Uint8Array.from(raw, (char) => char.charCodeAt(0))
+}
+
+type PushState = 'unsupported' | 'off' | 'on' | 'busy'
+
 interface Props {
   open: boolean
   onClose: () => void
@@ -116,6 +124,79 @@ export default function TweaksPanel({open, onClose}: Props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const [pushState, setPushState] = useState<PushState>('unsupported')
+
+  useEffect(() => {
+    let cancelled = false
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+      const syncPushState = async () => {
+        const registration = await navigator.serviceWorker.getRegistration()
+        if (!registration || cancelled) {
+          return
+        }
+        const subscription = await registration.pushManager.getSubscription()
+        if (!cancelled) {
+          // eslint-disable-next-line react-hooks/set-state-in-effect
+          setPushState(subscription ? 'on' : 'off')
+        }
+      }
+      void syncPushState()
+    }
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const togglePush = async () => {
+    if (pushState === 'unsupported' || pushState === 'busy') {
+      return
+    }
+    const registration = await navigator.serviceWorker.getRegistration()
+    if (!registration) {
+      return
+    }
+    setPushState('busy')
+    try {
+      if (pushState === 'on') {
+        const subscription = await registration.pushManager.getSubscription()
+        if (subscription) {
+          await fetch('/api/push/subscribe', {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({endpoint: subscription.endpoint}),
+          })
+          await subscription.unsubscribe()
+        }
+        setPushState('off')
+        return
+      }
+      const permission = await Notification.requestPermission()
+      if (permission !== 'granted') {
+        setPushState('off')
+        return
+      }
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(
+          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || '',
+        ),
+      })
+      const response = await fetch('/api/push/subscribe', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(subscription.toJSON()),
+      })
+      if (!response.ok) {
+        await subscription.unsubscribe()
+        setPushState('off')
+        return
+      }
+      setPushState('on')
+    } catch {
+      setPushState('off')
+    }
+  }
 
   const [dragOffset, setDragOffset] = useState(0)
   const dragStartY = useRef<number | null>(null)
@@ -239,6 +320,29 @@ export default function TweaksPanel({open, onClose}: Props) {
           }}
         />
       </div>
+
+      {pushState !== 'unsupported' && (
+        <div className="tweaks-row tweaks-toggle">
+          <div className="tweaks-label" style={{margin: 0}}>
+            new post alerts
+          </div>
+          <div
+            className="tweaks-switch"
+            role="switch"
+            aria-label="new post alerts"
+            aria-checked={pushState === 'on'}
+            aria-busy={pushState === 'busy'}
+            tabIndex={0}
+            data-on={pushState === 'on'}
+            onClick={() => void togglePush()}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                void togglePush()
+              }
+            }}
+          />
+        </div>
+      )}
 
       <div className="tweaks-row tweaks-toggle">
         <div className="tweaks-label" style={{margin: 0}}>
