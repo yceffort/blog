@@ -3,6 +3,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeKatex from 'rehype-katex'
 import prism from 'rehype-prism-plus'
 import rehypeSlug from 'rehype-slug'
+import remarkCjkFriendly from 'remark-cjk-friendly'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import remarkToc from 'remark-toc'
@@ -20,7 +21,12 @@ export function PostArticle({body, path}: {body: string; path: string}) {
           components={MDXComponents}
           options={{
             mdxOptions: {
-              remarkPlugins: [remarkMath, remarkToc, remarkGfm],
+              remarkPlugins: [
+                remarkMath,
+                remarkToc,
+                remarkGfm,
+                remarkCjkFriendly,
+              ],
               rehypePlugins: [
                 rehypeKatex,
                 rehypeSlug,
