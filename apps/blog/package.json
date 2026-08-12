@@ -9,8 +9,7 @@
     "dev": "next dev",
     "lint:style": "stylelint '**/*.{css,scss}'",
     "lint:style:fix": "stylelint --fix '**/*.{css,scss}'",
-    "start": "next start",
-    "translate": "node scripts/translate.mjs"
+    "start": "next start"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",
