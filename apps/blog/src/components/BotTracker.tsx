@@ -1,6 +1,5 @@
 'use client'
 
-import {track} from '@vercel/analytics'
 import {usePathname} from 'next/navigation'
 import {useEffect} from 'react'
 
@@ -45,18 +44,6 @@ export function BotTracker() {
     scheduleIdleTask(() => {
       const {isBot, botName, botCategory} = detectBot(navigator.userAgent)
       const likelyBot = isLikelyBot()
-
-      if (isBot || likelyBot) {
-        track('bot_visit', {
-          bot_name: botName,
-          bot_category: botCategory,
-          page_path: pathname,
-        })
-      } else {
-        track('human_visit', {
-          page_path: pathname,
-        })
-      }
 
       if (typeof window.gtag === 'function') {
         if (isBot || likelyBot) {

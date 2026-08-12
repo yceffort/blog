@@ -1,6 +1,4 @@
 import './tailwind.css'
-import {Analytics as VercelAnalytics} from '@vercel/analytics/react'
-import {SpeedInsights as VercelSpeedInsights} from '@vercel/speed-insights/next'
 import {Providers} from '@yceffort/shared/components'
 import type {Metadata} from 'next'
 import {Fraunces, Inter, JetBrains_Mono} from 'next/font/google'
@@ -182,8 +180,6 @@ export default async function Layout({children}: {children: ReactNode}) {
           )}
           {process.env.NODE_ENV === 'production' && (
             <>
-              <VercelAnalytics />
-              <VercelSpeedInsights />
               <GoogleAnalyticsWebVitalsTracker />
               <BotTracker />
               <ServiceWorkerRegistration />

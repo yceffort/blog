@@ -20,8 +20,6 @@
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/typography": "^0.5.20",
-    "@vercel/analytics": "^2.0.1",
-    "@vercel/speed-insights": "^2.0.0",
     "@yceffort/shared": "workspace:*",
     "date-fns": "^4.4.0",
     "front-matter": "^4.0.2",

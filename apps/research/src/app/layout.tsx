@@ -1,5 +1,4 @@
 import './tailwind.css'
-import {Analytics} from '@vercel/analytics/react'
 import {Providers} from '@yceffort/shared/components'
 import type {Metadata} from 'next'
 import {Fraunces, Inter, JetBrains_Mono} from 'next/font/google'
@@ -127,7 +126,6 @@ export default function Layout({children}: {children: ReactNode}) {
           gtag('config', '${SiteConfig.googleAnalyticsId}');
         `}
           </Script>
-          <Analytics />
         </body>
       </html>
     </>
