@@ -3,9 +3,10 @@ import {Providers} from '@yceffort/shared/components'
 import type {Metadata} from 'next'
 import {Fraunces, Inter, JetBrains_Mono} from 'next/font/google'
 import Script from 'next/script'
-import type {ReactNode} from 'react'
+import {Suspense, type ReactNode} from 'react'
 
 import AmbientEffects from '@/components/AmbientEffects'
+import {GoogleAnalyticsPageViewTracker} from '@/components/GoogleAnalyticsPageViewTracker'
 import {SiteConfig} from '@/config'
 
 const inter = Inter({
@@ -63,12 +64,13 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    icon: '/favicon/apple-icon.png',
-    shortcut: '/favicon/apple-icon.png',
-    apple: '/favicon/apple-icon.png',
-    other: {
-      rel: '/favicon/apple-icon-precomposed',
-      url: '/favicon/apple-icon-precomposed.png',
+    icon: '/favicon/apple-touch-icon.png',
+    shortcut: '/favicon/apple-touch-icon.png',
+    apple: '/favicon/apple-touch-icon.png',
+  },
+  alternates: {
+    types: {
+      'application/rss+xml': '/feed.xml',
     },
   },
   robots: {
@@ -85,7 +87,7 @@ export default function Layout({children}: {children: ReactNode}) {
   return (
     <>
       <html
-        lang="kr"
+        lang="ko"
         suppressHydrationWarning
         className={`${inter.variable} ${jetbrainsMono.variable} ${fraunces.variable}`}
       >
@@ -102,11 +104,11 @@ export default function Layout({children}: {children: ReactNode}) {
             sizes="96x96"
           />
           <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
-          <link rel="shortcut icon" href="/favicon.ico" />
+          <link rel="shortcut icon" href="/favicon/favicon.ico" />
           <link
             rel="apple-touch-icon"
             sizes="180x180"
-            href="/apple-touch-icon.png"
+            href="/favicon/apple-touch-icon.png"
           />
           <link rel="manifest" href="/favicon/site.webmanifest" />
         </head>
@@ -123,9 +125,14 @@ export default function Layout({children}: {children: ReactNode}) {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
-          gtag('config', '${SiteConfig.googleAnalyticsId}');
+          gtag('config', '${SiteConfig.googleAnalyticsId}', {
+            page_path: window.location.pathname,
+          });
         `}
           </Script>
+          <Suspense fallback={null}>
+            <GoogleAnalyticsPageViewTracker />
+          </Suspense>
         </body>
       </html>
     </>
