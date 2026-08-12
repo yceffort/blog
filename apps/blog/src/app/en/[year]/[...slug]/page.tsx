@@ -270,6 +270,11 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
         <SubscribeCta lang="en" />
 
         <footer className="post-footer">
+          <p className="post-author-note">
+            <Link href="/about">yceffort</Link> — frontend engineer. For talks,
+            consulting, or writing inquiries,{' '}
+            <Link href="/about#contact">reach out here</Link>.
+          </p>
           <Link href="/en">&larr; Back to the blog</Link>
           <Link href={`/${postSlug}`} className="issue">
             한국어로 읽기 →

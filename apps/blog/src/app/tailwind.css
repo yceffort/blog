@@ -1865,6 +1865,10 @@ body[data-minimal='true'] .hero-title .accent {
 .post-footer .issue {
   color: var(--ink-3);
 }
+.post-author-note {
+  width: 100%;
+  color: var(--ink-3);
+}
 .post-subscribe {
   display: flex;
   flex-wrap: wrap;
