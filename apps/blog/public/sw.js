@@ -405,17 +405,25 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close()
-  const url = event.notification.data?.url || '/'
+  // 상대 URL은 일부 플랫폼(iOS PWA 등)의 openWindow에서 조용히 실패한다
+  const url = new URL(
+    event.notification.data?.url || '/',
+    self.location.origin,
+  ).href
   event.waitUntil(
     self.clients
       .matchAll({type: 'window', includeUncontrolled: true})
-      .then((clients) => {
-        for (const client of clients) {
-          if (new URL(client.url).pathname === url && 'focus' in client) {
+      .then((clientList) => {
+        for (const client of clientList) {
+          if (client.url === url && 'focus' in client) {
             return client.focus()
           }
         }
-        return self.clients.openWindow(url)
+        return self.clients.openWindow(url).catch(() => {
+          // openWindow가 막히면 이미 떠 있는 창을 글로 이동시켜 재사용한다
+          const client = clientList.find((c) => 'navigate' in c)
+          return client?.navigate(url).then((c) => c?.focus())
+        })
       }),
   )
 })
