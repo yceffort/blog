@@ -1,3 +1,5 @@
+import {SiteConfig} from '@/config'
+
 export function AboutIntro() {
   return (
     <div className="pt-8 pb-8 xl:col-span-2">
@@ -5,9 +7,9 @@ export function AboutIntro() {
         <p>
           한국에서 활동하는 프론트엔드 엔지니어입니다. 네이버 파이낸셜에서 약
           4년 반 동안 14명 규모의 프론트엔드 팀을 이끌며 금융 서비스 개발과 공통
-          인프라 구축을 담당했습니다. 「모던 리액트 Deep Dive」, 「npm Deep
-          Dive」에 이어 최근 「프런트엔드 성능 최적화 Deep Dive」를 출간했고,
-          현재도 기술 서적을 쓰고 있습니다.
+          인프라 구축을 담당했고, 현재도 프론트엔드 엔지니어로 일하고 있습니다.
+          「모던 리액트 Deep Dive」, 「npm Deep Dive」에 이어 최근 「프런트엔드
+          성능 최적화 Deep Dive」를 출간했고, 현재도 기술 서적을 쓰고 있습니다.
         </p>
         <p>
           확장 가능한 시스템, 공유 라이브러리, 개발자 도구처럼 팀의 생산성을
@@ -18,6 +20,26 @@ export function AboutIntro() {
           화려함보다 본질을 중요하게 생각합니다. 빠르게 만드는 것보다 무엇을 왜
           만들어야 하는지 깊이 이해하는 일, 사용자와 개발자 모두에게 오래 도움이
           되는 결정을 내리는 일에 더 가치를 둡니다.
+        </p>
+
+        <h2>이런 이야기를 할 수 있습니다</h2>
+        <ul>
+          <li>React 내부 동작과 렌더링 파이프라인</li>
+          <li>npm·의존성 관리와 공급망 보안</li>
+          <li>웹 성능 최적화 측정과 개선</li>
+          <li>SSR 서비스의 컨테이너·쿠버네티스 운영</li>
+          <li>AI 코딩 도구 시대의 코드 리뷰와 검증 체계</li>
+        </ul>
+
+        <h2 id="contact">문의</h2>
+        <p>
+          사내 세미나·컨퍼런스 발표, 기술 자문, 기고·감수, 풀타임 채용을
+          제안하고 싶으신 경우{' '}
+          <a href={`mailto:${SiteConfig.author.contacts.email}`}>
+            {SiteConfig.author.contacts.email}
+          </a>
+          로 연락 주세요. 회사 업무와 무관한 건에 한해 검토하며, 보통 일주일
+          안에 회신합니다.
         </p>
       </div>
     </div>
