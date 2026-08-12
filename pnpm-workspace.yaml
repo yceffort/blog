@@ -10,5 +10,3 @@ allowBuilds:
 overrides:
   # postcss-import-url이 존재하지 않는 lodash.trim@4.18.1을 요구해 lodash로 대체
   lodash.trim: 'npm:lodash@^4.17.21'
-  # markdown-it-mermaid가 구버전 mermaid를 고정해 취약 버전이 설치되는 것을 방지
-  'markdown-it-mermaid>mermaid': '^11.16.1'

@@ -1,6 +1,4 @@
 import {Marp as MarpCore} from '@marp-team/marp-core'
-// @ts-expect-error - markdown-it-mermaid doesn't have types
-import mermaidPlugin from 'markdown-it-mermaid'
 import postcss from 'postcss'
 import type {Result as PostCSSResult, AtRule} from 'postcss'
 import postcssImportUrl from 'postcss-import-url'
@@ -55,8 +53,24 @@ async function renderMarp(markdown: string): Promise<RenderedMarp> {
     printable: false,
   })
 
-  // Mermaid 플러그인 추가
-  marp.use(mermaidPlugin)
+  // mermaid 펜스는 서버에서 파싱하지 않고 placeholder만 남긴다.
+  // 실제 렌더는 클라이언트(Marp.tsx)가 textContent를 읽어 수행한다.
+  marp.use((md) => {
+    const defaultFence = md.renderer.rules.fence
+    md.renderer.rules.fence = (
+      tokens: {info: string; content: string}[],
+      idx: number,
+      options: unknown,
+      env: unknown,
+      slf: unknown,
+    ) => {
+      const token = tokens[idx]
+      if (token.info.trim() === 'mermaid') {
+        return `<div class="mermaid">${md.utils.escapeHtml(token.content.trim())}</div>`
+      }
+      return defaultFence(tokens, idx, options, env, slf)
+    }
+  })
 
   marp.themeSet.add(yceffortTheme)
   marp.themeSet.add(midnightTheme)

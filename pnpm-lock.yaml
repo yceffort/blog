@@ -6,7 +6,6 @@ settings:
 
 overrides:
   lodash.trim: npm:lodash@^4.17.21
-  markdown-it-mermaid>mermaid: ^11.16.1
 
 importers:
 
@@ -193,9 +192,6 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
-      markdown-it-mermaid:
-        specifier: ^0.2.5
-        version: 0.2.5
       mermaid:
         specifier: ^11.16.1
         version: 11.16.1
@@ -2605,9 +2601,6 @@ packages:
 
   markdown-it-front-matter@0.2.4:
     resolution: {integrity: sha512-25GUs0yjS2hLl8zAemVndeEzThB1p42yxuDEKbd4JlL3jiz+jsm6e56Ya8B0VREOkNxLYB4TTwaoPJ3ElMmW+w==}
-
-  markdown-it-mermaid@0.2.5:
-    resolution: {integrity: sha512-ZUTFRX+cXEtWmn/9LMlpVklPJiDrHPWyHE/wamC2wm0Ojh1qOcuKWfWW3BqP83+7w6C59rS7M3OrGTs/u9mQTA==}
 
   markdown-it@14.3.0:
     resolution: {integrity: sha512-RCEsPjR+sr0x+AuYp601tKTkgFG4YEPLCzHST3cQ/fhlJkqAkz1L2/Qbp1j9qw5SBwQHFBoW8+hoN5xssOF0Tw==}
@@ -5710,10 +5703,6 @@ snapshots:
   markdown-extensions@2.0.0: {}
 
   markdown-it-front-matter@0.2.4: {}
-
-  markdown-it-mermaid@0.2.5:
-    dependencies:
-      mermaid: 11.16.1
 
   markdown-it@14.3.0:
     dependencies:
