@@ -32,6 +32,7 @@ import {GoogleAnalyticsPageViewTracker} from '@/components/GoogleAnalyticsPageVi
 import {GoogleAnalyticsWebVitalsTracker} from '@/components/GoogleAnalyticsWebVitalsTracker'
 import LayoutWrapper from '@/components/LayoutWrapper'
 import NavigationDirection from '@/components/NavigationDirection'
+import {OutboundLinkTracker} from '@/components/OutboundLinkTracker'
 import {ServiceWorkerRegistration} from '@/components/ServiceWorkerRegistration'
 import {SiteConfig} from '@/config'
 import {buildOgImageUrl} from '@/utils/og'
@@ -176,6 +177,7 @@ export default async function Layout({children}: {children: ReactNode}) {
               <Suspense fallback={null}>
                 <GoogleAnalyticsPageViewTracker />
               </Suspense>
+              <OutboundLinkTracker />
             </>
           )}
           {process.env.NODE_ENV === 'production' && (
