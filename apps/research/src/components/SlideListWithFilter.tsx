@@ -1,27 +1,33 @@
 'use client'
 
 import Link from 'next/link'
-import {useCallback, useMemo, useSyncExternalStore} from 'react'
+import {useCallback, useMemo, useRef, useSyncExternalStore} from 'react'
+
+import {SiteConfig} from '@/config'
 
 import {SlidePreview} from './SlidePreview'
 
 interface Slide {
   slug: string
-  date: string
+  date: string | null
   tags: string[]
   description: string
   title: string
   published: boolean
+  slideCount: number
   preview: {
     html: string
-    css: string
+    cssIndex: number
     fonts: string[]
   }
 }
 
 interface Props {
   slides: Slide[]
+  cssList: string[]
 }
+
+const PER_PAGE = SiteConfig.postsPerPage
 
 function readTagsFromUrl(): string[] {
   if (typeof window === 'undefined') {
@@ -37,7 +43,15 @@ function readTagsFromUrl(): string[] {
     .filter(Boolean)
 }
 
-function writeTagsToUrl(tags: string[]) {
+function readPageFromUrl(): number {
+  if (typeof window === 'undefined') {
+    return 1
+  }
+  const page = Number(new URLSearchParams(window.location.search).get('page'))
+  return Number.isInteger(page) && page > 1 ? page : 1
+}
+
+function writeFilterToUrl(tags: string[], page: number) {
   if (typeof window === 'undefined') {
     return
   }
@@ -47,54 +61,65 @@ function writeTagsToUrl(tags: string[]) {
   } else {
     url.searchParams.set('tag', tags.join(','))
   }
+  if (page <= 1) {
+    url.searchParams.delete('page')
+  } else {
+    url.searchParams.set('page', String(page))
+  }
   window.history.replaceState(null, '', url.toString())
+  window.dispatchEvent(new Event('research:filter-change'))
 }
 
-function ResearchCard({slide}: {slide: Slide}) {
-  const {slug, date, tags, title, preview, published} = slide
+function ResearchCard({slide, css}: {slide: Slide; css: string}) {
+  const {slug, date, tags, title, description, preview, published, slideCount} =
+    slide
+  const cardRef = useRef<HTMLElement>(null)
+
+  const onPointerMove = (e: React.PointerEvent<HTMLElement>) => {
+    const el = cardRef.current
+    if (!el) {
+      return
+    }
+    const rect = el.getBoundingClientRect()
+    el.style.setProperty(
+      '--mx',
+      `${((e.clientX - rect.left) / rect.width) * 100}%`,
+    )
+    el.style.setProperty(
+      '--my',
+      `${((e.clientY - rect.top) / rect.height) * 100}%`,
+    )
+  }
 
   return (
-    <article className="group relative flex cursor-pointer flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-sky-300 hover:shadow-lg hover:shadow-sky-500/10 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-sky-500 dark:hover:shadow-sky-500/20">
+    <article ref={cardRef} className="post-card" onPointerMove={onPointerMove}>
+      <Link href={`/slides/${slug}`} aria-label={title} prefetch={false} />
       {!published && (
         <span className="absolute right-2 top-2 z-10 rounded-md bg-amber-500 px-2 py-0.5 text-xs font-bold uppercase text-white shadow">
           Draft
         </span>
       )}
-      <Link href={`/slides/${slug}`} className="block">
-        <SlidePreview
-          html={preview.html}
-          css={preview.css}
-          fonts={preview.fonts}
-        />
-      </Link>
-      <div className="flex flex-1 flex-col justify-between p-4">
-        <div className="space-y-2">
-          <div className="flex flex-wrap gap-2">
-            {tags.slice(0, 3).map((tag) => (
-              <span
-                key={tag}
-                className="inline-block rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold uppercase text-blue-600 dark:bg-blue-900 dark:text-blue-300"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <div>
-            <h3 className="text-lg font-black leading-tight tracking-tight line-clamp-2">
-              <Link
-                href={`/slides/${slug}`}
-                className="text-black decoration-4 hover:underline dark:text-white"
-              >
-                {title}
-              </Link>
-            </h3>
-            <dl>
-              <dt className="sr-only">Published on</dt>
-              <dd className="text-sm font-bold leading-6 text-gray-600 dark:text-gray-400">
-                <time dateTime={date}>{date}</time>
-              </dd>
-            </dl>
-          </div>
+      <div className="thumb">
+        <SlidePreview html={preview.html} css={css} fonts={preview.fonts} />
+      </div>
+      <div className="body">
+        <div className="tag-row">
+          {tags.slice(0, 3).map((tag) => (
+            <span key={tag} className="tag-chip">
+              #{tag}
+            </span>
+          ))}
+        </div>
+        <h3>{title}</h3>
+        {description && <p className="desc">{description}</p>}
+        <div className="meta">
+          {date && (
+            <>
+              <time dateTime={date}>{date}</time>
+              <span aria-hidden="true">·</span>
+            </>
+          )}
+          <span>{slideCount} slides</span>
         </div>
       </div>
     </article>
@@ -103,28 +128,31 @@ function ResearchCard({slide}: {slide: Slide}) {
 
 function subscribeToHistory(onChange: () => void) {
   window.addEventListener('popstate', onChange)
-  window.addEventListener('research:tag-change', onChange)
+  window.addEventListener('research:filter-change', onChange)
   return () => {
     window.removeEventListener('popstate', onChange)
-    window.removeEventListener('research:tag-change', onChange)
+    window.removeEventListener('research:filter-change', onChange)
   }
 }
 
-export function SlideListWithFilter({slides}: Props) {
+export function SlideListWithFilter({slides, cssList}: Props) {
   // URL ↔ state 동기화 (SSR-safe)
-  const tagsKey = useSyncExternalStore(
+  const filterKey = useSyncExternalStore(
     subscribeToHistory,
-    () => readTagsFromUrl().join(','),
-    () => '',
+    () => `${readTagsFromUrl().join(',')}|${readPageFromUrl()}`,
+    () => '|1',
   )
+  const [tagsKey, pageKey] = filterKey.split('|')
   const selectedTags = useMemo(
     () => (tagsKey ? tagsKey.split(',').filter(Boolean) : []),
     [tagsKey],
   )
+  const rawPage = Number(pageKey) || 1
+
+  const listTopRef = useRef<HTMLDivElement>(null)
 
   const setSelectedTags = useCallback((next: string[]) => {
-    writeTagsToUrl(next)
-    window.dispatchEvent(new Event('research:tag-change'))
+    writeFilterToUrl(next, 1)
   }, [])
 
   const allTags = useMemo(() => {
@@ -158,6 +186,13 @@ export function SlideListWithFilter({slides}: Props) {
     )
   }, [slides, selectedTags])
 
+  const lastPage = Math.max(1, Math.ceil(filteredSlides.length / PER_PAGE))
+  const page = Math.min(rawPage, lastPage)
+  const pagedSlides = filteredSlides.slice(
+    (page - 1) * PER_PAGE,
+    page * PER_PAGE,
+  )
+
   const handleToggleTag = (tag: string) => {
     const next = selectedTags.includes(tag)
       ? selectedTags.filter((t) => t !== tag)
@@ -169,56 +204,101 @@ export function SlideListWithFilter({slides}: Props) {
     setSelectedTags([])
   }
 
+  const handlePageChange = (nextPage: number) => {
+    writeFilterToUrl(selectedTags, nextPage)
+    listTopRef.current?.scrollIntoView({block: 'start'})
+  }
+
   return (
     <>
+      <div ref={listTopRef} className="sec-head scroll-mt-20">
+        <div>
+          <span className="sec-count">
+            {selectedTags.length > 0
+              ? `${filteredSlides.length}/${slides.length} decks`
+              : `${slides.length} decks`}
+          </span>
+          <h2>
+            All <em>decks</em>
+          </h2>
+        </div>
+        <div className="line" />
+        <span className="hint">tap tag · filter</span>
+      </div>
+
       {allTags.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2 pb-2 pt-4">
+        <div className="flex flex-wrap items-center gap-2 pb-2">
           <button
             type="button"
             onClick={handleClearTags}
-            className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide transition-colors ${
-              selectedTags.length === 0
-                ? 'border-sky-500 bg-sky-500 text-white'
-                : 'border-gray-300 bg-white text-gray-600 hover:border-sky-400 hover:text-sky-600 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-sky-500 dark:hover:text-sky-400'
-            }`}
+            className="filter-chip"
+            data-on={selectedTags.length === 0 ? 'true' : 'false'}
           >
-            전체 ({slides.length})
+            전체 <span className="count">({slides.length})</span>
           </button>
-          {allTags.map(([tag, count]) => {
-            const active = selectedTags.includes(tag)
-            return (
-              <button
-                key={tag}
-                type="button"
-                onClick={() => handleToggleTag(tag)}
-                className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide transition-colors ${
-                  active
-                    ? 'border-blue-600 bg-blue-600 text-white'
-                    : 'border-gray-300 bg-white text-gray-600 hover:border-blue-400 hover:text-blue-600 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-blue-500 dark:hover:text-blue-400'
-                }`}
-              >
-                {tag} <span className="opacity-60">({count})</span>
-              </button>
-            )
-          })}
-          {selectedTags.length > 0 && (
-            <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">
-              {filteredSlides.length}건 표시 중
-            </span>
-          )}
+          {allTags.map(([tag, count]) => (
+            <button
+              key={tag}
+              type="button"
+              onClick={() => handleToggleTag(tag)}
+              className="filter-chip"
+              data-on={selectedTags.includes(tag) ? 'true' : 'false'}
+            >
+              #{tag} <span className="count">({count})</span>
+            </button>
+          ))}
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-2">
-        {filteredSlides.map((slide) => (
-          <ResearchCard key={slide.slug} slide={slide} />
+      <div className="grid grid-cols-1 gap-6 pt-4 md:grid-cols-2">
+        {pagedSlides.map((slide) => (
+          <ResearchCard
+            key={slide.slug}
+            slide={slide}
+            css={cssList[slide.preview.cssIndex] ?? ''}
+          />
         ))}
         {filteredSlides.length === 0 && (
-          <div className="col-span-full py-16 text-center text-gray-500 dark:text-gray-400">
+          <div className="col-span-full py-16 text-center text-sm text-[var(--ink-3)]">
             선택한 태그에 해당하는 슬라이드가 없습니다.
           </div>
         )}
       </div>
+
+      {lastPage > 1 && (
+        <nav className="pager" aria-label="pagination">
+          <button
+            type="button"
+            className="pager-btn"
+            disabled={page === 1}
+            onClick={() => handlePageChange(page - 1)}
+            aria-label="이전 페이지"
+          >
+            ←
+          </button>
+          {Array.from({length: lastPage}, (_, i) => i + 1).map((n) => (
+            <button
+              key={n}
+              type="button"
+              className="pager-btn"
+              data-active={n === page ? 'true' : 'false'}
+              aria-current={n === page ? 'page' : undefined}
+              onClick={() => n !== page && handlePageChange(n)}
+            >
+              {n}
+            </button>
+          ))}
+          <button
+            type="button"
+            className="pager-btn"
+            disabled={page === lastPage}
+            onClick={() => handlePageChange(page + 1)}
+            aria-label="다음 페이지"
+          >
+            →
+          </button>
+        </nav>
+      )}
     </>
   )
 }

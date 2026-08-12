@@ -61,7 +61,7 @@ export const SlidePreview = memo(function SlidePreviewBase({
   }, [html, css])
 
   return (
-    <div className="relative aspect-[16/9] w-full cursor-pointer overflow-hidden rounded-t-lg bg-white dark:bg-gray-900">
+    <div className="relative aspect-[16/9] w-full cursor-pointer overflow-hidden bg-white dark:bg-gray-900">
       <span ref={elementRef} className="block h-full w-full" />
     </div>
   )

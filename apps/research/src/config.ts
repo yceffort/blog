@@ -9,7 +9,7 @@ export const SiteConfig = {
   subtitle: 'research',
   copyright: 'yceffort © All rights reserved.',
   disqusShortname: '',
-  postsPerPage: 5,
+  postsPerPage: 6,
   googleAnalyticsId: 'G-ND58S24JBX',
   useKatex: false,
   menu: [
