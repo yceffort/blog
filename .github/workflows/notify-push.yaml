@@ -5,6 +5,12 @@ on:
     paths:
       - 'apps/blog/posts/**/*.md'
       - 'apps/blog/series/*.md'
+  workflow_dispatch:
+    inputs:
+      files:
+        description: 'Post paths to notify (space separated)'
+        required: true
+        type: string
 
 jobs:
   notify:
@@ -12,12 +18,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Detect added posts
         id: added
         run: |
-          files=$(git diff --name-only --diff-filter=A HEAD^ HEAD -- 'apps/blog/posts/**/*.md' 'apps/blog/series/*.md' | grep -v '\.en\.md$' || true)
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            files="${{ inputs.files }}"
+          else
+            # Diff the whole pushed range, not just the head commit: a push of
+            # several commits (e.g. post + translation) lands here once, and
+            # HEAD^..HEAD would only see the last commit's files.
+            base="${{ github.event.before }}"
+            if [ "$base" = "0000000000000000000000000000000000000000" ]; then
+              base="HEAD^"
+            fi
+            files=$(git diff --name-only --diff-filter=A "$base" HEAD -- 'apps/blog/posts/**/*.md' 'apps/blog/series/*.md' | grep -v '\.en\.md$' || true)
+          fi
           echo "files<<EOF" >> "$GITHUB_OUTPUT"
           echo "$files" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
