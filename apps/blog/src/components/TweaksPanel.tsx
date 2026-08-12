@@ -51,6 +51,12 @@ function urlBase64ToUint8Array(base64: string) {
 
 type PushState = 'unsupported' | 'off' | 'on' | 'busy'
 
+function trackPush(eventName: string) {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', eventName)
+  }
+}
+
 interface Props {
   open: boolean
   onClose: () => void
@@ -168,11 +174,13 @@ export default function TweaksPanel({open, onClose}: Props) {
           })
           await subscription.unsubscribe()
         }
+        trackPush('push_unsubscribe')
         setPushState('off')
         return
       }
       const permission = await Notification.requestPermission()
       if (permission !== 'granted') {
+        trackPush('push_permission_denied')
         setPushState('off')
         return
       }
@@ -189,11 +197,18 @@ export default function TweaksPanel({open, onClose}: Props) {
       })
       if (!response.ok) {
         await subscription.unsubscribe()
+        trackPush('push_subscribe_failed')
         setPushState('off')
         return
       }
+      trackPush('push_subscribe')
       setPushState('on')
     } catch {
+      trackPush(
+        pushState === 'on'
+          ? 'push_unsubscribe_failed'
+          : 'push_subscribe_failed',
+      )
       setPushState('off')
     }
   }

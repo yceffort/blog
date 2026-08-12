@@ -6,6 +6,12 @@ import {useEffect, useRef, useState} from 'react'
 const SEEN_KEY = 'push-alert-tooltip-seen'
 const EXIT_DURATION = 300
 
+function trackTooltip(action: 'shown' | 'click' | 'dismiss') {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', `push_tooltip_${action}`)
+  }
+}
+
 // 알림 구독 기능이 Tweaks 패널 안에 숨어 있어서, 미구독 방문자에게
 // 한 번만 툴팁으로 알려준다
 export default function PushAlertTooltip({onOpen}: {onOpen: () => void}) {
@@ -41,6 +47,7 @@ export default function PushAlertTooltip({onOpen}: {onOpen: () => void}) {
       timers.current.push(
         setTimeout(() => {
           setMounted(true)
+          trackTooltip('shown')
           timers.current.push(setTimeout(() => setVisible(true), 30))
         }, 1200),
         setTimeout(() => setVisible(false), 9000),
@@ -75,6 +82,7 @@ export default function PushAlertTooltip({onOpen}: {onOpen: () => void}) {
           type="button"
           className="font-medium"
           onClick={() => {
+            trackTooltip('click')
             dismiss()
             onOpen()
           }}
@@ -87,7 +95,10 @@ export default function PushAlertTooltip({onOpen}: {onOpen: () => void}) {
           type="button"
           aria-label={isEn ? 'Close' : '닫기'}
           className="px-1.5 text-base leading-none opacity-60 hover:opacity-100"
-          onClick={dismiss}
+          onClick={() => {
+            trackTooltip('dismiss')
+            dismiss()
+          }}
         >
           ×
         </button>
