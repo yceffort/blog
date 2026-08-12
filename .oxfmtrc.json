@@ -18,7 +18,6 @@
     "**/.next/**",
     "**/.lighthouseci/**",
     "pnpm-lock.yaml",
-    "**/*.css",
-    "labs/"
+    "**/*.css"
   ]
 }
