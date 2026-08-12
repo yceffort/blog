@@ -1,6 +1,0 @@
-# re-measurement 2026-08-06 14:27:07: BFF 호출의 DNS 쿼리 (CoreDNS log, 앱 파드 10.244.1.12 발신)
---- bff 1회 호출
-{"via":"k8s-fe-lab-5cfb6b8744-lhlf9","target":"http://internal-api","ms":2.1,"upstream":{"pod":"internal-api-678dfc65c7-2j92t"}}
---- CoreDNS 쿼리 로그에서 앱 파드(10.244.1.12)가 보낸 internal-api 쿼리
-[INFO] 10.244.1.12:46788 - 4789 "A IN internal-api.default.svc.cluster.local. udp 56 false 512" NOERROR qr,aa,rd 110 0.00007221s
-[INFO] 10.244.1.12:46788 - 24756 "AAAA IN internal-api.default.svc.cluster.local. udp 56 false 512" NOERROR qr,aa,rd 149 0.00009046s

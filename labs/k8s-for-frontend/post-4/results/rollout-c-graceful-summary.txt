@@ -1,2 +1,0 @@
-# scenario=c-graceful repeat=1 measured=2026-08-08 18:29:38
-run1 rollout=3s new[2476] err=6 ECONNREFUSED=6 | ka[2476] err=3 ECONNRESET=3

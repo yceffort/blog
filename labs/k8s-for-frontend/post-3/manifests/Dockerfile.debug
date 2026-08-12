@@ -1,6 +1,0 @@
-# 3편: 디버그 파드 이미지. 앱 컨테이너(node:24-slim)에는 ping/curl/dig가 없어서 따로 만든다.
-# 주의: alpine(musl)이라 리졸버 동작이 glibc와 다르다. search 경로 측정은 이 파드가 아니라
-# glibc 기반 client 파드(Node dns.lookup)로 하고, 여기서는 ping/curl/dig(+search)만 쓴다.
-FROM alpine:3.22
-RUN apk add --no-cache bind-tools curl
-CMD ["sleep", "infinity"]

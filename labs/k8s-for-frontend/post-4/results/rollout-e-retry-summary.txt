@@ -1,6 +1,0 @@
-# scenario=e-retry repeat=5 measured=2026-08-08 18:57:02
-run1 rollout=3s drained=33s new[375] err=0 retried_ok=0 | ka[375] err=0 retried_ok=3
-run2 rollout=3s drained=31s new[350] err=0 retried_ok=0 | ka[350] err=0 retried_ok=2
-run3 rollout=2s drained=32s new[367] err=0 retried_ok=0 | ka[367] err=0 retried_ok=1
-run4 rollout=3s drained=33s new[369] err=0 retried_ok=0 | ka[369] err=0 retried_ok=3
-run5 rollout=3s drained=33s new[369] err=0 retried_ok=0 | ka[369] err=0 retried_ok=3

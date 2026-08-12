@@ -1,3 +1,0 @@
-# measured=2026-08-08 19:04:19
-s1-surge surge=1 unavail=0 rollout_ready=3431ms all_terminated=4000ms
-s2-unavail surge=0 unavail=1 rollout_ready=3262ms all_terminated=3293ms

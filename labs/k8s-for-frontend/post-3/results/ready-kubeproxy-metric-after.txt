@@ -1,2 +1,0 @@
-kubeproxy_network_programming_duration_seconds_sum{ip_family="IPv4"} 60.99154592299999
-kubeproxy_network_programming_duration_seconds_count{ip_family="IPv4"} 40

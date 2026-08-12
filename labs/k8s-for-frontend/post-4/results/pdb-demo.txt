@@ -1,8 +1,0 @@
-# pod=graceful-lab-644ddcd9c9-jx9k7 measured=2026-08-08 19:04:15
---- eviction 시도 (자발적 중단)
-Error from server (TooManyRequests): Cannot evict pod as it would violate the pod's disruption budget.
---- delete 시도 (PDB와 무관)
-pod "graceful-lab-644ddcd9c9-jx9k7" deleted from default namespace
---- rollout restart (역시 PDB와 무관)
-restart 발행됨
-rollout 완료 (PDB가 막지 않음)

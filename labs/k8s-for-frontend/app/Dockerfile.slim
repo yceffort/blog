@@ -1,9 +1,0 @@
-# 1편 비교용: 베이스만 slim으로 바꾼 버전. 빌드 방식은 naive와 동일
-FROM node:24-slim
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
-EXPOSE 3000
-CMD ["npm", "start"]

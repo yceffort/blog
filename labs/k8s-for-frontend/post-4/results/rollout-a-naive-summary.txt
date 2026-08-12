@@ -1,6 +1,0 @@
-# scenario=a-naive repeat=5 measured=2026-08-08 18:40:30
-run1 rollout=3s new[103] err=0 | ka[103] err=4 ECONNRESET=4
-run2 rollout=3s new[103] err=0 | ka[103] err=5 ECONNRESET=5
-run3 rollout=3s new[104] err=2 ECONNRESET=2 | ka[104] err=4 ECONNRESET=4
-run4 rollout=3s new[102] err=5 ECONNRESET=4 ECONNREFUSED=1 | ka[103] err=5 ECONNRESET=4 ECONNREFUSED=1
-run5 rollout=3s new[104] err=5 ECONNRESET=4 ECONNREFUSED=1 | ka[104] err=5 ECONNRESET=5

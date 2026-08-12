@@ -1,8 +1,0 @@
-# 3편: ExternalName Service의 실체(CNAME 한 줄, 프록시 없음) 확인용.
-apiVersion: v1
-kind: Service
-metadata:
-  name: external-api
-spec:
-  type: ExternalName
-  externalName: example.com
