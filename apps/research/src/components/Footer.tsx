@@ -33,6 +33,13 @@ export default function Footer() {
           <div>{` • `}</div>
           <Link href="/">{SiteConfig.url}</Link>
         </div>
+        <div className="mb-2 flex space-x-2 text-sm text-gray-500 dark:text-gray-400">
+          <a href="https://yceffort.kr">blog</a>
+          <div>{` • `}</div>
+          <Link href="/feed.xml" prefetch={false}>
+            rss
+          </Link>
+        </div>
       </div>
     </footer>
   )
