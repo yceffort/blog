@@ -706,7 +706,7 @@ I confirmed that there is code at the top of the CSS that loads external fonts, 
 This code has the following problems.
 
 - An `@import` rule inside a CSS file can block page rendering. The browser first downloads and parses this CSS file, and only when it encounters `@import` does it then request another CSS file from the Google Fonts server. That Google Fonts CSS file contains `@font-face` rules that download the actual font files (`woff2`, etc.). These multiple sequential request stages delay font loading, which can cause FOUT (Flash of Unstyled Text) or CLS (Cumulative Layout Shift). (`display=swap` induces FOUT, so text appears quickly, but the layout can shift when the font swaps in.)
-- Loading many fonts**:** Noto Sans KR (Korean), JP (Japanese), and SC (Simplified Chinese) fonts are being loaded in multiple weights. If only some fonts are needed depending on the specific page or the user's language setting, downloading unnecessary fonts slows down the initial load. CJK (Chinese, Japanese, Korean) fonts have very large character sets and correspondingly large file sizes.
+- **Loading many fonts**: Noto Sans KR (Korean), JP (Japanese), and SC (Simplified Chinese) fonts are being loaded in multiple weights. If only some fonts are needed depending on the specific page or the user's language setting, downloading unnecessary fonts slows down the initial load. CJK (Chinese, Japanese, Korean) fonts have very large character sets and correspondingly large file sizes.
 
 To fix the problems above, I propose the following.
 

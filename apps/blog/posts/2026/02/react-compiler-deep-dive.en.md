@@ -601,7 +601,7 @@ Breaking down the 4 cache slots:
 | `$[2]` | Dependency | `listItems` (for comparison) | `listItems` reference changes |
 | `$[3]` | Result     | `<ul>{listItems}</ul>` JSX   | `listItems` changes           |
 
-Each scope operates **independently**. When `items` changes, both `$[0]`~~`$[1]` and `$[2]`~~`$[3]` are updated. While manual `useMemo` would only cache the `processItems(items)` result, the compiler caches the dependent `<ul>` JSX as a separate scope.
+Each scope operates **independently**. When `items` changes, both `$[0]`\~`$[1]` and `$[2]`\~`$[3]` are updated. While manual `useMemo` would only cache the `processItems(items)` result, the compiler caches the dependent `<ul>` JSX as a separate scope.
 
 ### Cache Storage Location: Fiber Tree
 

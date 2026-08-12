@@ -43,7 +43,7 @@ https://www.npmjs.com/package/eslint-config-yceffort
 - https://github.com/yceffort/eslint-config-yceffort
 - https://www.npmjs.com/package/eslint-config-yceffort
 
-허허~~
+허허\~\~
 
 ## 4. prettier의 일부 기능을 끄고 싶은데..
 
