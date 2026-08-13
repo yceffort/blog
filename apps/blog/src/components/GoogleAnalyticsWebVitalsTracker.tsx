@@ -33,6 +33,15 @@ function sendToGoogleAnalytics(metric: MetricWithAttribution) {
     sw_controlled: navigator.serviceWorker?.controller ? 'yes' : 'no',
   }
 
+  if (name === 'CLS') {
+    const {attribution} = metric
+    params.cls_shift_target = truncate(attribution.largestShiftTarget)
+    params.cls_shift_value = Math.round(
+      (attribution.largestShiftValue ?? 0) * 1000,
+    )
+    params.cls_load_state = attribution.loadState
+  }
+
   if (name === 'LCP') {
     const {attribution} = metric
     params.lcp_target = truncate(attribution.target)
