@@ -8,7 +8,6 @@ import Link from 'next/link'
 import {useRef, ViewTransition} from 'react'
 
 import type {Post} from '@/type'
-import {buildOgImageUrl} from '@/utils/og'
 
 export default function PostCard({
   post,
@@ -38,13 +37,6 @@ export default function PostCard({
   const d = new Date(date)
   const isoDate = format(d, 'yyyy-MM-dd')
   const transitionName = `post-${slug.replace(/\//g, '-')}`
-  const ogImageUrl = buildOgImageUrl({
-    title: plainTitle,
-    description,
-    tags,
-    path: '/' + slug,
-    thumbnail,
-  })
 
   const cardRef = useRef<HTMLElement>(null)
 
@@ -82,8 +74,6 @@ export default function PostCard({
 
   return (
     <>
-      <link rel="prefetch" href={ogImageUrl} as="image" />
-      <link rel="prefetch" href={`${ogImageUrl}&size=large`} as="image" />
       <article
         ref={cardRef}
         className="post-card"
