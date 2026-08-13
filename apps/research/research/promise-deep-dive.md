@@ -10,7 +10,7 @@ tags:
   - deep-dive
 date: 2026-08-13
 description: '상태 머신, 마이크로태스크, 체이닝, 조합기, 에러 처리 — Promise의 동작 원리 정리와 실행 순서 퀴즈'
-published: false
+published: true
 ---
 
 # Promise 딥다이브
