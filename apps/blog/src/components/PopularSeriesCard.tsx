@@ -75,7 +75,6 @@ export default function PopularSeriesCard({
           alt=""
           fill
           sizes="(min-width: 1024px) 33vw, 100vw"
-          unoptimized
         />
       </div>
       <div className="body">

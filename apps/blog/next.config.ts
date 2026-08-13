@@ -56,6 +56,11 @@ const config: NextConfig = {
   cacheComponents: true,
   images: {
     formats: ['image/avif', 'image/webp'],
+    localPatterns: [
+      // 코드 생성 썸네일은 쿼리 스트링(v, slug, dpl)을 허용해야 한다
+      {pathname: '/api/og/art'},
+      {pathname: '/**', search: ''},
+    ],
   },
   outputFileTracingIncludes: {
     '/*': ['./posts/**/*'],

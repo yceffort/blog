@@ -106,7 +106,6 @@ export default function PostCard({
                 alt=""
                 fill
                 sizes="(min-width: 1024px) 33vw, 100vw"
-                unoptimized={thumbnail.startsWith('/api/')}
               />
             </div>
           </ViewTransition>
