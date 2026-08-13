@@ -84,8 +84,13 @@ async function EnHomeContent() {
         <div className="hint">hover · tilt · open</div>
       </div>
       <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {popular.map((post) => (
-          <PostCard key={post.fields.slug} post={post} pathPrefix="/en" />
+        {popular.map((post, i) => (
+          <PostCard
+            key={post.fields.slug}
+            post={post}
+            pathPrefix="/en"
+            priority={i < 3}
+          />
         ))}
       </section>
 

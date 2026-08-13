@@ -127,8 +127,13 @@ async function HomeContent() {
         <div className="hint">hover · tilt · open</div>
       </div>
       <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => (
-          <PostCard key={post.fields.slug} post={post} badge="인기 포스트" />
+        {posts.map((post, i) => (
+          <PostCard
+            key={post.fields.slug}
+            post={post}
+            badge="인기 포스트"
+            priority={i < 3}
+          />
         ))}
         {popularSeries && (
           <PopularSeriesCard

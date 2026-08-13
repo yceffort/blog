@@ -14,10 +14,12 @@ export default function PostCard({
   post,
   pathPrefix = '',
   badge,
+  priority = false,
 }: {
   post: Post
   pathPrefix?: string
   badge?: string
+  priority?: boolean
 }) {
   const {
     fields: {slug},
@@ -106,6 +108,7 @@ export default function PostCard({
                 alt=""
                 fill
                 sizes="(min-width: 1024px) 33vw, 100vw"
+                priority={priority}
               />
             </div>
           </ViewTransition>
