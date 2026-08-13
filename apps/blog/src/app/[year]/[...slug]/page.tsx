@@ -21,7 +21,7 @@ import {buildBlogPostingJsonLd, buildBreadcrumbJsonLd} from '@/utils/jsonLd'
 import {buildOgImageUrl} from '@/utils/og'
 import {
   findPostByYearAndSlug,
-  getFeaturedSlugs,
+  getPrerenderSlugs,
   getRelatedPosts,
   getSeriesPosts,
 } from '@/utils/Post'
@@ -84,7 +84,7 @@ export async function generateMetadata(props: {
 }
 
 export async function generateStaticParams() {
-  const slugs = await getFeaturedSlugs('ko')
+  const slugs = await getPrerenderSlugs('ko')
   return slugs.map((slug) => {
     const [year, ...rest] = slug.split('/')
     return {year, slug: rest}

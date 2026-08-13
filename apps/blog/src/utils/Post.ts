@@ -5,7 +5,11 @@ import {sync} from 'glob'
 import {cache} from 'react'
 import readingTime from 'reading-time'
 
-import {POPULAR_POSTS_COUNT, RECENT_POSTS_COUNT} from '@/constants'
+import {
+  POPULAR_POSTS_COUNT,
+  PRERENDER_POSTS_COUNT,
+  RECENT_POSTS_COUNT,
+} from '@/constants'
 
 import type {FrontMatter, Post, TagWithCount} from '../type'
 import {getPopularPostSlugs} from './analytics'
@@ -198,4 +202,20 @@ export const getFeaturedSlugs = cache(async function getFeaturedSlugsImpl(
 ): Promise<string[]> {
   const {popular, recent} = await getFeaturedPosts(locale)
   return [...popular, ...recent].map((p) => p.fields.slug)
+})
+
+// 빌드 시 사전 생성할 슬러그. 검색 롱테일 유입이 콜드 함수 렌더(TTFB 상승)를
+// 밟지 않도록, 홈 노출용(getFeaturedSlugs)보다 넓게 최근 1년 인기 상위를 포함한다.
+export const getPrerenderSlugs = cache(async function getPrerenderSlugsImpl(
+  locale: Locale = 'ko',
+): Promise<string[]> {
+  const allPosts = await getAllPosts(locale)
+  const existing = new Set(allPosts.map((p) => p.fields.slug))
+  const popularSlugs = await getPopularPostSlugs(PRERENDER_POSTS_COUNT, 365)
+
+  const slugs = new Set(popularSlugs.filter((slug) => existing.has(slug)))
+  for (const p of allPosts.slice(0, RECENT_POSTS_COUNT)) {
+    slugs.add(p.fields.slug)
+  }
+  return [...slugs]
 })

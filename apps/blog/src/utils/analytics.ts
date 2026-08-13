@@ -30,6 +30,7 @@ function getClient(): BetaAnalyticsDataClient | null {
 
 export async function getPopularPostViews(
   limit: number,
+  days = 30,
 ): Promise<{slug: string; views: number}[]> {
   const client = getClient()
   if (!client) {
@@ -39,7 +40,7 @@ export async function getPopularPostViews(
   try {
     const [response] = await client.runReport({
       property: `properties/${propertyId}`,
-      dateRanges: [{startDate: '30daysAgo', endDate: 'today'}],
+      dateRanges: [{startDate: `${days}daysAgo`, endDate: 'today'}],
       dimensions: [{name: 'pagePath'}],
       metrics: [{name: 'screenPageViews'}],
       orderBys: [{metric: {metricName: 'screenPageViews'}, desc: true}],
@@ -69,7 +70,10 @@ export async function getPopularPostViews(
   }
 }
 
-export async function getPopularPostSlugs(count: number): Promise<string[]> {
-  const views = await getPopularPostViews(count * 2)
+export async function getPopularPostSlugs(
+  count: number,
+  days = 30,
+): Promise<string[]> {
+  const views = await getPopularPostViews(count * 2, days)
   return views.map((row) => row.slug).slice(0, count)
 }
