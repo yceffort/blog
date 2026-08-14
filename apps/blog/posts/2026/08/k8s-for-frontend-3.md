@@ -204,7 +204,7 @@ nameserver는 클러스터 DNS(CoreDNS)의 ClusterIP다. 문제는 나머지 두
 
 셋째 행이 이 표의 반전이다. 흔히 "정식 이름"이라 부르는 FQDN(fully qualified domain name, 도메인 전체를 끝까지 적은 이름)이 가장 많은 쿼리를 만든다. 점이 4개라 ndots:5의 기준에 미달하고, 그래서 search 접미사 세 개를 전부 붙여 NXDOMAIN을 세 번 받은 뒤에야 원래 이름을 시도하기 때문이다. 반대로 단축명은 첫 search 후보에서 바로 적중하고, 끝에 점을 붙인 이름(trailing dot)은 절대 이름으로 취급되어 search를 아예 건너뛴다. 클러스터 안에서는 지연 차이가 ms 단위에서 안 보일 만큼 작지만(클러스터 내부 이름은 CoreDNS 자신이 원본 데이터를 들고 있어 바로 답한다), 쿼리 수는 표 그대로 4배다.
 
-외부 도메인도 증폭 자체는 피하지 못한다. 같은 방법으로 `www.example.com`(점 2개)을 조회하면 search 후보 3개가 전부 NXDOMAIN, 마지막 절대 이름 시도까지 이름 4개 x A/AAAA = **쿼리 8개**가 나간다. 콜드 조회에 73.9ms가 걸렸고 끝에 점을 붙인 `www.example.com.`은 쿼리 2개에 2.3ms였는데, 이 차이를 증폭의 비용으로 읽으면 안 된다. 뒤쪽은 직전 조회로 CoreDNS에 캐시가 생긴 웜 상태라 업스트림 왕복 자체가 빠진 수치이고, 이 환경의 search 접미사는 셋 다 cluster.local 하위라 NXDOMAIN 6개도 CoreDNS가 즉답하는 싼 실패다. 즉 73.9ms의 지배항은 증폭이 아니라 마지막 절대 이름의 업스트림 왕복이다. 증폭이 지연과 안정성 문제로 본격화되는 것은 EKS처럼 노드의 search를 상속받아 접미사 붙은 실패 조회까지 업스트림으로 포워딩되는 환경이나 UDP 유실로 재시도가 겹치는 순간이고, 그런 조건이 아니어도 쿼리 수 4배는 CoreDNS와 업스트림의 부하로 고스란히 남는다.
+외부 도메인도 증폭 자체는 피하지 못한다. 같은 방법으로 `www.example.com`(점 2개)을 조회하면 search 후보 3개가 전부 NXDOMAIN, 마지막 절대 이름 시도까지 이름 4개 x A/AAAA = **쿼리 8개**가 나간다. 콜드 조회에 73.9ms가 걸렸고 끝에 점을 붙인 `www.example.com.`은 쿼리 2개에 2.3ms였는데, 이 차이를 증폭의 비용으로 읽으면 안 된다. 뒤쪽은 직전 조회로 CoreDNS에 캐시가 생긴 웜 상태라 업스트림 왕복 자체가 빠진 수치이고, 이 환경의 search 접미사는 셋 다 cluster.local 하위라 NXDOMAIN 6개도 CoreDNS가 즉답하는, 비용이 거의 들지 않는 실패다. 즉 73.9ms의 지배항은 증폭이 아니라 마지막 절대 이름의 업스트림 왕복이다. 증폭이 지연과 안정성 문제로 본격화되는 것은 EKS처럼 노드의 search를 상속받아 접미사 붙은 실패 조회까지 업스트림으로 포워딩되는 환경이나 UDP 유실로 재시도가 겹치는 순간이고, 그런 조건이 아니어도 쿼리 수 4배는 CoreDNS와 업스트림의 부하로 고스란히 남는다.
 
 이걸 직접 재 보려는 분을 위해 측정 함정도 두 개 적어 둔다. 처음에 dig로 시도했다가 증폭이 전혀 재현되지 않아 한참을 헤맸는데, dig는 기본으로 search 목록을 쓰지 않는다(`+search`를 붙여야 한다). 그리고 CoreDNS 설정에 `cache 30`이 있어 응답이 30초 캐시되므로, 반복 측정은 콜드와 웜을 구분해야 한다(이 kind 환경의 기본 Corefile은 cluster.local 이름의 캐시를 꺼 두고 있어서, 캐시를 타는 것은 외부 이름 쪽이다). log 플러그인은 성능 비용 경고가 있으니 측정이 끝나면 빼는 것이 안전하다.
 
@@ -259,7 +259,7 @@ NAME            TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)
 k8s-fe-lab-lb   LoadBalancer   10.96.83.209   172.18.0.7    80:30562/TCP
 ```
 
-한 Service가 주소 세 개를 동시에 갖고 있다. 1편에서 타입 세 가지를 나열만 했는데, 실물은 이렇게 배타적 선택지가 아니라 **겹겹의 계층**이다. LoadBalancer는 NodePort(모든 노드에 열리는 30562 포트)를 포함하고, NodePort는 ClusterIP를 포함한다(기본값 기준이며, `allocateLoadBalancerNodePorts: false`로 NodePort 없는 LoadBalancer를 만들 수도 있다). iptables에서도 NodePort로 들어온 패킷이 결국 ClusterIP와 같은 KUBE-SVC 체인으로 합류하는 규칙이 그대로 보인다. 바깥의 로드밸런서가 노드의 포트로 던지면, 거기서부터는 앞 절들에서 본 것과 같은 길이라는 뜻이다.
+한 Service가 주소 세 개를 동시에 갖고 있다. 1편에서 타입 세 가지를 나열만 했는데, 실물은 이렇게 배타적 선택지가 아니라 **중첩된 레이어**다. LoadBalancer는 NodePort(모든 노드에 열리는 30562 포트)를 포함하고, NodePort는 ClusterIP를 포함한다(기본값 기준이며, `allocateLoadBalancerNodePorts: false`로 NodePort 없는 LoadBalancer를 만들 수도 있다). iptables에서도 NodePort로 들어온 패킷이 결국 ClusterIP와 같은 KUBE-SVC 체인으로 합류하는 규칙이 그대로 보인다. 바깥의 로드밸런서가 노드의 포트로 던지면, 거기서부터는 앞 절들에서 본 것과 같은 길이라는 뜻이다.
 
 다음으로 Gateway와 HTTPRoute를 만들어 문을 세우고, 이 문이 어느 길로 파드에 닿는지를 쟀다. 방법은 앞 절과 같은 패킷 카운터 대조다. 우리 Service의 KUBE-SVC 체인 카운터를 세 노드에서 전부 0으로 지운 뒤, 경로별로 새 커넥션 10개씩을 보냈다.
 
@@ -269,7 +269,7 @@ k8s-fe-lab-lb   LoadBalancer   10.96.83.209   172.18.0.7    80:30562/TCP
 | LoadBalancer(172.18.0.7) 경유  | worker 3 + worker2 7 (LB 자신의 체인) |
 | 파드에서 ClusterIP 직접        | 발신 파드가 있는 노드의 KUBE-SVC에 10 |
 
-셋 다 kube-proxy의 규칙을 통과했다. 표의 숫자 두 개에는 부연이 필요하다. LB 행이 원래 Service의 체인이 아닌 것은 LB가 별도 Service(k8s-fe-lab-lb)라서다. 원래 체인은 0에 머물고, LB의 프록시가 여러 노드의 NodePort로 뿌린 결과가 자기 몫의 KUBE-SVC 체인에 3+7로 잡혔다. Gateway 행이 10이 아니라 8인 것은 문 앞의 프록시가 업스트림 커넥션을 자체 관리해서 다운스트림 커넥션 수와 어긋날 수 있기 때문인데, 여기서 증명 대상은 숫자의 크기가 아니라 카운터가 0이 아니라는 사실 쪽이다. 그런데 이 결과를 일반화하기 전에 밝혀 둘 것이 있다. 사실 이 실측은 예상과 반대로 나온 것이다. ingress-nginx를 비롯한 많은 L7 컨트롤러는 [Service를 거치지 않고 EndpointSlice를 직접 구독해서 파드 IP로 바로 프록시하는 것](https://kubernetes.github.io/ingress-nginx/user-guide/miscellaneous/)을 기본으로 삼는다(세션 어피니티나 자체 로드밸런싱 알고리즘을 쓰기 위해서다). 그 우회를 카운터가 멈춰 있는 것으로 보여줄 계획이었는데, 이 환경의 게이트웨이 데이터 플레인(envoy)의 설정을 관리 API로 덤프해 보니 업스트림이 파드 IP 목록이 아니라 ClusterIP 하나였다(발췌의 cx_total, rq_total 값은 덤프를 뜬 시점의 것이라, 위 10회 실험의 숫자와는 별개다).
+셋 다 kube-proxy의 규칙을 통과했다. 표의 숫자 두 개에는 부연이 필요하다. LB 행의 카운터가 원래 Service의 체인에 잡히지 않은 것은 LB가 별도 Service(k8s-fe-lab-lb)라서다. 원래 체인은 0에 머물고, LB의 프록시가 여러 노드의 NodePort로 뿌린 결과가 자기 몫의 KUBE-SVC 체인에 3+7로 잡혔다. Gateway 행이 10이 아니라 8인 것은 문 앞의 프록시가 업스트림 커넥션을 자체 관리해서 다운스트림 커넥션 수와 어긋날 수 있기 때문인데, 여기서 증명 대상은 숫자의 크기가 아니라 카운터가 0이 아니라는 사실 쪽이다. 그런데 이 결과를 일반화하기 전에 밝혀 둘 것이 있다. 사실 이 실측은 예상과 반대로 나온 것이다. ingress-nginx를 비롯한 많은 L7 컨트롤러는 [Service를 거치지 않고 EndpointSlice를 직접 구독해서 파드 IP로 바로 프록시하는 것](https://kubernetes.github.io/ingress-nginx/user-guide/miscellaneous/)을 기본으로 삼는다(세션 어피니티나 자체 로드밸런싱 알고리즘을 쓰기 위해서다). 그 우회를 카운터가 멈춰 있는 것으로 보여줄 계획이었는데, 이 환경의 게이트웨이 데이터 플레인(envoy)의 설정을 관리 API로 덤프해 보니 업스트림이 파드 IP 목록이 아니라 ClusterIP 하나였다(발췌의 cx_total, rq_total 값은 덤프를 뜬 시점의 것이라, 위 10회 실험의 숫자와는 별개다).
 
 ```text
 $ kubectl exec debug -- curl -s http://172.18.0.6:10000/clusters   # 발췌

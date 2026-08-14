@@ -22,7 +22,7 @@ Chrome 125, Safari 17.2. 숫자 카운터 애니메이션 라이브러리 [numbe
 
 문제는 세상의 브라우저가 저 하한 아래에 아직 많다는 점이다. 이 라이브러리를 쓰고 싶었던 곳이 하필 그런 환경이었다. 업데이트가 멈춘 구형 Android WebView와, iOS 버전에 묶여 따라 올라가지 못하는 구형 Safari에서도 같은 애니메이션을 보여주고 싶었다. 같은 요구는 upstream 이슈 트래커에도 그대로 올라와 있다. iOS 17.2 미만에서 애니메이션이 돌지 않으니 `cubic-bezier()` 폴백이라도 달라는 요청([#131](https://github.com/barvian/number-flow/issues/131))과, 구형 Safari에서 동작하지 않는다는 제보([#164](https://github.com/barvian/number-flow/issues/164))가 열려 있다. 그래서 원본의 API와 시각 결과를 유지한 채 애니메이션 구동부만 교체해 하한을 Chrome 66과 WebKit 16.4(API 기준의 이론 하한은 iOS 13대)까지 내리는 포크 [yceffort/number-flow](https://github.com/yceffort/number-flow)를 만들었다.
 
-이 글은 그 과정의 기록인데, 시간순 일지 대신 **결정 기록** 형식으로 정리해 봤다. 마이그레이션이라는 작업의 실체가 코드 작성보다는 연속된 판단에 가까웠기 때문이다. 내렸던 결정 다섯 개를 순서대로 적고, 뒤집었던 판단 두 가지는 "번복"으로 따로 적는다. 하나는 한 번에 뒤집혔고, 다른 하나는 세 번을 고쳐 쓰고서야 끝났다. 뒤집힌 결정이야말로 처음부터 알았더라면 좋았을 것들이라서다. 결정이라기보다 포기에 가까운 것도 하나 있는데, Safari의 자동 강등 이야기가 그렇다. 판단이 아니라 코드가 궁금한 쪽을 위해, 뒤쪽에 파일별로 무엇을 어떻게 왜 바꿨는지 정리한 변경 지도 절도 두었다.
+이 글은 그 과정의 기록인데, 시간순 일지 대신 **결정 기록** 형식으로 정리해 봤다. 마이그레이션이라는 작업의 실체가 코드 작성보다는 연속된 판단에 가까웠기 때문이다. 내렸던 결정 다섯 개를 순서대로 적고, 뒤집었던 판단 두 가지는 "번복"으로 따로 적는다. 하나는 한 번에 뒤집혔고, 다른 하나는 세 번을 고쳐 쓰고서야 끝났다. 뒤집힌 결정이야말로 처음부터 알았더라면 좋았을 것들이라서다. 결정이라기보다 포기에 가까운 것도 하나 있는데, Safari의 자동 강등 이야기가 그렇다. 판단이 아니라 코드가 궁금한 쪽을 위해, 뒤쪽에 파일별로 무엇을 어떻게 왜 바꿨는지 정리한 변경 지도 절을 따로 두었다.
 
 > 이 글의 코드 인용은 포크 [yceffort/number-flow `578d5f0`](https://github.com/yceffort/number-flow/tree/578d5f0)과 업스트림 [barvian/number-flow `a7b78f5`](https://github.com/barvian/number-flow/tree/a7b78f5)(number-flow 0.6.2) 기준이다. 검증 수치는 저장소 CI와 README에 기록된 것이다.
 
@@ -32,9 +32,9 @@ Chrome 125, Safari 17.2. 숫자 카운터 애니메이션 라이브러리 [numbe
 
 - 각 자릿수가 0~9 숫자를 전부 DOM에 가지고 현재 값만 보이게 하는 구조. 애니메이션이 어떻게 되든 접근성 트리와 텍스트는 항상 정확하다.
 - `Intl.NumberFormat.formatToParts` 결과에 키를 부여해서, 자릿수·기호의 등장/퇴장/이동을 안정적으로 추적하는 diff 로직.
-- 위아래로 스크롤되는 숫자를 자연스럽게 잘라내는 여섯 겹 마스크 그래디언트 CSS.
+- 위아래로 스크롤되는 숫자를 자연스럽게 잘라내는 여섯 레이어 마스크 그래디언트 CSS.
 
-이 자산들 위에 얹힌 애니메이션 실행부는 생각보다 얇았다. 실제로 `el.animate()`를 호출하는 곳은 [lite.ts](https://github.com/yceffort/number-flow/blob/578d5f0/packages/number-flow/src/lite.ts) 전체에서 일곱 곳뿐이다. 그래서 재작성이 아니라 vendoring을 택했다. 원본 소스를 그대로 가져오고, 일곱 곳의 호출부만 엔진 추상화 한 겹 뒤로 밀었다.
+이 자산들 위에 얹힌 애니메이션 실행부는 생각보다 얇았다. 실제로 `el.animate()`를 호출하는 곳은 [lite.ts](https://github.com/yceffort/number-flow/blob/578d5f0/packages/number-flow/src/lite.ts) 전체에서 일곱 곳뿐이다. 그래서 재작성이 아니라 vendoring을 택했다. 원본 소스를 그대로 가져오고, 일곱 곳의 호출부만 엔진 추상화 레이어 하나 뒤로 밀었다.
 
 업스트림의 호출이 이런 형태라면:
 
@@ -154,7 +154,7 @@ valueAt(now: number): number {
 }
 ```
 
-루프에는 rAF 외에 34ms짜리 `setTimeout` 백스톱을 겹쳐 뒀다.
+루프에는 rAF 외에 34ms짜리 `setTimeout` 백스톱(backstop, rAF가 멎었을 때 진행을 이어받는 안전장치)을 겹쳐 뒀다.
 
 ```ts
 const ensureLoop = () => {
@@ -215,13 +215,13 @@ export const digitYPercent = (c: number, length: number, n: number): number => {
 
 여기까지의 결정들은 전부 "구형 브라우저에서 돌아간다"는 주장을 만들기 위한 것인데, 이 주장은 성격상 최신 브라우저에서 아무리 테스트해도 증명되지 않는다. 폴백 경로를 `setEngineMode('raf')`로 강제해서 최신 Chrome에서 돌리는 것과, 진짜 Chrome 66에서 돌리는 것은 다른 일이다. 진짜 구형 브라우저에는 폴백 엔진이 우회하려는 기능만 없는 게 아니라, 폴백 엔진 자신이 쓰는 API가 없을 수도 있다.
 
-그래서 검증을 세 겹으로 만들었다.
+그래서 검증을 세 레이어로 만들었다.
 
 1. **선언**: `.browserslistrc`에 지원 하한(Chrome 66+, Safari/iOS 13+, Firefox 78+, Edge 79+)을 못 박는다.
 2. **정적 검사**: CI에서 `eslint-plugin-compat`이 소스가 하한에서 없는 API를 쓰면 실패시킨다.
 3. **실행**: 실제 구형 브라우저 바이너리로 selftest를 돌린다.
 
-먼저 인정할 것이 있다. 세 겹이 커버하는 범위는 같지 않다. 실행 증명이 닿는 곳은 Chromium 66+와 WebKit 16.4+까지다. 선언된 하한 중 iOS 13에서 16.3까지의 구간과 Firefox 78+는 정적 검사만 통과한, 이 절의 기준으로는 아직 "주장"이다. Safari 16.0에서 16.3까지의 WebKit 빌드는 현재 macOS에서 실행조차 안 되고, 구형 Firefox는 러너를 만들지 않았다. 그 구간의 하한은 API 표면의 정적 분석이 유일한 근거라는 것을 못 박아 둔다.
+먼저 인정할 것이 있다. 세 레이어가 커버하는 범위는 같지 않다. 실행 증명이 닿는 곳은 Chromium 66+와 WebKit 16.4+까지다. 선언된 하한 중 iOS 13에서 16.3까지의 구간과 Firefox 78+는 정적 검사만 통과한, 이 절의 기준으로는 아직 "주장"이다. Safari 16.0에서 16.3까지의 WebKit 빌드는 현재 macOS에서 실행조차 안 되고, 구형 Firefox는 러너를 만들지 않았다. 그 구간의 하한은 API 표면의 정적 분석이 유일한 근거라는 것을 못 박아 둔다.
 
 세 번째가 핵심이다. `demo/selftest.html`은 브라우저 안에서 스스로 다섯 가지 시나리오(스핀+폭 변화, 인터럽트 연타, 부호 크로스페이드, 실시간 티커, 종료 후 정리 상태)를 실행하고 44건의 assert 결과를 보고하는 페이지다. 이걸 Chromium 스냅샷 저장소에서 받은 실제 구버전 바이너리와, Playwright가 릴리스별로 고정해 둔 구버전 WebKit으로 실행한다. 매 커밋 도는 CI가 커버하는 것은 Chromium 66/80/114와 WebKit 16.4/17.4/18.2이고, 여덟 개 마일스톤(66/71/75/80/87/92/100/114) 전체 매트릭스는 로컬 러너로 확인한 결과다.
 
@@ -239,7 +239,7 @@ export const digitYPercent = (c: number, length: number, n: number): number => {
 
 여기부터는 뒤집은 판단들이다.
 
-폴백 엔진은 매 프레임 인라인 스타일을 쓰니까, 애니메이션이 끝나면 지워서 스타일시트에 제어권을 돌려주는 게 당연한 위생이라고 생각했다. 실제로 그렇게 [고쳤다](https://github.com/yceffort/number-flow/commit/7bde206). rest 상태가 된 채널은 인라인 `--y`를 지운다.
+폴백 엔진은 매 프레임 인라인 스타일을 쓰니까, 애니메이션이 끝나면 지워서 스타일시트에 제어권을 돌려주는 게 당연한 뒷정리라고 생각했다. 실제로 그렇게 [고쳤다](https://github.com/yceffort/number-flow/commit/7bde206). rest 상태가 된 채널은 인라인 `--y`를 지운다.
 
 그리고 며칠 뒤 이 결정을 [뒤집었다](https://github.com/yceffort/number-flow/commit/6be954f). 원인은 소유권과 타이밍의 불일치였다.
 
@@ -324,7 +324,7 @@ if (!this.computedAnimated || !this._preUpdated) {
 
 숨은 탭이나 reduced motion 상태에서 값이 갱신되면 애니메이션 없이 DOM만 바뀌는데, 이때 날아가던 트윈을 그대로 두면 이미 갱신된 `--current` 위에 이전 델타를 계속 얹어서 숫자가 어긋난 위치에 그려진다.
 
-- **`Num` 생성자가 rAF 모드에서 초기값을 인라인으로 심는다.** `--scale-x: 1`, `--_number-flow-dx: 0px`. rAF 엔진은 폭 델타 변수를 애니메이션하는 대신 `--scale-x`를 계산 완료된 숫자로 직접 쓰는데(구형 브라우저는 `var()`가 `calc()`로 치환된 값으로 나누는 연산을 소화하지 못한다), 그러려면 애니메이션이 없는 평상시에도 나눗셈의 기준이 될 안정된 값이 있어야 한다.
+- **`Num` 생성자가 rAF 모드에서 초기값을 인라인으로 심는다.** `--scale-x: 1`, `--_number-flow-dx: 0px`. rAF 엔진은 폭 델타 변수를 애니메이션하는 대신 `--scale-x`를 계산 완료된 숫자로 직접 쓰는데(구형 브라우저는 치환 결과가 `calc()` 수식인 `var()` 값으로 나누는 연산을 소화하지 못한다), 그러려면 애니메이션이 없는 평상시에도 나눗셈의 기준이 될 안정된 값이 있어야 한다.
 - **접근성 폴백.** Chrome 77~80은 `ElementInternals`는 있지만 ARIAMixin이 없어서 `internals.ariaLabel = ...` 대입이 조용히 무시된다. `'ariaLabel' in internals`로 감지해서 없으면 `setAttribute('aria-label', ...)`로 폴백한다. "구형 브라우저 지원"을 표방하는 순간, 이런 조용한 무시들이 전부 지원 범위의 책임이 된다.
 - **React 19의 이중 마운트 리플로우 차단은 업스트림에서 물려받은 것이다.** React 19는 커밋 중에 커스텀 엘리먼트의 `data` 프로퍼티를 설정하고, 래퍼의 `componentDidMount`가 같은 객체를 한 번 더 설정하는데, 동일성 검사가 없으면 두 번째 설정이 업데이트 경로를 타서 마운트마다 모든 섹션과 자릿수를 재측정하며 동기 리플로우를 강제한다([이슈 #195](https://github.com/barvian/number-flow/issues/195)). 이 검사는 vendoring한 시점의 업스트림에 이미 들어 있었고(upstream PR #196), 포크는 유지만 했다. 포크의 개선이 아니므로 성격을 분리해 적어 둔다.
 - **백그라운드 탭 애니메이션 누수 가드도 마찬가지로 업스트림의 것이다.** 숨은 탭에서는 WAAPI 애니메이션이 pending인 채 쌓여서, 초 단위로 값이 갱신되는 페이지를 오래 백그라운드에 두면 메모리가 기가바이트 단위로 새는 문제가 보고되어 있었다([이슈 #165](https://github.com/barvian/number-flow/issues/165)). 이를 막는 `visibilityState === 'visible'` 게이트 역시 업스트림에 이미 있었고 포크는 물려받았다. 포크 고유의 기여는 rAF 폴백 경로에 한정된다: 그쪽에서는 백스톱 타이머가 백그라운드에서도 트윈을 끝까지 진행시키므로, pending이 쌓일 자리 자체가 없다.

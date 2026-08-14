@@ -24,7 +24,7 @@ seriesOrder: 5
 
 이 글은 "프론트엔드 개발자가 알아야 할 쿠버네티스" 시리즈의 다섯 번째 편이다. 용어가 낯설면 [1편의 개념 지도](/2026/08/k8s-for-frontend-1)를, 파드와 컨테이너는 [2편](/2026/08/k8s-for-frontend-2)을, 트래픽 경로와 conntrack은 [3편](/2026/08/k8s-for-frontend-3)을, 파드의 종료는 [4편](/2026/08/k8s-for-frontend-4)을 먼저 읽는 것을 권한다.
 
-> 측정 환경: Apple M5 macOS 위의 colima VM(4 CPU/8GB), kind v0.32.0(kindest/node v1.36.1, Kubernetes v1.36.1), metrics-server(해상도 15초), 앱은 Next.js 16.2.12 standalone(node:24-slim, Node v24.19.0)으로 앞 편들과 같다. 실험용 Deployment는 [4편 최종 조립본](/2026/08/k8s-for-frontend-4)(preStop sleep 3초, 결원 없는 보폭, readiness 5초)을 계승하되 requests CPU 200m/limit 400m으로 줄였다. 물리 코어가 4개뿐인 단일 머신에서 "스케일 아웃이 실제로 지연을 회복시키는" 규모를 만들기 위한 값이다. HPA는 autoscaling/v2, CPU 70%, min 3/max 12. 부하는 클러스터 안 client 파드에서 개루프(고정 요청률)로 흘렸다. 폐루프(동시성 고정) 부하는 4동시만으로도 150rps가 나와 실험 전에 HPA를 깨워 버린다는 것을 사전 검증에서 배웠고, 응답이 늦어져도 유입률이 유지되는 개루프가 트래픽 스파이크의 실제 모형이기도 하다. KEDA는 v2.20.2, 이미지는 kind 네트워크에 붙인 로컬 레지스트리(registry:2)에서 받는다. HPA 컨트롤러 소스 인용은 kubernetes v1.36.1 태그 기준이다. 측정 스크립트와 raw 로그는 별도 보관했다.
+> 측정 환경: Apple M5 macOS 위의 colima VM(4 CPU/8GB), kind v0.32.0(kindest/node v1.36.1, Kubernetes v1.36.1), metrics-server(해상도 15초), 앱은 Next.js 16.2.12 standalone(node:24-slim, Node v24.19.0)으로 앞 편들과 같다. 실험용 Deployment는 [4편 최종 조립본](/2026/08/k8s-for-frontend-4)(preStop sleep 3초, 결원 없는 보폭, readiness 5초)을 계승하되 requests CPU 200m/limit 400m으로 줄였다. 물리 코어가 4개뿐인 단일 머신에서 "스케일 아웃이 실제로 지연을 회복시키는" 규모를 만들기 위한 값이다. HPA는 autoscaling/v2, CPU 70%, min 3/max 12. 부하는 클러스터 안 client 파드에서 개루프(고정 요청률)로 흘렸다. 폐루프(동시성 고정) 부하는 동시성 4만으로도 150rps가 나와 실험 전에 HPA를 깨워 버린다는 것을 사전 검증에서 배웠고, 응답이 늦어져도 유입률이 유지되는 개루프가 트래픽 스파이크의 실제 모형이기도 하다. KEDA는 v2.20.2, 이미지는 kind 네트워크에 붙인 로컬 레지스트리(registry:2)에서 받는다. HPA 컨트롤러 소스 인용은 kubernetes v1.36.1 태그 기준이다. 측정 스크립트와 raw 로그는 별도 보관했다.
 
 ## 오토스케일러는 15초짜리 루프다
 
@@ -38,9 +38,9 @@ desiredReplicas = ceil( currentReplicas × 현재 사용률 / 목표 사용률 )
 
 첫째, **분모의 "사용률"은 requests 기준이다.** [1편](/2026/08/k8s-for-frontend-1)에서 예고한 연결이 여기서 실측으로 확인되는데, limit이 아니라 requests 대비 비율이라서 이번 실험(requests 200m, limit 400m)의 파드는 사용률이 200%까지 올라갈 수 있다. requests가 실사용과 동떨어져 있으면 이 공식 전체가 어긋난다.
 
-둘째, **읽는 메트릭에는 이미 두 겹의 지연이 있다.** kubelet의 통계를 metrics-server가 15초 간격으로 긁고(이 클러스터의 `--metric-resolution=15s`), HPA가 그것을 다시 15초 간격으로 읽는다. 두 루프의 위상이 맞물리는 정도에 따라, 부하가 올라도 HPA가 그것을 "볼" 때까지 최대 30초 안팎이 걸린다. 스파이크가 스크레이프 직후에 시작되면 다음 스크레이프까지 15초를 기다리고, 그 값이 HPA의 다음 판단 주기에 걸리기까지 다시 최대 15초가 쌓이는 식이다. 뒤의 실측에서 이 감지 창이 전체 지연의 지배항으로 나온다.
+둘째, **읽는 메트릭에는 이미 두 레이어의 지연이 있다.** kubelet의 통계를 metrics-server가 15초 간격으로 수집(스크레이프)하고(이 클러스터의 `--metric-resolution=15s`), HPA가 그것을 다시 15초 간격으로 읽는다. 두 루프의 위상이 맞물리는 정도에 따라, 부하가 올라도 HPA가 그것을 "볼" 때까지 최대 30초 안팎이 걸린다. 스파이크가 스크레이프 직후에 시작되면 다음 스크레이프까지 15초를 기다리고, 그 값이 HPA의 다음 판단 주기에 걸리기까지 다시 최대 15초가 쌓이는 식이다. 뒤의 실측에서 이 감지 창이 전체 지연의 지배항으로 나온다.
 
-셋째, **tolerance라는 무시 구간이 있다.** 현재/목표 비율이 1.0에서 ±0.1 안이면 HPA는 움직이지 않는다. 사용률이 70\~77% 사이를 오가는 동안 replicas가 출렁이지 않는 이유다. 흥미로운 것은 이 0.1이 오랫동안 클러스터 전역 설정이었는데, 이번 실험 클러스터(v1.36)에서는 HPA 오브젝트별로 `spec.behavior.scaleUp.tolerance`를 넣어 보니 그대로 수용되어 저장됐다. v1.33에서 알파로 들어온 [퍼-HPA tolerance](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)가 기본 게이트로 살아 있다는 뜻이다. 직접 확인한 기록은 이렇다.
+셋째, **tolerance라는 무시 구간이 있다.** 현재/목표 비율이 1.0에서 ±0.1 안이면 HPA는 움직이지 않는다. 사용률이 70\~77% 사이를 오가는 동안 replicas가 출렁이지 않는 이유다. 흥미로운 것은 이 0.1이 오랫동안 클러스터 전역 설정이었는데, 이번 실험 클러스터(v1.36)에서는 HPA 오브젝트별로 `spec.behavior.scaleUp.tolerance`를 넣어 보니 그대로 수용되어 저장됐다. v1.33에서 알파로 들어온 [HPA별 tolerance](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)가 기본 게이트로 살아 있다는 뜻이다. 직접 확인한 기록은 이렇다.
 
 ```text
 $ kubectl patch hpa autoscale-lab --type=merge \
@@ -96,7 +96,7 @@ $ kubectl get events --field-selector involvedObject.kind=HorizontalPodAutoscale
 
 Ready는 1\~2초 만에 일제히 끝났는데, 첫 요청은 31초에서 169초까지 흩어졌고 하나는 끝내 일을 받지 못했다. [3편](/2026/08/k8s-for-frontend-3)에서 본 그대로다. 분배는 커넥션이 태어날 때 한 번뿐이라, keep-alive로 이미 맺어진 커넥션들은 기존 파드에 붙어 있고, 새 파드는 새 커넥션이 열릴 때만 일을 받는다. 실제로 스파이크 2분 뒤의 분포를 세어 보니 살아남은 기존 파드 3개가 트래픽의 54%를 쥐고 있었고, 가장 바쁜 파드와 가장 한가한 파드의 차이가 3.4배였다(1,940 대 577). 레플리카 수는 8개로 늘었는데 부하는 고르게 퍼지지 않는, 스케일 아웃과 로드밸런싱이 별개라는 증거다.
 
-셋째, **그 사이를 버티는 것은 기존 파드다.** 22.5초의 감지 창 동안 기존 3개 파드가 12배 부하를 받아냈다. 이번에는 p95 74ms로 버텼지만, 버티지 못하면 어떻게 되는지가 뒤의 실명 절이다. [사이징 글](/2026/08/nodejs-k8s-pod-sizing)이 minReplicas를 "스파이크 흡수 여력"으로 정하라고 한 이유가 이 창에 있다.
+셋째, **그 사이를 버티는 것은 기존 파드다.** 22.5초의 감지 창 동안 기존 3개 파드가 12배 부하를 받아냈다. 이번에는 p95 74ms로 버텼지만, 버티지 못하면 어떻게 되는지가 뒤의 실명(失明, HPA가 판단 근거인 메트릭을 통째로 잃는 상태) 절이다. [사이징 글](/2026/08/nodejs-k8s-pod-sizing)이 minReplicas를 "스파이크 흡수 여력"으로 정하라고 한 이유가 이 창에 있다.
 
 ## 더 빨리 띄울 수 있는가: 세 가지 개입
 
