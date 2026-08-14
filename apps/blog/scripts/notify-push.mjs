@@ -4,7 +4,9 @@
  * 사용법: node apps/blog/scripts/notify-push.mjs <추가된 md 파일 경로...>
  * 필요 환경변수: KV_REST_API_URL, KV_REST_API_TOKEN, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY
  */
-import {readFile} from 'node:fs/promises'
+import {readFile, readdir} from 'node:fs/promises'
+import {join} from 'node:path'
+import {fileURLToPath} from 'node:url'
 
 import webpush from 'web-push'
 
@@ -65,6 +67,24 @@ function parseFrontmatter(markdown) {
   return fields
 }
 
+const POSTS_DIR = fileURLToPath(new URL('../posts', import.meta.url))
+
+// 시리즈 리드미에는 published 필드가 없어서, draft 글과 함께 커밋된 시리즈가
+// 그대로 알림으로 나간다. 공개된 글이 하나라도 있는 시리즈만 알린다.
+async function seriesHasPublishedPost(seriesName) {
+  const entries = await readdir(POSTS_DIR, {recursive: true})
+  for (const entry of entries) {
+    if (!entry.endsWith('.md') || entry.endsWith('.en.md')) {
+      continue
+    }
+    const fm = parseFrontmatter(await readFile(join(POSTS_DIR, entry), 'utf8'))
+    if (fm.series === seriesName && fm.published !== 'false') {
+      return true
+    }
+  }
+  return false
+}
+
 // posts/{y}/{m}/{slug}.md → 새 글, series/{slug}.md → 새 시리즈
 async function toNotification(filePath) {
   const post = filePath.match(/posts\/(\d{4})\/(\d{2})\/([^/]+)\.md$/)
@@ -82,6 +102,9 @@ async function toNotification(filePath) {
       body: fm.title || post[3],
       url: `/${post[1]}/${post[2]}/${post[3]}`,
     }
+  }
+  if (!(await seriesHasPublishedPost(fm.name))) {
+    return null
   }
   return {
     title: '새 시리즈가 시작됐어요',
