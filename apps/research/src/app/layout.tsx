@@ -6,7 +6,9 @@ import Script from 'next/script'
 import {Suspense, type ReactNode} from 'react'
 
 import AmbientEffects from '@/components/AmbientEffects'
+import {BotTracker} from '@/components/BotTracker'
 import {GoogleAnalyticsPageViewTracker} from '@/components/GoogleAnalyticsPageViewTracker'
+import {OutboundLinkTracker} from '@/components/OutboundLinkTracker'
 import {SiteConfig} from '@/config'
 
 const inter = Inter({
@@ -115,12 +117,14 @@ export default function Layout({children}: {children: ReactNode}) {
         <body className="antialiased">
           <AmbientEffects />
           <Providers>{children}</Providers>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${SiteConfig.googleAnalyticsId}`}
-            strategy="afterInteractive"
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
+          {process.env.NODE_ENV === 'production' && (
+            <>
+              <Script
+                src={`https://www.googletagmanager.com/gtag/js?id=${SiteConfig.googleAnalyticsId}`}
+                strategy="afterInteractive"
+              />
+              <Script id="google-analytics" strategy="afterInteractive">
+                {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
@@ -129,10 +133,14 @@ export default function Layout({children}: {children: ReactNode}) {
             page_path: window.location.pathname,
           });
         `}
-          </Script>
-          <Suspense fallback={null}>
-            <GoogleAnalyticsPageViewTracker />
-          </Suspense>
+              </Script>
+              <Suspense fallback={null}>
+                <GoogleAnalyticsPageViewTracker />
+              </Suspense>
+              <OutboundLinkTracker />
+              <BotTracker />
+            </>
+          )}
         </body>
       </html>
     </>

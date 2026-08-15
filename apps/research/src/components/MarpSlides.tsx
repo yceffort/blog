@@ -197,6 +197,12 @@ export function MarpSlides({
         if (window.location.hash !== newHash) {
           window.location.hash = newHash
         }
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'slide_view', {
+            slide_number: newIndex + 1,
+            page_path: window.location.pathname,
+          })
+        }
       }
     },
     [sendSlideChange],

@@ -198,6 +198,9 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
+      isbot:
+        specifier: ^5.2.1
+        version: 5.2.1
       mermaid:
         specifier: ^11.16.1
         version: 11.16.1
