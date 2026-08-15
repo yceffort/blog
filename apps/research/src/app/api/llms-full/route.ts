@@ -8,7 +8,7 @@ export function GET() {
   parts.push(`# ${SiteConfig.title} — ${SiteConfig.subtitle}`)
   parts.push('')
   parts.push(
-    '> Full markdown of every published slide deck. Each deck is separated by a thematic break.',
+    '> Full markdown of every published slide. Each slide is separated by a thematic break.',
   )
   parts.push('')
 

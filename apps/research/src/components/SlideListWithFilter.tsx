@@ -215,11 +215,11 @@ export function SlideListWithFilter({slides, cssList}: Props) {
         <div>
           <span className="sec-count">
             {selectedTags.length > 0
-              ? `${filteredSlides.length}/${slides.length} decks`
-              : `${slides.length} decks`}
+              ? `${filteredSlides.length}/${slides.length} slides`
+              : `${slides.length} slides`}
           </span>
           <h2>
-            All <em>decks</em>
+            All <em>slides</em>
           </h2>
         </div>
         <div className="line" />

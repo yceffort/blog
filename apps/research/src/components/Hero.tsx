@@ -70,7 +70,7 @@ const Hero = memo(function HeroBase() {
           <p>
             Slides and long-form research notes by{' '}
             <b style={{color: 'var(--ink)'}}>yceffort</b> — deep dives into the
-            frontend stack, presented one deck at a time.
+            frontend stack, presented one slide at a time.
           </p>
         </div>
       </div>

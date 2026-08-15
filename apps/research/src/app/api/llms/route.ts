@@ -8,7 +8,7 @@ export function GET() {
   lines.push(`# ${SiteConfig.title} — ${SiteConfig.subtitle}`)
   lines.push('')
   lines.push(
-    '> Slide decks and research notes. Each slide is authored in Markdown with Marp directives.',
+    '> Slides and research notes. Each slide is authored in Markdown with Marp directives.',
   )
   lines.push('')
   lines.push('## Slides')
