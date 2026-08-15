@@ -17,6 +17,7 @@ interface SlideData {
   css: string
   fonts: string[]
   published: boolean
+  post?: string
 }
 
 async function getSlideData(slug: string): Promise<SlideData | null> {
@@ -37,9 +38,10 @@ async function getSlideData(slug: string): Promise<SlideData | null> {
   const description = data.description ? String(data.description) : undefined
   const tags = data.tags as string[] | undefined
   const published = data.published !== false
+  const post = data.post ? String(data.post) : undefined
   const {html, css, fonts} = await generateRenderedMarp(markdown)
 
-  return {title, description, tags, html, css, fonts, published}
+  return {title, description, tags, html, css, fonts, published, post}
 }
 
 export async function generateStaticParams() {
@@ -110,7 +112,7 @@ export default async function SlidePage(props: {
     return null
   }
 
-  const {html, css, fonts, published} = data
+  const {html, css, fonts, published, post} = data
 
   return (
     <div>
@@ -119,6 +121,7 @@ export default async function SlidePage(props: {
         dataCss={css}
         dataFonts={JSON.stringify(fonts)}
         slug={params.slug}
+        postUrl={post}
       />
       {!published && (
         <div className="pointer-events-none fixed bottom-4 left-4 z-50 select-none rounded-lg border border-amber-400 bg-amber-100/95 px-4 py-2 text-sm font-medium text-amber-900 shadow-lg backdrop-blur-sm dark:border-amber-500 dark:bg-amber-900/90 dark:text-amber-100">

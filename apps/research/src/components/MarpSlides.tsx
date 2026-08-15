@@ -27,6 +27,7 @@ interface MarpSlidesProps {
   dataCss: string
   dataFonts: string
   slug: string
+  postUrl?: string
 }
 
 export function MarpSlides({
@@ -34,6 +35,7 @@ export function MarpSlides({
   dataCss,
   dataFonts,
   slug,
+  postUrl,
 }: MarpSlidesProps) {
   // JSON 파싱에 에러 처리 추가 (memoized)
   const html = useMemo(() => {
@@ -991,6 +993,18 @@ export function MarpSlides({
             <span className={styles.contextMenuIcon}>📄</span>
             PDF로 다운로드
           </button>
+          {postUrl && (
+            <button
+              className={styles.contextMenuItem}
+              onClick={() => {
+                window.open(postUrl, '_blank', 'noopener,noreferrer')
+                closeContextMenu()
+              }}
+            >
+              <span className={styles.contextMenuIcon}>📖</span>
+              블로그 글로 읽기
+            </button>
+          )}
           <button
             className={styles.contextMenuItem}
             onClick={() => {

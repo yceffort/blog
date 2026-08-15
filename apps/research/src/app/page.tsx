@@ -18,6 +18,7 @@ interface Slide {
   description: string
   title: string
   published: boolean
+  post?: string
   slideCount: number
   preview: {
     html: string
@@ -55,6 +56,7 @@ async function getHomeSlides(): Promise<HomeSlidesData> {
     const description = data.description
     const title = data.title
     const published = data.published
+    const post = data.post ? String(data.post) : undefined
 
     const {html, css, fonts} = await generateRenderedMarp(content)
 
@@ -72,6 +74,7 @@ async function getHomeSlides(): Promise<HomeSlidesData> {
       description,
       title,
       published,
+      post,
       slideCount: html.length,
       preview: {
         html: html[0] || '',

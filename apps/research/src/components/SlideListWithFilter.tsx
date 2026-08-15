@@ -14,6 +14,7 @@ interface Slide {
   description: string
   title: string
   published: boolean
+  post?: string
   slideCount: number
   preview: {
     html: string
@@ -120,6 +121,19 @@ function ResearchCard({slide, css}: {slide: Slide; css: string}) {
             </>
           )}
           <span>{slideCount} slides</span>
+          {slide.post && (
+            <>
+              <span aria-hidden="true">·</span>
+              <a
+                href={slide.post}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative z-10 underline underline-offset-2"
+              >
+                📖 블로그 글
+              </a>
+            </>
+          )}
         </div>
       </div>
     </article>

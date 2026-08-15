@@ -9,6 +9,7 @@ tags:
 date: 2026-05-15
 description: '"use cache" 한 줄이 만드는 빌드 타임 변환, 캐시 키, cacheLife, 그리고 Cache Components까지'
 published: true
+post: https://yceffort.kr/2026/05/use-cache-deep-dive
 ---
 
 # `'use cache'` 디렉티브 딥다이브 ⏱

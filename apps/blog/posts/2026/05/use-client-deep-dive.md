@@ -10,6 +10,7 @@ description: '"use client" 한 줄이 만드는 모듈 경계, 빌드 타임 변
 thumbnail: /thumbnails/2026/05/use-client-deep-dive.png
 series: 디렉티브 딥다이브
 seriesOrder: 1
+slide: use-client-deep-dive
 ---
 
 ## Table of Contents

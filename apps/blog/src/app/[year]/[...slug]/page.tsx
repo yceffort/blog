@@ -125,7 +125,7 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
   }
 
   const {
-    frontMatter: {title, tags, date, description, series, published},
+    frontMatter: {title, tags, date, description, series, published, slide},
     body,
     path,
     fields: {slug: postSlug},
@@ -268,6 +268,20 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
             seriesPosts={seriesPosts}
             currentSlug={postSlug}
           />
+        )}
+
+        {slide && (
+          <aside className="post-subscribe">
+            <p>이 글은 발표 슬라이드로도 정리되어 있습니다.</p>
+            <a
+              href={`https://research.yceffort.kr/slides/${slide}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="post-subscribe-link"
+            >
+              슬라이드로 보기 →
+            </a>
+          </aside>
         )}
 
         <PostArticle body={body} path={path} />

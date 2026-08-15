@@ -9,6 +9,7 @@ tags:
 date: 2026-05-15
 description: '"use server" 한 줄 뒤에서 무슨 일이 벌어지고 있는가?'
 published: false
+post: https://yceffort.kr/2026/03/react-server-functions-deep-dive
 ---
 
 # `'use server'` 디렉티브 딥다이브 🌐
