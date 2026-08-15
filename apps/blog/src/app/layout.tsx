@@ -152,7 +152,7 @@ export default async function Layout({children}: {children: ReactNode}) {
               <LayoutWrapper enSlugs={enSlugs}>{children}</LayoutWrapper>
             </Suspense>
           </Providers>
-          {GA_MEASUREMENT_ID && (
+          {GA_MEASUREMENT_ID && process.env.NODE_ENV === 'production' && (
             <>
               <Script
                 strategy="afterInteractive"
