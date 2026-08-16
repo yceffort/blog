@@ -10,7 +10,6 @@ import {fileURLToPath} from 'node:url'
 
 import webpush from 'web-push'
 
-const SITE_URL = 'https://yceffort.kr'
 const SUBSCRIPTIONS_KEY = 'push:subscriptions'
 
 const {
@@ -113,24 +112,6 @@ async function toNotification(filePath) {
   }
 }
 
-// 배포가 끝나기 전에 알림이 나가면 링크가 404가 되므로, 새 글 URL이
-// 살아날 때까지 기다린다
-async function waitForDeploy(url, timeoutMs = 10 * 60 * 1000) {
-  const deadline = Date.now() + timeoutMs
-  while (Date.now() < deadline) {
-    try {
-      const response = await fetch(`${SITE_URL}${url}`, {method: 'HEAD'})
-      if (response.ok) {
-        return true
-      }
-    } catch {
-      // 재시도
-    }
-    await new Promise((resolve) => setTimeout(resolve, 20_000))
-  }
-  return false
-}
-
 const files = process.argv.slice(2).filter((f) => !f.endsWith('.en.md'))
 const notifications = (
   await Promise.all(files.map((f) => toNotification(f)))
@@ -139,12 +120,6 @@ const notifications = (
 if (notifications.length === 0) {
   console.log('no notifications to send')
   process.exit(0)
-}
-
-const live = await waitForDeploy(notifications[0].url)
-if (!live) {
-  console.error(`deploy did not become live for ${notifications[0].url}`)
-  process.exit(1)
 }
 
 const subscriptions = (await redis(['HVALS', SUBSCRIPTIONS_KEY])) || []

@@ -39,6 +39,37 @@ jobs:
           echo "$files" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
+      - name: Wait for blog deploy
+        if: steps.added.outputs.files != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # The site answers 200 even for unknown post URLs (soft 404), so
+          # polling the post URL cannot tell whether the deploy is live.
+          # Wait for a successful "Production – blog" Vercel deployment that
+          # contains this commit — Vercel may skip an intermediate commit and
+          # deploy a newer one instead, which still includes these posts.
+          # 30 min: the blog build is slow and its deployment record can lag
+          # well behind the push while queued.
+          for _ in $(seq 1 90); do
+            git fetch --quiet origin main
+            while read -r id sha; do
+              if git merge-base --is-ancestor "$GITHUB_SHA" "$sha" 2>/dev/null; then
+                state=$(gh api "repos/${{ github.repository }}/deployments/$id/statuses" \
+                  --jq '.[0].state // empty' || true)
+                echo "deployment $id ($sha) state: ${state:-pending}"
+                if [ "$state" = "success" ]; then
+                  exit 0
+                fi
+              fi
+            done < <(gh api "repos/${{ github.repository }}/deployments" \
+              -X GET -f environment="Production – blog" -f per_page=10 \
+              --jq '.[] | "\(.id) \(.sha)"' || true)
+            sleep 20
+          done
+          echo "timed out waiting for a blog deploy containing $GITHUB_SHA"
+          exit 1
+
       - uses: actions/setup-node@v4
         if: steps.added.outputs.files != ''
         with:
