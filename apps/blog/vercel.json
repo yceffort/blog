@@ -8,8 +8,8 @@
           "value": "nosniff"
         },
         {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' https://research.yceffort.kr"
         },
         {
           "key": "X-XSS-Protection",
