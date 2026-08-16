@@ -3,6 +3,7 @@ import type {HTMLProps, ReactElement} from 'react'
 
 import CodeBlock from '@/components/CodeBlock'
 import ImageZoom from '@/components/ImageZoom'
+import LiveDemo from '@/components/LiveDemo'
 import Mermaid from '@/components/Mermaid'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -44,6 +45,7 @@ function NextImage(props: HTMLProps<HTMLImageElement>) {
 }
 
 const MdxComponents = {
+  LiveDemo,
   img: NextImage,
   table: (props: HTMLProps<HTMLTableElement>) => {
     return (
