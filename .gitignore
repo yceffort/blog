@@ -43,7 +43,8 @@ next-env.d.ts
 
 # Claude Code
 CLAUDE.md
-.claude/
+.claude/*
+!.claude/skills/
 
 # Generated files
 .posts-cache.json

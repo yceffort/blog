@@ -1,0 +1,871 @@
+<title>yceffort 성과 리포트</title>
+
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11, 11, 11, 0.1);
+    --s1: #2a78d6;
+    --s1-soft: rgba(42, 120, 214, 0.1);
+    --s2: #eb6834;
+    --good: #006300;
+    --bad: #d03b3b;
+    --warn: #b97e00;
+    --warn-bg: rgba(250, 178, 25, 0.14);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --surface: #1a1a19;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --muted: #898781;
+      --grid: #2c2c2a;
+      --baseline: #383835;
+      --border: rgba(255, 255, 255, 0.1);
+      --s1: #3987e5;
+      --s1-soft: rgba(57, 135, 229, 0.16);
+      --s2: #d95926;
+      --good: #0ca30c;
+      --bad: #e66767;
+      --warn: #fab219;
+      --warn-bg: rgba(250, 178, 25, 0.12);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --grid: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255, 255, 255, 0.1);
+    --s1: #3987e5;
+    --s1-soft: rgba(57, 135, 229, 0.16);
+    --s2: #d95926;
+    --good: #0ca30c;
+    --bad: #e66767;
+    --warn: #fab219;
+    --warn-bg: rgba(250, 178, 25, 0.12);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Segoe UI", "Malgun Gothic", system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 40px 20px 72px; }
+
+  header.masthead { margin-bottom: 28px; }
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 6px;
+  }
+  h1 {
+    font-size: clamp(26px, 4.5vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+  .period { font-size: 14px; color: var(--ink-2); margin: 0; }
+  .period b { font-weight: 650; color: var(--ink); }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 650;
+    padding: 2px 9px;
+    border-radius: 999px;
+    background: var(--warn-bg);
+    color: var(--warn);
+    vertical-align: 2px;
+  }
+
+  section { margin-top: 44px; }
+  h2 {
+    font-size: 19px;
+    font-weight: 750;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+  }
+  .sub { font-size: 13.5px; color: var(--ink-2); margin: 0 0 16px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  /* KPI tiles */
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 24px;
+  }
+  @media (max-width: 720px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+  .kpi { padding: 16px 18px; }
+  .kpi .label { font-size: 13px; color: var(--ink-2); margin: 0 0 4px; }
+  .kpi .value { font-size: 30px; font-weight: 650; letter-spacing: -0.01em; line-height: 1.15; }
+  .kpi .delta { font-size: 12.5px; margin-top: 6px; font-weight: 650; }
+  .delta.up { color: var(--good); }
+  .delta.down { color: var(--bad); }
+  .delta.flagged { color: var(--warn); font-weight: 600; }
+  .kpi .note { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+
+  /* summary */
+  .lede { margin-top: 24px; padding: 18px 20px; }
+  .lede ul { margin: 0; padding-left: 18px; }
+  .lede li { margin: 4px 0; font-size: 14.5px; }
+  .lede b { font-weight: 700; }
+
+  /* chart shell */
+  .chart-shell { position: relative; }
+  .legend { display: flex; gap: 18px; align-items: center; margin: 2px 0 10px; flex-wrap: wrap; }
+  .legend .key { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--ink-2); }
+  .key .swatch-line { width: 16px; height: 0; border-top: 2.5px solid; border-radius: 2px; }
+  .key .swatch-tri {
+    width: 0; height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 7px solid var(--muted);
+  }
+  svg { display: block; width: 100%; height: auto; }
+  svg text { font-family: inherit; }
+
+  .viz-tip {
+    position: absolute;
+    pointer-events: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    border-radius: 9px;
+    padding: 9px 12px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    min-width: 150px;
+    max-width: 260px;
+    z-index: 5;
+    display: none;
+  }
+  .viz-tip .t-date { font-weight: 750; margin-bottom: 3px; }
+  .viz-tip .t-row { display: flex; align-items: baseline; gap: 7px; }
+  .viz-tip .t-key { width: 14px; border-top: 2.5px solid; border-radius: 2px; align-self: center; flex: none; }
+  .viz-tip .t-val { font-weight: 750; }
+  .viz-tip .t-name { color: var(--ink-2); }
+  .viz-tip .t-event { margin-top: 5px; padding-top: 5px; border-top: 1px solid var(--grid); color: var(--ink-2); font-size: 12px; }
+
+  /* bar lists */
+  .bars { display: flex; flex-direction: column; gap: 14px; }
+  .bar-row { outline: none; border-radius: 6px; }
+  .bar-row:focus-visible { outline: 2px solid var(--s1); outline-offset: 3px; }
+  .bar-title {
+    font-size: 13.5px;
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    min-width: 0;
+  }
+  .bar-title .name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .bar-title .meta { color: var(--muted); font-size: 12px; flex: none; }
+  .evergreen {
+    flex: none;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--good);
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    padding: 0 7px;
+    line-height: 1.6;
+  }
+  .bar-track { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+  .bar-fill {
+    height: 14px;
+    background: var(--s1);
+    border-radius: 0 4px 4px 0;
+    min-width: 2px;
+    transition: filter 0.12s ease;
+  }
+  .bar-row:hover .bar-fill, .bar-row:focus-visible .bar-fill { filter: brightness(1.15); }
+  .bar-val { font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums; flex: none; }
+  .bar-pct { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; flex: none; }
+
+  .warn-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11.5px;
+    font-weight: 650;
+    color: var(--warn);
+  }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 720px) { .split { grid-template-columns: 1fr; } }
+
+  /* stacked bar */
+  .stack { display: flex; height: 18px; border-radius: 4px; overflow: hidden; gap: 2px; margin: 10px 0 10px; }
+  .stack > div:first-child { border-radius: 4px 0 0 4px; }
+  .stack > div:last-child { border-radius: 0 4px 4px 0; }
+  .chips { display: flex; gap: 16px; flex-wrap: wrap; }
+  .chip { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--ink-2); }
+  .chip .sw { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+  .chip b { color: var(--ink); font-weight: 700; }
+
+  .ref-list { list-style: none; margin: 10px 0 0; padding: 0; }
+  .ref-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--grid);
+    font-size: 13.5px;
+  }
+  .ref-list li:last-child { border-bottom: none; }
+  .ref-list .n { font-variant-numeric: tabular-nums; font-weight: 700; }
+  .ref-list .d { color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* table */
+  .tbl-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  th {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--baseline);
+    white-space: nowrap;
+  }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--grid); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td.num { font-weight: 600; }
+  .cell-bar { display: inline-block; height: 10px; background: var(--s1); border-radius: 0 3px 3px 0; vertical-align: middle; min-width: 2px; }
+  .t-title { max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .series-tag { color: var(--muted); font-size: 12px; }
+
+  details { margin-top: 14px; }
+  summary {
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 650;
+    color: var(--ink-2);
+  }
+  summary:focus-visible { outline: 2px solid var(--s1); outline-offset: 2px; border-radius: 4px; }
+
+  /* insights */
+  .insights { display: flex; flex-direction: column; gap: 14px; }
+  .insight { padding: 16px 18px; }
+  .insight h3 { margin: 0 0 4px; font-size: 15px; font-weight: 750; }
+  .insight p { margin: 0; font-size: 14px; color: var(--ink-2); }
+  .insight p b { color: var(--ink); font-weight: 650; }
+
+  footer.notes { margin-top: 48px; font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--grid); padding-top: 16px; }
+  footer.notes p { margin: 4px 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <p class="eyebrow">yceffort.kr · GA4 성과 리포트</p>
+    <h1>최근 4주, 글 한 편이 트래픽을 끌었습니다</h1>
+    <p class="period">
+      <b>2026-07-19 ~ 08-16</b> (직전 4주 06-21 ~ 07-18과 비교) ·
+      <span class="badge">⚠ 8/10 SPA 계측 변경</span>
+      <span class="badge">⚠ 크롤러 트래픽 포함</span>
+    </p>
+  </header>
+
+  <div class="kpis">
+    <div class="card kpi">
+      <p class="label">사용자</p>
+      <div class="value">2,743</div>
+      <div class="delta down">▼ 25.8%</div>
+      <div class="note">직전 기간에 7/1 버스트 포함</div>
+    </div>
+    <div class="card kpi">
+      <p class="label">세션</p>
+      <div class="value">4,995</div>
+      <div class="delta down">▼ 3.5%</div>
+      <div class="note">직전 5,175</div>
+    </div>
+    <div class="card kpi">
+      <p class="label">페이지뷰</p>
+      <div class="value">6,928</div>
+      <div class="delta flagged">▲ 29.2% · ⚠ 계측 변경</div>
+      <div class="note">8/10 이후 직전과 비교 불가</div>
+    </div>
+    <div class="card kpi">
+      <p class="label">참여율</p>
+      <div class="value">55.0%</div>
+      <div class="delta flagged">+18.0%p · ⚠ 계측 영향</div>
+      <div class="note">평균 세션 6분 14초</div>
+    </div>
+  </div>
+
+  <div class="card lede">
+    <ul>
+      <li><b>7/22 발행된 '프론트엔드는 어디서 왔고, 에이전트 이후 어디로 가는가'가 879 조회로 압도적 1위</b>입니다. 2위(279)의 3.2배로, 이번 기간 상승분의 대부분을 설명합니다.</li>
+      <li><b>사용자 -26%는 기저효과에 가깝습니다.</b> 직전 기간의 7/1 하루 1,251명은 사용자·세션·페이지뷰가 1:1:1이라 크롤러 버스트로 추정됩니다.</li>
+      <li><b>페이지뷰·참여율 상승은 8/10 SPA page_view 계측 시작의 영향</b>이므로, 기간 비교는 사용자·세션 기준으로만 유효합니다.</li>
+    </ul>
+  </div>
+
+  <section>
+    <h2>일별 트렌드 (91일)</h2>
+    <p class="sub">스파이크는 대부분 발행일과 일치합니다. 8/10 세로선 이후 페이지뷰가 사용자와 벌어지는 구간이 계측 변경 효과입니다.</p>
+    <div class="card">
+      <div class="legend">
+        <span class="key"><span class="swatch-line" style="border-color: var(--s1)"></span>사용자</span>
+        <span class="key"><span class="swatch-line" style="border-color: var(--s2)"></span>페이지뷰</span>
+        <span class="key"><span class="swatch-tri"></span>글 발행일</span>
+      </div>
+      <div class="chart-shell" id="trend-shell">
+        <svg id="trend" role="img" aria-label="91일간 일별 사용자와 페이지뷰 추이 라인 차트" tabindex="0"></svg>
+        <div class="viz-tip" id="trend-tip"></div>
+      </div>
+      <details>
+        <summary>표로 보기 (일별 수치 전체)</summary>
+        <div class="tbl-wrap" style="max-height: 320px; overflow-y: auto; margin-top: 10px;">
+          <table id="trend-table">
+            <thead><tr><th>날짜</th><th class="num">사용자</th><th class="num">페이지뷰</th><th>메모</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <h2>인기 글 TOP 10</h2>
+    <p class="sub">최근 4주 페이지뷰 기준. 괄호는 사용자당 평균 체류 시간입니다.</p>
+    <div class="card">
+      <div class="bars" id="top-posts"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>유입 경로</h2>
+    <div class="split">
+      <div class="card">
+        <p class="sub" style="margin-bottom: 12px;"><b style="color: var(--ink);">채널별 세션</b> · 4,995 세션 기준</p>
+        <div class="bars" id="channels" style="gap: 11px;"></div>
+      </div>
+      <div class="card">
+        <p class="sub" style="margin-bottom: 2px;"><b style="color: var(--ink);">리퍼럴 상위</b> · 세션</p>
+        <ul class="ref-list">
+          <li><span class="d">surfit.io</span><span class="n">263</span></li>
+          <li><span class="d">github.com</span><span class="n">220</span></li>
+          <li><span class="d">teams.microsoft (사내 공유)</span><span class="n">23</span></li>
+          <li><span class="d">maeil-mail.kr</span><span class="n">16</span></li>
+          <li><span class="d">vercel.com</span><span class="n">13</span></li>
+        </ul>
+        <p class="sub" style="margin: 14px 0 0;">AI Assistant 채널이 처음 잡히기 시작했습니다 (15세션, gemini.google.com 등).</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>독자</h2>
+    <div class="split">
+      <div class="card">
+        <p class="sub" style="margin-bottom: 12px;"><b style="color: var(--ink);">국가별 사용자</b> · 2,743명 기준</p>
+        <div class="bars" id="countries" style="gap: 11px;"></div>
+      </div>
+      <div class="card">
+        <p class="sub" style="margin-bottom: 4px;"><b style="color: var(--ink);">신규 vs 재방문</b></p>
+        <div class="stack" role="img" aria-label="신규 사용자 76.8%, 재방문 사용자 23.2%">
+          <div style="width: 76.8%; background: var(--s1);"></div>
+          <div style="width: 23.2%; background: var(--s2);"></div>
+        </div>
+        <div class="chips">
+          <span class="chip"><span class="sw" style="background: var(--s1)"></span>신규 <b>2,450</b> (76.8%)</span>
+          <span class="chip"><span class="sw" style="background: var(--s2)"></span>재방문 <b>741</b> (23.2%)</span>
+        </div>
+        <p class="sub" style="margin: 18px 0 4px;"><b style="color: var(--ink);">기기</b></p>
+        <div class="chips">
+          <span class="chip">데스크톱 <b>2,345</b> (85.4%)</span>
+          <span class="chip">모바일 <b>394</b> (14.3%)</span>
+          <span class="chip">태블릿 <b>8</b></span>
+        </div>
+        <p class="sub" style="margin: 14px 0 0;">데스크톱 비중 85%는 업무 시간대에 읽는 개발자 독자층과 부합합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>신규 글 성과 (7~8월 발행)</h2>
+    <p class="sub">발행일 순. 조회수는 최근 4주 누적이라 발행이 늦을수록 집계 기간이 짧습니다.</p>
+    <div class="card tbl-wrap">
+      <table id="recent-table">
+        <thead>
+          <tr><th>발행</th><th>제목</th><th class="num">조회</th><th class="num">사용자</th><th></th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>인사이트</h2>
+    <div class="insights">
+      <div class="card insight">
+        <h3>에세이형 글의 순간 화력이 가장 큽니다</h3>
+        <p>상위 10개 중 6개가 AI·커리어 에세이입니다. 다만 에세이는 발행 주간에 화력이 집중되고, <b>검색으로 꾸준히 들어오는 쪽은 딥다이브</b>입니다. 2021년 AST 글이 여전히 5위(평균 체류 1분 34초)라는 점이 그 증거입니다.</p>
+      </div>
+      <div class="card insight">
+        <h3>k8s 시리즈는 1편 이후 이탈이 큽니다</h3>
+        <p>1편 233 → 2편 146(63% 유지) → 3편 23으로 급감합니다. 3~5편은 발행 후 열흘이 지났는데도 후속 유입이 약해서, <b>1편 본문에서 다음 편으로 잇는 도선(시리즈 내비게이션, 발행 시점 푸시)</b>을 점검해볼 만합니다.</p>
+      </div>
+      <div class="card insight">
+        <h3>Direct 52% + 신규 77%, 공유 기반 유입 구조입니다</h3>
+        <p>검색(32%)보다 직접·공유 유입이 큽니다. 리퍼럴 1위 surfit.io(263), 2위 github.com(220)으로 <b>커리어 플랫폼과 GitHub 인용이 실질적인 배포 채널</b>입니다. 재방문 23%는 구독 장치(푸시, RSS)가 더 일할 여지가 있다는 신호입니다.</p>
+      </div>
+      <div class="card insight">
+        <h3>크롤러 오염을 걷어내면 실사용자는 약 2,350명입니다</h3>
+        <p>싱가포르 394명은 세션이 1:1이라 크롤러로 추정되며(전체의 14%), 7/1 버스트(1,251명)도 같은 패턴입니다. <b>정기 리포트에서는 이 트래픽을 상시 제외</b>하는 편이 정확합니다. /2026/08/this-post-does-not-exist 같은 존재하지 않는 경로 유입도 소량 관측됩니다(LLM·크롤러의 추측 링크로 추정).</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>다음 글, 다음 방향</h2>
+    <p class="sub">이번 4주 데이터에서 도출한 제안입니다.</p>
+    <div class="insights">
+      <div class="card insight">
+        <h3>화력은 에세이, 지속력은 딥다이브. 이원 리듬을 유지할 것</h3>
+        <p>TOP 10의 6개가 AI·커리어 에세이(화력), 5위는 2021년 AST 딥다이브(검색 지속)입니다. 신규 77% 유입 구조에서 <b>에세이가 새 독자를 데려오고 딥다이브가 검색으로 장기 회수하는 조합</b>이 작동하고 있으니, 월 에세이 1편 + 딥다이브 1~2편 리듬이 데이터와 맞습니다.</p>
+      </div>
+      <div class="card insight">
+        <h3>다음 글감: 멀티 웹뷰 후속과 SSR 로깅 딥다이브</h3>
+        <p>8/16 발행한 멀티 웹뷰 글의 후속(관측, 인증 등)과 보류 중인 SSR 로깅 성능 딥다이브가 우선순위입니다. 둘 다 <b>실측·장애 경험 기반이라 AI가 대체 못 하는 유형</b>이고, 이번 기간 성과 상위가 정확히 그 유형이었습니다. 단, k8s 시리즈의 이탈 데이터(1편 233 → 3편 23)를 볼 때 <b>5편 시리즈보다 1~2편 완결형</b>을 권합니다.</p>
+      </div>
+      <div class="card insight">
+        <h3>AI Assistant 유입과 GitHub 인용을 겨냥한 레퍼런스형을 늘릴 것</h3>
+        <p>AI Assistant 채널이 처음 잡혔고(15세션), github.com 리퍼럴이 220세션입니다. <b>"AI가 이 글을 참고해야 답할 수 있는 글" 전략이 실제 유입으로 나타나기 시작</b>한 신호이므로, 실측 수치·재현 절차가 있는 레퍼런스형 글(린트 규칙, 보안 분석, 마이그레이션 기록)의 비중을 늘릴 근거가 생겼습니다.</p>
+      </div>
+      <div class="card insight">
+        <h3>다음 분기 과제는 재방문 23%를 끌어올리는 것</h3>
+        <p>Direct 52% + 신규 77%는 화력이 발행 주간에만 몰린다는 뜻이기도 합니다. 이미 구축된 웹 푸시와 시리즈 내비게이션이 <b>초동 화력과 후속편 유지율에 실제 기여하는지</b>를 다음 월간 리포트에서 측정 항목으로 추가하는 것을 제안합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="notes">
+    <p>데이터: GA4 Data API (yceffort.kr, G-ND58S24JBX) · 생성 2026-08-16 · 8/16은 집계 중이라 수치가 낮습니다.</p>
+    <p>8/10 이전 페이지뷰는 SPA 라우팅 미집계 상태라 이후와 직접 비교할 수 없습니다. 참여율·평균 세션 시간도 같은 영향을 받습니다.</p>
+  </footer>
+</div>
+
+<script>
+  // ── data ──────────────────────────────────────────────
+  // [MM/DD, users, pageviews]
+  const DAILY = [
+    ["5/17",54,108],["5/18",99,144],["5/19",103,147],["5/20",82,110],["5/21",94,132],
+    ["5/22",92,125],["5/23",41,52],["5/24",40,61],["5/25",43,102],["5/26",94,174],
+    ["5/27",159,212],["5/28",81,103],["5/29",72,102],["5/30",35,72],["5/31",30,53],
+    ["6/1",59,104],["6/2",44,92],["6/3",44,70],["6/4",75,107],["6/5",91,135],
+    ["6/6",65,78],["6/7",39,60],["6/8",80,122],["6/9",117,196],["6/10",72,124],
+    ["6/11",90,135],["6/12",70,142],["6/13",72,94],["6/14",35,50],["6/15",322,409],
+    ["6/16",445,614],["6/17",282,375],["6/18",176,241],["6/19",132,152],["6/20",64,93],
+    ["6/21",87,129],["6/22",179,254],["6/23",175,266],["6/24",143,212],["6/25",468,528],
+    ["6/26",108,173],["6/27",66,78],["6/28",56,85],["6/29",90,137],["6/30",104,154],
+    ["7/1",1251,1299],["7/2",97,140],["7/3",90,121],["7/4",48,69],["7/5",60,82],
+    ["7/6",109,167],["7/7",117,174],["7/8",119,149],["7/9",121,153],["7/10",111,149],
+    ["7/11",72,94],["7/12",63,85],["7/13",86,128],["7/14",108,147],["7/15",100,133],
+    ["7/16",75,138],["7/17",37,64],["7/18",35,55],["7/19",34,52],["7/20",72,101],
+    ["7/21",75,100],["7/22",100,165],["7/23",95,154],["7/24",262,367],["7/25",99,129],
+    ["7/26",134,185],["7/27",361,533],["7/28",168,219],["7/29",139,242],["7/30",150,203],
+    ["7/31",116,147],["8/1",64,85],["8/2",47,72],["8/3",117,182],["8/4",149,204],
+    ["8/5",124,281],["8/6",86,219],["8/7",174,238],["8/8",60,81],["8/9",60,150],
+    ["8/10",178,577],["8/11",126,605],["8/12",115,408],["8/13",118,438],["8/14",104,518],
+    ["8/15",50,100],["8/16",29,173]
+  ];
+  const EVENTS = {
+    "6/12": "발행: 코드를 읽거나 설명할 줄 몰라도… · AI가 경계를 지운다면",
+    "6/21": "발행: 마지막으로 코드를 진지하게 읽은 게 언제인가",
+    "7/1": "크롤러 버스트 추정 (사용자 ≈ 세션 ≈ PV, 1:1:1)",
+    "7/22": "발행: 프론트엔드는 어디서 왔고… · 성능 Deep Dive 출간 소식",
+    "8/3": "발행: Node.js 파드 사이징",
+    "8/5": "발행: k8s 시리즈 1·2편",
+    "8/6": "발행: k8s 시리즈 3편",
+    "8/8": "발행: k8s 시리즈 4편",
+    "8/10": "발행: k8s 5편 · 인터뷰 모집 · TS7 마이그레이션 / SPA page_view 계측 시작",
+    "8/11": "발행: number-flow 이식기",
+    "8/12": "발행: 서비스 워커 캐싱 1편",
+    "8/13": "발행: 서비스 워커 캐싱 2편",
+    "8/15": "발행: framer-motion 프레임드랍"
+  };
+  const PUB_DATES = Object.keys(EVENTS).filter((d) => EVENTS[d].startsWith("발행"));
+
+  const TOP_POSTS = [
+    {t: "프론트엔드는 어디서 왔고, 에이전트 이후 어디로 가는가", pv: 879, u: 725, eng: 107},
+    {t: "코드를 읽거나 설명할 줄 몰라도, 스펙을 만족하면 상관없을까", pv: 279, u: 231, eng: 95},
+    {t: "프론트엔드 개발자를 위한 쿠버네티스 개념 지도 (k8s 1편)", pv: 233, u: 155, eng: 103},
+    {t: "내 Next.js 앱은 어떻게 파드가 되는가 (k8s 2편)", pv: 146, u: 128, eng: 94},
+    {t: "자바스크립트 개발자를 위한 AST 이해하기", pv: 126, u: 105, eng: 94, evergreen: "2021"},
+    {t: "『프런트엔드 성능 최적화 Deep Dive』 출간 소식", pv: 124, u: 189, eng: 28},
+    {t: "AI가 기획·개발·디자인의 경계를 지운다면, 무엇이 남는가", pv: 95, u: 106, eng: 111},
+    {t: "typescript@7을 설치하면 벌어지는 일들", pv: 93, u: 50, eng: 49},
+    {t: "마지막으로 코드를 진지하게 읽은 게 언제인가", pv: 87, u: 142, eng: 78},
+    {t: "책을 쓰고 있습니다: 인터뷰이 모집", pv: 82, u: 53, eng: 21}
+  ];
+
+  const CHANNELS = [
+    {t: "Direct", v: 2603, pct: "52.1%"},
+    {t: "Organic Search", v: 1594, pct: "31.9%"},
+    {t: "Referral", v: 597, pct: "12.0%"},
+    {t: "Unassigned", v: 75, pct: "1.5%"},
+    {t: "AI Assistant", v: 15, pct: "0.3%"}
+  ];
+
+  const COUNTRIES = [
+    {t: "한국", v: 1941, pct: "70.8%"},
+    {t: "싱가포르", v: 394, pct: "14.4%", warn: "크롤러 추정"},
+    {t: "중국", v: 104, pct: "3.8%"},
+    {t: "미국", v: 84, pct: "3.1%"},
+    {t: "독일", v: 24, pct: "0.9%"}
+  ];
+
+  const RECENT = [
+    {d: "7/22", t: "프론트엔드는 어디서 왔고, 에이전트 이후 어디로 가는가", pv: 879, u: 725},
+    {d: "7/22", t: "『프런트엔드 성능 최적화 Deep Dive』 출간 소식", pv: 124, u: 189},
+    {d: "8/3", t: "Node.js 파드는 왜 그 크기인가: 파드 사이징 실측", pv: 53, u: 40},
+    {d: "8/5", t: "쿠버네티스 개념 지도", series: "k8s 1편", pv: 233, u: 155},
+    {d: "8/5", t: "내 Next.js 앱은 어떻게 파드가 되는가", series: "k8s 2편", pv: 146, u: 128},
+    {d: "8/6", t: "트래픽은 어떻게 내 파드에 도착하는가", series: "k8s 3편", pv: 23, u: 15},
+    {d: "8/8", t: "파드는 어떻게 종료되는가", series: "k8s 4편", pv: 13, u: 11},
+    {d: "8/10", t: "오토스케일링은 자동이지만 즉시가 아니다", series: "k8s 5편", pv: 16, u: 12},
+    {d: "8/10", t: "책을 쓰고 있습니다: 인터뷰이 모집", pv: 82, u: 53},
+    {d: "8/10", t: "typescript@7을 설치하면 벌어지는 일들", pv: 93, u: 50},
+    {d: "8/11", t: "number-flow를 구형 브라우저로 이식하기", pv: 43, u: 14},
+    {d: "8/12", t: "서비스 워커 캐싱의 동작 원리", series: "SW 1편", pv: 12, u: 2},
+    {d: "8/13", t: "서비스 워커 캐싱 적용기", series: "SW 2편", pv: 3, u: 1},
+    {d: "8/15", t: "framer-motion 배너에서 프레임드랍 없애기", pv: 3, u: 2}
+  ];
+  const fmt = (n) => n.toLocaleString("en-US");
+  const fmtEng = (s) => `${Math.floor(s / 60)}분 ${String(s % 60).padStart(2, "0")}초`;
+  const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+  // ── trend chart ───────────────────────────────────────
+  const shell = document.getElementById("trend-shell");
+  const svg = document.getElementById("trend");
+  const tip = document.getElementById("trend-tip");
+  const NS = "http://www.w3.org/2000/svg";
+  const YMAX = 1300;
+  const M = {l: 46, r: 14, t: 18, b: 40};
+  let geom = null;
+
+  function el(name, attrs, parent) {
+    const node = document.createElementNS(NS, name);
+    for (const k in attrs) node.setAttribute(k, attrs[k]);
+    parent.appendChild(node);
+    return node;
+  }
+
+  function renderTrend() {
+    const W = Math.max(shell.clientWidth, 320);
+    const H = W < 560 ? 240 : 300;
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    svg.setAttribute("width", W);
+    svg.setAttribute("height", H);
+    svg.textContent = "";
+
+    const iw = W - M.l - M.r;
+    const ih = H - M.t - M.b;
+    const x = (i) => M.l + (i / (DAILY.length - 1)) * iw;
+    const y = (v) => M.t + ih - (v / YMAX) * ih;
+    geom = {x, y, W, H};
+
+    const grid = css("--grid"), baseline = css("--baseline"), muted = css("--muted");
+    const s1 = css("--s1"), s2 = css("--s2"), surface = css("--surface"), ink2 = css("--ink-2");
+
+    // y grid + ticks
+    for (const v of [0, 250, 500, 750, 1000, 1250]) {
+      el("line", {x1: M.l, x2: W - M.r, y1: y(v), y2: y(v), stroke: v === 0 ? baseline : grid, "stroke-width": 1}, svg);
+      if (v > 0) el("text", {x: M.l - 8, y: y(v) + 4, "text-anchor": "end", "font-size": 10.5, fill: muted}, svg).textContent = fmt(v);
+    }
+
+    // x ticks: 월 시작 + 양 끝
+    DAILY.forEach((d, i) => {
+      const isTick = d[0] === "6/1" || d[0] === "7/1" || d[0] === "8/1" || i === 0 || i === DAILY.length - 1;
+      if (isTick) el("text", {x: x(i), y: H - M.b + 16, "text-anchor": "middle", "font-size": 10.5, fill: muted}, svg).textContent = d[0];
+    });
+
+    // 8/10 계측 변경 세로선
+    const narrow = W < 560;
+    const i810 = DAILY.findIndex((d) => d[0] === "8/10");
+    el("line", {x1: x(i810), x2: x(i810), y1: M.t - 4, y2: M.t + ih, stroke: muted, "stroke-width": 1}, svg);
+    el("text", {x: x(i810) - 6, y: M.t + 6, "text-anchor": "end", "font-size": 10.5, "font-weight": 650, fill: ink2}, svg).textContent = narrow ? "계측 시작" : "8/10 SPA 계측 시작";
+
+    // 발행 플래그 (베이스라인 위 삼각형)
+    for (const d of PUB_DATES) {
+      const i = DAILY.findIndex((r) => r[0] === d);
+      if (i < 0) continue;
+      const cx = x(i), cy = M.t + ih;
+      el("path", {d: `M ${cx} ${cy - 7} L ${cx - 4.5} ${cy} L ${cx + 4.5} ${cy} Z`, fill: muted}, svg);
+    }
+
+    // 라인 (pv 먼저, users 위에)
+    const path = (idx) => DAILY.map((d, i) => `${i ? "L" : "M"} ${x(i).toFixed(1)} ${y(d[idx]).toFixed(1)}`).join(" ");
+    el("path", {d: path(2), fill: "none", stroke: s2, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round"}, svg);
+    el("path", {d: path(1), fill: "none", stroke: s1, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round"}, svg);
+
+    // 7/1 주석 (좁은 화면에서는 툴팁으로만 제공)
+    if (!narrow) {
+      const i701 = DAILY.findIndex((d) => d[0] === "7/1");
+      el("line", {x1: x(i701) + 4, y1: y(1251) - 4, x2: x(i701) + 30, y2: y(1251) - 18, stroke: muted, "stroke-width": 1}, svg);
+      el("text", {x: x(i701) + 34, y: y(1251) - 14, "font-size": 10.5, "font-weight": 650, fill: ink2}, svg).textContent = "7/1 크롤러 버스트 추정 (1,251)";
+    }
+
+    // 끝점 마커 (서피스 링)
+    const last = DAILY.length - 1;
+    for (const [idx, color] of [[2, s2], [1, s1]]) {
+      el("circle", {cx: x(last), cy: y(DAILY[last][idx]), r: 6, fill: surface}, svg);
+      el("circle", {cx: x(last), cy: y(DAILY[last][idx]), r: 4, fill: color}, svg);
+    }
+
+    // 크로스헤어 (숨김 상태로 준비)
+    el("line", {id: "xhair", x1: 0, x2: 0, y1: M.t, y2: M.t + ih, stroke: baseline, "stroke-width": 1, visibility: "hidden"}, svg);
+  }
+
+  let tipIdx = -1;
+  function showTip(i) {
+    tipIdx = i;
+    const d = DAILY[i];
+    const xh = svg.querySelector("#xhair");
+    xh.setAttribute("x1", geom.x(i));
+    xh.setAttribute("x2", geom.x(i));
+    xh.setAttribute("visibility", "visible");
+
+    tip.textContent = "";
+    const dt = document.createElement("div");
+    dt.className = "t-date";
+    dt.textContent = `2026년 ${d[0].replace("/", "월 ")}일` + (i === DAILY.length - 1 ? " (집계 중)" : "");
+    tip.appendChild(dt);
+    for (const [label, v, colorVar] of [["사용자", d[1], "--s1"], ["페이지뷰", d[2], "--s2"]]) {
+      const row = document.createElement("div");
+      row.className = "t-row";
+      const key = document.createElement("span");
+      key.className = "t-key";
+      key.style.borderColor = css(colorVar);
+      const val = document.createElement("span");
+      val.className = "t-val";
+      val.textContent = fmt(v);
+      const name = document.createElement("span");
+      name.className = "t-name";
+      name.textContent = label;
+      row.append(key, val, name);
+      tip.appendChild(row);
+    }
+    if (EVENTS[d[0]]) {
+      const ev = document.createElement("div");
+      ev.className = "t-event";
+      ev.textContent = EVENTS[d[0]];
+      tip.appendChild(ev);
+    }
+    tip.style.display = "block";
+    const shellRect = shell.getBoundingClientRect();
+    const px = geom.x(i);
+    const flip = px > shellRect.width * 0.62;
+    tip.style.left = flip ? "" : `${px + 14}px`;
+    tip.style.right = flip ? `${shellRect.width - px + 14}px` : "";
+    tip.style.top = "24px";
+  }
+  function hideTip() {
+    tipIdx = -1;
+    tip.style.display = "none";
+    const xh = svg.querySelector("#xhair");
+    if (xh) xh.setAttribute("visibility", "hidden");
+  }
+  svg.addEventListener("pointermove", (e) => {
+    const rect = svg.getBoundingClientRect();
+    const px = e.clientX - rect.left;
+    const ratio = (px - M.l) / (rect.width - M.l - M.r);
+    const i = Math.round(ratio * (DAILY.length - 1));
+    if (i < 0 || i > DAILY.length - 1) return hideTip();
+    showTip(i);
+  });
+  svg.addEventListener("pointerleave", hideTip);
+  svg.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); showTip(Math.min(DAILY.length - 1, tipIdx < 0 ? DAILY.length - 1 : tipIdx + 1)); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); showTip(Math.max(0, tipIdx < 0 ? DAILY.length - 1 : tipIdx - 1)); }
+    else if (e.key === "Escape") hideTip();
+  });
+  svg.addEventListener("blur", hideTip);
+
+  new ResizeObserver(() => { hideTip(); renderTrend(); }).observe(shell);
+  const mq = window.matchMedia("(prefers-color-scheme: dark)");
+  if (mq.addEventListener) mq.addEventListener("change", renderTrend);
+  renderTrend();
+
+  // trend table
+  {
+    const tbody = document.querySelector("#trend-table tbody");
+    for (const d of DAILY) {
+      const tr = document.createElement("tr");
+      const cells = [d[0], fmt(d[1]), fmt(d[2]), EVENTS[d[0]] || ""];
+      cells.forEach((c, ci) => {
+        const td = document.createElement("td");
+        if (ci === 1 || ci === 2) td.className = "num";
+        if (ci === 3) td.style.color = "var(--muted)";
+        td.textContent = c;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    }
+  }
+
+  // ── bar lists ─────────────────────────────────────────
+  function barList(rootId, rows, {max, unit, valOf, pctOf, metaOf, warnOf, badgeOf}) {
+    const root = document.getElementById(rootId);
+    rows.forEach((r) => {
+      const row = document.createElement("div");
+      row.className = "bar-row";
+      row.tabIndex = 0;
+      row.setAttribute("role", "img");
+
+      const titleLine = document.createElement("div");
+      titleLine.className = "bar-title";
+      const name = document.createElement("span");
+      name.className = "name";
+      name.textContent = r.t;
+      name.title = r.t;
+      titleLine.appendChild(name);
+      if (badgeOf && badgeOf(r)) {
+        const b = document.createElement("span");
+        b.className = "evergreen";
+        b.textContent = badgeOf(r);
+        titleLine.appendChild(b);
+      }
+      if (warnOf && warnOf(r)) {
+        const w = document.createElement("span");
+        w.className = "warn-inline";
+        w.textContent = "⚠ " + warnOf(r);
+        titleLine.appendChild(w);
+      }
+      if (metaOf && metaOf(r)) {
+        const m = document.createElement("span");
+        m.className = "meta";
+        m.textContent = metaOf(r);
+        titleLine.appendChild(m);
+      }
+
+      const track = document.createElement("div");
+      track.className = "bar-track";
+      const fill = document.createElement("div");
+      fill.className = "bar-fill";
+      fill.style.width = `${Math.max((valOf(r) / max) * 72, 0.5)}%`;
+      const val = document.createElement("span");
+      val.className = "bar-val";
+      val.textContent = fmt(valOf(r));
+      track.append(fill, val);
+      if (pctOf && pctOf(r)) {
+        const p = document.createElement("span");
+        p.className = "bar-pct";
+        p.textContent = pctOf(r);
+        track.appendChild(p);
+      }
+      row.setAttribute("aria-label", `${r.t}: ${fmt(valOf(r))}${unit}${metaOf && metaOf(r) ? ", " + metaOf(r) : ""}`);
+      row.append(titleLine, track);
+      root.appendChild(row);
+    });
+  }
+
+  barList("top-posts", TOP_POSTS, {
+    max: 879,
+    unit: "회",
+    valOf: (r) => r.pv,
+    metaOf: (r) => `사용자 ${fmt(r.u)} · 체류 ${fmtEng(r.eng)}`,
+    badgeOf: (r) => r.evergreen ? `에버그린 ${r.evergreen}` : null
+  });
+
+  barList("channels", CHANNELS, {
+    max: 2603,
+    unit: "세션",
+    valOf: (r) => r.v,
+    pctOf: (r) => r.pct
+  });
+
+  barList("countries", COUNTRIES, {
+    max: 1941,
+    unit: "명",
+    valOf: (r) => r.v,
+    pctOf: (r) => r.pct,
+    warnOf: (r) => r.warn || null
+  });
+
+  // ── recent posts table ────────────────────────────────
+  {
+    const tbody = document.querySelector("#recent-table tbody");
+    RECENT.forEach((r) => {
+      const tr = document.createElement("tr");
+
+      const tdD = document.createElement("td");
+      tdD.textContent = r.d;
+      tdD.style.whiteSpace = "nowrap";
+      tdD.style.color = "var(--ink-2)";
+
+      const tdT = document.createElement("td");
+      tdT.className = "t-title";
+      tdT.title = r.t;
+      tdT.textContent = r.t + " ";
+      if (r.series) {
+        const s = document.createElement("span");
+        s.className = "series-tag";
+        s.textContent = `· ${r.series}`;
+        tdT.appendChild(s);
+      }
+
+      const tdPv = document.createElement("td");
+      tdPv.className = "num";
+      tdPv.textContent = fmt(r.pv);
+
+      const tdU = document.createElement("td");
+      tdU.className = "num";
+      tdU.style.color = "var(--ink-2)";
+      tdU.textContent = fmt(r.u);
+
+      const tdBar = document.createElement("td");
+      tdBar.style.width = "120px";
+      const bar = document.createElement("span");
+      bar.className = "cell-bar";
+      bar.style.width = `${Math.max((r.pv / 879) * 110, 2)}px`;
+      tdBar.appendChild(bar);
+
+      tr.append(tdD, tdT, tdPv, tdU, tdBar);
+      tbody.appendChild(tr);
+    });
+  }
+</script>
