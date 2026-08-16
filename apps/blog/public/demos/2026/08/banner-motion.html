@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>배너 모션 4종 비교: 원본 · 재구현1 · 재구현2 · CSS only</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #fff;
+        --fg: #111827;
+        --muted: #6b7280;
+        --line: #e5e7eb;
+        --accent: #4f46e5;
+        --card-bg: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        --chart-bg: #f8fafc;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #111827;
+          --fg: #f9fafb;
+          --muted: #9ca3af;
+          --line: #374151;
+          --card-bg: linear-gradient(135deg, #1e3a8a, #1e40af);
+          --chart-bg: #1f2937;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+        font-size: 14px;
+      }
+      .panel {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        padding: 10px 12px 8px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--line);
+      }
+      .row-controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+      }
+      button {
+        font: inherit;
+        font-size: 13px;
+        padding: 5px 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--bg);
+        color: var(--fg);
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+      select {
+        font: inherit;
+        font-size: 13px;
+        padding: 5px 6px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--bg);
+        color: var(--fg);
+      }
+      button .dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        margin-right: 5px;
+        vertical-align: 0;
+      }
+      .stats {
+        font-variant-numeric: tabular-nums;
+        color: var(--muted);
+        font-size: 12px;
+        margin-left: auto;
+      }
+      .stats b {
+        color: var(--fg);
+      }
+      .stats .bad {
+        color: #e03131;
+        font-weight: 700;
+      }
+      /* 메인 스레드가 멈추면 같이 멈추는 공. rAF 로 움직이므로 잰크가 눈에 보인다. */
+      .lane {
+        flex: 0 1 90px;
+        min-width: 70px;
+        height: 12px;
+        border-radius: 6px;
+        background: color-mix(in srgb, var(--line) 50%, transparent);
+        position: relative;
+        overflow: hidden;
+      }
+      .ball {
+        position: absolute;
+        top: 2px;
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        background: var(--accent);
+        will-change: transform;
+      }
+      .chart-wrap {
+        margin-top: 8px;
+      }
+      .chart-wrap svg {
+        display: block;
+        width: 100%;
+        height: 96px;
+        background: var(--chart-bg);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+      .chart-wrap .grid {
+        stroke: var(--line);
+        stroke-width: 0.3;
+        vector-effect: non-scaling-stroke;
+      }
+      .chart-wrap polyline.curve {
+        fill: none;
+        stroke-width: 2;
+        vector-effect: non-scaling-stroke;
+      }
+      .chart-note {
+        margin-top: 4px;
+        font-size: 11px;
+        color: var(--muted);
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .note {
+        padding: 6px 12px 10px;
+        font-size: 12px;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+      .note p {
+        margin: 6px 0 0;
+      }
+      .note ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .note li {
+        margin: 2px 0;
+      }
+      .note li b {
+        display: inline-block;
+        min-width: 64px;
+        color: var(--fg);
+      }
+      .banner-wrapper {
+        height: 0;
+      }
+      .banner {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin: 8px 16px;
+        padding: 16px 20px;
+        min-height: 152px;
+        border-radius: 16px;
+        background: var(--card-bg);
+        opacity: 0;
+        transform: scale(0.96);
+        overflow: hidden;
+      }
+      .banner .text {
+        flex: 1;
+        min-width: 0;
+      }
+      .banner h2 {
+        margin: 0 0 6px;
+        font-size: 16px;
+      }
+      .banner p {
+        margin: 0;
+        color: var(--muted);
+      }
+      .banner img {
+        width: 150px;
+        height: 150px;
+        flex: none;
+      }
+      .rows {
+        padding: 8px 16px;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .thumb {
+        width: 32px;
+        height: 32px;
+        border-radius: 9px;
+        background: var(--line);
+        flex: none;
+      }
+      .grow {
+        flex: 1;
+        min-width: 0;
+      }
+      .title {
+        font-weight: 600;
+      }
+      .sub,
+      .delta {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .amount {
+        font-weight: 600;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="panel">
+      <div class="row-controls">
+        <button data-mode="original">
+          <span class="dot" style="background: #e03131"></span>원본
+        </button>
+        <button data-mode="reimpl">
+          <span class="dot" style="background: #1b64da"></span>재구현1
+        </button>
+        <button data-mode="fixed">
+          <span class="dot" style="background: #12b886"></span>재구현2
+        </button>
+        <button data-mode="css">
+          <span class="dot" style="background: #f59f00"></span>CSS only
+        </button>
+        <button id="clear">지우기</button>
+        <select
+          id="load"
+          title="매 프레임 메인 스레드를 태워 저사양 기기를 흉내 낸다"
+        >
+          <option value="0">부하 없음</option>
+          <option value="14">부하 중</option>
+          <option value="22">부하 강</option>
+        </select>
+        <span class="lane"><span class="ball" id="ball"></span></span>
+        <span class="stats" id="stats">버튼을 누르면 0.8초간 계측한다</span>
+      </div>
+      <div class="chart-wrap">
+        <svg
+          id="chart"
+          viewBox="0 0 100 40"
+          preserveAspectRatio="none"
+          aria-label="밀림 곡선 비교"
+        >
+          <line class="grid" x1="0" x2="100" y1="20" y2="20" />
+          <line class="grid" x1="12.5" x2="12.5" y1="0" y2="40" />
+          <line class="grid" x1="50" x2="50" y1="0" y2="40" />
+        </svg>
+        <div class="chart-note">
+          <span
+            >아래 목록의 이동 곡선. 세로 = 밀림 진행률, 세로선 = 100ms ·
+            400ms</span
+          >
+          <span>가로 0 → 800ms</span>
+        </div>
+      </div>
+    </div>
+    <div class="note">
+      <ul>
+        <li><b>원본</b> rAF로 매 프레임 height를 쓴다. 매 프레임 리플로우.</li>
+        <li>
+          <b>재구현1</b> 1차 재구현의 재현. 곡선은 같은데 100ms 일찍 출발.
+        </li>
+        <li>
+          <b>재구현2</b> height는 100ms에 한 계단, 밀림은 transform (JS 타이머).
+        </li>
+        <li>
+          <b>CSS only</b> 같은 계단을 CSS 지연 transition + ResizeObserver로.
+        </li>
+      </ul>
+      <p>공은 매 프레임 JS로 움직인다. 메인 스레드가 밀리면 공이 멈칫한다.</p>
+      <p>
+        <b>부하</b>는 저사양 기기를 흉내 내는 눈 비교용 장치다. 켜면 공은 어느
+        모드든 덜컹이지만, 원본은 목록까지 같이 끊기고 계단 방식(재구현2·CSS
+        only)의 목록은 컴포지터에서 돌아 그대로 미끄러진다. 부하 중에는 곡선을
+        그리지 않는다.
+      </p>
+      <p>
+        드랍 수치의 차이까지 보려면 DevTools의 CPU 스로틀(4~6x)이 확실하다. 부하
+        없음에서 계단 방식이 1~2 드랍 나오는 건 레이어 승격 비용이 한 번에
+        몰려서다. 이 우열이 뒤집히는 조건(무거운 문서, 빠듯한 프레임 예산)이 곧
+        이 기법을 쓸 조건이다.
+      </p>
+    </div>
+
+    <div class="banner-wrapper" id="wrapper">
+      <div class="banner" id="card">
+        <div class="text">
+          <h2>새로운 혜택이 도착했어요</h2>
+          <p>
+            이 카드가 등장하는 0.6초 동안, 아래 목록 전체가 매 프레임 다시
+            배치될 수도, 한 번만 배치될 수도 있다.
+          </p>
+        </div>
+        <!-- 실제 배너처럼 용량이 큰 이미지 (노이즈 PNG, 약 930KB) -->
+        <img src="./banner-image.png" alt="" width="150" height="150" />
+      </div>
+    </div>
+
+    <div class="rows" id="rows"></div>
+
+    <script>
+      // ── 아래 콘텐츠 (일부러 많다: 리플로우 비용은 문서 크기에 비례) ──
+      const rows = document.getElementById("rows");
+      const ROW_COUNT = 1200;
+      let html = "";
+      for (let i = 0; i < ROW_COUNT; i++) {
+        html +=
+          '<div class="row"><div class="thumb"></div>' +
+          '<div class="grow"><div class="title">항목 ' +
+          (i + 1) +
+          "</div>" +
+          '<div class="sub">부가 설명이 붙는 두 번째 줄</div></div>' +
+          '<div><div class="amount">' +
+          (1234567 - i * 811).toLocaleString() +
+          "원</div>" +
+          '<div class="delta">' +
+          (i % 3 === 0 ? "▲" : "▼") +
+          " " +
+          ((i % 17) + 0.4) +
+          "%</div></div></div>";
+      }
+      rows.innerHTML = html;
+
+      // ── 타임라인: 실측으로 확인한 원본 값 그대로 ──
+      const HEIGHT_DELAY = 100;
+      const DURATION = 300;
+      const EASE_CSS = "cubic-bezier(0.25, 0.1, 0.35, 1)"; // framer 비-transform 기본 곡선
+      const SCALE_EASE = "cubic-bezier(0.47, 0, 0.23, 1.38)";
+      const CARD_TRANSITION =
+        "opacity " +
+        DURATION +
+        "ms " +
+        EASE_CSS +
+        " 300ms, " +
+        "transform " +
+        DURATION +
+        "ms " +
+        SCALE_EASE +
+        " 300ms";
+      const PUSH_TRANSITION = "transform " + DURATION + "ms " + EASE_CSS;
+
+      // cubic-bezier 를 JS 에서 푸는 표준 구현 (이분법)
+      function cubicBezier(x1, y1, x2, y2) {
+        const bx = (t) =>
+          3 * t * (1 - t) * (1 - t) * x1 + 3 * t * t * (1 - t) * x2 + t * t * t;
+        const by = (t) =>
+          3 * t * (1 - t) * (1 - t) * y1 + 3 * t * t * (1 - t) * y2 + t * t * t;
+        return (x) => {
+          if (x <= 0) return 0;
+          if (x >= 1) return 1;
+          let lo = 0,
+            hi = 1;
+          for (let i = 0; i < 24; i++) {
+            const mid = (lo + hi) / 2;
+            if (bx(mid) < x) lo = mid;
+            else hi = mid;
+          }
+          return by((lo + hi) / 2);
+        };
+      }
+      const heightEase = cubicBezier(0.25, 0.1, 0.35, 1);
+
+      const wrapper = document.getElementById("wrapper");
+      const card = document.getElementById("card");
+      const statsEl = document.getElementById("stats");
+      const chart = document.getElementById("chart");
+      const buttons = [...document.querySelectorAll("button[data-mode]")];
+      const COLORS = {
+        original: "#e03131",
+        reimpl: "#1b64da",
+        fixed: "#12b886",
+        css: "#f59f00",
+      };
+      const LABELS = {
+        original: "원본",
+        reimpl: "재구현1",
+        fixed: "재구현2",
+        css: "CSS only",
+      };
+      const RECORD_MS = 800;
+      let running = false;
+      const curves = {};
+
+      // ── 잰크 공: 항상 rAF 로 움직인다. 메인 스레드가 막히면 같이 멈춘다. ──
+      const ball = document.getElementById("ball");
+      const lane = ball.parentElement;
+      requestAnimationFrame(function moveBall(now) {
+        const range = lane.clientWidth - 10;
+        const p = (Math.sin(now / 300) + 1) / 2;
+        ball.style.transform = "translateX(" + (p * range).toFixed(1) + "px)";
+        requestAnimationFrame(moveBall);
+      });
+
+      // ── 인위적 부하: 매 프레임 메인 스레드를 지정한 ms 만큼 태워 저사양 기기를 흉내 ──
+      // 눈 비교 전용이다. 메인 스레드가 끊기는 동안에도 컴포지터에서 도는 계단 방식의
+      // 밀림만 살아남는 대비를 보여준다. 드랍 "수치"의 대비를 인위 부하로 만드는 것은
+      // 예산 경계에 걸려 머신 상태에 따라 널뛰므로 여기서는 하지 않는다. 수치 재현은
+      // 실제 작업 비용 자체를 곱하는 DevTools CPU 스로틀의 몫이다.
+      let loadMs = 0;
+      requestAnimationFrame(function burn() {
+        if (loadMs > 0) {
+          const end = performance.now() + loadMs;
+          while (performance.now() < end) {
+            /* busy-wait */
+          }
+        }
+        requestAnimationFrame(burn);
+      });
+      const loadSelect = document.getElementById("load");
+      loadSelect.addEventListener("change", () => {
+        loadMs = Number(loadSelect.value);
+      });
+
+      const rowsTop = () => rows.getBoundingClientRect().top;
+
+      // ── 위치 곡선 + 프레임 통계를 함께 기록 ──
+      // 부하가 켜져 있으면 위치(rect)를 읽지 않는다. rect 읽기는 강제 동기 레이아웃이라
+      // 드랍 수치를 오염시킨다. 곡선은 부하 없음에서, 드랍 비교는 부하 상태에서 본다.
+      function record(durationMs, withCurve) {
+        return new Promise((resolve) => {
+          const samples = [];
+          const start = performance.now();
+          requestAnimationFrame(function tick(now) {
+            samples.push({ t: now - start, y: withCurve ? rowsTop() : 0 });
+            if (now - start < durationMs) return requestAnimationFrame(tick);
+            resolve({ samples, start });
+          });
+        });
+      }
+
+      // rAF 는 같은 프레임의 ResizeObserver 보다 먼저 실행돼, 계단 프레임에서
+      // "페인트된 적 없는" 위치가 한 프레임 잡힌다. median-of-3 으로 걷어낸다.
+      function despike(samples) {
+        return samples.map((s, i) => {
+          if (i === 0 || i === samples.length - 1) return s;
+          const v = [samples[i - 1].y, s.y, samples[i + 1].y].sort(
+            (a, b) => a - b,
+          )[1];
+          return { t: s.t, y: v };
+        });
+      }
+
+      function frameStats(samples) {
+        const gaps = samples.slice(1).map((s, i) => s.t - samples[i].t);
+        const median =
+          [...gaps].sort((a, b) => a - b)[Math.floor(gaps.length / 2)] || 16.7;
+        // 중앙값을 그대로 baseline 으로 쓰면 모든 프레임이 균일하게 느려졌을 때
+        // (부하 강) baseline 이 같이 늘어나 "드랍 0" 으로 나온다. 60Hz 예산으로
+        // 클램프한다. 120Hz 기기는 중앙값이 더 작으므로 그대로 쓰인다.
+        const baseline = Math.min(median, 17);
+        const dropped = gaps.reduce(
+          (n, g) => (g > baseline * 1.5 ? n + Math.round(g / baseline) - 1 : n),
+          0,
+        );
+        return { frames: samples.length, dropped, longest: Math.max(...gaps) };
+      }
+
+      function drawCurves() {
+        [...chart.querySelectorAll(".curve")].forEach((el) => el.remove());
+        for (const [mode, samples] of Object.entries(curves)) {
+          const from = samples[0].y;
+          const to = samples[samples.length - 1].y;
+          const dist = to - from || 1;
+          const points = samples
+            .map(
+              (s) =>
+                ((s.t / RECORD_MS) * 100).toFixed(2) +
+                "," +
+                ((1 - (s.y - from) / dist) * 40).toFixed(2),
+            )
+            .join(" ");
+          const line = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "polyline",
+          );
+          line.setAttribute("points", points);
+          line.setAttribute("class", "curve");
+          line.setAttribute("stroke", COLORS[mode]);
+          if (mode !== "original") line.setAttribute("stroke-dasharray", "3 2");
+          chart.appendChild(line);
+        }
+      }
+
+      function measureCardHeight() {
+        wrapper.style.height = "auto";
+        const h = wrapper.offsetHeight;
+        wrapper.style.height = "0px";
+        void wrapper.offsetHeight;
+        return h;
+      }
+
+      function reset() {
+        wrapper.style.transition = "none";
+        wrapper.style.height = "0px";
+        card.style.transition = "none";
+        card.style.opacity = "0";
+        card.style.transform = "scale(0.96)";
+        rows.style.transition = "none";
+        rows.style.transform = "";
+        void wrapper.offsetHeight;
+        return new Promise((r) =>
+          requestAnimationFrame(() => requestAnimationFrame(r)),
+        );
+      }
+
+      function showCard() {
+        card.style.transition = CARD_TRANSITION;
+        card.style.opacity = "1";
+        card.style.transform = "scale(1)";
+      }
+
+      // Invert 와 Play 를 같은 프레임에: 되돌린 위치를 강제 flush 로 확정한 뒤 transition 을 건다
+      function invertAndPlay(deltaY) {
+        rows.style.transition = "none";
+        rows.style.transform = "translate3d(0," + -deltaY + "px,0)";
+        void rows.offsetHeight;
+        rows.style.transition = PUSH_TRANSITION;
+        rows.style.transform = "translate3d(0,0,0)";
+      }
+
+      function cleanupRows() {
+        rows.style.transition = "none";
+        rows.style.transform = "";
+      }
+
+      // ── 방식 1: 원본. rAF 가 매 프레임 height 를 고쳐 써서 문서 전체를 리플로우 ──
+      function playOriginal(H) {
+        const start = performance.now();
+        requestAnimationFrame(function frame(now) {
+          const elapsed = now - start - HEIGHT_DELAY;
+          if (elapsed < 0) {
+            wrapper.style.height = "0px";
+            return requestAnimationFrame(frame);
+          }
+          const p = Math.min(elapsed / DURATION, 1);
+          wrapper.style.height = (heightEase(p) * H).toFixed(2) + "px"; // ← 매 프레임 레이아웃
+          if (p < 1) return requestAnimationFrame(frame);
+          wrapper.style.height = "auto";
+        });
+      }
+
+      // 밀림 거리는 H 로 이미 알고 있으므로 rect 를 다시 읽지 않는다. 계단 프레임의
+      // 강제 레이아웃을 invertAndPlay 의 flush 한 번으로 줄이기 위해서다.
+
+      // ── 방식 2: 1차 재구현의 재현. 자리를 즉시 만들고 delay 없이 민다 (100ms 이르다) ──
+      function playReimpl(H) {
+        wrapper.style.height = "auto";
+        invertAndPlay(H);
+        setTimeout(cleanupRows, DURATION + 60);
+      }
+
+      // ── 방식 3: 계단 + FLIP (JS 타이머 구동). 레이아웃은 100ms 에 한 번 ──
+      function playFixed(H) {
+        setTimeout(() => {
+          wrapper.style.height = H + "px";
+          invertAndPlay(H);
+          setTimeout(() => {
+            wrapper.style.height = "auto";
+            cleanupRows();
+          }, DURATION + 60);
+        }, HEIGHT_DELAY);
+      }
+
+      // ── 방식 4: 같은 계단을 CSS 로. 지연 transition 이 계단을 밟고 RO 가 받아서 민다 ──
+      function playCss(H) {
+        let initial = true; // observe 직후의 초기 통지는 계단이 아니다
+        const observer = new ResizeObserver(() => {
+          if (initial) {
+            initial = false;
+            return;
+          }
+          invertAndPlay(H);
+          observer.disconnect();
+        });
+        observer.observe(wrapper);
+        wrapper.style.transition = "height 0s " + HEIGHT_DELAY + "ms"; // 지연된 불연속 변경
+        wrapper.style.height = H + "px";
+        setTimeout(
+          () => {
+            observer.disconnect();
+            wrapper.style.transition = "none";
+            wrapper.style.height = "auto";
+            cleanupRows();
+          },
+          HEIGHT_DELAY + DURATION + 60,
+        );
+      }
+
+      async function run(mode) {
+        if (running) return;
+        running = true;
+        buttons.forEach((b) => (b.disabled = true));
+        statsEl.textContent = "측정 중…";
+        await reset();
+        const H = measureCardHeight();
+        const withCurve = loadMs === 0;
+        const pending = record(RECORD_MS, withCurve);
+        showCard();
+        if (mode === "original") playOriginal(H);
+        else if (mode === "reimpl") playReimpl(H);
+        else if (mode === "fixed") playFixed(H);
+        else playCss(H);
+        const { samples } = await pending;
+        const stats = frameStats(samples);
+        if (withCurve) {
+          curves[mode] = despike(samples);
+          drawCurves();
+        }
+        statsEl.innerHTML =
+          LABELS[mode] +
+          " · 프레임 <b>" +
+          stats.frames +
+          "</b>" +
+          ' · 드랍 <b class="' +
+          (stats.dropped > 0 ? "bad" : "") +
+          '">' +
+          stats.dropped +
+          "</b>" +
+          " · 최장 <b>" +
+          stats.longest.toFixed(1) +
+          "ms</b>";
+        running = false;
+        buttons.forEach((b) => (b.disabled = false));
+      }
+
+      buttons.forEach((b) =>
+        b.addEventListener("click", () => run(b.dataset.mode)),
+      );
+      document.getElementById("clear").addEventListener("click", () => {
+        for (const key of Object.keys(curves)) delete curves[key];
+        drawCurves();
+        statsEl.textContent = "버튼을 누르면 0.8초간 계측한다";
+      });
+    </script>
+  </body>
+</html>
