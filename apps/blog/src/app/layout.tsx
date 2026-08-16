@@ -31,6 +31,7 @@ import {GoogleAnalyticsWebVitalsTracker} from '@/components/GoogleAnalyticsWebVi
 import LayoutWrapper from '@/components/LayoutWrapper'
 import NavigationDirection from '@/components/NavigationDirection'
 import {OutboundLinkTracker} from '@/components/OutboundLinkTracker'
+import PullToRefresh from '@/components/PullToRefresh'
 import {ServiceWorkerRegistration} from '@/components/ServiceWorkerRegistration'
 import {SiteConfig} from '@/config'
 import {buildOgImageUrl} from '@/utils/og'
@@ -147,6 +148,7 @@ export default async function Layout({children}: {children: ReactNode}) {
             <NavigationDirection />
           </Suspense>
           <AmbientEffects />
+          <PullToRefresh />
           <Providers>
             <Suspense fallback={null}>
               <LayoutWrapper enSlugs={enSlugs}>{children}</LayoutWrapper>
