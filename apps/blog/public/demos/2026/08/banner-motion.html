@@ -143,10 +143,16 @@
         gap: 8px;
       }
       .note {
-        padding: 6px 12px 10px;
+        padding: 4px 12px 6px;
         font-size: 12px;
         line-height: 1.6;
         color: var(--muted);
+      }
+      .note summary {
+        cursor: pointer;
+        color: var(--fg);
+        font-size: 12px;
+        padding: 2px 0;
       }
       .note p {
         margin: 6px 0 0;
@@ -198,21 +204,32 @@
         flex: none;
       }
       .rows {
-        padding: 8px 16px;
+        padding: 8px 12px;
       }
       .row {
         display: flex;
         align-items: center;
-        gap: 12px;
-        padding: 9px 0;
-        border-bottom: 1px solid var(--line);
+        gap: 10px;
+        padding: 8px 10px;
+        margin: 6px 0;
+        border-radius: 10px;
+        background: color-mix(in srgb, var(--fg) 3%, var(--bg));
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.07),
+          0 0 0 1px color-mix(in srgb, var(--line) 60%, transparent);
       }
       .thumb {
-        width: 32px;
-        height: 32px;
-        border-radius: 9px;
-        background: var(--line);
+        width: 36px;
+        height: 36px;
+        border-radius: 11px;
         flex: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
       }
       .grow {
         flex: 1;
@@ -220,11 +237,45 @@
       }
       .title {
         font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .badge {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 600;
+        padding: 1px 5px;
+        margin-left: 4px;
+        border-radius: 5px;
+        vertical-align: 1px;
+        color: var(--accent);
+        background: color-mix(in srgb, var(--accent) 12%, transparent);
+      }
+      .badge.warm {
+        color: #e8590c;
+        background: color-mix(in srgb, #e8590c 12%, transparent);
       }
       .sub,
       .delta {
         font-size: 12px;
         color: var(--muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .bar {
+        margin-top: 4px;
+        height: 4px;
+        border-radius: 2px;
+        background: color-mix(in srgb, var(--line) 55%, transparent);
+        overflow: hidden;
+      }
+      .bar span {
+        display: block;
+        height: 100%;
+        border-radius: 2px;
+        background: linear-gradient(90deg, var(--accent), #22b8cf);
       }
       .amount {
         font-weight: 600;
@@ -280,7 +331,8 @@
         </div>
       </div>
     </div>
-    <div class="note">
+    <details class="note">
+      <summary>모드 설명과 읽는 법</summary>
       <ul>
         <li><b>원본</b> rAF로 매 프레임 height를 쓴다. 매 프레임 리플로우.</li>
         <li>
@@ -301,12 +353,14 @@
         그리지 않는다.
       </p>
       <p>
-        드랍 수치의 차이까지 보려면 DevTools의 CPU 스로틀(4~6x)이 확실하다. 부하
-        없음에서 계단 방식이 1~2 드랍 나오는 건 레이어 승격 비용이 한 번에
-        몰려서다. 이 우열이 뒤집히는 조건(무거운 문서, 빠듯한 프레임 예산)이 곧
-        이 기법을 쓸 조건이다.
+        드랍 수치의 차이까지 보려면 모바일 기기나 DevTools의 CPU 스로틀(4~6x)이
+        확실하다. 부하 없음에서 계단 방식이 1~2 드랍 나오는 건 계단 순간의
+        레이아웃 커밋 1회가 한 프레임에 몰려서다(목록 레이어는 재생 직전에
+        will-change로 미리 승격해 둔다). 원본은 같은 비용을 매 프레임 낸다. 이
+        우열이 뒤집히는 조건(무거운 문서, 빠듯한 프레임 예산)이 곧 이 기법을 쓸
+        조건이다.
       </p>
-    </div>
+    </details>
 
     <div class="banner-wrapper" id="wrapper">
       <div class="banner" id="card">
@@ -325,17 +379,37 @@
     <div class="rows" id="rows"></div>
 
     <script>
-      // ── 아래 콘텐츠 (일부러 많다: 리플로우 비용은 문서 크기에 비례) ──
+      // ── 아래 콘텐츠 (일부러 많고 무겁다: 레이아웃·프리페인트 비용은 문서의
+      // 노드 수에 비례하고, 페인트 비용은 뷰포트에 걸린 행의 복잡도에 비례) ──
       const rows = document.getElementById("rows");
-      const ROW_COUNT = 1200;
+      const ROW_COUNT = 2000;
+      const HUES = [212, 262, 152, 22, 332, 190];
+      const NAMES = "가나다라마바사아자차카타파하";
       let html = "";
       for (let i = 0; i < ROW_COUNT; i++) {
+        const hue = HUES[i % HUES.length];
         html +=
-          '<div class="row"><div class="thumb"></div>' +
+          '<div class="row">' +
+          '<div class="thumb" style="background:linear-gradient(135deg,hsl(' +
+          hue +
+          ",72%,55%),hsl(" +
+          (hue + 40) +
+          ',72%,45%))">' +
+          NAMES[i % NAMES.length] +
+          "</div>" +
           '<div class="grow"><div class="title">항목 ' +
           (i + 1) +
+          '<span class="badge">적립</span>' +
+          (i % 4 === 0 ? '<span class="badge warm">이벤트</span>' : "") +
           "</div>" +
-          '<div class="sub">부가 설명이 붙는 두 번째 줄</div></div>' +
+          '<div class="sub">부가 설명이 붙는 두 번째 줄 · ' +
+          ((i % 23) + 1) +
+          "분 전 · 조회 " +
+          ((i * 37) % 997) +
+          "</div>" +
+          '<div class="bar"><span style="width:' +
+          ((i * 13) % 90 + 10) +
+          '%"></span></div></div>' +
           '<div><div class="amount">' +
           (1234567 - i * 811).toLocaleString() +
           "원</div>" +
@@ -515,7 +589,11 @@
         return h;
       }
 
-      function reset() {
+      // 계단 방식(transform 밀림)은 실제 구현처럼 재생 직전에 will-change 로
+      // 목록을 레이어로 미리 승격해 둔다. 이 승격 비용(전체 목록의 페인트 기록)을
+      // 애니메이션 중간에 내면 계단 프레임에 리플로우와 함께 몰려서, 기법 자체의
+      // 비용이 아닌 것이 측정을 오염시킨다. 원본은 레이어 없이 동작하므로 걷어낸다.
+      function reset(mode) {
         wrapper.style.transition = "none";
         wrapper.style.height = "0px";
         card.style.transition = "none";
@@ -523,6 +601,7 @@
         card.style.transform = "scale(0.96)";
         rows.style.transition = "none";
         rows.style.transform = "";
+        rows.style.willChange = mode === "original" ? "" : "transform";
         void wrapper.offsetHeight;
         return new Promise((r) =>
           requestAnimationFrame(() => requestAnimationFrame(r)),
@@ -617,10 +696,13 @@
         running = true;
         buttons.forEach((b) => (b.disabled = true));
         statsEl.textContent = "측정 중…";
-        await reset();
+        await reset(mode);
         const H = measureCardHeight();
         const withCurve = loadMs === 0;
         const pending = record(RECORD_MS, withCurve);
+        // 첫 샘플이 찍힌 뒤에 재생을 시작한다. 같은 프레임에서 시작하면 재생
+        // 첫 프레임의 커밋이 첫 샘플 이전에 끝나 계측에 잡히지 않는다.
+        await new Promise((r) => requestAnimationFrame(r));
         showCard();
         if (mode === "original") playOriginal(H);
         else if (mode === "reimpl") playReimpl(H);
