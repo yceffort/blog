@@ -16,7 +16,7 @@ pre-commit:
       glob: '*.{scss,css}'
       run: pnpm exec stylelint --fix {staged_files}
       stage_fixed: true
-    # 고쳐야할게 넘 많아서 패스..
-    # markdownlint:
-    #   glob: '*.md'
-    #   run: pnpm exec markdownlint --fix {staged_files}
+    markdown:
+      glob: '*.{md,mdx}'
+      exclude: 'labs/**'
+      run: node apps/blog/scripts/check-markdown.mjs {staged_files}
