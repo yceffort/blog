@@ -807,7 +807,7 @@ export default function Page() {
 }
 ```
 
-Here, the choice between `'use cache'` and `'use cache: remote'` depends on the environment. In self-hosted setups, in-memory storage persists between requests, so `'use cache'` also provides deduplication. In serverless environments, instances might be different each time, leading to low hit rates for in-memory storage. If cross-instance sharing makes sense for your scenario, `'use cache: remote'` is a candidate. However, [as we saw earlier](#use-cache-private과-use-cache-remote), if data changes frequently every second, even remote cache hits quickly become stale, reducing benefits. Use remote only when there's **clear motivation from sharing** (rate limit avoidance, upstream protection, expensive computation reuse).
+Here, the choice between `'use cache'` and `'use cache: remote'` depends on the environment. In self-hosted setups, in-memory storage persists between requests, so `'use cache'` also provides deduplication. In serverless environments, instances might be different each time, leading to low hit rates for in-memory storage. If cross-instance sharing makes sense for your scenario, `'use cache: remote'` is a candidate. However, [as we saw earlier](#use-cache-private-and-use-cache-remote), if data changes frequently every second, even remote cache hits quickly become stale, reducing benefits. Use remote only when there's **clear motivation from sharing** (rate limit avoidance, upstream protection, expensive computation reuse).
 
 ## cacheTag and Tag-based Invalidation
 
