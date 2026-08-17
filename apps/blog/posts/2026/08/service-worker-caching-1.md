@@ -128,7 +128,7 @@ await caches.delete('pages-v0') // 버킷 통째로 삭제 (버전 청소용)
 
 이 저장소에는 TTL이 없다. `put()`으로 넣은 것은 코드로 지우기 전까지 그대로 있고, HTTP 캐시가 공짜로 해주던 일들(만료, 용량 관리, 실수로부터의 자동 회복)을 전부 직접 설계해야 한다. 이것이 서비스 워커 캐싱의 본질이라고 생각한다. 만료가 없고 모든 것을 코드로 제어한다는 것은 강력함인 동시에, 버전 관리와 청소를 설계하지 않으면 캐시가 반드시 썩는다는 뜻이다. 배포마다 URL이 바뀌는 자산이 하나라도 있으면 캐시는 단조 증가하고, 옛 로직이 만든 엔트리는 새 로직이 읽다가 깨진다.
 
-거꾸로 "TTL이 없다"가 "영구 저장"이라는 뜻도 아니다. 저장 공간이 부족해지면 브라우저는 origin 단위로 저장소를 통째로 축출할 수 있고(Cache Storage 포함)[^5], Safari는 사용자가 7일간 사이트와 상호작용하지 않으면 서비스 워커 등록과 캐시를 지운다[^6]. `navigator.storage.persist()`로 영속을 요청하는 길이 있지만, 기본값은 어디까지나 best-effort 저장이다. 지금 얼마나 쓰고 있는지는 `navigator.storage.estimate()`로 확인할 수 있다. 요약하면 이 저장소는 스스로 청소하지 않으면서, 필요하면 통째로 사라질 수는 있는 곳이다. 양쪽 모두를 설계에 넣어야 한다.
+거꾸로 "TTL이 없다"가 "영구 저장"이라는 뜻도 아니다. 저장 공간이 부족해지면 브라우저는 origin 단위로 저장소를 통째로 축출할 수 있고(Cache Storage 포함)[^5], Safari는 사이트와 상호작용 없이 **Safari를 사용한 날 기준** 7일이 지나면 서비스 워커 등록과 캐시를 지운다(달력 7일이 아니라 사용일로 세고, 홈 화면에 추가된 웹앱은 별도 카운터를 가져 이 삭제의 의도 대상이 아니다)[^6]. `navigator.storage.persist()`로 영속을 요청하는 길이 있지만, 기본값은 어디까지나 best-effort 저장이다. 지금 얼마나 쓰고 있는지는 `navigator.storage.estimate()`로 확인할 수 있다. 요약하면 이 저장소는 스스로 청소하지 않으면서, 필요하면 통째로 사라질 수는 있는 곳이다. 양쪽 모두를 설계에 넣어야 한다.
 
 다루는 쪽의 함정도 둘 있는데, 이번에는 재현까지 해봤다.
 
@@ -138,7 +138,7 @@ await caches.delete('pages-v0') // 버킷 통째로 삭제 (버전 청소용)
 TypeError: Failed to execute 'text' on 'Response': body stream already read
 ```
 
-에러가 나면 차라리 다행이고, 더 나쁜 경우는 소비된 바디가 조용히 빈 채로 저장되는 쪽이다. "네트워크 응답은 원본을 돌려주고, 캐시에는 clone을 넣는다"를 규칙으로 삼으면 안전하다.
+`cache.put()` 쪽도 마찬가지로, 이미 소비된(disturbed) 바디를 넘기면 조용히 넘어가는 것이 아니라 TypeError로 거부하도록 스펙에 못 박혀 있다[^4]. 어느 경로로 순서가 꼬이든 명시적인 에러로 나타난다는 뜻이니, "네트워크 응답은 원본을 돌려주고, 캐시에는 clone을 넣는다"를 규칙으로 삼으면 안전하다.
 
 두 번째는 교차 출처 리소스다. CORS 헤더 없이 `no-cors`로 가져온 응답은 opaque 응답이 되는데, status가 0으로 보이고 바디를 들여다볼 수 없지만 저장과 재사용은 가능하다. 문제는 두 겹이다. 우선 성공인지 실패인지 코드로 구분할 수 없다. 404 응답도 opaque로는 status 0이라, 깨진 리소스를 정상인 줄 알고 캐시하게 된다. 다음으로 저장 용량이 실제 크기보다 훨씬 크게 계상된다. 응답 크기를 통해 교차 출처 정보가 새는 것을 막으려고 브라우저가 패딩을 더하기 때문이다[^7]. 직접 재보면 이렇다. 이 블로그의 오리진에서 104KB(106,346바이트)짜리 외부 이미지를 `no-cors`로 받아 저장했더니, `navigator.storage.estimate()`의 usage가 **6,869,027바이트(약 6.6MB)** 늘었다. 실제 크기의 약 65배다. 쿼터가 10GB로 잡힌 프로필이라 여유는 있지만, opaque 응답을 수백 개 쌓는 설계라면 계상 기준으로는 기가바이트 단위가 되어 축출을 앞당길 수 있다는 뜻이다. 오프라인 지원 범위에 외부 도메인 리소스가 들어 있다면 피해 갈 수 없는 트레이드오프다.
 
@@ -151,12 +151,13 @@ flowchart TD
     R["register()"] --> I[installing]
     I -->|install 실패| X[redundant]
     I -->|install 성공| W["installed (waiting)"]
-    W -->|"기존 탭 모두 닫힘 또는 skipWaiting()"| A[activating]
+    W -->|"최초 설치(선행 워커 없음): 즉시"| A[activating]
+    W -->|"업데이트: 기존 탭 모두 닫힘 또는 skipWaiting()"| A
     A --> AC[activated]
     AC -->|새 버전으로 교체됨| X
 ```
 
-각 상태는 `registration.installing`, `registration.waiting`, `registration.active`로 손에 잡히고, 개별 워커의 `state` 속성과 `statechange` 이벤트로 전이를 관찰할 수 있다[^1]. install은 프리캐시를 채우기에, activate는 옛 캐시를 청소하기에 알맞은 시점으로 설계되어 있다. 여기에 중요한 디테일이 하나 있다. 처음 등록된 워커는 activated가 된 뒤에도 기본적으로 **이미 열려 있던 페이지는 제어하지 않는다.** 제어는 다음 내비게이션부터 시작되고, 당겨오고 싶다면 `clients.claim()`을 불러야 한다. 페이지 입장에서 지금 제어받고 있는지는 `navigator.serviceWorker.controller`가 null인지로 판별한다.
+각 상태는 `registration.installing`, `registration.waiting`, `registration.active`로 손에 잡히고, 개별 워커의 `state` 속성과 `statechange` 이벤트로 전이를 관찰할 수 있다[^1]. install은 프리캐시를 채우기에, activate는 옛 캐시를 청소하기에 알맞은 시점으로 설계되어 있다. 다이어그램의 대기(waiting)는 업데이트에만 해당하는 상태로, 선행 active 워커가 없는 최초 설치는 설치가 끝나면 대기 없이 곧장 활성화된다. 여기에 중요한 디테일이 하나 있다. 처음 등록된 워커는 activated가 된 뒤에도 기본적으로 **이미 열려 있던 페이지는 제어하지 않는다.** 제어는 다음 내비게이션부터 시작되고, 당겨오고 싶다면 `clients.claim()`을 불러야 한다. 페이지 입장에서 지금 제어받고 있는지는 `navigator.serviceWorker.controller`가 null인지로 판별한다.
 
 업데이트도 이 상태 기계를 그대로 탄다. 브라우저는 내비게이션 때마다(그리고 push 같은 기능 이벤트에서도 마지막 확인이 24시간을 넘겼다면) 등록된 워커 스크립트의 업데이트를 확인하고, 바이트가 하나라도 다르면 새 워커를 installing으로 띄운다[^8]. 여기서 문제가 나온다. 새 워커는 설치를 마쳐도, 기존 워커가 제어하는 탭이 모두 닫히기 전까지 **waiting에 멈춰 있다.** 옛 로직과 새 로직이 한 오리진에서 섞이지 않게 하려는 안전장치인데, 뒤집으면 탭을 계속 열어두고 새로고침만 하는 사용자는 며칠이고 옛 캐시 로직에 붙잡혀 있을 수 있다는 뜻이다. 새로고침은 같은 탭을 계속 점유하므로 "탭이 모두 닫히는" 조건을 영원히 만들지 못한다. 배포를 했는데 사용자가 옛 버전을 보고 있다면 대개 이 대기가 원인이다.
 
@@ -211,41 +212,44 @@ Cache Storage와 fetch 이벤트가 재료라면, 전략은 조리법이다. 네
 | cache-only             | 캐시에만 묻는다                          | install 때 넣어둔 프리캐시 전용   | 캐시에 없으면 그대로 실패   |
 | network-only           | 캐시를 아예 쓰지 않는다                  | 애널리틱스, POST 요청             | 오프라인 지원 없음          |
 
-앞의 셋은 구현도 짧다. 앞 절의 clone 함정만 피하면 각각 십수 줄이다.
+앞의 셋은 구현도 짧다. 다만 짧은 코드에도 지킬 규칙이 셋 있다. 앞 절의 clone 함정을 피하는 것, 실패 응답을 저장하지 않도록 `response.ok`를 확인하는 것(빼먹으면 404·500이 캐시에 눌러앉는다), 그리고 조회와 저장을 같은 버킷으로 맞추는 것이다(전 버킷을 뒤지는 `caches.match()`로 조회하면 버킷을 나눈 의미가 사라지고, 청소 전의 옛 버킷이 먼저 걸릴 수도 있다).
 
 ```javascript
 async function cacheFirst(request, cacheName) {
-  const cached = await caches.match(request)
+  const cache = await caches.open(cacheName)
+  const cached = await cache.match(request)
   if (cached) return cached
   const response = await fetch(request)
-  const cache = await caches.open(cacheName)
-  await cache.put(request, response.clone())
+  if (response.ok) await cache.put(request, response.clone())
   return response
 }
 
 async function networkFirst(request, cacheName) {
+  const cache = await caches.open(cacheName)
   try {
     const response = await fetch(request)
-    const cache = await caches.open(cacheName)
-    await cache.put(request, response.clone())
+    if (response.ok) await cache.put(request, response.clone())
     return response
   } catch (error) {
-    const cached = await caches.match(request)
+    const cached = await cache.match(request)
     if (cached) return cached
     throw error
   }
 }
 
-async function staleWhileRevalidate(request, cacheName) {
-  const cached = await caches.match(request)
-  const refresh = fetch(request).then(async (response) => {
-    const cache = await caches.open(cacheName)
-    await cache.put(request, response.clone())
+async function staleWhileRevalidate(event, cacheName) {
+  const cache = await caches.open(cacheName)
+  const cached = await cache.match(event.request)
+  const refresh = fetch(event.request).then(async (response) => {
+    if (response.ok) await cache.put(event.request, response.clone())
     return response
   })
+  event.waitUntil(refresh.catch(() => {}))
   return cached ?? refresh
 }
 ```
+
+staleWhileRevalidate만 event를 통째로 받는 것은 우연이 아니다. 캐시로 즉답한 뒤에도 백그라운드 갱신이 이어지므로, 앞에서 본 `waitUntil`로 워커의 수명을 붙잡아 두지 않으면 유휴 종료에 잘릴 수 있다. 캐시 히트 상태에서 갱신 fetch가 실패하면 아무도 그 promise를 기다리지 않으므로, unhandled rejection이 되지 않게 catch로 삼키는 것까지가 한 세트다.
 
 코드가 짧다고 실패 모드까지 단순한 것은 아니다. 각 전략이 어긋나는 지점을 하나씩 짚으면 이렇다. cache-first는 갱신 경로가 아예 없으므로, URL에 해시가 없는 리소스에 걸면 배포로도 못 고치는 낡은 응답이 남는다(청소는 뒤의 버전 전략 몫이 된다). network-first는 "실패"의 정의가 관건이다. `fetch()`는 연결이 아예 안 될 때만 reject하고, 연결은 되는데 하염없이 느린 상태(lie-fi)에서는 실패하지 않으므로, 타임아웃을 직접 걸어 캐시로 넘어가는 변형을 만들지 않으면 오프라인 폴백이 있어도 체감은 "무한 로딩"이 된다. stale-while-revalidate는 백그라운드 갱신이 성공했는지 사용자에게 알릴 방법이 없다는 것이 대가다. 화면은 이미 낡은 버전으로 그려졌고, 새 응답은 다음 방문에야 보인다. cache-only는 프리캐시 목록 관리가 곧 가용성이라 목록에서 빠진 리소스가 바로 장애가 되고, network-only는 말 그대로 워커가 값을 더하지 않는 경로이니 애초에 `respondWith()`를 부르지 않고 통과시키는 편이 낫다(다음 질문에서 볼 오버헤드 때문이다).
 
