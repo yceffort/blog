@@ -1,14 +1,13 @@
 root = true
 
-[*.{js,ts,tsx}]
+[*]
 charset = utf-8
 end_of_line = lf
 indent_style = space
 indent_size = 2
 insert_final_newline = true
-max_line_length = 80
 trim_trailing_whitespace = true
 
-[package.json]
-indent_style = space
-indent_size = 2
+# 줄 끝 두 칸은 마크다운의 강제 개행이라 지우면 렌더가 바뀐다
+[*.md]
+trim_trailing_whitespace = false
