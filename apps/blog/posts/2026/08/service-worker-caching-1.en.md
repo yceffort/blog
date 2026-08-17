@@ -128,7 +128,7 @@ The matching rules for lookups are also worth knowing. By default, `match()` com
 
 This storage has no TTL. What you `put()` stays until code deletes it, and everything the HTTP cache did for free (expiration, quota management, automatic recovery from mistakes) must now be designed by hand. I think this is the essence of service worker caching. No expiration and full control in code is power, but it also means that unless you design versioning and cleanup, the cache will rot, guaranteed. If even one asset changes its URL per deploy, the cache grows monotonically, and entries written by old logic break when new logic reads them.
 
-Conversely, "no TTL" does not mean "permanent storage" either. When storage runs low, the browser can evict an origin's storage wholesale (Cache Storage included)[^5], and Safari deletes service worker registrations and caches when the user has not interacted with the site for 7 days[^6]. There is a path to request persistence via `navigator.storage.persist()`, but the default is strictly best-effort storage. How much you are currently using can be checked with `navigator.storage.estimate()`. In short, this is a place that never cleans itself, yet can disappear entirely when needed. Both sides must go into the design.
+Conversely, "no TTL" does not mean "permanent storage" either. When storage runs low, the browser can evict an origin's storage wholesale (Cache Storage included)[^5], and Safari deletes service worker registrations and caches after 7 days **of Safari use** without interaction with the site (counted in days the browser is actually used, not calendar days, and web apps added to the home screen keep their own counter and are not the intended target of this deletion)[^6]. There is a path to request persistence via `navigator.storage.persist()`, but the default is strictly best-effort storage. How much you are currently using can be checked with `navigator.storage.estimate()`. In short, this is a place that never cleans itself, yet can disappear entirely when needed. Both sides must go into the design.
 
 There are also two traps on the handling side, and this time I reproduced them myself.
 
@@ -138,7 +138,7 @@ The first is stepped on by nearly everyone using it for the first time: **a Resp
 TypeError: Failed to execute 'text' on 'Response': body stream already read
 ```
 
-Getting an error is actually the lucky case; the worse outcome is a consumed body being silently stored empty. Make it a rule that "the original response goes back to the network caller, and the clone goes into the cache" and you are safe.
+The same holds on the `cache.put()` side: pass it an already-consumed (disturbed) body and the spec requires it to reject with a TypeError rather than let it slide[^4]. Whichever way the order gets tangled, it surfaces as an explicit error, so make it a rule that "the original response goes back to the network caller, and the clone goes into the cache" and you are safe.
 
 The second is cross-origin resources. A response fetched with `no-cors` and without CORS headers becomes an opaque response: its status reads 0 and its body cannot be inspected, yet it can be stored and reused. The problem is two-layered. First, code cannot distinguish success from failure. Even a 404 shows status 0 as opaque, so you end up caching a broken resource believing it is fine. Second, its storage footprint is accounted far larger than its actual size, because the browser adds padding to prevent cross-origin information from leaking through response sizes[^7]. Measuring it directly looks like this. From this blog's origin, I fetched a 104KB (106,346-byte) external image with `no-cors` and stored it, and the usage reported by `navigator.storage.estimate()` grew by **6,869,027 bytes (about 6.6MB)**. That is about 65 times the actual size. The profile had its quota set at 10GB, so there was room to spare, but it means a design that stacks up hundreds of opaque responses can reach gigabytes in accounting terms and pull eviction forward. If your offline coverage includes resources from external domains, this trade-off cannot be avoided.
 
@@ -151,12 +151,13 @@ flowchart TD
     R["register()"] --> I[installing]
     I -->|install fails| X[redundant]
     I -->|install succeeds| W["installed (waiting)"]
-    W -->|"all existing tabs closed or skipWaiting()"| A[activating]
+    W -->|"first install (no prior worker): immediately"| A[activating]
+    W -->|"update: all existing tabs closed or skipWaiting()"| A
     A --> AC[activated]
     AC -->|replaced by a new version| X
 ```
 
-Each state is tangible through `registration.installing`, `registration.waiting`, and `registration.active`, and transitions can be observed through an individual worker's `state` property and its `statechange` event[^1]. install is designed as the right moment to fill the precache, and activate as the right moment to clean up old caches. One important detail sits here. A freshly registered worker, by default, **does not control pages that were already open** even after it becomes activated. Control begins with the next navigation, and if you want to pull it forward you must call `clients.claim()`. From the page's perspective, whether it is currently controlled is determined by whether `navigator.serviceWorker.controller` is null.
+Each state is tangible through `registration.installing`, `registration.waiting`, and `registration.active`, and transitions can be observed through an individual worker's `state` property and its `statechange` event[^1]. install is designed as the right moment to fill the precache, and activate as the right moment to clean up old caches. The waiting state in the diagram applies only to updates: a first install with no prior active worker proceeds straight to activation with no waiting at all. One important detail sits here. A freshly registered worker, by default, **does not control pages that were already open** even after it becomes activated. Control begins with the next navigation, and if you want to pull it forward you must call `clients.claim()`. From the page's perspective, whether it is currently controlled is determined by whether `navigator.serviceWorker.controller` is null.
 
 Updates ride this same state machine. On every navigation (and on functional events like push, if the last check was more than 24 hours ago), the browser checks the registered worker script for updates, and if even one byte differs it starts the new worker as installing[^8]. Here the problem emerges. Even after the new worker finishes installing, it **stays frozen in waiting** until every tab controlled by the existing worker is closed. It is a safety mechanism to keep old logic and new logic from mixing on one origin, but flipped around, it means a user who keeps a tab open and only refreshes can stay trapped under the old cache logic for days. A refresh keeps occupying the same tab, so it can never satisfy the "all tabs closed" condition. If you deployed and users are seeing the old version, this waiting is usually the cause.
 
@@ -211,41 +212,44 @@ If Cache Storage and the fetch event are the ingredients, strategies are the rec
 | cache-only             | Ask only the cache                                 | Reserved for assets precached at install              | Fails outright when not in the cache |
 | network-only           | Never touch the cache                              | Analytics, POST requests                              | No offline support                   |
 
-The first three are short to implement. Avoid the clone trap from the previous section and each is a dozen-plus lines.
+The first three are short to implement. Still, even short code has three rules to keep. Avoid the clone trap from the previous section, check `response.ok` so failure responses are never stored (skip it and a 404 or 500 squats in the cache), and keep lookups and stores on the same bucket (look up via the all-bucket `caches.match()` and splitting buckets loses its meaning, and a not-yet-cleaned old bucket may even match first).
 
 ```javascript
 async function cacheFirst(request, cacheName) {
-  const cached = await caches.match(request)
+  const cache = await caches.open(cacheName)
+  const cached = await cache.match(request)
   if (cached) return cached
   const response = await fetch(request)
-  const cache = await caches.open(cacheName)
-  await cache.put(request, response.clone())
+  if (response.ok) await cache.put(request, response.clone())
   return response
 }
 
 async function networkFirst(request, cacheName) {
+  const cache = await caches.open(cacheName)
   try {
     const response = await fetch(request)
-    const cache = await caches.open(cacheName)
-    await cache.put(request, response.clone())
+    if (response.ok) await cache.put(request, response.clone())
     return response
   } catch (error) {
-    const cached = await caches.match(request)
+    const cached = await cache.match(request)
     if (cached) return cached
     throw error
   }
 }
 
-async function staleWhileRevalidate(request, cacheName) {
-  const cached = await caches.match(request)
-  const refresh = fetch(request).then(async (response) => {
-    const cache = await caches.open(cacheName)
-    await cache.put(request, response.clone())
+async function staleWhileRevalidate(event, cacheName) {
+  const cache = await caches.open(cacheName)
+  const cached = await cache.match(event.request)
+  const refresh = fetch(event.request).then(async (response) => {
+    if (response.ok) await cache.put(event.request, response.clone())
     return response
   })
+  event.waitUntil(refresh.catch(() => {}))
   return cached ?? refresh
 }
 ```
+
+It is no accident that only staleWhileRevalidate takes the whole event. The background refresh continues after the cache has already answered, so without holding the worker's lifetime with the `waitUntil` we saw earlier, idle termination can cut it off. And when the cache hits, nobody awaits the refresh promise, so swallowing its failure with a catch to avoid an unhandled rejection is part of the same set.
 
 Short code does not mean the failure modes are simple. Pointing at where each strategy goes wrong, one by one: cache-first has no refresh path at all, so applying it to a resource without a hash in its URL leaves a stale response that not even a deploy can fix (cleanup then falls to the versioning strategy discussed above). For network-first, the crux is the definition of "failure." `fetch()` rejects only when the connection cannot be made at all, and it does not fail in the connected-but-endlessly-slow state (lie-fi), so unless you build a variant that applies its own timeout and falls over to the cache, the experience is "infinite loading" even though an offline fallback exists. The cost of stale-while-revalidate is that there is no way to tell the user whether the background refresh succeeded. The screen has already been drawn with the stale version, and the fresh response only shows up on the next visit. For cache-only, precache list management is availability itself, so a resource missing from the list is an outage on the spot, and network-only is by definition a path where the worker adds no value, so it is better not to call `respondWith()` at all and let it pass through (because of the overhead we will see in the next question).
 
