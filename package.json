@@ -17,7 +17,7 @@
     "build": "pnpm -r build",
     "build:blog": "pnpm --filter blog build",
     "build:research": "pnpm --filter research build",
-    "lint": "oxlint --type-aware && node apps/blog/scripts/check-markdown.mjs",
+    "lint": "oxlint --type-aware && node apps/blog/scripts/check-markdown.mjs --quiet",
     "lint:fix": "oxlint --type-aware --fix",
     "prettier": "oxfmt --check .",
     "prettier:fix": "oxfmt ."
