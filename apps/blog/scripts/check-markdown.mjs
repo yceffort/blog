@@ -140,8 +140,10 @@ function checkFrontMatter(file, attributes, report) {
     if (Number.isNaN(date.getTime())) {
       report('error', 0, `date를 파싱할 수 없다: ${attributes.date}`)
     } else {
+      // Post.ts가 toISOString()으로 UTC 날짜를 쓰므로 여기도 UTC로 읽는다.
+      // 로컬 시간대로 읽으면 같은 글이 KST와 CI에서 다른 달로 떨어진다.
       const pathYearMonth = file.slice(POSTS_DIR.length + 1).slice(0, 7)
-      const dateYearMonth = `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}`
+      const dateYearMonth = date.toISOString().slice(0, 7).replace('-', '/')
       if (
         /^\d{4}\/\d{2}$/.test(pathYearMonth) &&
         pathYearMonth !== dateYearMonth
