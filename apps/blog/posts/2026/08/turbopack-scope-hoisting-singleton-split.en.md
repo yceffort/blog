@@ -252,7 +252,7 @@ The debug logs lied too. A receive-event log stamped at 27ms after the response 
 
 I also made a wrong refutation. "The stack trace offsets match, so there is one copy of the module": wrong, because two module records can share the same code. It took the limits of a method as a fact, and that misread threw away the right answer (two instances) once before I got it back.
 
-There were weapons gained, too. Instead of scraping production, **a local build under the same conditions (version, env, bundler) reproduces output matching down to the key chunks' file names**. When hunting for an upstream issue, sweep with the mechanism's vocabulary (scope hoisting) before your own symptom's vocabulary. And "in the same chunk" and "the same instance" are different statements: a bundler's module merging and the runtime's module registry operate at different stages, and access paths can fork even inside one chunk.
+There were weapons gained, too. When hunting for an upstream issue, sweep with the mechanism's vocabulary (scope hoisting) before your own symptom's vocabulary. And "in the same chunk" and "the same instance" are different statements: a bundler's module merging and the runtime's module registry operate at different stages, and access paths can fork even inside one chunk.
 
 Any package that exports mutable state at module scope (a Map, a Set, a registry, a cache) stands on the same trap. This one blew up big because it holds a lot of state whose integrity is the feature itself, not because this package is special.
 
