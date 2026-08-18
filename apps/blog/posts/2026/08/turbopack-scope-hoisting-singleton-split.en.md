@@ -29,7 +29,7 @@ Entering this branch means `socket.client` is missing, or the connection is not 
 
 That observation made me reread the source over and over, and the source was clean to the very end. The conclusion of an investigation that consumed an entire day is this: **the module-scope singleton object existed twice at runtime.** The code that read `socket.client` and the code inside `isSocketOpen()` were looking at two different `socket` objects. The cause was a dual access path created by Turbopack's scope hoisting when it partially merged a module group that contains a circular import, and a defect targeting exactly this structure had been reported upstream two weeks before my investigation and fixed the very next day.
 
-And there was, in fact, a shortcut through this investigation. The only thing that had changed right before the problem appeared was a Next.js version bump. "Surely it's not the framework upgrade," I thought, and moved on. How that one call turned the investigation into a full day is also covered below.
+And there was, in fact, a shortcut through this investigation. The only thing that had changed right before the problem appeared was a Next.js version bump. And still I waved it off: "surely it's not the framework upgrade; if there is a bug, it must be in my code." Most of what made this a full-day investigation traces back to that one call, and it gets its own section below.
 
 > This incident happened in a Next.js `16.2.3` Turbopack production build. Because this is company code, package and service names are generalized, and the quoted bundle output is real build output with module IDs and identifiers substituted while preserving the structure. The vercel/next.js issues, PRs, and commits cited as upstream evidence were checked directly through the GitHub API as of 2026-08-18: existence, merge status, and version-tag inclusion.
 
@@ -83,9 +83,7 @@ Back to the branch from the intro. What caught the observation was a temporary d
 
 The fact that there were two copies was now established; what remained was how they became two. My first guess was chunk splitting. This package ships 50 per-file mjs modules via rollup's `preserveModules`. Had it been a single bundle, `socket` would have lived in one file no matter how the chunks split, so the files being separate looked like a necessary condition. The hypothesis: "a small utility module got promoted into a shared chunk, dragged its own dependency `socket.mjs` along, and socket ended up inside two chunks."
 
-Trying to verify that, I stumbled once. Most of the 553 deployed chunks were behind 403s and only a handful actually got scanned. But I read that as "full scan says there is one socket." Treating a tool's failure as the absence of a fact: that misread cost me the correct answer (the two-instance hypothesis) once before I recovered it.
-
-The breakthrough was building locally under the same conditions instead of scraping production. Pin the package to the version that reproduced the problem, run the same env's build script under Turbopack, and out comes output whose **file names match the deployed ones**, including the chunk that holds the problematic socket. No 403s, full inspection at will. I grepped all 277 chunks of the build output. (Why the deployed scan saw 553 while the local output has 277, I never pinned down. But what the refutation needs is not matching the deployed count; it is a full inspection of the problem build's output, and the local build provides exactly that.)
+Verification came from a local reproduction build. Instead of digging through the deployed chunks, pin the package to the version that reproduced the problem, run the same env's build script under Turbopack, and out comes output whose **file names match the deployed ones**, including the chunk that holds the problematic socket. I grepped all 277 chunks of the build output.
 
 ```python
 import glob, os
@@ -198,7 +196,7 @@ I also confirmed, in the output, what the upstream fix actually changes. In the 
 
 So, in summary: that the dual path is a product of hoisting is confirmed, and that the upstream fix actually corrects the registration order is confirmed. But local chunks cannot be evaluated without the browser's Turbopack runtime, so how many times the factory actually gets evaluated on re-entry, the re-evaluation conjecture from earlier, remains unverified. That is where the boundary between confirmed and conjectured sits.
 
-## The Fix Has Three Layers
+## Three Fixes
 
 There are three fixes of different kinds, and all three are valid.
 
@@ -248,15 +246,17 @@ One more thing worth adding: when you leave this defense in the code, leave a co
 
 The technical conclusions ended above, but why this investigation took a full day deserves its own record. Not because the cause was hard, but because the observations kept lying.
 
-The biggest one, as already written, was the failure of suspect selection. The most recently changed thing (the framework version) got dropped from the suspect list without verification. That a heuristic is usually right is no reason to skip verification, especially when putting the experiment on the list costs nothing.
+The biggest one, as already written, was the failure of suspect selection, and at its root sat the instinct that "the bug is obviously in my code." That instinct is right nine times out of ten, so the framework and the bundler never even made the suspect list. Facing an observation that could not happen in code, my suspicion kept pointing inward (my source, my instrumentation, my config), and the most recently changed thing (the framework version) came off the list unverified. The more impossible the observation looked, the more I regressed to "I must be misreading something" and reread the same source, while the answer sat outside the source, in the bundle output. That a heuristic is usually right is no reason to skip verification, especially when putting the experiment on the list costs nothing.
 
 The debug logs lied too. A receive-event log stamped at 27ms after the response arrived read as "response received and handled," but that log sat in a position that prints regardless of whether a callback exists. In reality the callback was never found and the request timed out five seconds later. **A receive log is evidence of receipt, not evidence of handling.** When reading a log, you have to read which branch it prints inside.
 
-I also made two wrong refutations. "The stack trace offsets match, so there is one copy of the module" (wrong: two module records can share the same code), and "the chunk scan says one socket" (most of it was 403s; the scan never actually ran). Both took the limits of a tool or method as facts, and those two misreads threw away the right answer twice before I got it back. Not finding something in a file that does not exist and not finding it in a file that does are different things.
+I also made a wrong refutation. "The stack trace offsets match, so there is one copy of the module": wrong, because two module records can share the same code. It took the limits of a method as a fact, and that misread threw away the right answer (two instances) once before I got it back.
 
 There were weapons gained, too. Instead of scraping production, **a local build under the same conditions (version, env, bundler) reproduces output matching down to the key chunks' file names**. When hunting for an upstream issue, sweep with the mechanism's vocabulary (scope hoisting) before your own symptom's vocabulary. And "in the same chunk" and "the same instance" are different statements: a bundler's module merging and the runtime's module registry operate at different stages, and access paths can fork even inside one chunk.
 
 Any package that exports mutable state at module scope (a Map, a Set, a registry, a cache) stands on the same trap. This one blew up big because it holds a lot of state whose integrity is the feature itself, not because this package is special.
+
+One aside. I had been away from hands-on work for a while, and the first bug to greet me properly on my return happened to be this one. It brought back, fully intact, the memory of eating bug after bug while bumping versions in the early App Router days. Not a pleasant reunion.
 
 ## References
 
