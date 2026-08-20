@@ -42,7 +42,7 @@ published: true
 5. **Suspense와 SSR** — useSuspenseQuery, 서버 프리페치와 HydrationBoundary
 6. **실전 함정 모음** — 리뷰에서 반복해서 만나는 잘못된 패턴 여섯 가지
 
-마지막에 **종합 퀴즈 6문제** (1부 내용 포함).
+1부처럼 파트 끝마다 **중간 점검 퀴즈**가 있고, 마지막에 **종합 퀴즈 6문제** (1부 내용 포함).
 
 기준은 1부와 같다: **TanStack Query v5.101.4**, 소스 인용은 v5.101.4 태그, 동작 확인은 Node.js 24 + query-core 실측.
 
@@ -220,6 +220,63 @@ const {data: count} = useQuery({
 
 ---
 
+## 중간 점검 ① — 몇 개나 만들어질까
+
+```jsx
+function Header() {
+  const {data} = useQuery({queryKey: ['me'], queryFn: fetchMe})
+}
+function Sidebar() {
+  const {data} = useQuery({queryKey: ['me'], queryFn: fetchMe})
+  const {data: unread} = useQuery({
+    queryKey: ['me'],
+    queryFn: fetchMe,
+    select: (me) => me.unreadCount,
+  })
+}
+```
+
+두 컴포넌트가 같은 화면에서 함께 마운트된다. Query와 QueryObserver는 각각 몇 개 만들어지고, 네트워크 요청은 몇 번 나갈까?
+
+---
+
+## 중간 점검 ① — 정답: Query 1개, Observer 3개, 요청 1번
+
+- Query는 **키당 1개** — 셋 다 `['me']`이므로 본체는 하나
+- Observer는 **useQuery 호출당 1개** — Header 1 + Sidebar 2 = 3개 ("컴포넌트당 1개"가 아니다)
+- 동시 요청은 같은 Query에 합류하므로 **1번** (1부의 중복 제거)
+- select는 Observer의 일이다 — 캐시는 하나인데 Sidebar의 두 번째 훅만 숫자를 받는 이유
+
+> 데이터와 요청은 Query(키)마다, 옵션과 가공은 Observer(호출)마다.
+
+---
+
+## 중간 점검 ② — 목록이 바뀌었는데 조용하다
+
+```jsx
+const {data: count} = useQuery({
+  queryKey: ['todos'],
+  queryFn: fetchTodos,
+  select: (todos) => todos.filter((t) => !t.done).length,
+})
+```
+
+백그라운드 갱신이 일어났고, 응답에서 **완료된 항목 하나의 제목이 바뀌었다** (미완료 개수는 그대로). 이 컴포넌트는 리렌더될까?
+
+<!-- 진행: "캐시 데이터는 분명히 바뀌었다"를 먼저 합의시키고 손들기 — select가 어느 층에서 일하는지로 반전. -->
+
+---
+
+## 중간 점검 ② — 정답: 리렌더되지 않는다
+
+- 캐시의 data는 바뀌었다 — 제목이 바뀐 항목은 structural sharing을 거쳐도 새 참조가 된다
+- 하지만 이 Observer가 컴포넌트에 반환하는 것은 **select를 거친 숫자**이고, 미완료 개수는 그대로다
+- 가공 결과가 이전과 같으면 알림이 없다 — "이 컴포넌트의 관심사는 미완료 개수뿐"이라고 select로 선언했기 때문
+
+> 리렌더 방어는 겹겹이다: 읽은 필드만(tracked properties), 내용이 같으면 같은 참조(structural sharing), 가공 결과가 같으면 침묵(select).
+
+---
+
 ## Part 5 — Suspense와 SSR
 
 <!-- _class: invert -->
@@ -382,6 +439,55 @@ this.gcTime = Math.max(
 - hydrate된 데이터도 평범한 캐시 — 1부의 생명주기가 그대로 적용
 - 서버의 QueryClient는 **요청마다 새로** — 싱글턴은 사용자 간 데이터 유출
 - 서버 기본값: retry 0, gcTime Infinity. 그리고 SSR에서는 **staleTime > 0**으로 hydrate 직후 재요청을 막는 것이 정석
+
+---
+
+## 중간 점검 ① — 1초짜리 요청 셋
+
+```jsx
+function Dashboard() {
+  const {data: user} = useSuspenseQuery({queryKey: ['user'], ...})
+  const {data: stats} = useSuspenseQuery({queryKey: ['stats'], ...})
+  const {data: news} = useSuspenseQuery({queryKey: ['news'], ...})
+}
+```
+
+세 요청은 각각 1초 걸리고 서로 독립이다. 화면이 뜨기까지 몇 초일까? 어떻게 고칠까?
+
+---
+
+## 중간 점검 ① — 정답: 3초. useSuspenseQueries로 1초
+
+- suspend는 **그 줄에서 함수 실행을 중단**한다 — 두 번째 훅은 user가 도착하기 전엔 호출조차 안 된다
+- 1초 × 3 직렬 = 3초 (워터폴)
+- 서로 독립인 쿼리는 `useSuspenseQueries`로 한 번에 선언 → 병렬 1초
+
+단, stats가 user의 결과를 필요로 하는 **종속 쿼리라면 직렬이 정답**이다 — 그때는 워터폴이 아니라 의존성이다.
+
+---
+
+## 중간 점검 ② — prefetch가 무시된다
+
+```jsx
+// 서버 컴포넌트
+await queryClient.prefetchQuery({queryKey: ['todos'], queryFn: fetchTodos})
+
+// 클라이언트 컴포넌트
+const {data} = useQuery({queryKey: ['todos', 'list'], queryFn: fetchTodos})
+```
+
+프리페치도, HydrationBoundary도 정상 동작했다. 그런데 첫 화면에 스피너가 뜨고 요청이 다시 나간다. 왜일까?
+
+---
+
+## 중간 점검 ② — 정답: 키가 다르다
+
+- hydrate는 잘 됐다 — 클라이언트 캐시에 `['todos']` 항목이 들어 있다
+- 하지만 useQuery가 보는 주소는 `['todos', 'list']` — **다른 캐시 항목**이므로 빈손에서 시작한다
+- 에러도 경고도 없다. 프리픽스 관계여도 소용없다 (프리픽스 매칭은 invalidate의 기능이고, 조회는 정확한 키)
+- 예방: 서버와 클라이언트가 **같은 queryOptions 헬퍼**를 import하게 한다 (함정 1에서 계속)
+
+> SSR 최적화가 통째로 무시되는데 화면은 멀쩡히 돌아간다 — 가장 발견이 늦는 종류의 버그다.
 
 ---
 

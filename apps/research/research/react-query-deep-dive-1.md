@@ -71,6 +71,8 @@ react-query는 이 반복을 없애기 위해 존재한다.
 2. **캐시의 생명주기** — fresh, stale, inactive와 staleTime/gcTime
 3. **useMutation과 무효화** — 쓰기 작업 후 캐시를 갱신하는 법
 
+각 파트 끝에는 이해를 확인하는 **중간 점검 퀴즈**가 있다.
+
 **2부**
 
 4. **내부 동작** — QueryClient, Query, QueryObserver의 구독 모델
@@ -388,6 +390,60 @@ const {data: orders} = useQuery({
 
 ---
 
+## 중간 점검 ① — 서버가 500을 내려줬다
+
+```js
+useQuery({
+  queryKey: ['config'],
+  queryFn: async () => {
+    const res = await fetch('/api/config') // 서버가 500을 반환
+    return res.json()
+  },
+})
+```
+
+서버가 500과 함께 `{"message": "Internal Server Error"}`를 응답했다. 이 쿼리의 `status`는 무엇일까?
+
+<!-- 진행: pending / error / success 손들기. error가 다수인 편 — fetch의 reject 조건을 되물으며 반전. -->
+
+---
+
+## 중간 점검 ① — 정답: success
+
+- `fetch`는 404, 500에도 **reject하지 않는다** — reject는 네트워크 단절 수준에서만
+- `res.json()`도 성공한다 (에러 응답도 유효한 JSON이므로)
+- queryFn이 throw하지 않았으니 `status: 'success'`, `data`는 `{message: 'Internal Server Error'}`
+- 화면은 에러 객체를 정상 데이터처럼 그리다 깨지고, 에러 분기는 끝까지 침묵한다
+
+> 실패는 throw로 알린다 — fetch를 쓴다면 `res.ok` 검사는 선택이 아니라 규약의 일부다.
+
+---
+
+## 중간 점검 ② — 두 축으로 읽기
+
+```jsx
+const {status, fetchStatus, isLoading} = useQuery({
+  queryKey: ['orders', userId],
+  queryFn: () => fetchOrders(userId),
+  enabled: false,
+})
+```
+
+이 쿼리의 `status`, `fetchStatus`, `isLoading`은 각각 무엇일까?
+
+---
+
+## 중간 점검 ② — 정답: pending / idle / false
+
+- 데이터가 한 번도 없었으니 `status: 'pending'`
+- 요청이 날아가고 있지 않으니 `fetchStatus: 'idle'`
+- `isLoading = isPending && isFetching`이므로 **false**
+- "pending = 로딩 중"으로 외웠다면 여기서 무너진다 — pending은 "보여줄 데이터가 없다"일 뿐, 로딩 여부는 fetchStatus의 몫
+
+> 스피너를 isPending에만 걸면 enabled: false인 화면은 영원히 스피너다. isLoading이 이 경우를 걸러낸다.
+
+---
+
 ## Part 2 — 캐시의 생명주기
 
 <!-- _class: invert -->
@@ -630,6 +686,58 @@ retry: (failureCount, error) => error.status >= 500 && failureCount < 3
 
 ---
 
+## 중간 점검 ① — 뒤집힌 두 시계
+
+`staleTime: 5분, gcTime: 1분`으로 설정된 목록 쿼리가 있다.
+
+```text
+00:00  목록 진입          → 요청, 데이터 도착 (fresh)
+00:30  상세 화면으로 이동  → 구독자 0
+02:30  목록으로 복귀       → ?
+```
+
+02:30 복귀 시점에 무슨 일이 일어날까? staleTime 기준으로 데이터는 아직 fresh다(5분 안 지남).
+
+<!-- 진행: "즉시 표시 / 스피너" 손들기. "fresh니까 즉시"가 다수 — 두 시계의 독립성으로 반전. -->
+
+---
+
+## 중간 점검 ① — 정답: 스피너 + 새 요청
+
+- 두 시계는 **서로 독립**이다 — staleTime은 신선도, gcTime은 보관
+- 구독자가 0이 된 00:30부터 gcTime 1분 카운트다운 → **01:30에 캐시 삭제**
+- "아직 fresh였다"는 사실은 도움이 안 된다. 신선하고 말고 할 **캐시 자체가 없다**
+- 02:30 복귀는 빈손 시작 → 스피너 + 새 요청
+
+> staleTime > gcTime이 금지는 아니지만, 낡기도 전에 버려지는 설정이다. 보통 staleTime ≤ gcTime으로 둔다.
+
+---
+
+## 중간 점검 ② — 폴링과 신선도
+
+```js
+useQuery({
+  queryKey: ['stock', itemId],
+  queryFn: fetchStock,
+  staleTime: Infinity, // 절대 낡지 않는다
+  refetchInterval: 5_000, // 5초 폴링
+})
+```
+
+staleTime이 Infinity면 데이터는 영원히 fresh다. 5초 폴링은 돌까, 멈출까?
+
+---
+
+## 중간 점검 ② — 정답: 돈다
+
+- mount/focus/reconnect 계기는 `shouldFetchOn` 판정을 거친다 — **stale일 때만** 갱신
+- **`refetchInterval`은 이 판정을 거치지 않는다** (실측 확인) — fresh여도 인터벌마다 요청이 나간다
+- 그래서 이 조합은 모순이 아니라 유효한 선언이다: "자동 계기로는 갱신하지 말고, 5초마다는 무조건 받아라"
+
+> 네 가지 계기 중 폴링만 신선도와 무관하다. "갱신 = 계기 × stale" 공식의 유일한 예외.
+
+---
+
 ## Part 3 — useMutation과 캐시 무효화
 
 <!-- _class: invert -->
@@ -799,6 +907,66 @@ useMutation({
 - 키는 **프리픽스로 매칭**된다 — 계층적 키 설계가 여기서 회수된다
 - 필수 후처리는 **useMutation 쪽** 콜백에 (mutate 쪽은 언마운트 시 증발)
 - 낙관적 업데이트 3박자: **스냅샷 → 미리 그리기 → 실패 시 롤백**, 마무리는 무효화
+
+---
+
+## 중간 점검 ① — 무효화가 증발한다
+
+```jsx
+const mutation = useMutation({mutationFn: addTodo})
+
+mutation.mutate(newTodo, {
+  onSuccess: () => {
+    queryClient.invalidateQueries({queryKey: ['todos']})
+    navigate('/todos')
+  },
+})
+```
+
+저장 버튼을 누르자마자 사용자가 뒤로가기로 이 화면을 떠났다. 서버 저장은 성공했다. `['todos']` 무효화는 실행될까?
+
+---
+
+## 중간 점검 ① — 정답: 실행되지 않는다
+
+- `mutate()` **호출부의 콜백은 컴포넌트가 언마운트되면 실행되지 않는다**
+- 무효화가 증발했으니 목록 화면은 stale 표시조차 안 된 옛 캐시를 그대로 보여준다
+- 반드시 일어나야 하는 후처리는 **useMutation 정의부에**, 그 화면에서만 의미 있는 후처리는 호출부에
+
+```jsx
+const mutation = useMutation({
+  mutationFn: addTodo,
+  onSuccess: () => queryClient.invalidateQueries({queryKey: ['todos']}), // 항상 실행
+})
+mutation.mutate(newTodo, {onSuccess: () => navigate('/todos')}) // 이 화면 한정
+```
+
+---
+
+## 중간 점검 ② — 캐시는 바뀌었는데 화면이 그대로
+
+```js
+queryClient.setQueryData(['todos'], (old) => {
+  old.push(newTodo) // 캐시 배열에 직접 추가
+  return old
+})
+```
+
+`getQueryData`로 확인하면 새 항목이 분명히 들어 있다. 그런데 화면의 목록에는 나타나지 않는다. 왜일까?
+
+---
+
+## 중간 점검 ② — 정답: 참조가 그대로다
+
+- `old.push()`는 배열을 직접 수정한다 — 반환된 것은 **이전과 같은 참조**
+- react-query는 **참조 비교로 변화를 감지**한다. 같은 참조 = "바뀐 게 없다" → 구독자에게 알림이 가지 않는다
+- 갱신 함수는 불변으로 새 배열을 만들어야 한다:
+
+```js
+queryClient.setQueryData(['todos'], (old) => [...old, newTodo]) // 새 배열
+```
+
+> "참조가 같으면 같은 데이터"는 react-query의 리렌더 최적화가 깔고 있는 전제다 — 왜 그런지는 2부 Part 4(structural sharing)에서 회수한다.
 
 ---
 
