@@ -353,7 +353,6 @@ Next.js App Router의 서버 컴포넌트에서:
 ```jsx
 export default async function Page() {
   const queryClient = new QueryClient() // 요청마다 새로! (다음 슬라이드)
-
   await queryClient.prefetchQuery({
     queryKey: ['todos'],
     queryFn: fetchTodos,

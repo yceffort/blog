@@ -485,10 +485,8 @@ useQuery({
 })
 ```
 
-Node에서 query-core로 직접 확인한 동작:
-
 ```js
-// fetchQuery: 컴포넌트 없이 쿼리를 실행하는 코어 API (실측용)
+// Node 실측 — fetchQuery는 컴포넌트 없이 쿼리를 실행하는 코어 API
 await client.fetchQuery(opts) // 요청 1회
 await client.fetchQuery(opts) // fresh → queryFn 호출 없음, 캐시 반환
 // queryFn 호출 횟수: 1
