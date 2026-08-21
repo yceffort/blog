@@ -20,3 +20,7 @@ pre-commit:
       glob: '*.{md,mdx}'
       exclude: 'labs/**'
       run: node apps/blog/scripts/check-markdown.mjs {staged_files}
+    translation-sync:
+      glob: '*.md'
+      exclude: 'labs/**'
+      run: node apps/blog/scripts/check-translation-sync.mjs {staged_files}
