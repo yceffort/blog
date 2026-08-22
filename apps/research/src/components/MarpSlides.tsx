@@ -229,33 +229,38 @@ export function MarpSlides({
         return
       }
 
+      // 물리 키 기준(e.code)으로 비교해 한영 전환/Caps Lock 상태와 무관하게 동작
+
       // 도움말 토글 (? 키)
-      if (e.key === '?') {
+      if (e.key === '?' || (e.code === 'Slash' && e.shiftKey)) {
         setIsHelpOpen((prev) => !prev)
         return
       }
 
       // 검색 열기 (/ 또는 Cmd/Ctrl+F)
-      if (e.key === '/' || ((e.metaKey || e.ctrlKey) && e.key === 'f')) {
+      if (
+        (e.code === 'Slash' && !e.shiftKey) ||
+        ((e.metaKey || e.ctrlKey) && e.code === 'KeyF')
+      ) {
         e.preventDefault()
         setIsSearchOpen(true)
         return
       }
 
       // 레이저 포인터 토글 (L 키)
-      if (e.key === 'l' || e.key === 'L') {
+      if (e.code === 'KeyL') {
         setIsLaserMode((prev) => !prev)
         return
       }
 
       // 드로잉 모드 토글 (D 키)
-      if (e.key === 'd' || e.key === 'D') {
+      if (e.code === 'KeyD') {
         setIsDrawingMode((prev) => !prev)
         return
       }
 
       // QR 코드 토글 (Q 키)
-      if (e.key === 'q' || e.key === 'Q') {
+      if (e.code === 'KeyQ') {
         setQrUrl((prev) =>
           prev
             ? null
@@ -265,7 +270,7 @@ export function MarpSlides({
       }
 
       // 오버뷰 토글 (G 키)
-      if (e.key === 'g' || e.key === 'G') {
+      if (e.code === 'KeyG') {
         if (multiple) {
           setIsOverviewOpen((prev) => !prev)
         }
@@ -273,7 +278,7 @@ export function MarpSlides({
       }
 
       // 발표자 모드 열기 (P 키)
-      if (e.key === 'p' || e.key === 'P') {
+      if (e.code === 'KeyP') {
         window.open(
           `/slides/${slug}/presenter`,
           'presenter',
