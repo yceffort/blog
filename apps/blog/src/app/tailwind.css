@@ -1869,6 +1869,29 @@ body[data-minimal='true'] .hero-title .accent {
   width: 100%;
   color: var(--ink-3);
 }
+.post-slide-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 820px;
+  margin: 20px auto 0;
+  padding: 10px 14px;
+  border-left: 3px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+  background: color-mix(in oklab, var(--primary) 8%, transparent);
+  font-size: 13px;
+  color: var(--ink-2);
+  gap: 12px;
+}
+.post-slide-note-link {
+  flex-shrink: 0;
+  font-weight: 600;
+  color: var(--primary);
+}
+.post-slide-note-link:hover {
+  color: var(--primary-2);
+}
 .post-subscribe {
   display: flex;
   flex-wrap: wrap;

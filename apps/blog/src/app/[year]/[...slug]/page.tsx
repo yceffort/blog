@@ -271,13 +271,13 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
         )}
 
         {slide && (
-          <aside className="post-subscribe">
+          <aside className="post-slide-note">
             <p>이 글은 발표 슬라이드로도 정리되어 있습니다.</p>
             <a
               href={`https://research.yceffort.kr/slides/${slide}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="post-subscribe-link"
+              className="post-slide-note-link"
             >
               슬라이드로 보기 →
             </a>
