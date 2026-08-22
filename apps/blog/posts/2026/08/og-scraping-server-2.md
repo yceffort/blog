@@ -748,37 +748,48 @@ request(url, {signal: AbortSignal.timeout(8_000)})
 
 그럴듯한 보안 코드와 실제로 동작하는 보안 코드는 다르고, 그 차이는 대체로 돌려봤는가에서 온다고 생각한다.
 
-직접 재현해 볼 수 있는 최소 코드는 이 정도다.
+앞에서 "손으로 벗기면 16진 표기에서 뚫린다"고 한 대목은 직접 돌려서 확인할 수 있다. `169.254.0.0/16`(메타데이터 대역)을 막아 두고, IPv4-mapped 주소를 손으로 벗겨 검사하는 방식과 `BlockList`에 그대로 넘기는 방식을 나란히 세워 보면 된다.
 
-```bash
-npm i undici
+```ts
+import {BlockList, isIPv4} from 'node:net'
 
-# ① IPv4-mapped 16진 표기 우회
-node -e "const{BlockList,isIPv4}=require('net');
-const b=new BlockList();b.addSubnet('169.254.0.0',16,'ipv4');
-const bad=ip=>{const a=ip.startsWith('::ffff:')?ip.slice(7):ip;
-  return !b.check(a,isIPv4(a)?'ipv4':'ipv6')};
-const good=ip=>!b.check(ip,isIPv4(ip)?'ipv4':'ipv6');
-console.log('손으로 벗김:',bad('::ffff:a9fe:a9fe'),'(true면 취약)');
-console.log('그대로     :',good('::ffff:a9fe:a9fe'),'(false면 안전)')"
+const blocked = new BlockList()
+blocked.addSubnet('169.254.0.0', 16, 'ipv4')
 
-# ② lookup 훅은 IP 리터럴에서 호출되지 않는다
-node -e "const http=require('http'),{request,Agent}=require('undici');
-const s=http.createServer((_,r)=>{r.writeHead(200);r.end('INTERNAL')});
-let n=0;const a=new Agent({connect:{lookup(h,o,cb){n++;cb(new Error('BLOCKED'),'',0)}}});
-s.listen(9004,'127.0.0.1',async()=>{
-  for(const u of ['http://localhost:9004/','http://127.0.0.1:9004/']){
-    n=0;try{const r=await request(u,{dispatcher:a});
-      console.log(u,'->',r.statusCode,await r.body.text(),'| lookup',n,'회')}
-    catch(e){console.log(u,'-> 차단 | lookup',n,'회')}}
-  s.close();process.exit(0)})"
+// ::ffff:a9fe:a9fe 는 169.254.169.254 를 가리키는 IPv4-mapped 주소다
+const mapped = '::ffff:a9fe:a9fe'
+
+// 방식 A: '::ffff:' 접두어를 손으로 벗겨서 검사한다
+const prefix = '::ffff:'
+const stripped = mapped.startsWith(prefix)
+  ? mapped.slice(prefix.length)
+  : mapped
+const passesA = !blocked.check(stripped, isIPv4(stripped) ? 'ipv4' : 'ipv6')
+
+// 방식 B: 벗기지 않고 원문 그대로 BlockList에 넘긴다
+const passesB = !blocked.check(mapped, isIPv4(mapped) ? 'ipv4' : 'ipv6')
+
+console.log('손으로 벗김:', passesA) // true → 통과시킨다. 취약하다
+console.log('그대로     :', passesB) // false → 막는다. 안전하다
 ```
 
-## 여기까지가 뚫리지 않는 법이다
+`a9fe:a9fe`는 16진수라 문자열을 벗겨 `isIPv4`에 넣으면 IPv4로 인식되지 않고, 그 틈으로 메타데이터 주소가 화이트리스트를 통과한다. `BlockList`는 IPv4-mapped를 알아서 IPv4로 보고 막는다. 그러니 벗기지 않는 쪽이 옳다.
 
-그러니까 이 편 전체가 그 이야기였다. 화이트리스트를 걸었다는 사실은 아무것도 보장하지 않는다. 어떤 우회를 막는지 말할 수 있는 방어만 방어이고, 그것을 말할 수 있으려면 결국 돌려봐야 한다. 위의 체크리스트가 길어 보이지만 한 줄 한 줄이 실제로 뚫리는 경로 하나씩에 대응하고, 근거 없이 들어간 줄은 없다.
+## 정리: 여섯 우회는 다섯 원리로 닫힌다
 
-막는 쪽이 아니라 되게 만드는 쪽, 그러니까 에러율과 지연을 낮추는 이야기는 [1편](/2026/08/og-scraping-server-1)에 있다.
+이 편은 하나의 순서로 짜여 있다. 먼저 화이트리스트를 뚫는 여섯 가지 우회를 보고, 그다음 그것을 관통하는 방어 원리 다섯 개로 닫았다. 둘을 마주 놓으면 이렇게 대응한다.
+
+| 우회                              | 무엇으로 막는가                                                      |
+| --------------------------------- | -------------------------------------------------------------------- |
+| IP 표기 변형, DNS로 사설 IP, IPv6 | 이름이 아니라 **DNS가 해석한 주소**를 검증한다 (원리 1)              |
+| DNS rebinding                     | 검증한 **그 주소로 직접 연결**한다 (원리 2)                          |
+| 리다이렉트로 우회                 | 홉마다 원리 1·2를 **처음부터 다시** 한다 (원리 3)                    |
+| URL 파서 혼동                     | 한 번 파싱한 객체만 쓰고 **스킴·포트도 잠근다** (원리 4)             |
+| 위가 전부 뚫렸을 때               | 애플리케이션 방어를 **믿지 않는다**. 아웃바운드 차단·IMDSv2 (원리 5) |
+
+이 표가 이 편의 요지다. 화이트리스트를 걸었다는 사실 자체는 아무것도 보장하지 않는다. 어떤 우회를 막는지 한 줄씩 말할 수 있는 방어만 방어이고, 그렇게 말할 수 있으려면 결국 돌려봐야 한다. 실제로 돌려보니 처음에 그럴듯하게 적어둔 네 가지가 틀렸다는 것도 그래서 알게 됐다.
+
+여기까지가 남의 URL을 서버가 대신 여는 일을 안전하게 만드는 법이었다. 같은 기능을 이번엔 빠르고 정확하게 만드는 쪽, 그러니까 에러율과 지연을 낮추는 이야기는 [1편](/2026/08/og-scraping-server-1)에 있다.
 
 ## 참고
 
