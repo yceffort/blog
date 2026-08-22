@@ -6,8 +6,8 @@ tags:
   - scraping
   - architecture
   - deep-dive
-published: false
-date: 2026-08-19 09:00:00
+published: true
+date: 2026-08-22 13:30:00
 description: '링크 미리보기 서버의 "에러율 10%"는 성질이 다른 다섯 종류의 실패가 뭉친 숫자다. 캐시가 그중 무엇을 고치고 무엇을 못 고치는지, 이 워크로드가 왜 I/O 바운드에 저 TPS인지, 그리고 런타임 선택이 실제로 갈리는 네 지점은 어디인지. 소켓 직전까지의 통제권, 망가진 HTML 파싱, 인코딩(여기서는 Node가 불리하다), 코드 소유권을 차례로 따져본다. OG 스크래핑 서버 설계 노트 시리즈의 첫 편이다.'
 thumbnail: /thumbnails/2026/08/og-scraping-server-1.png
 series: 'OG 스크래핑 서버 설계 노트'

@@ -7,8 +7,8 @@ tags:
   - caching
   - encoding
   - deep-dive
-published: false
-date: 2026-08-19 10:00:00
+published: true
+date: 2026-08-22 14:30:00
 description: 'User-Agent 하나가 에러율을 가르고, Node 내장 TextDecoder는 CP949 확장 문자를 에러 없이 다른 글자로 바꾼다. 스크랩해 온 og:title은 API 응답이 아니라 사용자 입력이라는 것, 캐시 스탬피드와 negative caching, 그리고 "P95 1초 미만"이라는 목표를 캐시 히트율에서 역산해 달성 가능한지 먼저 확인하는 방법까지. 200만 건 시뮬레이션으로 검증한 역산식을 포함한다. OG 스크래핑 서버 설계 노트 시리즈의 마지막 편이다.'
 thumbnail: /thumbnails/2026/08/og-scraping-server-3.png
 series: 'OG 스크래핑 서버 설계 노트'
