@@ -113,6 +113,9 @@ export function MarpSlides({
     handleDrawMove,
     handleDrawEnd,
     handleClearCanvas,
+    textPos,
+    commitText,
+    cancelText,
   } = useDrawing(isDrawingMode, activeIndex)
 
   const {sendSlideChange} = useBroadcastChannel(`marp-slides-${slug}`, {
@@ -787,13 +790,31 @@ export function MarpSlides({
             onPointerUp={handleDrawEnd}
             onPointerCancel={handleDrawEnd}
           />
+          {textPos && (
+            <input
+              className={styles.drawTextInput}
+              style={{left: textPos.x, top: textPos.y, color: drawColor}}
+              ref={(el) => el?.focus()}
+              onKeyDown={(e) => {
+                if (e.nativeEvent.isComposing) {
+                  return
+                }
+                if (e.key === 'Enter') {
+                  commitText(e.currentTarget.value)
+                } else if (e.key === 'Escape') {
+                  cancelText()
+                }
+              }}
+              onBlur={(e) => commitText(e.currentTarget.value)}
+            />
+          )}
           <div
             className={styles.drawToolbar}
             role="presentation"
             onClick={(e) => e.stopPropagation()}
           >
             <div className={styles.drawToolGroup}>
-              {(['pen', 'highlighter', 'eraser'] as const).map((t) => (
+              {(['pen', 'highlighter', 'eraser', 'text'] as const).map((t) => (
                 <button
                   key={t}
                   className={styles.drawToolBtn}
@@ -802,7 +823,13 @@ export function MarpSlides({
                   aria-label={t}
                   title={t}
                 >
-                  {t === 'pen' ? '✎' : t === 'highlighter' ? '◐' : '⌫'}
+                  {t === 'pen'
+                    ? '✎'
+                    : t === 'highlighter'
+                      ? '◐'
+                      : t === 'eraser'
+                        ? '⌫'
+                        : 'T'}
                 </button>
               ))}
             </div>

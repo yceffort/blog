@@ -552,6 +552,20 @@
   touch-action: none;
 }
 
+.drawTextInput {
+  position: absolute;
+  z-index: 55;
+  min-width: 160px;
+  padding: 0;
+  background: transparent;
+  border: 1px dashed rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+  outline: none;
+  font-size: 24px;
+  font-family: sans-serif;
+  line-height: 1.2;
+}
+
 .drawToolbar {
   position: fixed;
   bottom: 24px;

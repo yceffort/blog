@@ -1,11 +1,12 @@
 import {useCallback, useEffect, useRef, useState} from 'react'
 
-export type DrawTool = 'pen' | 'highlighter' | 'eraser'
+export type DrawTool = 'pen' | 'highlighter' | 'eraser' | 'text'
 
-// 드로잉 캔버스 상태 + 핸들러 (펜/형광펜/지우개)
+// 드로잉 캔버스 상태 + 핸들러 (펜/형광펜/지우개/텍스트)
 export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
   const [drawTool, setDrawTool] = useState<DrawTool>('pen')
   const [drawColor, setDrawColor] = useState('#ef4444')
+  const [textPos, setTextPos] = useState<{x: number; y: number} | null>(null)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const drawingRef = useRef(false)
   const lastPointRef = useRef<{x: number; y: number} | null>(null)
@@ -38,6 +39,7 @@ export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
 
   // 슬라이드 이동 시 드로잉 클리어
   useEffect(() => {
+    setTextPos(null)
     const canvas = canvasRef.current
     if (!canvas) {
       return
@@ -46,10 +48,22 @@ export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
     ctx?.clearRect(0, 0, canvas.width, canvas.height)
   }, [activeIndex])
 
+  // 드로잉 모드 종료 시 텍스트 입력 취소
+  useEffect(() => {
+    if (!isDrawingMode) {
+      setTextPos(null)
+    }
+  }, [isDrawingMode])
+
   const handleDrawStart = useCallback(
     (e: React.PointerEvent<HTMLCanvasElement>) => {
       const canvas = canvasRef.current
       if (!canvas) {
+        return
+      }
+      if (drawTool === 'text') {
+        const rect = canvas.getBoundingClientRect()
+        setTextPos({x: e.clientX - rect.left, y: e.clientY - rect.top})
         return
       }
       canvas.setPointerCapture(e.pointerId)
@@ -60,7 +74,7 @@ export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
         y: e.clientY - rect.top,
       }
     },
-    [],
+    [drawTool],
   )
 
   const handleDrawMove = useCallback(
@@ -111,6 +125,28 @@ export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
     lastPointRef.current = null
   }, [])
 
+  // 입력한 텍스트를 캔버스에 그리기
+  const commitText = useCallback(
+    (value: string) => {
+      const canvas = canvasRef.current
+      const ctx = canvas?.getContext('2d')
+      if (ctx && textPos && value.trim()) {
+        ctx.save()
+        ctx.font = '24px sans-serif'
+        ctx.textBaseline = 'top'
+        ctx.fillStyle = drawColor
+        ctx.fillText(value, textPos.x, textPos.y)
+        ctx.restore()
+      }
+      setTextPos(null)
+    },
+    [textPos, drawColor],
+  )
+
+  const cancelText = useCallback(() => {
+    setTextPos(null)
+  }, [])
+
   const handleClearCanvas = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) {
@@ -130,5 +166,8 @@ export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
     handleDrawMove,
     handleDrawEnd,
     handleClearCanvas,
+    textPos,
+    commitText,
+    cancelText,
   }
 }
