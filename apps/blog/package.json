@@ -12,7 +12,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.116.0",
+    "@anthropic-ai/sdk": "^0.117.1",
     "@google-analytics/data": "^7.0.0",
     "@panzoom/panzoom": "^4.6.2",
     "@react-three/fiber": "^9.7.0",
