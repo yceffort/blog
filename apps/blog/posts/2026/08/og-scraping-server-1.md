@@ -12,6 +12,7 @@ published: true
 date: 2026-08-22 13:30:00
 description: '링크 미리보기 서버의 "에러율 10%"는 성질이 다른 다섯 종류의 실패가 뭉친 숫자다. 이 워크로드가 왜 I/O 바운드에 저 TPS인지, 런타임 선택이 실제로 갈리는 네 지점은 어디인지 따져본 뒤, User-Agent와 인코딩으로 에러율을 낮추는 일로 넘어간다. Node 내장 TextDecoder는 CP949 확장 문자를 에러 없이 다른 글자로 바꾸고, 스크랩해 온 og:title은 API 응답이 아니라 사용자 입력이다. 캐시 스탬피드와 negative caching, 그리고 "P95 1초 미만"을 캐시 히트율에서 역산해 검증하는 200만 건 시뮬레이션까지 담았다. OG 스크래핑 서버 설계 노트 2부작의 첫 편이다.'
 thumbnail: /thumbnails/2026/08/og-scraping-server-1.png
+slide: og-scraping-server-nodejs-1
 series: 'OG 스크래핑 서버 설계 노트'
 seriesOrder: 1
 ---
