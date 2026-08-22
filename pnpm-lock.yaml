@@ -78,8 +78,8 @@ importers:
         specifier: ^16.3.0
         version: 16.3.0(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.102.0)
       next-mdx-remote-client:
-        specifier: ^2.1.11
-        version: 2.1.11(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@10.2.2)(unified@11.0.5)
+        specifier: ^2.1.12
+        version: 2.1.12(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@10.2.2)(unified@11.0.5)
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -2913,8 +2913,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  next-mdx-remote-client@2.1.11:
-    resolution: {integrity: sha512-R28K170ODHCdzoqyoNosTSMGKEj/MEHknQELSjK6eQVsGXxeQ3brORmusql3AvPBqTGOfYVVeTvuIC/133UZxw==}
+  next-mdx-remote-client@2.1.12:
+    resolution: {integrity: sha512-KDfhIk5aEM0kkZ0xQ8XBkmo4O5xmJeGWUomm40Ac/xhkt5sIDOTmTU/QFfmJGLJUJipD5o0BAHqVSIZKuXgNEw==}
     engines: {node: '>=20.9.0'}
     peerDependencies:
       react: '>= 19.1.0'
@@ -3232,8 +3232,8 @@ packages:
   remark-math@6.0.0:
     resolution: {integrity: sha512-MMqgnP74Igy+S3WwnhQ7kqGlEerTETXMvJhrUzDikVZ2/uogJCb+WHUg97hK9/jcfc0dkD73s3LN8zU49cTEtA==}
 
-  remark-mdx-remove-esm@1.3.2:
-    resolution: {integrity: sha512-BvL8VSdVXy9S7NlHP56nUJAHFc45h5E9HnHiLUGHe5tw3Yvm/3cVZvAzlkEEh2i+fkq2uKrf2xn5VmItBhMypA==}
+  remark-mdx-remove-esm@1.3.3:
+    resolution: {integrity: sha512-KgGfD4JV3lKse0n/m8UxW4jK6H/9ffkCVxVAJ60aGY4uiPX/+SQCT5/lQcRGcjyQuRLDq2Df2krv6pD/qWJRVw==}
     peerDependencies:
       unified: ^11
 
@@ -6357,7 +6357,7 @@ snapshots:
 
   nanoid@3.3.18: {}
 
-  next-mdx-remote-client@2.1.11(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@10.2.2)(unified@11.0.5):
+  next-mdx-remote-client@2.1.12(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@10.2.2)(unified@11.0.5):
     dependencies:
       '@babel/code-frame': 7.29.7
       '@mdx-js/mdx': 3.1.1(supports-color@10.2.2)
@@ -6365,7 +6365,7 @@ snapshots:
       '@types/mdx': 2.0.14
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
-      remark-mdx-remove-esm: 1.3.2(unified@11.0.5)
+      remark-mdx-remove-esm: 1.3.3(unified@11.0.5)
       serialize-error: 13.0.1
       vfile: 6.0.3
       vfile-matter: 5.0.1
@@ -6775,7 +6775,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  remark-mdx-remove-esm@1.3.2(unified@11.0.5):
+  remark-mdx-remove-esm@1.3.3(unified@11.0.5):
     dependencies:
       '@types/mdast': 4.0.4
       unified: 11.0.5
