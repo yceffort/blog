@@ -1,4 +1,5 @@
 import {Marp as MarpCore} from '@marp-team/marp-core'
+import markdownItCjkFriendly from 'markdown-it-cjk-friendly'
 import postcss from 'postcss'
 import type {Result as PostCSSResult, AtRule} from 'postcss'
 import postcssImportUrl from 'postcss-import-url'
@@ -52,6 +53,10 @@ async function renderMarp(markdown: string): Promise<RenderedMarp> {
     script: false,
     printable: false,
   })
+
+  // 한글처럼 띄어쓰기 없이 구두점과 붙는 텍스트에서 **강조**가 리터럴로 노출되는
+  // CommonMark flanking 규칙 문제를 구제한다. blog의 remark-cjk-friendly와 같은 프로젝트다.
+  marp.use(markdownItCjkFriendly)
 
   // mermaid 펜스는 서버에서 파싱하지 않고 placeholder만 남긴다.
   // 실제 렌더는 클라이언트(Marp.tsx)가 textContent를 읽어 수행한다.
