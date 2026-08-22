@@ -6,7 +6,3 @@ allowBuilds:
   '@parcel/watcher': false
   lefthook: true
   protobufjs: false
-
-overrides:
-  # postcss-import-url이 존재하지 않는 lodash.trim@4.18.1을 요구해 lodash로 대체
-  lodash.trim: 'npm:lodash@^4.17.21'
