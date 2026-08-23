@@ -142,6 +142,57 @@ async function main() {
       orderBys: [{metric: {metricName: 'sessions'}, desc: true}],
       limit: 15,
     }),
+    // 레퍼럴 유입만 (source/medium). 채널 그룹의 Referral 내역 확인용
+    run('referrals', {
+      dateRanges: range,
+      dimensions: [{name: 'sessionSource'}, {name: 'sessionMedium'}],
+      metrics: [{name: 'sessions'}, {name: 'activeUsers'}],
+      orderBys: [{metric: {metricName: 'sessions'}, desc: true}],
+      limit: 40,
+    }),
+    // 실제 레퍼러 URL (이벤트 스코프). 어느 페이지에서 링크를 타고 왔는지
+    run('referrerUrls', {
+      dateRanges: range,
+      dimensions: [{name: 'pageReferrer'}],
+      metrics: [{name: 'screenPageViews'}, {name: 'activeUsers'}],
+      orderBys: [{metric: {metricName: 'screenPageViews'}, desc: true}],
+      limit: 40,
+    }),
+    // 채널 → 랜딩 글 교차. 사용자 흐름 다이어그램의 뼈대
+    run('channelLanding', {
+      dateRanges: range,
+      dimensions: [
+        {name: 'sessionDefaultChannelGroup'},
+        {name: 'landingPagePlusQueryString'},
+      ],
+      metrics: [{name: 'sessions'}, {name: 'activeUsers'}],
+      orderBys: [{metric: {metricName: 'sessions'}, desc: true}],
+      limit: 150,
+    }),
+    // 소스 → 랜딩 글 교차. "어디서 어느 글로" 표
+    run('sourceLanding', {
+      dateRanges: range,
+      dimensions: [
+        {name: 'sessionSource'},
+        {name: 'landingPagePlusQueryString'},
+      ],
+      metrics: [{name: 'sessions'}],
+      orderBys: [{metric: {metricName: 'sessions'}, desc: true}],
+      limit: 150,
+    }),
+    // 랜딩 글별 세션 깊이·참여. 흐름의 마지막 단계(더 읽었나 / 한 장만 보고 떠났나)
+    run('landingDepth', {
+      dateRanges: range,
+      dimensions: [{name: 'landingPagePlusQueryString'}],
+      metrics: [
+        {name: 'sessions'},
+        {name: 'engagedSessions'},
+        {name: 'screenPageViews'},
+        {name: 'bounceRate'},
+      ],
+      orderBys: [{metric: {metricName: 'sessions'}, desc: true}],
+      limit: 40,
+    }),
     run('countries', {
       dateRanges: range,
       dimensions: [{name: 'country'}],

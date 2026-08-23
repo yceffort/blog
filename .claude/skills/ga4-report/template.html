@@ -288,6 +288,33 @@
   .insight p { margin: 0; font-size: 14px; color: var(--ink-2); }
   .insight p b { color: var(--ink); font-weight: 650; }
 
+  /* callout + inline code + de-emphasised rows */
+  .callout { border-left: 3px solid var(--warn); }
+  .callout h3 { margin: 0 0 6px; font-size: 15px; font-weight: 750; }
+  .callout p { margin: 0; font-size: 14px; color: var(--ink-2); }
+  .callout p b { color: var(--ink); font-weight: 650; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.9em;
+    background: var(--s1-soft);
+    padding: 1px 5px;
+    border-radius: 4px;
+    word-break: break-all;
+  }
+  tr.dim td { color: var(--muted); }
+  tr.dim td code { background: transparent; padding: 1px 0; }
+  .muted { color: var(--muted); }
+
+  /* mermaid */
+  pre.mermaid {
+    margin: 0;
+    overflow-x: auto;
+    text-align: center;
+    font-family: inherit;
+    line-height: normal;
+  }
+  pre.mermaid svg { max-width: 100%; height: auto; }
+
   footer.notes { margin-top: 48px; font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--grid); padding-top: 16px; }
   footer.notes p { margin: 4px 0; }
 
@@ -299,51 +326,52 @@
 <div class="wrap">
   <header class="masthead">
     <p class="eyebrow">yceffort.kr · GA4 성과 리포트</p>
-    <h1>최근 4주, 글 한 편이 트래픽을 끌었습니다</h1>
+    <h1>서피트가 실제로는 GA4가 말하는 것보다 1.7배 큽니다</h1>
     <p class="period">
-      <b>2026-07-19 ~ 08-16</b> (직전 4주 06-21 ~ 07-18과 비교) ·
+      <b>2026-07-26 ~ 08-23</b> (직전 4주 06-28 ~ 07-25와 비교) ·
       <span class="badge">⚠ 8/10 SPA 계측 변경</span>
       <span class="badge">⚠ 크롤러 트래픽 포함</span>
+      <span class="badge">⚠ 로컬 dev 유입 혼입</span>
     </p>
   </header>
 
   <div class="kpis">
     <div class="card kpi">
       <p class="label">사용자</p>
-      <div class="value">2,743</div>
-      <div class="delta down">▼ 25.8%</div>
-      <div class="note">직전 기간에 7/1 버스트 포함</div>
+      <div class="value">2,618</div>
+      <div class="delta down">▼ 19.2%</div>
+      <div class="note">직전 3,240에 7/1 버스트 1,251 포함</div>
     </div>
     <div class="card kpi">
       <p class="label">세션</p>
-      <div class="value">4,995</div>
-      <div class="delta down">▼ 3.5%</div>
-      <div class="note">직전 5,175</div>
+      <div class="value">4,810</div>
+      <div class="delta up">▲ 1.7%</div>
+      <div class="note">직전 4,730</div>
     </div>
     <div class="card kpi">
       <p class="label">페이지뷰</p>
-      <div class="value">6,928</div>
-      <div class="delta flagged">▲ 29.2% · ⚠ 계측 변경</div>
-      <div class="note">8/10 이후 직전과 비교 불가</div>
+      <div class="value">7,629</div>
+      <div class="delta flagged">▲ 59.2% · ⚠ 계측 변경</div>
+      <div class="note">직전 기간은 SPA 미집계 상태</div>
     </div>
     <div class="card kpi">
       <p class="label">참여율</p>
-      <div class="value">55.0%</div>
-      <div class="delta flagged">+18.0%p · ⚠ 계측 영향</div>
-      <div class="note">평균 세션 6분 14초</div>
+      <div class="value">53.9%</div>
+      <div class="delta flagged">+12.9%p · ⚠ 계측 영향</div>
+      <div class="note">평균 세션 6분 13초</div>
     </div>
   </div>
 
   <div class="card lede">
     <ul>
-      <li><b>7/22 발행된 '프론트엔드는 어디서 왔고, 에이전트 이후 어디로 가는가'가 879 조회로 압도적 1위</b>입니다. 2위(279)의 3.2배로, 이번 기간 상승분의 대부분을 설명합니다.</li>
-      <li><b>사용자 -26%는 기저효과에 가깝습니다.</b> 직전 기간의 7/1 하루 1,251명은 사용자·세션·페이지뷰가 1:1:1이라 크롤러 버스트로 추정됩니다.</li>
-      <li><b>페이지뷰·참여율 상승은 8/10 SPA page_view 계측 시작의 영향</b>이므로, 기간 비교는 사용자·세션 기준으로만 유효합니다.</li>
+      <li><b>서피트 유입은 채널 리포트의 229세션이 아니라 약 400세션으로 보입니다.</b> <code>?ref=surfit.io</code>가 붙은 세션 중 254개가 레퍼러 없이 Direct로 잡히고 있어, 실제 규모가 1.7배가량 과소 집계되는 것으로 추정됩니다.</li>
+      <li><b>홈으로 들어온 세션은 3.49페이지를 읽고, 글로 바로 떨어진 세션은 1.43페이지를 읽습니다.</b> 검색과 공유로 유입되는 대부분이 한 편만 읽고 떠나고 있어, 글 안에서 다음 글로 잇는 도선에 여지가 있어 보입니다.</li>
+      <li><b>사용자 19% 감소는 기저효과로 보입니다.</b> 직전 기간의 7/1 하루 1,251명은 사용자·세션·페이지뷰가 1:1:1이라 크롤러 버스트로 추정되며, 이를 걷어내면 오히려 증가에 가깝습니다.</li>
     </ul>
   </div>
 
   <section>
-    <h2>일별 트렌드 (91일)</h2>
+    <h2>일별 트렌드 (92일)</h2>
     <p class="sub">스파이크는 대부분 발행일과 일치합니다. 8/10 세로선 이후 페이지뷰가 사용자와 벌어지는 구간이 계측 변경 효과입니다.</p>
     <div class="card">
       <div class="legend">
@@ -352,7 +380,7 @@
         <span class="key"><span class="swatch-tri"></span>글 발행일</span>
       </div>
       <div class="chart-shell" id="trend-shell">
-        <svg id="trend" role="img" aria-label="91일간 일별 사용자와 페이지뷰 추이 라인 차트" tabindex="0"></svg>
+        <svg id="trend" role="img" aria-label="92일간 일별 사용자와 페이지뷰 추이 라인 차트" tabindex="0"></svg>
         <div class="viz-tip" id="trend-tip"></div>
       </div>
       <details>
@@ -379,20 +407,127 @@
     <h2>유입 경로</h2>
     <div class="split">
       <div class="card">
-        <p class="sub" style="margin-bottom: 12px;"><b style="color: var(--ink);">채널별 세션</b> · 4,995 세션 기준</p>
+        <p class="sub" style="margin-bottom: 12px;"><b style="color: var(--ink);">채널별 세션</b> · 4,730 세션 기준</p>
         <div class="bars" id="channels" style="gap: 11px;"></div>
+        <p class="sub" style="margin: 14px 0 0;">Direct가 절반이지만, 그중 상당수는 레퍼러가 지워진 서피트 유입으로 보입니다. 아래 보정 항목을 함께 보시는 편이 정확합니다.</p>
       </div>
       <div class="card">
-        <p class="sub" style="margin-bottom: 2px;"><b style="color: var(--ink);">리퍼럴 상위</b> · 세션</p>
+        <p class="sub" style="margin-bottom: 2px;"><b style="color: var(--ink);">외부 레퍼러</b> · 세션 (source 기준)</p>
         <ul class="ref-list">
-          <li><span class="d">surfit.io</span><span class="n">263</span></li>
-          <li><span class="d">github.com</span><span class="n">220</span></li>
-          <li><span class="d">teams.microsoft (사내 공유)</span><span class="n">23</span></li>
-          <li><span class="d">maeil-mail.kr</span><span class="n">16</span></li>
-          <li><span class="d">vercel.com</span><span class="n">13</span></li>
+          <li><span class="d">google (검색)</span><span class="n">1,474</span></li>
+          <li><span class="d">surfit.io</span><span class="n">229</span></li>
+          <li><span class="d">github.com</span><span class="n">205</span></li>
+          <li><span class="d">teams.microsoft (사내 공유)</span><span class="n">33</span></li>
+          <li><span class="d">maeil-mail.kr (뉴스레터)</span><span class="n">22</span></li>
+          <li><span class="d">vercel.com</span><span class="n">21</span></li>
+          <li><span class="d">naver (검색)</span><span class="n">24</span></li>
+          <li><span class="d">gemini · chatgpt · claude</span><span class="n">17</span></li>
         </ul>
-        <p class="sub" style="margin: 14px 0 0;">AI Assistant 채널이 처음 잡히기 시작했습니다 (15세션, gemini.google.com 등).</p>
+        <p class="sub" style="margin: 14px 0 0;">AI Assistant 채널은 18세션입니다. 아직 작지만 gemini, chatgpt, claude가 각각 잡히기 시작했습니다.</p>
       </div>
+    </div>
+
+    <div class="card" style="margin-top: 14px;">
+      <p class="sub" style="margin-bottom: 10px;"><b style="color: var(--ink);">레퍼러 URL 원본</b> · 페이지뷰 기준. 채널 분류가 아니라 실제로 링크가 걸려 있던 페이지입니다.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>레퍼러</th><th class="num">PV</th><th class="num">사용자</th><th>해석</th></tr></thead>
+          <tbody>
+            <tr><td><code>https://www.google.com/</code></td><td class="num">1,503</td><td class="num">841</td><td>검색 유입의 대부분</td></tr>
+            <tr><td><code>https://github.com/</code></td><td class="num">242</td><td class="num">52</td><td>PV/사용자 4.7 · 이슈·PR 인용 추정</td></tr>
+            <tr><td><code>https://www.surfit.io/</code></td><td class="num">170</td><td class="num">94</td><td>레퍼러가 남은 절반만 해당</td></tr>
+            <tr><td><code>https://search.naver.com/</code> <span class="muted">+ m.</span></td><td class="num">36</td><td class="num">13</td><td>네이버 검색</td></tr>
+            <tr><td><code>https://github.com/byhhh2/fe-article</code></td><td class="num">20</td><td class="num">1</td><td>FE 아티클 큐레이션 저장소</td></tr>
+            <tr><td><code>https://teams.public.onecdn…microsoft/</code></td><td class="num">20</td><td class="num">11</td><td>사내 Teams 공유</td></tr>
+            <tr><td><code>https://internal.surfit.io/</code></td><td class="num">15</td><td class="num">1</td><td>서피트 내부 도구</td></tr>
+            <tr><td><code>android-app://com.slack/</code></td><td class="num">9</td><td class="num">7</td><td>Slack 모바일 공유</td></tr>
+            <tr class="dim"><td><code>https://yceffort.kr/…</code> (내부 이동)</td><td class="num">495</td><td class="num">-</td><td>사이트 안에서 다음 글로 넘어간 흐름</td></tr>
+            <tr class="dim"><td><code>http://localhost:3000·3001/…</code></td><td class="num">283</td><td class="num">-</td><td>⚠ 로컬 개발 트래픽이 운영 GA4에 집계됨</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card callout" style="margin-top: 14px;">
+      <h3>서피트 유입은 채널 리포트보다 큽니다</h3>
+      <p>서피트는 링크에 <code>?ref=surfit.io</code>를 붙여 보냅니다. 이 쿼리스트링을 지문 삼아 세면 <b>400세션</b>이 나오는데, GA4가 Referral로 분류한 서피트 세션은 <b>229</b>뿐입니다. 나머지는 레퍼러 헤더가 없어 Direct(254)나 Organic Search(23)로 흩어졌습니다. 인앱 브라우저나 앱에서 열 때 레퍼러가 전달되지 않아 생기는 현상으로 추정됩니다.</p>
+      <div class="chips" style="margin-top: 10px;">
+        <span class="chip">Direct로 잡힘 <b>254</b></span>
+        <span class="chip">Referral로 잡힘 <b>130</b></span>
+        <span class="chip">Organic Search로 잡힘 <b>23</b></span>
+        <span class="chip">보정 합계 <b>400세션</b></span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>어디서 어느 글로 오는가</h2>
+    <p class="sub"><code>?ref=surfit.io</code> 지문으로 서피트를 보정한 뒤, 소스별 대표 랜딩 글을 세션 기준으로 이었습니다. 굵은 선일수록 세션이 많습니다.</p>
+    <div class="card">
+      <pre class="mermaid">
+flowchart LR
+  G(["google 검색<br/>1,474세션"])
+  S(["surfit.io 보정<br/>400세션"])
+  H(["github.com<br/>205세션"])
+  M(["maeil-mail.kr<br/>22세션"])
+  T(["teams · slack<br/>사내 공유 42세션"])
+
+  P1["에이전트 이후 어디로 가는가"]
+  P2["k8s 1편 개념 지도"]
+  P3["k8s 2편 파드 뜯어보기"]
+  P4["Effect-TS 딥다이브 (EN)"]
+  P5["AST 이해하기 (2021)"]
+  P6["set-state-in-effect (EN)"]
+  P7["코드를 읽을 줄 몰라도"]
+  HOME["홈 · 목록"]
+
+  G ==>|"136"| HOME
+  G ==>|"105"| P4
+  G ==>|"64"| P6
+  G ==>|"58"| P5
+  G -->|"23"| P1
+  S ==>|"135"| P1
+  S ==>|"132"| P2
+  S ==>|"101"| P3
+  H ==>|"57"| HOME
+  H -->|"10"| P5
+  M -->|"21"| P7
+  T -->|"15"| HOME
+      </pre>
+      <p class="sub" style="margin-top: 12px;">서피트는 최신 글 3편으로만 들어오고, 구글은 홈과 <b>영문 딥다이브</b>로 들어옵니다. 검색 유입 상위 두 개가 <code>/en</code> 경로(Effect-TS 105, set-state-in-effect 64)라는 점은 영문 번역이 실제로 검색 유입을 만들고 있다는 신호로 보입니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>사용자 흐름</h2>
+    <p class="sub">상위 40개 랜딩 페이지(전체 세션의 75.8%)를 랜딩 유형별로 묶고, 참여 세션과 세션당 페이지뷰를 이었습니다.</p>
+    <div class="card">
+      <pre class="mermaid">
+flowchart TD
+  IN(["유입 4,810세션"])
+
+  IN --> L1["글 상세로 바로 랜딩<br/>2,060세션"]
+  IN --> L2["홈 · /en 랜딩<br/>703세션"]
+  IN --> L3["목록 · 태그 · 시리즈<br/>69세션"]
+  IN --> L4["랜딩 미상 (not set)<br/>749세션"]
+  IN -.-> L5["집계 밖 나머지<br/>1,229세션"]
+
+  L1 --> E1["참여 1,357 (65.9%)"]
+  L1 --> X1["이탈 703"]
+  L2 --> E2["참여 475 (67.6%)"]
+  L2 --> X2["이탈 228"]
+  L3 --> E3["참여 46 (66.7%)"]
+  L4 --> X4["참여 127 (17.0%)<br/>PV 0 · 봇 추정"]
+
+  E1 --> D1{{"1.43 PV/세션<br/>한 편만 읽고 이탈"}}
+  E2 --> D2{{"3.49 PV/세션<br/>홈에서 글을 골라 읽음"}}
+  E3 --> D3{{"1.99 PV/세션"}}
+
+  D1 --> NEXT["내부 이동 495 PV<br/>(yceffort.kr 레퍼러)"]
+  D2 --> NEXT
+  D3 --> NEXT
+      </pre>
+      <p class="sub" style="margin-top: 12px;">홈으로 들어온 세션이 글에 바로 떨어진 세션보다 <b>2.4배 많은 페이지</b>를 읽습니다. 참여율 자체는 두 경로가 거의 같으므로(65.9% 대 67.6%), 차이는 관심도가 아니라 <b>다음에 읽을 것이 눈에 보이는가</b>에서 오는 것으로 추정됩니다. 랜딩 미상 749세션은 페이지뷰가 0이고 참여율이 17%라 대부분 봇으로 보입니다.</p>
     </div>
   </section>
 
@@ -400,26 +535,26 @@
     <h2>독자</h2>
     <div class="split">
       <div class="card">
-        <p class="sub" style="margin-bottom: 12px;"><b style="color: var(--ink);">국가별 사용자</b> · 2,743명 기준</p>
+        <p class="sub" style="margin-bottom: 12px;"><b style="color: var(--ink);">국가별 사용자</b> · 2,618명 기준</p>
         <div class="bars" id="countries" style="gap: 11px;"></div>
       </div>
       <div class="card">
         <p class="sub" style="margin-bottom: 4px;"><b style="color: var(--ink);">신규 vs 재방문</b></p>
-        <div class="stack" role="img" aria-label="신규 사용자 76.8%, 재방문 사용자 23.2%">
-          <div style="width: 76.8%; background: var(--s1);"></div>
-          <div style="width: 23.2%; background: var(--s2);"></div>
+        <div class="stack" role="img" aria-label="신규 사용자 77.3%, 재방문 사용자 22.7%">
+          <div style="width: 77.3%; background: var(--s1);"></div>
+          <div style="width: 22.7%; background: var(--s2);"></div>
         </div>
         <div class="chips">
-          <span class="chip"><span class="sw" style="background: var(--s1)"></span>신규 <b>2,450</b> (76.8%)</span>
-          <span class="chip"><span class="sw" style="background: var(--s2)"></span>재방문 <b>741</b> (23.2%)</span>
+          <span class="chip"><span class="sw" style="background: var(--s1)"></span>신규 <b>2,310</b> (77.3%)</span>
+          <span class="chip"><span class="sw" style="background: var(--s2)"></span>재방문 <b>680</b> (22.7%)</span>
         </div>
         <p class="sub" style="margin: 18px 0 4px;"><b style="color: var(--ink);">기기</b></p>
         <div class="chips">
-          <span class="chip">데스크톱 <b>2,345</b> (85.4%)</span>
-          <span class="chip">모바일 <b>394</b> (14.3%)</span>
-          <span class="chip">태블릿 <b>8</b></span>
+          <span class="chip">데스크톱 <b>2,226</b> (84.9%)</span>
+          <span class="chip">모바일 <b>392</b> (15.0%)</span>
+          <span class="chip">태블릿 <b>4</b></span>
         </div>
-        <p class="sub" style="margin: 14px 0 0;">데스크톱 비중 85%는 업무 시간대에 읽는 개발자 독자층과 부합합니다.</p>
+        <p class="sub" style="margin: 14px 0 0;">데스크톱 85%는 업무 시간대에 읽는 개발자 독자층과 부합합니다. 재방문 22.7%는 직전 기간과 거의 같습니다.</p>
       </div>
     </div>
   </section>
@@ -441,20 +576,24 @@
     <h2>인사이트</h2>
     <div class="insights">
       <div class="card insight">
-        <h3>에세이형 글의 순간 화력이 가장 큽니다</h3>
-        <p>상위 10개 중 6개가 AI·커리어 에세이입니다. 다만 에세이는 발행 주간에 화력이 집중되고, <b>검색으로 꾸준히 들어오는 쪽은 딥다이브</b>입니다. 2021년 AST 글이 여전히 5위(평균 체류 1분 34초)라는 점이 그 증거입니다.</p>
+        <h3>서피트가 최신 글 3편을 실어 나르고 있습니다</h3>
+        <p>보정된 서피트 400세션 중 368세션이 <b>에이전트 글(135), k8s 1편(132), k8s 2편(101)</b> 세 편에 몰려 있습니다. 서피트는 아카이브가 아니라 발행 직후에만 작동하는 채널로 보이며, 이 세 편이 이번 기간 상위권을 차지한 것도 대부분 여기서 설명됩니다.</p>
       </div>
       <div class="card insight">
-        <h3>k8s 시리즈는 1편 이후 이탈이 큽니다</h3>
-        <p>1편 233 → 2편 146(63% 유지) → 3편 23으로 급감합니다. 3~5편은 발행 후 열흘이 지났는데도 후속 유입이 약해서, <b>1편 본문에서 다음 편으로 잇는 도선(시리즈 내비게이션, 발행 시점 푸시)</b>을 점검해볼 만합니다.</p>
+        <h3>글로 바로 떨어진 독자는 한 편만 읽고 떠납니다</h3>
+        <p>글 상세 랜딩은 1.43 PV/세션, 홈 랜딩은 3.49 PV/세션입니다. 참여율은 65.9%와 67.6%로 거의 같으므로 <b>차이는 관심도가 아니라 다음 글이 눈에 보이는지</b>에서 오는 것으로 추정됩니다. 글 하단 관련 글이나 시리즈 도선이 실제로 노출되고 있는지 점검할 여지가 있습니다.</p>
       </div>
       <div class="card insight">
-        <h3>Direct 52% + 신규 77%, 공유 기반 유입 구조입니다</h3>
-        <p>검색(32%)보다 직접·공유 유입이 큽니다. 리퍼럴 1위 surfit.io(263), 2위 github.com(220)으로 <b>커리어 플랫폼과 GitHub 인용이 실질적인 배포 채널</b>입니다. 재방문 23%는 구독 장치(푸시, RSS)가 더 일할 여지가 있다는 신호입니다.</p>
+        <h3>영문 번역이 검색 유입을 실제로 만들고 있습니다</h3>
+        <p>구글 검색 랜딩 상위가 <code>/en/2026/02/effect-ts-deep-dive</code>(105세션)와 <code>/en/2025/12/react-set-state-in-effect-lint-rule</code>(64세션)입니다. 한국어 원문보다 영문판이 더 많이 검색되는 글이 있다는 뜻이라, <b>번역 대상을 감이 아니라 이 데이터로 고르는 편</b>이 나아 보입니다. 다만 <code>/en</code> 홈 랜딩은 이탈률 77%라 영문 진입점 자체는 약합니다.</p>
       </div>
       <div class="card insight">
-        <h3>크롤러 오염을 걷어내면 실사용자는 약 2,350명입니다</h3>
-        <p>싱가포르 394명은 세션이 1:1이라 크롤러로 추정되며(전체의 14%), 7/1 버스트(1,251명)도 같은 패턴입니다. <b>정기 리포트에서는 이 트래픽을 상시 제외</b>하는 편이 정확합니다. /2026/08/this-post-does-not-exist 같은 존재하지 않는 경로 유입도 소량 관측됩니다(LLM·크롤러의 추측 링크로 추정).</p>
+        <h3>k8s 시리즈는 1편 이후로 갈수록 얇아집니다</h3>
+        <p>1편 278 → 2편 161(58% 유지) → 3편 33 → 4편 23 → 5편 45입니다. 서피트가 1·2편만 실어 나른 것과 정확히 겹치므로, <b>외부 채널이 닿지 않는 3편부터는 자력 유입이 거의 없다</b>고 볼 수 있습니다. 시리즈물은 편수보다 1편의 도선 설계가 결정적으로 보입니다.</p>
+      </div>
+      <div class="card insight">
+        <h3>세 종류의 오염이 지표에 섞여 있습니다</h3>
+        <p>싱가포르 396명과 중국 139명은 사용자와 세션이 1:1이라 크롤러로 추정되고(합쳐서 전체의 20%), 랜딩 미상 749세션은 페이지뷰가 0입니다. 여기에 <b>로컬 개발 트래픽 283 PV</b>가 운영 GA4에 그대로 들어오고 있습니다(<code>localhost:3000</code>·<code>3001</code> 레퍼러). 크롤러를 걷어낸 실사용자는 <b>약 2,080명</b>으로 추정되며, 로컬 계측 차단은 바로 조치할 수 있는 항목입니다.</p>
       </div>
     </div>
   </section>
@@ -464,27 +603,34 @@
     <p class="sub">이번 4주 데이터에서 도출한 제안입니다.</p>
     <div class="insights">
       <div class="card insight">
-        <h3>화력은 에세이, 지속력은 딥다이브. 이원 리듬을 유지할 것</h3>
-        <p>TOP 10의 6개가 AI·커리어 에세이(화력), 5위는 2021년 AST 딥다이브(검색 지속)입니다. 신규 77% 유입 구조에서 <b>에세이가 새 독자를 데려오고 딥다이브가 검색으로 장기 회수하는 조합</b>이 작동하고 있으니, 월 에세이 1편 + 딥다이브 1~2편 리듬이 데이터와 맞습니다.</p>
+        <h3>가장 값싼 개선은 글 하단의 다음 글 도선입니다</h3>
+        <p>글 상세 랜딩 2,060세션이 1.43 PV/세션에 머물러 있습니다. 홈 랜딩 수준(3.49)의 절반만 따라가도 페이지뷰가 크게 달라지는 구간이라, <b>새 글을 한 편 더 쓰는 것보다 기존 글의 도선을 손보는 편</b>이 효율이 높아 보입니다. 서피트로 들어온 368세션이 정확히 이 경로에 있습니다.</p>
+      </div>
+      <div class="card insight">
+        <h3>번역 대상은 검색 데이터로 고르는 편이 나아 보입니다</h3>
+        <p>영문 랜딩 상위 두 편(Effect-TS, set-state-in-effect)이 구글 검색 유입의 상당 부분을 만들고 있습니다. 반면 <code>/en</code> 홈은 이탈률 77%입니다. 번역을 넓게 늘리기보다 <b>검색 수요가 확인된 딥다이브부터 영문화하고, <code>/en</code> 진입점을 목록이 아닌 대표 글로 바꾸는 것</b>을 제안드립니다.</p>
       </div>
       <div class="card insight">
         <h3>다음 글감: 멀티 웹뷰 후속과 SSR 로깅 딥다이브</h3>
-        <p>8/16 발행한 멀티 웹뷰 글의 후속(관측, 인증 등)과 보류 중인 SSR 로깅 성능 딥다이브가 우선순위입니다. 둘 다 <b>실측·장애 경험 기반이라 AI가 대체 못 하는 유형</b>이고, 이번 기간 성과 상위가 정확히 그 유형이었습니다. 단, k8s 시리즈의 이탈 데이터(1편 233 → 3편 23)를 볼 때 <b>5편 시리즈보다 1~2편 완결형</b>을 권합니다.</p>
+        <p>보류 중인 멀티 웹뷰 후속(인증, 키보드, capability, 관측)과 SSR 로깅 성능 딥다이브가 우선순위입니다. 둘 다 <b>실측·장애 경험 기반이라 AI가 대체하기 어려운 유형</b>이고, 이번 기간 상위 글도 정확히 그 유형이었습니다. 다만 k8s 시리즈의 3편 이후 급감을 볼 때 <b>5편 시리즈보다 1~2편 완결형</b>이 데이터와 맞습니다.</p>
       </div>
       <div class="card insight">
-        <h3>AI Assistant 유입과 GitHub 인용을 겨냥한 레퍼런스형을 늘릴 것</h3>
-        <p>AI Assistant 채널이 처음 잡혔고(15세션), github.com 리퍼럴이 220세션입니다. <b>"AI가 이 글을 참고해야 답할 수 있는 글" 전략이 실제 유입으로 나타나기 시작</b>한 신호이므로, 실측 수치·재현 절차가 있는 레퍼런스형 글(린트 규칙, 보안 분석, 마이그레이션 기록)의 비중을 늘릴 근거가 생겼습니다.</p>
+        <h3>GitHub 인용은 사용자당 4.7 PV로 가장 깊게 읽힙니다</h3>
+        <p>github.com 레퍼러는 242 PV에 사용자 52명입니다. 사용자당 4.7페이지로, 모든 채널 중 가장 깊습니다. <code>github.com/byhhh2/fe-article</code> 같은 큐레이션 저장소 인용도 잡혔습니다. <b>"AI가 이 글을 참고해야 답할 수 있는 글" 전략이 PR·이슈 인용으로 나타나는 신호</b>로 보이며, 실측 수치와 재현 절차가 있는 레퍼런스형 글의 근거가 됩니다.</p>
       </div>
       <div class="card insight">
-        <h3>다음 분기 과제는 재방문 23%를 끌어올리는 것</h3>
-        <p>Direct 52% + 신규 77%는 화력이 발행 주간에만 몰린다는 뜻이기도 합니다. 이미 구축된 웹 푸시와 시리즈 내비게이션이 <b>초동 화력과 후속편 유지율에 실제 기여하는지</b>를 다음 월간 리포트에서 측정 항목으로 추가하는 것을 제안합니다.</p>
+        <h3>다음 리포트 전에 로컬 계측부터 막는 것을 권합니다</h3>
+        <p>운영 GA4에 로컬 개발 트래픽 283 PV가 들어와 있습니다. 지금은 3.7% 수준이라 결론을 바꾸지 않지만, <b>발행 직후 초동 지표를 볼 때는 오차가 커지는 구간</b>입니다. 측정 ID를 <code>NODE_ENV === 'production'</code>이나 호스트명으로 가드하면 다음 기간부터 깨끗한 비교가 가능합니다.</p>
       </div>
     </div>
   </section>
 
   <footer class="notes">
-    <p>데이터: GA4 Data API (yceffort.kr, G-ND58S24JBX) · 생성 2026-08-16 · 8/16은 집계 중이라 수치가 낮습니다.</p>
+    <p>데이터: GA4 Data API (yceffort.kr, G-ND58S24JBX) · 생성 2026-08-23 · 8/23은 집계 중이라 수치가 낮습니다.</p>
     <p>8/10 이전 페이지뷰는 SPA 라우팅 미집계 상태라 이후와 직접 비교할 수 없습니다. 참여율·평균 세션 시간도 같은 영향을 받습니다.</p>
+    <p>사용자 흐름의 랜딩 유형 집계는 상위 40개 랜딩 페이지(3,646세션, 전체의 75.8%)만 포함합니다. 나머지 1,229세션은 롱테일이라 분류에서 빠져 있습니다.</p>
+    <p>존재하지 않는 경로 유입(<code>/2026/08/this-post-does-not-exist</code> 2회, <code>/2026/08/how-traffic-reaches-pod</code> 1회)은 LLM·크롤러의 추측 링크로 추정되어 본문 표에서 제외했습니다. <code>/2026/08/service-worker-caching-pwa</code>(14회)는 분할 전 초안의 구 슬러그이고, 서비스 워커 캐싱 1·2편(15회)과 멀티 웹뷰 글은 아직 <code>published: false</code>인 초안이라 신규 글 표에서 뺐습니다. 이들 조회는 대부분 로컬 개발 중 접근으로 추정됩니다.</p>
+    <p>서피트 보정치 400세션은 <code>?ref=surfit.io</code> 쿼리스트링이 남은 세션만 센 값이라, 파라미터가 지워진 유입이 있다면 실제로는 더 클 수 있습니다.</p>
   </footer>
 </div>
 
@@ -492,87 +638,92 @@
   // ── data ──────────────────────────────────────────────
   // [MM/DD, users, pageviews]
   const DAILY = [
-    ["5/17",54,108],["5/18",99,144],["5/19",103,147],["5/20",82,110],["5/21",94,132],
-    ["5/22",92,125],["5/23",41,52],["5/24",40,61],["5/25",43,102],["5/26",94,174],
-    ["5/27",159,212],["5/28",81,103],["5/29",72,102],["5/30",35,72],["5/31",30,53],
-    ["6/1",59,104],["6/2",44,92],["6/3",44,70],["6/4",75,107],["6/5",91,135],
-    ["6/6",65,78],["6/7",39,60],["6/8",80,122],["6/9",117,196],["6/10",72,124],
-    ["6/11",90,135],["6/12",70,142],["6/13",72,94],["6/14",35,50],["6/15",322,409],
-    ["6/16",445,614],["6/17",282,375],["6/18",176,241],["6/19",132,152],["6/20",64,93],
-    ["6/21",87,129],["6/22",179,254],["6/23",175,266],["6/24",143,212],["6/25",468,528],
-    ["6/26",108,173],["6/27",66,78],["6/28",56,85],["6/29",90,137],["6/30",104,154],
-    ["7/1",1251,1299],["7/2",97,140],["7/3",90,121],["7/4",48,69],["7/5",60,82],
-    ["7/6",109,167],["7/7",117,174],["7/8",119,149],["7/9",121,153],["7/10",111,149],
-    ["7/11",72,94],["7/12",63,85],["7/13",86,128],["7/14",108,147],["7/15",100,133],
-    ["7/16",75,138],["7/17",37,64],["7/18",35,55],["7/19",34,52],["7/20",72,101],
-    ["7/21",75,100],["7/22",100,165],["7/23",95,154],["7/24",262,367],["7/25",99,129],
-    ["7/26",134,185],["7/27",361,533],["7/28",168,219],["7/29",139,242],["7/30",150,203],
-    ["7/31",116,147],["8/1",64,85],["8/2",47,72],["8/3",117,182],["8/4",149,204],
-    ["8/5",124,281],["8/6",86,219],["8/7",174,238],["8/8",60,81],["8/9",60,150],
-    ["8/10",178,577],["8/11",126,605],["8/12",115,408],["8/13",118,438],["8/14",104,518],
-    ["8/15",50,100],["8/16",29,173]
+    ["5/24",40,61],["5/25",43,102],["5/26",94,174],["5/27",159,212],["5/28",81,103],
+    ["5/29",72,102],["5/30",35,72],["5/31",30,53],["6/1",59,104],["6/2",44,92],
+    ["6/3",44,70],["6/4",75,107],["6/5",91,135],["6/6",65,78],["6/7",39,60],
+    ["6/8",80,122],["6/9",117,196],["6/10",72,124],["6/11",90,135],["6/12",70,142],
+    ["6/13",72,94],["6/14",35,50],["6/15",322,409],["6/16",445,614],["6/17",282,375],
+    ["6/18",176,241],["6/19",132,152],["6/20",64,93],["6/21",87,129],["6/22",179,254],
+    ["6/23",175,266],["6/24",143,212],["6/25",468,528],["6/26",108,173],["6/27",66,78],
+    ["6/28",56,85],["6/29",90,137],["6/30",104,154],["7/1",1251,1299],["7/2",97,140],
+    ["7/3",90,121],["7/4",48,69],["7/5",60,82],["7/6",109,167],["7/7",117,174],
+    ["7/8",119,149],["7/9",121,153],["7/10",111,149],["7/11",72,94],["7/12",63,85],
+    ["7/13",86,128],["7/14",108,147],["7/15",100,133],["7/16",75,138],["7/17",37,64],
+    ["7/18",35,55],["7/19",34,52],["7/20",72,101],["7/21",75,100],["7/22",100,165],
+    ["7/23",95,154],["7/24",262,367],["7/25",99,129],["7/26",134,185],["7/27",361,533],
+    ["7/28",168,219],["7/29",139,242],["7/30",150,203],["7/31",116,147],["8/1",64,85],
+    ["8/2",47,72],["8/3",117,182],["8/4",149,204],["8/5",124,281],["8/6",86,219],
+    ["8/7",174,238],["8/8",60,81],["8/9",60,150],["8/10",178,577],["8/11",126,605],
+    ["8/12",115,408],["8/13",118,438],["8/14",104,518],["8/15",50,100],["8/16",55,234],
+    ["8/17",71,229],["8/18",108,258],["8/19",101,311],["8/20",103,312],["8/21",108,345],
+    ["8/22",52,192],["8/23",41,61]
   ];
   const EVENTS = {
     "6/12": "발행: 코드를 읽거나 설명할 줄 몰라도… · AI가 경계를 지운다면",
     "6/21": "발행: 마지막으로 코드를 진지하게 읽은 게 언제인가",
-    "7/1": "크롤러 버스트 추정 (사용자 ≈ 세션 ≈ PV, 1:1:1)",
+    "6/25": "스파이크 468명 (직전 기간 밖)",
+    "7/1": "크롤러 버스트 추정 (사용자 1,251 ≈ 세션 1,284 ≈ PV 1,299)",
     "7/22": "발행: 프론트엔드는 어디서 왔고… · 성능 Deep Dive 출간 소식",
+    "7/27": "서피트 확산 추정 (361명, 발행 5일 뒤 최고점)",
     "8/3": "발행: Node.js 파드 사이징",
     "8/5": "발행: k8s 시리즈 1·2편",
     "8/6": "발행: k8s 시리즈 3편",
     "8/8": "발행: k8s 시리즈 4편",
     "8/10": "발행: k8s 5편 · 인터뷰 모집 · TS7 마이그레이션 / SPA page_view 계측 시작",
     "8/11": "발행: number-flow 이식기",
-    "8/12": "발행: 서비스 워커 캐싱 1편",
-    "8/13": "발행: 서비스 워커 캐싱 2편",
-    "8/15": "발행: framer-motion 프레임드랍"
+    "8/15": "발행: framer-motion 프레임드랍",
+    "8/19": "발행: turbopack 싱글톤 분리 버그",
+    "8/22": "발행: OG 스크래핑 서버 1·2편",
+    "8/23": "집계 중"
   };
   const PUB_DATES = Object.keys(EVENTS).filter((d) => EVENTS[d].startsWith("발행"));
 
   const TOP_POSTS = [
-    {t: "프론트엔드는 어디서 왔고, 에이전트 이후 어디로 가는가", pv: 879, u: 725, eng: 107},
-    {t: "코드를 읽거나 설명할 줄 몰라도, 스펙을 만족하면 상관없을까", pv: 279, u: 231, eng: 95},
-    {t: "프론트엔드 개발자를 위한 쿠버네티스 개념 지도 (k8s 1편)", pv: 233, u: 155, eng: 103},
-    {t: "내 Next.js 앱은 어떻게 파드가 되는가 (k8s 2편)", pv: 146, u: 128, eng: 94},
-    {t: "자바스크립트 개발자를 위한 AST 이해하기", pv: 126, u: 105, eng: 94, evergreen: "2021"},
-    {t: "『프런트엔드 성능 최적화 Deep Dive』 출간 소식", pv: 124, u: 189, eng: 28},
-    {t: "AI가 기획·개발·디자인의 경계를 지운다면, 무엇이 남는가", pv: 95, u: 106, eng: 111},
-    {t: "typescript@7을 설치하면 벌어지는 일들", pv: 93, u: 50, eng: 49},
-    {t: "마지막으로 코드를 진지하게 읽은 게 언제인가", pv: 87, u: 142, eng: 78},
-    {t: "책을 쓰고 있습니다: 인터뷰이 모집", pv: 82, u: 53, eng: 21}
+    {t: "프론트엔드는 어디서 왔고, 에이전트 이후 어디로 가는가", pv: 675, u: 527, eng: 96},
+    {t: "프론트엔드 개발자를 위한 쿠버네티스 개념 지도 (k8s 1편)", pv: 278, u: 170, eng: 106},
+    {t: "코드를 읽거나 설명할 줄 몰라도, 스펙을 만족하면 상관없을까", pv: 276, u: 204, eng: 87},
+    {t: "내 Next.js 앱은 어떻게 파드가 되는가 (k8s 2편)", pv: 161, u: 136, eng: 89},
+    {t: "『프런트엔드 성능 최적화 Deep Dive』 출간 소식", pv: 129, u: 168, eng: 29},
+    {t: "책을 쓰고 있습니다: 인터뷰이 모집", pv: 124, u: 79, eng: 27},
+    {t: "typescript@7을 설치하면 벌어지는 일들", pv: 113, u: 62, eng: 49},
+    {t: "자바스크립트 개발자를 위한 AST 이해하기", pv: 109, u: 88, eng: 129, evergreen: "2021"},
+    {t: "코딩 에이전트 핵심 개념 완전 가이드", pv: 88, u: 42, eng: 61},
+    {t: "마지막으로 코드를 진지하게 읽은 게 언제인가", pv: 88, u: 107, eng: 76}
   ];
 
   const CHANNELS = [
-    {t: "Direct", v: 2603, pct: "52.1%"},
-    {t: "Organic Search", v: 1594, pct: "31.9%"},
-    {t: "Referral", v: 597, pct: "12.0%"},
-    {t: "Unassigned", v: 75, pct: "1.5%"},
-    {t: "AI Assistant", v: 15, pct: "0.3%"}
+    {t: "Direct", v: 2568, pct: "54.3%"},
+    {t: "Organic Search", v: 1508, pct: "31.9%"},
+    {t: "Referral", v: 556, pct: "11.8%"},
+    {t: "Unassigned", v: 77, pct: "1.6%"},
+    {t: "AI Assistant", v: 18, pct: "0.4%"},
+    {t: "Organic Social", v: 3, pct: "0.1%"}
   ];
 
   const COUNTRIES = [
-    {t: "한국", v: 1941, pct: "70.8%"},
-    {t: "싱가포르", v: 394, pct: "14.4%", warn: "크롤러 추정"},
-    {t: "중국", v: 104, pct: "3.8%"},
-    {t: "미국", v: 84, pct: "3.1%"},
-    {t: "독일", v: 24, pct: "0.9%"}
+    {t: "한국", v: 1777, pct: "67.9%"},
+    {t: "싱가포르", v: 396, pct: "15.1%", warn: "크롤러 추정"},
+    {t: "중국", v: 139, pct: "5.3%", warn: "크롤러 추정"},
+    {t: "미국", v: 71, pct: "2.7%"},
+    {t: "독일", v: 48, pct: "1.8%"}
   ];
 
   const RECENT = [
-    {d: "7/22", t: "프론트엔드는 어디서 왔고, 에이전트 이후 어디로 가는가", pv: 879, u: 725},
-    {d: "7/22", t: "『프런트엔드 성능 최적화 Deep Dive』 출간 소식", pv: 124, u: 189},
-    {d: "8/3", t: "Node.js 파드는 왜 그 크기인가: 파드 사이징 실측", pv: 53, u: 40},
-    {d: "8/5", t: "쿠버네티스 개념 지도", series: "k8s 1편", pv: 233, u: 155},
-    {d: "8/5", t: "내 Next.js 앱은 어떻게 파드가 되는가", series: "k8s 2편", pv: 146, u: 128},
-    {d: "8/6", t: "트래픽은 어떻게 내 파드에 도착하는가", series: "k8s 3편", pv: 23, u: 15},
-    {d: "8/8", t: "파드는 어떻게 종료되는가", series: "k8s 4편", pv: 13, u: 11},
-    {d: "8/10", t: "오토스케일링은 자동이지만 즉시가 아니다", series: "k8s 5편", pv: 16, u: 12},
-    {d: "8/10", t: "책을 쓰고 있습니다: 인터뷰이 모집", pv: 82, u: 53},
-    {d: "8/10", t: "typescript@7을 설치하면 벌어지는 일들", pv: 93, u: 50},
-    {d: "8/11", t: "number-flow를 구형 브라우저로 이식하기", pv: 43, u: 14},
-    {d: "8/12", t: "서비스 워커 캐싱의 동작 원리", series: "SW 1편", pv: 12, u: 2},
-    {d: "8/13", t: "서비스 워커 캐싱 적용기", series: "SW 2편", pv: 3, u: 1},
-    {d: "8/15", t: "framer-motion 배너에서 프레임드랍 없애기", pv: 3, u: 2}
+    {d: "7/22", t: "프론트엔드는 어디서 왔고, 에이전트 이후 어디로 가는가", pv: 675, u: 527},
+    {d: "7/22", t: "『프런트엔드 성능 최적화 Deep Dive』 출간 소식", pv: 129, u: 168},
+    {d: "8/3", t: "Node.js 파드는 왜 그 크기인가: 파드 사이징 실측", pv: 59, u: 42},
+    {d: "8/5", t: "쿠버네티스 개념 지도", series: "k8s 1편", pv: 278, u: 170},
+    {d: "8/5", t: "내 Next.js 앱은 어떻게 파드가 되는가", series: "k8s 2편", pv: 161, u: 136},
+    {d: "8/6", t: "트래픽은 어떻게 내 파드에 도착하는가", series: "k8s 3편", pv: 33, u: 18},
+    {d: "8/8", t: "파드는 어떻게 종료되는가", series: "k8s 4편", pv: 23, u: 15},
+    {d: "8/10", t: "오토스케일링은 자동이지만 즉시가 아니다", series: "k8s 5편", pv: 45, u: 33},
+    {d: "8/10", t: "책을 쓰고 있습니다: 인터뷰이 모집", pv: 124, u: 79},
+    {d: "8/10", t: "typescript@7을 설치하면 벌어지는 일들", pv: 113, u: 62},
+    {d: "8/11", t: "number-flow를 구형 브라우저로 이식하기", pv: 66, u: 21},
+    {d: "8/15", t: "framer-motion 배너에서 프레임드랍 없애기", pv: 57, u: 40},
+    {d: "8/19", t: "turbopack에서 싱글톤이 두 개가 됐다", pv: 43, u: 21},
+    {d: "8/22", t: "OG 스크래핑 서버를 Node.js로 짓는다면", series: "OG 1편", pv: 6, u: 3},
+    {d: "8/22", t: "SSRF는 어떻게 뚫리는가", series: "OG 2편", pv: 5, u: 2}
   ];
   const fmt = (n) => n.toLocaleString("en-US");
   const fmtEng = (s) => `${Math.floor(s / 60)}분 ${String(s % 60).padStart(2, "0")}초`;
@@ -804,7 +955,7 @@
   }
 
   barList("top-posts", TOP_POSTS, {
-    max: 879,
+    max: 675,
     unit: "회",
     valOf: (r) => r.pv,
     metaOf: (r) => `사용자 ${fmt(r.u)} · 체류 ${fmtEng(r.eng)}`,
@@ -812,14 +963,14 @@
   });
 
   barList("channels", CHANNELS, {
-    max: 2603,
+    max: 2568,
     unit: "세션",
     valOf: (r) => r.v,
     pctOf: (r) => r.pct
   });
 
   barList("countries", COUNTRIES, {
-    max: 1941,
+    max: 1777,
     unit: "명",
     valOf: (r) => r.v,
     pctOf: (r) => r.pct,
@@ -861,7 +1012,7 @@
       tdBar.style.width = "120px";
       const bar = document.createElement("span");
       bar.className = "cell-bar";
-      bar.style.width = `${Math.max((r.pv / 879) * 110, 2)}px`;
+      bar.style.width = `${Math.max((r.pv / 675) * 110, 2)}px`;
       tdBar.appendChild(bar);
 
       tr.append(tdD, tdT, tdPv, tdU, tdBar);
