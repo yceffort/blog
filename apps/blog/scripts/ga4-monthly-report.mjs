@@ -1,4 +1,5 @@
 import {readFileSync} from 'node:fs'
+
 import {BetaAnalyticsDataClient} from '@google-analytics/data'
 
 // .env.local 수동 로딩 (JSON 값에 따옴표가 있어 --env-file 파싱이 깨질 수 있음)
@@ -27,7 +28,11 @@ async function run(opts) {
 const num = (r, i = 0) => Number(r.metricValues?.[i]?.value ?? 0)
 const dim = (r, i = 0) => r.dimensionValues?.[i]?.value ?? ''
 const pct = (cur, prev) =>
-  prev === 0 ? (cur === 0 ? '0%' : '신규') : `${(((cur - prev) / prev) * 100).toFixed(1)}%`
+  prev === 0
+    ? cur === 0
+      ? '0%'
+      : '신규'
+    : `${(((cur - prev) / prev) * 100).toFixed(1)}%`
 
 async function main() {
   // 1. 전체 트래픽 비교
@@ -56,24 +61,43 @@ async function main() {
     ['신규 사용자', 5],
   ]
   for (const [label, i] of metrics) {
-    console.log(`${label}: ${num(cr, i).toLocaleString()} (이전 ${num(pr, i).toLocaleString()}, ${pct(num(cr, i), num(pr, i))})`)
+    console.log(
+      `${label}: ${num(cr, i).toLocaleString()} (이전 ${num(pr, i).toLocaleString()}, ${pct(num(cr, i), num(pr, i))})`,
+    )
   }
-  console.log(`평균 세션 시간: ${num(cr, 3).toFixed(1)}초 (이전 ${num(pr, 3).toFixed(1)}초)`)
-  console.log(`참여율: ${(num(cr, 4) * 100).toFixed(1)}% (이전 ${(num(pr, 4) * 100).toFixed(1)}%)`)
+  console.log(
+    `평균 세션 시간: ${num(cr, 3).toFixed(1)}초 (이전 ${num(pr, 3).toFixed(1)}초)`,
+  )
+  console.log(
+    `참여율: ${(num(cr, 4) * 100).toFixed(1)}% (이전 ${(num(pr, 4) * 100).toFixed(1)}%)`,
+  )
 
   // 2. 인기 포스트 TOP 20
   console.log('\n=== [2] 인기 포스트 TOP 20 (페이지뷰) ===')
   const top = await run({
     dateRanges: [CUR],
     dimensions: [{name: 'pagePath'}, {name: 'pageTitle'}],
-    metrics: [{name: 'screenPageViews'}, {name: 'totalUsers'}, {name: 'averageSessionDuration'}],
+    metrics: [
+      {name: 'screenPageViews'},
+      {name: 'totalUsers'},
+      {name: 'averageSessionDuration'},
+    ],
     orderBys: [{metric: {metricName: 'screenPageViews'}, desc: true}],
-    dimensionFilter: {filter: {fieldName: 'pagePath', stringFilter: {matchType: 'BEGINS_WITH', value: '/20'}}},
+    dimensionFilter: {
+      filter: {
+        fieldName: 'pagePath',
+        stringFilter: {matchType: 'BEGINS_WITH', value: '/20'},
+      },
+    },
     limit: 20,
   })
   top.rows?.forEach((r, idx) => {
-    const title = dim(r, 1).replace(/ \| yceffort.*$/, '').slice(0, 45)
-    console.log(`${String(idx + 1).padStart(2)}. ${num(r, 0).toLocaleString().padStart(6)}pv  ${dim(r, 0)}  「${title}」`)
+    const title = dim(r, 1)
+      .replace(/ \| yceffort.*$/, '')
+      .slice(0, 45)
+    console.log(
+      `${String(idx + 1).padStart(2)}. ${num(r, 0).toLocaleString().padStart(6)}pv  ${dim(r, 0)}  「${title}」`,
+    )
   })
 
   // 3. 신규 유입 포스트 비교 (직전 30일 대비 신규 상승)
@@ -82,14 +106,24 @@ async function main() {
     dateRanges: [CUR],
     dimensions: [{name: 'pagePath'}],
     metrics: [{name: 'screenPageViews'}],
-    dimensionFilter: {filter: {fieldName: 'pagePath', stringFilter: {matchType: 'BEGINS_WITH', value: '/20'}}},
+    dimensionFilter: {
+      filter: {
+        fieldName: 'pagePath',
+        stringFilter: {matchType: 'BEGINS_WITH', value: '/20'},
+      },
+    },
     limit: 200,
   })
   const prevByPath = await run({
     dateRanges: [PREV],
     dimensions: [{name: 'pagePath'}],
     metrics: [{name: 'screenPageViews'}],
-    dimensionFilter: {filter: {fieldName: 'pagePath', stringFilter: {matchType: 'BEGINS_WITH', value: '/20'}}},
+    dimensionFilter: {
+      filter: {
+        fieldName: 'pagePath',
+        stringFilter: {matchType: 'BEGINS_WITH', value: '/20'},
+      },
+    },
     limit: 200,
   })
   const prevMap = new Map(prevByPath.rows?.map((r) => [dim(r), num(r)]) ?? [])
@@ -100,7 +134,9 @@ async function main() {
     .sort((a, b) => b.delta - a.delta)
     .slice(0, 10)
   risers.forEach((x) => {
-    console.log(`+${x.delta.toLocaleString().padStart(6)}  (${x.prev}→${x.cur})  ${x.path}`)
+    console.log(
+      `+${x.delta.toLocaleString().padStart(6)}  (${x.prev}→${x.cur})  ${x.path}`,
+    )
   })
 
   // 4. 트래픽 소스 / 채널
@@ -111,7 +147,11 @@ async function main() {
     metrics: [{name: 'sessions'}, {name: 'totalUsers'}],
     orderBys: [{metric: {metricName: 'sessions'}, desc: true}],
   })
-  ch.rows?.forEach((r) => console.log(`${dim(r).padEnd(18)} ${num(r).toLocaleString().padStart(7)} 세션  (사용자 ${num(r, 1).toLocaleString()})`))
+  ch.rows?.forEach((r) =>
+    console.log(
+      `${dim(r).padEnd(18)} ${num(r).toLocaleString().padStart(7)} 세션  (사용자 ${num(r, 1).toLocaleString()})`,
+    ),
+  )
 
   // 5. 검색 유입 소스 TOP
   console.log('\n=== [5] 유입 소스(source/medium) TOP 12 ===')
@@ -122,7 +162,11 @@ async function main() {
     orderBys: [{metric: {metricName: 'sessions'}, desc: true}],
     limit: 12,
   })
-  src.rows?.forEach((r) => console.log(`${dim(r).padEnd(30)} ${num(r).toLocaleString().padStart(7)} 세션`))
+  src.rows?.forEach((r) =>
+    console.log(
+      `${dim(r).padEnd(30)} ${num(r).toLocaleString().padStart(7)} 세션`,
+    ),
+  )
 
   // 6. 국가 / 기기
   console.log('\n=== [6] 국가 TOP 8 ===')
@@ -133,7 +177,11 @@ async function main() {
     orderBys: [{metric: {metricName: 'totalUsers'}, desc: true}],
     limit: 8,
   })
-  geo.rows?.forEach((r) => console.log(`${dim(r).padEnd(18)} ${num(r).toLocaleString().padStart(7)} 사용자`))
+  geo.rows?.forEach((r) =>
+    console.log(
+      `${dim(r).padEnd(18)} ${num(r).toLocaleString().padStart(7)} 사용자`,
+    ),
+  )
 
   console.log('\n=== [7] 기기 카테고리 ===')
   const dev = await run({
@@ -142,7 +190,11 @@ async function main() {
     metrics: [{name: 'totalUsers'}, {name: 'sessions'}],
     orderBys: [{metric: {metricName: 'totalUsers'}, desc: true}],
   })
-  dev.rows?.forEach((r) => console.log(`${dim(r).padEnd(10)} ${num(r).toLocaleString().padStart(7)} 사용자  (세션 ${num(r, 1).toLocaleString()})`))
+  dev.rows?.forEach((r) =>
+    console.log(
+      `${dim(r).padEnd(10)} ${num(r).toLocaleString().padStart(7)} 사용자  (세션 ${num(r, 1).toLocaleString()})`,
+    ),
+  )
 }
 
 main().catch((e) => {

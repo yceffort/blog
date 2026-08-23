@@ -26,8 +26,12 @@ for (const file of staged) {
 }
 
 if (outOfSync.length > 0) {
-  console.error('한국어 포스트가 수정되었지만 대응 영문 번역이 함께 스테이징되지 않았습니다:')
+  console.error(
+    '한국어 포스트가 수정되었지만 대응 영문 번역이 함께 스테이징되지 않았습니다:',
+  )
   for (const en of outOfSync) console.error(`  - ${en}`)
-  console.error('번역을 동기화해 함께 커밋하거나, 의도된 커밋이면 --no-verify로 건너뛰세요.')
+  console.error(
+    '번역을 동기화해 함께 커밋하거나, 의도된 커밋이면 --no-verify로 건너뛰세요.',
+  )
   process.exit(1)
 }
