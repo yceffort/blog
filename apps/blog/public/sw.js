@@ -30,9 +30,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(PAGES_CACHE)
-      .then((cache) =>
-        cache.addAll(PRECACHE_URLS).then(() => cache.match('/')),
-      )
+      .then((cache) => cache.addAll(PRECACHE_URLS).then(() => cache.match('/')))
       // 페이지 로드 중에 SW가 설치되면 이미 로드된 이미지는 fetch 이벤트를
       // 거치지 않으므로, 프리캐시한 홈의 이미지를 여기서 직접 저장한다
       .then((home) => (home ? saveImagesFromHTML(home.clone()) : null))
@@ -289,7 +287,9 @@ async function handleImage(event) {
   try {
     const response = await fetch(event.request)
     if (response.ok || response.type === 'opaque') {
-      event.waitUntil(putWithTrim(IMAGES_CACHE, event.request, response.clone()))
+      event.waitUntil(
+        putWithTrim(IMAGES_CACHE, event.request, response.clone()),
+      )
     }
     return response
   } catch {
@@ -412,10 +412,8 @@ self.addEventListener('push', (event) => {
 self.addEventListener('notificationclick', (event) => {
   event.notification.close()
   // 상대 URL은 일부 플랫폼(iOS PWA 등)의 openWindow에서 조용히 실패한다
-  const url = new URL(
-    event.notification.data?.url || '/',
-    self.location.origin,
-  ).href
+  const url = new URL(event.notification.data?.url || '/', self.location.origin)
+    .href
   event.waitUntil(
     self.clients
       .matchAll({type: 'window', includeUncontrolled: true})

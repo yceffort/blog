@@ -3,16 +3,12 @@ pre-commit:
   commands:
     oxlint:
       glob: '*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}'
-      exclude:
-        - 'labs/**'
-        - '**/public/**'
+      exclude: 'labs/**'
       run: pnpm exec oxlint --type-aware --fix {staged_files}
       stage_fixed: true
     oxfmt:
       glob: '*.{ts,cts,tsx,js,cjs,jsx,json,md,yaml,yml}'
-      exclude:
-        - 'labs/**'
-        - '**/public/**'
+      exclude: 'labs/**'
       run: pnpm exec oxfmt {staged_files}
       stage_fixed: true
     stylelint:

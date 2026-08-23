@@ -13,6 +13,7 @@
   "sortPackageJson": false,
   "ignorePatterns": [
     "**/public/**",
+    "!**/public/sw.js",
     "**/node_modules/**",
     "**/.cache/**",
     "**/.next/**",
