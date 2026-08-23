@@ -15,7 +15,7 @@ export default function RelatedPosts({
   }
 
   return (
-    <section className="post-related" aria-label={title}>
+    <section className="post-related" aria-label={title} data-nav="related">
       <h2 className="post-related-title">{title}</h2>
       <ul className="post-row-list">
         {posts.map((post) => (

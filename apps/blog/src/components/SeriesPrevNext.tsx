@@ -38,7 +38,11 @@ export default function SeriesPrevNext({
   }
 
   return (
-    <nav className="series-endnav" aria-label={labels.aria}>
+    <nav
+      className="series-endnav"
+      aria-label={labels.aria}
+      data-nav="series-prevnext"
+    >
       {prevPost ? (
         <Link
           href={`${pathPrefix}/${prevPost.fields.slug}`}

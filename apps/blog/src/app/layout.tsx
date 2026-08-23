@@ -28,6 +28,7 @@ import AmbientEffects from '@/components/AmbientEffects'
 import {BotTracker} from '@/components/BotTracker'
 import {GoogleAnalyticsPageViewTracker} from '@/components/GoogleAnalyticsPageViewTracker'
 import {GoogleAnalyticsWebVitalsTracker} from '@/components/GoogleAnalyticsWebVitalsTracker'
+import {InternalNavTracker} from '@/components/InternalNavTracker'
 import LayoutWrapper from '@/components/LayoutWrapper'
 import NavigationDirection from '@/components/NavigationDirection'
 import {OutboundLinkTracker} from '@/components/OutboundLinkTracker'
@@ -178,6 +179,7 @@ export default async function Layout({children}: {children: ReactNode}) {
                 <GoogleAnalyticsPageViewTracker />
               </Suspense>
               <OutboundLinkTracker />
+              <InternalNavTracker />
             </>
           )}
           {process.env.NODE_ENV === 'production' && (

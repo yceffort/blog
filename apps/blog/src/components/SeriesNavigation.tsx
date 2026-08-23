@@ -34,7 +34,7 @@ export default function SeriesNavigation({
     currentIndex < seriesPosts.length - 1 ? seriesPosts[currentIndex + 1] : null
 
   return (
-    <div className="post-series-nav">
+    <div className="post-series-nav" data-nav="series-nav">
       <div className="series-nav-head">
         <span className="series-nav-kicker">{labels.kicker}</span>
         <h3 className="series-nav-title">
