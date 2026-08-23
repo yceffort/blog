@@ -42,16 +42,20 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches
-      .keys()
-      .then((keys) =>
-        Promise.all(
-          keys
-            .filter((key) => !ALL_CACHES.includes(key))
-            .map((key) => caches.delete(key)),
+    Promise.all([
+      // 내비게이션 요청을 워커 기동과 병렬로 출발시켜 콜드 기동이
+      // TTFB에 직렬로 얹히지 않게 한다 (미지원 브라우저는 그냥 넘어간다)
+      self.registration.navigationPreload?.enable(),
+      caches
+        .keys()
+        .then((keys) =>
+          Promise.all(
+            keys
+              .filter((key) => !ALL_CACHES.includes(key))
+              .map((key) => caches.delete(key)),
+          ),
         ),
-      )
-      .then(() => self.clients.claim()),
+    ]).then(() => self.clients.claim()),
   )
 })
 
@@ -214,7 +218,9 @@ async function cacheFirst(event, cacheName) {
 async function networkFirst(event, cacheName) {
   const {request} = event
   try {
-    const response = await fetch(request)
+    // 내비게이션이면 preload로 먼저 출발한 응답을 쓴다. 내비게이션이
+    // 아니거나 preload 미지원이면 undefined로 resolve되어 fetch로 간다
+    const response = (await event.preloadResponse) ?? (await fetch(request))
     if (response.ok) {
       event.waitUntil(putWithTrim(cacheName, request, response.clone()))
     }
