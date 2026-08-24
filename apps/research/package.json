@@ -28,7 +28,7 @@
     "qrcode.react": "^4.2.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "sass": "^1.102.0",
+    "sass": "^1.103.1",
     "swiper": "^14.1.0",
     "tailwindcss": "^4.3.3"
   },
