@@ -273,13 +273,30 @@ if (name === 'LCP') {
 
 `sw_controlled` is especially handy. Until now the effect was estimated by a before/after period comparison around the service worker deploy, but from here on, worker-controlled and uncontrolled page views can be split directly within the same period. When the next extreme value appears, which element of which post got slow at which stage will be printed right into the data. For reference, custom parameters like these must be registered as event-scoped custom dimensions in the GA4 admin console before the Data API can query them.
 
+About two weeks later, while checking how much data had accumulated, I found that the `sw_controlled` line above was wrong. All five metrics go out from the same page view, so the count of `no` values should be roughly the same for each metric. Yet over the five days from August 21, TTFB and FCP had 214 and 207 `no` values, while LCP had 40 and INP only 9.
+
+The cause is when the check runs. This worker calls `skipWaiting()` and `clients.claim()`, so even a first-visit page gets a `navigator.serviceWorker.controller` the moment the worker activates, even though that page's navigation request never went through the worker. TTFB and FCP are reported right after load, ahead of activation, but LCP, CLS, and INP are reported when the user interacts or leaves the page, by which point `controller` already exists. As a result, most first-visit LCPs were labeled `yes`, and the five-day LCP contrast (`yes` 1,583ms vs. `no` 2,909ms) turned out to be a number with first-time visitors who stayed a while mixed in, not a worker effect.
+
+I switched the criterion to a value independent of reporting time. `workerStart` on `PerformanceNavigationTiming` is the time the worker was started to handle the navigation request, and it is 0 for requests that never went through a worker.
+
+```typescript
+function isNavigationServedByServiceWorker() {
+  const [navigation] = performance.getEntriesByType(
+    'navigation',
+  ) as PerformanceNavigationTiming[]
+  return (navigation?.workerStart ?? 0) > 0
+}
+```
+
+The lesson is modest. `controller` answers "is a worker controlling this page right now," while `workerStart` answers "did this page's response go through a worker." For a worker that uses `clients.claim()`, performance metrics need the latter. The `sw_controlled` values collected for LCP, CLS, and INP before the fix have to be discarded; only TTFB and FCP remain usable.
+
 So I fixed `/_next/image` to classify as cache-first (this fix was bundled and deployed on the same day as v3, together with body-image precaching). It was not the main culprit, but it is indeed a spot where the worker detour cost can be removed. The initial one-day signal from deploy day shows returning-visitor mean LCP 951ms, TTFB 391ms, and FCP 603ms, all better than the full v1 window (aggregated not to the end of June like the earlier table, but across everything from late May when v1 started to just before the v3 deploy: 1,532ms, 859ms, and 1,066ms respectively). But unlike the earlier table, this baseline includes the traffic-shift period after the book's publication, making the comparison unfavorable to v1, and with only 120~170 samples per metric, plus the mean's vulnerability to a few extreme values seen above, it is reference-grade at best. Once a few weeks of data accumulate, I plan to follow up.
 
 ![Comparison of returning-visitor and new-visitor FCP and TTFB means before and after the service worker deploy](./images/service-worker-caching/ga4-fcp-ttfb-before-after.en.png)
 
 ## Remaining Work and an Honest Conclusion
 
-The TTFB deterioration (returning-visitor mean +525ms) looks like the worker startup and fetch detour overhead covered in Part 1, but as reserved above, the full attribution still awaits confirmation via the `sw_controlled` instrumentation. Navigation preload, which launches the navigation request without waiting for worker startup, remains the next task for winning that number back.
+The attribution of the TTFB deterioration (returning-visitor mean +525ms) could be partly checked with the TTFB `sw_controlled` values that survived the instrumentation flaw above. The `navigate` contrast is unusable, though: `no` means a first visit, so DNS and TLS connection costs are stacked on top and cancel out the worker cost, and indeed the two-week means from August 13 were nearly identical, `no` 556ms (510 samples) vs. `yes` 508ms (604 samples). Samples whose `navigation_type` is `reload`, on the other hand, are returning visits on both sides with the connection already open, so the difference narrows to whether the worker was in the path (a hard reload bypasses the worker). There it was `no` 51ms (12 samples) vs. `yes` 595ms (64 samples). The sample is too small to treat as more than circumstantial, but it points the same way as the hypothesis above that the worker detour costs somewhere around 500ms. Navigation preload, which launches the navigation request without waiting for worker startup, remains the next task for winning that number back.
 
 I also need to be honest about this blog's stated cause. I built it under the banner of "reading that does not cut out when the subway enters a tunnel," but even that cause is only half fulfilled. A tunnel is often not fully offline but a state where the connection exists yet crawls endlessly (lie-fi), and since network-first falls back to the cache only when fetch fails, the current implementation without a timeout fallback is helpless in that state. It works fully only in offline that fails cleanly, like airplane mode.
 
