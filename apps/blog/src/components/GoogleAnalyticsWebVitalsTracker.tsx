@@ -13,6 +13,16 @@ function truncate(value: string | undefined) {
   return value?.slice(0, 100)
 }
 
+// navigator.serviceWorker.controller는 첫 방문에서도 clients.claim() 직후 생기므로
+// 보고 시점이 늦은 LCP/CLS/INP가 오분류된다. 내비게이션 자체가 워커를 거쳤는지는
+// workerStart로 판정한다(보고 시점과 무관).
+function isNavigationServedByServiceWorker() {
+  const [navigation] = performance.getEntriesByType(
+    'navigation',
+  )
+  return (navigation?.workerStart ?? 0) > 0
+}
+
 function sendToGoogleAnalytics(metric: MetricWithAttribution) {
   if (typeof window.gtag !== 'function' || !GA_MEASUREMENT_ID) {
     // eslint-disable-next-line no-console
@@ -30,7 +40,7 @@ function sendToGoogleAnalytics(metric: MetricWithAttribution) {
     event_label: id,
     non_interaction: true,
     navigation_type: navigationType,
-    sw_controlled: navigator.serviceWorker?.controller ? 'yes' : 'no',
+    sw_controlled: isNavigationServedByServiceWorker() ? 'yes' : 'no',
   }
 
   if (name === 'CLS') {
