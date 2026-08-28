@@ -49,7 +49,7 @@ export default function SeriesNavigation({
         </span>
       </div>
 
-      <details className="series-nav-list group">
+      <details className="series-nav-list group" open>
         <summary>
           <svg
             width="14"
