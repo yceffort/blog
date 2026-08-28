@@ -36,9 +36,7 @@ published: true
 
 ---
 
-## 퀴즈 ①② — 시작과 상태
-
-**①** 첫 렌더에서 두 번째 쿼리에 무슨 일이 일어날까?
+## 퀴즈 ① — 기다려줄까
 
 ```jsx
 const {data: user} = useQuery({queryKey: ['user'], queryFn: fetchUser})
@@ -48,59 +46,136 @@ const {data: orders} = useQuery({
 })
 ```
 
-**②** 목록이 이미 화면에 떠 있고, 탭에서 돌아오며 백그라운드 갱신이 도는 중이다. `status` / `fetchStatus` / `isPending` / `isFetching`은 각각 무엇일까?
+첫 렌더에서 두 번째 쿼리에 무슨 일이 일어날까? `user`는 아직 도착하지 않았다.
 
-<!-- 진행: ①은 "user를 기다린다"가 다수. ②는 네 값을 순서대로 부르게 시킨다. -->
-
----
-
-## 정답 ①② — 기다려주지 않는다
-
-**①** 기다려주지 않는다. queryFn이 첫 렌더에 그대로 호출돼 `user.id`에서 **TypeError**가 나고, 쿼리는 error로 끝난다.
-
-- 키도 갈라진다. 배열 원소의 `undefined`는 `null`로 직렬화되어 `["orders",null]`이라는 별도 항목이 생긴다 (1부의 "undefined 무시"는 **객체 속성** 한정이다)
-- 조건부 실행은 훅을 if로 감싸는 게 아니라 `enabled: user?.id !== undefined`로 건다
-
-**②** `success` / `fetching` / `false` / `true`
-
-- 데이터가 있으니 status는 success, 요청이 날아가고 있으니 fetchStatus는 fetching
-- `isPending`은 "보여줄 데이터가 없다"는 뜻이므로 여기서는 false
-- 스피너를 `isFetching`에 걸면 갱신할 때마다 화면이 통째로 스피너가 된다
+<!-- 진행: "user를 기다린다"가 다수. 훅에 기다림 같은 건 없다는 점부터 짚는다. -->
 
 ---
 
-## 퀴즈 ③④ — 규약과 두 시계
+## 퀴즈 ① — 정답: 기다려주지 않는다
 
-**③** 서버가 401을 내려줬다. 이 쿼리의 `status`는 무엇일까?
+- queryFn이 첫 렌더에 그대로 호출돼 `user.id`에서 **TypeError**가 나고, 쿼리는 error로 끝난다
+- 키도 갈라진다. 배열 원소의 `undefined`는 `null`로 직렬화되어 `["orders",null]`이라는 **별도 캐시 항목**이 생긴다 (1부의 "undefined 무시"는 **객체 속성** 한정이다)
+- user가 도착하면 `['orders', 7]`로 옮겨가고, 앞의 error 항목은 캐시에 그대로 남는다
 
 ```js
-queryFn: async () => {
-  const res = await fetch('/api/me')
-  if (!res.ok) return
-  return res.json()
-}
+enabled: user?.id !== undefined // 조건은 훅을 if로 감싸는 게 아니라 여기에
 ```
 
-**④** 재방문할 때마다 스피너가 뜨는 게 싫어서 `gcTime: Infinity`로 뒀다. 이 쿼리의 네트워크 요청은 줄어들까?
+> 종속 쿼리에서 enabled를 빠뜨리면 "가끔 에러"가 아니라 **매번** 에러다. 첫 렌더는 언제나 있기 때문이다.
 
 ---
 
-## 정답 ③④ — 다른 시계는 다른 일을 한다
+## 퀴즈 ② — 네 값을 불러보자
 
-**③** `error`. 단 이유가 다르다. 401이라서가 아니라 queryFn이 **undefined를 반환**해서다. 에러 메시지도 `["me"] data is undefined`라 서버 상태와 무관하다. 실패는 `return`이 아니라 **throw**로 알린다.
+목록이 이미 화면에 떠 있고, 탭에서 돌아오며 백그라운드 갱신이 도는 중이다.
 
-**④** 줄지 않는다. `staleTime`이 기본 0이면 데이터는 도착 즉시 낡고, 마운트와 포커스 복귀마다 백그라운드 갱신이 그대로 나간다.
+```jsx
+const {status, fetchStatus, isPending, isFetching} = useQuery({
+  queryKey: ['todos'],
+  queryFn: fetchTodos,
+})
+```
 
-- gcTime이 막은 것은 **캐시 삭제**뿐이다. 사용자는 스피너 대신 옛 데이터를 먼저 보지만 뒤에서 요청은 똑같이 나간다
-- **요청량의 손잡이는 staleTime, 메모리의 손잡이는 gcTime** — 서로 독립인 두 시계다
+네 값은 각각 무엇일까?
 
 ---
 
-## 퀴즈 ⑤⑥ — 실패와 쓰기
+## 퀴즈 ② — 정답: success / fetching / false / true
 
-**⑤** API 서버가 죽었다. 사용자는 에러 화면을 **얼마나 빨리** 보게 될까?
+- 데이터가 있으니 `status`는 success, 요청이 날아가고 있으니 `fetchStatus`는 fetching
+- `isPending`은 "보여줄 데이터가 없다"는 뜻이므로 여기서는 **false**
+- 두 축이 분리된 이유가 바로 이 상태다. "데이터가 있으면서 동시에 요청 중"은 예외가 아니라 **정상 운영 상태**다
 
-**⑥** 할 일 추가가 성공(201)했다. 목록 쿼리는 저절로 갱신될까?
+> 스피너를 `isFetching`에 걸면 갱신할 때마다 화면이 통째로 스피너가 된다. 첫 진입은 isPending, 갱신 표시는 isFetching.
+
+---
+
+## 퀴즈 ③ — 401을 받았다
+
+```js
+useQuery({
+  queryKey: ['me'],
+  queryFn: async () => {
+    const res = await fetch('/api/me')
+    if (!res.ok) return
+    return res.json()
+  },
+})
+```
+
+서버가 401을 내려줬다. 이 쿼리의 `status`는 무엇일까?
+
+<!-- 진행: error / success 손들기. 답은 error인데, 이유를 물으면 대부분 틀린다. -->
+
+---
+
+## 퀴즈 ③ — 정답: error, 단 이유가 다르다
+
+- **401이라서가 아니다.** queryFn이 `undefined`를 반환해서다
+- 에러 메시지도 `["me"] data is undefined`라 서버 상태와 아무 관련이 없다
+- 401이든 500이든 이 코드는 같은 에러를 낸다. 화면은 원인을 구분할 방법이 없다
+
+```js
+if (!res.ok) throw new Error(`${res.status}`) // 실패는 throw로 알린다
+```
+
+> `return`은 성공이고, 그중 `undefined`만 금지다. "데이터 없음"은 `null`로 표현한다.
+
+---
+
+## 퀴즈 ④ — gcTime을 무한으로
+
+재방문할 때마다 스피너가 뜨는 게 싫어서 이렇게 뒀다.
+
+```js
+useQuery({queryKey: ['todos'], queryFn: fetchTodos, gcTime: Infinity})
+```
+
+이 쿼리의 네트워크 요청은 줄어들까?
+
+---
+
+## 퀴즈 ④ — 정답: 줄지 않는다
+
+- `staleTime`이 기본 0이면 데이터는 도착 즉시 낡는다. 마운트와 포커스 복귀마다 백그라운드 갱신이 그대로 나간다
+- gcTime이 막은 것은 **캐시 삭제**뿐이다. 사용자는 스피너 대신 옛 데이터를 먼저 보지만, 뒤에서 요청은 똑같이 나간다
+- 덤으로 이 설정은 안 쓰는 캐시가 **영원히 남는다**는 뜻이기도 하다
+
+> 요청량의 손잡이는 **staleTime**, 메모리의 손잡이는 **gcTime**. 서로 독립인 두 시계다.
+
+---
+
+## 퀴즈 ⑤ — 에러 화면은 언제 뜨나
+
+API 서버가 죽어서 모든 요청이 500으로 떨어진다.
+
+```jsx
+const {status, error} = useQuery({queryKey: ['todos'], queryFn: fetchTodos})
+if (status === 'error') return <ErrorView error={error} />
+```
+
+사용자는 이 에러 화면을 얼마나 빨리 보게 될까?
+
+<!-- 진행: "바로 뜬다"가 다수. 기본 retry 값을 되물으면 표정이 바뀐다. -->
+
+---
+
+## 퀴즈 ⑤ — 정답: 빨라야 7초 뒤
+
+- 기본 `retry: 3`에 지수 백오프가 붙는다 — 1초 → 2초 → 4초, 여기에 요청 시간이 더해진다
+- `status: 'error'`는 **재시도가 전부 소진된 뒤**에야 된다. 그동안 status는 계속 pending이라 화면은 스피너다
+- 4xx는 세 번 더 물어봐도 답이 같다. 보통은 조건을 건다
+
+```js
+retry: (failureCount, error) => error.status >= 500 && failureCount < 3
+```
+
+> 서버에서는 기본값이 0회다. SSR 중 3회 재시도는 응답 지연으로 직결되기 때문이다.
+
+---
+
+## 퀴즈 ⑥ — 추가는 됐는데
 
 ```jsx
 const {mutate} = useMutation({mutationFn: createTodo})
@@ -108,18 +183,24 @@ const {mutate} = useMutation({mutationFn: createTodo})
 useQuery({queryKey: ['todos'], queryFn: fetchTodos})
 ```
 
-<!-- 진행: ⑤는 "바로 뜬다"가 다수. 기본 retry 값을 되물으면 표정이 바뀐다. -->
+서버가 201을 내려줬고 mutation은 success다. 목록 쿼리는 저절로 갱신될까?
 
 ---
 
-## 정답 ⑤⑥ — 자동인 것과 아닌 것
+## 퀴즈 ⑥ — 정답: 갱신되지 않는다
 
-**⑤** 빨라야 7초 뒤. 기본 `retry: 3`에 지수 백오프(1초 → 2초 → 4초)가 붙고, `status: 'error'`는 **재시도가 전부 소진된 뒤**에야 된다. 그동안 status는 계속 pending이라 화면은 스피너다. 4xx까지 세 번 재시도할 이유는 없으니 보통은 조건을 건다.
-
-**⑥** 갱신되지 않는다. mutation은 **캐시에 대해 아무것도 모른다** — 서버에 요청을 보내고 결과를 알려줄 뿐이다.
-
-- 목록을 다시 받으려면 `onSuccess`에서 `invalidateQueries({queryKey: ['todos']})`를 직접 호출한다
+- mutation은 **캐시에 대해 아무것도 모른다**. 서버에 요청을 보내고 결과를 알려줄 뿐이다
+- `['todos']`와 `createTodo` 사이에 연결고리는 없다 — react-query는 데이터 간 의존성을 모른다
 - 읽기와 쓰기를 잇는 다리는 자동으로 놓이지 않는다
+
+```js
+useMutation({
+  mutationFn: createTodo,
+  onSuccess: () => queryClient.invalidateQueries({queryKey: ['todos']}),
+})
+```
+
+> 쓰기 뒤에 무엇을 무효화할지는 자동으로 정해지지 않는다. 키 설계가 여기서 회수된다.
 
 ---
 
