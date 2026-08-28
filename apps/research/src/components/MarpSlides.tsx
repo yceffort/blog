@@ -105,6 +105,7 @@ export function MarpSlides({
   const laserRef = useLaserPointer(isLaserMode)
   const {
     canvasRef,
+    textInputRef,
     drawTool,
     setDrawTool,
     drawColor,
@@ -794,15 +795,20 @@ export function MarpSlides({
             <input
               className={styles.drawTextInput}
               style={{left: textPos.x, top: textPos.y, color: drawColor}}
-              ref={(el) => el?.focus()}
+              ref={(el) => {
+                textInputRef.current = el
+                el?.focus()
+              }}
               onKeyDown={(e) => {
-                if (e.nativeEvent.isComposing) {
-                  return
-                }
-                if (e.key === 'Enter') {
-                  commitText(e.currentTarget.value)
-                } else if (e.key === 'Escape') {
+                if (e.key === 'Escape' && !e.nativeEvent.isComposing) {
                   cancelText()
+                }
+              }}
+              // 한글 IME 조합 중 Enter 는 keydown 시점에 isComposing 이라 무시된다.
+              // keyup 은 조합이 끝난 뒤라 마지막 글자까지 담긴 값을 커밋할 수 있다
+              onKeyUp={(e) => {
+                if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+                  commitText(e.currentTarget.value)
                 }
               }}
               onBlur={(e) => commitText(e.currentTarget.value)}

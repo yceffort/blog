@@ -8,6 +8,7 @@ export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
   const [drawColor, setDrawColor] = useState('#ef4444')
   const [textPos, setTextPos] = useState<{x: number; y: number} | null>(null)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const textInputRef = useRef<HTMLInputElement | null>(null)
   const drawingRef = useRef(false)
   const lastPointRef = useRef<{x: number; y: number} | null>(null)
 
@@ -55,6 +56,23 @@ export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
     }
   }, [isDrawingMode])
 
+  // 지정한 위치에 텍스트를 캔버스로 굽는다
+  const drawText = useCallback(
+    (pos: {x: number; y: number}, value: string) => {
+      const ctx = canvasRef.current?.getContext('2d')
+      if (!ctx || !value.trim()) {
+        return
+      }
+      ctx.save()
+      ctx.font = '24px sans-serif'
+      ctx.textBaseline = 'top'
+      ctx.fillStyle = drawColor
+      ctx.fillText(value, pos.x, pos.y)
+      ctx.restore()
+    },
+    [drawColor],
+  )
+
   const handleDrawStart = useCallback(
     (e: React.PointerEvent<HTMLCanvasElement>) => {
       const canvas = canvasRef.current
@@ -62,6 +80,14 @@ export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
         return
       }
       if (drawTool === 'text') {
+        // preventDefault 없이는 뒤이은 mousedown의 기본 동작이 포커스를 body로
+        // 옮겨서, 방금 띄운 입력창이 blur -> 언마운트로 즉시 사라진다
+        e.preventDefault()
+        const input = textInputRef.current
+        if (input && textPos) {
+          drawText(textPos, input.value)
+          input.value = ''
+        }
         const rect = canvas.getBoundingClientRect()
         setTextPos({x: e.clientX - rect.left, y: e.clientY - rect.top})
         return
@@ -74,7 +100,7 @@ export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
         y: e.clientY - rect.top,
       }
     },
-    [drawTool],
+    [drawTool, textPos, drawText],
   )
 
   const handleDrawMove = useCallback(
@@ -128,19 +154,12 @@ export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
   // 입력한 텍스트를 캔버스에 그리기
   const commitText = useCallback(
     (value: string) => {
-      const canvas = canvasRef.current
-      const ctx = canvas?.getContext('2d')
-      if (ctx && textPos && value.trim()) {
-        ctx.save()
-        ctx.font = '24px sans-serif'
-        ctx.textBaseline = 'top'
-        ctx.fillStyle = drawColor
-        ctx.fillText(value, textPos.x, textPos.y)
-        ctx.restore()
+      if (textPos) {
+        drawText(textPos, value)
       }
       setTextPos(null)
     },
-    [textPos, drawColor],
+    [textPos, drawText],
   )
 
   const cancelText = useCallback(() => {
@@ -158,6 +177,7 @@ export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
 
   return {
     canvasRef,
+    textInputRef,
     drawTool,
     setDrawTool,
     drawColor,
