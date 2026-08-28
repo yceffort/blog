@@ -877,7 +877,7 @@ mutation.mutate(newTodo, {
 useMutation({
   mutationFn: toggleTodo,
   onMutate: async (toggled) => {
-    await queryClient.cancelQueries({queryKey: ['todos']}) // 진행 중 refetch가 덮어쓰지 않게
+    await queryClient.cancelQueries({queryKey: ['todos']}) // 진행 중 refetch 차단
     const snapshot = queryClient.getQueryData(['todos'])   // 롤백용 스냅샷
     queryClient.setQueryData(['todos'], (old) =>
       old.map((t) => (t.id === toggled.id ? {...t, done: !t.done} : t)),
@@ -887,9 +887,8 @@ useMutation({
   onError: (err, toggled, context) => {
     if (context) queryClient.setQueryData(['todos'], context.snapshot) // 롤백
   },
-  onSettled: () => {
-    queryClient.invalidateQueries({queryKey: ['todos']}) // 최종 동기화
-  },
+  onSettled: () =>
+    queryClient.invalidateQueries({queryKey: ['todos']}), // 최종 동기화
 })
 ```
 
@@ -931,10 +930,12 @@ mutation.mutate(newTodo, {
 - 무효화가 증발했으니 목록 화면은 stale 표시조차 안 된 옛 캐시를 그대로 보여준다
 - 반드시 일어나야 하는 후처리는 **useMutation 정의부에**, 그 화면에서만 의미 있는 후처리는 호출부에
 
+<!-- prettier-ignore -->
 ```jsx
 const mutation = useMutation({
   mutationFn: addTodo,
-  onSuccess: () => queryClient.invalidateQueries({queryKey: ['todos']}), // 항상 실행
+  onSuccess: () =>
+    queryClient.invalidateQueries({queryKey: ['todos']}), // 항상 실행
 })
 mutation.mutate(newTodo, {onSuccess: () => navigate('/todos')}) // 이 화면 한정
 ```
