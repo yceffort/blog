@@ -558,12 +558,17 @@
   min-width: 160px;
   padding: 0;
   background: transparent;
-  border: 1px dashed rgba(255, 255, 255, 0.5);
+  border: 1px dashed currentColor;
   border-radius: 2px;
   outline: none;
   font-size: 24px;
   font-family: sans-serif;
   line-height: 1.2;
+
+  // @tailwindcss/forms 가 focus 시 box-shadow 로 링을 그린다
+  &:focus {
+    box-shadow: none;
+  }
 }
 
 .drawToolbar {
