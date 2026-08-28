@@ -36,6 +36,93 @@ published: true
 
 ---
 
+## 퀴즈 ①② — 시작과 상태
+
+**①** 첫 렌더에서 두 번째 쿼리에 무슨 일이 일어날까?
+
+```jsx
+const {data: user} = useQuery({queryKey: ['user'], queryFn: fetchUser})
+const {data: orders} = useQuery({
+  queryKey: ['orders', user?.id],
+  queryFn: () => fetchOrders(user.id),
+})
+```
+
+**②** 목록이 이미 화면에 떠 있고, 탭에서 돌아오며 백그라운드 갱신이 도는 중이다. `status` / `fetchStatus` / `isPending` / `isFetching`은 각각 무엇일까?
+
+<!-- 진행: ①은 "user를 기다린다"가 다수. ②는 네 값을 순서대로 부르게 시킨다. -->
+
+---
+
+## 정답 ①② — 기다려주지 않는다
+
+**①** 기다려주지 않는다. queryFn이 첫 렌더에 그대로 호출돼 `user.id`에서 **TypeError**가 나고, 쿼리는 error로 끝난다.
+
+- 키도 갈라진다. 배열 원소의 `undefined`는 `null`로 직렬화되어 `["orders",null]`이라는 별도 항목이 생긴다 (1부의 "undefined 무시"는 **객체 속성** 한정이다)
+- 조건부 실행은 훅을 if로 감싸는 게 아니라 `enabled: user?.id !== undefined`로 건다
+
+**②** `success` / `fetching` / `false` / `true`
+
+- 데이터가 있으니 status는 success, 요청이 날아가고 있으니 fetchStatus는 fetching
+- `isPending`은 "보여줄 데이터가 없다"는 뜻이므로 여기서는 false
+- 스피너를 `isFetching`에 걸면 갱신할 때마다 화면이 통째로 스피너가 된다
+
+---
+
+## 퀴즈 ③④ — 규약과 두 시계
+
+**③** 서버가 401을 내려줬다. 이 쿼리의 `status`는 무엇일까?
+
+```js
+queryFn: async () => {
+  const res = await fetch('/api/me')
+  if (!res.ok) return
+  return res.json()
+}
+```
+
+**④** 재방문할 때마다 스피너가 뜨는 게 싫어서 `gcTime: Infinity`로 뒀다. 이 쿼리의 네트워크 요청은 줄어들까?
+
+---
+
+## 정답 ③④ — 다른 시계는 다른 일을 한다
+
+**③** `error`. 단 이유가 다르다. 401이라서가 아니라 queryFn이 **undefined를 반환**해서다. 에러 메시지도 `["me"] data is undefined`라 서버 상태와 무관하다. 실패는 `return`이 아니라 **throw**로 알린다.
+
+**④** 줄지 않는다. `staleTime`이 기본 0이면 데이터는 도착 즉시 낡고, 마운트와 포커스 복귀마다 백그라운드 갱신이 그대로 나간다.
+
+- gcTime이 막은 것은 **캐시 삭제**뿐이다. 사용자는 스피너 대신 옛 데이터를 먼저 보지만 뒤에서 요청은 똑같이 나간다
+- **요청량의 손잡이는 staleTime, 메모리의 손잡이는 gcTime** — 서로 독립인 두 시계다
+
+---
+
+## 퀴즈 ⑤⑥ — 실패와 쓰기
+
+**⑤** API 서버가 죽었다. 사용자는 에러 화면을 **얼마나 빨리** 보게 될까?
+
+**⑥** 할 일 추가가 성공(201)했다. 목록 쿼리는 저절로 갱신될까?
+
+```jsx
+const {mutate} = useMutation({mutationFn: createTodo})
+// 목록은 다른 컴포넌트에서
+useQuery({queryKey: ['todos'], queryFn: fetchTodos})
+```
+
+<!-- 진행: ⑤는 "바로 뜬다"가 다수. 기본 retry 값을 되물으면 표정이 바뀐다. -->
+
+---
+
+## 정답 ⑤⑥ — 자동인 것과 아닌 것
+
+**⑤** 빨라야 7초 뒤. 기본 `retry: 3`에 지수 백오프(1초 → 2초 → 4초)가 붙고, `status: 'error'`는 **재시도가 전부 소진된 뒤**에야 된다. 그동안 status는 계속 pending이라 화면은 스피너다. 4xx까지 세 번 재시도할 이유는 없으니 보통은 조건을 건다.
+
+**⑥** 갱신되지 않는다. mutation은 **캐시에 대해 아무것도 모른다** — 서버에 요청을 보내고 결과를 알려줄 뿐이다.
+
+- 목록을 다시 받으려면 `onSuccess`에서 `invalidateQueries({queryKey: ['todos']})`를 직접 호출한다
+- 읽기와 쓰기를 잇는 다리는 자동으로 놓이지 않는다
+
+---
+
 ## 이 덱에서 다루는 것
 
 4. **내부 동작** — useQuery 한 줄 뒤에서 벌어지는 일 (QueryClient, Query, QueryObserver)
@@ -51,6 +138,25 @@ published: true
 ## Part 4 — useQuery 한 줄의 뒤편
 
 <!-- _class: invert -->
+
+---
+
+## 그 전에 — 도서관 하나
+
+이름부터 외울 필요는 없다. 내부 배치는 **도서관**과 같다.
+
+| 도서관                        | react-query   |
+| ----------------------------- | ------------- |
+| 도서관 (운영 주체)            | QueryClient   |
+| 서가 — 청구기호로 정리된 책장 | QueryCache    |
+| 책 한 권                      | Query         |
+| 그 책에 걸어둔 알림 신청      | QueryObserver |
+
+- 내가 집에 가도 **책은 서가에 남는다** → 언마운트해도 캐시가 남는 이유
+- 같은 책을 셋이 신청해도 사서는 **한 번만** 꺼내온다 → 요청 중복 제거
+- 아무도 찾지 않는 책은 정해둔 기간 뒤 폐기 → gcTime
+
+1부에서 외웠던 규칙들이, 여기서부터는 **구조를 보면 당연해진다**.
 
 ---
 
@@ -109,9 +215,27 @@ QueryObserver가 하는 일:
 
 ---
 
+## useQuery는 데이터를 가져오지 않는다
+
+소스를 보기 전에 문장으로. useQuery가 하는 일은 셋뿐이다.
+
+```text
+① 만든다   — 이 컴포넌트 몫의 QueryObserver를 하나 만든다
+② 구독한다 — 그 Observer를 통해 Query의 변화를 듣는다
+③ 받는다   — 지금 상태를 {data, status, ...} 모양으로 돌려받는다
+```
+
+- useQuery는 **캐시에 붙는 코드**지 요청을 보내는 코드가 아니다
+- 요청, 재시도, GC는 전부 Query가 한다 — 도서관 비유로는 사서의 일
+- 같은 키로 열 번 호출해도 요청이 한 번인 이유: 신청서만 열 장 걸렸을 뿐이다
+
+다음 장에서 이 셋을 실제 소스로 확인한다. 코드는 낯설어도 하는 일은 위의 셋 그대로다.
+
+---
+
 ## useQuery = 만들고, 구독하고, 반환한다
 
-`react-query` 패키지의 `useBaseQuery.ts`(v5.101.4)를 요약하면 세 줄이다:
+앞 장의 셋을 `useBaseQuery.ts`(v5.101.4)에서 그대로 확인할 수 있다:
 
 ```js
 // ① Observer를 만든다 (훅 호출당 하나, 리렌더 간 유지)
@@ -129,7 +253,7 @@ return !options.notifyOnChangeProps ? observer.trackResult(result) : result
 ```
 
 - useQuery 자체에는 로직이 거의 없다. **모든 동작은 프레임워크 무관한 query-core에** 있고, React는 구독만 한다 (Vue/Svelte/Solid 어댑터가 존재하는 이유)
-- ②의 `notifyManager.batchCalls`와 ③의 `trackResult`가 다음 두 슬라이드의 주인공이다
+- 코드를 외울 필요는 없다. ②의 `batchCalls`와 ③의 `trackResult`, 이 두 이름만 들고 다음 장으로
 
 ---
 
