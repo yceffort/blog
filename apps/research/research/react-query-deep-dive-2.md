@@ -322,19 +322,18 @@ QueryObserver가 하는 일:
 // ① Observer를 만든다 (훅 호출당 하나, 리렌더 간 유지)
 const [observer] = React.useState(() => new QueryObserver(client, options))
 
-// ② React 18의 외부 스토어 구독 API로 연결한다
+// ② useSyncExternalStore — React 바깥의 값을 구독하는 React 18 공식 API
 React.useSyncExternalStore(
-  (onStoreChange) =>
-    observer.subscribe(notifyManager.batchCalls(onStoreChange)),
+  (cb) => observer.subscribe(notifyManager.batchCalls(cb)),
   () => observer.getCurrentResult(),
 )
 
-// ③ notifyOnChangeProps를 지정하지 않았다면 trackResult로 감싸 반환한다
-return !options.notifyOnChangeProps ? observer.trackResult(result) : result
+// ③ 결과를 그대로 주지 않고 trackResult로 한 번 감싸 반환한다
+return observer.trackResult(result)
 ```
 
-- useQuery 자체에는 로직이 거의 없다. **모든 동작은 프레임워크 무관한 query-core에** 있고, React는 구독만 한다 (Vue/Svelte/Solid 어댑터가 존재하는 이유)
-- 코드를 외울 필요는 없다. ②의 `batchCalls`와 ③의 `trackResult`, 이 두 이름만 들고 다음 장으로
+- 여기서 "바깥의 값"이 곧 Query다. 로직은 useQuery가 아니라 프레임워크 무관한 **query-core**에 있고 React는 구독만 한다 (Vue/Svelte/Solid 어댑터가 존재하는 이유)
+- 외울 이름은 둘. ②의 `batchCalls`와 ③의 `trackResult`가 다음 장들의 주인공이다
 
 ---
 
@@ -357,7 +356,7 @@ const {data} = useQuery({queryKey: ['todos'], queryFn: fetchTodos})
 
 ## 리렌더 최적화 ② — structural sharing
 
-refetch 응답이 이전과 같은 내용이면? JSON 파싱은 매번 **새 객체**를 만들지만, 캐시는 **이전 참조를 유지**한다. Node 실측:
+**구조 공유**: 새 응답을 옛 데이터와 깊이 비교해, 바뀐 가지만 새로 만들고 나머지는 **옛 참조를 그대로 재사용**한다. JSON 파싱은 매번 새 객체를 뱉지만 캐시에 들어가는 것은 그 결과가 아니다. Node 실측:
 
 ```js
 // 내용이 완전히 같은 응답을 두 번 받으면: data1 === data2 (참조 유지)
@@ -376,21 +375,23 @@ prev.meta === next.meta // true
 
 ## notifyManager — 알림은 모아서
 
-Query 하나의 상태 변화는 여러 Observer에게 전파된다. 이 알림은 **notifyManager가 모아서 한 번에** 보낸다.
+응답 하나에 Query의 상태는 여러 번 바뀐다. 그대로 흘려보내면 리렌더가 곱셈으로 불어난다.
 
 ```text
-[ 응답 도착 ] ─▶ Query 상태 변경
+응답 도착 ─▶ Query 상태가 연달아 바뀜 (data 반영 → fetching 종료)
+                  │   그대로 흘리면: 변경 2 × 구독자 3 = 최대 6번 리렌더
+                  ▼
+        [ notifyManager ]  ← 알림을 모았다가 한 틱 뒤에 한 번에
                   │
                   ▼
-        [ notifyManager.batch ]  ← 알림들을 모았다가
-                  │
-                  ▼
-        같은 틱에 연속 통지 ─▶ React 18이 리렌더 1회로 합친다
+        React 18의 automatic batching ─▶ 리렌더 1번
 ```
 
-- 소스: `notifyManager.ts` — 변경을 `setTimeout(0)` 한 틱에 모아 flush한다 (프레임 단위가 아니라 매크로태스크 단위)
-- 덕분에 상태 전이(fetching 시작 → 데이터 반영 → 종료)가 따로따로 그려지지 않는다 — 리렌더를 실제로 합치는 주체는 **React 18의 automatic batching**
-- 개념만 알면 된다: **"알림은 한 틱에 뭉쳐서 오고, React가 한 번에 그린다"**
+- 소스: `notifyManager.ts` — 변경 알림을 모아뒀다가 다음 틱에 몰아서 flush한다
+- 리렌더를 실제로 합치는 주체는 **React 18의 automatic batching**이다. notifyManager는 알림들이 같은 틱에 떨어지게 만들어 그 조건을 갖춰준다
+- 외울 것은 한 줄: **알림은 뭉쳐서 오고, React가 한 번에 그린다**
+
+<!-- 구두 보충: flush는 setTimeout(0), 즉 프레임이 아니라 매크로태스크 단위다. -->
 
 ---
 
@@ -498,15 +499,12 @@ function TodoList() {
 
 // 로딩과 에러는 바깥에서 선언한다
 <ErrorBoundary fallback={<ErrorView />}>
-  <Suspense fallback={<Spinner />}>
-    <TodoList />
-  </Suspense>
+  <Suspense fallback={<Spinner />}><TodoList /></Suspense>
 </ErrorBoundary>
 ```
 
-- `status === 'pending'` 분기가 사라진다 — 로딩이면 컴포넌트가 **던져지고**(suspend) Suspense가 받는다
-- 에러도 던져진다 — ErrorBoundary가 받는다
-- 대가: `enabled`, `placeholderData`, `throwOnError`가 타입에서 제거됐다 — "데이터는 항상 있고, 에러는 항상 던져진다"는 모델과 모순이기 때문
+- `status === 'pending'` 분기가 사라진다. 데이터가 아직 없으면 컴포넌트가 **Promise를 throw**하고, React가 그것을 받아 가장 가까운 `<Suspense>`의 fallback을 대신 그린다. Promise가 풀리면 그 컴포넌트만 다시 렌더한다
+- 에러도 같은 방식으로 throw되어 ErrorBoundary가 받는다. 대가로 `enabled`, `placeholderData`, `throwOnError`는 **타입에서 빠졌다** — "데이터는 항상 있고 에러는 항상 던져진다"는 모델과 모순이기 때문이다
 
 ---
 
@@ -557,11 +555,8 @@ Next.js App Router의 서버 컴포넌트에서:
 
 ```jsx
 export default async function Page() {
-  const queryClient = new QueryClient() // 요청마다 새로! (다음 슬라이드)
-  await queryClient.prefetchQuery({
-    queryKey: ['todos'],
-    queryFn: fetchTodos,
-  })
+  const queryClient = new QueryClient() // 요청마다 새로 (뒤에서)
+  await queryClient.prefetchQuery({queryKey: ['todos'], queryFn: fetchTodos})
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
@@ -571,8 +566,9 @@ export default async function Page() {
 }
 ```
 
-- `prefetchQuery`: 서버의 QueryClient 캐시에 데이터를 채운다
-- `dehydrate`: 캐시를 직렬화 — `HydrationBoundary`가 클라이언트 캐시에 부어 넣는다
+- `prefetchQuery`: 서버 캐시를 채운다. `await`를 붙여야 dehydrate 시점에 데이터가 들어 있다
+- `dehydrate(queryClient)`: 그 캐시를 **JSON으로 직렬화**해 HTML에 싣는다
+- `HydrationBoundary`: 자식이 렌더되기 전에 그 JSON을 **브라우저 캐시에 부어 넣는다**
 
 ---
 
@@ -593,23 +589,39 @@ function TodoList() {
 
 ---
 
-## QueryClient는 요청마다 새로
+## 클라이언트가 둘이라는 것
 
-서버 코드에서 이 습관 하나는 사고로 직결된다.
+SSR에서 QueryClient는 **두 개**다. 이름이 같을 뿐 하는 일이 다르다.
+
+| 구분 | 서버의 QueryClient                        | 브라우저의 QueryClient         |
+| ---- | ----------------------------------------- | ------------------------------ |
+| 정체 | dehydrate할 데이터를 담는 **일회용 그릇** | 앱이 사는 동안의 **진짜 캐시** |
+| 개수 | prefetch하는 서버 컴포넌트마다            | 앱 전체에 하나                 |
+| 수명 | 응답을 보내면 버려진다                    | 탭을 닫을 때까지               |
+
+- 서버 쪽은 **캐시로 쓸 물건이 아니다**. 담고, 직렬화하고, 버린다. 그게 전부다
+- Provider용 클라이언트는 공식 `getQueryClient()`가 한 파일에서 분기한다: `isServer`면 매번 새로, 브라우저면 `browserQueryClient ??= ...`로 하나만 유지
+
+<!-- 구두 보충: 공식 문서는 Provider 클라이언트를 useState로 만들지 말라고 경고한다. suspend할 수 있는 코드와 사이에 Suspense 경계가 없으면 첫 렌더에서 React가 클라이언트를 버리기 때문. -->
+
+---
+
+## QueryClient는 요청마다 새로
 
 ```js
 // ❌ 모듈 스코프 싱글턴 — 브라우저에선 정석, 서버에선 사고
 const queryClient = new QueryClient()
 
-// ✅ 요청마다 생성
+// ✅ 서버 컴포넌트 안에서 생성
 export default async function Page() {
   const queryClient = new QueryClient()
   ...
 }
 ```
 
-- 서버 프로세스는 **모든 사용자가 공유**한다. 모듈 스코프 캐시에 A의 `['me']`가 남아 있으면 **B의 렌더에 A의 개인정보**가 들어갈 수 있다
-- Provider용 클라이언트는 공식 가이드의 `getQueryClient()` 패턴으로: `isServer ? new QueryClient() : (browserQueryClient ??= new QueryClient())` — useState 방식은 Suspense 경계 없이 초기 suspend가 나면 클라이언트가 재생성될 수 있다
+- **안전**: 서버 프로세스는 모든 사용자가 공유한다. 모듈 스코프 캐시에 A의 `['me']`가 남아 있으면 **B의 렌더에 A의 개인정보**가 실려 나간다
+- **잃는 것도 없다**: 어차피 직렬화하고 버릴 그릇이라 재사용해서 얻을 게 없다. 공식 가이드도 한 요청에서 queryClient를 여러 개 만들어 각각 dehydrate해도 된다고 명시한다
+- 한 요청 안의 여러 서버 컴포넌트가 하나를 공유하게 하려면 React의 `cache()`로 감싼다 — `cache(() => new QueryClient())`는 **요청 스코프**라 요청 사이로는 새지 않는다
 
 ---
 
