@@ -91,8 +91,9 @@ function isPrefetchRequest(request) {
 // 여러 너비를 포함하므로, 원본(url 파라미터)별로 1080에 가장 가까운 하나만 고른다
 function extractImageUrls(html) {
   const found = new Set()
-  const tagRe = /<img\b[^>]*>/g
-  const attrRe = /(?:src|srcset)="([^"]+)"/g
+  const tagRe = /<img\b[^>]*>/gi
+  // Next.js는 srcSet으로 렌더하므로 대소문자를 구분하면 srcset 후보를 통째로 놓친다
+  const attrRe = /(?:src|srcset)="([^"]+)"/gi
   let tag
   while ((tag = tagRe.exec(html))) {
     let match
