@@ -1,6 +1,6 @@
 'use client'
 
-import {useEffect, useRef, useState} from 'react'
+import {useEffect, useRef, useState, useSyncExternalStore} from 'react'
 
 const THRESHOLD = 70
 const MAX_PULL = 110
@@ -20,15 +20,15 @@ function isIOSStandalone() {
   return isIOS && isStandalone
 }
 
+// 판정 결과는 세션 동안 바뀌지 않으므로 구독은 아무것도 하지 않는다
+const subscribe = () => () => {}
+
 export default function PullToRefresh() {
-  const [enabled, setEnabled] = useState(false)
+  // 서버에서는 항상 false, 하이드레이션 이후 클라이언트 판정으로 바뀐다
+  const enabled = useSyncExternalStore(subscribe, isIOSStandalone, () => false)
   const [refreshing, setRefreshing] = useState(false)
   const circleRef = useRef<HTMLDivElement>(null)
   const arrowRef = useRef<SVGSVGElement>(null)
-
-  useEffect(() => {
-    setEnabled(isIOSStandalone())
-  }, [])
 
   useEffect(() => {
     const circle = circleRef.current

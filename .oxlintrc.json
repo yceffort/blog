@@ -33,7 +33,6 @@
     "import/no-unassigned-import": "off",
     "no-underscore-dangle": "off",
     "unicorn/require-post-message-target-origin": "off",
-    "react/set-state-in-effect": "warn",
     "typescript/no-unsafe-type-assertion": "off"
   },
   "overrides": [

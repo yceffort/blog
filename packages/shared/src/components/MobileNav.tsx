@@ -18,15 +18,10 @@ const EXIT_MS = 280
 
 const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
   const pathname = usePathname() ?? '/'
-  const [mounted, setMounted] = useState(false)
   const [rendered, setRendered] = useState(false)
   const [open, setOpen] = useState(false)
   const rafRef = useRef<number | null>(null)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   useEffect(() => {
     return () => {
@@ -120,8 +115,7 @@ const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
         </svg>
       </button>
 
-      {mounted &&
-        rendered &&
+      {rendered &&
         createPortal(
           <>
             <div

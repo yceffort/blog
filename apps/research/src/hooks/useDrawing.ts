@@ -38,9 +38,17 @@ export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
     return () => window.removeEventListener('resize', resize)
   }, [isDrawingMode])
 
+  // 슬라이드가 바뀌거나 드로잉 모드가 꺼지면 입력 중이던 텍스트를 취소한다.
+  // effect로 지우면 한 번 더 렌더되므로 렌더 중에 조정한다.
+  const resetKey = `${activeIndex}:${isDrawingMode}`
+  const [prevResetKey, setPrevResetKey] = useState(resetKey)
+  if (prevResetKey !== resetKey) {
+    setPrevResetKey(resetKey)
+    setTextPos(null)
+  }
+
   // 슬라이드 이동 시 드로잉 클리어
   useEffect(() => {
-    setTextPos(null)
     const canvas = canvasRef.current
     if (!canvas) {
       return
@@ -48,13 +56,6 @@ export function useDrawing(isDrawingMode: boolean, activeIndex: number) {
     const ctx = canvas.getContext('2d')
     ctx?.clearRect(0, 0, canvas.width, canvas.height)
   }, [activeIndex])
-
-  // 드로잉 모드 종료 시 텍스트 입력 취소
-  useEffect(() => {
-    if (!isDrawingMode) {
-      setTextPos(null)
-    }
-  }, [isDrawingMode])
 
   // 지정한 위치에 텍스트를 캔버스로 굽는다
   const drawText = useCallback(
