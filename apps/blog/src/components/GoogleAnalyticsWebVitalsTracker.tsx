@@ -17,9 +17,7 @@ function truncate(value: string | undefined) {
 // 보고 시점이 늦은 LCP/CLS/INP가 오분류된다. 내비게이션 자체가 워커를 거쳤는지는
 // workerStart로 판정한다(보고 시점과 무관).
 function isNavigationServedByServiceWorker() {
-  const [navigation] = performance.getEntriesByType(
-    'navigation',
-  )
+  const [navigation] = performance.getEntriesByType('navigation')
   return (navigation?.workerStart ?? 0) > 0
 }
 
