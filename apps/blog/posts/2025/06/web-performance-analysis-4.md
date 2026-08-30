@@ -201,7 +201,7 @@ UI.panels.timeline._millisecondsToRecordAfterLoadEvent = 5000
 3. 이 개발자 도구가 떠있는 화면에서, 크롬 개발자 도구를 여는 단축키 Ctrl+Shift+i or ⌘+⌥+|i 를 또 누릅니다. 그러면 개발자도구를 위한 개발자 도구가 뜹니다. 이러한 방식을 devtools on devtools 라고 부릅니다.
    ![7.png](./images/portfolio/7.png)
    이 창에서는 웹사이트에서 사용중인 개발자도구를 개발자도구로 열어서 우리가 원하는 조작을 수행할 수 있습니다.
-4. 콘솔 창으로 이동한다음, `UI.panels.timeline.millisecondsToRecordAfterLoadEvent = 3000 ` 을 입력합니다. 이렇게 하면, 이제 5초를 대기하던 performance 가 3초만 대기하게 됩니다.
+4. 콘솔 창으로 이동한다음, `UI.panels.timeline.millisecondsToRecordAfterLoadEvent = 3000` 을 입력합니다. 이렇게 하면, 이제 5초를 대기하던 performance 가 3초만 대기하게 됩니다.
 
 그리고 다시금 성능을 측정해보면, 라이트하우스와 비슷하게 LCP 가 굉장히 비슷하게 좋은 점수로 나오는 것을 확인할 수 있습니다.
 
@@ -460,6 +460,7 @@ if (showFullAnimation) {
   → `will-change`는 브라우저에 "이 속성이 곧 변경될 예정"이라는 힌트를 주는 CSS 속성입니다. 예를 들어 `will-change: transform`을 설정하면 브라우저는 해당 요소에 대해 레이어 분리나 GPU 가속 처리를 미리 준비하여 **레이아웃 계산 및 리페인트 비용을 줄일 수 있습니다**. 다만 과도한 사용은 오히려 성능을 저하시킬 수 있으므로 변화가 집중되는 핵심 요소에만 국한해서 사용하는 것이 좋습니다.
 - **`prefers-reduced-motion` 미디어 쿼리를 고려했는가?**  
   → `prefers-reduced-motion`은 **사용자가 운영체제 또는 브라우저에서 애니메이션 최소화를 선호한다고 명시했을 때** 이를 감지할 수 있는 CSS 미디어 쿼리입니다. 이를 활용하면 애니메이션이나 전환 효과를 최소화하거나 생략함으로써 모션 민감 사용자를 배려해줄 수 있습니다.
+
   ```css
   @media (prefers-reduced-motion: reduce) {
     .animated {
@@ -468,6 +469,7 @@ if (showFullAnimation) {
     }
   }
   ```
+
 - **모바일 기기에서 애니메이션 성능이 충분한가?**  
   → 저성능 디바이스에서도 렌더링 병목이나 프레임 드롭 없이 동작하는지 확인합니다. 특히 `opacity`, `transform` 등 GPU 최적화 가능한 속성만을 사용하는 것을 권장해드리며, layout/paint/reflow를 유발하는 속성(`top`, `left`, `height` 등)은 지양하는 것이 좋습니다.
 

@@ -201,7 +201,7 @@ So what if we modified this number of seconds, re-measured, and checked whether 
 3. In this window where DevTools is open, press the DevTools shortcut Ctrl+Shift+i or ⌘+⌥+|i again. This opens DevTools for the DevTools. This technique is called devtools on devtools.
    ![7.png](./images/portfolio/7.png)
    In this window, we can inspect the DevTools instance the website is using with another DevTools and perform whatever manipulation we want.
-4. Go to the console and enter `UI.panels.timeline.millisecondsToRecordAfterLoadEvent = 3000 `. Now the Performance panel, which used to wait 5 seconds, waits only 3.
+4. Go to the console and enter `UI.panels.timeline.millisecondsToRecordAfterLoadEvent = 3000`. Now the Performance panel, which used to wait 5 seconds, waits only 3.
 
 Measuring performance again, you can confirm that LCP comes out with a very similar, good score — much like Lighthouse.
 
@@ -460,6 +460,7 @@ When applying the improvements suggested above to a real project, how about usin
   → `will-change` is a CSS property that hints to the browser that "this property is about to change." For example, setting `will-change: transform` lets the browser prepare layer separation or GPU-accelerated handling for that element in advance, which **can reduce layout calculation and repaint costs**. However, excessive use can actually degrade performance, so it's best to limit it to the key elements where changes are concentrated.
 - **Did you consider the `prefers-reduced-motion` media query?**  
   → `prefers-reduced-motion` is a CSS media query that can detect **when a user has explicitly indicated in their OS or browser that they prefer minimized animation**. Using it, you can minimize or skip animations and transition effects out of consideration for motion-sensitive users.
+
   ```css
   @media (prefers-reduced-motion: reduce) {
     .animated {
@@ -468,6 +469,7 @@ When applying the improvements suggested above to a real project, how about usin
     }
   }
   ```
+
 - **Is animation performance sufficient on mobile devices?**  
   → Verify it operates without rendering bottlenecks or frame drops even on low-end devices. In particular, I recommend using only GPU-optimizable properties like `opacity` and `transform`, and avoiding properties that trigger layout/paint/reflow (`top`, `left`, `height`, etc.).
 

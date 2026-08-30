@@ -200,6 +200,7 @@ However, when examined with performance optimization as the focus, the following
   ![streaming-data](./images/streaming-data.png)
 
 - Also, according to the HTML capture, the actual memo list area does not exist in the SSR HTML, and instead waits for client rendering along with the Suspense fallback, as follows:
+
   ```html
   <div hidden id="S:5">
     <div class="flex w-full flex-col gap-4">
@@ -273,13 +274,13 @@ const initI18next = async (language: Language, namespace?: Namespace) => {
 export default async function useTranslation(...) {
   const i18nInstance = await initI18next(language, namespace);
   return {
-	t: i18nextInstance.getFixedT(
-		language,
-		Array.isArray(namespace) ? namespace[0] : namespace,
-		options?.keyPrefix,
-	),
-	i18n: i18nextInstance,
-	};
+  t: i18nextInstance.getFixedT(
+    language,
+    Array.isArray(namespace) ? namespace[0] : namespace,
+    options?.keyPrefix,
+  ),
+  i18n: i18nextInstance,
+  };
 }
 ```
 
@@ -368,6 +369,7 @@ Especially if the number of memos grows to hundreds or more,
 and other performance degradations can occur. Therefore, I suggest the following improvements:
 
 - **Limit the number of memos on initial load (`limit`)**, then load progressively via infinite scroll or a "Show more" button
+
   ```typescript
   getMemos = async () =>
     this.supabaseClient
@@ -377,6 +379,7 @@ and other performance degradations can occur. Therefore, I suggest the following
       .order('created_at', {ascending: false})
       .limit(20)
   ```
+
 - On the client, wire this up with React Query's `useInfiniteQuery` or a `cursor`-based loading structure
 
 Switching to this structure reduces the network bottleneck at SSR time, and **by prioritizing only the data needed for what the user actually sees on screen, you can expect improvements in perceived performance (LCP, TTFB).**
@@ -442,15 +445,15 @@ Meanwhile, the Supabase client itself currently has a cache variable `supabaseCl
 let supabaseClient: MemoSupabaseClient;
 
 export const getSupabaseClient = () => {
-	if (supabaseClient) return supabaseClient;
+  if (supabaseClient) return supabaseClient;
 
-	const cookieStore = cookies();
+  const cookieStore = cookies();
 
-	return createServerClient<Database, "memo", Database["memo"]>(
-		CONFIG.supabaseUrl,
-		CONFIG.supabaseAnonKey,
-		{ cookies: { ... } },
-	);
+  return createServerClient<Database, "memo", Database["memo"]>(
+    CONFIG.supabaseUrl,
+    CONFIG.supabaseAnonKey,
+    { cookies: { ... } },
+  );
 };
 ```
 

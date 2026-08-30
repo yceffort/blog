@@ -200,6 +200,7 @@ await initSentryUserInfo({ lng });
   ![streaming-data](./images/streaming-data.png)
 
 - 또한 HTML 캡처에 따르면, 실제 메모 리스트 영역은 SSR HTML에 존재하지 않고, 다음과 같이 Suspense fallback과 함께 클라이언트 렌더링을 기다리는 구조입니다:
+
   ```html
   <div hidden id="S:5">
     <div class="flex w-full flex-col gap-4">
@@ -273,13 +274,13 @@ const initI18next = async (language: Language, namespace?: Namespace) => {
 export default async function useTranslation(...) {
   const i18nInstance = await initI18next(language, namespace);
   return {
-	t: i18nextInstance.getFixedT(
-		language,
-		Array.isArray(namespace) ? namespace[0] : namespace,
-		options?.keyPrefix,
-	),
-	i18n: i18nextInstance,
-	};
+  t: i18nextInstance.getFixedT(
+    language,
+    Array.isArray(namespace) ? namespace[0] : namespace,
+    options?.keyPrefix,
+  ),
+  i18n: i18nextInstance,
+  };
 }
 ```
 
@@ -368,6 +369,7 @@ getMemos = async () =>
 등의 성능 저하가 발생할 수 있습니다. 따라서 다음과 같은 개선을 제안드립니다:
 
 - **초기 로딩 시 메모 수를 제한(`limit`)하고**, 이후는 무한스크롤이나 "더보기" 버튼을 통해 점진적으로 로딩
+
   ```typescript
   getMemos = async () =>
     this.supabaseClient
@@ -377,6 +379,7 @@ getMemos = async () =>
       .order('created_at', {ascending: false})
       .limit(20)
   ```
+
 - 클라이언트에서는 React Query의 `useInfiniteQuery` 또는 `cursor` 기반 로딩 구조로 연동
 
 이러한 구조로 전환하면 SSR 시점의 네트워크 병목을 줄이고, **유저가 실제로 보는 화면에 필요한 데이터만 우선 제공함으로써 체감 성능(LCP, TTFB) 개선 효과를 기대할 수 있습니다.**
@@ -442,15 +445,15 @@ setTag('lng', lng)
 let supabaseClient: MemoSupabaseClient;
 
 export const getSupabaseClient = () => {
-	if (supabaseClient) return supabaseClient;
+  if (supabaseClient) return supabaseClient;
 
-	const cookieStore = cookies();
+  const cookieStore = cookies();
 
-	return createServerClient<Database, "memo", Database["memo"]>(
-		CONFIG.supabaseUrl,
-		CONFIG.supabaseAnonKey,
-		{ cookies: { ... } },
-	);
+  return createServerClient<Database, "memo", Database["memo"]>(
+    CONFIG.supabaseUrl,
+    CONFIG.supabaseAnonKey,
+    { cookies: { ... } },
+  );
 };
 ```
 

@@ -152,7 +152,7 @@ removeMetricsForPods(metrics, ignoredPods)
 removeMetricsForPods(metrics, unreadyPods)
 
 if len(metrics) == 0 {
-	return 0, 0, fmt.Errorf("did not receive metrics for targeted pods (pods might be unready)")
+  return 0, 0, fmt.Errorf("did not receive metrics for targeted pods (pods might be unready)")
 }
 ```
 
@@ -160,21 +160,21 @@ unready로 분류된 파드의 메트릭을 표본에서 지우고, 남은 표�
 
 ```go
 if resource == v1.ResourceCPU {
-	var unready bool
-	_, condition := podutil.GetPodCondition(&pod.Status, v1.PodReady)
-	if condition == nil || pod.Status.StartTime == nil {
-		unready = true
-	} else {
-		if pod.Status.StartTime.Add(cpuInitializationPeriod).After(time.Now()) {
-			unready = condition.Status == v1.ConditionFalse || metric.Timestamp.Before(condition.LastTransitionTime.Time.Add(metric.Window))
-		} else {
-			unready = condition.Status == v1.ConditionFalse && pod.Status.StartTime.Add(delayOfInitialReadinessStatus).After(condition.LastTransitionTime.Time)
-		}
-	}
-	if unready {
-		unreadyPods.Insert(pod.Name)
-		continue
-	}
+  var unready bool
+  _, condition := podutil.GetPodCondition(&pod.Status, v1.PodReady)
+  if condition == nil || pod.Status.StartTime == nil {
+    unready = true
+  } else {
+    if pod.Status.StartTime.Add(cpuInitializationPeriod).After(time.Now()) {
+      unready = condition.Status == v1.ConditionFalse || metric.Timestamp.Before(condition.LastTransitionTime.Time.Add(metric.Window))
+    } else {
+      unready = condition.Status == v1.ConditionFalse && pod.Status.StartTime.Add(delayOfInitialReadinessStatus).After(condition.LastTransitionTime.Time)
+    }
+  }
+  if unready {
+    unreadyPods.Insert(pod.Name)
+    continue
+  }
 }
 ```
 
