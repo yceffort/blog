@@ -31,8 +31,8 @@ export default function AnnouncementBanner() {
 
   return (
     <ViewTransition name="announcement-banner">
-      <div className="fixed inset-x-0 bottom-4 z-50 flex justify-center px-4 sm:bottom-6">
-        <div className="w-full max-w-lg rounded-2xl bg-gradient-to-r from-brand-1 via-brand-2 to-brand-3 p-[2px] shadow-[0_16px_40px_-16px_rgba(0,0,0,0.55)]">
+      <div className="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex justify-center px-4 sm:bottom-6">
+        <div className="pointer-events-auto w-full max-w-lg rounded-2xl bg-gradient-to-r from-brand-1 via-brand-2 to-brand-3 p-[2px] shadow-[0_16px_40px_-16px_rgba(0,0,0,0.55)]">
           <div className="flex items-center gap-3 rounded-[14px] bg-surface px-4 py-3">
             <Link href={POST_PATH} className="group min-w-0 flex-1">
               <span className="flex items-center gap-2">
