@@ -35,29 +35,49 @@ export function InternalNavTracker() {
   }, [])
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) {
-            continue
-          }
-          observer.unobserve(entry.target)
+    let observer: IntersectionObserver | null = null
+    let timer: ReturnType<typeof setTimeout> | undefined
+    let attempts = 0
 
-          if (typeof window.gtag === 'function') {
-            window.gtag('event', 'internal_nav_view', {
+    // gtag는 afterInteractive로 주입되므로 이 effect보다 늦게 준비된다. 준비 전에
+    // 관찰을 시작하면 첫 화면에 걸린 블록의 노출이 그대로 버려지고, unobserve까지
+    // 끝난 뒤라 다시 잡을 기회도 없다. 화면 위쪽 블록만 과소 집계되므로 gtag를
+    // 기다렸다가 관찰을 시작한다. GA가 차단된 환경에서는 결국 포기한다.
+    function start() {
+      if (typeof window.gtag !== 'function') {
+        if (attempts++ < 50) {
+          timer = setTimeout(start, 200)
+        }
+        return
+      }
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) {
+              continue
+            }
+            observer?.unobserve(entry.target)
+
+            window.gtag?.('event', 'internal_nav_view', {
               nav_block: (entry.target as HTMLElement).dataset.nav,
               page_path: pathname,
             })
           }
-        }
-      },
-      {threshold: 0.5},
-    )
+        },
+        {threshold: 0.5},
+      )
 
-    document
-      .querySelectorAll<HTMLElement>('[data-nav]')
-      .forEach((block) => observer.observe(block))
-    return () => observer.disconnect()
+      document
+        .querySelectorAll<HTMLElement>('[data-nav]')
+        .forEach((block) => observer?.observe(block))
+    }
+
+    start()
+    return () => {
+      clearTimeout(timer)
+      observer?.disconnect()
+    }
   }, [pathname])
 
   return null
