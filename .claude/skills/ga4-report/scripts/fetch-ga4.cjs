@@ -230,6 +230,60 @@ async function main() {
       orderBys: [{metric: {metricName: 'screenPageViews'}, desc: true}],
       limit: 30,
     }),
+    // 글 하단 도선의 노출 대비 클릭. InternalNavTracker가 보내는 커스텀 이벤트로,
+    // "스크롤이 거기까지 안 간 것"과 "보고도 안 누른 것"을 나눠서 본다.
+    run('navBlocks', {
+      dateRanges: range,
+      dimensions: [{name: 'customEvent:nav_block'}, {name: 'eventName'}],
+      metrics: [{name: 'eventCount'}, {name: 'activeUsers'}],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'eventName',
+          inListFilter: {
+            values: ['internal_nav_view', 'internal_nav_click'],
+          },
+        },
+      },
+      orderBys: [{metric: {metricName: 'eventCount'}, desc: true}],
+      limit: 30,
+    }),
+    // 도선이 어느 글에서 노출·클릭됐는지. 글별로 도선을 손볼 때 우선순위가 된다.
+    run('navBlockPages', {
+      dateRanges: range,
+      dimensions: [
+        {name: 'pagePath'},
+        {name: 'customEvent:nav_block'},
+        {name: 'eventName'},
+      ],
+      metrics: [{name: 'eventCount'}],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'eventName',
+          inListFilter: {
+            values: ['internal_nav_view', 'internal_nav_click'],
+          },
+        },
+      },
+      orderBys: [{metric: {metricName: 'eventCount'}, desc: true}],
+      limit: 40,
+    }),
+    // BotTracker가 직접 분류한 봇/사람. 국가별 1:1 휴리스틱보다 정확하다.
+    run('botVisits', {
+      dateRanges: range,
+      dimensions: [{name: 'eventName'}],
+      metrics: [
+        {name: 'eventCount'},
+        {name: 'activeUsers'},
+        {name: 'sessions'},
+      ],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'eventName',
+          inListFilter: {values: ['human_visit', 'bot_visit']},
+        },
+      },
+      limit: 5,
+    }),
   ]
 
   const out = {
