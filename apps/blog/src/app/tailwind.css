@@ -2022,7 +2022,8 @@ body[data-minimal='true'] .hero-title .accent {
   font-weight: 500;
   color: var(--primary);
 }
-.floating-toc-scroll-top {
+.floating-toc-scroll-top,
+.floating-toc-share {
   display: grid;
   width: 40px;
   height: 40px;
@@ -2039,9 +2040,33 @@ body[data-minimal='true'] .hero-title .accent {
   cursor: pointer;
   place-items: center;
 }
-.floating-toc-scroll-top:hover {
+.floating-toc-scroll-top:hover,
+.floating-toc-share:hover {
   border-color: var(--primary);
   color: var(--ink);
+}
+.floating-toc-toast {
+  position: absolute;
+  right: 0;
+  bottom: 56px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.35);
+  background: var(--surface);
+  font-size: 12px;
+  white-space: nowrap;
+  color: var(--ink-2);
+  transform: translateY(6px);
+  transition:
+    opacity 160ms,
+    transform 160ms;
+  opacity: 0;
+  pointer-events: none;
+}
+.floating-toc-toast[data-show='true'] {
+  transform: none;
+  opacity: 1;
 }
 .floating-toc-scroll-top[data-show='false'] {
   pointer-events: none;

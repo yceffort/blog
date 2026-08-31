@@ -1,5 +1,6 @@
 'use client'
 
+import {usePathname} from 'next/navigation'
 import {useEffect, useRef, useState} from 'react'
 
 interface TOCItem {
@@ -10,6 +11,18 @@ interface TOCItem {
 
 const handleScrollTop = () => {
   window.scrollTo({top: 0, behavior: 'smooth'})
+}
+
+const SHARE_FEEDBACK_MS = 2000
+
+function trackShare(method: 'web_share' | 'copy') {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', 'share', {
+      method,
+      content_type: 'post',
+      item_id: window.location.pathname,
+    })
+  }
 }
 
 function TOCList({
@@ -65,6 +78,9 @@ function FloatingTOC({
   const [isOpen, setIsOpen] = useState(false)
   const [progress, setProgress] = useState(0)
   const [showScrollTop, setShowScrollTop] = useState(false)
+  const [copied, setCopied] = useState(false)
+  const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const isEn = usePathname()?.startsWith('/en')
   const panelRef = useRef<HTMLDivElement>(null)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const itemRefs = useRef<Map<string, HTMLLIElement>>(new Map())
@@ -139,6 +155,41 @@ function FloatingTOC({
       behavior: 'smooth',
     })
   }, [isOpen, activeId])
+
+  useEffect(
+    () => () => {
+      if (copyTimer.current) {
+        clearTimeout(copyTimer.current)
+      }
+    },
+    [],
+  )
+
+  const handleShare = async () => {
+    const url = window.location.href
+
+    if (typeof navigator.share === 'function') {
+      try {
+        await navigator.share({title: document.title, url})
+        trackShare('web_share')
+        return
+      } catch (error) {
+        // 사용자가 공유 시트를 닫은 것이면 여기서 끝내고,
+        // 브라우저가 공유를 거부한 것이면 복사로 넘어간다
+        if ((error as Error).name === 'AbortError') {
+          return
+        }
+      }
+    }
+
+    await navigator.clipboard.writeText(url)
+    trackShare('copy')
+    setCopied(true)
+    if (copyTimer.current) {
+      clearTimeout(copyTimer.current)
+    }
+    copyTimer.current = setTimeout(() => setCopied(false), SHARE_FEEDBACK_MS)
+  }
 
   const rounded = Math.round(progress)
 
@@ -229,6 +280,37 @@ function FloatingTOC({
           />
         </svg>
         <span className="reading-progress-num">{rounded}</span>
+      </button>
+
+      <output
+        className="floating-toc-toast"
+        data-show={copied ? 'true' : 'false'}
+      >
+        {isEn ? 'Link copied' : '링크를 복사했습니다'}
+      </output>
+
+      <button
+        type="button"
+        onClick={handleShare}
+        className="floating-toc-share"
+        aria-label={isEn ? 'Share this post' : '이 글 공유하기'}
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="18" cy="5" r="3" />
+          <circle cx="6" cy="12" r="3" />
+          <circle cx="18" cy="19" r="3" />
+          <path d="m8.6 13.5 6.8 4" />
+          <path d="m15.4 6.5-6.8 4" />
+        </svg>
       </button>
     </div>
   )
