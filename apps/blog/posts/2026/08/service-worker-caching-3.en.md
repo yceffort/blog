@@ -430,11 +430,12 @@ To find the cause I dumped the full resource timings. The LCP element is the art
 The reason the HTTP cache cannot stop this is in the response headers.
 
 ```http
-cache-control: public, max-age=0, must-revalidate
+cache-control: private, no-store, no-cache, max-age=0, must-revalidate
 vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+x-nextjs-stale-time: 300
 ```
 
-With `max-age=0, must-revalidate` the browser cache has to revalidate before every use, and four entries in `vary` make matching fragile. Cache Storage does not look at these headers.
+With `no-store` in there, the browser cache does not even store this response. That is a step before revalidation, so the four entries in `vary` do not matter either. It is not that nothing reuses the response: `x-nextjs-stale-time: 300` means App Router holds it in its own router cache for five minutes, but that cache is in memory and gone the moment the page is opened fresh. The only thing that survives on disk is Cache Storage, and Cache Storage does not read these headers in the first place.
 
 That much is correlation. This series has read correlation as causation and walked it back three times, so it needed splitting once more. I built three conditions: no worker with prefetching as is, the worker with prefetching as is, and no worker with only the prefetches blocked. The blocking is done with CDP's `Network.setBlockedURLs`. Playwright's `route()` was unusable because, as the earlier trap showed, it disables the HTTP cache and penalizes only the no-worker condition; instead I enabled the Network domain itself in all three conditions so that its activation is a constant. Twelve runs per condition, with the execution order rotated on each iteration.
 
@@ -462,16 +463,16 @@ One last thing to admit. This series never once measured the axis on which this 
 
 ## When and how to use one
 
-When part 1 named its three conditions for adopting a service worker, all three were generalities. Having measured across three posts, one of them can now carry a test. It is the case of needing a strategy the HTTP cache cannot express, and whether your own site qualifies is something the response headers will tell you. In DevTools, pick the requests that go out repeatedly on every page and check whether they carry `max-age=0` or `must-revalidate` with several headers listed under `vary`. If they do, the browser cache cannot serve them without revalidating, and if dozens of them go out per page you are in the same situation this blog was. App Router's RSC prefetches were exactly that. The more prefetches a framework fires on its own, the more likely this clause applies.
+When part 1 named its three conditions for adopting a service worker, all three were generalities. Having measured across three posts, one of them can now carry a test. It is the case of needing a strategy the HTTP cache cannot express, and whether your own site qualifies is something the response headers will tell you. In DevTools, pick the requests that go out repeatedly on every page and read `cache-control` on the response. If `no-store` is there, the browser cache does not store the response at all; if `no-cache` or `max-age=0, must-revalidate` is there, it stores it but has to ask the server before every use, so the round trip stays. Either way, if dozens of them go out per page you are in the same situation this blog was. App Router's RSC prefetches were exactly that. The more prefetches a framework fires on its own, the more likely this clause applies.
 
 To put it in one place.
 
-| Situation                                                     | What this series answers                                                                                           |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| Offline is an actual requirement                              | Use one. Nothing else makes a site work offline                                                                    |
-| Dozens of requests needing revalidation go out on every page  | Use one. Warm LCP on this blog went from 460ms to 200ms                                                            |
-| Many of your users are on unreliable networks                 | Use one, but put a timeout fallback on network-first first. Without it, a slow connection means an endless spinner |
-| Returning-visit performance on static assets is the only goal | Do not. Filename hashes and `immutable` cover it, and Cache Storage was no faster in the lab or in production      |
+| Situation                                                               | What this series answers                                                                                           |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Offline is an actual requirement                                        | Use one. Nothing else makes a site work offline                                                                    |
+| Requests the browser cache cannot use go out by the dozen on every page | Use one. Warm LCP on this blog went from 460ms to 200ms                                                            |
+| Many of your users are on unreliable networks                           | Use one, but put a timeout fallback on network-first first. Without it, a slow connection means an endless spinner |
+| Returning-visit performance on static assets is the only goal           | Do not. Filename hashes and `immutable` cover it, and Cache Storage was no faster in the lab or in production      |
 
 If you do reach for one, five things this series confirmed.
 
