@@ -1,5 +1,5 @@
 ---
-title: 'How Service Worker Caching Works: The Proxy, the Lifecycle, and Five Strategies'
+title: 'How <em>Service Worker</em> Caching Works: The Proxy, the Lifecycle, and Five Strategies'
 tags:
   - web-performance
   - service-worker

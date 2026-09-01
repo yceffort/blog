@@ -1,5 +1,5 @@
 ---
-title: '서비스 워커 캐싱 적용기: App Router의 함정들과 GA4 실측'
+title: '<em>서비스 워커</em> 캐싱 적용기: App Router의 함정들과 GA4 실측'
 tags:
   - web-performance
   - service-worker

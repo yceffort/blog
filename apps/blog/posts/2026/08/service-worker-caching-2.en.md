@@ -1,5 +1,5 @@
 ---
-title: 'Applying Service Worker Caching: App Router Traps and GA4 Field Data'
+title: 'Applying <em>Service Worker</em> Caching: App Router Traps and GA4 Field Data'
 tags:
   - web-performance
   - service-worker

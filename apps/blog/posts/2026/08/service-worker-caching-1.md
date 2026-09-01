@@ -1,5 +1,5 @@
 ---
-title: '서비스 워커 캐싱의 동작 원리: 프록시, 라이프사이클, 다섯 가지 전략'
+title: '<em>서비스 워커</em> 캐싱의 동작 원리: 프록시, 라이프사이클, 다섯 가지 전략'
 tags:
   - web-performance
   - service-worker
