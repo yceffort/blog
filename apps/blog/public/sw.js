@@ -6,6 +6,11 @@ const RSC_CACHE = `rsc-${CACHE_VERSION}`
 
 const OFFLINE_URL = '/offline'
 const PRECACHE_URLS = [OFFLINE_URL, '/']
+// 프리캐시한 오프라인 폴백과 홈은 가장 먼저 삽입되므로, 그냥 두면 상한
+// 트리밍의 첫 삭제 대상이 된다. 절대 URL로 미리 만들어 두고 제외한다
+const PRECACHE_HREFS = PRECACHE_URLS.map(
+  (url) => new URL(url, self.location.origin).href,
+)
 const ALL_CACHES = [STATIC_CACHE, PAGES_CACHE, IMAGES_CACHE, RSC_CACHE]
 
 // 배포마다 ?dpl= 쿼리가 바뀌어 엔트리가 계속 쌓이므로 캐시별 상한을 두고
@@ -189,7 +194,9 @@ async function putWithTrim(cacheName, request, response) {
   const cache = await caches.open(cacheName)
   await cache.put(request, response)
   const max = MAX_ENTRIES[cacheName]
-  const keys = await cache.keys()
+  const keys = (await cache.keys()).filter(
+    (key) => !PRECACHE_HREFS.includes(key.url),
+  )
   if (max && keys.length > max) {
     await Promise.all(
       keys.slice(0, keys.length - max).map((key) => cache.delete(key)),
@@ -198,7 +205,8 @@ async function putWithTrim(cacheName, request, response) {
 }
 
 async function cacheFirst(event, cacheName) {
-  const cached = await caches.match(event.request)
+  const cache = await caches.open(cacheName)
+  const cached = await cache.match(event.request)
   if (cached) {
     return cached
   }
@@ -225,13 +233,15 @@ async function networkFirst(event, cacheName) {
     }
     return response
   } catch {
-    const cached = await caches.match(request)
+    const cache = await caches.open(cacheName)
+    const cached = await cache.match(request)
     if (cached) {
       return cached
     }
 
     if (request.mode === 'navigate') {
-      const offline = await caches.match(OFFLINE_URL)
+      const pages = await caches.open(PAGES_CACHE)
+      const offline = await pages.match(OFFLINE_URL)
       if (offline) {
         return offline
       }
@@ -280,7 +290,8 @@ async function handleNavigation(event) {
 }
 
 async function handleImage(event) {
-  const cached = await caches.match(event.request)
+  const cache = await caches.open(IMAGES_CACHE)
+  const cached = await cache.match(event.request)
   if (cached) {
     return cached
   }
@@ -320,7 +331,8 @@ async function handleRSC(event) {
     }
     return response
   } catch {
-    const cached = await caches.match(request)
+    const cache = await caches.open(RSC_CACHE)
+    const cached = await cache.match(request)
     if (cached) {
       return cached
     }
