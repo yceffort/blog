@@ -1,5 +1,5 @@
 ---
-title: 'Measuring the Cost of Going Through a Service Worker: Building in the Lab the Control Group GA4 Could Not Give Me'
+title: 'Measuring the Cost of Going Through a <em>Service Worker</em>: Building in the Lab the Control Group GA4 Could Not Give Me'
 tags:
   - web-performance
   - service-worker
@@ -402,7 +402,65 @@ Confirmed. Line the two conditions up on the same moment and no worker-detour la
 
 Not confirmed. First, the tail. When the edge misses, the span between the 103 and the final headers stretches to three seconds, and with no way to query each request's edge cache state in RUM I could not tell how much of part 2's +525 ms average that component accounts for. Next, Safari. Its `navigate` p50 is `no` 126 ms against `yes` 172 ms (81 and 80 samples), a gap comparable to Chromium's, but how Safari handles the 103 and how that lands in `responseStart` is something I did not check. Last, real devices. The lab is a local server with no CDN path, real users' Cache Storage lives under disk conditions and quota pressure, and CPU throttling does not imitate the memory and storage latency of a slow device. Failing to reproduce those environments on one M5 remains the limit of this measurement.
 
-So this is about as much as the series can finally say about the cost of going through the worker. In latency it does not show up at this blog's median, and the tail still spreads wide, but whether that tail belongs to the worker is something I could not separate out. The larger cost sits in the bytes the worker fetches in the background, and since those bytes are what make an article readable offline, that side reads less as waste than as this feature's price tag. Navigation preload should stay on, and what it recovers is limited to cold starts. And most of the effort behind these numbers went not into the worker but into making the measurement trustworthy. It took one round to confirm that a control group would not form on its own, and three falls, over the proxy's headers, the interception's cache, and the definition of a cold start, before the first table appeared, and it was only after every table was drawn and the conclusion written that I learned the two conditions had been timing different moments all along. Part 2 closed by saying that collecting real user metrics for a before-and-after comparison should come first; I would now add two sentences. When the real user metrics do not give you a control group, the cost of building one is part of the feature's cost. And building one is not the end of it: whether both arms are measuring the same thing is the next question.
+## So does it help performance
+
+The cost side is settled above. But this series quoted numbers from the other side more than once and never settled that account. Writing "measuring the cost" in the title is part of why, and closing here would mean showing only one ledger.
+
+The largest number on the benefit side is part 2's returning-visitor FCP average, 1,463 ms down to 829 ms, or -43%. As the previous section separated out, both sides of that comparison are restricted to returning visitors, so a first visit with an empty cache is present on neither, and the difference between new and returning visitors does not explain it. But the lab found the same FCP for Cache Storage and the HTTP cache, so the mechanism does not explain it either. The caveats part 2 attached to that table, that moving the cut forward to just before the v3 deploy turns -43% into -27%, and that CLS, which the worker cannot touch, moved 19% over the same span, are now less caveats than the main explanation. The reading that returning-visitor FCP improved because static assets came out of Cache Storage is one to drop here.
+
+Closing on "there was no benefit" had a problem of its own, though. The lab is a local server with no CDN round trip. Real users might get a genuine gain from Cache Storage erasing the trip to the edge, and the lab's structure cannot measure that. So I attached the paired comparison from the fourth trap to the production domain again, this time collecting FCP and LCP as well: twenty-five pairs alternating the blocked and the allowed condition on each iteration, warm and cold both, counting only the runs that hit the edge cache.
+
+| Phase | Metric | No worker | Worker | Delta    |
+| ----- | ------ | --------- | ------ | -------- |
+| warm  | TTFB   | 12.5      | 44.4   | +31.9    |
+| warm  | FCP    | 96        | 132    | +36      |
+| warm  | LCP    | 460       | 200    | **-260** |
+| cold  | TTFB   | 45.4      | 78.7   | +33.3    |
+| cold  | FCP    | 136       | 132    | -4       |
+| cold  | LCP    | 596       | 528    | -68      |
+
+(ms, p50, 25 runs per condition.)
+
+The two TTFB rows are the Early Hints artifact from earlier and must not be read as latency. The other four are what to read, and the warm LCP was not what I expected. In the lab, toggling the worker moved LCP by less than 5 ms; in production it drops to less than half.
+
+My first suspect was my own apparatus. Only the worker condition dwells an extra 3.5 seconds on the home page waiting for `controllerchange`. Matching the dwell across conditions and running twenty more pairs still gave 460 against 200, and reversing the order in which the conditions run for another twelve pairs gave 524 against 200. Not the apparatus.
+
+To find the cause I dumped the full resource timings. The LCP element is the article title `h1` in every run, and fonts finish around 50 ms in both conditions, so it is not fonts. The difference sat in one place. Opening an article fires 31 `?_rsc=` prefetches at the header navigation, the series list, and the tag links. That is 23 distinct paths; because the `_rsc` value is a hash of the originating page's router state, the same URL is fetched twice. Without the worker all 31 go to the network and pull down 345,639 bytes, one of them 82,761 bytes on its own. With the worker all 31 come from Cache Storage, at zero bytes.
+
+The reason the HTTP cache cannot stop this is in the response headers.
+
+```http
+cache-control: public, max-age=0, must-revalidate
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+```
+
+With `max-age=0, must-revalidate` the browser cache has to revalidate before every use, and four entries in `vary` make matching fragile. Cache Storage does not look at these headers.
+
+That much is correlation. This series has read correlation as causation and walked it back three times, so it needed splitting once more. I built three conditions: no worker with prefetching as is, the worker with prefetching as is, and no worker with only the prefetches blocked. The blocking is done with CDP's `Network.setBlockedURLs`. Playwright's `route()` was unusable because, as the earlier trap showed, it disables the HTTP cache and penalizes only the no-worker condition; instead I enabled the Network domain itself in all three conditions so that its activation is a constant. Twelve runs per condition, with the execution order rotated on each iteration.
+
+| Condition                     | FCP | LCP | Runs where LCP slipped past 500 ms |
+| ----------------------------- | --- | --- | ---------------------------------- |
+| No worker, prefetching as is  | 96  | 532 | 8 / 12                             |
+| Worker, prefetching as is     | 136 | 216 | 5 / 12                             |
+| No worker, prefetches blocked | 172 | 224 | 1 / 12                             |
+
+Block the prefetches and LCP comes down to 224 ms without any worker, effectively the worker condition's 216 ms. What the worker returns on warm LCP is the part it takes off the network.
+
+Two things stay honest. One is that I never pinned down why the `h1` repaints late. In the slow runs an intermediate candidate appears between the first one and the `h1`, and the `h1` slips past 500 ms, but nothing in the resource timings shows what holds that repaint. What is confirmed is only that removing the prefetches cuts that pattern to 1 run in 12. The other is that the worker is not as clean as blocking outright: 5 of its 12 runs still slipped. Serving from cache is not the same as not requesting.
+
+The number 31 needs a caveat too. It is the count of links inside the headless default viewport of 1280x720. On a smaller real device fewer go out at first and more follow as the reader scrolls. The direction carries over; the size does not.
+
+This finding has the opposite sign from the byte cost settled earlier, so the two belong side by side. What the lab measured was one soft navigation from an empty profile, and there the worker added 265 KB by fetching one copy of the HTML and four thumbnails in the background. What I just measured is a hard navigation after one visit to the home page, and there the worker takes 345 KB of RSC prefetching off the network. They do not contradict each other; the conditions differ. This worker's byte balance flips sign depending on what the visitor does, which means it is not a figure that settles into one line.
+
+So does it help performance? On this blog, yes. Just not where part 2 read the help as being. It was not putting static assets in Cache Storage and shortening returning-visit FCP; it was handing over the RSC prefetches that the HTTP cache cannot serve without revalidating. That is precisely the third of the three reasons part 1 listed for reaching for a service worker, "when you need a strategy the HTTP cache cannot express". Part 1 wrote that clause as a generality and did not know whether this blog fell under it. Now it does.
+
+One other sentence in part 1 has to be narrowed at the same spot. It said that if returning-visit performance is the only goal this layer is probably not the answer, on the grounds that it means rebuilding in code what the HTTP cache already does. The first half held up here: as far as static assets go, Cache Storage was not faster than the HTTP cache. What wobbles is the premise of "already does". When something the HTTP cache cannot do is mixed in, like App Router's RSC prefetching, the answer changes even for that same goal.
+
+The conditions this conclusion stands on have to be drawn too. This blog has a CDN that is already fast (46 ms to the final headers on an edge HIT), `immutable` cache headers correctly set on static assets, and a text LCP element. Change those three and the answer changes. In particular, on a site with a slow origin or no CDN the round trip Cache Storage erases is a different size, and the gain could show up on static assets after all, an environment this series never measured once. What was found here is not "service workers are useless for performance" but "under these conditions, this is where the benefit was".
+
+One last thing to admit. This series never once measured the axis on which this worker earns its keep: offline. Performance metrics are a ruler for how fast things are when the network is there, and the reason the feature exists is to make things open when it is not. Everything measured, walked back, and measured again across three posts was held against a ruler slightly askew from the feature's purpose. I do not think that makes it pointless. If offline is why you are reaching for it, performance is not the reason to adopt but a price paid or refunded alongside, and it is better to know which way and how much before you do.
+
+So this is about as much as the series can finally say. In latency, going through the worker does not show up at this blog's median, and the tail still spreads wide, but whether that tail belongs to the worker is something I could not separate out. In bytes it goes up or down depending on what the visitor does. Navigation preload should stay on, and what it recovers is limited to cold starts. And most of the effort behind these numbers went not into the worker but into making the measurement trustworthy. It took one round to confirm that a control group would not form on its own, and three falls, over the proxy's headers, the interception's cache, and the definition of a cold start, before the first table appeared; it was only after every table was drawn and the conclusion written that I learned the two conditions had been timing different moments all along; and at the end the benefit table had to be split once more. Part 2 closed by saying that collecting real user metrics for a before-and-after comparison should come first; I would now add two sentences. When the real user metrics do not give you a control group, the cost of building one is part of the feature's cost. And building one is not the end of it: whether both arms are measuring the same thing is the next question.
 
 ---
 
