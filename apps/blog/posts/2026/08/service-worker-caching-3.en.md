@@ -466,17 +466,17 @@ When part 1 named its three conditions for adopting a service worker, all three 
 
 To put it in one place.
 
-| Situation                                                     | What this series answers                                                                  |
-| ------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| Offline is an actual requirement                              | Use one. Performance is not the reason to adopt but a value that comes along              |
-| Dozens of requests needing revalidation go out on every page  | Worth it. Every bit of the LCP gain this blog saw came from here                          |
-| Many of your users are on unreliable networks                 | Use one, but put a timeout fallback on network-first first. Without it, lie-fi defeats it |
-| Returning-visit performance on static assets is the only goal | Do not. Hashes and `immutable` already settle it, and Cache Storage is no faster          |
+| Situation                                                     | What this series answers                                                                                           |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Offline is an actual requirement                              | Use one. Nothing else makes a site work offline                                                                    |
+| Dozens of requests needing revalidation go out on every page  | Use one. Warm LCP on this blog went from 460ms to 200ms                                                            |
+| Many of your users are on unreliable networks                 | Use one, but put a timeout fallback on network-first first. Without it, a slow connection means an endless spinner |
+| Returning-visit performance on static assets is the only goal | Do not. Filename hashes and `immutable` cover it, and Cache Storage was no faster in the lab or in production      |
 
-If you do reach for one, five things this series paid to learn.
+If you do reach for one, five things this series confirmed.
 
-- Turn on navigation preload. It gives back double-digit milliseconds on a cold start, and there is no reason not to.
-- Requests you do not need to intercept should pass through without `respondWith()`. A fetch handler charges every request.
+- Turn on navigation preload. Cold-start TTFB drops by 11ms, and there is no reason not to.
+- Requests you do not need to intercept should pass through without `respondWith()`. Registering a fetch handler routes every request on the origin through the worker.
 - If the design fetches anything extra in the background, count those bytes first. This worker pulled one copy of the HTML and four thumbnails on every article click, and no web metric caught it.
 - Version your cache names and delete the old ones in activate. And keep the precached offline fallback out of the size trimming. Left alone, it is the first thing to go.
 - Plant the metrics that will separate before from after, before you deploy. That this may still not be enough was the subject of this post.
