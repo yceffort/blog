@@ -1,0 +1,15 @@
+103/sw-nopreload ctrl true | ws 0.4 reqStart 0.5 FIRS 42.6 FRHS 0.0 respStart 42.6 respEnd 43.2
+103/sw-nopreload ctrl true | ws 0.4 reqStart 0.5 FIRS 42.4 FRHS 0.0 respStart 42.4 respEnd 43.0
+103/sw-nopreload ctrl true | ws 0.4 reqStart 0.5 FIRS 42.7 FRHS 0.0 respStart 42.7 respEnd 43.3
+103/sw-nopreload ctrl true | ws 0.2 reqStart 0.3 FIRS 42.5 FRHS 0.0 respStart 42.5 respEnd 43.2
+103/sw-nopreload ctrl true | ws 0.4 reqStart 0.5 FIRS 41.8 FRHS 0.0 respStart 41.8 respEnd 42.5
+103/sw-nopreload ctrl true | ws 0.4 reqStart 0.4 FIRS 43.7 FRHS 0.0 respStart 43.7 respEnd 44.4
+103/sw-nopreload ctrl true | ws 0.4 reqStart 0.5 FIRS 42.2 FRHS 0.0 respStart 42.2 respEnd 42.9
+103/sw-nopreload ctrl true | ws 0.4 reqStart 0.4 FIRS 41.5 FRHS 0.0 respStart 41.5 respEnd 42.1
+103/sw-nopreload ctrl true | ws 0.5 reqStart 0.7 FIRS 42.0 FRHS 0.0 respStart 42.0 respEnd 42.7
+103/sw-nopreload ctrl true | ws 0.8 reqStart 0.9 FIRS 43.6 FRHS 0.0 respStart 43.6 respEnd 44.8
+103/sw-nopreload ctrl true | ws 0.9 reqStart 1.0 FIRS 43.8 FRHS 0.0 respStart 43.8 respEnd 44.9
+103/sw-nopreload ctrl true | ws 1.0 reqStart 1.2 FIRS 44.2 FRHS 0.0 respStart 44.2 respEnd 45.5
+103/sw-nopreload ctrl true | ws 1.2 reqStart 1.3 FIRS 44.0 FRHS 0.0 respStart 44.0 respEnd 45.4
+103/sw-nopreload ctrl true | ws 1.3 reqStart 1.5 FIRS 44.9 FRHS 0.0 respStart 44.9 respEnd 46.6
+103/sw-nopreload ctrl true | ws 1.0 reqStart 1.2 FIRS 44.2 FRHS 0.0 respStart 44.2 respEnd 45.5
