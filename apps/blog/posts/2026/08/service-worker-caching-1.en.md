@@ -140,7 +140,7 @@ TypeError: Failed to execute 'text' on 'Response': body stream already read
 
 The same holds on the `cache.put()` side: pass it an already-consumed (disturbed) body and the spec requires it to reject with a TypeError rather than let it slide[^4]. Whichever way the order gets tangled, it surfaces as an explicit error, so make it a rule that "the original response goes back to the network caller, and the clone goes into the cache" and you are safe.
 
-The second is cross-origin resources. A response fetched with `no-cors` and without CORS headers becomes an opaque response: its status reads 0 and its body cannot be inspected, yet it can be stored and reused. The problem is twofold. First, code cannot distinguish success from failure. Even a 404 shows status 0 as opaque, so you end up caching a broken resource believing it is fine. Second, its storage footprint is accounted far larger than its actual size, because the browser adds padding to prevent cross-origin information from leaking through response sizes[^7]. Measuring it directly looks like this. From this blog's origin, I fetched a 104KB (106,346-byte) external image with `no-cors` and stored it, and the usage reported by `navigator.storage.estimate()` grew by **6,869,027 bytes (about 6.6MB)**. That is about 65 times the actual size. The profile had its quota set at 10GB, so there was room to spare, but it means a design that stacks up hundreds of opaque responses can reach gigabytes in accounting terms and pull eviction forward. If your offline coverage includes resources from external domains, this trade-off cannot be avoided.
+The second is cross-origin resources. A response fetched with `mode: 'no-cors'` becomes an opaque response: its status reads 0 and its body cannot be inspected, yet it can be stored and reused. What makes a response opaque is not the absence of CORS headers on the server but the mode of the request. Even when the server does send `Access-Control-Allow-Origin`, a request made with `mode: 'no-cors'` still comes back opaque. The problem is twofold. First, code cannot distinguish success from failure. Even a 404 shows status 0 as opaque, so you end up caching a broken resource believing it is fine. Second, its storage footprint is accounted far larger than its actual size, because the browser adds padding to prevent cross-origin information from leaking through response sizes[^7]. Measuring it directly looks like this. From this blog's origin, I fetched a 104KB (106,346-byte) external image with `no-cors` and stored it, and the usage reported by `navigator.storage.estimate()` grew by **6,869,027 bytes (about 6.6MB)**. The padding is not proportional to the original size; several megabytes land on each response as a lump, so storing a response of a few kilobytes starts from roughly the same place. The profile had its quota set at 10GB, so there was room to spare, but it means a design that stacks up hundreds of opaque responses can reach gigabytes in accounting terms and pull eviction forward. That said, for an origin that allows CORS there is the option of fetching with `mode: 'cors'` (or the `crossorigin` attribute on an image tag) and storing that instead, in which case the response is not opaque and no padding is accounted at all. What cannot be avoided is limited to origins that do not send CORS headers.
 
 ## Why Am I Seeing the Old Version After Deploying?
 
@@ -212,26 +212,26 @@ If Cache Storage and the fetch event are the ingredients, strategies are the rec
 | cache-only             | Ask only the cache                                 | Reserved for assets precached at install              | Fails outright when not in the cache |
 | network-only           | Never touch the cache                              | Analytics, POST requests                              | No offline support                   |
 
-The first three are short to implement. Still, even short code has three rules to keep. Avoid the clone trap from the previous section, check `response.ok` so failure responses are never stored (skip it and a 404 or 500 squats in the cache), and keep lookups and stores on the same bucket (look up via the all-bucket `caches.match()` and splitting buckets loses its meaning, and a not-yet-cleaned old bucket may even match first).
+The first three are short to implement. Still, even short code has four rules to keep. Avoid the clone trap from the previous section, check `response.ok` so failure responses are never stored (skip it and a 404 or 500 squats in the cache), keep lookups and stores on the same bucket (look up via the all-bucket `caches.match()` and splitting buckets loses its meaning, and a not-yet-cleaned old bucket may even match first), and detach the store with `event.waitUntil()` so it never holds the response back.
 
 ```javascript
-async function cacheFirst(request, cacheName) {
+async function cacheFirst(event, cacheName) {
   const cache = await caches.open(cacheName)
-  const cached = await cache.match(request)
+  const cached = await cache.match(event.request)
   if (cached) return cached
-  const response = await fetch(request)
-  if (response.ok) await cache.put(request, response.clone())
+  const response = await fetch(event.request)
+  if (response.ok) event.waitUntil(cache.put(event.request, response.clone()))
   return response
 }
 
-async function networkFirst(request, cacheName) {
+async function networkFirst(event, cacheName) {
   const cache = await caches.open(cacheName)
   try {
-    const response = await fetch(request)
-    if (response.ok) await cache.put(request, response.clone())
+    const response = await fetch(event.request)
+    if (response.ok) event.waitUntil(cache.put(event.request, response.clone()))
     return response
   } catch (error) {
-    const cached = await cache.match(request)
+    const cached = await cache.match(event.request)
     if (cached) return cached
     throw error
   }
@@ -240,8 +240,8 @@ async function networkFirst(request, cacheName) {
 async function staleWhileRevalidate(event, cacheName) {
   const cache = await caches.open(cacheName)
   const cached = await cache.match(event.request)
-  const refresh = fetch(event.request).then(async (response) => {
-    if (response.ok) await cache.put(event.request, response.clone())
+  const refresh = fetch(event.request).then((response) => {
+    if (response.ok) event.waitUntil(cache.put(event.request, response.clone()))
     return response
   })
   event.waitUntil(refresh.catch(() => {}))
@@ -249,9 +249,9 @@ async function staleWhileRevalidate(event, cacheName) {
 }
 ```
 
-It is no accident that only staleWhileRevalidate takes the whole event. The background refresh continues after the cache has already answered, so without holding the worker's lifetime with the `waitUntil` we saw earlier, idle termination can cut it off. And when the cache hits, nobody awaits the refresh promise, so swallowing its failure with a catch to avoid an unhandled rejection is part of the same set.
+It is no accident that all three take the whole event. Per the spec `cache.put()` only settles after it has read the response body to the end[^4], so awaiting the store and then returning the response means the browser receives it only once the whole body has come down. Put HTML through network-first that way and streaming parsing disappears entirely. So in all three strategies the store is detached with the `waitUntil` we saw earlier: the response goes back immediately, and the store rides on the worker's lifetime. staleWhileRevalidate has one more thing on top of that. Once the cache answers instantly, nobody awaits the refresh promise, so swallowing its failure with a catch to avoid an unhandled rejection, and handing that promise to `waitUntil` so idle termination cannot cut it off, is part of the same set.
 
-Short code does not mean the failure modes are simple. Pointing at where each strategy goes wrong, one by one: cache-first has no refresh path at all, so applying it to a resource without a hash in its URL leaves a stale response that not even a deploy can fix (cleanup then falls to the versioning strategy discussed above). For network-first, the crux is the definition of "failure." `fetch()` rejects only when the connection cannot be made at all, and it does not fail in the connected-but-endlessly-slow state (lie-fi), so unless you build a variant that applies its own timeout and falls over to the cache, the experience is "infinite loading" even though an offline fallback exists. The cost of stale-while-revalidate is that there is no way to tell the user whether the background refresh succeeded. The screen has already been drawn with the stale version, and the fresh response only shows up on the next visit. For cache-only, precache list management is availability itself, so a resource missing from the list is an outage on the spot, and network-only is by definition a path where the worker contributes nothing, so it is better not to call `respondWith()` at all and let it pass through (because of the overhead we will see in the next question).
+Short code does not mean the failure modes are simple. Pointing at where each strategy goes wrong, one by one: cache-first has no refresh path at all, so applying it to a resource without a hash in its URL leaves a stale response that not even a deploy can fix (cleanup then falls to the versioning strategy discussed later). For network-first, the crux is the definition of "failure." `fetch()` rejects only when the connection cannot be made at all, and it does not fail in the connected-but-endlessly-slow state (lie-fi), so unless you build a variant that applies its own timeout and falls over to the cache, the experience is "infinite loading" even though an offline fallback exists. The cost of stale-while-revalidate is that there is no way to tell the user whether the background refresh succeeded. The screen has already been drawn with the stale version, and the fresh response only shows up on the next visit. For cache-only, precache list management is availability itself, so a resource missing from the list is an outage on the spot, and network-only is by definition a path where the worker contributes nothing, so it is better not to call `respondWith()` at all and let it pass through (because of the overhead we will see in the next question).
 
 These five names are close to an industry lingua franca, so even if you end up using Workbox, you will meet classes with the same names (`CacheFirst`, `NetworkFirst`, `StaleWhileRevalidate`, `CacheOnly`, `NetworkOnly`)[^11]. stale-while-revalidate shares its name with the `Cache-Control: stale-while-revalidate` covered in the book's cache chapter, and that is no coincidence: it is the same idea. Serve the stale thing first and refresh behind it; the difference is whether you declare that idea in an HTTP header or enforce it yourself in worker code.
 
@@ -261,9 +261,9 @@ And these five are not the whole story. Real-world work is mostly combinations a
 
 The last question remains. This layer carries distinct costs, and for most sites, the likely answer is that service worker caching is not needed.
 
-The moment you register a fetch handler, every request on that origin routes through the service worker. If the worker was asleep, navigation must wait for it to wake, unless you use a mechanism like navigation preload. The time startup inserts into the request path can be seen directly in resource timing. In the navigation entry of a page the worker controls, `fetchStart - workerStart` is the span spent standing the worker up, and measured on this blog it is around 2ms in the warm state where the worker is alive. The problem is cold startup, and there is a measurement trap here. With DevTools attached, the worker is never idle-terminated, so you cannot reproduce a cold start while the developer tools are open. It is a cost that looks absent during development and shows up only for real users. The real-user size is confirmed in the field measurements of [Part 2](/2026/08/service-worker-caching-2), and to spoil it up front, this blog's returning-visitor TTFB with the worker in the path got worse by 525ms on average.
+The moment you register a fetch handler, every request on that origin routes through the service worker. If the worker was asleep, navigation must wait for it to wake, unless you use a mechanism like navigation preload. The time startup inserts into the request path can be seen directly in resource timing. In the navigation entry of a page the worker controls, `fetchStart - workerStart` is the span spent standing the worker up, and measured on this blog it is around 2ms in the warm state where the worker is alive. The problem is cold startup, and there is a measurement trap here. With DevTools attached, the worker is never idle-terminated, so you cannot reproduce a cold start while the developer tools are open. It is a cost that looks absent during development and shows up only for real users. The real-user size is confirmed in the field measurements of [Part 2](/2026/08/service-worker-caching-2), and to spoil it up front, this blog's returning-visitor TTFB with the worker in the path got worse by 525ms on average[^15].
 
-Browser vendors take this cost seriously too. When the practice spread of adding an empty fetch handler that does nothing, just to satisfy PWA installability criteria, Chrome started showing a console warning from version 112 and shipped, in the same version, an optimization that skips such handlers entirely[^12]. That the browser built an explicit bypass tells you the size of the cost. The compensating mechanism is navigation preload[^13]. Enable it in activate, and the navigation request departs in parallel with worker startup, with the fetch handler receiving the result as `event.preloadResponse`.
+Browser vendors take this cost seriously too. When the practice spread of adding an empty fetch handler that does nothing, just to satisfy PWA installability criteria, Chrome started showing a console warning from version 112, and the optimization that skips such handlers entirely became enabled by default in 115[^12]. That the browser built an explicit bypass tells you the size of the cost. The compensating mechanism is navigation preload[^13]. Enable it in activate, and the navigation request departs in parallel with worker startup, with the fetch handler receiving the result as `event.preloadResponse`.
 
 ```javascript
 self.addEventListener('activate', (event) => {
@@ -295,7 +295,7 @@ In the end, this layer is a trade: you take over, in code, the work the HTTP cac
 
 [^3]: [Service worker caching and HTTP caching](https://web.dev/articles/service-worker-caching-and-http-caching), web.dev. Covers the lookup order of the two cache layers and guidance for designing expiration policies.
 
-[^4]: [Cache](https://developer.mozilla.org/en-US/docs/Web/API/Cache), MDN. Documents the behavior of put/match/keys, the match options (ignoreSearch, ignoreVary, and others), and states that keys() guarantees insertion order.
+[^4]: [Cache](https://developer.mozilla.org/en-US/docs/Web/API/Cache), MDN. Documents the behavior of put/match/keys, the match options (ignoreSearch, ignoreVary, and others), and states that keys() guarantees insertion order. The rule that a store completes only after the response body has been read to the end is defined in [the Cache.put algorithm in the spec](https://w3c.github.io/ServiceWorker/#cache-put).
 
 [^5]: [Storage quotas and eviction criteria](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria), MDN. Explains origin-level LRU eviction under storage pressure, stating that IndexedDB and Cache API data are deleted together.
 
@@ -311,8 +311,10 @@ In the end, this layer is a trade: you take over, in code, the work the HTTP cac
 
 [^11]: [workbox-strategies](https://developer.chrome.com/docs/workbox/modules/workbox-strategies), Chrome for Developers. The five strategies are provided as classes under the same names.
 
-[^12]: [Intent to Ship: Skip service worker no-op fetch handler](https://groups.google.com/a/chromium.org/g/blink-dev/c/tEFS0BH8UmE), blink-dev. Explains the background of the console warning from Chrome 112 and the no-op handler skip optimization.
+[^12]: [Intent to Ship: Skip service worker no-op fetch handler](https://groups.google.com/a/chromium.org/g/blink-dev/c/tEFS0BH8UmE), blink-dev. Explains the background of the console warning from Chrome 112 and the no-op handler skip optimization. The version in which the optimization became enabled by default is listed as 115 in the [Chrome Platform Status entry](https://chromestatus.com/feature/5136946693668864).
 
 [^13]: [NavigationPreloadManager](https://developer.mozilla.org/en-US/docs/Web/API/NavigationPreloadManager), MDN.
 
 [^14]: [Application Cache is a Douchebag](https://alistapart.com/article/application-cache-is-a-douchebag/), Jake Archibald, A List Apart (2012). The article that laid out how AppCache's implicit rules betray developers' intent, and that came to symbolize the API's retirement.
+
+[^15]: This average is mostly the work of the tail. 70% of the gap comes from the top 10% while the median moves by 134ms, and 26 events with a TTFB over 10 seconds (1.4% of the sample) account for 57% of the average gap on their own. [Part 3](/2026/08/service-worker-caching-3) reads this number again.

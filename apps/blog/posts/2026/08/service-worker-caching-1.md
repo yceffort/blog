@@ -140,7 +140,7 @@ TypeError: Failed to execute 'text' on 'Response': body stream already read
 
 `cache.put()` 쪽도 마찬가지로, 이미 소비된(disturbed) 바디를 넘기면 조용히 넘어가는 것이 아니라 TypeError로 거부하도록 스펙에 못 박혀 있다[^4]. 어느 경로로 순서가 꼬이든 명시적인 에러로 나타난다는 뜻이니, "네트워크 응답은 원본을 돌려주고, 캐시에는 clone을 넣는다"를 규칙으로 삼으면 안전하다.
 
-두 번째는 교차 출처 리소스다. CORS 헤더 없이 `no-cors`로 가져온 응답은 opaque 응답이 되는데, status가 0으로 보이고 바디를 들여다볼 수 없지만 저장과 재사용은 가능하다. 문제는 두 가지다. 우선 성공인지 실패인지 코드로 구분할 수 없다. 404 응답도 opaque로는 status 0이라, 깨진 리소스를 정상인 줄 알고 캐시하게 된다. 다음으로 저장 용량이 실제 크기보다 훨씬 크게 계상된다. 응답 크기를 통해 교차 출처 정보가 새는 것을 막으려고 브라우저가 패딩을 더하기 때문이다[^7]. 직접 재보면 이렇다. 이 블로그의 오리진에서 104KB(106,346바이트)짜리 외부 이미지를 `no-cors`로 받아 저장했더니, `navigator.storage.estimate()`의 usage가 **6,869,027바이트(약 6.6MB)** 늘었다. 실제 크기의 약 65배다. 쿼터가 10GB로 잡힌 프로필이라 여유는 있지만, opaque 응답을 수백 개 쌓는 설계라면 계상 기준으로는 기가바이트 단위가 되어 축출을 앞당길 수 있다는 뜻이다. 오프라인 지원 범위에 외부 도메인 리소스가 들어 있다면 피해 갈 수 없는 트레이드오프다.
+두 번째는 교차 출처 리소스다. `mode: 'no-cors'`로 가져온 응답은 opaque 응답이 되는데, status가 0으로 보이고 바디를 들여다볼 수 없지만 저장과 재사용은 가능하다. 응답을 opaque로 만드는 것은 서버에 CORS 헤더가 없어서가 아니라 요청의 mode다. 서버가 `Access-Control-Allow-Origin`을 보내주더라도 `mode: 'no-cors'`로 요청하면 응답은 여전히 opaque다. 문제는 두 가지다. 우선 성공인지 실패인지 코드로 구분할 수 없다. 404 응답도 opaque로는 status 0이라, 깨진 리소스를 정상인 줄 알고 캐시하게 된다. 다음으로 저장 용량이 실제 크기보다 훨씬 크게 계상된다. 응답 크기를 통해 교차 출처 정보가 새는 것을 막으려고 브라우저가 패딩을 더하기 때문이다[^7]. 직접 재보면 이렇다. 이 블로그의 오리진에서 104KB(106,346바이트)짜리 외부 이미지를 `no-cors`로 받아 저장했더니, `navigator.storage.estimate()`의 usage가 **6,869,027바이트(약 6.6MB)** 늘었다. 패딩은 원본 크기에 비례하는 것이 아니라 응답 하나당 수 MB가 통째로 얹히는 형태라, 몇 KB짜리 응답을 저장해도 계상은 비슷한 자리에서 시작한다. 쿼터가 10GB로 잡힌 프로필이라 여유는 있지만, opaque 응답을 수백 개 쌓는 설계라면 계상 기준으로는 기가바이트 단위가 되어 축출을 앞당길 수 있다는 뜻이다. 다만 CORS를 허용하는 출처라면 `mode: 'cors'`로(이미지 태그라면 `crossorigin` 속성으로) 받아 저장하는 길이 있고, 이때는 응답이 opaque가 아니니 패딩 계상도 생기지 않는다. 피해 갈 수 없는 것은 CORS 헤더를 주지 않는 출처에 한정된다.
 
 ## 배포했는데 왜 옛 버전이 보이는가
 
@@ -198,7 +198,7 @@ navigator.serviceWorker.addEventListener('controllerchange', () => {
 
 알아둘 규칙이 둘 더 있다. 워커 스크립트 자체는 기본적으로 HTTP 캐시를 우회해서 매번 새로 받아온다(기본값 `updateViaCache: 'imports'`는 importScripts 대상에만 캐시를 허용한다). 캐시를 쓰도록 바꾸더라도, 마지막 업데이트 확인 후 24시간이 지난 등록에 대해서는 HTTP 캐시를 우회하도록 스펙에 못 박혀 있다[^8]. 잘못된 워커가 배포돼도 최대 하루 안에는 교체 기회가 온다는 뜻인데, 뒤집어 말하면 하루 동안은 잘못된 코드가 모든 요청을 주무를 수 있다는 뜻이기도 하다. 서비스 워커 배포에 유독 보수적이어야 하는 이유이고, 최악의 경우를 대비해 캐시를 비우고 스스로 등록 해제하는, 이른바 kill switch 워커를 배포하는 탈출로도 알려져 있다[^9]. 대기를 그대로 둘지 `skipWaiting()`으로 건너뛸지는 앱의 구조에 따라 갈리는 결정이라, 이 블로그의 선택은 [2편](/2026/08/service-worker-caching-2)에서 다룬다.
 
-개발 중에 이 라이프사이클과 싸우는 도구는 DevTools의 Application > Service Workers 패널에 모여 있다. "Update on reload"는 새로고침마다 워커를 강제로 갱신·활성화해 대기를 없는 셈 치게 해주고, "Bypass for network"는 워커를 통째로 우회한다. 반대로 조심할 것도 있다. 캐시 무시 새로고침(hard reload)은 그 요청을 서비스 워커 밖으로 우회시키므로, "하드 리로드로 해보니 된다/안 된다"는 워커 검증의 근거가 되지 못한다. 도구가 상태를 바꿔버리는 레이어라서, 정직한 검증은 결국 시크릿 창을 새로 열거나 실제 기기에서 하게 된다.
+개발 중에 이 라이프사이클과 싸우는 도구는 DevTools의 Application > Service Workers 패널에 모여 있다. "Update on reload"는 새로고침마다 워커를 강제로 갱신하고 활성화해 대기를 없는 셈 치게 해주고, "Bypass for network"는 워커를 통째로 우회한다. 반대로 조심할 것도 있다. 캐시 무시 새로고침(hard reload)은 그 요청을 서비스 워커 밖으로 우회시키므로, "하드 리로드로 해보니 된다/안 된다"는 워커 검증의 근거가 되지 못한다. 도구가 상태를 바꿔버리는 레이어라서, 정직한 검증은 결국 시크릿 창을 새로 열거나 실제 기기에서 하게 된다.
 
 ## 무엇을 어떤 전략으로 담는가
 
@@ -212,26 +212,26 @@ Cache Storage와 fetch 이벤트가 재료라면, 전략은 조리법이다. 네
 | cache-only             | 캐시에만 묻는다                          | install 때 넣어둔 프리캐시 전용   | 캐시에 없으면 그대로 실패   |
 | network-only           | 캐시를 아예 쓰지 않는다                  | 애널리틱스, POST 요청             | 오프라인 지원 없음          |
 
-앞의 셋은 구현도 짧다. 다만 짧은 코드에도 지킬 규칙이 셋 있다. 앞 절의 clone 함정을 피하는 것, 실패 응답을 저장하지 않도록 `response.ok`를 확인하는 것(빼먹으면 404·500이 캐시에 눌러앉는다), 그리고 조회와 저장을 같은 버킷으로 맞추는 것이다(전 버킷을 뒤지는 `caches.match()`로 조회하면 버킷을 나눈 의미가 사라지고, 청소 전의 옛 버킷이 먼저 걸릴 수도 있다).
+앞의 셋은 구현도 짧다. 다만 짧은 코드에도 지킬 규칙이 넷 있다. 앞 절의 clone 함정을 피하는 것, 실패 응답을 저장하지 않도록 `response.ok`를 확인하는 것(빼먹으면 404나 500이 캐시에 눌러앉는다), 조회와 저장을 같은 버킷으로 맞추는 것(전 버킷을 뒤지는 `caches.match()`로 조회하면 버킷을 나눈 의미가 사라지고, 청소 전의 옛 버킷이 먼저 걸릴 수도 있다), 그리고 저장을 `event.waitUntil()`로 떼어 응답을 붙들지 않는 것이다.
 
 ```javascript
-async function cacheFirst(request, cacheName) {
+async function cacheFirst(event, cacheName) {
   const cache = await caches.open(cacheName)
-  const cached = await cache.match(request)
+  const cached = await cache.match(event.request)
   if (cached) return cached
-  const response = await fetch(request)
-  if (response.ok) await cache.put(request, response.clone())
+  const response = await fetch(event.request)
+  if (response.ok) event.waitUntil(cache.put(event.request, response.clone()))
   return response
 }
 
-async function networkFirst(request, cacheName) {
+async function networkFirst(event, cacheName) {
   const cache = await caches.open(cacheName)
   try {
-    const response = await fetch(request)
-    if (response.ok) await cache.put(request, response.clone())
+    const response = await fetch(event.request)
+    if (response.ok) event.waitUntil(cache.put(event.request, response.clone()))
     return response
   } catch (error) {
-    const cached = await cache.match(request)
+    const cached = await cache.match(event.request)
     if (cached) return cached
     throw error
   }
@@ -240,8 +240,8 @@ async function networkFirst(request, cacheName) {
 async function staleWhileRevalidate(event, cacheName) {
   const cache = await caches.open(cacheName)
   const cached = await cache.match(event.request)
-  const refresh = fetch(event.request).then(async (response) => {
-    if (response.ok) await cache.put(event.request, response.clone())
+  const refresh = fetch(event.request).then((response) => {
+    if (response.ok) event.waitUntil(cache.put(event.request, response.clone()))
     return response
   })
   event.waitUntil(refresh.catch(() => {}))
@@ -249,7 +249,7 @@ async function staleWhileRevalidate(event, cacheName) {
 }
 ```
 
-staleWhileRevalidate만 event를 통째로 받는 것은 우연이 아니다. 캐시로 즉답한 뒤에도 백그라운드 갱신이 이어지므로, 앞에서 본 `waitUntil`로 워커의 수명을 붙잡아 두지 않으면 유휴 종료에 잘릴 수 있다. 캐시 히트 상태에서 갱신 fetch가 실패하면 아무도 그 promise를 기다리지 않으므로, unhandled rejection이 되지 않게 catch로 삼키는 것까지가 한 세트다.
+세 함수가 모두 event를 받는 것은 우연이 아니다. `cache.put()`은 스펙상 응답 바디를 끝까지 읽은 뒤에야 끝나므로[^4], 저장을 `await`로 기다린 다음 응답을 돌려주면 브라우저는 본문이 전부 내려온 뒤에야 그 응답을 받는다. HTML을 network-first로 처리한다면 스트리밍 파싱이 통째로 사라지는 셈이다. 그래서 세 전략 모두 저장은 앞에서 본 `waitUntil`로 떼어, 응답은 곧바로 돌려주고 저장은 워커의 수명에 얹는다. staleWhileRevalidate에는 여기에 하나가 더 붙는다. 캐시로 즉답하고 나면 갱신 promise를 아무도 기다리지 않으므로, 갱신 fetch가 실패했을 때 unhandled rejection이 되지 않게 catch로 삼키고 그 promise를 `waitUntil`에 넘겨 유휴 종료에 잘리지 않게 하는 것까지가 한 세트다.
 
 코드가 짧다고 실패 모드까지 단순한 것은 아니다. 각 전략이 어긋나는 지점을 하나씩 짚으면 이렇다. cache-first는 갱신 경로가 아예 없으므로, URL에 해시가 없는 리소스에 걸면 배포로도 못 고치는 낡은 응답이 남는다(청소는 뒤의 버전 전략 몫이 된다). network-first는 "실패"의 정의가 관건이다. `fetch()`는 연결이 아예 안 될 때만 reject하고, 연결은 되는데 하염없이 느린 상태(lie-fi)에서는 실패하지 않으므로, 타임아웃을 직접 걸어 캐시로 넘어가는 변형을 만들지 않으면 오프라인 폴백이 있어도 체감은 "무한 로딩"이 된다. stale-while-revalidate의 대가는 백그라운드 갱신이 성공했는지 사용자에게 알릴 방법이 없다는 것이다. 화면은 이미 낡은 버전으로 그려졌고, 새 응답은 다음 방문에야 보인다. cache-only는 프리캐시 목록 관리가 곧 가용성이라 목록에서 빠진 리소스가 바로 장애가 되고, network-only는 말 그대로 워커가 보태는 것이 없는 경로이니 애초에 `respondWith()`를 부르지 않고 통과시키는 편이 낫다(다음 질문에서 볼 오버헤드 때문이다).
 
@@ -261,9 +261,9 @@ staleWhileRevalidate만 event를 통째로 받는 것은 우연이 아니다. �
 
 마지막 질문이 남는다. 이 레이어에는 뚜렷한 대가가 있고, 대부분의 사이트에는 서비스 워커 캐싱이 필요하지 않을 가능성이 높다.
 
-fetch 핸들러를 등록하는 순간, 그 오리진의 모든 요청은 서비스 워커를 경유한다. 워커가 잠들어 있었다면, navigation preload 같은 장치를 쓰지 않는 한 깨어나는 시간까지 내비게이션이 기다려야 한다. 기동이 요청 경로에 끼어드는 시간은 리소스 타이밍으로 직접 볼 수 있다. 워커가 제어하는 페이지의 navigation entry에서 `fetchStart - workerStart`가 워커를 세우는 데 쓴 구간인데, 이 블로그에서 재보면 워커가 살아 있는 웜 상태에서는 2ms 안팎이다. 문제는 콜드 기동이고, 여기에 측정 함정이 하나 있다. DevTools가 붙어 있으면 워커가 유휴 종료되지 않아서, 개발자 도구를 열어둔 채로는 콜드 기동을 재현할 수 없다. 개발 중에는 빠져 보이다가 실사용자에게서만 나타나는 비용이라는 뜻이다. 실사용자 쪽 크기는 [2편](/2026/08/service-worker-caching-2)의 실측에서 확인하는데, 미리 말해두면 워커 경유가 끼어든 이 블로그의 재방문자 TTFB는 평균 525ms 나빠졌다.
+fetch 핸들러를 등록하는 순간, 그 오리진의 모든 요청은 서비스 워커를 경유한다. 워커가 잠들어 있었다면, navigation preload 같은 장치를 쓰지 않는 한 깨어나는 시간까지 내비게이션이 기다려야 한다. 기동이 요청 경로에 끼어드는 시간은 리소스 타이밍으로 직접 볼 수 있다. 워커가 제어하는 페이지의 navigation entry에서 `fetchStart - workerStart`가 워커를 세우는 데 쓴 구간인데, 이 블로그에서 재보면 워커가 살아 있는 웜 상태에서는 2ms 안팎이다. 문제는 콜드 기동이고, 여기에 측정 함정이 하나 있다. DevTools가 붙어 있으면 워커가 유휴 종료되지 않아서, 개발자 도구를 열어둔 채로는 콜드 기동을 재현할 수 없다. 개발 중에는 빠져 보이다가 실사용자에게서만 나타나는 비용이라는 뜻이다. 실사용자 쪽 크기는 [2편](/2026/08/service-worker-caching-2)의 실측에서 확인하는데, 미리 말해두면 워커 경유가 끼어든 이 블로그의 재방문자 TTFB는 평균 525ms 나빠졌다[^15].
 
-브라우저 개발사도 이 비용을 심각하게 여긴다. 한때 PWA 판정 조건을 맞추려고 아무 일도 하지 않는 빈 fetch 핸들러를 넣는 관행이 퍼지자, Chrome은 112부터 콘솔 경고를 띄우고, 같은 버전에서 그런 핸들러를 아예 건너뛰는 최적화도 함께 출시했다[^12]. 브라우저가 명시적으로 우회로를 만들 만큼의 비용이라는 뜻이다. 보완 장치로는 navigation preload가 있다[^13]. activate에서 켜두면 내비게이션 요청을 워커 기동과 병렬로 먼저 출발시키고, fetch 핸들러는 그 결과를 `event.preloadResponse`로 받아 쓴다.
+브라우저 개발사도 이 비용을 심각하게 여긴다. 한때 PWA 판정 조건을 맞추려고 아무 일도 하지 않는 빈 fetch 핸들러를 넣는 관행이 퍼지자, Chrome은 112부터 콘솔 경고를 띄웠고, 그런 핸들러를 아예 건너뛰는 최적화는 115에서 기본 활성화됐다[^12]. 브라우저가 명시적으로 우회로를 만들 만큼의 비용이라는 뜻이다. 보완 장치로는 navigation preload가 있다[^13]. activate에서 켜두면 내비게이션 요청을 워커 기동과 병렬로 먼저 출발시키고, fetch 핸들러는 그 결과를 `event.preloadResponse`로 받아 쓴다.
 
 ```javascript
 self.addEventListener('activate', (event) => {
@@ -295,7 +295,7 @@ self.addEventListener('fetch', (event) => {
 
 [^3]: [Service worker caching and HTTP caching](https://web.dev/articles/service-worker-caching-and-http-caching), web.dev. 두 캐시 레이어의 조회 순서와 만료 정책 설계 지침을 다룬다.
 
-[^4]: [Cache](https://developer.mozilla.org/en-US/docs/Web/API/Cache), MDN. put/match/keys의 동작, match 옵션(ignoreSearch, ignoreVary 등), keys()가 삽입 순서를 보장한다는 점이 명시되어 있다.
+[^4]: [Cache](https://developer.mozilla.org/en-US/docs/Web/API/Cache), MDN. put/match/keys의 동작, match 옵션(ignoreSearch, ignoreVary 등), keys()가 삽입 순서를 보장한다는 점이 명시되어 있다. 저장이 응답 바디를 끝까지 읽은 뒤에야 끝난다는 규칙은 [스펙의 Cache.put 알고리즘](https://w3c.github.io/ServiceWorker/#cache-put)에 정의되어 있다.
 
 [^5]: [Storage quotas and eviction criteria](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria), MDN. 저장 공간 압박 시 origin 단위 LRU 축출을 설명하며, IndexedDB와 Cache API 데이터가 함께 삭제된다고 명시한다.
 
@@ -311,8 +311,10 @@ self.addEventListener('fetch', (event) => {
 
 [^11]: [workbox-strategies](https://developer.chrome.com/docs/workbox/modules/workbox-strategies), Chrome for Developers. 다섯 전략이 같은 이름의 클래스로 제공된다.
 
-[^12]: [Intent to Ship: Skip service worker no-op fetch handler](https://groups.google.com/a/chromium.org/g/blink-dev/c/tEFS0BH8UmE), blink-dev. Chrome 112부터의 콘솔 경고와 no-op 핸들러 스킵 최적화의 배경을 설명한다.
+[^12]: [Intent to Ship: Skip service worker no-op fetch handler](https://groups.google.com/a/chromium.org/g/blink-dev/c/tEFS0BH8UmE), blink-dev. Chrome 112부터의 콘솔 경고와 no-op 핸들러 스킵 최적화의 배경을 설명한다. 최적화가 기본 활성화된 버전은 [Chrome Platform Status 항목](https://chromestatus.com/feature/5136946693668864)에서 115로 확인된다.
 
 [^13]: [NavigationPreloadManager](https://developer.mozilla.org/en-US/docs/Web/API/NavigationPreloadManager), MDN.
 
 [^14]: [Application Cache is a Douchebag](https://alistapart.com/article/application-cache-is-a-douchebag/), Jake Archibald, A List Apart (2012). AppCache의 암묵적 규칙들이 어떻게 개발자의 의도를 배신하는지 정리한, 이 API의 폐기를 상징하게 된 글이다.
+
+[^15]: 이 평균은 대부분 꼬리가 만든 값이다. 격차의 70%가 상위 10%에서 나오고 중앙값 이동은 134ms이며, TTFB가 10초를 넘긴 이벤트 26건(표본의 1.4%)만으로 평균 격차의 57%가 설명된다. 이 수치를 다시 읽는 일은 [3편](/2026/08/service-worker-caching-3)에서 다룬다.
