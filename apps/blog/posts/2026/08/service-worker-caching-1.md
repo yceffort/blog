@@ -140,7 +140,7 @@ TypeError: Failed to execute 'text' on 'Response': body stream already read
 
 `cache.put()` 쪽도 마찬가지로, 이미 소비된(disturbed) 바디를 넘기면 조용히 넘어가는 것이 아니라 TypeError로 거부하도록 스펙에 못 박혀 있다[^4]. 어느 경로로 순서가 꼬이든 명시적인 에러로 나타난다는 뜻이니, "네트워크 응답은 원본을 돌려주고, 캐시에는 clone을 넣는다"를 규칙으로 삼으면 안전하다.
 
-두 번째는 교차 출처 리소스다. `mode: 'no-cors'`로 가져온 응답은 opaque 응답이 되는데, status가 0으로 보이고 바디를 들여다볼 수 없지만 저장과 재사용은 가능하다. 응답을 opaque로 만드는 것은 서버에 CORS 헤더가 없어서가 아니라 요청의 mode다. 서버가 `Access-Control-Allow-Origin`을 보내주더라도 `mode: 'no-cors'`로 요청하면 응답은 여전히 opaque다. 문제는 두 가지다. 우선 성공인지 실패인지 코드로 구분할 수 없다. 404 응답도 opaque로는 status 0이라, 깨진 리소스를 정상인 줄 알고 캐시하게 된다. 다음으로 저장 용량이 실제 크기보다 훨씬 크게 계상된다. 응답 크기를 통해 교차 출처 정보가 새는 것을 막으려고 브라우저가 패딩을 더하기 때문이다[^7]. 직접 재보면 이렇다. 이 블로그의 오리진에서 104KB(106,346바이트)짜리 외부 이미지를 `no-cors`로 받아 저장했더니, `navigator.storage.estimate()`의 usage가 **6,869,027바이트(약 6.6MB)** 늘었다. 패딩은 원본 크기에 비례하는 것이 아니라 응답 하나당 수 MB가 통째로 얹히는 형태라, 몇 KB짜리 응답을 저장해도 계상되는 크기는 비슷하다. 쿼터가 10GB로 잡힌 프로필이라 여유는 있지만, opaque 응답을 수백 개 쌓는 설계라면 계상 기준으로는 기가바이트 단위가 되어 축출을 앞당길 수 있다는 뜻이다. 다만 CORS를 허용하는 출처라면 `mode: 'cors'`로(이미지 태그라면 `crossorigin` 속성으로) 받아 저장하는 길이 있고, 이때는 응답이 opaque가 아니니 패딩 계상도 생기지 않는다. 피해 갈 수 없는 것은 CORS 헤더를 주지 않는 출처에 한정된다.
+두 번째는 교차 출처 리소스다. `mode: 'no-cors'`로 가져온 응답은 opaque 응답이 되는데, status가 0으로 보이고 바디를 들여다볼 수 없지만 저장과 재사용은 가능하다. 응답을 opaque로 만드는 것은 서버에 CORS 헤더가 없어서가 아니라 요청의 mode다. 서버가 `Access-Control-Allow-Origin`을 보내주더라도 `mode: 'no-cors'`로 요청하면 응답은 여전히 opaque다. 문제는 두 가지다. 우선 성공인지 실패인지 코드로 구분할 수 없다. 404 응답도 opaque로는 status 0이라, 깨진 리소스를 정상인 줄 알고 캐시하게 된다. 다음으로 저장 용량이 실제 크기보다 훨씬 크게 계상된다. 응답 크기를 통해 교차 출처 정보가 새는 것을 막으려고 브라우저가 패딩을 더하기 때문이다[^7]. 직접 재보면 이렇다. 이 블로그의 오리진에서 104KB(106,346바이트)짜리 외부 이미지를 `no-cors`로 받아 저장했더니, `navigator.storage.estimate()`의 usage가 **6,869,027바이트(약 6.6MB)** 늘었다. 패딩은 원본 크기에 비례하지 않는다. Chromium은 opaque 응답마다 0에서 약 14.1MB 사이의 난수를 더하는데[^7], 몇 KB짜리 응답도 그만큼 계상될 수 있고 얼마가 붙을지는 응답마다 다르다. 위의 6.6MB도 그 범위에서 뽑힌 한 값이다. 쿼터가 10GB로 잡힌 프로필이라 여유는 있지만, opaque 응답을 수백 개 쌓는 설계라면 계상 기준으로는 기가바이트 단위가 되어 축출을 앞당길 수 있다는 뜻이다. 다만 CORS를 허용하는 출처라면 `mode: 'cors'`로(이미지 태그라면 `crossorigin` 속성으로) 받아 저장하는 길이 있고, 이때는 응답이 opaque가 아니니 패딩 계상도 생기지 않는다. 피해 갈 수 없는 것은 CORS 헤더를 주지 않는 출처에 한정된다.
 
 ## 배포했는데 왜 옛 버전이 보이는가
 
@@ -157,7 +157,7 @@ flowchart TD
     AC -->|새 버전으로 교체됨| X
 ```
 
-각 상태는 `registration.installing`, `registration.waiting`, `registration.active`로 손에 잡히고, 개별 워커의 `state` 속성과 `statechange` 이벤트로 전이를 관찰할 수 있다[^1]. install은 프리캐시를 채우기에, activate는 옛 캐시를 청소하기에 알맞은 시점으로 설계되어 있다. 다이어그램의 대기(waiting)는 업데이트에만 해당하는 상태로, 선행 active 워커가 없는 최초 설치는 설치가 끝나면 대기 없이 곧장 활성화된다. 여기에 중요한 디테일이 하나 있다. 처음 등록된 워커는 activated가 된 뒤에도 기본적으로 **이미 열려 있던 페이지는 제어하지 않는다.** 제어는 다음 내비게이션부터 시작되고, 당겨오고 싶다면 `clients.claim()`을 불러야 한다. 페이지 입장에서 지금 제어받고 있는지는 `navigator.serviceWorker.controller`가 null인지로 판별한다.
+각 상태는 `registration.installing`, `registration.waiting`, `registration.active`로 손에 잡히고, 개별 워커의 `state` 속성과 `statechange` 이벤트로 전이를 관찰할 수 있다[^1]. install은 프리캐시를 채우기에, activate는 옛 캐시를 청소하기에 알맞은 시점으로 설계되어 있다. 다이어그램의 대기(waiting)에 머무르는 것은 업데이트뿐이다. 최초 설치도 스펙상 installed(waiting)를 한 번 거치지만, 선행 active 워커가 없으면 설치 직후의 Try Activate가 곧바로 Activate를 부르므로 멈추지 않고 활성화로 넘어간다. 여기에 중요한 디테일이 하나 있다. 처음 등록된 워커는 activated가 된 뒤에도 기본적으로 **이미 열려 있던 페이지는 제어하지 않는다.** 제어는 다음 내비게이션부터 시작되고, 당겨오고 싶다면 `clients.claim()`을 불러야 한다. 페이지 입장에서 지금 제어받고 있는지는 `navigator.serviceWorker.controller`가 null인지로 판별한다.
 
 업데이트도 이 상태 기계를 그대로 탄다. 브라우저는 내비게이션 때마다(그리고 push 같은 기능 이벤트에서도 마지막 확인이 24시간을 넘겼다면) 등록된 워커 스크립트의 업데이트를 확인하고, 바이트가 하나라도 다르면 새 워커를 installing으로 띄운다[^8]. 여기서 문제가 나온다. 새 워커는 설치를 마쳐도, 기존 워커가 제어하는 탭이 모두 닫히기 전까지 **waiting에 멈춰 있다.** 옛 로직과 새 로직이 한 오리진에서 섞이지 않게 하려는 안전장치인데, 뒤집으면 탭을 계속 열어두고 새로고침만 하는 사용자는 며칠이고 옛 캐시 로직에 붙잡혀 있을 수 있다는 뜻이다. 새로고침은 같은 탭을 계속 점유하므로 "탭이 모두 닫히는" 조건을 영원히 만들지 못한다. 배포를 했는데 사용자가 옛 버전을 보고 있다면 대개 이 대기가 원인이다.
 
@@ -196,13 +196,13 @@ navigator.serviceWorker.addEventListener('controllerchange', () => {
 
 무조건 `skipWaiting()`을 부르는 것과 달리, 이 패턴은 건너뛰는 시점을 사용자의 동의 뒤로 미룬다. 옛 HTML과 새 캐시 로직이 섞이는 창을 사용자가 스스로 닫게 하는 셈이라, 대기의 안전장치를 유지하면서 "며칠째 옛 버전" 문제도 피할 수 있다.
 
-알아둘 규칙이 둘 더 있다. 워커 스크립트 자체는 기본적으로 HTTP 캐시를 우회해서 매번 새로 받아온다(기본값 `updateViaCache: 'imports'`는 importScripts 대상에만 캐시를 허용한다). 캐시를 쓰도록 바꾸더라도, 마지막 업데이트 확인 후 24시간이 지난 등록에 대해서는 HTTP 캐시를 우회하도록 스펙에 못 박혀 있다[^8]. 잘못된 워커가 배포돼도 최대 하루 안에는 교체 기회가 온다는 뜻인데, 뒤집어 말하면 하루 동안은 잘못된 코드가 모든 요청을 주무를 수 있다는 뜻이기도 하다. 서비스 워커 배포에 유독 보수적이어야 하는 이유이고, 최악의 경우를 대비해 캐시를 비우고 스스로 등록 해제하는, 이른바 kill switch 워커를 배포하는 탈출로도 알려져 있다[^9]. 대기를 그대로 둘지 `skipWaiting()`으로 건너뛸지는 앱의 구조에 따라 갈리는 결정이라, 이 블로그의 선택은 [2편](/2026/08/service-worker-caching-2)에서 다룬다.
+알아둘 규칙이 둘 더 있다. 워커 스크립트 자체는 기본적으로 HTTP 캐시를 우회해서 매번 새로 받아온다(기본값 `updateViaCache: 'imports'`는 importScripts 대상에만 캐시를 허용한다). 캐시를 쓰도록 바꾸더라도, 마지막 업데이트 확인 후 24시간이 지난 등록에 대해서는 HTTP 캐시를 우회하도록 스펙에 못 박혀 있다[^8]. 잘못된 워커가 배포돼도 최대 하루 안에는 교체 기회가 온다는 뜻인데, 뒤집어 말하면 하루 동안은 잘못된 코드가 모든 요청을 주무를 수 있다는 뜻이기도 하다. 서비스 워커 배포에 유독 보수적이어야 하는 이유이고, 최악의 경우를 대비해 같은 URL에 fetch 핸들러가 없는 no-op 워커를 덮어써서 잘못된 워커를 무력화하는 탈출로도 알려져 있다(저장소까지 비워야 하면 `Clear-Site-Data: storage` 헤더를 보조로 함께 쓴다)[^9]. 대기를 그대로 둘지 `skipWaiting()`으로 건너뛸지는 앱의 구조에 따라 갈리는 결정이라, 이 블로그의 선택은 [2편](/2026/08/service-worker-caching-2)에서 다룬다.
 
 개발 중에 이 라이프사이클과 싸우는 도구는 DevTools의 Application > Service Workers 패널에 모여 있다. "Update on reload"는 새로고침마다 워커를 강제로 갱신하고 활성화해 대기를 없는 셈 치게 해주고, "Bypass for network"는 워커를 통째로 우회한다. 반대로 조심할 것도 있다. 캐시 무시 새로고침(hard reload)은 그 요청을 서비스 워커 밖으로 우회시키므로, "하드 리로드로 해보니 된다/안 된다"는 워커 검증의 근거가 되지 못한다. 도구가 상태를 바꿔버리는 레이어라서, 정직한 검증은 결국 시크릿 창을 새로 열거나 실제 기기에서 하게 된다.
 
 ## 무엇을 어떤 전략으로 담는가
 
-Cache Storage와 fetch 이벤트가 재료라면, 전략은 조리법이다. 네 번째 질문은 리소스마다 두 가지를 되물으면 풀린다. **낡은 채로 보여도 되는가**, 그리고 **네트워크가 없을 때 어떻게 되어야 하는가.** 이름 붙은 전략은 대체로 다섯 가지로 정리된다[^10].
+Cache Storage와 fetch 이벤트가 재료라면, 전략은 조리법이다. 네 번째 질문은 리소스마다 두 가지를 되물으면 풀린다. **낡은 채로 보여도 되는가**, 그리고 **네트워크가 없을 때 어떻게 되어야 하는가.** 카탈로그는 The Offline Cookbook이 여덟 가지 서빙 패턴으로 정리해 두었지만[^10], 실무에서 이름으로 통용되는 것은 대체로 다섯 가지로 좁혀진다[^11].
 
 | 전략                   | 동작                                     | 어울리는 리소스                   | 대가                        |
 | ---------------------- | ---------------------------------------- | --------------------------------- | --------------------------- |
@@ -261,7 +261,7 @@ async function staleWhileRevalidate(event, cacheName) {
 
 마지막 질문이 남는다. 이 레이어에는 뚜렷한 대가가 있고, 대부분의 사이트에는 서비스 워커 캐싱이 필요하지 않을 가능성이 높다.
 
-fetch 핸들러를 등록하는 순간, 그 오리진의 모든 요청은 서비스 워커를 경유한다. 워커가 잠들어 있었다면, navigation preload 같은 장치를 쓰지 않는 한 깨어나는 시간까지 내비게이션이 기다려야 한다. 기동이 요청 경로에 끼어드는 시간은 리소스 타이밍으로 직접 볼 수 있다. 워커가 제어하는 페이지의 navigation entry에서 `fetchStart - workerStart`가 워커를 세우는 데 쓴 구간인데, 이 블로그에서 재보면 워커가 살아 있는 웜 상태에서는 2ms 안팎이다. 문제는 콜드 기동이고, 여기에 측정 함정이 하나 있다. DevTools가 붙어 있으면 워커가 유휴 종료되지 않아서, 개발자 도구를 열어둔 채로는 콜드 기동을 재현할 수 없다. 개발 중에는 빠져 보이다가 실사용자에게서만 나타나는 비용이라는 뜻이다. 실사용자 쪽 크기는 [2편](/2026/08/service-worker-caching-2)의 실측에서 확인하는데, 미리 말해두면 워커 경유가 끼어든 이 블로그의 재방문자 TTFB는 평균 525ms 나빠졌다[^15].
+fetch 핸들러를 등록하는 순간, 그 오리진의 모든 요청은 서비스 워커를 경유한다. 워커가 잠들어 있었다면, navigation preload 같은 장치를 쓰지 않는 한 깨어나는 시간까지 내비게이션이 기다려야 한다. 워커가 요청 경로에 끼어드는 시간은 리소스 타이밍으로 직접 볼 수 있다. 워커가 제어하는 페이지의 navigation entry에서 `fetchStart - workerStart`가 그 구간이다. `workerStart`는 워커가 이미 떠 있으면 fetch 이벤트를 디스패치하기 직전에, 떠 있지 않으면 워커 스레드를 시작하기 직전에 찍히므로, 콜드일 때만 기동 시간을 포함하고 웜일 때는 디스패치와 핸들러 진입 비용만 남는다. 이 블로그에서 재보면 워커가 살아 있는 웜 상태에서는 2ms 안팎이다. 문제는 콜드 기동이고, 여기에 측정 함정이 하나 있다. DevTools가 붙어 있으면 워커가 유휴 종료되지 않아서, 개발자 도구를 열어둔 채로는 콜드 기동을 재현할 수 없다. 개발 중에는 빠져 보이다가 실사용자에게서만 나타나는 비용이라는 뜻이다. 실사용자 쪽 크기는 [2편](/2026/08/service-worker-caching-2)의 실측에서 확인하는데, 미리 말해두면 워커 경유가 끼어든 이 블로그의 재방문자 TTFB는 평균 525ms 나빠졌다[^15].
 
 브라우저 개발사도 이 비용을 심각하게 여긴다. 한때 PWA 판정 조건을 맞추려고 아무 일도 하지 않는 빈 fetch 핸들러를 넣는 관행이 퍼지자, Chrome은 112부터 콘솔 경고를 띄웠고, 그런 핸들러를 아예 건너뛰는 최적화는 115에서 기본 활성화됐다[^12]. 브라우저가 명시적으로 우회로를 만들 만큼의 비용이라는 뜻이다. 보완 장치로는 navigation preload가 있다[^13]. activate에서 켜두면 내비게이션 요청을 워커 기동과 병렬로 먼저 출발시키고, fetch 핸들러는 그 결과를 `event.preloadResponse`로 받아 쓴다.
 
@@ -295,17 +295,17 @@ self.addEventListener('fetch', (event) => {
 
 [^3]: [Service worker caching and HTTP caching](https://web.dev/articles/service-worker-caching-and-http-caching), web.dev. 두 캐시 레이어의 조회 순서와 만료 정책 설계 지침을 다룬다.
 
-[^4]: [Cache](https://developer.mozilla.org/en-US/docs/Web/API/Cache), MDN. put/match/keys의 동작, match 옵션(ignoreSearch, ignoreVary 등), keys()가 삽입 순서를 보장한다는 점이 명시되어 있다. 저장이 응답 바디를 끝까지 읽은 뒤에야 끝난다는 규칙은 [스펙의 Cache.put 알고리즘](https://w3c.github.io/ServiceWorker/#cache-put)에 정의되어 있다.
+[^4]: [Cache](https://developer.mozilla.org/en-US/docs/Web/API/Cache), MDN. put/match/keys의 목록과 개요를 담는다. match 옵션(ignoreSearch, ignoreVary 등)은 [Cache.match](https://developer.mozilla.org/en-US/docs/Web/API/Cache/match)에, keys()가 삽입 순서를 보장한다는 점("The requests are returned in the same order that they were inserted.")은 [Cache.keys](https://developer.mozilla.org/en-US/docs/Web/API/Cache/keys)에 명시되어 있다. 저장이 응답 바디를 끝까지 읽은 뒤에야 끝난다는 규칙은 [스펙의 Cache.put 알고리즘](https://w3c.github.io/ServiceWorker/#cache-put)에 정의되어 있다.
 
 [^5]: [Storage quotas and eviction criteria](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria), MDN. 저장 공간 압박 시 origin 단위 LRU 축출을 설명하며, IndexedDB와 Cache API 데이터가 함께 삭제된다고 명시한다.
 
 [^6]: [Full Third-Party Cookie Blocking and More](https://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/), WebKit Blog. 7일간 상호작용이 없으면 서비스 워커 등록과 캐시를 포함한 스크립트 기록 가능 저장소를 삭제하는 정책을 설명한다.
 
-[^7]: [Storage for the web](https://web.dev/articles/storage-for-the-web), web.dev. 교차 출처 opaque 응답의 용량 계상에 패딩이 더해지는 이유를 설명한다.
+[^7]: [storage/common/quota/padding_key.cc](https://chromium.googlesource.com/chromium/src/+/main/storage/common/quota/padding_key.cc), Chromium 소스. `ShouldPadResponseType()`이 opaque와 opaqueRedirect 응답을 패딩 대상으로 고르고, `ComputeRandomResponsePadding()`이 `raw_random % kPaddingRange`를 돌려준다. `kPaddingRange`는 `14431 * 1024`, 약 14.1MB다. 응답 크기를 통해 교차 출처 정보가 새는 것을 막으려는 장치다.
 
 [^8]: [Service Worker 스펙의 업데이트 알고리즘](https://w3c.github.io/ServiceWorker/#update-algorithm). registration이 stale(마지막 업데이트 확인 후 24시간 경과)이면 HTTP 캐시를 우회하는 규칙이 정의되어 있다. `updateViaCache` 옵션 자체는 [MDN의 register() 문서](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)를 참고.
 
-[^9]: [Removing buggy service workers](https://developer.chrome.com/docs/workbox/remove-buggy-service-workers), Chrome for Developers.
+[^9]: [Removing buggy service workers](https://developer.chrome.com/docs/workbox/remove-buggy-service-workers), Chrome for Developers. 같은 URL에 fetch 핸들러 없는 no-op 워커를 배포해 잘못된 워커를 무력화하는 절차와, 보조 수단인 `Clear-Site-Data` 헤더를 설명한다.
 
 [^10]: [The Offline Cookbook](https://web.dev/articles/offline-cookbook), web.dev (Jake Archibald). 캐싱 전략들의 표준 카탈로그로 통용되는 문서다.
 
