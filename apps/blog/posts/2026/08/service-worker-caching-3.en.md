@@ -425,54 +425,101 @@ The two TTFB rows are the Early Hints artifact from earlier and must not be read
 
 My first suspect was my own apparatus. Only the worker condition dwells an extra 3.5 seconds on the home page waiting for `controllerchange`. Matching the dwell across conditions and running twenty more pairs still gave 460 against 200, and reversing the order in which the conditions run for another twelve pairs gave 524 against 200. Not the apparatus.
 
-To find the cause I dumped the full resource timings. The LCP element is the article title `h1` in every run, and fonts finish around 50 ms in both conditions, so it is not fonts. The difference sat in one place. Opening an article fires 31 `?_rsc=` prefetches at the header navigation, the series list, and the tag links. That is 23 distinct paths, eight of which go out twice, and the two are not the same URL. `_rsc` is a hash over four prefetch-related request headers (`next-router-prefetch`, `next-router-segment-prefetch`, `next-router-state-tree`, `next-url`), so the same path becomes a different URL once that combination changes. All 31 URLs are distinct. Without the worker all 31 go to the network and pull down 345,639 bytes, one of them 82,761 bytes on its own. With the worker all 31 come from Cache Storage, at zero bytes.
+To find the cause I dumped the full resource timings. The LCP element is the article title `h1` in every run, and fonts finish around 50 ms in both conditions, so it is not fonts. The difference sat in one place. Opening an article fires 31 `?_rsc=` prefetches at the header navigation, the series list, and the tag links. That is 23 distinct paths, eight of which go out twice, and the two are not the same URL. `_rsc` is a hash over four prefetch-related request headers (`next-router-prefetch`, `next-router-segment-prefetch`, `next-router-state-tree`, `next-url`), so the same path becomes a different URL once that combination changes. All 31 URLs are distinct. Without the worker all 31 go to the network and pull down 345,639 bytes, one of them 82,761 bytes on its own. With the worker the same figure reads zero bytes.
 
-The reason the HTTP cache cannot stop this is in the response headers.
+And here I stepped into the same trap for the third time in this one post. I read that zero as a cache hit and wrote that the worker serves all 31 out of Cache Storage. Open `sw.js` and it cannot.
+
+```javascript
+async function handleRSC(event) {
+  const {request} = event
+  // Prefetches are not cached: only pages actually visited get stored
+  const isVisit = !isPrefetchRequest(request)
+  if (isVisit) {
+    event.waitUntil(savePageHTML(request, event.clientId))
+  }
+
+  try {
+    const response = await fetch(request) // prefetches come through here too
+    if (isVisit && response.ok) {
+      event.waitUntil(putWithTrim(RSC_CACHE, request, response.clone()))
+    }
+    return response
+  } catch {
+    // the cache is only consulted when the network throws
+    const cache = await caches.open(RSC_CACHE)
+    // ...
+  }
+}
+```
+
+A prefetch has `isVisit` false, so it is excluded from storage outright, and `cache.match()` sits inside the `catch` that only runs when `fetch()` throws. This worker has never served a prefetch out of Cache Storage, and with it turned on all 31 still go to the network. The zero is the very thing I warned about once in the traps section and again in the static assets section: `transferSize` reads 0 on any response that came through the worker. I wrote it down twice and walked into it a third time.
+
+The data says the same. Re-aggregating the raw runs for the three conditions:
+
+| Condition          | Prefetches | `transferSize` total | Last prefetch response ends |
+| ------------------ | ---------- | -------------------- | --------------------------- |
+| No worker          | 31         | 345,639              | 1,115ms                     |
+| Worker             | 31         | 0                    | 1,142ms                     |
+| No worker, blocked | 18         | 0                    | 898ms                       |
+
+The worker condition sent all 31 in every one of its 12 runs, and the last response finishes at 1,142 ms against 1,115 ms, which is effectively the same. Pulling them from a cache could not produce that. The zero in the blocked condition is zero for a different reason again: a blocked request also reports `transferSize` 0. And the 325 prefetches from the earlier section, the ones that took 1 ms to pass through the worker with a duration matching the no-worker condition, now read differently. They were not fast; they were just passing through.
+
+So why do these 31 go out again on every page load? Because of the response headers, which the browser cache cannot reuse.
 
 ```http
-cache-control: private, no-store, no-cache, max-age=0, must-revalidate
+cache-control: public, max-age=0, must-revalidate
 vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
 x-nextjs-stale-time: 300
 ```
 
-With `no-store` in there, the browser cache does not even store this response. That is a step before revalidation, so the four entries in `vary` do not matter either. It is not that nothing reuses the response: `x-nextjs-stale-time: 300` means App Router holds it in its own router cache for five minutes, but that cache is in memory and gone the moment the page is opened fresh. The only thing that survives on disk is Cache Storage, and neither `cache-control` nor `x-nextjs-stale-time` appears anywhere in its put and match algorithms. What a lookup reads is the method, the URL, and, unless `ignoreVary` is set, `vary`.
+These come from the 31 prefetch responses a real browser makes when opening an article page. All 31 carry that same `cache-control`, and 25 of them carry `x-nextjs-stale-time: 300`. Throw `curl` at the same URL and you get `private, no-store` back, but that is a response to a request that does not reproduce the header set named in `vary`, so the browser's values are the ones to use here.
+
+There is no `no-store`, so the browser cache does store the response. But `max-age=0, must-revalidate` means a revalidation round trip to the server before every use, and as long as that round trip remains, most of the point of prefetching is gone. On top of that, of the four entries in `vary`, `next-router-state-tree` differs per originating page. The same target path splits into different cache entries depending on where you navigated from, so it gets stored and rarely matched again. It is not that nothing reuses the response: `x-nextjs-stale-time: 300` means App Router holds it in its own router cache for five minutes, but that cache is in memory and gone the moment the page is opened fresh. The only thing that survives on disk is Cache Storage, and neither `cache-control` nor `x-nextjs-stale-time` appears anywhere in its put and match algorithms. What a lookup reads is the method, the URL, and, unless `ignoreVary` is set, `vary`. Which means putting these in Cache Storage carries the `vary` splitting problem along with them.
 
 That much is correlation. This series has read correlation as causation and walked it back three times, so it needed splitting once more. I built three conditions: no worker with prefetching as is, the worker with prefetching as is, and no worker with only the prefetches blocked. The blocking is done with CDP's `Network.setBlockedURLs`. Playwright's `route()` was unusable because, as the earlier trap showed, it disables the HTTP cache and penalizes only the no-worker condition; instead I enabled the Network domain itself in all three conditions so that its activation is a constant. Twelve runs per condition, with the execution order rotated on each iteration.
 
-| Condition                     | FCP | LCP | Runs where LCP slipped past 500 ms |
+| Condition                     | FCP | LCP | Runs that fell into the slow group |
 | ----------------------------- | --- | --- | ---------------------------------- |
 | No worker, prefetching as is  | 96  | 532 | 8 / 12                             |
 | Worker, prefetching as is     | 136 | 216 | 5 / 12                             |
 | No worker, prefetches blocked | 172 | 224 | 1 / 12                             |
 
-Block the prefetches and LCP comes down to 224 ms without any worker, effectively the worker condition's 216 ms. What the worker returns on warm LCP is the part it takes off the network.
+The last column is there because the LCP distribution is bimodal in all three conditions: a fast group between 168 and 256 ms and a slow group above 360 ms. Nothing falls between the two, so I counted at a 300 ms boundary, and any boundary between 256 and 360 gives the same numbers.
 
-Two things stay honest. One is that I never pinned down why the `h1` repaints late. In the slow runs an intermediate candidate appears between the first one and the `h1`, and the `h1` slips past 500 ms, but nothing in the resource timings shows what holds that repaint. What is confirmed is only that removing the prefetches cuts that pattern to 1 run in 12. The other is that the worker is not as clean as blocking outright: 5 of its 12 runs still slipped. Serving from cache is not the same as not requesting.
+Block the prefetches and LCP comes down to 224 ms without any worker, effectively the worker condition's 216 ms. What this table does separate is that prefetch traffic pushes LCP out. The blocked condition differs from the no-worker condition in nothing but the prefetches, so the drop from 532 to 224 belongs to them.
+
+Reading the worker's 216 ms in the same table takes more care. Two conditions arriving at the same place did not take the same route. As we just saw, the worker sends all 31 prefetches to the network. It takes nothing off, and still lands on the same LCP as the blocked condition.
+
+Three things stay honest. First, I never pinned down what the worker does to pull LCP in. That it is not bytes is confirmed; what remains is a guess, that routing these requests through the worker changes their priority or how they contend with rendering, and resource timings cannot separate that. The FCP column in the same table reads as circumstantial support for the guess. The condition with the worst LCP (no worker, prefetching as is) has the best FCP of the three at 96 ms, while the two with good LCP are worse at 136 ms and 172 ms. That pattern is hard to get from pure byte contention, which points at render ordering, but that too is a guess. Second, I never pinned down why the `h1` repaints late either. In the slow runs an intermediate candidate appears between the first one and the `h1`, and the `h1` slips back, but nothing shows what holds that repaint. What is confirmed is only that removing the prefetches cuts that pattern to 1 run in 12. Third, the worker is not as clean as blocking outright: 5 of its 12 runs still slipped. Sending the requests anyway and still arriving early is not the same as not requesting.
 
 The number 31 needs a caveat too. It is the count of links inside the headless default viewport of 1280x720. On a smaller real device fewer go out at first and more follow as the reader scrolls. The direction carries over; the size does not.
 
-This finding has the opposite sign from the byte cost settled earlier, so the two belong side by side. What the lab measured was one soft navigation from an empty profile, and there the worker added 265 KB by fetching one copy of the HTML and four thumbnails in the background. What I just measured is a hard navigation after one visit to the home page, and there the worker takes 345 KB of RSC prefetching off the network. They do not contradict each other; the conditions differ. This worker's byte balance flips sign depending on what the visitor does, which means it is not a figure that settles into one line.
+Put this next to the byte cost settled earlier and it becomes clear the sign only points one way. What the lab measured was one soft navigation from an empty profile, and there the worker added 265 KB by fetching one copy of the HTML and four thumbnails in the background. What I just measured is a hard navigation after one visit to the home page, and there the worker neither removes nor adds the 345 KB of prefetching. It passes it straight through. I had meant to settle these two scenes as a balance with opposite signs, but with the credit side gone there is nothing to settle. What this worker does to bytes is either add to them or leave them alone.
 
-So does it help performance? On this blog, yes. Just not from where part 2 pointed. It was not putting static assets in Cache Storage and shortening returning-visit FCP; it was handing over the RSC prefetches that the HTTP cache cannot serve without revalidating. That is precisely the third of the three reasons part 1 listed for reaching for a service worker, "when you need a strategy the HTTP cache cannot express". Part 1 wrote that clause as a generality and did not know whether this blog fell under it. Now it does.
+So does it help performance? On this blog, yes. The warm LCP of 460 ms against 200 ms comes from 25 paired runs, and the direction held across twenty more pairs with dwell time matched and twelve more with the order reversed. As an observation it is that solid.
 
-One other sentence in part 1 has to be narrowed at the same spot. It said that if returning-visit performance is the only goal this layer is probably not the answer, on the grounds that it means rebuilding in code what the HTTP cache already does. The first half held up here: as far as static assets go, Cache Storage was not faster than the HTTP cache. What wobbles is the premise of "already does". When something the HTTP cache cannot do is mixed in, like App Router's RSC prefetching, the answer changes even for that same goal.
+Why it helps, I do not know. The explanation part 2 pointed at, putting static assets in Cache Storage to shorten returning-visit FCP, was dropped in both the lab and production. The explanation I reached for next, that the worker hands over the RSC prefetches the HTTP cache cannot serve without revalidating, was just dropped by the code and the data. This worker does not hand them over. Only guesses remain, so the right thing is to leave this space empty.
 
-The conditions this conclusion stands on have to be drawn too. This blog has a CDN that is already fast (46 ms to the final headers on an edge HIT), `immutable` cache headers correctly set on static assets, and a text LCP element. Change those three and the answer changes. In particular, on a site with a slow origin or no CDN the round trip Cache Storage erases is a different size, and the gain could show up on static assets after all, an environment this series never measured once. What was found here is not "service workers are useless for performance" but "under these conditions, this is where the benefit was".
+Which means I also do not know whether this blog falls under the third of the three reasons part 1 listed for reaching for a service worker, "when you need a strategy the HTTP cache cannot express". To claim that clause, the worker has to actually do something the HTTP cache cannot, and this one does nothing there but let the request through. The fact that RSC prefetches are poorly reused by the HTTP cache stands; whether a service worker can fill that gap is something this series never measured. Measuring it would mean changing `handleRSC` to store prefetches and consult the cache first, and then the `vary` splitting becomes the problem all over again.
+
+One other sentence in part 1 has to be narrowed at the same spot. It said that if returning-visit performance is the only goal this layer is probably not the answer, on the grounds that it means rebuilding in code what the HTTP cache already does. The first half held up here: as far as static assets go, Cache Storage was not faster than the HTTP cache. What wobbles is the premise of "already does", and wobbling is as far as I can take it. That there is something the HTTP cache does not do well, like App Router's RSC prefetching, is confirmed by the headers; whether a worker fills it in is not.
+
+The conditions this conclusion stands on have to be drawn too. This blog has a CDN that is already fast (46 ms to the final headers on an edge HIT), `immutable` cache headers correctly set on static assets, and a text LCP element. Change those three and the answer changes. In particular, on a site with a slow origin or no CDN the round trip Cache Storage erases is a different size, and the gain could show up on static assets after all, an environment this series never measured once. What was found here is not "service workers are useless for performance" but "under these conditions there was a benefit, and where it comes from is still unpinned".
 
 One last thing to admit. This series never once measured the axis on which this worker earns its keep: offline. Performance metrics are a ruler for how fast things are when the network is there, and the reason the feature exists is to make things open when it is not. Everything measured, walked back, and measured again across three posts was held against a ruler slightly askew from the feature's purpose. I do not think that makes it pointless. If offline is why you are reaching for it, performance is not the reason to adopt but a price paid or refunded alongside, and it is better to know which way and how much before you do.
 
 ## When and how to use one
 
-When part 1 named its three conditions for adopting a service worker, all three were generalities. Having measured across three posts, one of them can now carry a test. It is the case of needing a strategy the HTTP cache cannot express, and whether your own site qualifies is something the response headers will tell you. In DevTools, pick the requests that go out repeatedly on every page and read `cache-control` on the response. If `no-store` is there, the browser cache does not store the response at all; if `no-cache` or `max-age=0, must-revalidate` is there, it stores it but has to ask the server before every use, so the round trip stays. Either way, if dozens of them go out per page you are in the same situation this blog was. App Router's RSC prefetches were exactly that. The more prefetches a framework fires on its own, the more likely this clause applies.
+When part 1 named its three conditions for adopting a service worker, all three were generalities. Having measured across three posts, one of them can at least carry a diagnostic. It is the case of needing a strategy the HTTP cache cannot express, and whether your own site has requests like that is something the response headers will tell you. In DevTools, pick the requests that go out repeatedly on every page and read two lines. First `cache-control`. If `no-store` is there, the browser cache does not store the response at all; if `no-cache` or `max-age=0, must-revalidate` is there, it stores it but has to ask the server before every use, so the round trip stays. Then `vary`. If a header whose value changes per request is listed there, a stored entry rarely gets matched again. Either way, if dozens of them go out per page you are in the same situation this blog was. App Router's RSC prefetches were not the `no-store` case but the revalidation and `vary` one. The more prefetches a framework fires on its own, the more likely this clause applies. A diagnosis is not a prescription, though. Whether a service worker can fill those requests in is something you only learn by writing the worker that way and measuring again, and this blog's worker was not written that way.
 
 To put it in one place.
 
-| Situation                                                               | What this series answers                                                                                           |
-| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| Offline is an actual requirement                                        | Use one. Nothing else makes a site work offline                                                                    |
-| Requests the browser cache cannot use go out by the dozen on every page | Use one. Warm LCP on this blog went from 460ms to 200ms                                                            |
-| Many of your users are on unreliable networks                           | Use one, but put a timeout fallback on network-first first. Without it, a slow connection means an endless spinner |
-| Returning-visit performance on static assets is the only goal           | Do not. Filename hashes and `immutable` cover it, and Cache Storage was no faster in the lab or in production      |
+| Situation                                                                 | What this series answers                                                                                                       |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Offline is an actual requirement                                          | Use one. Nothing else makes a site work offline                                                                                |
+| Requests the browser cache cannot reuse go out by the dozen on every page | Measure, then decide. Warm LCP on this blog went from 460ms to 200ms, but not because the worker served those requests instead |
+| Many of your users are on unreliable networks                             | Use one, but put a timeout fallback on network-first first. Without it, a slow connection means an endless spinner             |
+| Returning-visit performance on static assets is the only goal             | Do not. Filename hashes and `immutable` cover it, and Cache Storage was no faster in the lab or in production                  |
 
 If you do reach for one, five things this series confirmed.
 
@@ -482,7 +529,7 @@ If you do reach for one, five things this series confirmed.
 - Version your cache names and delete the old ones in activate. And keep the precached offline fallback out of the size trimming. Left alone, it is the first thing to go.
 - Plant the metrics that will separate before from after, before you deploy. That this may still not be enough was the subject of this post.
 
-So this is about as much as the series can finally say. In latency, going through the worker does not show up at this blog's median, and the tail still spreads wide, but whether that tail belongs to the worker is something I could not separate out. In bytes it goes up or down depending on what the visitor does. Navigation preload should stay on, and what it recovers is limited to cold starts. And most of the effort behind these numbers went not into the worker but into making the measurement trustworthy. It took one round to confirm that a control group would not form on its own, and three falls, over the proxy's headers, the interception's cache, and the definition of a cold start, before the first table appeared; it was only after every table was drawn and the conclusion written that I learned the two conditions had been timing different moments all along; and at the end the benefit table had to be split once more. Part 2 closed by saying that collecting real user metrics for a before-and-after comparison should come first; I would now add two sentences. When the real user metrics do not give you a control group, the cost of building one is part of the feature's cost. And building one is not the end of it: whether both arms are measuring the same thing is the next question.
+So this is about as much as the series can finally say. In latency, going through the worker does not show up at this blog's median, and the tail still spreads wide, but whether that tail belongs to the worker is something I could not separate out. In bytes it goes up or stays level depending on what the visitor does; it never goes down. And yet production warm LCP dropped to less than half, and after three posts I still cannot say where that came from. Navigation preload should stay on, and what it recovers is limited to cold starts. And most of the effort behind these numbers went not into the worker but into making the measurement trustworthy. It took one round to confirm that a control group would not form on its own, and three falls, over the proxy's headers, the interception's cache, and the definition of a cold start, before the first table appeared; it was only after every table was drawn and the conclusion written that I learned the two conditions had been timing different moments all along; and at the end, on the benefit table, I walked into the trap of reading `transferSize` 0 as a cache hit for the third time. Part 2 closed by saying that collecting real user metrics for a before-and-after comparison should come first; I would now add two sentences. When the real user metrics do not give you a control group, the cost of building one is part of the feature's cost. And building one is not the end of it: whether both arms are measuring the same thing is the next question.
 
 ---
 
