@@ -543,13 +543,7 @@ To put it in one place.
 | Many of your users are on unreliable networks                             | Use one, but put a timeout fallback on network-first first. Without it, a slow connection means an endless spinner                                   |
 | Returning-visit performance on static assets is the only goal             | Do not. Filename hashes and `immutable` cover it, and Cache Storage was no faster in the lab or in production                                        |
 
-If you do reach for one, five things this series confirmed.
-
-- Turn on navigation preload. Cold-start TTFB drops by 11ms, and there is no reason not to.
-- Requests you do not need to intercept should pass through without `respondWith()`. Registering a fetch handler routes every request a controlled page makes through the worker, whatever origin it is headed to.
-- If the design fetches anything extra in the background, count those bytes first. This worker pulled one copy of the HTML and four thumbnails on every article click, and no web metric caught it.
-- Version your cache names and delete the old ones in activate. And keep the precached offline fallback out of the size trimming. Left alone, it is the first thing to go.
-- Plant the metrics that will separate before from after, before you deploy. That this may still not be enough was the subject of this post.
+If you do reach for one, add one item to the ways of cutting the cost listed at the end of part 1. If the design fetches anything extra in the background, count those bytes first. This worker pulled one copy of the HTML and four thumbnails on every article click, and no web metric caught it.
 
 Going back to the 500 ms left at the end of part 2, three things were mixed into that number: the tail that dragged the average up, my own traffic making up more than half of the `reload` control group, and the reference-point difference from 103 Early Hints that produced the +35 ms left at p50. Take those three away and on this blog the worker-detour latency does not show up at the median. It was 2 ms in the lab, and in production, measured at the final headers, the worker side was not slower either. Whether what remains in the tail belongs to the worker is still unknown.
 
