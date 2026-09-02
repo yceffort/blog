@@ -201,7 +201,7 @@ http
   .listen(3100)
 ```
 
-요청을 받으면 편도 지연만큼 기다렸다가 업스트림으로 넘기고, 응답 헤더를 받으면 다시 편도 지연 뒤에 내려보내며, 본문은 4KB 조각으로 잘라 전역 토큰 버킷(`nextFree`)으로 450KB/s에 맞춰 흘린다. 버킷이 전역이라 동시에 열린 응답들이 대역폭을 나눠 쓴다. DevTools의 Fast 4G 프리셋을 참고한 값(왕복 75ms, 다운로드 4Mbps의 90%)인데, 절대값보다 중요한 것은 페이지, 워커, preload가 전부 같은 프록시를 지난다는 점이다. 업로드는 페이싱하지 않았다. 측정 대상이 전부 GET이라 요청 본문이 없다.
+요청을 받으면 편도 지연만큼 기다렸다가 업스트림으로 넘기고, 응답 헤더를 받으면 다시 편도 지연 뒤에 내려보내며, 본문은 4KB 조각으로 잘라 전역 토큰 버킷(`nextFree`)으로 450KB/s에 맞춰 흘린다. 버킷이 전역이라 동시에 열린 응답들이 대역폭을 나눠 쓴다. 모바일 4G를 염두에 두고 고른 값(왕복 75ms, 다운로드 4Mbps의 90%)이고 DevTools의 Fast 4G 프리셋(다운로드 9Mbps의 90%, 목표 왕복 60ms)보다는 느린데, 절대값보다 중요한 것은 페이지, 워커, preload가 전부 같은 프록시를 지난다는 점이다. 업로드는 페이싱하지 않았다. 측정 대상이 전부 GET이라 요청 본문이 없다.
 
 위 코드의 `flushHeaders()` 한 줄은 처음에 없었고, 그 상태로 시운전한 워커 없는 조건의 TTFB가 205ms였다. 왕복 75ms에 서버 시간을 더해도 90ms 언저리여야 했다. Node의 `res.writeHead()`는 헤더를 즉시 내보내지 않고 첫 `write()`까지 붙들고 있어서, 첫 조각의 전송 시간이 TTFB에 얹혀 있었던 것이다. 시운전 당시의 프록시는 본문을 쪼개지 않고 통째로 한 번에 썼으니 그 첫 조각이 압축된 HTML 55KB 전부였고, 450KB/s에서 122ms다. 75에 122를 더하면 205ms 언저리가 된다.
 
@@ -232,9 +232,9 @@ const context = await chromium.launchPersistentContext(userDataDir, {
 
 `responseStart`는 스펙상 `firstInterimResponseStart`가 0이 아니면 그 값을 돌려주고, 0일 때만 `finalResponseHeadersStart`를 돌려준다[^3]. Chrome 115가 responseStart를 최종 헤더 쪽으로 옮겼다가 호환성 문제로 Chrome 133에서 되돌리면서 이 정의가 됐다[^4]. 그러니까 103 Early Hints를 보내는 사이트에서 `responseStart`는 최종 헤더가 도착한 시각이 아니라 103이 도착한 시각이다.
 
-yceffort.kr은 103을 보낸다. 이걸 확인하는 데 한 번 헛걸음했는데, `curl`의 기본 UA로는 200만 보이기 때문이다. Chrome UA와 내비게이션 헤더(`accept: text/html...`, `sec-fetch-dest: document`)를 함께 붙여야 103이 나온다. 내용은 `server: Vercel`과 `x-vercel-id` 두 줄뿐이고 `link` 헤더도 없으니 프리로드로 쓰이는 것도 아니다. 엣지가 요청을 받았다는 신호가 전부다.
+yceffort.kr은 103을 보낸다. 이걸 확인하는 데 한 번 헛걸음했는데, 그냥 `curl`을 던지면 200만 보이기 때문이다. `sec-fetch-mode: navigate`를 붙여 내비게이션 요청으로 보이게 해야 103이 나온다. Chrome UA나 `accept: text/html`은 없어도 되고, `sec-fetch-dest: document`만으로는 나오지 않는다. 내용은 `server: Vercel`과 `x-vercel-id` 두 줄뿐이고 `link` 헤더도 없으니 프리로드로 쓰이는 것도 아니다. 엣지가 요청을 받았다는 신호가 전부다.
 
-문제는 워커를 거치면 이 값이 달라진다는 것이다. 프로덕션 도메인에 Playwright를 붙여, 시간대 변동을 상쇄하려고 회차마다 워커를 막은 조건과 허용한 조건을 번갈아 열두 쌍 돌렸다(스물네 회 전부 h2에 `x-vercel-cache: HIT`이었다). `serviceWorkers: 'block'`으로 연 쪽은 `firstInterimResponseStart` 중앙 8.8ms에 `finalResponseHeadersStart` 중앙 46.0ms였고 `responseStart`는 앞의 값을 가져갔다. 워커가 제어한 쪽은 열두 번 모두 controller를 잡은 상태에서 `firstInterimResponseStart` 중앙 36.3ms였고, `finalResponseHeadersStart`는 열두 번 다 0이었다. 워커 경로에서는 interim 타이밍이 전달되지 않고 최종 헤더 시각이 interim 슬롯에 들어가는 것으로 보인다. 워커 없는 쪽은 103 도착 시각을, 워커 있는 쪽은 최종 헤더 도착 시각을 같은 이름으로 보고하고 있었던 셈이다. 최종 헤더끼리 맞춰 놓으면 36.3 대 46.0으로 워커 쪽이 오히려 10ms 가까이 빠른데, 두 조건이 지나는 경로 자체가 다르니 이 차이도 개선으로 읽어서는 안 되고 "+35ms는 아니다"까지만 읽는 것이 맞겠다.
+문제는 워커를 거치면 이 값이 달라진다는 것이다. 프로덕션 도메인에 Playwright를 붙여, 시간대 변동을 상쇄하려고 회차마다 워커를 막은 조건과 허용한 조건을 번갈아 열두 쌍 돌렸다(스물네 회 전부 `x-vercel-cache: HIT`이었다. 워커를 지난 응답은 `nextHopProtocol`이 빈 문자열이라, h2로 찍힌 것은 워커 없는 열두 회뿐이다). `serviceWorkers: 'block'`으로 연 쪽은 `firstInterimResponseStart` 중앙 8.8ms에 `finalResponseHeadersStart` 중앙 46.0ms였고 `responseStart`는 앞의 값을 가져갔다. 워커가 제어한 쪽은 열두 번 모두 controller를 잡은 상태에서 `firstInterimResponseStart` 중앙 36.3ms였고, `finalResponseHeadersStart`는 열두 번 다 0이었다. 워커 경로에서는 interim 타이밍이 전달되지 않고 최종 헤더 시각이 interim 슬롯에 들어가는 것으로 보인다. 워커 없는 쪽은 103 도착 시각을, 워커 있는 쪽은 최종 헤더 도착 시각을 같은 이름으로 보고하고 있었던 셈이다. 최종 헤더끼리 맞춰 놓으면 36.3 대 46.0으로 워커 쪽이 오히려 10ms 가까이 빠른데, 두 조건이 지나는 경로 자체가 다르니 이 차이도 개선으로 읽어서는 안 되고 "+35ms는 아니다"까지만 읽는 것이 맞겠다.
 
 103만 다르게 두고 통제 실험도 해 봤다. 103을 보내는 서버와 안 보내는 서버를 세우고 양쪽 다 최종 헤더는 40ms 뒤에 내려보내도록 고정한 뒤, 워커 유무를 가로질러 `responseStart`를 읽었다. 조건당 15회다.
 
@@ -400,7 +400,7 @@ async function networkFirst(event, cacheName) {
 
 확인한 것. 두 조건을 같은 시점에 맞춰 놓고 보면 이 사이트에서 워커 경유 지연은 p50에서 관측되지 않는다. 랩이 5ms 아래를 가리킨 것과 실사용자 데이터가 35ms를 가리킨 것은 서로 다른 답이 아니라 서로 다른 자였다. 랩 안에서 재는 한 이 워커의 경유 비용은 기동 자체보다 기동 뒤의 준비 구간이 크고, navigation preload는 그 전체를 병렬화해서 콜드 기동에서만 11ms를 돌려준다. 웜 상태의 비용은 측정되지 않는다. 대신 지연이 아니라 바이트 쪽에 비용이 있다. 글 하나를 클릭하고 머무는 8초 동안 같은 오리진 트래픽이 310KB에서 575KB로 늘고, 그 대역폭 경합이 클릭 요청에 50ms 안팎으로 되돌아온다. 그중 대조군이 끝내 받지 않는 것은 HTML 한 벌 55KB뿐이고, 썸네일 216KB는 독자가 스크롤하면 대조군도 받을 것을 워커가 미리 그리고 더 큰 변형으로 받아 두는 몫이다. 어느 쪽이든 하드 내비게이션 단위로 보고되는 web-vitals에는 잡히지 않는다. 재방문자에게 Cache Storage는 HTTP 캐시보다 빠르지 않고, 그래서 같은 기간 안의 `sw_controlled` FCP 대조는 대부분 재방문 자체의 몫으로 읽는 편이 맞다. 그리고 실사용자 데이터에서 `reload` 대조군은 16일에 여섯 번의 방문이 전부이고 12건 중 8건이 확인하러 들어간 내 트래픽이라 기다려도 모이지 않으며, `navigate` 대조군은 신규와 재방문의 차이가 섞여 있어 표본이 늘어도 깨끗해지지 않는다.
 
-확인하지 못한 것. 우선 꼬리다. 엣지가 MISS일 때 103과 최종 헤더 사이는 3초까지 벌어지는데, RUM에서 각 요청의 엣지 캐시 상태를 조회할 수단이 없어 2편의 평균 +525ms 가운데 이 성분이 얼마인지는 가르지 못했다. 다음으로 Safari다. `navigate` p50이 `no` 126ms 대 `yes` 172ms(각 81건과 80건)로 Chromium과 비슷한 격차를 보이는데, Safari가 103을 어떻게 다루고 그 값이 `responseStart`에 어떻게 들어가는지는 확인하지 못했다. 마지막으로 실기기다. 랩은 로컬 서버라 CDN 경로가 없고, 실사용자 기기의 Cache Storage는 디스크 상태와 용량 압박을 겪으며, CPU 스로틀은 느린 기기의 메모리와 스토리지 지연까지 흉내 내지는 않는다. 그 환경을 M5 한 대로 재현하지 못한 것은 여전히 이 측정의 한계다.
+확인하지 못한 것. 우선 꼬리다. 엣지가 MISS일 때 103과 최종 헤더 사이는 3초에서 5초까지 벌어지는데, RUM에서 각 요청의 엣지 캐시 상태를 조회할 수단이 없어 2편의 평균 +525ms 가운데 이 성분이 얼마인지는 가르지 못했다. 다음으로 Safari다. `navigate` p50이 `no` 126ms 대 `yes` 172ms(각 81건과 80건)로 Chromium과 비슷한 격차를 보이는데, Safari가 103을 어떻게 다루고 그 값이 `responseStart`에 어떻게 들어가는지는 확인하지 못했다. 마지막으로 실기기다. 랩은 로컬 서버라 CDN 경로가 없고, 실사용자 기기의 Cache Storage는 디스크 상태와 용량 압박을 겪으며, CPU 스로틀은 느린 기기의 메모리와 스토리지 지연까지 흉내 내지는 않는다. 그 환경을 M5 한 대로 재현하지 못한 것은 여전히 이 측정의 한계다.
 
 ## 그래서 성능에는 도움이 되는가
 
@@ -425,7 +425,7 @@ TTFB 두 줄은 앞에서 본 Early Hints 아티팩트이니 지연으로 읽으
 
 먼저 내 측정 설계를 의심했다. 이 설계는 워커 조건만 홈에서 `controllerchange`를 기다리느라 3.5초를 더 머문다. 두 조건의 체류 시간을 맞추고 스무 쌍을 다시 돌려도 460 대 200이었고, 조건 실행 순서를 뒤집어 열두 쌍을 더 돌려도 524 대 200으로 방향이 그대로였다. 설계 탓은 아니었다.
 
-원인을 찾으려고 리소스 타이밍을 전부 떠 봤다. LCP 요소는 전 회차 글 제목 `h1`이고 폰트는 두 조건 모두 50ms 안팎에 다 도착하니 폰트는 아니다. 차이는 한 군데에 몰려 있었다. 글 페이지를 열면 헤더 내비게이션과 시리즈 목록과 태그 링크를 향해 `?_rsc=` 프리페치가 31건 나간다. 경로로는 23개인데 `_rsc` 값이 출발 페이지의 라우터 상태 해시라 같은 URL이 두 번씩 잡힌다. 워커가 없으면 이 31건이 전부 네트워크로 나가 345,639바이트를 받는다. 그중 한 건이 82,761바이트다. 워커가 있으면 31건 전부 Cache Storage에서 나와 0바이트다.
+원인을 찾으려고 리소스 타이밍을 전부 떠 봤다. LCP 요소는 전 회차 글 제목 `h1`이고 폰트는 두 조건 모두 50ms 안팎에 다 도착하니 폰트는 아니다. 차이는 한 군데에 몰려 있었다. 글 페이지를 열면 헤더 내비게이션과 시리즈 목록과 태그 링크를 향해 `?_rsc=` 프리페치가 31건 나간다. 경로로는 23개이고 그중 여덟 개가 두 번씩 나가는데, 두 번이 같은 URL은 아니다. `_rsc`는 프리페치 관련 요청 헤더 넷(`next-router-prefetch`, `next-router-segment-prefetch`, `next-router-state-tree`, `next-url`)을 이어 붙여 해시한 값이라, 같은 경로라도 그 조합이 달라지면 다른 URL이 된다. 31건의 URL은 전부 서로 다르다. 워커가 없으면 이 31건이 전부 네트워크로 나가 345,639바이트를 받는다. 그중 한 건이 82,761바이트다. 워커가 있으면 31건 전부 Cache Storage에서 나와 0바이트다.
 
 HTTP 캐시가 이걸 막아 주지 못하는 이유는 응답 헤더에 있다.
 
@@ -435,7 +435,7 @@ vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-pre
 x-nextjs-stale-time: 300
 ```
 
-`no-store`가 붙어 있으니 브라우저 캐시는 이 응답을 저장조차 하지 않는다. 재검증 이전의 문제라 `vary`가 네 개나 걸린 것도 따질 필요가 없다. 이 응답을 재사용하는 캐시가 아주 없는 것은 아니다. `x-nextjs-stale-time: 300`은 App Router가 자체 라우터 캐시에 5분 동안 들고 있겠다는 뜻인데, 그 캐시는 페이지를 새로 열면 사라지는 메모리 캐시다. 디스크에 남는 것은 Cache Storage뿐이고, Cache Storage는 애초에 이 헤더들을 보지 않는다.
+`no-store`가 붙어 있으니 브라우저 캐시는 이 응답을 저장조차 하지 않는다. 재검증 이전의 문제라 `vary`가 네 개나 걸린 것도 따질 필요가 없다. 이 응답을 재사용하는 캐시가 아주 없는 것은 아니다. `x-nextjs-stale-time: 300`은 App Router가 자체 라우터 캐시에 5분 동안 들고 있겠다는 뜻인데, 그 캐시는 페이지를 새로 열면 사라지는 메모리 캐시다. 디스크에 남는 것은 Cache Storage뿐인데, Cache Storage의 저장과 조회 알고리즘에는 `cache-control`도 `x-nextjs-stale-time`도 나오지 않는다. 조회에서 보는 것은 메서드와 URL, 그리고 `ignoreVary`를 켜지 않았다면 `vary`뿐이다.
 
 여기까지는 상관이다. 이 시리즈는 상관을 인과로 읽었다가 세 번 되돌렸으니 한 번 더 갈라야 했다. 조건을 셋으로 만들었다. 워커 없이 프리페치 그대로, 워커를 켜고 프리페치 그대로, 그리고 워커 없이 프리페치만 막은 것이다. 차단은 CDP의 `Network.setBlockedURLs`로 했다. Playwright의 `route()`는 앞의 함정에서 본 대로 HTTP 캐시를 꺼서 워커 없는 조건만 불리해지니 쓸 수 없었고, 대신 Network 도메인 자체는 세 조건 모두에서 켜 두어 도메인 활성화를 상수로 만들었다. 조건당 12회, 회차마다 실행 순서를 돌렸다.
 
@@ -477,7 +477,7 @@ x-nextjs-stale-time: 300
 쓰기로 했다면 이 시리즈에서 확인한 것이 다섯 있다.
 
 - navigation preload를 켠다. 콜드 기동 TTFB가 11ms 줄고, 켜지 않을 이유가 없다.
-- 가로챌 필요가 없는 요청은 `respondWith()`를 부르지 않고 통과시킨다. fetch 핸들러를 등록하면 그 오리진의 모든 요청이 워커를 거친다.
+- 가로챌 필요가 없는 요청은 `respondWith()`를 부르지 않고 통과시킨다. fetch 핸들러를 등록하면 워커가 제어하는 페이지에서 나가는 요청은 목적지 오리진과 무관하게 전부 워커를 거친다.
 - 배경에서 무언가를 더 받는 설계라면 그 바이트를 먼저 계산한다. 이 워커는 글 하나를 클릭할 때마다 HTML 한 벌과 썸네일 넉 장을 더 받았고, 그것은 어떤 웹 지표에도 잡히지 않았다.
 - 캐시 이름에 버전을 붙이고 activate에서 옛 버전을 지운다. 그리고 프리캐시한 오프라인 폴백은 상한 트리밍에서 빼 둔다. 그냥 두면 가장 먼저 삭제되는 것이 그것이다.
 - 배포하기 전에 전후를 가를 지표부터 심는다. 그것만으로도 부족할 수 있다는 것이 이 편의 내용이었다.
@@ -486,7 +486,7 @@ x-nextjs-stale-time: 300
 
 ---
 
-[^1]: [PerformanceResourceTiming: workerStart](https://w3c.github.io/resource-timing/#dom-performanceresourcetiming-workerstart), Resource Timing. 서비스 워커가 기동될 때는 기동 직전의 시각을, 이미 실행 중이면 fetch 이벤트 디스패치 직전의 시각을 돌려주며, 워커를 거치지 않으면 0이다. `PerformanceNavigationTiming`은 이 인터페이스를 상속한다.
+[^1]: [PerformanceResourceTiming: workerStart](https://w3c.github.io/resource-timing/#dom-performanceresourcetiming-workerstart), Resource Timing. 스펙은 이 값을 Fetch의 final service worker start time으로만 정의한다. 기동 중인 경우와 이미 떠 있는 경우를 갈라 놓은 것은 [MDN 문서](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceResourceTiming/workerStart) 쪽인데, 서비스 워커가 기동될 때는 기동 직전의 시각을, 이미 실행 중이면 fetch 이벤트 디스패치 직전의 시각을 돌려주며 워커를 거치지 않으면 0이라고 적고 있다. `PerformanceNavigationTiming`은 이 인터페이스를 상속한다.
 
 [^2]: [browserContext.route()](https://playwright.dev/docs/api/class-browsercontext#browser-context-route), Playwright 문서. "Enabling routing disables http cache."라고 명시되어 있다.
 
