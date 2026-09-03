@@ -11,6 +11,11 @@ thumbnail: /thumbnails/2026/05/use-client-deep-dive.png
 series: 디렉티브 딥다이브
 seriesOrder: 1
 slide: use-client-deep-dive
+art:
+  layout: rings
+  hue: violet
+  tone: dark
+  hero: 'use client'
 ---
 
 ## Table of Contents

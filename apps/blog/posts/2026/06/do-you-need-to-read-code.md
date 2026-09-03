@@ -12,6 +12,13 @@ description: '스펙을 만족하고 버그를 고칠 수 있다면 코드를 �
 series: 'AI 시대의 판단'
 seriesOrder: 1
 thumbnail: /thumbnails/2026/06/do-you-need-to-read-code.png
+art:
+  scene: 'A magnifying glass hovers over a single forked branch line buried beneath a stack of stamped checkmark seals on a pull request card. The seals cover the surface completely, but the fork underneath splits into a broken dead-end unseen by any of them.'
+  composition: macro
+  layout: glyph
+  hue: violet
+  tone: dark
+  hero: '숨겨진 커플링'
 ---
 
 ## 개요

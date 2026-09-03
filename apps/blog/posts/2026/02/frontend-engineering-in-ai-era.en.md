@@ -7,6 +7,11 @@ tags:
 published: true
 date: 2026-02-14 12:00:00
 description: "AI coding tools aren't changing developers—they're changing the nature of what developers do."
+art:
+  layout: bauhaus
+  hue: violet
+  tone: light
+  hero: '인지 부채'
 ---
 
 ## Table of Contents

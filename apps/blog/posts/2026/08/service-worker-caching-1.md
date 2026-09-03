@@ -11,6 +11,11 @@ description: '서비스 워커는 사이트와 네트워크 사이에 선 프로
 thumbnail: /thumbnails/2026/08/service-worker-caching-1.png
 series: '서비스 워커 캐싱 딥다이브'
 seriesOrder: 1
+art:
+  layout: bands
+  hue: cyan
+  tone: light
+  hero: '104KB → 6.6MB'
 ---
 
 ## Table of Contents

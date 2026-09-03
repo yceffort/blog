@@ -12,6 +12,11 @@ description: 'The questions React Foundation must answer'
 thumbnail: '/thumbnails/2026/03/react-is-whose.png'
 series: 'The State of Next.js'
 seriesOrder: 3
+art:
+  layout: bands
+  hue: violet
+  tone: light
+  hero: '24%'
 ---
 
 ## Table of Contents

@@ -11,6 +11,11 @@ date: 2026-03-16 16:24:02
 description: 'Hey Edge Middleware, how have you been?'
 series: 'The State of Next.js'
 seriesOrder: 1
+art:
+  layout: bands
+  hue: blue
+  tone: dark
+  hero: 'Edge Runtime'
 ---
 
 ## Table of Contents

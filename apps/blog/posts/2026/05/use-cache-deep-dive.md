@@ -11,6 +11,11 @@ thumbnail: /thumbnails/2026/05/use-cache-deep-dive.png
 series: 디렉티브 딥다이브
 seriesOrder: 3
 slide: use-cache-deep-dive
+art:
+  layout: rings
+  hue: violet
+  tone: dark
+  hero: 'use cache'
 ---
 
 ## Table of Contents

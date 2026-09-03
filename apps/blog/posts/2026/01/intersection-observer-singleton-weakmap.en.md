@@ -7,6 +7,11 @@ tags:
 published: true
 date: 2026-01-17 21:30:00
 description: 'How to efficiently observe hundreds of elements while preventing memory leaks'
+art:
+  layout: rings
+  hue: cyan
+  tone: light
+  hero: 'WeakMap'
 ---
 
 ## Table of Contents

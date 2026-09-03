@@ -10,6 +10,11 @@ published: true
 date: 2026-05-09 12:54:08
 description: '좋은 패키지는 기능뿐 아니라 의존성, 버전업, 호환성, 릴리즈 정책까지 사용자 친화적이어야 한다.'
 thumbnail: /thumbnails/2026/05/good-package-for-long-term-users.png
+art:
+  layout: rings
+  hue: blue
+  tone: light
+  hero: 'peerDependencies'
 ---
 
 ## Table of Contents

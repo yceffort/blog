@@ -10,6 +10,11 @@ published: true
 date: 2026-05-03 15:50:00
 description: '코드 리뷰가 놓치는 bundle 비용, PR에 어떻게 띄울 것인가.'
 thumbnail: /thumbnails/2026/05/pr-diff-vs-bundle.png
+art:
+  layout: bands
+  hue: cyan
+  tone: light
+  hero: 'PR diff → +200KB'
 ---
 
 ## Table of Contents

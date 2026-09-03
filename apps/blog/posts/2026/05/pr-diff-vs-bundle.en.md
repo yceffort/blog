@@ -10,6 +10,11 @@ published: true
 date: 2026-05-03 15:50:00
 description: 'The bundle costs that code review misses, and how to surface them in the PR.'
 thumbnail: /thumbnails/2026/05/pr-diff-vs-bundle.png
+art:
+  layout: bands
+  hue: cyan
+  tone: light
+  hero: 'PR diff → +200KB'
 ---
 
 ## Table of Contents

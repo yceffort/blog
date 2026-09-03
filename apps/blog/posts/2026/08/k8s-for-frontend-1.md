@@ -12,6 +12,13 @@ description: 'SSR을 운영하는 프론트엔드 개발자가 마주치는 쿠�
 thumbnail: /thumbnails/2026/08/k8s-for-frontend-1.png
 series: '프론트엔드 개발자가 알아야 할 쿠버네티스'
 seriesOrder: 1
+art:
+  scene: 'A single browser window sends an arrow toward a large server box; the arrow hits a gateway box in between that splits into two smaller boxes labeled by identical small squares inside, one square glowing while the other is dim.'
+  composition: cutaway
+  layout: bands
+  hue: blue
+  tone: light
+  hero: '파드에서 오토스케일러까지'
 ---
 
 ## Table of Contents

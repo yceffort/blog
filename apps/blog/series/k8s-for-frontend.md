@@ -2,6 +2,11 @@
 name: '프론트엔드 개발자가 알아야 할 쿠버네티스'
 title: '프론트엔드 개발자가 알아야 할 <em>쿠버네티스</em>'
 description: 'SSR을 운영하는 프론트엔드 개발자가 쿠버네티스를 블랙박스로 두지 않기 위해, kind 클러스터에서 직접 열어보고 실측한 기록'
+art:
+  hue: warm
+  tone: light
+  scene: 'A container box splits into multiple identical pod boxes connected by lines to a single load-balancer box, with arrows showing request traffic entering from a browser window and flowing between the pods.'
+  composition: cutaway
 ---
 
 SSR을 운영하다 보면 배포, 트래픽, 메모리 같은 문제의 절반은 애플리케이션 바깥, 그러니까 쿠버네티스 쪽에서 벌어진다. 그런데 프론트엔드 개발자 입장에서 쿠버네티스는 대체로 남이 만들어 둔 매니페스트를 복사해 쓰는 블랙박스로 남기 쉽다. 이 시리즈는 그 블랙박스를 한 층씩 직접 열어본 기록이다.

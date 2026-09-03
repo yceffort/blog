@@ -12,6 +12,11 @@ description: "A Service's ClusterIP is an IP attached to no machine, yet curl re
 thumbnail: /thumbnails/2026/08/k8s-for-frontend-3.png
 series: 'Kubernetes for Frontend Developers'
 seriesOrder: 3
+art:
+  layout: bands
+  hue: blue
+  tone: dark
+  hero: 'ClusterIP'
 ---
 
 ## Table of Contents

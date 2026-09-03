@@ -12,6 +12,11 @@ description: 'Even a deploy that changes not a single line of code leaks errors.
 thumbnail: /thumbnails/2026/08/k8s-for-frontend-4.png
 series: 'Kubernetes for Frontend Developers'
 seriesOrder: 4
+art:
+  layout: bands
+  hue: blue
+  tone: dark
+  hero: 'CrashLoopBackOff'
 ---
 
 ## Table of Contents

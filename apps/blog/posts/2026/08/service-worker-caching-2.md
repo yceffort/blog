@@ -11,6 +11,13 @@ description: '1편의 일반론을 들고 이 블로그(Next.js App Router)를 �
 thumbnail: /thumbnails/2026/08/service-worker-caching-2.png
 series: '서비스 워커 캐싱 딥다이브'
 seriesOrder: 2
+art:
+  scene: 'a paper airplane flying through an open window into a stormy sky, leaving a glowing trail of small photographs behind it'
+  composition: diagonal
+  layout: bands
+  hue: cyan
+  tone: dark
+  hero: '634ms → 525ms'
 ---
 
 ## Table of Contents

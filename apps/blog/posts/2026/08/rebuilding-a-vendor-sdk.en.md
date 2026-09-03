@@ -10,6 +10,13 @@ published: true
 date: 2026-08-31 14:00:00
 description: 'I imported one constant and 97.7% of the bundle came along with it. The vendor had no timeline for a fix, so I pried open the published source maps, recovered over 400 TypeScript files, and rewrote the build, the entry points, and the dependencies however I wanted. Everything except the logic. That got /send to -77.5% raw. The hard part came after. All 1,932 tests passed, and a few of them were watching nothing at all.'
 thumbnail: /thumbnails/2026/08/rebuilding-a-vendor-sdk.png
+art:
+  scene: 'A single tiny gear jammed inside a massive shipping crate, the crate cracked open spilling far too much packing foam.'
+  composition: cutaway
+  layout: bands
+  hue: cyan
+  tone: dark
+  hero: '-77.5%'
 ---
 
 ## Table of Contents

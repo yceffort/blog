@@ -12,6 +12,11 @@ description: "Raise traffic 12x and it takes 31.5 seconds for a new pod to recei
 thumbnail: /thumbnails/2026/08/k8s-for-frontend-5.png
 series: 'Kubernetes for Frontend Developers'
 seriesOrder: 5
+art:
+  layout: gridChart
+  hue: blue
+  tone: dark
+  hero: '31.5초'
 ---
 
 ## Table of Contents

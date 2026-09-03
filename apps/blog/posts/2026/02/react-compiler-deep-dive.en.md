@@ -6,6 +6,11 @@ tags:
 published: true
 date: 2026-02-19 14:00:00
 description: 'A deep exploration of how React Compiler analyzes code and what it produces, from pipeline to final output.'
+art:
+  layout: codePanel
+  hue: violet
+  tone: dark
+  hero: '280ms → 0ms'
 ---
 
 ## Table of Contents

@@ -12,6 +12,11 @@ description: '기술 우위보다 강한 전환 비용'
 thumbnail: /thumbnails/2026/03/why-still-nextjs.png
 series: 'Next.js의 현주소'
 seriesOrder: 5
+art:
+  layout: columns
+  hue: slate
+  tone: light
+  hero: '전환 비용'
 ---
 
 ## Table of Contents

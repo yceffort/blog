@@ -13,6 +13,13 @@ thumbnail: /thumbnails/2026/08/og-scraping-server-2.png
 slide: og-scraping-server-nodejs-2
 series: 'OG 스크래핑 서버 설계 노트'
 seriesOrder: 2
+art:
+  scene: 'A padlocked front gate stands wide open, while a tiny unlocked side door lets a paper airplane slip through the wall behind it.'
+  composition: diagonal
+  layout: stripes
+  hue: rose
+  tone: dark
+  hero: '169.254.169.254'
 ---
 
 ## Table of Contents

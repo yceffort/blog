@@ -2,6 +2,11 @@
 name: 서비스 워커 캐싱 딥다이브
 title: '<em>서비스 워커</em> 캐싱 딥다이브'
 description: '『프런트엔드 성능 최적화 Deep Dive』의 캐시 장에서 못 다한 세 번째 캐시 레이어. 프록시와 라이프사이클과 전략의 일반론부터, Next.js 블로그에 직접 적용하고 GA4로 실측한 기록까지'
+art:
+  hue: cyan
+  tone: light
+  scene: 'A translucent intermediary panel sits between a browser window and a server box, intercepting the arrow flowing between them and redirecting it into a small storage shelf stacked with cached cards.'
+  composition: cutaway
 ---
 
 브라우저 캐시에는 세 레이어가 있다. HTTP 캐시, CDN 캐시, 그리고 서비스 워커 캐시다. 앞의 둘은 책에서 한 장에 걸쳐 다뤘지만, 마지막 하나는 분량 때문에 끝내 싣지 못했다. 이 시리즈는 그 빚을 갚는 기록이다.

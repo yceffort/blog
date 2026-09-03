@@ -12,6 +12,11 @@ description: 'I added one GC tuning flag to the same workload and peak RSS jumpe
 thumbnail: /thumbnails/2026/08/nodejs-k8s-pod-sizing.png
 series: 'Kubernetes for Frontend Developers'
 seriesOrder: 6
+art:
+  layout: gridChart
+  hue: warm
+  tone: dark
+  hero: '201MB → 593MB'
 ---
 
 ## Table of Contents

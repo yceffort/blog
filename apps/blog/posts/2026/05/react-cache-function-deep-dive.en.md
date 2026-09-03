@@ -10,6 +10,11 @@ published: true
 date: 2026-05-30 14:00:00
 description: "Every odd rule of React's cache() falls straight out of a ~30-line implementation. We trace the dispatcher, getCacheForType, and the WeakMap/Map tree at the source level to see exactly how request-scoped memoization works."
 thumbnail: /thumbnails/2026/05/react-cache-function-deep-dive.png
+art:
+  layout: codePanel
+  hue: violet
+  tone: dark
+  hero: 'getCacheForType'
 ---
 
 ## Table of Contents

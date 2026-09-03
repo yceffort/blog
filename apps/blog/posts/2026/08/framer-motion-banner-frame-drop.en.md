@@ -10,6 +10,13 @@ published: true
 date: 2026-08-15 20:00:00
 description: 'A banner built with framer-motion made the entire home screen stutter for the 0.6 seconds it took to open. The record of guessing the cause from the code, having that guess overturned twice by measurement, and finally removing the reflow with a single easing function. Plus what the work left behind: the gap between declaration and execution, the principle that properties decide performance, preserving mechanisms, suspecting your instruments first, and proving sameness with a curve.'
 thumbnail: /thumbnails/2026/08/framer-motion-banner-frame-drop.png
+art:
+  scene: 'A single accordion card lifts open above a long paper list, its downward push frozen into visible stair-step notches instead of a smooth ramp.'
+  composition: cutaway
+  layout: contours
+  hue: warm
+  tone: dark
+  hero: '25회 → 10회'
 ---
 
 ## Table of Contents

@@ -10,6 +10,11 @@ description: "Build-time transformations, cache key serialization, ResumeDataCac
 thumbnail: /thumbnails/2026/05/use-cache-deep-dive.png
 series: Directive Deep Dive
 seriesOrder: 3
+art:
+  layout: rings
+  hue: violet
+  tone: dark
+  hero: 'use cache'
 ---
 
 ## Table of Contents

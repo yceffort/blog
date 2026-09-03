@@ -9,6 +9,11 @@ tags:
 published: true
 date: 2026-02-21 10:00:00
 description: '무한 스크롤이 UX, 성능, 접근성, 그리고 법률의 관점에서 어떻게 재평가되고 있는지 살펴본다'
+art:
+  layout: stripes
+  hue: rose
+  tone: light
+  hero: '-50.0%'
 ---
 
 ## Table of Contents

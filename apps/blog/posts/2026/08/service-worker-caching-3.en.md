@@ -11,6 +11,13 @@ description: 'I set out to confirm the 500 ms hint that part 2 left behind, but 
 thumbnail: /thumbnails/2026/08/service-worker-caching-3.png
 series: 'Service Worker Caching Deep Dive'
 seriesOrder: 3
+art:
+  scene: 'A single glass jar sits nearly empty on a vast table, while a stopwatch beside it drips molten wax through a tiny funnel.'
+  composition: vast
+  layout: gridChart
+  hue: cyan
+  tone: light
+  hero: '103 Early Hints'
 ---
 
 ## Table of Contents

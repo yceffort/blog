@@ -2,6 +2,11 @@
 name: 'OG 스크래핑 서버 설계 노트'
 title: '<em>OG 스크래핑</em> 서버 설계 노트'
 description: '링크 미리보기 서버를 짓는다면 무엇을 먼저 정해야 하는가. 런타임 선택의 근거부터 SSRF, 인코딩, 캐시 스탬피드까지 원리로 따라가고, 그렇게 쓴 코드를 전부 돌려본 기록'
+art:
+  hue: rose
+  tone: light
+  scene: 'A server box opens a URL card and pulls og tags into a preview card, while an arrow loops back through the same server toward an internal address, revealing an interception path. A cache shelf beside it holds duplicate copies of the same card.'
+  composition: cutaway
 ---
 
 링크 미리보기는 명세만 보면 세 줄짜리 기능이다. URL을 열고, HTML을 파싱하고, `og:` 태그를 꺼내면 된다. 그런데 그 세 줄이 프로덕션에서 무너지는 지점이 꽤 많고, 그중 상당수는 "에러율이 높다"는 하나의 숫자 뒤에 뭉쳐서 잘 보이지 않는다.

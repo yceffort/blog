@@ -12,6 +12,11 @@ description: '판단을 비싸게 만든 마찰이, 동시에 판단을 못 배�
 series: 'AI 시대의 판단'
 seriesOrder: 3
 thumbnail: /thumbnails/2026/06/learning-what-ai-cant-do.png
+art:
+  layout: glyph
+  hue: violet
+  tone: dark
+  hero: 'desirable difficulties'
 ---
 
 ## 신호가 꺼진다

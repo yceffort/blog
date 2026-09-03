@@ -10,6 +10,11 @@ tags:
 published: true
 date: 2026-05-15 02:00:00
 description: 'Bun이 Claude Code로 6일 만에 Zig에서 Rust로 옮긴 사건. 코드 품질보다 OSS 거버넌스와 자원 비대칭의 의미가 더 크다.'
+art:
+  layout: stripes
+  hue: rose
+  tone: dark
+  hero: '6일'
 ---
 
 ## Table of Contents

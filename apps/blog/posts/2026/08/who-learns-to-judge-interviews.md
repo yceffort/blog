@@ -8,6 +8,13 @@ published: true
 date: 2026-08-10 13:00:00
 description: 'AI가 코드를 쓰는 시대에 개발자의 하루가 어떻게 달라졌는지 듣고 있습니다. AI 덕분에 성장이 빨라진 분, 반대로 학습에 어려움을 느끼는 분, AI와 함께 커리어를 시작한 주니어 분의 이야기를 찾습니다. 인터뷰는 예외 없이 익명으로 처리합니다.'
 thumbnail: /thumbnails/2026/08/who-learns-to-judge-interviews.png
+art:
+  scene: 'A single keyboard sits center stage, one cable splitting into two diverging paths: one path leads to a rising stacked bar timeline, the other to a collapsing broken bar timeline.'
+  composition: plate
+  layout: bauhaus
+  hue: violet
+  tone: light
+  hero: '남은 판단은 누가 배우는가'
 ---
 
 ## Table of Contents

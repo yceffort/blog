@@ -11,6 +11,11 @@ date: 2026-03-17 20:07:31
 description: 'What question does vinext really ask?'
 series: 'The State of Next.js'
 seriesOrder: 2
+art:
+  layout: bands
+  hue: blue
+  tone: light
+  hero: '94%'
 ---
 
 ## Table of Contents

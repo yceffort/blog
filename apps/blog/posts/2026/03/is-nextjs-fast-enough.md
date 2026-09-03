@@ -12,6 +12,11 @@ description: '벤치마크가 말해주는 불편한 진실'
 thumbnail: '/thumbnails/2026/03/is-nextjs-fast-enough.png'
 series: 'Next.js의 현주소'
 seriesOrder: 4
+art:
+  layout: gridChart
+  hue: warm
+  tone: light
+  hero: '13ms → 431ms'
 ---
 
 ## Table of Contents

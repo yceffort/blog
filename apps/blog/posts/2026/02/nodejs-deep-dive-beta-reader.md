@@ -7,6 +7,11 @@ published: true
 featured: true
 date: 2026-02-19 22:00:00
 description: '많관부22'
+art:
+  layout: glyph
+  hue: violet
+  tone: dark
+  hero: 'Node.js Deep Dive'
 ---
 
 네번째 책을 쓰고 있습니다. 이번에는 Node.js 입니다.

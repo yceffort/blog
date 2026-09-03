@@ -5,6 +5,11 @@ tags:
 published: true
 date: 2026-07-22 12:00:00
 description: '🙇🏻‍♂️'
+art:
+  layout: contours
+  hue: warm
+  tone: light
+  hero: '1,458쪽'
 ---
 
 ![frontend-performance-deep-dive](https://wikibook.co.kr/images/cover/l/9791158396916.jpg)

@@ -10,6 +10,12 @@ published: true
 date: 2026-07-22 10:00:00
 description: 'Why the layers piled up, why we returned to the server, and why the stack survives even after agents. And why the survival of a stack and the value of the people who know it are two separate things'
 thumbnail: /thumbnails/2026/07/frontend-past-present-after-agents.png
+art:
+  scene: 'A tower of stacked block layers rises between a server box at the base and a browser window at the top, connected by request and response arrows; the uppermost blocks turn transparent glass while a blinking terminal cursor rewrites the block underneath.'
+  composition: cutaway
+  layout: bauhaus
+  hue: slate
+  tone: light
 ---
 
 ## It Looks Like We're Back Where We Started

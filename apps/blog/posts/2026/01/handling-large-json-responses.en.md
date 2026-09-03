@@ -6,6 +6,11 @@ tags:
 published: true
 date: 2026-01-11 15:00:00
 description: 'How to survive when JSON.parse() becomes overwhelming'
+art:
+  layout: contours
+  hue: cyan
+  tone: light
+  hero: '47.2초 → 0.4초'
 ---
 
 ## Table of Contents

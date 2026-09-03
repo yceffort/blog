@@ -5,6 +5,11 @@ tags:
 published: true
 date: 2026-01-17 20:00:00
 description: 'Exhaustive check pattern using the never type'
+art:
+  layout: glyph
+  hue: violet
+  tone: light
+  hero: 'assertNever'
 ---
 
 ## Table of Contents

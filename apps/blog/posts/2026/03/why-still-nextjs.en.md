@@ -12,6 +12,11 @@ description: 'Switching costs stronger than technical superiority'
 thumbnail: /thumbnails/2026/03/why-still-nextjs.png
 series: 'The State of Next.js'
 seriesOrder: 5
+art:
+  layout: columns
+  hue: slate
+  tone: light
+  hero: '전환 비용'
 ---
 
 ## Table of Contents

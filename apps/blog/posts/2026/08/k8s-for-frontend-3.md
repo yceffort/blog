@@ -12,6 +12,11 @@ description: 'Service의 ClusterIP는 어느 기계에도 붙어 있지 않은 I
 thumbnail: /thumbnails/2026/08/k8s-for-frontend-3.png
 series: '프론트엔드 개발자가 알아야 할 쿠버네티스'
 seriesOrder: 3
+art:
+  layout: bands
+  hue: blue
+  tone: dark
+  hero: 'ClusterIP'
 ---
 
 ## Table of Contents

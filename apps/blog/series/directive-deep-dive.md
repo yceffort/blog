@@ -2,6 +2,11 @@
 name: 디렉티브 딥다이브
 title: '<em>디렉티브</em> 딥다이브'
 description: "'use client', 'use server', 'use cache'. 파일 맨 위 한 줄이 빌드와 런타임에서 무엇으로 변하는지 소스 레벨까지 따라간 기록"
+art:
+  hue: violet
+  tone: light
+  scene: 'A single file icon at the center splits into two separate module nodes connected by thin lines, one line crossing a vertical network boundary wall with an arrow passing through it.'
+  composition: diagonal
 ---
 
 React와 Next.js의 디렉티브는 파일 맨 위에 문자열 한 줄을 적는 것이 전부다. 그런데 그 한 줄이 만드는 결과는 전부가 아니다. 모듈 그래프가 갈라지고, 함수가 네트워크 엔드포인트로 바뀌고, 캐시 경계가 생긴다. 적기는 쉬운데 무슨 일이 벌어지는지는 설명하기 어려운 이 간극이 시리즈의 출발점이다.

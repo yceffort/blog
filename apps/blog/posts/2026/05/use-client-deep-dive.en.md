@@ -10,6 +10,11 @@ description: "Module boundaries created by a single line of 'use client', build-
 thumbnail: /thumbnails/2026/05/use-client-deep-dive.png
 series: Directive Deep Dive
 seriesOrder: 1
+art:
+  layout: rings
+  hue: violet
+  tone: dark
+  hero: 'use client'
 ---
 
 ## Table of Contents

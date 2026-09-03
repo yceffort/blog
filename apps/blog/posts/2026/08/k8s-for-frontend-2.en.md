@@ -12,6 +12,13 @@ description: 'The same Next.js app produced one 1.72GB image and one 208MB image
 thumbnail: /thumbnails/2026/08/k8s-for-frontend-2.png
 series: 'Kubernetes for Frontend Developers'
 seriesOrder: 2
+art:
+  scene: 'A massive block of stacked slabs stands on the left, and a single thin slab a fraction of its size sits on the right at the same baseline, both resting on identical small server boxes.'
+  composition: plate
+  layout: rings
+  hue: blue
+  tone: dark
+  hero: '1.72GB → 208MB'
 ---
 
 ## Table of Contents

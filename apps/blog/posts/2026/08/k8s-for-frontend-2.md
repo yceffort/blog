@@ -12,6 +12,13 @@ description: '같은 Next.js 앱인데 이미지 하나는 1.72GB, 하나는 208
 thumbnail: /thumbnails/2026/08/k8s-for-frontend-2.png
 series: '프론트엔드 개발자가 알아야 할 쿠버네티스'
 seriesOrder: 2
+art:
+  scene: 'A massive block of stacked slabs stands on the left, and a single thin slab a fraction of its size sits on the right at the same baseline, both resting on identical small server boxes.'
+  composition: plate
+  layout: rings
+  hue: blue
+  tone: dark
+  hero: '1.72GB → 208MB'
 ---
 
 ## Table of Contents

@@ -12,6 +12,11 @@ description: 'React Foundation이 답해야 할 질문'
 thumbnail: '/thumbnails/2026/03/react-is-whose.png'
 series: 'Next.js의 현주소'
 seriesOrder: 3
+art:
+  layout: bands
+  hue: violet
+  tone: light
+  hero: '24%'
 ---
 
 ## Table of Contents

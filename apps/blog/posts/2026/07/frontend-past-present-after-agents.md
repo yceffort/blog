@@ -10,6 +10,12 @@ published: true
 date: 2026-07-22 10:00:00
 description: '층은 왜 쌓였고, 왜 서버로 돌아왔고, 에이전트 이후에도 스택이 남는 이유는 무엇인가. 그리고 스택이 이기는 것과 그 스택을 아는 사람의 가치는 왜 별개인가'
 thumbnail: /thumbnails/2026/07/frontend-past-present-after-agents.png
+art:
+  scene: 'A tower of stacked block layers rises between a server box at the base and a browser window at the top, connected by request and response arrows; the uppermost blocks turn transparent glass while a blinking terminal cursor rewrites the block underneath.'
+  composition: cutaway
+  layout: bauhaus
+  hue: slate
+  tone: light
 ---
 
 ## 제자리로 돌아온 것처럼 보이지만

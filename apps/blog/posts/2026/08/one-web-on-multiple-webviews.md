@@ -9,6 +9,13 @@ published: false
 date: 2026-08-16 14:00:00
 description: '같은 웹 서비스가 네 개의 웹뷰 위에서 돌아가면, 하단 여백 하나를 얻는 방법이 네 가지가 된다. if (isPartnerApp)가 코드베이스에 스며드는 과정을 부검하고, 분기를 소멸·격리·존치로 가르고, 남는 분기를 질문에서 선언으로 바꾸는 설계를 기록했다. 그리고 이 구조가 해결하지 못하는 것들도 함께.'
 thumbnail: /thumbnails/2026/08/one-web-on-multiple-webviews.png
+art:
+  scene: 'Four mismatched keys of different shapes trying to fit into a single narrow keyhole in a wooden door.'
+  composition: diagonal
+  layout: rings
+  hue: blue
+  tone: light
+  hero: '질문에서 선언으로'
 ---
 
 ## Table of Contents

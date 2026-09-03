@@ -6,6 +6,11 @@ tags:
 published: true
 date: 2026-02-20 10:00:00
 description: 'I dug deep into what Effect-TS is all about and why everyone seems so excited about it.'
+art:
+  layout: rings
+  hue: violet
+  tone: dark
+  hero: 'Effect<A, E, R>'
 ---
 
 ## Table of Contents

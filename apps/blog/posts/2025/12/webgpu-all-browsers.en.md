@@ -7,6 +7,11 @@ tags:
 published: true
 date: 2025-12-30 12:00:00
 description: 'In July 2025, the browser GPU API changed generations for the first time in 14 years'
+art:
+  layout: rings
+  hue: violet
+  tone: dark
+  hero: 'WebGPU'
 ---
 
 ## Table of Contents

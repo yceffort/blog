@@ -9,6 +9,11 @@ tags:
 published: true
 date: 2026-02-21 10:00:00
 description: 'How infinite scroll is being reevaluated from UX, performance, accessibility, and legal perspectives'
+art:
+  layout: stripes
+  hue: rose
+  tone: light
+  hero: '-50.0%'
 ---
 
 ## Table of Contents

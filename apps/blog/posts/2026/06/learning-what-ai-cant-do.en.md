@@ -12,6 +12,11 @@ description: 'The friction that made judgment expensive is the same friction tha
 series: 'Judgment in the AI Era'
 seriesOrder: 3
 thumbnail: /thumbnails/2026/06/learning-what-ai-cant-do.png
+art:
+  layout: glyph
+  hue: violet
+  tone: dark
+  hero: 'desirable difficulties'
 ---
 
 ## The Signal Goes Dark

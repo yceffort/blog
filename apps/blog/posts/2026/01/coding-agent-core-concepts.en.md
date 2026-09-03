@@ -7,6 +7,11 @@ tags:
 published: true
 date: 2026-01-17 23:00:00
 description: 'Complete overview of core coding agent concepts: Rules, Commands, MCP, Sub-agents, Hooks, Skills, and Plugins'
+art:
+  layout: columns
+  hue: violet
+  tone: light
+  hero: 'SKILL.md'
 ---
 
 ## Table of Contents

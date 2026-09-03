@@ -10,6 +10,11 @@ tags:
 published: true
 date: 2026-04-20 12:00:00
 description: '분명 빨라졌는데 코드베이스와 내 실력은 왜 그대로인가. 체감과 실증 사이의 간격을 들여다본다.'
+art:
+  layout: bauhaus
+  hue: slate
+  tone: light
+  hero: '24% 빨라질 것'
 ---
 
 ## Table of Contents

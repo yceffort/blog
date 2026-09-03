@@ -7,6 +7,11 @@ published: true
 featured: true
 date: 2026-02-19 22:00:00
 description: 'Please show lots of interest and support!'
+art:
+  layout: glyph
+  hue: violet
+  tone: dark
+  hero: 'Node.js Deep Dive'
 ---
 
 I'm writing my fourth book. This time, it's about Node.js.

@@ -12,6 +12,11 @@ description: 'The claim that job boundaries are collapsing is only half true. Wh
 series: 'Judgment in the AI Era'
 seriesOrder: 2
 thumbnail: /thumbnails/2026/06/when-job-titles-blur.png
+art:
+  layout: bauhaus
+  hue: slate
+  tone: light
+  hero: 'T자형 인간'
 ---
 
 ## Overview

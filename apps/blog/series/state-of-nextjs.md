@@ -2,6 +2,11 @@
 name: 'Next.js의 현주소'
 title: '<em>Next.js</em>의 현주소'
 description: 'Edge Runtime의 후퇴, Cloudflare의 재구현, React Foundation 출범까지. 2026년의 Next.js가 서 있는 자리를 다섯 편에 걸쳐 짚어본 기록'
+art:
+  hue: slate
+  tone: dark
+  scene: 'One large server box stands center with a framework nameplate-shaped panel, while a second smaller box beside it is wired with identical connectors, both feeding into the same set of module nodes linked by lines.'
+  composition: cutaway
 ---
 
 2026년 초의 Next.js 생태계에는 굵직한 사건이 몰려 있었다. Edge Runtime이 사실상 후퇴했고, Cloudflare는 Next.js를 아예 다시 구현한 vinext를 내놓았고, React는 Foundation 체제로 넘어갔다. 각각을 따로 보면 개별 뉴스지만, 묶어서 보면 "Next.js와 그 위의 React는 지금 어디에 서 있는가"라는 하나의 질문이 된다.

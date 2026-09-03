@@ -12,6 +12,13 @@ description: 'The Kubernetes vocabulary and structure that frontend developers r
 thumbnail: /thumbnails/2026/08/k8s-for-frontend-1.png
 series: 'Kubernetes for Frontend Developers'
 seriesOrder: 1
+art:
+  scene: 'A single browser window sends an arrow toward a large server box; the arrow hits a gateway box in between that splits into two smaller boxes labeled by identical small squares inside, one square glowing while the other is dim.'
+  composition: cutaway
+  layout: bands
+  hue: blue
+  tone: light
+  hero: '파드에서 오토스케일러까지'
 ---
 
 ## Table of Contents

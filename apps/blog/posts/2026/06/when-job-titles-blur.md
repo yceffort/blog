@@ -12,6 +12,11 @@ description: '직군의 경계가 무너진다는 말은 절반만 맞다. 무�
 series: 'AI 시대의 판단'
 seriesOrder: 2
 thumbnail: /thumbnails/2026/06/when-job-titles-blur.png
+art:
+  layout: bauhaus
+  hue: slate
+  tone: light
+  hero: 'T자형 인간'
 ---
 
 ## 개요

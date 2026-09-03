@@ -12,6 +12,13 @@ description: "If the spec is satisfied and the bugs get fixed, do you still need
 series: 'Judgment in the AI Era'
 seriesOrder: 1
 thumbnail: /thumbnails/2026/06/do-you-need-to-read-code.png
+art:
+  scene: 'A magnifying glass hovers over a single forked branch line buried beneath a stack of stamped checkmark seals on a pull request card. The seals cover the surface completely, but the fork underneath splits into a broken dead-end unseen by any of them.'
+  composition: macro
+  layout: glyph
+  hue: violet
+  tone: dark
+  hero: '숨겨진 커플링'
 ---
 
 ## Overview
