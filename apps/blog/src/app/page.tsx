@@ -10,6 +10,7 @@ import PostCard from '@/components/PostCard'
 import RecentRow from '@/components/RecentRow'
 import SeriesRow from '@/components/SeriesRow'
 import {SiteConfig} from '@/config'
+import {HOME_SERIES_COUNT} from '@/constants'
 import {buildOgImageUrl} from '@/utils/og'
 import {
   buildArtThumbnail,
@@ -160,7 +161,7 @@ async function HomeContent() {
             </div>
           </div>
           <section className="rec-list">
-            {series.map((s, i) => (
+            {series.slice(0, HOME_SERIES_COUNT).map((s, i) => (
               <SeriesRow key={s.slug} series={s} index={i} />
             ))}
           </section>
