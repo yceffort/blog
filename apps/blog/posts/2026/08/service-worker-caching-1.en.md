@@ -5,7 +5,7 @@ tags:
   - service-worker
   - pwa
   - browser
-published: false
+published: true
 date: 2026-08-12 20:00:00
 description: 'A service worker is a programmable proxy standing between your site and the network. Where does it stand, why does the cache rot, why am I seeing the old version after deploying, what goes in under which strategy, and so, should you use it? Holding on to five questions you actually meet in practice, this post goes down to the details of state transitions and to a real measurement in which a 104KB opaque response was accounted as 6.6MB of storage. It is the general theory that did not fit into the cache chapter of Frontend Performance Optimization Deep Dive (published in Korean), and the first post of the Service Worker Caching Deep Dive series.'
 thumbnail: /thumbnails/2026/08/service-worker-caching-1.png

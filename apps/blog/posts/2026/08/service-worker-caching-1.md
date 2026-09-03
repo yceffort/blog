@@ -5,7 +5,7 @@ tags:
   - service-worker
   - pwa
   - browser
-published: false
+published: true
 date: 2026-08-12 20:00:00
 description: '서비스 워커는 사이트와 네트워크 사이에 선 프로그래밍 가능한 프록시다. 어디에 서 있는가, 캐시는 왜 썩는가, 배포했는데 왜 옛 버전이 보이는가, 무엇을 어떤 전략으로 담는가, 그래서 이걸 써야 하는가. 실무에서 마주치는 다섯 개의 질문을 붙잡고, opaque 응답이 104KB에서 6.6MB로 집계되는 실측과 상태 전이의 세부까지 내려간다. 『프런트엔드 성능 최적화 Deep Dive』의 캐시 장에서 못 다한 일반론이다. 서비스 워커 캐싱 딥다이브 시리즈의 첫 편이다.'
 thumbnail: /thumbnails/2026/08/service-worker-caching-1.png

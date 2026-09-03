@@ -5,7 +5,7 @@ tags:
   - service-worker
   - pwa
   - nextjs
-published: false
+published: true
 date: 2026-08-27 20:00:00
 description: '1편의 일반론을 들고 이 블로그(Next.js App Router)를 오프라인에서도 열리게 만들었다. 첫 배포에서는 방금 읽은 글이 오프라인에서 안 열렸고, 두 번째 배포에서는 글은 열리는데 이미지가 전부 깨졌다. 소프트 내비게이션과 프리페치, next/image가 만든 함정들을 하나씩 고쳐 배포한 연대기와, 그 결과를 GA4 실사용자 데이터로 정산한 기록이다. 재방문자 FCP는 평균 634ms 좋아졌고, TTFB는 평균 525ms 나빠졌다. 서비스 워커 캐싱 딥다이브 시리즈의 두 번째 편이다.'
 thumbnail: /thumbnails/2026/08/service-worker-caching-2.png

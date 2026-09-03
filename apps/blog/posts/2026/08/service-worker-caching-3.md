@@ -5,7 +5,7 @@ tags:
   - service-worker
   - pwa
   - nextjs
-published: false
+published: true
 date: 2026-08-28 20:00:00
 description: '2편 끝에 남긴 "워커 경유 비용 500ms"를 확정하려 했지만, 대조군이 되는 하드 리로드는 하루 한 건이 안 됐다. 그래서 Playwright와 셰이핑 프록시로 대조군을 직접 만들어 재 보니 내비게이션에서 워커 비용은 2ms였고, 비용은 지연이 아니라 글 하나를 클릭할 때마다 배경에서 더 받는 바이트 쪽에 있었다. 랩과 실사용자 데이터 사이에 남겨 둔 간극은 글을 다 쓰고 나서야 103 Early Hints가 만든 측정 정의 차이였다는 것을 알았다. 서비스 워커 캐싱 딥다이브 시리즈의 세 번째 편이다.'
 thumbnail: /thumbnails/2026/08/service-worker-caching-3.png

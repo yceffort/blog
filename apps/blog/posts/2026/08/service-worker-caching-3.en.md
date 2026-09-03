@@ -5,7 +5,7 @@ tags:
   - service-worker
   - pwa
   - nextjs
-published: false
+published: true
 date: 2026-08-28 20:00:00
 description: 'I set out to confirm the 500 ms hint that part 2 left behind, but the hard reloads that would form the control group arrive at under one a day. So I built the control group myself, with Playwright and a shaping proxy, and found that going through the worker costs 2 ms on a navigation, and that the cost is not latency but the bytes the worker fetches in the background on every click. The gap I had left between the lab and the field turned out, only after the post was written, to be a measurement definition difference created by 103 Early Hints. Third part of the service worker caching deep dive series.'
 thumbnail: /thumbnails/2026/08/service-worker-caching-3.png
