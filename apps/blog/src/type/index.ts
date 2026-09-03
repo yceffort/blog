@@ -1,3 +1,11 @@
+/** 코드 생성 썸네일 스펙. scripts/generate-art-spec.mjs 가 본문에서 뽑아 frontmatter `art`에 쓴다 */
+export interface ArtSpec {
+  layout?: string
+  hue?: string
+  tone?: 'light' | 'dark'
+  hero?: string
+}
+
 export interface FrontMatter {
   title: string
   category: string
@@ -13,6 +21,7 @@ export interface FrontMatter {
   seriesOrder?: number
   featured?: boolean
   thumbnail?: string
+  art?: ArtSpec
   /** 대응하는 research 발표 슬라이드의 slug (research.yceffort.kr/slides/{slide}) */
   slide?: string
 }

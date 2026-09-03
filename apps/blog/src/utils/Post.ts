@@ -11,7 +11,7 @@ import {
   RECENT_POSTS_COUNT,
 } from '@/constants'
 
-import type {FrontMatter, Post, TagWithCount} from '../type'
+import type {ArtSpec, FrontMatter, Post, TagWithCount} from '../type'
 import {getPopularPostSlugs} from './analytics'
 import {POST_ROOT, isLocaleFile, pathToSlug} from './postPaths'
 import type {Locale} from './postPaths'
@@ -19,10 +19,42 @@ import type {Locale} from './postPaths'
 const THUMB_DIR = `${process.cwd()}/public/thumbnails`
 
 // 코드 생성 썸네일(api/og/art) 캐시 무효화용 버전. 아트 디자인이 바뀌면 올린다.
-const ART_VERSION = 4
+const ART_VERSION = 6
 
-export function buildArtThumbnail(seed: string): string {
-  return `/api/og/art?v=${ART_VERSION}&slug=${encodeURIComponent(seed)}`
+// public/thumbnails 에 생성 일러스트(webp)나 실사(png)가 있으면 그 경로, 없으면 frontmatter art 로 코드 아트 URL
+// 둘 다 없는 옛 글은 썸네일 없이 둔다
+// 재생성해도 파일명이 같아 캐시가 안 깨지므로 수정 시각을 버전으로 붙인다
+export function resolveThumbnail(
+  slug: string,
+  art?: ArtSpec,
+): string | undefined {
+  const ext = ['webp', 'png'].find((e) =>
+    fs.existsSync(`${THUMB_DIR}/${slug}.${e}`),
+  )
+  if (!ext) {
+    return art ? buildArtThumbnail(slug, art) : undefined
+  }
+  const version = Math.floor(
+    fs.statSync(`${THUMB_DIR}/${slug}.${ext}`).mtimeMs / 1000,
+  ).toString(36)
+  return `/thumbnails/${slug}.${ext}?v=${version}`
+}
+
+export function buildArtThumbnail(seed: string, art?: ArtSpec): string {
+  const params = new URLSearchParams({v: String(ART_VERSION), slug: seed})
+  if (art?.layout) {
+    params.set('layout', art.layout)
+  }
+  if (art?.hue) {
+    params.set('hue', art.hue)
+  }
+  if (art?.tone) {
+    params.set('tone', art.tone)
+  }
+  if (art?.hero) {
+    params.set('hero', art.hero)
+  }
+  return `/api/og/art?${params.toString()}`
 }
 
 export type {Locale}
@@ -47,10 +79,7 @@ export const getAllPosts = cache(async function getAllPostsImpl(
         const tags: string[] = (fmTags || []).map((tag: string) => tag.trim())
         const stats = readingTime(body, {wordsPerMinute: 250})
 
-        // 실사 썸네일(책 표지 등)이 public/thumbnails에 있으면 우선, 없으면 생성 아트
-        const thumbnail = fs.existsSync(`${THUMB_DIR}/${slug}.png`)
-          ? `/thumbnails/${slug}.png`
-          : buildArtThumbnail(slug)
+        const thumbnail = resolveThumbnail(slug, fm.art)
 
         const result: Post = {
           frontMatter: {

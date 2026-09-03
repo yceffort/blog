@@ -13,7 +13,7 @@ import {SiteConfig} from '@/config'
 import {HOME_SERIES_COUNT} from '@/constants'
 import {buildOgImageUrl} from '@/utils/og'
 import {
-  buildArtThumbnail,
+  resolveThumbnail,
   getAllPosts,
   getAllTagsFromPosts,
   getFeaturedPosts,
@@ -105,6 +105,8 @@ async function HomeContent() {
     tagCount,
     yearsWriting,
   } = homeData
+  const popularSeriesThumbnail =
+    popularSeries && resolveThumbnail(`series/${popularSeries.slug}`)
 
   return (
     <div className="page-view">
@@ -136,10 +138,10 @@ async function HomeContent() {
             priority={i < 3}
           />
         ))}
-        {popularSeries && (
+        {popularSeries && popularSeriesThumbnail && (
           <PopularSeriesCard
             series={popularSeries}
-            thumbnail={buildArtThumbnail(`series/${popularSeries.slug}`)}
+            thumbnail={popularSeriesThumbnail}
           />
         )}
       </section>

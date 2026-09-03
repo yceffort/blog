@@ -1,11 +1,10 @@
 import {parseTitleEmphasis} from '@yceffort/shared/utils'
 import {ImageResponse} from 'next/og'
-import type {ReactNode} from 'react'
 
 import {unblockSvgLoader} from '@/utils/ogSharpUnblock'
 
-const WIDTH = 1200
-const HEIGHT = 630
+import {LAYOUTS, LAYOUT_BY_NAME, HEIGHT, INK, WIDTH, alpha} from './layouts'
+import type {Ctx} from './layouts'
 
 const FONT_URL =
   'https://cdn.jsdelivr.net/gh/fonts-archive/NanumGothic/NanumGothicBold.ttf'
@@ -28,8 +27,6 @@ const DUOS: [string, string][] = [
   ['#e879f9', '#4c1d95'],
   ['#94a3b8', '#334155'],
 ]
-
-const INK = '#0a0a0f'
 
 interface Paper {
   bg: string
@@ -119,575 +116,24 @@ function mulberry32(seed: number) {
   }
 }
 
-function alpha(hex: string, a: number): string {
-  const n = parseInt(hex.slice(1), 16)
-  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`
+// frontmatter `art.hue` → DUOS 인덱스 후보. 실제 팔레트는 후보 안에서 해시로 고른다
+const HUES: Record<string, number[]> = {
+  warm: [0, 4, 10, 13],
+  rose: [5, 8],
+  violet: [1, 7, 11, 14],
+  blue: [2, 6],
+  cyan: [9, 12],
+  green: [3, 12],
+  slate: [15],
 }
 
-interface Ctx {
-  rand: () => number
-  c1: string
-  c2: string
-  dark: boolean
-}
-
-function pick3({rand, c1, c2, dark}: Ctx, i: number): string {
-  const roll = (i + Math.floor(rand() * 3)) % 3
-  return roll === 0 ? c1 : roll === 1 ? c2 : dark ? '#e8e8f0' : INK
-}
-
-function svgWrap(children: ReactNode[], key: string) {
-  return (
-    <svg
-      key={key}
-      width={WIDTH}
-      height={HEIGHT}
-      viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-      style={{position: 'absolute', top: 0, left: 0}}
-    >
-      {children}
-    </svg>
-  )
-}
-
-function threadSvg(ctx: Ctx, nodeCount: number, yMin: number, yMax: number) {
-  const {rand, dark} = ctx
-  const points = Array.from({length: nodeCount}, (_, i) => ({
-    x: 80 + ((WIDTH - 160) / (nodeCount - 1)) * i + (rand() - 0.5) * 70,
-    y: yMin + rand() * (yMax - yMin),
-    size: 12 + rand() * 18,
-  }))
-  return svgWrap(
-    [
-      <polyline
-        key="line"
-        points={points.map((p) => `${p.x},${p.y}`).join(' ')}
-        fill="none"
-        stroke={alpha(dark ? '#f5f5fa' : INK, 0.35)}
-        strokeWidth={3}
-      />,
-      ...points.map((p, i) => (
-        <rect
-          key={i}
-          x={p.x - p.size / 2}
-          y={p.y - p.size / 2}
-          width={p.size}
-          height={p.size}
-          fill={pick3(ctx, i)}
-          transform={`rotate(45 ${p.x} ${p.y})`}
-        />
-      )),
-    ],
-    'thread',
-  )
-}
-
-function band(ctx: Ctx, key: string, opts?: {thin?: boolean}) {
-  const {rand, c1, c2} = ctx
-  const h = opts?.thin ? 22 + rand() * 40 : 100 + rand() * 130
-  return (
-    <div
-      key={key}
-      style={{
-        position: 'absolute',
-        left: -220,
-        top: 40 + rand() * 420,
-        width: WIDTH + 440,
-        height: h,
-        borderRadius: h,
-        background: `linear-gradient(120deg, ${c1} 0%, ${c2} 100%)`,
-        opacity: opts?.thin ? 0.45 : 0.85,
-        transform: `rotate(${-26 + rand() * 52}deg)`,
-      }}
-    />
-  )
-}
-
-function bandsLayout(ctx: Ctx) {
-  const {rand} = ctx
-  return [
-    band(ctx, 'band'),
-    rand() < 0.5 && band(ctx, 'band2', {thin: true}),
-    threadSvg(ctx, 4 + Math.floor(rand() * 3), 90, 540),
-  ]
-}
-
-function ringsLayout(ctx: Ctx) {
-  const {rand, c1, c2} = ctx
-  const isCircle = rand() < 0.5
-  const cx = 560 + rand() * 420
-  const cy = 140 + rand() * 300
-  const size = 340 + rand() * 180
-  const rot = 45 + rand() * 30
-  const rings = [1, 0.66, 0.36]
-  return [
-    svgWrap(
-      [
-        ...rings.map((ratio, i) => {
-          const s = size * ratio
-          return isCircle ? (
-            <circle
-              key={i}
-              cx={cx}
-              cy={cy}
-              r={s / 2}
-              fill="none"
-              stroke={alpha(i === 1 ? c2 : c1, 0.4 + i * 0.25)}
-              strokeWidth={5 - i}
-            />
-          ) : (
-            <rect
-              key={i}
-              x={cx - s / 2}
-              y={cy - s / 2}
-              width={s}
-              height={s}
-              fill="none"
-              stroke={alpha(i === 1 ? c2 : c1, 0.4 + i * 0.25)}
-              strokeWidth={5 - i}
-              transform={`rotate(${rot + i * 12} ${cx} ${cy})`}
-            />
-          )
-        }),
-        <rect
-          key="core"
-          x={cx - 15}
-          y={cy - 15}
-          width={30}
-          height={30}
-          fill={c2}
-          transform={`rotate(45 ${cx} ${cy})`}
-        />,
-      ],
-      'rings',
-    ),
-    band(ctx, 'underline', {thin: true}),
-    threadSvg(ctx, 3, 100, 420),
-  ]
-}
-
-function fieldLayout(ctx: Ctx) {
-  const {rand} = ctx
-  const count = 11 + Math.floor(rand() * 5)
-  return [
-    band(ctx, 'belt', {thin: true}),
-    ...Array.from({length: count}, (_, i) => {
-      const size = 10 + rand() * 44
-      return (
-        <div
-          key={`piece-${i}`}
-          style={{
-            position: 'absolute',
-            left: 40 + rand() * (WIDTH - 120),
-            top: 40 + rand() * (HEIGHT - 120),
-            width: size,
-            height: size,
-            background: pick3(ctx, i),
-            opacity: 0.35 + rand() * 0.6,
-            transform: `rotate(${45 + rand() * 40}deg)`,
-          }}
-        />
-      )
-    }),
-  ]
-}
-
-function columnsLayout(ctx: Ctx) {
-  const {rand, c1, c2} = ctx
-  const count = 2 + Math.floor(rand() * 2)
-  return [
-    ...Array.from({length: count}, (_, i) => {
-      const w = i === 0 ? 110 + rand() * 120 : 22 + rand() * 60
-      return (
-        <div
-          key={`col-${i}`}
-          style={{
-            position: 'absolute',
-            left: 80 + rand() * (WIDTH - 300),
-            top: -120,
-            width: w,
-            height: HEIGHT + 240,
-            borderRadius: w,
-            background: `linear-gradient(175deg, ${c1} 0%, ${c2} 100%)`,
-            opacity: i === 0 ? 0.85 : 0.4,
-            transform: `rotate(${-8 + rand() * 16}deg)`,
-          }}
-        />
-      )
-    }),
-    threadSvg(ctx, 5 + Math.floor(rand() * 3), 180, 460),
-  ]
-}
-
-function codePanelLayout(ctx: Ctx) {
-  const {rand, c1, c2, dark} = ctx
-  const lineCount = 9 + Math.floor(rand() * 4)
-  const px = 90 + rand() * 160
-  const py = 60 + rand() * 60
-  const pw = 620 + rand() * 300
-  const lines = Array.from({length: lineCount}, (_, i) => {
-    const indent = [0, 40, 40, 80, 80, 40][Math.floor(rand() * 6)]
-    return {
-      indent,
-      segs: Array.from({length: 1 + Math.floor(rand() * 3)}, () => ({
-        w: 40 + rand() * 150,
-        c: rand() < 0.4 ? c1 : rand() < 0.6 ? c2 : dark ? '#3c3c50' : '#d8d2c6',
-      })),
-      y: i,
-    }
-  })
-  return [
-    <div
-      key="panel"
-      style={{
-        position: 'absolute',
-        left: px,
-        top: py,
-        width: pw,
-        height: 34 + lineCount * 34 + 20,
-        borderRadius: 18,
-        background: dark ? alpha('#1d1d2b', 0.9) : alpha('#ffffff', 0.75),
-        border: `1px solid ${dark ? '#2c2c40' : '#e5ddcf'}`,
-        display: 'flex',
-      }}
-    />,
-    <div
-      key="dots"
-      style={{
-        position: 'absolute',
-        left: px + 20,
-        top: py + 16,
-        display: 'flex',
-        gap: 8,
-      }}
-    >
-      {[c1, c2, dark ? '#3c3c50' : '#d8d2c6'].map((c, i) => (
-        <div
-          key={i}
-          style={{width: 12, height: 12, borderRadius: 999, background: c}}
-        />
-      ))}
-    </div>,
-    ...lines.map((line, i) => (
-      <div
-        key={`line-${i}`}
-        style={{
-          position: 'absolute',
-          left: px + 24 + line.indent,
-          top: py + 48 + i * 34,
-          display: 'flex',
-          gap: 10,
-        }}
-      >
-        {line.segs.map((seg, j) => (
-          <div
-            key={j}
-            style={{
-              width: seg.w,
-              height: 14,
-              borderRadius: 7,
-              background: seg.c,
-              opacity: 0.9,
-            }}
-          />
-        ))}
-      </div>
-    )),
-  ]
-}
-
-function contoursLayout(ctx: Ctx) {
-  const {rand, c1, c2, dark} = ctx
-  const layers = 6
-  const baseY = 120 + rand() * 200
-  const amp = 40 + rand() * 60
-  const phase = rand() * 600
-  return [
-    svgWrap(
-      Array.from({length: layers}, (_, i) => {
-        const y = baseY + i * (46 + rand() * 14)
-        const a = amp * (0.7 + rand() * 0.6)
-        const p = phase + i * 90
-        const d = `M -50 ${y} Q ${300 - p / 4} ${y - a}, 600 ${y} T 1250 ${y}`
-        const color =
-          i % 3 === 0 ? c1 : i % 3 === 1 ? c2 : dark ? '#f5f5fa' : INK
-        return (
-          <path
-            key={i}
-            d={d}
-            fill="none"
-            stroke={alpha(color, i % 3 === 2 ? 0.25 : 0.65)}
-            strokeWidth={i === Math.floor(layers / 2) ? 7 : 3}
-          />
-        )
-      }),
-      'contours',
-    ),
-    threadSvg(ctx, 3, 380, 540),
-  ]
-}
-
-function gridChartLayout(ctx: Ctx) {
-  const {rand, c1, c2, dark} = ctx
-  const gridGap = 60
-  const nodeCount = 5 + Math.floor(rand() * 3)
-  const points = Array.from({length: nodeCount}, (_, i) => ({
-    x: 100 + ((WIDTH - 200) / (nodeCount - 1)) * i,
-    y: 460 - rand() * 330 - i * (rand() * 20),
-  }))
-  const gridColor = alpha(dark ? '#f5f5fa' : INK, 0.07)
-  return [
-    svgWrap(
-      [
-        ...Array.from({length: Math.ceil(WIDTH / gridGap)}, (_, i) => (
-          <line
-            key={`v-${i}`}
-            x1={i * gridGap}
-            y1={0}
-            x2={i * gridGap}
-            y2={HEIGHT}
-            stroke={gridColor}
-            strokeWidth={1}
-          />
-        )),
-        ...Array.from({length: Math.ceil(HEIGHT / gridGap)}, (_, i) => (
-          <line
-            key={`h-${i}`}
-            x1={0}
-            y1={i * gridGap}
-            x2={WIDTH}
-            y2={i * gridGap}
-            stroke={gridColor}
-            strokeWidth={1}
-          />
-        )),
-        <polyline
-          key="chart"
-          points={points.map((p) => `${p.x},${p.y}`).join(' ')}
-          fill="none"
-          stroke={c1}
-          strokeWidth={7}
-        />,
-        ...points.map((p, i) => (
-          <rect
-            key={`n-${i}`}
-            x={p.x - 10}
-            y={p.y - 10}
-            width={20}
-            height={20}
-            fill={i === points.length - 1 ? c2 : c1}
-            transform={`rotate(45 ${p.x} ${p.y})`}
-          />
-        )),
-      ],
-      'grid',
-    ),
-  ]
-}
-
-function glyphLayout(ctx: Ctx) {
-  const {rand, c1, c2} = ctx
-  const cx = 700 + rand() * 260
-  const cy = 180 + rand() * 200
-  const size = 380 + rand() * 200
-  const isCircle = rand() < 0.4
-  return [
-    svgWrap(
-      isCircle
-        ? [
-            <circle
-              key="outline"
-              cx={cx}
-              cy={cy}
-              r={size / 2}
-              fill="none"
-              stroke={alpha(c1, 0.5)}
-              strokeWidth={26}
-            />,
-            <circle
-              key="core"
-              cx={cx + size * 0.42}
-              cy={cy + size * 0.35}
-              r={26}
-              fill={c2}
-            />,
-          ]
-        : [
-            <rect
-              key="outline"
-              x={cx - size / 2}
-              y={cy - size / 2}
-              width={size}
-              height={size}
-              fill="none"
-              stroke={alpha(c1, 0.5)}
-              strokeWidth={26}
-              transform={`rotate(45 ${cx} ${cy})`}
-            />,
-            <rect
-              key="core"
-              x={cx - 30}
-              y={cy - 30}
-              width={60}
-              height={60}
-              fill={c2}
-              transform={`rotate(45 ${cx} ${cy})`}
-            />,
-          ],
-      'glyph',
-    ),
-    band(ctx, 'base', {thin: true}),
-    threadSvg(ctx, 3, 380, 560),
-  ]
-}
-
-function halftoneLayout(ctx: Ctx) {
-  const {rand, c1, c2} = ctx
-  const gap = 66 + rand() * 14
-  const cols = Math.ceil(WIDTH / gap) + 1
-  const rows = Math.ceil(HEIGHT / gap) + 1
-  const angle = rand() * Math.PI * 2
-  const dx = Math.cos(angle)
-  const dy = Math.sin(angle)
-  const dots: ReactNode[] = []
-  for (let i = 0; i < cols; i++) {
-    for (let j = 0; j < rows; j++) {
-      const x = i * gap
-      const y = j * gap
-      const t =
-        (x * dx + y * dy) / (WIDTH * Math.abs(dx) + HEIGHT * Math.abs(dy) || 1)
-      const tt = Math.min(1, Math.max(0, (t + 1) / 2))
-      dots.push(
-        <circle
-          key={`${i}-${j}`}
-          cx={x}
-          cy={y}
-          r={2 + tt * 17}
-          fill={tt < 0.5 ? c1 : c2}
-          opacity={0.5}
-        />,
-      )
-    }
+function estimateWidthUnits(text: string): number {
+  let units = 0
+  for (const ch of text) {
+    units += ch.charCodeAt(0) > 0x2e7f ? 1 : 0.62
   }
-  return [
-    svgWrap(dots, 'halftone'),
-    rand() < 0.5 && band(ctx, 'accent', {thin: true}),
-  ]
+  return units
 }
-
-function stripesLayout(ctx: Ctx) {
-  const {rand, c1, c2, dark} = ctx
-  const angle = -38 + rand() * 76
-  const count = 6 + Math.floor(rand() * 5)
-  const spacing = 90 + rand() * 60
-  const startX = -100 + rand() * 300
-  return [
-    ...Array.from({length: count}, (_, i) => {
-      const w = 10 + rand() * 64
-      const roll = rand()
-      const color = roll < 0.4 ? c1 : roll < 0.75 ? c2 : dark ? '#e8e8f0' : INK
-      return (
-        <div
-          key={`stripe-${i}`}
-          style={{
-            position: 'absolute',
-            left: startX + i * spacing + (rand() - 0.5) * 40,
-            top: -320,
-            width: w,
-            height: HEIGHT + 640,
-            borderRadius: w,
-            background: color,
-            opacity: roll < 0.75 ? 0.55 + rand() * 0.35 : 0.25,
-            transform: `rotate(${angle}deg)`,
-          }}
-        />
-      )
-    }),
-    rand() < 0.6 && threadSvg(ctx, 3 + Math.floor(rand() * 2), 120, 500),
-  ]
-}
-
-function bauhausLayout(ctx: Ctx) {
-  const {rand, c1, c2} = ctx
-  const count = 3 + Math.floor(rand() * 2)
-  return [
-    svgWrap(
-      Array.from({length: count}, (_, i) => {
-        const r = 130 + rand() * 190
-        const cx = 150 + rand() * (WIDTH - 300)
-        const cy = 80 + rand() * (HEIGHT - 160)
-        const solid = rand() < 0.6
-        const color = i % 2 === 0 ? c1 : c2
-        return solid ? (
-          <circle
-            key={i}
-            cx={cx}
-            cy={cy}
-            r={r}
-            fill={alpha(color, 0.32 + rand() * 0.2)}
-          />
-        ) : (
-          <circle
-            key={i}
-            cx={cx}
-            cy={cy}
-            r={r}
-            fill="none"
-            stroke={alpha(color, 0.55)}
-            strokeWidth={10 + rand() * 20}
-          />
-        )
-      }),
-      'bauhaus',
-    ),
-    threadSvg(ctx, 3, 120, 520),
-  ]
-}
-
-function stepsLayout(ctx: Ctx) {
-  const {rand, c1, c2} = ctx
-  const count = 5 + Math.floor(rand() * 3)
-  const stepW = (WIDTH - 200) / count
-  const rising = rand() < 0.7
-  const baseY = 500 + rand() * 60
-  return [
-    ...Array.from({length: count}, (_, i) => {
-      const level = rising ? i : count - 1 - i
-      const h = 70 + level * (46 + rand() * 22)
-      return (
-        <div
-          key={`step-${i}`}
-          style={{
-            position: 'absolute',
-            left: 100 + i * stepW + 8,
-            top: baseY - h,
-            width: stepW - 16,
-            height: h,
-            borderRadius: 14,
-            background: `linear-gradient(175deg, ${i % 2 === 0 ? c1 : c2} 0%, ${i % 2 === 0 ? c2 : c1} 140%)`,
-            opacity: 0.5 + (level / count) * 0.45,
-          }}
-        />
-      )
-    }),
-    threadSvg(ctx, count, 90, 300),
-  ]
-}
-
-const LAYOUTS = [
-  bandsLayout,
-  ringsLayout,
-  fieldLayout,
-  columnsLayout,
-  codePanelLayout,
-  contoursLayout,
-  gridChartLayout,
-  glyphLayout,
-  halftoneLayout,
-  stripesLayout,
-  bauhausLayout,
-  stepsLayout,
-]
 
 interface Frag {
   text: string
@@ -715,25 +161,37 @@ export async function GET(request: Request) {
   const slug = searchParams.get('slug') ?? 'yceffort'
   const title = searchParams.get('title')
   const tag = searchParams.get('tag')
+  const layoutName = searchParams.get('layout')
+  const hueName = searchParams.get('hue')
+  const tone = searchParams.get('tone')
+  const hero = searchParams.get('hero')?.slice(0, 26) || null
 
   const hash = hashCode(slug)
   const rand = mulberry32(hash)
-  const [c1, c2] = DUOS[hash % DUOS.length]
+  const hueIndices = (hueName && HUES[hueName]) || null
+  const [c1, c2] = hueIndices
+    ? DUOS[hueIndices[hash % hueIndices.length]]
+    : DUOS[hash % DUOS.length]
 
-  const layout = LAYOUTS[Math.floor(rand() * LAYOUTS.length)]
-  const paper = pickPaper(rand)
+  const layoutRoll = Math.floor(rand() * LAYOUTS.length)
+  const layout =
+    (layoutName && LAYOUT_BY_NAME[layoutName]) || LAYOUTS[layoutRoll]
+  const rolledPaper = pickPaper(rand)
+  const wantDark = tone === 'dark' ? true : tone === 'light' ? false : null
+  const paper = (() => {
+    if (wantDark === null || rolledPaper.dark === wantDark) {
+      return rolledPaper
+    }
+    const candidates = PAPERS.filter((p) => p.paper.dark === wantDark)
+    return candidates[hash % candidates.length].paper
+  })()
   const dark = paper.dark
   const ctx: Ctx = {rand, c1, c2, dark}
 
   const blobCorner = Math.floor(rand() * 4)
-  const dot = {
-    x: 60 + rand() * (WIDTH - 240),
-    y: 60 + rand() * (HEIGHT - 220),
-    size: 40 + rand() * 52,
-  }
 
   let fontData: ArrayBuffer | undefined
-  if (title) {
+  if (title || hero || layout === LAYOUT_BY_NAME.glyph) {
     const fontRes = await fetch(FONT_URL)
     if (fontRes.ok) {
       fontData = await fontRes.arrayBuffer()
@@ -766,18 +224,53 @@ export async function GET(request: Request) {
         }}
       />
       {layout(ctx)}
-      <div
-        style={{
-          position: 'absolute',
-          left: dot.x,
-          top: dot.y,
-          width: dot.size,
-          height: dot.size,
-          borderRadius: 9999,
-          background: c2,
-          opacity: 0.9,
-        }}
-      />
+      {hero && !title && (
+        <div
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: 300,
+            background: `linear-gradient(180deg, rgba(${paper.scrim}, 0) 0%, rgba(${paper.scrim}, 0.85) 55%, rgba(${paper.scrim}, 0.97) 100%)`,
+          }}
+        />
+      )}
+      {hero && !title && (
+        <div
+          style={{
+            position: 'absolute',
+            // 목록 행(3:2)이 좌우 127px를 잘라내므로 그 안쪽에 둔다
+            left: 164,
+            bottom: 56,
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <div
+            style={{
+              width: 22,
+              height: 22,
+              marginRight: 22,
+              background: c2,
+              transform: 'rotate(45deg)',
+              display: 'flex',
+            }}
+          />
+          <div
+            style={{
+              display: 'flex',
+              fontSize: Math.min(104, 820 / estimateWidthUnits(hero)),
+              fontWeight: 700,
+              lineHeight: 1,
+              letterSpacing: '-0.02em',
+              color: inkColor,
+            }}
+          >
+            {hero}
+          </div>
+        </div>
+      )}
       {title && (
         <div
           style={{

@@ -5,6 +5,7 @@ import {PostArticle} from '@/components/PostArticle'
 import RecentRow from '@/components/RecentRow'
 import {SiteConfig} from '@/config'
 import {buildOgImageUrl} from '@/utils/og'
+import {resolveThumbnail} from '@/utils/Post'
 import {findSeriesBySlug, getAllSeries} from '@/utils/Series'
 
 export async function generateMetadata(props: {
@@ -31,6 +32,7 @@ export async function generateMetadata(props: {
             description: series.description,
             path: `/series/${slug}`,
             type: 'page',
+            thumbnail: resolveThumbnail(`series/${slug}`),
           }),
           width: 1200,
           height: 630,

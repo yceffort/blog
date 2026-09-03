@@ -59,6 +59,8 @@ const config: NextConfig = {
     localPatterns: [
       // 코드 생성 썸네일은 쿼리 스트링(v, slug, dpl)을 허용해야 한다
       {pathname: '/api/og/art'},
+      // 생성 썸네일은 파일 수정 시각(v)을 쿼리로 붙여 캐시를 깬다
+      {pathname: '/thumbnails/**'},
       {pathname: '/**', search: ''},
     ],
   },
