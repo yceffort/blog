@@ -1,0 +1,12 @@
+{
+  // MDX는 JSX 표현식이 MD037/MD031 오탐을 내므로 제외한다. MDX 검사는 apps/blog/scripts/check-markdown.mjs가 맡는다.
+  "globs": ["**/*.md"],
+  "ignores": [
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/target/**",
+    ".claude/**",
+    "labs/**",
+    "**/CHANGELOG.md",
+  ],
+}

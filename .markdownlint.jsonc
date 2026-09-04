@@ -1,27 +1,28 @@
 {
   "$schema": "https://json.schemastore.org/markdownlint",
+  // 아래 false 규칙 중 주석이 달린 것은 기존 글에 이미 널리 퍼져 있고 렌더링에 영향이 없어 끈 것이다.
   "default": false,
-  "heading-increment": true,
+  "heading-increment": false, // h1 다음 h3로 시작하는 옛 글 다수
   "heading-style": {"style": "atx"},
   "ul-style": {"style": "dash"},
   "list-indent": true,
   "ul-indent": {
     "indent": 2,
-    "start_indented": false
+    "start_indented": false,
   },
   "no-trailing-spaces": {
     "br_spaces": 2,
     "list_item_empty_lines": false,
-    "strict": false
+    "strict": false,
   },
   "no-hard-tabs": {
     "code_blocks": true,
     "ignore_code_languages": [],
-    "spaces_per_tab": 2
+    "spaces_per_tab": 2,
   },
   "no-reversed-links": true,
   "no-multiple-blanks": {
-    "maximum": 1
+    "maximum": 1,
   },
   "line-length": false,
   "commands-show-output": false,
@@ -31,33 +32,29 @@
   "no-multiple-space-closed-atx": false,
   "blanks-around-headings": {
     "lines_above": 1,
-    "lines_below": 1
+    "lines_below": 1,
   },
   "heading-start-left": true,
-  "no-duplicate-heading": {
-    "siblings_only": true
-  },
+  "no-duplicate-heading": false, // "요약" 같은 형제 제목 반복은 의도된 구성
   "single-h1": false,
   "no-trailing-punctuation": false,
   "no-multiple-space-blockquote": true,
-  "no-blanks-blockquote": true,
-  "ol-prefix": {
-    "style": "one_or_ordered"
-  },
+  "no-blanks-blockquote": false, // 인용문을 빈 줄로 나눠 별도 blockquote로 렌더하는 것이 의도
+  "ol-prefix": false, // 문단과 이미지로 끊긴 번호 목록이 옛 글에 많고 CommonMark는 start를 살려 렌더한다
   "list-marker-space": {
     "ul_single": 1,
     "ol_single": 1,
     "ul_multi": 1,
-    "ol_multi": 1
+    "ol_multi": 1,
   },
   "blanks-around-fences": {
-    "list_items": true
+    "list_items": true,
   },
   "blanks-around-lists": true,
   "no-inline-html": false,
   "no-bare-urls": false,
   "hr-style": {
-    "style": "consistent"
+    "style": "consistent",
   },
   "no-emphasis-as-heading": false,
   "no-space-in-emphasis": true,
@@ -68,26 +65,26 @@
   "no-empty-links": true,
   "required-headings": false,
   "proper-names": false,
-  "no-alt-text": true,
+  "no-alt-text": false, // 옛 글 이미지 37건이 alt 없음. 새 글부터 채우고 나중에 켠다
   "code-block-style": {
-    "style": "fenced"
+    "style": "fenced",
   },
   "single-trailing-newline": true,
   "code-fence-style": {
-    "style": "backtick"
+    "style": "backtick",
   },
   "emphasis-style": {
-    "style": "underscore"
+    "style": "underscore",
   },
   "strong-style": {
-    "style": "asterisk"
+    "style": "asterisk",
   },
   "link-fragments": true,
   "reference-links-images": {
-    "shortcut_syntax": false
+    "shortcut_syntax": false,
   },
   "link-image-reference-definitions": {
-    "ignored_definitions": ["//"]
+    "ignored_definitions": ["//"],
   },
   "link-image-style": {
     "autolink": true,
@@ -95,6 +92,6 @@
     "full": true,
     "collapsed": true,
     "shortcut": true,
-    "url_inline": true
-  }
+    "url_inline": true,
+  },
 }

@@ -17,12 +17,13 @@
     "build": "pnpm -r build",
     "build:blog": "pnpm --filter blog build",
     "build:research": "pnpm --filter research build",
-    "lint": "oxlint --type-aware && node apps/blog/scripts/check-markdown.mjs --quiet",
-    "lint:fix": "oxlint --type-aware --fix",
+    "lint": "oxlint --type-aware && rust-markdownlint && node apps/blog/scripts/check-markdown.mjs --quiet",
+    "lint:fix": "oxlint --type-aware --fix && rust-markdownlint --fix",
     "prettier": "oxfmt --check .",
     "prettier:fix": "oxfmt ."
   },
   "devDependencies": {
+    "@yceffort/rust-markdownlint": "^0.1.1",
     "lefthook": "^2.1.10",
     "oxfmt": "^0.64.0",
     "oxlint": "^1.80.0",

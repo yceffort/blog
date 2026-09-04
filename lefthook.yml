@@ -16,6 +16,11 @@ pre-commit:
       glob: '*.{scss,css}'
       run: pnpm exec stylelint --fix {staged_files}
       stage_fixed: true
+    rust-markdownlint:
+      glob: '*.md'
+      exclude: 'labs/**'
+      run: pnpm exec rust-markdownlint --fix --no-globs {staged_files}
+      stage_fixed: true
     markdown:
       glob: '*.{md,mdx}'
       exclude: 'labs/**'

@@ -109,6 +109,9 @@ importers:
 
   .:
     devDependencies:
+      '@yceffort/rust-markdownlint':
+        specifier: ^0.1.1
+        version: 0.1.1
       lefthook:
         specifier: ^2.1.10
         version: 2.1.10
@@ -1656,6 +1659,36 @@ packages:
     resolution: {integrity: sha512-A9gOqLdi6cV4ibazAjcQufGj0B1y/vDqYrcuP6d/6x8P27gRS8643Dj9o1dEKtB6O7fwxb2FgBmJS2mX7gpvdw==}
     engines: {node: '>=14.6'}
     deprecated: this version has critical issues, please update to the latest version
+
+  '@yceffort/rust-markdownlint-darwin-arm64@0.1.1':
+    resolution: {integrity: sha512-hCCIeV6MywJNTlGXzhPFkYdHs5cVQqjFiTcFRDVMA2LYwPDssrwvCYm8aW0HsBDh/qPMYfd3DkKif9oaO78j6g==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@yceffort/rust-markdownlint-darwin-x64@0.1.1':
+    resolution: {integrity: sha512-p09MIK24e68G5Z0c0S/zEA5FL75Gpz9tEzvcOK/4VEk5BgZVHpK55CXeIJPy5ulCcmIdNmS24M85FwGX3iI7Aw==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@yceffort/rust-markdownlint-linux-arm64@0.1.1':
+    resolution: {integrity: sha512-P3MXHclFoycGp1R5lf1GnJXWH7BqGVPYAP6l2DpGZuVdXX4QnSdlWIB/NG7TnSjP7bwC7Nbmd+XL8c2H1Mnj+Q==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@yceffort/rust-markdownlint-linux-x64@0.1.1':
+    resolution: {integrity: sha512-soPZk2Cge3yTZHIERYmhhwryfONhcErjfXAxyJg/291oB/uATe2Zg0PBzAnPFIvFxcFNX9nK82gcC7sqFa0CfA==}
+    cpu: [x64]
+    os: [linux]
+
+  '@yceffort/rust-markdownlint-win32-x64@0.1.1':
+    resolution: {integrity: sha512-17H1bJsaAhhsELqa4+MHQaIf+pPPmVcU6b89ufaYzmVcG9QJZl/HL7zwzL+pCuQBhdWWVtbvdS0/++KxxV7gHw==}
+    cpu: [x64]
+    os: [win32]
+
+  '@yceffort/rust-markdownlint@0.1.1':
+    resolution: {integrity: sha512-Rd+3DgLY8OsXFScY6xTtOFP2a76FMjx8TNF5EmcjgNBnYpGP7BB1oClzLctYqmVvlR5UIqweOXwda0pCY2W0wA==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -4782,6 +4815,29 @@ snapshots:
       d3-transition: 3.0.1(d3-selection@3.0.0)
 
   '@xmldom/xmldom@0.9.10': {}
+
+  '@yceffort/rust-markdownlint-darwin-arm64@0.1.1':
+    optional: true
+
+  '@yceffort/rust-markdownlint-darwin-x64@0.1.1':
+    optional: true
+
+  '@yceffort/rust-markdownlint-linux-arm64@0.1.1':
+    optional: true
+
+  '@yceffort/rust-markdownlint-linux-x64@0.1.1':
+    optional: true
+
+  '@yceffort/rust-markdownlint-win32-x64@0.1.1':
+    optional: true
+
+  '@yceffort/rust-markdownlint@0.1.1':
+    optionalDependencies:
+      '@yceffort/rust-markdownlint-darwin-arm64': 0.1.1
+      '@yceffort/rust-markdownlint-darwin-x64': 0.1.1
+      '@yceffort/rust-markdownlint-linux-arm64': 0.1.1
+      '@yceffort/rust-markdownlint-linux-x64': 0.1.1
+      '@yceffort/rust-markdownlint-win32-x64': 0.1.1
 
   acorn-jsx@5.3.2(acorn@8.18.0):
     dependencies:
