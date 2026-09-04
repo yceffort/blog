@@ -142,7 +142,7 @@ Looking only at enterprise CRUD/backoffice/permission-centric apps, it would see
 7. Largely unrelated to permissions/privacy/masking policies
 ```
 
-If even 3-4 of these are broken, it's better not to use it. Next.js official documentation explains that `'use cache'` can be used for both data-level function caching and UI-level component/page caching, but separates cases where fresh data is needed every request to use Suspense streaming instead of `'use cache'`. It's not a model of "put caches on all server data."
+If even 3-4 of these are broken, it's better not to use it. Next.js official documentation[^6] explains that `'use cache'` can be used for both data-level function caching and UI-level component/page caching, but separates cases where fresh data is needed every request to use Suspense streaming instead of `'use cache'`. It's not a model of "put caches on all server data."
 
 ### 1. Public Content / Documentation / Help / Terms
 
@@ -737,7 +737,7 @@ async function Dashboard() {
 
 Without an explicit call, the outer uses the default profile (15 minutes). However, if the inner cache's lifetime is shorter, the outer default lifetime gets reduced to that value. The reverse direction (inner being longer extending the outer) doesn't happen — the default 15 minutes is maintained.
 
-Looking at how this works in the internal implementation, minimum propagation is applied to the `workUnitStore` variable in ALS. However, this minimum rule only matters **when there's no explicit `cacheLife` on the outside**. If there's an explicit call on the outside, it's handled so that the outer lifetime takes precedence even if propagation triggers.
+Looking at how this works in the internal implementation, minimum propagation is applied to the `workUnitStore` variable in ALS[^5]. However, this minimum rule only matters **when there's no explicit `cacheLife` on the outside**. If there's an explicit call on the outside, it's handled so that the outer lifetime takes precedence even if propagation triggers.
 
 ```tsx
 // Simplified propagation intent

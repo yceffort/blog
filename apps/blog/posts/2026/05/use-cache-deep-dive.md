@@ -143,7 +143,7 @@ sort: 6개
 7. 권한·개인정보·마스킹 정책과 거의 무관하다.
 ```
 
-이 중 3~4개만 깨져도 안 쓰는 게 맞다. Next.js 공식 문서도 `'use cache'`를 데이터 레벨 함수 캐싱과 UI 레벨 컴포넌트/페이지 캐싱에 모두 쓸 수 있다고 설명하지만, fresh data가 매 요청 필요하면 `'use cache'`가 아니라 Suspense로 streaming하라고 분리한다. "모든 서버 데이터에 캐시를 걸라"는 모델이 아니다.
+이 중 3~4개만 깨져도 안 쓰는 게 맞다. Next.js 공식 문서[^6]도 `'use cache'`를 데이터 레벨 함수 캐싱과 UI 레벨 컴포넌트/페이지 캐싱에 모두 쓸 수 있다고 설명하지만, fresh data가 매 요청 필요하면 `'use cache'`가 아니라 Suspense로 streaming하라고 분리한다. "모든 서버 데이터에 캐시를 걸라"는 모델이 아니다.
 
 ### 1. 공개 콘텐츠 / 문서 / 도움말 / 약관
 
@@ -738,7 +738,7 @@ async function Dashboard() {
 
 명시적 호출이 없으면 외부는 default 프로필(15분)을 사용한다. 그러나 내부 cache의 lifetime이 그보다 짧으면 외부 default lifetime이 그 값으로 줄어든다. 반대 방향(내부가 길다고 외부를 늘리기)은 일어나지 않는다 — default 15분이 유지된다.
 
-이 동작이 내부 구현에서 어떻게 일어나는지 보면, ALS의 `workUnitStore` 변수에 minimum propagation이 적용되어 있다. 단 이 minimum 룰은 **외부에 명시적 `cacheLife`가 없을 때만** 의미가 있다. 외부에 명시 호출이 있으면 propagation이 발동해도 외부 lifetime이 우선하도록 처리된다.
+이 동작이 내부 구현에서 어떻게 일어나는지 보면, ALS의 `workUnitStore` 변수에 minimum propagation이 적용되어 있다[^5]. 단 이 minimum 룰은 **외부에 명시적 `cacheLife`가 없을 때만** 의미가 있다. 외부에 명시 호출이 있으면 propagation이 발동해도 외부 lifetime이 우선하도록 처리된다.
 
 ```tsx
 // 단순화한 propagation 의도
