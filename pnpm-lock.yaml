@@ -239,8 +239,8 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
       web-vitals:
-        specifier: ^6.1.0
-        version: 6.1.0
+        specifier: ^6.1.1
+        version: 6.1.1
     devDependencies:
       '@naverpay/stylelint-config':
         specifier: ^1.0.0
@@ -3762,8 +3762,8 @@ packages:
     resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
     engines: {node: '>= 8'}
 
-  web-vitals@6.1.0:
-    resolution: {integrity: sha512-ZNoJ/MbU6aaR2WjKrFVUvy5WQx+G96YvXQFSsmKTz3A/0VlAFywjUcxl00hc/S6wef2stfgQ4yWYIJCWCNudkA==}
+  web-vitals@6.1.1:
+    resolution: {integrity: sha512-r93gKnR6ZC2O8F3JrS0AAGIQ0v0OhXuyg4DAj2oG7K+GPkwXfUSc3ZcWeu50AsV5yIc6xxnTjERipJ6EvSw2vg==}
 
   which@1.3.1:
     resolution: {integrity: sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==}
@@ -7477,7 +7477,7 @@ snapshots:
 
   web-streams-polyfill@3.3.3: {}
 
-  web-vitals@6.1.0: {}
+  web-vitals@6.1.1: {}
 
   which@1.3.1:
     dependencies:
