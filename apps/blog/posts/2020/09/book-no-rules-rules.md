@@ -13,8 +13,7 @@ template: post
 
 https://read.amazon.com/kp/card?asin=B081Y3R657&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_X.RyFb5WBPP20
 
-넷플릭스의 조직 문화하면 가장 먼저 떠오르는 것은, 아마도 gizmodo에서 쓴 기사일 것이다. [Working at Netflix Sounds Like Hell
-](https://gizmodo.com/working-at-netflix-sounds-like-hell-1830020977)
+넷플릭스의 조직 문화하면 가장 먼저 떠오르는 것은, 아마도 gizmodo에서 쓴 기사일 것이다. [Working at Netflix Sounds Like Hell](https://gizmodo.com/working-at-netflix-sounds-like-hell-1830020977)
 
 > The profile’s sources described the "Netflix way" as a structure founded on brutal honesty, ritual humiliation, insider lingo, and constant fear. It’s a mix of elements that a lot of people in corporate culture might recognize but according to many employees, it’s been a chaotic process that is difficult to scale as the company carries out its plans of world domination.
 

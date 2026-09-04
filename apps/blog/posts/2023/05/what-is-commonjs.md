@@ -16,8 +16,7 @@ description: 'const module = require("./module.js")'
 
 nodejs가 15.3.0 부터 esmodule을 정식 지원하기 시작한 이래로, 많은 자바스크립트 개발자들이 모듈을 불러오는 과정이 `require`와 `import` 로 차이가 있다는 것을 알 뿐, 그 외의 동작에도 차이가 있다는 것을 잘 모르는 것 같다. (일단 나부터 모른다면 ㄱㅊ) 구체적으로 이 둘은 어떤 차이가 있고, 궁극적으로 npm 라이브러리가 이 두 모듈을 동시에 지원하기 위해 어떠한 노력을 기울여야 하는지 종합적으로 살펴보자.
 
-> 과거 [CommonJS와 ES Modules은 왜 함께 할 수 없는가?
-> ](/2020/08/commonjs-esmodules) 라는 글을 작성한 적이 있는데 이 보다 더 심오하게 들어간 내용을 작성해보았다.
+> 과거 [CommonJS와 ES Modules은 왜 함께 할 수 없는가?](/2020/08/commonjs-esmodules) 라는 글을 작성한 적이 있는데 이 보다 더 심오하게 들어간 내용을 작성해보았다.
 
 ## Commonjs
 

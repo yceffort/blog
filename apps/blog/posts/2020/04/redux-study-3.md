@@ -86,8 +86,7 @@ type Reducer<S, A> = (state: S, action: A) => S
 
 리듀서는 (리듀싱 함수라고도 불리운다) 파라미터(`accumulation`)를 받아서 새로운 파라미터를 반환하는 함수다. 이는 value의 모음을 하나의 value로 축약하는데 사용된다.
 
-리듀서는 리덕스만의 독특한 것이 아니다. 이는 함수형 프로그래밍의 기초적인 컨셉이다. 심지어 자바스크립트와 같은 비 함수적인 언어에서도 리듀싱을 위한 api가 존재한다. [Array.prototype.reduce()
-](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
+리듀서는 리덕스만의 독특한 것이 아니다. 이는 함수형 프로그래밍의 기초적인 컨셉이다. 심지어 자바스크립트와 같은 비 함수적인 언어에서도 리듀싱을 위한 api가 존재한다. [Array.prototype.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
 
 리덕스에서 누적되는 값 (리듀싱 되는 값)은 상태 오브젝트이며, 여기의 값들은 action에 의해 누적된다. 리듀서는 이전의 상태와 액션을 기반으로 새로운 상태를 만들어 낸다. 이들은 모두 순수함수여야만 한다. 함수들은 주어진 입력값으로 정확히 같은 결과값을 내야 한다. 또한 사이드 이펙트에서 자유로워야 한다. 이러한 전제는 핫 리로딩이나 타임 트래블 (과거의 값을 가져오는)을 가능하게 해준다.
 

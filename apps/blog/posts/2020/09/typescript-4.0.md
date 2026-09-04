@@ -333,7 +333,7 @@ https://devblogs.microsoft.com/typescript/wp-content/uploads/sites/11/2020/08/pa
 
 ### `lib.d.ts` 수정
 
-`lib.d.ts`가 수정되었다. 특히, DOM 타입 관련된 부분의 수정이 있었다. 그중 가장 유의깊게 봐야할 것은 [document.origin](https://developer.mozilla.org/en-US/docs/Web/API/Document/origin)대신에 [self.origin][https://developer.mozilla.org/en-us/docs/web/api/windoworworkerglobalscope/origin]를 사용하는 것이다.
+`lib.d.ts`가 수정되었다. 특히, DOM 타입 관련된 부분의 수정이 있었다. 그중 가장 유의깊게 봐야할 것은 [document.origin](https://developer.mozilla.org/en-US/docs/Web/API/Document/origin)대신에 [self.origin](https://developer.mozilla.org/en-us/docs/web/api/windoworworkerglobalscope/origin)를 사용하는 것이다.
 
 ### 프로퍼티, 게터, 세터 오버라이딩 금지
 

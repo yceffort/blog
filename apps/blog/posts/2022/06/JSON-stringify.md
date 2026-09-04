@@ -323,5 +323,4 @@ Set {} TRUE
 
 - [`JSON.stringify`의 공식 문서](https://262.ecma-international.org/5.1/#sec-15.12.3)에서
 - [fast-json-stringify](https://github.com/fastify/fast-json-stringify)
-- [How to improve the performance of JSON. stringify ()?
-  ](https://developpaper.com/how-to-improve-the-performance-of-json-stringify/)
+- [How to improve the performance of JSON. stringify ()?](https://developpaper.com/how-to-improve-the-performance-of-json-stringify/)
