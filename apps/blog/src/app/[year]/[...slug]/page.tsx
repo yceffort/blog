@@ -297,8 +297,6 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
         <footer className="post-footer">
           <p className="post-author-note">
             <Link href="/about">yceffort</Link> — 프론트엔드 엔지니어입니다.
-            발표·기술 자문·기고 문의는{' '}
-            <Link href="/about#contact">이곳에서 받고 있습니다</Link>.
           </p>
           <Link href="/">&larr; Back to the blog</Link>
           <Link href={link} className="issue">

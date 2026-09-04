@@ -271,9 +271,7 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
 
         <footer className="post-footer">
           <p className="post-author-note">
-            <Link href="/about">yceffort</Link> — frontend engineer. For talks,
-            consulting, or writing inquiries,{' '}
-            <Link href="/about#contact">reach out here</Link>.
+            <Link href="/about">yceffort</Link> — frontend engineer.
           </p>
           <Link href="/en">&larr; Back to the blog</Link>
           <Link href={`/${postSlug}`} className="issue">

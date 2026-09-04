@@ -1,5 +1,3 @@
-import {SiteConfig} from '@/config'
-
 export function AboutIntro() {
   return (
     <div className="pt-8 pb-8 xl:col-span-2">
@@ -30,17 +28,6 @@ export function AboutIntro() {
           <li>SSR 서비스의 컨테이너·쿠버네티스 운영</li>
           <li>AI 코딩 도구 시대의 코드 리뷰와 검증 체계</li>
         </ul>
-
-        <h2 id="contact">문의</h2>
-        <p>
-          사내 세미나·컨퍼런스 발표, 기술 자문, 기고·감수, 풀타임 채용을
-          제안하고 싶으신 경우{' '}
-          <a href={`mailto:${SiteConfig.author.contacts.email}`}>
-            {SiteConfig.author.contacts.email}
-          </a>
-          로 연락 주세요. 회사 업무와 무관한 건에 한해 검토하며, 보통 일주일
-          안에 회신합니다.
-        </p>
       </div>
     </div>
   )
