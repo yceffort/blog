@@ -23,7 +23,7 @@
     "prettier:fix": "oxfmt ."
   },
   "devDependencies": {
-    "@yceffort/rust-markdownlint": "^0.1.1",
+    "@yceffort/rust-markdownlint": "^0.1.2",
     "lefthook": "^2.1.10",
     "oxfmt": "^0.64.0",
     "oxlint": "^1.80.0",
