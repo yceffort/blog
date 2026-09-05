@@ -6,3 +6,6 @@ allowBuilds:
   '@parcel/watcher': false
   lefthook: true
   protobufjs: false
+
+minimumReleaseAgeExclude:
+  - '@yceffort/*'
