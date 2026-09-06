@@ -1,5 +1,5 @@
 ---
-title: 'react-query 딥다이브 2부: 내부 동작, SSR, 실전 함정'
+title: 'react-query 딥다이브 2부: 내부 동작, 실전 함정, SSR'
 marp: true
 paginate: true
 theme: midnight
@@ -9,13 +9,13 @@ tags:
   - tanstack-query
   - deep-dive
 date: 2026-08-14
-description: 'QueryObserver 구독 모델, structural sharing, HydrationBoundary — 내부 동작에서 실전 함정까지 react-query 강의 2부'
+description: 'QueryObserver 구독 모델, structural sharing, HydrationBoundary — 내부 동작에서 실전 함정, SSR까지 react-query 강의 2부'
 published: true
 ---
 
 # react-query 딥다이브 2부
 
-내부 동작, SSR, 실전 함정
+내부 동작, 실전 함정, SSR
 
 <!-- _class: invert -->
 
@@ -206,9 +206,9 @@ useMutation({
 
 ## 이 덱에서 다루는 것
 
-4. **내부 동작** — useQuery 한 줄 뒤에서 벌어지는 일 (QueryClient, Query, QueryObserver)
-5. **Suspense와 SSR** — useSuspenseQuery, 서버 프리페치와 HydrationBoundary
-6. **실전 함정 모음** — 리뷰에서 반복해서 만나는 잘못된 패턴 여섯 가지
+4. **내부 동작** — useQuery 한 줄 뒤에서 벌어지는 일 (QueryClient, Query, QueryObserver), 그리고 useSuspenseQuery
+5. **실전 함정 모음** — 리뷰에서 반복해서 만나는 잘못된 패턴 여섯 가지
+6. **SSR** — 서버 프리페치, dehydrate, HydrationBoundary. 그리고 서버에서 달라지는 것들
 
 1부처럼 파트 끝마다 **중간 점검 퀴즈**가 있고, 마지막에 **종합 퀴즈 6문제** (1부 내용 포함).
 
@@ -415,6 +415,49 @@ const {data: count} = useQuery({
 
 ---
 
+## useSuspenseQuery — 분기 없는 세계
+
+useQuery가 Observer를 **구독**하는 훅이라면, 같은 Observer를 다른 방식으로 소비하는 훅이 하나 더 있다.
+
+```jsx
+function TodoList() {
+  const {data} = useSuspenseQuery({queryKey: ['todos'], queryFn: fetchTodos})
+  return <ul>{data.map(...)}</ul> // data는 항상 있다. 타입도 Todo[] (undefined 없음)
+}
+
+// 로딩과 에러는 바깥에서 선언한다
+<ErrorBoundary fallback={<ErrorView />}>
+  <Suspense fallback={<Spinner />}><TodoList /></Suspense>
+</ErrorBoundary>
+```
+
+- `status === 'pending'` 분기가 사라진다. 데이터가 아직 없으면 컴포넌트가 **Promise를 throw**하고, React가 그것을 받아 가장 가까운 `<Suspense>`의 fallback을 대신 그린다. Promise가 풀리면 그 컴포넌트만 다시 렌더한다
+- 에러도 같은 방식으로 throw되어 ErrorBoundary가 받는다. 대가로 `enabled`, `placeholderData`, `throwOnError`는 **타입에서 빠졌다** — "데이터는 항상 있고 에러는 항상 던져진다"는 모델과 모순이기 때문이다
+
+---
+
+## Suspense의 함정 — 요청이 직렬이 된다
+
+```jsx
+function Dashboard() {
+  const {data: user} = useSuspenseQuery({queryKey: ['user'], ...})
+  // ↑ 여기서 suspend. 아래 줄은 user가 도착해야 실행된다
+  const {data: stats} = useSuspenseQuery({queryKey: ['stats'], ...})
+}
+```
+
+```text
+useQuery 2개:          [ user ──────]
+                       [ stats ─────]        총 1초
+
+useSuspenseQuery 2개:  [ user ──────][ stats ─────]  총 2초
+```
+
+- suspend는 **함수 실행을 그 줄에서 중단**하는 것이다. 두 번째 훅은 첫 응답 전엔 호출조차 안 된다 (Promise 덱의 "순차 await" 함정과 같은 구조)
+- 서로 독립인 쿼리 여럿은 **`useSuspenseQueries`**로 병렬 선언한다
+
+---
+
 ## Part 4 정리
 
 - 데이터의 주인은 컴포넌트가 아니라 **Query** — 언마운트 후 생존, 요청 합류, GC가 전부 여기서 나온다
@@ -423,6 +466,7 @@ const {data: count} = useQuery({
 - **tracked properties**: 읽은 필드만 리렌더 사유가 된다
 - **structural sharing**: 내용이 같으면 참조도 같다 → deps에 data를 넣어도 안전
 - **select**: 캐시는 하나, 컴포넌트마다 다른 단면 — 가공 결과가 같으면 리렌더 없음
+- **useSuspenseQuery**: 같은 Observer, pending이면 Promise를 throw → 분기가 사라진다. 한 컴포넌트에 여럿이면 **직렬**, 독립 쿼리는 `useSuspenseQueries`
 
 ---
 
@@ -483,50 +527,199 @@ const {data: count} = useQuery({
 
 ---
 
-## Part 5 — Suspense와 SSR
-
-<!-- _class: invert -->
-
----
-
-## useSuspenseQuery — 분기 없는 세계
-
-```jsx
-function TodoList() {
-  const {data} = useSuspenseQuery({queryKey: ['todos'], queryFn: fetchTodos})
-  return <ul>{data.map(...)}</ul> // data는 항상 있다. 타입도 Todo[] (undefined 없음)
-}
-
-// 로딩과 에러는 바깥에서 선언한다
-<ErrorBoundary fallback={<ErrorView />}>
-  <Suspense fallback={<Spinner />}><TodoList /></Suspense>
-</ErrorBoundary>
-```
-
-- `status === 'pending'` 분기가 사라진다. 데이터가 아직 없으면 컴포넌트가 **Promise를 throw**하고, React가 그것을 받아 가장 가까운 `<Suspense>`의 fallback을 대신 그린다. Promise가 풀리면 그 컴포넌트만 다시 렌더한다
-- 에러도 같은 방식으로 throw되어 ErrorBoundary가 받는다. 대가로 `enabled`, `placeholderData`, `throwOnError`는 **타입에서 빠졌다** — "데이터는 항상 있고 에러는 항상 던져진다"는 모델과 모순이기 때문이다
-
----
-
-## Suspense의 함정 — 요청이 직렬이 된다
+## 중간 점검 ③ — 1초짜리 요청 셋
 
 ```jsx
 function Dashboard() {
   const {data: user} = useSuspenseQuery({queryKey: ['user'], ...})
-  // ↑ 여기서 suspend. 아래 줄은 user가 도착해야 실행된다
   const {data: stats} = useSuspenseQuery({queryKey: ['stats'], ...})
+  const {data: news} = useSuspenseQuery({queryKey: ['news'], ...})
 }
 ```
 
-```text
-useQuery 2개:          [ user ──────]
-                       [ stats ─────]        총 1초
+세 요청은 각각 1초 걸리고 서로 독립이다. 화면이 뜨기까지 몇 초일까? 어떻게 고칠까?
 
-useSuspenseQuery 2개:  [ user ──────][ stats ─────]  총 2초
+---
+
+## 중간 점검 ③ — 정답: 3초. useSuspenseQueries로 1초
+
+- suspend는 **그 줄에서 함수 실행을 중단**한다 — 두 번째 훅은 user가 도착하기 전엔 호출조차 안 된다
+- 1초 × 3 직렬 = 3초 (워터폴)
+- 서로 독립인 쿼리는 `useSuspenseQueries`로 한 번에 선언 → 병렬 1초
+
+단, stats가 user의 결과를 필요로 하는 **종속 쿼리라면 직렬이 정답**이다 — 그때는 워터폴이 아니라 의존성이다.
+
+---
+
+## Part 5 — 실전에서 반복되는 함정 여섯
+
+<!-- _class: invert -->
+
+전부 실제 코드 리뷰에서 반복해서 만나는 패턴들이다.
+
+---
+
+## 함정 1 — 흩어진 queryKey
+
+```js
+// list.tsx
+useQuery({queryKey: ['todos', 'list'], ...})
+// mutation.ts
+queryClient.invalidateQueries({queryKey: ['todo', 'list']}) // todos가 아니라 todo
 ```
 
-- suspend는 **함수 실행을 그 줄에서 중단**하는 것이다. 두 번째 훅은 첫 응답 전엔 호출조차 안 된다 (Promise 덱의 "순차 await" 함정과 같은 구조)
-- 서로 독립인 쿼리 여럿은 **`useSuspenseQueries`**로 병렬 선언한다
+- 오타·단복수 불일치는 에러가 아니다. **조용히 아무 일도 안 일어난다** (없는 키를 무효화했을 뿐)
+- 해결: 키와 fn을 한 곳에 선언하는 **queryOptions 헬퍼**
+
+```ts
+// queries/todos.ts — 키의 유일한 출처
+export const todoListOptions = queryOptions({
+  queryKey: ['todos', 'list'],
+  queryFn: fetchTodos,
+})
+
+useQuery(todoListOptions)
+queryClient.invalidateQueries({queryKey: todoListOptions.queryKey})
+```
+
+타입 추론도 따라온다. v5에서 키 관리의 사실상 표준.
+
+<!-- 구두 보충: "사실상 표준"의 근거 — queryOptions는 v5 공식 문서의 TypeScript 가이드가 권하는 패턴이고, 메인테이너 TkDodo의 "The Query Options API" 글이 배경 설명. 팩토리 객체(todoKeys.list() 류)로 더 키우는 팀도 많다. -->
+
+---
+
+## 함정 2 — 파라미터 바꾸고 refetch()
+
+```jsx
+// ❌ page는 클로저로, 갱신은 수동으로
+const {data, refetch} = useQuery({
+  queryKey: ['orders'],
+  queryFn: () => fetchOrders(page),
+})
+useEffect(() => {
+  refetch()
+}, [page])
+```
+
+- `['orders']` 캐시 하나를 페이지마다 **덮어쓴다** — 1페이지로 돌아가도 즉시 표시가 안 된다
+- 키와 fn이 어긋난 상태라 중복 제거, invalidate, 그리고 Part 6의 SSR hydrate까지 전부 오작동의 씨앗
+
+<!-- prettier-ignore -->
+```jsx
+// ✅ 파라미터는 키에. refetch는 필요 없다
+useQuery({queryKey: ['orders', page], queryFn: () => fetchOrders(page)})
+```
+
+`refetch`의 정당한 용도는 "**같은 키를 명시적 계기로 다시**"(새로고침 버튼)뿐이다.
+
+---
+
+## 함정 3 — data를 useEffect로 복사
+
+```jsx
+// ❌ 서버 상태를 클라이언트 상태로 복사
+const {data} = useQuery({queryKey: ['todos'], queryFn: fetchTodos})
+const [todos, setTodos] = useState([])
+useEffect(() => {
+  if (data) setTodos(data)
+}, [data])
+```
+
+- 렌더가 한 박자 늦고, 백그라운드 갱신이 `todos`에 반영 안 되는 순간이 생기고, "어느 쪽이 진실인가" 문제가 시작된다
+- 파생값은 **렌더 중 계산**하거나 **select**로:
+
+```jsx
+const {data: undone} = useQuery({
+  ...todoListOptions,
+  select: (todos) => todos.filter((t) => !t.done),
+})
+```
+
+- 예외는 편집 화면의 로컬 초안뿐 — "서버 값은 초기값"이라고 선을 긋고 복사한다
+
+---
+
+## 함정 4 — invalidate를 기다리지 않기
+
+```jsx
+// ❌ 폼 제출 → 목록으로 이동. 그런데 옛 목록이 잠깐 보인다
+onSuccess: () => {
+  queryClient.invalidateQueries({queryKey: ['todos']})
+  navigate('/todos') // invalidate의 refetch는 아직 진행 중
+}
+```
+
+- `invalidateQueries`는 **Promise를 반환**한다 — active 쿼리들의 refetch가 끝날 때까지
+- 갱신 완료를 보장하고 이동해야 한다면 await:
+
+```jsx
+onSuccess: async () => {
+  await queryClient.invalidateQueries({queryKey: ['todos']})
+  navigate('/todos')
+}
+```
+
+- 반대로 "이동 먼저, 갱신은 백그라운드"가 낫다면 await 없이 — **선택이라는 것을 알고 고르는 것**과 모르는 것의 차이
+
+<!-- 구두 보충: await하면 그만큼 버튼이 pending에 오래 머문다는 트레이드오프를 꼭 언급. 목록 화면이 어차피 스피너/기존 캐시를 보여줄 수 있으면 await 없는 쪽이 체감이 좋은 경우도 많다. -->
+
+---
+
+## 함정 5 — 낙관적 업데이트에서 cancelQueries 생략
+
+1부의 낙관적 업데이트에서 첫 줄이 왜 `cancelQueries`였는가.
+
+```text
+t0  포커스 계기 → ['todos'] 백그라운드 갱신 시작 (옛 목록 응답 대기)
+t1  사용자가 체크박스 클릭 → setQueryData로 캐시 미리 수정 (화면 반영)
+t2  t0의 응답 도착 → 서버의 "옛" 목록이 캐시를 덮어쓴다
+    → 체크가 풀린 것처럼 보인다. 잠시 후 무효화가 최신을 가져와 돌아온다 (깜빡임)
+```
+
+- 낙관적 수정과 진행 중이던 백그라운드 갱신의 **레이스 컨디션**이다
+- `await queryClient.cancelQueries({queryKey: ['todos']})`가 t0의 응답을 버리게 해서 이 창을 닫는다
+- 1부 인트로 코드의 레이스 컨디션을 react-query가 없애줬지만, **캐시를 직접 만지는 순간 레이스는 내 책임으로 돌아온다**
+
+---
+
+## 함정 6 — 에러 처리를 컴포넌트마다 복붙
+
+- v5는 useQuery의 `onError` 콜백을 **제거**했다 — 구독하는 useQuery 호출마다 실행돼, 같은 토스트가 구독 수만큼(Part 4 그림이라면 세 번) 뜨는 문제 때문
+- 전역 처리는 **QueryCache 레벨**에 한 번만 건다:
+
+```js
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error, query) => {
+      if (query.state.data !== undefined) {
+        // 데이터가 이미 화면에 있는 백그라운드 갱신 실패만 토스트
+        toast.error(`갱신 실패: ${error.message}`)
+      }
+    },
+  }),
+})
+```
+
+- 첫 로딩 실패는 컴포넌트의 `status === 'error'` 분기(또는 ErrorBoundary)가, 백그라운드 실패는 전역 토스트가 — 역할 분담이 선명해진다
+
+---
+
+## Part 5 정리 — 체크리스트
+
+리뷰할 때 이 여섯을 순서대로 본다.
+
+- [ ] queryKey가 **queryOptions 헬퍼**로 한 곳에 모여 있는가
+- [ ] `refetch()` 호출이 있다면 — 파라미터가 키에 안 들어간 신호 아닌가
+- [ ] `useEffect`로 data를 **useState에 복사**하고 있지 않은가
+- [ ] invalidate 후 이동/후속 동작 — **await가 필요한 상황**인가
+- [ ] `setQueryData` 앞에 **cancelQueries**가 있는가
+- [ ] 에러 토스트가 컴포넌트마다 있는가 — **QueryCache onError** 한 곳이면 되는가
+
+---
+
+## Part 6 — SSR
+
+<!-- _class: invert -->
 
 ---
 
@@ -647,10 +840,8 @@ this.gcTime = Math.max(
 
 ---
 
-## Part 5 정리
+## Part 6 정리
 
-- **useSuspenseQuery**: 분기가 사라지고 로딩/에러가 트리 바깥 선언으로 이동. data 타입에서 undefined가 빠진다
-- 같은 컴포넌트의 useSuspenseQuery 여럿은 **직렬(워터폴)** — 독립 쿼리는 `useSuspenseQueries`
 - SSR의 통로: **prefetchQuery → dehydrate → HydrationBoundary** — 클라이언트 코드는 그대로
 - hydrate된 데이터도 평범한 캐시 — 1부의 생명주기가 그대로 적용
 - 서버의 QueryClient는 **요청마다 새로** — 싱글턴은 사용자 간 데이터 유출
@@ -658,31 +849,7 @@ this.gcTime = Math.max(
 
 ---
 
-## 중간 점검 ① — 1초짜리 요청 셋
-
-```jsx
-function Dashboard() {
-  const {data: user} = useSuspenseQuery({queryKey: ['user'], ...})
-  const {data: stats} = useSuspenseQuery({queryKey: ['stats'], ...})
-  const {data: news} = useSuspenseQuery({queryKey: ['news'], ...})
-}
-```
-
-세 요청은 각각 1초 걸리고 서로 독립이다. 화면이 뜨기까지 몇 초일까? 어떻게 고칠까?
-
----
-
-## 중간 점검 ① — 정답: 3초. useSuspenseQueries로 1초
-
-- suspend는 **그 줄에서 함수 실행을 중단**한다 — 두 번째 훅은 user가 도착하기 전엔 호출조차 안 된다
-- 1초 × 3 직렬 = 3초 (워터폴)
-- 서로 독립인 쿼리는 `useSuspenseQueries`로 한 번에 선언 → 병렬 1초
-
-단, stats가 user의 결과를 필요로 하는 **종속 쿼리라면 직렬이 정답**이다 — 그때는 워터폴이 아니라 의존성이다.
-
----
-
-## 중간 점검 ② — prefetch가 무시된다
+## 중간 점검 — prefetch가 무시된다
 
 ```jsx
 // 서버 컴포넌트
@@ -696,180 +863,14 @@ const {data} = useQuery({queryKey: ['todos', 'list'], queryFn: fetchTodos})
 
 ---
 
-## 중간 점검 ② — 정답: 키가 다르다
+## 중간 점검 — 정답: 키가 다르다
 
 - hydrate는 잘 됐다 — 클라이언트 캐시에 `['todos']` 항목이 들어 있다
 - 하지만 useQuery가 보는 주소는 `['todos', 'list']` — **다른 캐시 항목**이므로 빈손에서 시작한다
 - 에러도 경고도 없다. 프리픽스 관계여도 소용없다 (프리픽스 매칭은 invalidate의 기능이고, 조회는 정확한 키)
-- 예방: 서버와 클라이언트가 **같은 queryOptions 헬퍼**를 import하게 한다 (함정 1에서 계속)
+- 예방: 서버와 클라이언트가 **같은 queryOptions 헬퍼**를 import하게 한다 (함정 1의 queryOptions)
 
 > SSR 최적화가 통째로 무시되는데 화면은 멀쩡히 돌아간다 — 가장 발견이 늦는 종류의 버그다.
-
----
-
-## Part 6 — 실전에서 반복되는 함정 여섯
-
-<!-- _class: invert -->
-
-전부 실제 코드 리뷰에서 반복해서 만나는 패턴들이다.
-
----
-
-## 함정 1 — 흩어진 queryKey
-
-```js
-// list.tsx
-useQuery({queryKey: ['todos', 'list'], ...})
-// mutation.ts
-queryClient.invalidateQueries({queryKey: ['todo', 'list']}) // todos가 아니라 todo
-```
-
-- 오타·단복수 불일치는 에러가 아니다. **조용히 아무 일도 안 일어난다** (없는 키를 무효화했을 뿐)
-- 해결: 키와 fn을 한 곳에 선언하는 **queryOptions 헬퍼**
-
-```ts
-// queries/todos.ts — 키의 유일한 출처
-export const todoListOptions = queryOptions({
-  queryKey: ['todos', 'list'],
-  queryFn: fetchTodos,
-})
-
-useQuery(todoListOptions)
-queryClient.invalidateQueries({queryKey: todoListOptions.queryKey})
-```
-
-타입 추론도 따라온다. v5에서 키 관리의 사실상 표준.
-
-<!-- 구두 보충: "사실상 표준"의 근거 — queryOptions는 v5 공식 문서의 TypeScript 가이드가 권하는 패턴이고, 메인테이너 TkDodo의 "The Query Options API" 글이 배경 설명. 팩토리 객체(todoKeys.list() 류)로 더 키우는 팀도 많다. -->
-
----
-
-## 함정 2 — 파라미터 바꾸고 refetch()
-
-```jsx
-// ❌ page는 클로저로, 갱신은 수동으로
-const {data, refetch} = useQuery({
-  queryKey: ['orders'],
-  queryFn: () => fetchOrders(page),
-})
-useEffect(() => {
-  refetch()
-}, [page])
-```
-
-- `['orders']` 캐시 하나를 페이지마다 **덮어쓴다** — 1페이지로 돌아가도 즉시 표시가 안 된다
-- 키와 fn이 어긋난 상태라 SSR hydrate, 중복 제거, invalidate 전부 오작동의 씨앗
-
-<!-- prettier-ignore -->
-```jsx
-// ✅ 파라미터는 키에. refetch는 필요 없다
-useQuery({queryKey: ['orders', page], queryFn: () => fetchOrders(page)})
-```
-
-`refetch`의 정당한 용도는 "**같은 키를 명시적 계기로 다시**"(새로고침 버튼)뿐이다.
-
----
-
-## 함정 3 — data를 useEffect로 복사
-
-```jsx
-// ❌ 서버 상태를 클라이언트 상태로 복사
-const {data} = useQuery({queryKey: ['todos'], queryFn: fetchTodos})
-const [todos, setTodos] = useState([])
-useEffect(() => {
-  if (data) setTodos(data)
-}, [data])
-```
-
-- 렌더가 한 박자 늦고, 백그라운드 갱신이 `todos`에 반영 안 되는 순간이 생기고, "어느 쪽이 진실인가" 문제가 시작된다
-- 파생값은 **렌더 중 계산**하거나 **select**로:
-
-```jsx
-const {data: undone} = useQuery({
-  ...todoListOptions,
-  select: (todos) => todos.filter((t) => !t.done),
-})
-```
-
-- 예외는 편집 화면의 로컬 초안뿐 — "서버 값은 초기값"이라고 선을 긋고 복사한다
-
----
-
-## 함정 4 — invalidate를 기다리지 않기
-
-```jsx
-// ❌ 폼 제출 → 목록으로 이동. 그런데 옛 목록이 잠깐 보인다
-onSuccess: () => {
-  queryClient.invalidateQueries({queryKey: ['todos']})
-  navigate('/todos') // invalidate의 refetch는 아직 진행 중
-}
-```
-
-- `invalidateQueries`는 **Promise를 반환**한다 — active 쿼리들의 refetch가 끝날 때까지
-- 갱신 완료를 보장하고 이동해야 한다면 await:
-
-```jsx
-onSuccess: async () => {
-  await queryClient.invalidateQueries({queryKey: ['todos']})
-  navigate('/todos')
-}
-```
-
-- 반대로 "이동 먼저, 갱신은 백그라운드"가 낫다면 await 없이 — **선택이라는 것을 알고 고르는 것**과 모르는 것의 차이
-
-<!-- 구두 보충: await하면 그만큼 버튼이 pending에 오래 머문다는 트레이드오프를 꼭 언급. 목록 화면이 어차피 스피너/기존 캐시를 보여줄 수 있으면 await 없는 쪽이 체감이 좋은 경우도 많다. -->
-
----
-
-## 함정 5 — 낙관적 업데이트에서 cancelQueries 생략
-
-1부의 낙관적 업데이트에서 첫 줄이 왜 `cancelQueries`였는가.
-
-```text
-t0  포커스 계기 → ['todos'] 백그라운드 갱신 시작 (옛 목록 응답 대기)
-t1  사용자가 체크박스 클릭 → setQueryData로 캐시 미리 수정 (화면 반영)
-t2  t0의 응답 도착 → 서버의 "옛" 목록이 캐시를 덮어쓴다
-    → 체크가 풀린 것처럼 보인다. 잠시 후 무효화가 최신을 가져와 돌아온다 (깜빡임)
-```
-
-- 낙관적 수정과 진행 중이던 백그라운드 갱신의 **레이스 컨디션**이다
-- `await queryClient.cancelQueries({queryKey: ['todos']})`가 t0의 응답을 버리게 해서 이 창을 닫는다
-- 1부 인트로 코드의 레이스 컨디션을 react-query가 없애줬지만, **캐시를 직접 만지는 순간 레이스는 내 책임으로 돌아온다**
-
----
-
-## 함정 6 — 에러 처리를 컴포넌트마다 복붙
-
-- v5는 useQuery의 `onError` 콜백을 **제거**했다 — 구독하는 useQuery 호출마다 실행돼, 같은 토스트가 구독 수만큼(Part 4 그림이라면 세 번) 뜨는 문제 때문
-- 전역 처리는 **QueryCache 레벨**에 한 번만 건다:
-
-```js
-const queryClient = new QueryClient({
-  queryCache: new QueryCache({
-    onError: (error, query) => {
-      if (query.state.data !== undefined) {
-        // 데이터가 이미 화면에 있는 백그라운드 갱신 실패만 토스트
-        toast.error(`갱신 실패: ${error.message}`)
-      }
-    },
-  }),
-})
-```
-
-- 첫 로딩 실패는 컴포넌트의 `status === 'error'` 분기(또는 ErrorBoundary)가, 백그라운드 실패는 전역 토스트가 — 역할 분담이 선명해진다
-
----
-
-## Part 6 정리 — 체크리스트
-
-리뷰할 때 이 여섯을 순서대로 본다.
-
-- [ ] queryKey가 **queryOptions 헬퍼**로 한 곳에 모여 있는가
-- [ ] `refetch()` 호출이 있다면 — 파라미터가 키에 안 들어간 신호 아닌가
-- [ ] `useEffect`로 data를 **useState에 복사**하고 있지 않은가
-- [ ] invalidate 후 이동/후속 동작 — **await가 필요한 상황**인가
-- [ ] `setQueryData` 앞에 **cancelQueries**가 있는가
-- [ ] 에러 토스트가 컴포넌트마다 있는가 — **QueryCache onError** 한 곳이면 되는가
 
 ---
 
@@ -984,7 +985,7 @@ function TodoCount() {
 
 ---
 
-## 퀴즈 5 — 롤백이 되지 않는다 (1부 Part 3 + 2부 Part 6)
+## 퀴즈 5 — 롤백이 되지 않는다 (1부 Part 3 + 2부 Part 5)
 
 낙관적 업데이트를 구현했다. cancelQueries도 잊지 않았다. 그런데 서버가 실패했을 때 **롤백해도 화면이 원래대로 돌아오지 않는다.**
 
@@ -1021,7 +1022,7 @@ queryClient.setQueryData(['todos'], (old) => toggle(old, toggled.id)) // ② 수
 
 ---
 
-## 퀴즈 6 — 서버에서 생긴 일 (2부 Part 5)
+## 퀴즈 6 — 서버에서 생긴 일 (2부 Part 6)
 
 SSR 프리페치 코드. 배포 후 "가끔 첫 화면이 다른 사람의 장바구니"라는 제보가 왔다.
 

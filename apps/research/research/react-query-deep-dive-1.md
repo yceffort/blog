@@ -985,9 +985,9 @@ queryClient.setQueryData(['todos'], (old) => [...old, newTodo]) // 새 배열
 1부는 "어떻게 쓰는가"였다. 2부는 "어떻게 돌아가는가".
 
 - useQuery를 호출하면 내부에서 무슨 일이 벌어지는가 — QueryClient, QueryCache, Query, QueryObserver
-- 데이터가 그대로면 리렌더도 없다 — structural sharing과 tracked properties
-- **Suspense와 SSR** — useSuspenseQuery, 서버 프리페치와 HydrationBoundary
-- 실전에서 자주 틀리는 패턴 모음과 **종합 퀴즈**
+- 데이터가 그대로면 리렌더도 없다 — structural sharing과 tracked properties, 그리고 useSuspenseQuery
+- 실전에서 자주 틀리는 패턴 여섯 — 구조를 알면 왜 틀렸는지 보인다
+- **SSR** — 서버 프리페치와 HydrationBoundary, 그리고 **종합 퀴즈**
 
 ---
 
