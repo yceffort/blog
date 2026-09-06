@@ -24,7 +24,7 @@
     "front-matter": "^4.0.2",
     "glob": "^13.0.6",
     "isbot": "^5.2.1",
-    "mermaid": "^11.16.1",
+    "mermaid": "^11.17.0",
     "minisearch": "^7.2.0",
     "next": "^16.3.1",
     "next-mdx-remote-client": "^2.1.12",
@@ -47,11 +47,11 @@
     "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0",
     "vfile": "^6.0.3",
-    "web-vitals": "^6.1.0"
+    "web-vitals": "^6.1.1"
   },
   "devDependencies": {
     "@naverpay/stylelint-config": "^1.0.0",
-    "@stylistic/stylelint-plugin": "^5.2.1",
+    "@stylistic/stylelint-plugin": "^5.3.0",
     "@types/hast": "^3.0.5",
     "@types/node": "^26.2.0",
     "@types/react": "^19.2.18",
