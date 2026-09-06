@@ -278,6 +278,62 @@ useMutation({
 
 ---
 
+## 잠깐 — 옵저버 패턴이란
+
+유튜브 채널 구독과 같다. 새 영상이 올라왔는지 **내가 계속 새로고침하지 않는다**. 구독해 두면 채널이 알려준다.
+
+```js
+class Channel {
+  #subscribers = new Set()
+
+  subscribe(fn) {
+    this.#subscribers.add(fn)
+    return () => this.#subscribers.delete(fn) // 구독 해제 함수를 돌려준다
+  }
+
+  upload(video) {
+    this.#subscribers.forEach((fn) => fn(video)) // 바뀌면 구독자 전원에게 알린다
+  }
+}
+
+const channel = new Channel()
+const unsubscribe = channel.subscribe((v) => console.log('알림:', v))
+channel.upload('1편') // 알림: 1편
+unsubscribe()
+channel.upload('2편') // 조용하다
+```
+
+- 바뀌는 쪽(채널)이 **구독자 목록**을 들고 있다가, 바뀌는 순간 목록을 돌며 알린다. 보는 쪽은 묻지 않고 기다린다
+- 채널은 구독자가 몇 명인지 안다. 그래서 "아무도 안 본다"를 **판단할 수 있다**
+
+---
+
+## react-query는 이 패턴 그대로다
+
+| 옵저버 패턴           | react-query                                                   |
+| --------------------- | ------------------------------------------------------------- |
+| 채널 (바뀌는 쪽)      | Query                                                         |
+| 구독자                | QueryObserver                                                 |
+| subscribe / 해제 함수 | `observer.subscribe(cb)`가 돌려준 함수를 언마운트 때 호출     |
+| 알림                  | Query 상태가 바뀌면 구독자 목록을 돌며 `onQueryUpdate()` 호출 |
+| 구독자 0명            | 마지막 구독자가 떠나면 `scheduleGc()`. gcTime 타이머의 출발점 |
+
+```ts
+// query.ts (v5.101.4) 요지. 앞 장 그림의 observers: [ 관찰자 목록 ]이 곧 구독자 목록이다
+removeObserver(observer) {
+  this.observers = this.observers.filter((x) => x !== observer)
+  if (!this.observers.length) this.scheduleGc() // 아무도 안 보면 GC 예약
+}
+#dispatch(action) {
+  this.state = reducer(this.state)
+  this.observers.forEach((observer) => observer.onQueryUpdate()) // 전원에게 알림
+}
+```
+
+1부에서 외웠던 "구독자가 0이면 GC 시작"은 규칙이 아니라 이 패턴의 **자연스러운 결과**다.
+
+---
+
 ## QueryObserver — 컴포넌트의 대리인
 
 컴포넌트가 Query를 직접 보지 않는다. 사이에 **관찰자**가 있다.
