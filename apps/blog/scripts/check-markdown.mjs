@@ -241,24 +241,6 @@ function checkBody(file, body, tree, report) {
       }
     }
 
-    if (node.type === 'code' && !node.lang) {
-      report('warn', line, '코드 블록에 언어가 없어 하이라이팅되지 않는다')
-    }
-
-    if (node.type === 'table') {
-      const columns = node.children[0]?.children.length ?? 0
-      const broken = node.children.find(
-        (row) => row.children.length !== columns,
-      )
-      if (broken) {
-        report(
-          'error',
-          broken.position.start.line,
-          `표의 열 수가 어긋난다 (${broken.children.length}칸, 머리글은 ${columns}칸)`,
-        )
-      }
-    }
-
     if (node.type === 'image' && isPost && !/^https?:/.test(node.url)) {
       const publicPath = toPublicPath(file, node.url)
       if (!existsSync(join(PUBLIC_DIR, publicPath))) {
@@ -272,9 +254,7 @@ function checkBody(file, body, tree, report) {
 
     if (node.type === 'link') {
       const url = node.url ?? ''
-      if (url === '') {
-        report('error', line, '링크 주소가 비어 있다')
-      } else if (url.startsWith('#')) {
+      if (url.startsWith('#')) {
         if (!headingSlugs.has(decodeURIComponent(url.slice(1)))) {
           report('error', line, `이 글에 없는 제목을 가리킨다: ${url}`)
         }

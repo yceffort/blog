@@ -70,6 +70,7 @@
     "style": "fenced",
   },
   "single-trailing-newline": true,
+  "table-column-count": true,
   "code-fence-style": {
     "style": "backtick",
   },
