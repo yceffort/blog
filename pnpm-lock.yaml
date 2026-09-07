@@ -110,8 +110,8 @@ importers:
   .:
     devDependencies:
       '@yceffort/rust-markdownlint':
-        specifier: ^0.1.2
-        version: 0.1.2
+        specifier: ^0.1.3
+        version: 0.1.3
       lefthook:
         specifier: ^2.1.10
         version: 2.1.10
@@ -1660,33 +1660,33 @@ packages:
     engines: {node: '>=14.6'}
     deprecated: this version has critical issues, please update to the latest version
 
-  '@yceffort/rust-markdownlint-darwin-arm64@0.1.2':
-    resolution: {integrity: sha512-KOEgQcNunipwbSZc1s2nu+TBK1VczFHmrhD72n5vKIqGnmj/3PSIQijJ/YDJDwT6A8ZtriAwbbDXscXKLxofZQ==}
+  '@yceffort/rust-markdownlint-darwin-arm64@0.1.3':
+    resolution: {integrity: sha512-qW2hcb1utyDiiSUjLcp62ZpE5hdQftfbf55tib4kagUDtMoVR8gNNAXp5wcnuPaC4FWhspfFqobgMcKgA0iqLA==}
     cpu: [arm64]
     os: [darwin]
 
-  '@yceffort/rust-markdownlint-darwin-x64@0.1.2':
-    resolution: {integrity: sha512-ciSdvNMDsa5Z/NRqt0Tk2Xl6/iZ6oFwHmCjpQzoMy/h09IZBr9fUYpLtCkjtL55ZI2AlJf/c0gTqQkXQ4l/3dw==}
+  '@yceffort/rust-markdownlint-darwin-x64@0.1.3':
+    resolution: {integrity: sha512-8fOGPAAtuqMNRwdMPEfGBX7Nt4IHt3B3A/1kromSM93bj0OLgHCOsLxSxBXGEy1hGLLAOITZ+Mv8BcNEIxcRdQ==}
     cpu: [x64]
     os: [darwin]
 
-  '@yceffort/rust-markdownlint-linux-arm64@0.1.2':
-    resolution: {integrity: sha512-ljYFnm6NDub2Isi9xQNs75EGMRa/YpydAf5JVAjdTX9cjfHnA+ulr6Xy3WCnHK6xE+2oO+WPxQ/P3dyRFmgwsA==}
+  '@yceffort/rust-markdownlint-linux-arm64@0.1.3':
+    resolution: {integrity: sha512-DHSyBF6wX+Zkh4PR4h3v/8PpXGyEhtOapBXGVIzhHUcGP7hKd8RhaCX18oVa6J8AR1ECcM0TjKrkcEvgq7vY8g==}
     cpu: [arm64]
     os: [linux]
 
-  '@yceffort/rust-markdownlint-linux-x64@0.1.2':
-    resolution: {integrity: sha512-YnSfapKRme21wQn+YtifaCzu9j5SqsWFKIc6R4JQWkUkmv7m3xxpJ4ShnIG/t2dT3KZHHGAnjNCrxBD5AX+JaA==}
+  '@yceffort/rust-markdownlint-linux-x64@0.1.3':
+    resolution: {integrity: sha512-ieuzaHhErk8tE3aU4NT4vVX69UYUiojZ0dZyXQVdlmAdP+R2KXl6l8iJER4suOO2D5Q/U9bkorVCAvexqyKMvQ==}
     cpu: [x64]
     os: [linux]
 
-  '@yceffort/rust-markdownlint-win32-x64@0.1.2':
-    resolution: {integrity: sha512-8tClgU8lHyfwHiUVX+d5uv26IIRV5s/ryo95aPIvIh+OQriY+Qrqk3gMWVpzOfD4/Za/i4akQISY/5y/8LIwvA==}
+  '@yceffort/rust-markdownlint-win32-x64@0.1.3':
+    resolution: {integrity: sha512-EpxbW0DFTeRaF1EpZS5xU1By9zcWVthMcYKK1f9OSZy1pCmfUmmI8tyLl7R58YfmUSrsjic2GO6uwqpR8xcwKA==}
     cpu: [x64]
     os: [win32]
 
-  '@yceffort/rust-markdownlint@0.1.2':
-    resolution: {integrity: sha512-UMGHrxrMqDbHqnCCPQoSd55+hOUyCmxDTdv+nF8woW3mH0YrGT/VUk5Z54cXzE1/WQOM6kSTRYO6M9dF84CKyA==}
+  '@yceffort/rust-markdownlint@0.1.3':
+    resolution: {integrity: sha512-JJ1bp6Jj3Y8b0bhJc0dEeR3muPsQIy29U9uJtg3Ulm7qJV7dbQ5UnnYE9WZbEiFKwUL06YQeiKy9rLzm6QbpKg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -4827,28 +4827,28 @@ snapshots:
 
   '@xmldom/xmldom@0.9.10': {}
 
-  '@yceffort/rust-markdownlint-darwin-arm64@0.1.2':
+  '@yceffort/rust-markdownlint-darwin-arm64@0.1.3':
     optional: true
 
-  '@yceffort/rust-markdownlint-darwin-x64@0.1.2':
+  '@yceffort/rust-markdownlint-darwin-x64@0.1.3':
     optional: true
 
-  '@yceffort/rust-markdownlint-linux-arm64@0.1.2':
+  '@yceffort/rust-markdownlint-linux-arm64@0.1.3':
     optional: true
 
-  '@yceffort/rust-markdownlint-linux-x64@0.1.2':
+  '@yceffort/rust-markdownlint-linux-x64@0.1.3':
     optional: true
 
-  '@yceffort/rust-markdownlint-win32-x64@0.1.2':
+  '@yceffort/rust-markdownlint-win32-x64@0.1.3':
     optional: true
 
-  '@yceffort/rust-markdownlint@0.1.2':
+  '@yceffort/rust-markdownlint@0.1.3':
     optionalDependencies:
-      '@yceffort/rust-markdownlint-darwin-arm64': 0.1.2
-      '@yceffort/rust-markdownlint-darwin-x64': 0.1.2
-      '@yceffort/rust-markdownlint-linux-arm64': 0.1.2
-      '@yceffort/rust-markdownlint-linux-x64': 0.1.2
-      '@yceffort/rust-markdownlint-win32-x64': 0.1.2
+      '@yceffort/rust-markdownlint-darwin-arm64': 0.1.3
+      '@yceffort/rust-markdownlint-darwin-x64': 0.1.3
+      '@yceffort/rust-markdownlint-linux-arm64': 0.1.3
+      '@yceffort/rust-markdownlint-linux-x64': 0.1.3
+      '@yceffort/rust-markdownlint-win32-x64': 0.1.3
 
   acorn-jsx@5.3.2(acorn@8.18.0):
     dependencies:
