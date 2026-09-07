@@ -136,7 +136,7 @@ AST는 코드의 구조를 보여주지만, "이 코드가 어떤 순서로 실�
 
 위 `List` 컴포넌트의 HIR은 개념적으로 이런 형태다:
 
-```
+```text
 function List
 bb0 (block):
   [1] $0 = Destructure items from params
@@ -153,7 +153,7 @@ bb0 (block):
 
 Playground에서 확인한 실제 HIR 출력 예시 (단순 컴포넌트):
 
-```
+```text
 function MyApp
 bb0 (block):
   [1] $0 = JSXText "Hello World"
@@ -167,7 +167,7 @@ bb0 (block):
 
 HIR로 코드의 실행 흐름은 파악했다. 하지만 하나의 변수가 여러 곳에서 재할당되면 "이 시점의 `x`가 어디서 온 값인가?"를 추적하기 어렵다. 이 문제를 해결하기 위해 HIR을 **SSA**(Static Single Assignment) 형태로 변환한다. SSA는 **각 변수가 정확히 한 번만 할당되는 형태**로, 컴파일러 최적화의 기초가 된다.
 
-```
+```text
 // 일반 코드
 let x = 1
 if (cond) { x = 2 }
@@ -204,7 +204,7 @@ Lydia Hallie의 React Summit 2025 발표에서 설명했듯이, 조건문이 있
 
 Playground에서 확인한 InferTypes 출력:
 
-```
+```text
 bb0 (block):
   [1] $4:TPrimitive = JSXText "Hello World"
   [2] $5:TObject<BuiltInJsx> = JSX <div>{$4:TPrimitive}</div>
@@ -244,7 +244,7 @@ function CaptureExample({onClick, label}) {
 
 Playground에서 Show Internals를 켜고 InferMutationAliasingEffects 패스를 펼치면, 컴파일러가 각 연산에 어떤 Effect를 부여하는지 확인할 수 있다. 가독성을 위해 정리하면:
 
-```
+```text
 [1] { onClick, label } = t0
       Create onClick = frozen          ← props에서 꺼낸 값, 불변
       Create label = frozen
@@ -332,7 +332,7 @@ function MutateExample({items, title}) {
 
 컴파일러의 Effect 분석:
 
-```
+```text
 [1] result = []                    → Create result = mutable
 [2] result.push(<li>...</li>)      → Mutate result  (반복)
 [3] <ul>{result}</ul>              → Freeze result
@@ -385,7 +385,7 @@ function MutateExample(t0) {
 
 `List` 컴포넌트에서:
 
-```
+```text
 Reactive (렌더링마다 변할 수 있음):
   - items          ← props
   - selItem        ← useState 값
@@ -413,7 +413,7 @@ Playground에서 확인할 수 있는 관련 패스:
 
 앞서 분석한 `CaptureExample`의 BuildReactiveFunction 출력을 보자 (가독성을 위해 정리했다):
 
-```
+```text
 function CaptureExample(t0) {
   [1] Destructure { onClick, label } = t0
 
@@ -451,7 +451,7 @@ scope @2의 의존성 목록에는 `data`도 포함되어 있지만, 최종 출�
 
 `MutateExample`의 scope 구성도 비교해보자. 6단계에서 봤듯이 Mutate Effect가 scope를 확장하므로, 배열 생성과 모든 push가 하나의 scope로 묶인다:
 
-```
+```text
 scope @1 dependencies=[items] declarations=[result] {
   result = []
   for (const item of items) { result.push(...) }

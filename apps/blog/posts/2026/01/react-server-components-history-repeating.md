@@ -551,7 +551,7 @@ export const Counter = component$(() => {
 
 **더 엄격해진 경계**: Next.js에서는 서버 컴포넌트에서 클라이언트 컴포넌트로 함수를 직접 전달하면 [직렬화 문제로 에러가 발생](https://github.com/vercel/next.js/discussions/49625)한다.
 
-```
+```text
 Error: Functions cannot be passed directly to Client Components
 unless you explicitly expose it by marking it with 'use server'.
 ```

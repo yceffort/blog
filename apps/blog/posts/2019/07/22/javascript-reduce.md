@@ -28,7 +28,7 @@ const totalSum = list.reduce(
 )
 ```
 
-```
+```text
 25
 ```
 
@@ -56,7 +56,7 @@ complicatedList.reduce(
 )
 ```
 
-```
+```text
 [0, 1, 2, 3, 4, 5, 6]
 ```
 
@@ -80,6 +80,6 @@ const flatten = function (arr, result = []) {
 flatten(moreComplicatedList)
 ```
 
-```
+```text
 [0, 1, 2, 3, 4, 5, 6]
 ```

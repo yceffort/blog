@@ -205,7 +205,7 @@ Web Animations API와 조합하면 CSS로 표현하기 어려운 동적인 애�
 
 View Transition이 발동하면 브라우저는 다음과 같은 pseudo-element 트리를 생성한다. 이 구조를 이해해야 CSS 커스터마이징이 가능하다.
 
-```
+```text
 ::view-transition
 └── ::view-transition-group(name)
     └── ::view-transition-image-pair(name)

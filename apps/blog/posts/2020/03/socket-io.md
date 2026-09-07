@@ -56,7 +56,7 @@ http.listen(3000, function () {
 
 이제 localhost:3000 으로 접속하면 아래와 같은 로그를 확인할 수 있다.
 
-```
+```text
 listening on *:3000
 a user connected
 ```
@@ -74,7 +74,7 @@ io.on('connection', function (socket) {
 
 다시 실행하고, 페이지를 닫으면 이제 아래와 같이 로그가 찍힌다.
 
-```
+```text
 listening on *:3000
 a user connected
 user disconnected
@@ -113,7 +113,7 @@ io.on('connection', function (socket) {
 })
 ```
 
-```
+```text
 > node index.js
 
 listening on *:3000

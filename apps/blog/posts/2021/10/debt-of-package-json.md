@@ -33,7 +33,7 @@ npm은 자바스크립트 개발자에게 있어 한 줄기 빛 같은 도구다
 
 `create-react-app`으로 react 프로젝트를 시작한다면 `react-scripts`가 설치되어 있을 것이다. 그리고 코딩 컨벤션을 위해 `eslint`를 설치할 수도 있다. 그러나 위 dependencies는 한가지 문제가 있다.
 
-```
+```text
 ➜  playground npm list eslint
 playground@ /Users/yceffort/private/playground
 ├── eslint@7.32.0
@@ -104,7 +104,7 @@ jest 버전이 24.x에서 26으로 업그레이드 된 것을 볼 수 있다. ma
 
 위 `package.json`을 살펴보자. react 버전은 16.8.6으로 고정되어 있고, `@testing-library/react-hooks`를 설치하려고 시도하고 있다. 그러나 [`@testing-library/react-hooks`는 `peerDependencies`로 `react@>=16.9`를 요구하기 때문](https://github.com/testing-library/react-hooks-testing-library/blob/565c9f80ff969c3b9f20d8b2efdc033996d9ec27/package.json#L78)에 아래와 같이 npm@7 환경에서는 설치가 되지 않는다.
 
-```
+```text
 ➜  playground npm install
 npm ERR! code ERESOLVE
 npm ERR! ERESOLVE could not resolve
@@ -137,7 +137,7 @@ npm ERR!     /Users/yceffort/.npm/_logs/2021-10-06T14_57_04_722Z-debug.log
 
 반대로 npm@6 환경에서는 그냥 경고문구만 뜨는 것을 확인할 수 있다.
 
-```
+```text
 ➜  playground npx npm@6 install
 npm WARN @testing-library/react-hooks@7.0.2 requires a peer of react@>=16.9.0 but none is installed. You must install peer dependencies yourself.
 npm WARN react-error-boundary@3.1.3 requires a peer of react@>=16.13.1 but none is installed. You must install peer dependencies yourself.

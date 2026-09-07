@@ -42,7 +42,7 @@ obj[hiSymbol] = 'hi'
 console.log(obj)
 ```
 
-```
+```text
 {Symbol(): "hello", Symbol(): "hi"}
 ```
 
@@ -53,7 +53,7 @@ const welcomeSymbol = Symbol('환영합니다')
 console.log(welcomeSymbol)
 ```
 
-```
+```text
 Symbol(환영합니다)
 ```
 
@@ -97,7 +97,7 @@ for (let i of Object.getOwnPropertyNames(메시)) {
 }
 ```
 
-```
+```text
 "영문명"
 "별명"
 "영문명"
@@ -112,7 +112,7 @@ for (let i of Object.getOwnPropertyNames(메시)) {
 Object.getOwnPropertySymbols(메시)
 ```
 
-```
+```text
 [Symbol(선수의 국적)]
 ```
 
@@ -122,7 +122,7 @@ Object.getOwnPropertySymbols(메시)
 Reflect.ownKeys(메시)
 ```
 
-```
+```text
 ["영문명", "별명", Symbol(선수의 국적)]
 ```
 

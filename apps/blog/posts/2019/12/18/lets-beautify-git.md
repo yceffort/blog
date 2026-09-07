@@ -24,13 +24,13 @@ template: post
 
 Single Line
 
-```
+```text
 [#issue number] :emoji: Commit Message
 ```
 
 Multi Line
 
-```
+```text
 [#issue number] :emoji: Commit Message
 - change detail1
 - change detail2

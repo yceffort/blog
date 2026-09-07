@@ -86,7 +86,7 @@ published: true
 
 사용자가 URL을 붙여넣으면, 그 페이지의 제목과 이미지를 카드로 보여준다.
 
-```
+```text
 사용자 ──"https://example.com/article" 입력──▶ 우리 서버
                                                   │
                                        ① 그 URL로 HTTP 요청
@@ -200,7 +200,7 @@ logger.warn('og_scrape_failed', {
 
 한 번의 스크래핑에서 시간이 어디로 가는지 재보면,
 
-```
+```text
 DNS 조회        ~10ms   ┐
 TCP + TLS       ~50ms   │
 요청 전송        ~1ms   ├─  네트워크 대기 (I/O)   ≈ 98%
@@ -220,7 +220,7 @@ og 태그 추출     ~1ms   ├─  CPU 작업              ≈  2%
 
 링크 미리보기는 대개 트래픽이 작다. 일 5,000건이라고 하면,
 
-```
+```text
 5,000 / 86,400초 ≈ 0.06 TPS
 피크를 평균의 10배로 잡아도 < 1 TPS
 ```
@@ -453,7 +453,7 @@ new TextDecoder('euc-kr').decode(bytes) // CP949 확장 문자가 깨진다
 
 많은 사이트가 미리보기 봇에만 OG 태그를 내준다.
 
-```
+```text
 facebookexternalhit/1.1
 Twitterbot/1.0
 Slackbot-LinkExpanding 1.0
@@ -475,7 +475,7 @@ Discordbot/2.0
 
 권장은 **자체 UA에 연락처를 넣는 것**이다.
 
-```
+```text
 MyPreviewBot/1.0 (+https://example.com/bot)
 ```
 
@@ -636,7 +636,7 @@ function decode(bytes: Buffer, charset: string): string {
 
 정리하면 이렇다.
 
-```
+```text
 ① 응답은 200이다
 ② og 태그도 정상적으로 있다
 ③ 파싱도 성공한다
@@ -714,7 +714,7 @@ for await (const chunk of res.body) {
 
 이제 방향이 반대다. **가져온 값이 우리 화면으로 들어온다.**
 
-```
+```text
 [2부]  사용자 URL ──▶ 우리 서버 ──▶ 외부 사이트     (나가는 방향: SSRF)
 [여기] 외부 사이트 ──▶ 우리 서버 ──▶ 사용자 브라우저 (들어오는 방향)
 ```
@@ -892,7 +892,7 @@ const html =
 
 ## 그래서 목표를 두 개로 쪼개야 한다
 
-```
+```text
 ① API 에러율     = 실패 응답 / 전체 API 요청     ← 반복 요청발 실패만 캐시로 개선
 ② 커버리지       = 성공한 고유 URL / 시도한 고유 URL  ← 스크래핑 품질로 개선
 ```
@@ -920,7 +920,7 @@ const html =
 
 ## 스탬피드가 왜 특히 나쁜가
 
-```
+```text
 t=0     캐시 만료
 t=0ms   요청 50건 도착 → 전부 미스 → 전부 외부로 나간다
         │
@@ -942,7 +942,7 @@ t=0ms   요청 50건 도착 → 전부 미스 → 전부 외부로 나간다
 캐시를 논하기 전에 **"같은 URL"이 무엇인지** 먼저 정해야 한다.
 아래는 사람 눈엔 같은 페이지지만, 문자열로는 전부 다르다.
 
-```
+```text
 https://Example.com/a?b=1&c=2
 https://example.com/a?c=2&b=1
 https://example.com/a?b=1&c=2#section
@@ -994,7 +994,7 @@ function once(key: string, fn: () => Promise<OgResult>) {
 
 만료된 값을 **일단 돌려주고**, 갱신은 백그라운드에서 한다.
 
-```
+```text
 요청 도착
    │
    ├─ 캐시에 값이 있다 (만료됨)
@@ -1113,7 +1113,7 @@ function ttlFor(result: OgResult): number {
 **경우 2: `h < 0.95`**
 P95는 미스 구간에 있다. 미스 분포에서 몇 번째 백분위인가?
 
-```
+```text
 q = (0.95 - h) / (1 - h)
 ```
 
@@ -1143,7 +1143,7 @@ q = (0.95 - h) / (1 - h)
 
 히트율은 **고유 URL 비율(unique ratio)**에서 나온다.
 
-```
+```text
 히트율 ≈ 1 - (TTL 기간 내 고유 URL 수 / TTL 기간 내 전체 요청 수)
 ```
 

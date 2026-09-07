@@ -112,7 +112,7 @@ cargo new my-app
 
 기본값으로, `cargo new`는 바이너리 애플리케이션 템플릿을 사용한다. 코드를 실행 한뒤에는, 아래와 같은 디렉토리 구조를 볼 수 있다.
 
-```
+```text
 my-app/
 ├── .git
 ├── .gitignore
@@ -268,7 +268,7 @@ fn main() {
 }
 ```
 
-```
+```text
 @yceffort ➜ /workspaces/rust-playground/chapter1/hello_cargo (main ✗) $ cargo run
    Compiling hello_cargo v0.1.0 (/workspaces/rust-playground/chapter1/hello_cargo)
 error[E0308]: mismatched types

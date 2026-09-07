@@ -190,7 +190,7 @@ dislike = lis[0].find('div', {'class': 'btn_area'}).findAll('span')[3].getText()
 like, dislike
 ```
 
-```
+```text
 ('7', '12')
 ```
 

@@ -161,7 +161,7 @@ ubuntu@study:~$ docker run -i -t --name network_test -p 80:80 ubuntu:14.04
 
 연결해보면, 아파치 서버가 정상적으로 실행되서 연결된 것을 알 수 있다.
 
-```
+```text
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <!--
@@ -177,7 +177,7 @@ ubuntu@study:~$ docker run -i -t --name network_test -p 80:80 ubuntu:14.04
 
 다시 정리하자면, 호스트의 80번 포트를 컨테이너의 80번 포트와 연결했고, 아파치 웹서비스의 80번 포트가 컨테이너의 포트와 연결되어 있는 것이다.
 
-```
+```text
 80번 호스트 포트 > 80번 컨테이너 포트 > 아파치 웹서비스 80번 포트
 ```
 

@@ -492,7 +492,7 @@ The `$$reactCache__` embedded at build time eventually points to the `cache()` f
 
 The flow works like this:
 
-```
+```text
 1. Argument serialization → encodeReply (Flight)
 2. Cache key composition → [buildId, id, args, hmrRefreshHash?]
 3. ResumeDataCache(RDC) lookup

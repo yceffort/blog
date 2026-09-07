@@ -1196,7 +1196,7 @@ production 모드와 별도로, 주석을 제거하고 코드르 압축시키는
 
 CRA(`create-react-app`)는 특별한 설정없이도 빠르고 간편하게 리액트 애플리케이션을 만들수 있도록 해주는 Cli tool이다.
 
-```
+```text
 # Installation
 $ npm install -g create-react-app
 
@@ -2013,7 +2013,7 @@ React 에서 async/await 을 사용하고 싶다면 Babel 과 transform-async-to
 
 기능과 라우팅에 따라서 css, js, 테스트 코드를 묶는 방법이다.
 
-```
+```text
 common/
 ├─ Avatar.js
 ├─ Avatar.css
@@ -2036,7 +2036,7 @@ profile/
 
 2. 파일 타입 별로 분류하는 법
 
-```
+```text
 api/
 ├─ APIUtils.js
 ├─ APIUtils.test.js

@@ -74,7 +74,7 @@ setInterval(() => {
 
 결과는 실행환경에 따라 다르다. 16gb 메모리가 있는 내 맥에서는 다음과 같은 결과가 나왔다.
 
-```
+```text
 ...
 Heap allocated 3.95 GB
 Heap allocated 3.96 GB
@@ -105,7 +105,7 @@ node index.js --max-old-space-size=8000
 
 위 커맨드에서는 최대 제한을 8gb로 설정했다. 이 크기를 설정할 때는 조심해야 한다. RAM에 물리적으로 사용가능한 공간을 설정해두는 것이 좋다. 물리적 메모리가 부족하면, 프로세스는 가상 메모리를 통해 디스크 공간을 확보하기 시작한다. 이 제한을 너무 높게 설정하면 PC가 손상될 수 있다.
 
-```
+```text
 ...
 Heap allocated 7.8 GB
 Heap allocated 7.8 GB

@@ -26,7 +26,7 @@ template: post
 
 1. 브라우저에 해당 파일의 캐시 기간을 굉장히 길게 설정해 두는 것 (1년 쯤)
 
-```
+```text
 # Server header
 Cache-Control: max-age=31536000
 ```
@@ -135,7 +135,7 @@ module.exports = {
 
 이렇게 바꾸고 나면, 매번 빌드시에 두개의 파일이 생성될 것이다. `main.[chunkhash].js` `vendor.[chunkhash].js` (웹팩 4의 경우 `vendors~main.[chunkhash].js`) 웹팩 4의 경우에는, 디펜던시가 그렇게 크지 않다면 벤더 번들을 만들어 내지 않는다.
 
-```
+```text
 $ webpack
 Hash: ac01483e8fec1fa70676
 Version: webpack 3.8.1
@@ -162,12 +162,12 @@ console.log('Wat');
 
 그러면 `vendor`에도 변화가 발생했다는 것을 알 수 있다.
 
-```
+```text
                            Asset   Size  Chunks             Chunk Names
 ./vendor.d9e134771799ecdf9483.js  47 kB       1  [emitted]  vendor
 ```
 
-```
+```text
                             Asset   Size  Chunks             Chunk Names
 ./vendor.e6ea4504d61a1cc1c60b.js  47 kB       1  [emitted]  vendor
 ```
@@ -201,7 +201,7 @@ module.exports = {
 
 이 작업까지 마치게 되면, 세 개의 파일이 생기게 된다.
 
-```
+```text
 $ webpack
 Hash: ac01483e8fec1fa70676
 Version: webpack 3.8.1
@@ -343,7 +343,7 @@ onShowCommentsClick(() => {
 
 `import()`를 활용하여 다이나믹 로딩을 할 모듈을 지정해둔다. 웹팩이 해당 코드를 만나게 되면, 이를 별도의 chunk로 분리하게 된다.
 
-```
+```text
 $ webpack
 Hash: 39b2a53cb4e73f0dc5b2
 Version: webpack 3.8.1
@@ -400,7 +400,7 @@ module.exports = {
 
 각 엔트리 파일별로, 웹팩은 각 엔트리에서 필요한 모듈을 별도의 의존성으로 나누어서 빌드 해준다.
 
-```
+```text
 $ webpack
 Hash: 318d7b8490a7382bf23b
 Version: webpack 3.8.1
@@ -438,7 +438,7 @@ module.exports = {
 
 코드를 빌드 할때, 웹팩은 각각의 모듈에 ID를 부여한다. 이 ID 는 번들 내의 `require()`로 사용 된다. 이러한 ID들은 모듈 경로 이전에 있는 빌드 결과물에서 볼 수 있다.
 
-```
+```text
 $ webpack
 Hash: df3474e4f76528e3bbc9
 Version: webpack 3.8.1
@@ -450,7 +450,7 @@ Time: 2150ms
 ./runtime.79f17c27b335abc7aaf4.js  1.45 kB       3  [emitted]  runtime
 ```
 
-```
+```text
    [0] ./index.js 29 kB {1} [built]
    [2] (webpack)/buildin/global.js 488 bytes {2} [built]
    [3] (webpack)/buildin/module.js 495 bytes {2} [built]
@@ -461,7 +461,7 @@ Time: 2150ms
 
 기본값으로, ID는 카운터로 계산된다. (첫번째 모듈은 0, 두번째는 1...) 문제는 여기에서 모듈이 추가 된다면, 이 모듈이 모듈 리스트의 중간에 나타나서 모든 다음 모듈의 아이디를 바꿔 버린다는 것이다.
 
-```
+```text
 $ webpack
 Hash: df3474e4f76528e3bbc9
 Version: webpack 3.8.1
@@ -478,26 +478,26 @@ Time: 2150ms
 
 여기에 모듈을 추가했다고 하면
 
-```
+```text
    [4] ./webPlayer.js 24 kB {1} [built]
 ```
 
 `comments`는 아이디가 밀려서 5번으로 바뀌게 되었다.
 
-```
+```text
    [5] ./comments.js 58 kB {0} [built]
 ```
 
 그리고 `adsj.js`는 6번으로 밀린다.
 
-```
+```text
    [6] ./ads.js 74 kB {1} [built]
        + 1 hidden module
 ```
 
 이는 실제 코드가 바뀌지 않았음에도 불구하고 이후에 모든 모듈들을 무효화 시켜 버린다. 따라서 이를 해결하기 위해서는, 모듈 아이디를 계산하는 방법을 [HashedModuleIdsPlugin](https://webpack.js.org/plugins/hashed-module-ids-plugin/)으로 바꾸는 것이 있다. 이는 카운토를 기반으로 한 ID를 모듈 경로를 해쉬한 방식으로 고친다.
 
-```
+```text
 $ webpack
 Hash: df3474e4f76528e3bbc9
 Version: webpack 3.8.1
@@ -509,7 +509,7 @@ Time: 2150ms
 ./runtime.25f5d0204e4f77fa57a1.js  1.45 kB       3  [emitted]  runtime
 ```
 
-```
+```text
 [3IRH] ./index.js 29 kB {1} [built]
 [DuR2] (webpack)/buildin/global.js 488 bytes {2} [built]
 [JkW7] (webpack)/buildin/module.js 495 bytes {2} [built]

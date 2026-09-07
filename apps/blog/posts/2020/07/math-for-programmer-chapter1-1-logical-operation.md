@@ -84,7 +84,7 @@ $$
 
 > 논리합은 논리곱과 부정기호로, 논리곱은 논리합과 부정기호로 표현할 수 있음을 가리키는 법칙이다. (킹무위키)
 
-```
+```text
 not(A or B)=(not A) and (not B)
 not(A and B)=(not A) or (not B)
 ```

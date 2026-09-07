@@ -63,7 +63,7 @@ export function Counter() {
 
 ## 단방향 경계
 
-```
+```text
 app/page.tsx           ← Server Component (default)
   └─ import Layout     ← Server Component
        └─ import Counter   ← 'use client' (경계!)
@@ -254,7 +254,7 @@ function serializeClientReference(request, parent, key, ref) {
 
 ## Flight payload 안의 모양
 
-```
+```text
 1:I["app/static/chunks/123.js","Counter"]
 2:["$","div",null,{"children":["$","$L1",null,{"initial":0}]}]
 ```

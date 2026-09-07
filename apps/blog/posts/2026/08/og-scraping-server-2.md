@@ -61,13 +61,13 @@ SSRF는 공격자에게 우리 서버의 네트워크 위치를 잠깐 빌려주
 
 공격자가 게시글에 링크를 하나 붙여넣는다.
 
-```
+```text
 http://169.254.169.254/latest/meta-data/iam/security-credentials/
 ```
 
 우리 서버가 미리보기 카드를 만들려고 그 URL을 열고, 응답에는 인스턴스에 붙은 IAM 역할 이름이 들어 있다. 공격자가 그 이름을 붙여 한 번 더 붙여넣는다.
 
-```
+```text
 http://169.254.169.254/latest/meta-data/iam/security-credentials/og-scraper-role
 ```
 
@@ -141,7 +141,7 @@ new URL('http://127.1/').hostname // '127.0.0.1'
 
 도메인 이름은 아무 IP나 가리킬 수 있기 때문이다. 공격자가 자기 도메인의 A 레코드를 이렇게 두면 그만이다.
 
-```
+```text
 evil.example.com.   IN  A   127.0.0.1
 ```
 
@@ -192,7 +192,7 @@ sequenceDiagram
 
 허용 목록에 `example.com`이 있다고 하고, 공격자가 이걸 붙여넣는다.
 
-```
+```text
 https://example.com/redirect?to=http://169.254.169.254/
 ```
 
@@ -313,7 +313,7 @@ export function isPublicAddress(ip: string): boolean {
 
 첫 줄이 왜 필요한지가 중요하다. `blocked.check()`는 IP가 아닌 문자열을 받으면 예외를 던지는 게 아니라 조용히 "막지 않음"으로 답한다. 직접 확인해 보면 이렇다.
 
-```
+```text
 "localhost"    check => false   (막지 않음)
 ""             check => false
 "999.1.1.1"    check => false
@@ -353,7 +353,7 @@ return !blocked.check(addr, isIPv4(addr) ? 'ipv4' : 'ipv6')
 
 다만 마지막 줄에는 조건이 붙는다. `64:ff9b::` 형태(NAT64)는 자동으로 풀어주지 않는다. 위에서 막힌 것은 앞의 코드에 `64:ff9b::/96` 한 줄을 직접 넣어뒀기 때문이고, 그 줄을 빼고 확인하면 결과가 갈린다.
 
-```
+```text
 64:ff9b::a9fe:a9fe -> 통과 (취약)
 ::ffff:a9fe:a9fe   -> 차단
 ```
@@ -437,7 +437,7 @@ export const scrapeAgent = new Agent({
 
 마지막 두 줄은 처음에 없던 것이다. 원래는 주소 하나만 골라 돌려주도록 썼는데, 돌려보니 첫 요청부터 죽었다.
 
-```
+```text
 single   -> throw TypeError: Invalid IP address: undefined   (options.all = [true])
 array    -> status 200                                        (options.all = [true])
 ```
@@ -464,7 +464,7 @@ flowchart TB
 
 `every`를 쓴 것도 의도가 있다. 공격자는 A 레코드를 이렇게 줄 수 있다.
 
-```
+```text
 evil.com.  IN  A  93.184.216.34    ← 공인
 evil.com.  IN  A  169.254.169.254  ← 사설
 ```
@@ -487,7 +487,7 @@ const paranoid = new Agent({
 
 결과는 이랬다.
 
-```
+```text
 http://localhost:9004/   → 차단됨                 | lookup 호출 1회
 http://127.0.0.1:9004/   → status 200 INTERNAL    | lookup 호출 0회
 http://[::1]:9005/       → status 200 INTERNAL    | lookup 호출 0회
@@ -497,7 +497,7 @@ http://[::1]:9005/       → status 200 INTERNAL    | lookup 호출 0회
 
 그러면 URL 검증 쪽에서 IP 리터럴을 잡아야 하는데, 여기 한 겹이 더 있다. `URL.hostname`은 **IPv6 리터럴의 대괄호를 남긴다.**
 
-```
+```text
 http://127.0.0.1/               hostname = "127.0.0.1"                isIP = 4
 http://[::1]/                   hostname = "[::1]"                    isIP = 0
 http://[::ffff:a9fe:a9fe]/      hostname = "[::ffff:a9fe:a9fe]"       isIP = 0
@@ -603,7 +603,7 @@ async function fetchGuarded(startUrl: URL) {
 
 그리고 여기서 처음에 적었다가 틀린 것이 하나 더 있다. 옛 문서를 따라 `maxRedirections: 0`으로 끄면 된다고 썼는데, undici 8에서 확인해 보니 이렇다.
 
-```
+```text
 maxRedirections: 0 -> status 302
 maxRedirections: 3 -> throw InvalidArgumentError: maxRedirections is not supported, use the redirect interceptor
 ```
@@ -711,7 +711,7 @@ flowchart TB
 
 공격자가 이런 URL을 준다.
 
-```
+```text
 https://evil.com/infinite   →  응답이 끝나지 않는다
 https://evil.com/10gb.html  →  거대한 HTML
 ```

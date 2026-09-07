@@ -106,7 +106,7 @@ published: false
 
 ### 텍스트가 숫자로 변환되는 과정
 
-```
+```text
 "throttle 함수"    → [0.23, -0.15, 0.87, 0.42, ...]
 "debounce 메서드"  → [0.21, -0.14, 0.85, 0.41, ...]
 "사과"            → [0.98,  0.42, -0.33, -0.51, ...]
@@ -123,7 +123,7 @@ published: false
 
 ### 1️⃣ 벡터 = 숫자들의 리스트
 
-```
+```text
 throttle: [0.23, -0.15, 0.87]
 debounce: [0.21, -0.14, 0.85]
 ```
@@ -153,7 +153,7 @@ const similarity = cosineSimilarity(vec1, vec2)
 
 ### ❌ Before: 파일 전체를 하나로
 
-```
+```text
 utils.ts (3000줄) → 하나의 거대한 벡터
 ```
 
@@ -161,7 +161,7 @@ utils.ts (3000줄) → 하나의 거대한 벡터
 
 ### ✅ After: 함수 단위로 분리
 
-```
+```text
 throttle 함수 (30줄) → 작은 벡터
 debounce 함수 (25줄) → 작은 벡터
 isEmpty 함수 (15줄) → 작은 벡터
@@ -233,7 +233,7 @@ const reranked = applyHeuristics(top15, userQuery)
 
 ### ❌ 맥락 없이 질문만
 
-```
+```text
 "throttle 써줘"
 ```
 
@@ -241,7 +241,7 @@ const reranked = applyHeuristics(top15, userQuery)
 
 ### ✅ 맥락과 함께
 
-```
+```text
 현재 파일: Button.tsx
 현재 코드: <Button onClick={handleClick} />
 찾은 정보: @naverpay/pie의 throttle 함수
@@ -256,21 +256,21 @@ const reranked = applyHeuristics(top15, userQuery)
 
 ### 1️⃣ 역할 정의
 
-```
+```text
 당신은 Pie Bot입니다.
 자바스크립트/타입스크립트 전문가로서...
 ```
 
 ### 2️⃣ 현재 상황 전달
 
-```
+```text
 파일: src/components/Button.tsx
 주변 코드: const handleClick = () => {...}
 ```
 
 ### 3️⃣ 참고 자료 제공
 
-```
+```text
 사용 가능한 함수: throttle from '@naverpay/pie'
 함수 시그니처: throttle(func, wait, options)
 ```

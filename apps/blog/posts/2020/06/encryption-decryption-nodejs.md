@@ -71,7 +71,7 @@ const decryptResult = decrypt(encryptResult)
 console.log('decrypt result:', decryptResult)
 ```
 
-```
+```text
 encrypt result: bad1fdcaa253c63bc3c8a5aadb7d8913:97a0a7ab35c84d3e52b56afeb717ad888669c67132cc97f941f7969ec52a1732
 decrypt result: hello my name is yceffort
 ```

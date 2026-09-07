@@ -175,7 +175,7 @@ fetch(url, {signal})
 
 5초 뒤에 자동으로 abort 되는 코드이다. fetch를 abort하게되면, request와 response 모두 취소된다. 따라서, `response.text()`도 취소된다.
 
-```
+```text
 DOMException: The user aborted a request.
 ```
 

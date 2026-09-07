@@ -320,7 +320,7 @@ So how did this attacker still succeed?
 
 The attacker's payload did not stop at poisoning dependencies. When the release workflow ran, it **extracted the OIDC token directly from the runner process memory.**
 
-```
+```text
 /proc/*/cmdline      → identify the Runner.Worker process
 /proc/<pid>/maps     → read the memory map
 /proc/<pid>/mem      → dump memory

@@ -136,7 +136,7 @@ While the AST shows the structure of code, it's inconvenient for understanding "
 
 The HIR for the above `List` component conceptually looks like this:
 
-```
+```text
 function List
 bb0 (block):
   [1] $0 = Destructure items from params
@@ -153,7 +153,7 @@ Each instruction generates a value with a unique identifier (`$0`, `$1`, ...), a
 
 Actual HIR output example from Playground (simple component):
 
-```
+```text
 function MyApp
 bb0 (block):
   [1] $0 = JSXText "Hello World"
@@ -167,7 +167,7 @@ The key point is that **high-level operations like `JSXText` and `JSX` are prese
 
 With HIR, we've captured the execution flow of the code. However, when a single variable is reassigned in multiple places, it becomes difficult to track "where did the value of `x` at this point come from?" To solve this problem, HIR is converted to **SSA** (Static Single Assignment) form. SSA is **a form where each variable is assigned exactly once**, forming the foundation of compiler optimizations.
 
-```
+```text
 // Regular code
 let x = 1
 if (cond) { x = 2 }
@@ -204,7 +204,7 @@ Infers the type of each value. This is a compiler-internal type system, differen
 
 InferTypes output confirmed in Playground:
 
-```
+```text
 bb0 (block):
   [1] $4:TPrimitive = JSXText "Hello World"
   [2] $5:TObject<BuiltInJsx> = JSX <div>{$4:TPrimitive}</div>
@@ -244,7 +244,7 @@ function CaptureExample({onClick, label}) {
 
 Turn on Show Internals in Playground and expand the InferMutationAliasingEffects pass to see what Effects the compiler assigns to each operation. Organized for readability:
 
-```
+```text
 [1] { onClick, label } = t0
       Create onClick = frozen          ← Value from props, immutable
       Create label = frozen
@@ -332,7 +332,7 @@ function MutateExample({items, title}) {
 
 The compiler's Effect analysis:
 
-```
+```text
 [1] result = []                    → Create result = mutable
 [2] result.push(<li>...</li>)      → Mutate result  (repeated)
 [3] <ul>{result}</ul>              → Freeze result
@@ -385,7 +385,7 @@ We've identified both types and Effects. Finally, it's time to answer **the most
 
 In the `List` component:
 
-```
+```text
 Reactive (can change each render):
   - items          ← props
   - selItem        ← useState value
@@ -413,7 +413,7 @@ Based on the analysis results from steps 5-7, this step actually decides "what t
 
 Let's look at the BuildReactiveFunction output for the previously analyzed `CaptureExample` (organized for readability):
 
-```
+```text
 function CaptureExample(t0) {
   [1] Destructure { onClick, label } = t0
 
@@ -451,7 +451,7 @@ Although scope @2's dependency list includes `data`, the final output only compa
 
 Let's also compare the scope configuration for `MutateExample`. As seen in step 6, Mutate Effects extend scope, so array creation and all pushes are grouped into one scope:
 
-```
+```text
 scope @1 dependencies=[items] declarations=[result] {
   result = []
   for (const item of items) { result.push(...) }

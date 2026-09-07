@@ -360,14 +360,14 @@ export function processReply(
 
 **JSON path**: When arguments consist only of primitive types, arrays, and plain objects. This is the lightest approach.
 
-```
+```text
 // When calling incrementLike(42)
 "42"
 ```
 
 **FormData path**: When complex types like Blob, ReadableStream, or other server references are included. Individual values are placed in separate FormData parts.
 
-```
+```text
 ------WebKitFormBoundary
 Content-Disposition: form-data; name="0"
 42
@@ -801,7 +801,7 @@ When the server receives this request, since there's no `Next-Action` header, it
 
 When users submit forms while JavaScript is loading (before hydration), React queues them and **replays** them once hydration is complete.
 
-```
+```text
 1. Server renders HTML → sends to browser
 2. User immediately submits form (JS not yet loaded)
 3. Submission is stored in queue
@@ -923,7 +923,7 @@ export async function createPost(formData: FormData) {
 
 Sequential execution of server functions is **per individual client (browser tab)**, not server-wide. More precisely, React's client runtime **dispatches server function calls one at a time**. It doesn't send the second request until the server returns a response to the first request.
 
-```
+```text
 User A's browser:  [action1] ──complete──> [action2] ──complete──> [action3]
 User B's browser:  [action1] ──complete──> [action2]
                    ↑ Processed in parallel, independent of each other
@@ -1145,7 +1145,7 @@ function serializeServerReference(request, serverReference) {
 
 In the actual Flight stream, it looks like this:
 
-```
+```text
 5:{"id":"abc123#deletePost","bound":null}
 0:["$","form",null,{"action":"$h5"}]
 ```

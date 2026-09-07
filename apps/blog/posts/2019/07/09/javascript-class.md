@@ -118,7 +118,7 @@ console.log(newMember.name)
 console.log(newMember.getName)
 ```
 
-```
+```text
 메켓트
 undefined
 ```

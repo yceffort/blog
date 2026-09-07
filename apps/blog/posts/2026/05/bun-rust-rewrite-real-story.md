@@ -225,7 +225,7 @@ Bun 팀의 공식 대응은 PR #30728이다. 두 가지를 한다.
 
 이슈 보고자는 여기서 멈추지 않았다. 첫 UB를 찾은 뒤 몇 분 안에 또 다른 UB를 추가로 발견했다.
 
-```
+```text
 error: Undefined Behavior: trying to retag from <wildcard> for Unique
 permission at alloc309[0x0], but no exposed tags have suitable
 permission in the borrow stack for this location

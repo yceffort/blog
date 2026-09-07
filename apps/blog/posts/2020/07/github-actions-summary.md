@@ -77,7 +77,7 @@ jobs:
 
 checkout-cation을 사용하기 위해서는, 다음 스텝을 포함하면 된다.
 
-```
+```text
 - uses: actions/checkout@v2
 ```
 

@@ -110,7 +110,7 @@ Even if you've already received 8MB out of 10MB, you must start the request from
 
 [NDJSON](https://github.com/ndjson/ndjson-spec) (Newline Delimited JSON) is a format where each line is an independent JSON object. It's also called JSON Lines (JSONL).
 
-```
+```text
 {"id":1,"name":"Alice","email":"alice@example.com"}
 {"id":2,"name":"Bob","email":"bob@example.com"}
 {"id":3,"name":"Charlie","email":"charlie@example.com"}
@@ -1125,7 +1125,7 @@ However, there are many situations where you can't modify existing APIs. In such
 
 If you're unsure which approach to choose, refer to this flowchart:
 
-```
+```text
 Is the data size less than 10MB?
 ├─ Yes → JSON.parse() is sufficient
 └─ No → Can you modify the server API?

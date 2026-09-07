@@ -32,7 +32,7 @@ func main() {
 }
 ```
 
-```
+```text
 $ go run GoStructure.go {잡일 5 김악덕 100} 5 100
 ```
 

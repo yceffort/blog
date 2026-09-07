@@ -112,7 +112,7 @@ pie showData
 
 Scale matters too. A link preview is usually a low traffic feature. Assume 5,000 requests a day:
 
-```
+```text
 5,000 / 86,400 seconds ~= 0.06 TPS
 Even taking peak as 10x the average, still under 1 TPS
 ```
@@ -251,7 +251,7 @@ The rest of this post is not about not getting broken, it is about making it wor
 
 Many sites serve OG tags only to preview bots. Names like these.
 
-```
+```text
 facebookexternalhit/1.1
 Twitterbot/1.0
 Slackbot-LinkExpanding 1.0
@@ -267,7 +267,7 @@ Request with the default User-Agent of `undici` or `node-fetch` and you often be
 
 The side I would recommend is your own UA with contact info in it.
 
-```
+```text
 MyPreviewBot/1.0 (+https://example.com/bot)
 ```
 
@@ -440,7 +440,7 @@ const html =
 
 Feed that string to `htmlparser2` and take `attribs.content`, and the result is this.
 
-```
+```text
 opts= undefined                 -> "A & B <script> 발"
 opts= {"decodeEntities":false}  -> "A &amp; B &lt;script&gt; &#48156;"
 ```
@@ -514,7 +514,7 @@ The last row is the key one. A URL you have never seen is always a cache miss, a
 
 So split the goal in two.
 
-```
+```text
 (1) API error rate = failed responses / total API requests   <- only repeat-driven failures improve with a cache
 (2) Coverage       = unique URLs succeeded / unique URLs attempted   <- improves with scraping quality
 ```
@@ -547,7 +547,7 @@ At the steady-state scale computed earlier (0.06 TPS) a moment like this does no
 
 Before discussing the cache you have to decide what "the same URL" means. The four below are the same page to a human eye and entirely different strings.
 
-```
+```text
 https://Example.com/a?b=1&c=2
 https://example.com/a?c=2&b=1
 https://example.com/a?b=1&c=2#section
@@ -650,7 +650,7 @@ Say a cache hit is always fast (about 5ms), and call the hit rate `h`. Sort all 
 
 If `h` is greater than 0.95, the 95th percentile falls inside the hit region, so P95 lands around 5ms and the goal is met automatically. If `h` is less than 0.95, P95 sits in the miss region, and which percentile of the miss distribution it is comes out as:
 
-```
+```text
 q = (0.95 - h) / (1 - h)
 ```
 
@@ -681,7 +681,7 @@ The thing to notice here is that the right-hand column of the table is **a value
 
 The hit rate comes from the unique URL ratio.
 
-```
+```text
 hit rate ~= 1 - (unique URLs within the TTL window / total requests within the TTL window)
 ```
 

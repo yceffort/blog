@@ -55,7 +55,7 @@ createObject.call({foo: 21}).bar()
 
 위 함수의 결과는
 
-```
+```text
 Inside `createObject`: 21, {foo: 21}
 Inside `bar`: 42, bar: f
 ```
@@ -78,7 +78,7 @@ createObject.call({foo: 21}).bar()
 
 결과는
 
-```
+```text
 Inside `createObject`: 21, {foo: 21}
 Inside `bar`: 21, {foo: 21}
 ```

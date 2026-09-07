@@ -60,7 +60,7 @@ template: post
 
 ## IGNORING PATTERNS
 
-```
+```text
 logs/
 *.notes
 pattern*/

@@ -123,7 +123,7 @@ let x1 =  1} // Declaration or statement expected.(1128)
 
 > https://ts-ast-viewer.com/#code/MYewdgzgLgBAtgUwhAhgcwQLhtATgSzDRgF4YByACQQBsaQAaGAdxFxoBMBCcgKF6A
 
-```
+```text
 AST
 SourceFile
     pos: 0
@@ -317,7 +317,7 @@ const message: string = 'Hello, world'
     - `StringKeyword`
     - `StringLiteral`
 
-```
+```text
 checker.checkSourceElementWorker
 checker.checkVariableStatement
 checker.checkGrammarVariableDeclarationList

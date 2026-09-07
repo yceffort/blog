@@ -74,7 +74,7 @@ The code above keeps allocating 10 megabytes at 40ms intervals, which quickly pr
 
 The result varies depending on the environment. On my Mac with 16GB of memory, I got the following result:
 
-```
+```text
 ...
 Heap allocated 3.95 GB
 Heap allocated 3.96 GB
@@ -105,7 +105,7 @@ node index.js --max-old-space-size=8000
 
 The command above sets the maximum limit to 8GB. Be careful when setting this size. It's best to keep it within the physically available space in RAM. If physical memory runs out, the process starts consuming disk space through virtual memory. Setting this limit too high can damage your PC.
 
-```
+```text
 ...
 Heap allocated 7.8 GB
 Heap allocated 7.8 GB

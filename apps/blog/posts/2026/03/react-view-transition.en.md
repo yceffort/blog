@@ -205,7 +205,7 @@ Combined with the Web Animations API, dynamic animations that are difficult to e
 
 When a View Transition activates, the browser creates the following pseudo-element tree. Understanding this structure is necessary for CSS customization.
 
-```
+```text
 ::view-transition
 └── ::view-transition-group(name)
     └── ::view-transition-image-pair(name)

@@ -30,7 +30,7 @@ function square(n) {
 
 When this code is converted to AST, the tree structure looks roughly like this:
 
-```
+```text
 Program
 └── FunctionDeclaration (name: "square")
     ├── params
@@ -91,7 +91,7 @@ function square(n) {
 
 Tokenizing the above code produces this result:
 
-```
+```text
 [
   { type: 'keyword',    value: 'function' },
   { type: 'identifier', value: 'square' },
@@ -166,7 +166,7 @@ The syntax analyzer (parser) takes the token list from above and assembles it in
 
 One of the most interesting aspects of what parsers do is handling **operator precedence**. Consider `1 + 2 * 3`. Simply reading left to right would give `(1 + 2) * 3 = 9`, but the mathematically correct result is `1 + (2 * 3) = 7`. The parser represents this precedence through tree structure.
 
-```
+```text
 // AST for 1 + 2 * 3
 // Multiplication is at a deeper position, so it's calculated first
 
@@ -522,7 +522,7 @@ Stage 2 is the key. While converting AST nodes to an intermediate representation
 
 Understanding is faster when you see what `Doc` actually looks like. The Doc for code like `foo(arg1, arg2, arg3)` conceptually has this structure:
 
-```
+```text
 group([
   "foo(",
   indent([
@@ -571,7 +571,7 @@ Ultimately, the pattern of using AST as an intermediate representation to transf
 
 The common pattern of the tools we've examined so far can be summarized like this:
 
-```
+```text
 Code (string)
   ↓ Lexical Analysis (tokenization)
 Token list

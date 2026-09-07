@@ -483,7 +483,7 @@ export const getPost = cache(async (slug: string) => {
 
 The statement "the cache disappears when the request ends" can be confusing. Doesn't that make it not a cache?
 
-```
+```text
 User A visits the /profile page
     ↓
 Server starts rendering (one "request")
@@ -500,7 +500,7 @@ Within the same render cycle, `getUser('123')` executes **only once**, and the o
 
 But the next request **starts fresh**:
 
-```
+```text
 User A request → getUser('123') runs → cache → response → cache deleted
 User B request → getUser('123') runs again → new cache → response → cache deleted
 ```
@@ -629,7 +629,7 @@ ls .next/cache/fetch-cache/
 
 Whenever the Next.js server receives a cacheable fetch response, it writes it to the filesystem:
 
-```
+```text
 1. fetch() call (cache: 'force-cache' or a revalidate setting)
      ↓
 2. Check the .next/cache/fetch-cache/ directory
@@ -827,7 +827,7 @@ When you run `next build`, Next.js analyzes each page and pre-renders **pages th
 
 **Why is it needed?**
 
-```
+```text
 Dynamic rendering (no Full Route Cache):
   User request → render on server → generate HTML → respond
 
@@ -958,7 +958,7 @@ It's the rendered output of server components. It's not HTML, but a special data
 
 **Why is it needed?**
 
-```
+```text
 Typical SPA navigation:
   Click link → request server → wait for response → render
 
@@ -1431,7 +1431,7 @@ NEXT_PRIVATE_DEBUG_CACHE=1
 
 With this enabled, you'll see logs like:
 
-```
+```text
 [cache] GET https://api.example.com/posts HIT
 [cache] GET https://api.example.com/users MISS
 ```
@@ -1464,7 +1464,7 @@ curl -I https://your-site.com/page
 
 **Headers when self-hosted:**
 
-```
+```text
 cache-control: s-maxage=3600, stale-while-revalidate=31536000
 ```
 

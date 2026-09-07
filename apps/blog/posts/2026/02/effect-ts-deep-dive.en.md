@@ -76,7 +76,7 @@ Here, **continuation** refers to "the computation remaining after the interrupti
 
 In pseudocode:
 
-```
+```text
 function getName() {
   // perform: triggers an effect. Similar to throw but can return.
   let name = perform 'askName'

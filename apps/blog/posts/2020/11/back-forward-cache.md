@@ -150,7 +150,7 @@ page가 unloading시에 캐싱이 되는지 안되는지 확실히 결정할수�
 
 최상단 페이지 응답에 아래와 같이 설정해두면 bfcache를 제거할 수 있다.
 
-```
+```text
 Cache-Control: no-store
 ```
 

@@ -78,7 +78,7 @@ v8 내부에서는, 이를 [string-table](https://chromium.googlesource.com/v8/v
 
 여기에 추가로, V8에는 [oddball](https://chromium.googlesource.com/v8/v8/+/master/src/builtins/base.tq#506) 이라고 불리는 것이 존재한다.
 
-```
+```text
 type TheHole extends Oddball;
 type Null extends Oddball;
 type Undefined extends Oddball;
@@ -119,7 +119,7 @@ V8 소스코드를 더 깊게 파고들어가 보면, 자바스크립트 프로�
 
 예를 들어, `undefined`는 V8에서 [다음](https://chromium.googlesource.com/v8/v8/+/a684fc4c927940a073e3859cbf91c301550f4318/include/v8-primitive.h#830)과 같이 구현되어 있다.
 
-```
+```text
 V8_INLINE Local<Primitive> Undefined(Isolate* isolate) {
   using S = internal::Address;
   using I = internal::Internals;
@@ -131,7 +131,7 @@ V8_INLINE Local<Primitive> Undefined(Isolate* isolate) {
 
 우리가 주목해야할 것은, `GetRoot`다. `GeetRoot`는 [다음](https://chromium.googlesource.com/v8/v8/+/a684fc4c927940a073e3859cbf91c301550f4318/include/v8-internal.h#388)과 같이 구현되어 있다.
 
-```
+```text
 V8_INLINE static internal::Address* GetRoot(v8::Isolate* isolate, int index) {
     internal::Address addr = reinterpret_cast<internal::Address>(isolate) +
                              kIsolateRootsOffset +
@@ -194,7 +194,7 @@ const d = {name: 'foo', number: 123}
 
 컴파일러를 거치면, 이러한 변수는 메모리에 위치하게 된다.
 
-```
+```text
 a: 0x000
 b: 0x010
 c: 0x020
@@ -203,7 +203,7 @@ d: 0x030
 
 자바스크립트 변수는 스택/힙/레지스터 등에 위치하거나 이미 알려져있는 힙 메모리 위치에 존재할 수 있다.
 
-```
+```text
 0x000: 0x100
 0x010: 123
 0x020: 0x200
@@ -212,7 +212,7 @@ d: 0x030
 
 실제 자바스크립트의 값은 힙에 위치한다.
 
-```
+```text
 0x100: 'foo'
 0x200: false
 0x300: {name: 0x100, number: 123 }

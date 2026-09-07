@@ -72,7 +72,7 @@ SSRF는 어떻게 뚫리는가
 
 공격자의 브라우저와 우리 서버는 **네트워크 위치가 다르다.**
 
-```
+```text
   공격자 브라우저                    우리 서버
        │                                │
        │  ✗ 방화벽에 막힘                │  ✓ 내부망 안에 있다
@@ -110,7 +110,7 @@ SSRF가 성립하려면 두 가지가 필요하다.
 
 **① 공격자가 게시글에 링크를 붙여넣는다**
 
-```
+```text
 http://169.254.169.254/latest/meta-data/iam/security-credentials/
 ```
 
@@ -118,7 +118,7 @@ http://169.254.169.254/latest/meta-data/iam/security-credentials/
 
 **③ 응답에 IAM 역할 이름이 들어 있다**
 
-```
+```text
 og-scraper-role
 ```
 
@@ -128,7 +128,7 @@ og-scraper-role
 
 **④ 공격자가 한 번 더 붙여넣는다**
 
-```
+```text
 http://169.254.169.254/latest/meta-data/iam/security-credentials/og-scraper-role
 ```
 
@@ -169,7 +169,7 @@ http://169.254.169.254/latest/meta-data/iam/security-credentials/og-scraper-role
 
 IMDSv2는 토큰을 먼저 받아야 한다.
 
-```
+```text
 PUT /latest/api/token
 X-aws-ec2-metadata-token-ttl-seconds: 21600
 ```
@@ -240,7 +240,7 @@ new URL('http://127.1/').hostname // '127.0.0.1'
 
 도메인 이름은 아무 IP나 가리킬 수 있다. 공격자가 자기 도메인의 A 레코드를 이렇게 두면,
 
-```
+```text
 evil.example.com.   IN  A   127.0.0.1
 ```
 
@@ -248,7 +248,7 @@ evil.example.com.   IN  A   127.0.0.1
 
 도메인을 살 필요조차 없다. 이름에 적힌 IP를 그대로 돌려주는 공개 서비스가 있다.
 
-```
+```text
 127.0.0.1.nip.io      →  127.0.0.1
 10.0.0.1.nip.io       →  10.0.0.1
 ```
@@ -280,7 +280,7 @@ await fetch(url) // ② 실제 요청 (또 조회한다!)
 
 공격자는 TTL을 0으로 둔 도메인을 준비한다.
 
-```
+```text
 t=0ms   ① 검사용 DNS 조회
         evil.com  →  93.184.216.34  (공인 IP)     ✓ 통과
 
@@ -306,7 +306,7 @@ TTL이 0이면 캐시되지 않으므로, **두 번의 조회가 다른 답을 �
 
 허용 목록에 `example.com`이 있다고 하자. 공격자가 아래를 붙여넣는다.
 
-```
+```text
 https://example.com/redirect?to=http://169.254.169.254/
 ```
 
@@ -615,7 +615,7 @@ export const scrapeAgent = new Agent({
 
 `lookup`이 반환한 주소로 **소켓이 곧바로 연결**되기 때문이다.
 
-```
+```text
 기존 방식                          lookup 훅 방식
 ─────────                          ──────────────
 ① DNS 조회 → 검사                  ① DNS 조회
@@ -638,7 +638,7 @@ export const scrapeAgent = new Agent({
 
 공격자가 A 레코드를 이렇게 줄 수 있다.
 
-```
+```text
 evil.com.  IN  A  93.184.216.34    ← 공인
 evil.com.  IN  A  169.254.169.254  ← 사설
 ```
@@ -774,7 +774,7 @@ function assertAllowedUrl(url: URL) {
 
 80, 443 외의 포트는 대개 **내부 서비스**다.
 
-```
+```text
 6379  Redis
 9200  Elasticsearch
 5432  PostgreSQL
@@ -832,7 +832,7 @@ takeover)와, `exаmple.com`처럼 **눈엔 같지만 다른 글자**(키릴 `а
 
 ## 다층 방어를 그림으로
 
-```
+```text
 사용자 URL
     │
     ▼
@@ -890,7 +890,7 @@ IP 대역 차단은 "메타데이터를 못 읽는다"는 **보안**을 표현�
 
 공격자가 이런 URL을 준다.
 
-```
+```text
 https://evil.com/infinite   →  응답이 끝나지 않는다
 https://evil.com/10gb.html  →  거대한 HTML
 ```

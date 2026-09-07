@@ -139,7 +139,7 @@ const arr = [(x) => x * 1, (x) => x * 2, (x) => x * 3, (x) => x * 4]
 console.log(arr.reduce((agg, el) => agg + el(agg), 1))
 ```
 
-```
+```text
 1 + 1 * 1 = 2
 2 + 2 * 2 = 6
 6 + 6 * 3 = 24

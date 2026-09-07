@@ -76,7 +76,7 @@ try {
 
 의사 코드(pseudocode)로 표현하면 이렇다.
 
-```
+```text
 function getName() {
   // perform: 이펙트를 발생시킨다. throw와 비슷하지만 돌아올 수 있다.
   let name = perform 'askName'

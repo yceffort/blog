@@ -30,7 +30,7 @@ function square(n) {
 
 이 코드를 AST로 변환하면, 트리 구조로 보면 대략 이런 모양이다.
 
-```
+```text
 Program
 └── FunctionDeclaration (name: "square")
     ├── params
@@ -91,7 +91,7 @@ function square(n) {
 
 위 코드를 토큰화하면 이런 결과가 나온다.
 
-```
+```text
 [
   { type: 'keyword',    value: 'function' },
   { type: 'identifier', value: 'square' },
@@ -166,7 +166,7 @@ tokenize('12 + 3 * 45')
 
 파서가 하는 일 중 가장 흥미로운 부분은 **연산자 우선순위** 처리다. `1 + 2 * 3`을 생각해보자. 단순히 왼쪽에서 오른쪽으로 읽으면 `(1 + 2) * 3 = 9`가 되겠지만, 수학적으로 올바른 결과는 `1 + (2 * 3) = 7`이다. 파서는 이 우선순위를 트리 구조로 표현한다.
 
-```
+```text
 // 1 + 2 * 3 의 AST
 // 곱셈이 더 깊은 위치에 있으므로 먼저 계산된다
 
@@ -522,7 +522,7 @@ module.exports = {
 
 `Doc`이 실제로 어떻게 생겼는지 보면 이해가 빠르다. `foo(arg1, arg2, arg3)` 라는 코드의 Doc은 개념적으로 이런 구조다.
 
-```
+```text
 group([
   "foo(",
   indent([
@@ -571,7 +571,7 @@ AST를 활용하면 코드를 시각적으로 표현하는 것도 가능하다. 
 
 지금까지 살펴본 도구들의 공통 패턴을 정리해보면 이렇다.
 
-```
+```text
 코드 (문자열)
   ↓ Lexical Analysis (토큰화)
 토큰 목록

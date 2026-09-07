@@ -27,7 +27,7 @@ template: post
 
 ### 설치
 
-```
+```text
 # NPM
 npm install redux
 
@@ -49,7 +49,7 @@ yarn add redux
 
 리액트와 리덕스가 설치된 앱을 만드는 방법으로 추천하는 것은 Create React App의 [오피셜 리액트+JS 템클릿](https://github.com/reduxjs/cra-template-redux)을 사용하는 것이다. 이는 리덕스 툴킷을 사용하는 장점과 리액트 리덕스를 리액트 컴포넌트에 연동하기 쉽게 해준다.
 
-```
+```text
 npx create-react-app my-app --template redux
 ```
 

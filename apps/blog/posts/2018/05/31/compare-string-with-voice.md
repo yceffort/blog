@@ -104,7 +104,7 @@ public static void main(String[] args) {
 
 결과
 
-```
+```text
 E200
 X000
 S532

@@ -50,7 +50,7 @@ cargo generate --git https://github.com/rustwasm/wasm-pack-template
 
 ### 내부 살펴보기
 
-```
+```text
 .
 ├── Cargo.toml
 ├── LICENSE_APACHE
@@ -122,7 +122,7 @@ pub fn set_panic_hook() {
 
 빌드가 끝나면, `pkg` 디렉토리 아래에 다음과 같은 내용을 확인할 수 있을 것이다.
 
-```
+```text
 ./pkg/
 ├── package.json
 ├── README.md
@@ -172,7 +172,7 @@ pub fn set_panic_hook() {
 
 `npm init wasm-app www`
 
-```
+```text
 @yceffort ➜ /workspaces/rust-playground/wasm-game-of-life (main ✗) $ npm init wasm-app www
 npx: installed 1 in 3.952s
 🦀 Rust + 🕸 Wasm = ❤
@@ -180,7 +180,7 @@ npx: installed 1 in 3.952s
 
 `www` 디렉토리 아래 npm package가 생성된 것을 볼 수 있다.
 
-```
+```text
 ./www/
 ├── bootstrap.js
 ├── index.html
@@ -195,7 +195,7 @@ npx: installed 1 in 3.952s
 
 이 패키지에서, 우리가 사용할 webassembly를 사용할 수 있도록 `dependencies`에 의존성으로 걸어두어야 한다.
 
-```
+```text
 ...
 "dependencies": {
     "wasm-game-of-life": "file:../pkg"

@@ -15,7 +15,7 @@ template: post
 
 ## Create-react-app 라이브러리로 시작
 
-```
+```text
 yarn global add create-react-app
 create-react-app hello-react
 

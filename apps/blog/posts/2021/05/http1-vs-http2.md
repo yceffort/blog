@@ -23,7 +23,7 @@ HTTP/2가 HTTP/1.1에서 변경된 내용을 살펴보려면, 각 버전 별로 
 
 예를 들어, www.example.com 도메인 웹사이트로 방문한다고 가정해보자. 이 URL로 이동하면, 웹 브라우저가 텍스트 기반 메시지 형식으로 HTTP 요청을 날린다.
 
-```
+```text
 GET /index.html HTTP/1.1
 Host: www.example.com
 ```
@@ -151,7 +151,7 @@ HTTP/2에서 반복적으로 등장하는 중요한 포인트 중 하나는, 이
 
 `request 1`
 
-```
+```text
 method:     GET
 scheme:     https
 host:       example.com
@@ -162,7 +162,7 @@ user-agent: Mozilla/5.0 ...
 
 `request 2`
 
-```
+```text
 method:     GET
 scheme:     https
 host:       example.com
@@ -175,7 +175,7 @@ user-agent: Mozilla/5.0
 
 `request 1`
 
-```
+```text
 method:     GET
 scheme:     https
 host:       example.com
@@ -186,7 +186,7 @@ user-agent: Mozilla/5.0 ...
 
 `request 2`
 
-```
+```text
 path:       /academy/images
 ```
 

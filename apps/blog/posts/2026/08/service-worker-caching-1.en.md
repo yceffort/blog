@@ -139,7 +139,7 @@ There are also two traps on the handling side, and this time I reproduced them m
 
 The first is stepped on by nearly everyone using it for the first time: **a Response body is a stream and can only be read once.** To return a network response through `respondWith()` while also putting it in the cache, you must take a copy for storage with `response.clone()`. Get the order wrong and you meet this error.
 
-```
+```text
 TypeError: Failed to execute 'text' on 'Response': body stream already read
 ```
 

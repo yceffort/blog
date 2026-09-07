@@ -33,7 +33,7 @@ template: post
 
 Global Code (aka 전역 코드): 프로그램 레벨에서 실행되는 코드로, `.js` 파일 또는 로컬 인라인 코드 (`<script></script>`) 등을 의미한다. 전역 코드는 어떠한 함수의 바디에 포함되지 않는다. 쉽게 얘기해서 전역 레벨의 코드를 의미한다. 여기에서 ECStack은 아래와 같이 생성된다.
 
-```
+```text
 ECStack = [globalContext];
 ```
 
@@ -50,7 +50,7 @@ Function Code (aka 함수 코드): 함수 코드에 진입하게 되었을 때, 
 
 이에 ECStack은 이렇게 수정된다.
 
-```
+```text
 // 처음에 foo함수를 실행했다가
 ECStack = [
   <foo> functionContext
@@ -99,7 +99,7 @@ foo()
 
 위 코드를 실행하면, 실행컨텍스트 스택이 아래와 같이 생성되고 소멸된다. 현재 실행중인 컨텍스트에서 이 컨텍스트와 관련없는 코드가 실행되면, 새로운 컨텍스트를 만든다. 이 컨텍스를 스택에 쌓고, 제어권은 이 추가된 컨텍스트에 이동된다.
 
-```
+```text
 1. [global EC]
 2. [global EC, foo() EC]
 3. [global EC, foo() EC, bar() EC]
@@ -224,7 +224,7 @@ foo('hello')
 
 전역 코드로 컨트롤이 진입하면 이제 전역 실행 컨텍스트가 생성되고, 이 전역 실행 컨텍스트는 실행 컨텍스트 스택에 쌓인다.
 
-```
+```text
 ECStack = [globalContext -> {VO, SC, this}];
 ```
 

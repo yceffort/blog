@@ -57,7 +57,7 @@ published: true
 
 ## 어디부터 봐야 하나
 
-```
+```text
 0. 측정 환경이 맞는지 확인 (미니파이·gz)  ← 여기서 틀리면 나머지가 전부 무의미
    ↓
 1. 안 들어와도 되는 게 있나      (Part 1)  : 코드 한 줄, 효과 큼
@@ -149,7 +149,7 @@ build: {
 
 의존성 중복 버전을 정리한 실측이다.
 
-```
+```text
 before  패키지 A ×4 · B ×3 · C ×2      합계 232.0 kB raw
 after                                  합계  79.8 kB raw   (−152.2 kB)
 gz 이득                                −2.25 kB
@@ -163,7 +163,7 @@ gz 이득                                −2.25 kB
 
 핵심은 "**이미 나온 바이트열이 또 나오면, 뒤로 가리키는 참조로 치환**한다"는 것이다.
 
-```
+```text
 function add(a,b){return a+b}     ← 원본 그대로 기록
 ...
 function add(a,b){return a+b}     ← "3,000바이트 앞의 30바이트와 동일"이라는 참조 몇 바이트로 치환
@@ -327,7 +327,7 @@ build: {
 
 MFE 환경에서 HTTP 클라이언트 패키지 하나를 `external`에서 뺐다 넣었다 하며 측정했다.
 
-```
+```text
 external에 있을 때   shared.js   43.08 kB gz
 빼면                shared.js   76.58 kB gz     (+33.50)
 ```
@@ -357,7 +357,7 @@ external에 있을 때   shared.js   43.08 kB gz
 
 **런타임이 제공하는 버전과 로컬 lockfile 버전이 semver를 만족하는지 확인해야 한다.**
 
-```
+```text
 런타임 제공  : @platform/http@0.19.0
 로컬 lockfile: 0.100.2
 ```
@@ -379,7 +379,7 @@ external에 있을 때   shared.js   43.08 kB gz
 
 `external`을 크기 때문에만 쓰는 게 아니다.
 
-```
+```text
 리모트 6개가 각자 WebSocket 클라이언트 번들 → 연결 6개
 external + 런타임 싱글톤                    → 연결 1개
 ```
@@ -653,7 +653,7 @@ export const Icon = ({ icon: Svg, size, color }) => (
 
 번들을 뜯어보면 이런 게 나온다.
 
-```
+```text
 디자인시스템 청크 구성
   embla-carousel + wheel-gestures   71.9 KB   ← 우리 화면에 캐러셀 없는데?
 ```
@@ -669,7 +669,7 @@ grep -rl "embla" node_modules/@ds/headless/dist/
 # → dist/tab-group/TabGroup.mjs
 ```
 
-```
+```text
 TabGroup          ← 앱이 실제로 쓰는 컴포넌트
   └ Carousel      ← TabGroup 내부 구현
       └ embla-carousel
@@ -816,7 +816,7 @@ JS의 import는 번들러가 `exports` 화이트리스트로 검사한다. 그�
 
 실측:
 
-```
+```text
 CSS   763.74 → 460.51 kB raw   |   49.36 → 30.37 kB gz   (−18.99)
 JS    바이트 완전 동일
 ```
@@ -841,7 +841,7 @@ JS    바이트 완전 동일
 
 ## 동적 마운트 앱이라면: CSS를 entry에서 import
 
-```
+```text
 entry(index.ts) → 동적 import → App.tsx → import './app.css'
 ```
 
@@ -859,7 +859,7 @@ export {mount, unmount} from './app'
 
 ## 참고: entry가 여러 개면 CSS도 갈린다
 
-```
+```text
 index.js  / index.css    ← 메인 화면
 detail.js / detail.css   ← 상세 화면
 ```
@@ -880,7 +880,7 @@ Part 4로 이어지는 지점이다.
 
 수동 청크 그룹을 **꺼보고** 재봤다.
 
-```
+```text
 켬:  index 33.04 + ds-ui 31.87 + shared 43.08 + runtime 0.41 = 108.40 gz
 끔:  index 57.60 +                shared 50.58              = 108.18 gz
 ```
@@ -915,7 +915,7 @@ A는 라우트를 전부 `React.lazy`로 나눴고, B는 라우트 2개를 빌�
 
 Rolldown(과 Rollup)의 기본 청킹은 **"동일한 동적 진입점 집합에서 참조되는 모듈"을 한 청크로 묶는다.**
 
-```
+```text
 라우트 A만 쓰는 모듈       → 청크 1
 라우트 B만 쓰는 모듈       → 청크 2
 라우트 A·B가 공유하는 모듈 → 청크 3
@@ -933,7 +933,7 @@ Rolldown(과 Rollup)의 기본 청킹은 **"동일한 동적 진입점 집합에
 
 앱 A의 청크 중 소스맵으로 귀속 가능한 161개를 분류했다.
 
-```
+```text
 node_modules 전용 : 50개 / 2,792 KB
 앱 소스 전용      : 93개 /   599 KB   ← 평균 6.4 KB
 혼합             : 18개 / 3,277 KB
@@ -941,7 +941,7 @@ node_modules 전용 : 50개 / 2,792 KB
 
 흔히 "vendor를 안 묶어서 그렇다"고 진단하지만, 이 앱에서는 이미 잘 묶여 있었다.
 
-```
+```text
 디자인시스템 ui : 2개 청크에만 분포
 아이콘         : 1개 청크
 ```
@@ -952,7 +952,7 @@ node_modules 전용 : 50개 / 2,792 KB
 
 ## 파편의 진짜 비용
 
-```
+```text
 초기(entry 정적)     13개 파일 / 1,480 KB
 ─────────────────────────────────────────
 목록 화면 진입      +79개 파일 / 3,164 KB
@@ -974,7 +974,7 @@ HTTP/2 멀티플렉싱이 있어도 공짜가 아니다. 정확히 하자.
 
 **① 요청이 사용자 클릭 이후에 시작된다**
 
-```
+```text
 정적 import : 앱 로드 시점에 이미 받아둠     → 클릭 즉시 렌더
 lazy        : 클릭 → 청크 요청(정적 의존은 병렬) → 렌더
 ```
@@ -991,7 +991,7 @@ lazy        : 클릭 → 청크 요청(정적 의존은 병렬) → 렌더
 
 라우트 A와 B가 공통 모듈을 쓴다고 하자.
 
-```
+```text
 안 나눴을 때:  A+B 한 청크        → 요청 1개
 나눴을 때  :  A청크 + B청크 + 공유청크 → 요청 3개
 ```
@@ -1096,7 +1096,7 @@ build: {
 
 ## entry 분리의 산출물
 
-```
+```text
 dist/
   main.js   / main.css      ← 일반 사용자용
   admin.js  / admin.css     ← 관리자용
@@ -1167,7 +1167,7 @@ Windows 대응으로 경로 구분자는 `[\\/]`를 쓰라고 rolldown 문서가
 
 `minSize`·`groups`는 **이미 생긴 파편을 사후에 묶는** 수단이다. 조합이 27개 진입점에서 나온다는 사실 자체는 그대로다.
 
-```
+```text
 설정 수단 (minSize / groups)   →  파편을 묶어 개수를 줄임
 구조 수단 (묶음 lazy / entry)   →  조합의 밑을 줄임
 ```
@@ -1236,7 +1236,7 @@ Windows 대응으로 경로 구분자는 `[\\/]`를 쓰라고 rolldown 문서가
 
 계획을 세운 시점과 실행 시점 사이에 **트리셰이킹(Part 2)을 먼저 적용했기 때문이다.**
 
-```
+```text
 Part 2 적용 전 : 디자인시스템 청크 89.99 kB gz   ← external로 빼면 −89
 Part 2 적용 후 : 디자인시스템 청크 31.87 kB gz   ← external로 빼면 −31.81
 ```
@@ -1283,7 +1283,7 @@ Part 2 적용 후 : 디자인시스템 청크 31.87 kB gz   ← external로 빼�
 
 CSS를 걷어낼 때 가장 무서운 건 **쓰는 셀렉터를 지우는 것**이다. 빌드는 통과하고 화면만 깨진다.
 
-```
+```text
 클래스 셀렉터 : 589 → 465   (제거 124, 추가 0)
 CSS 변수 선언 : 13 → 9
 
@@ -1301,7 +1301,7 @@ CSS 변수 선언 : 13 → 9
 
 ## 이름이 애매한 건 정의 파일까지 추적
 
-```
+```text
 ds-container-color-*, ds-placement-*  → floating-layout (미사용)
 ds-type-solid/line, ds-check*         → checkbox (미사용)
 ds-size-compact, ds-text-size-*       → textfield (미사용)
@@ -1345,7 +1345,7 @@ ds-size-compact, ds-text-size-*       → textfield (미사용)
 
 앱 B를 조율 비용 순으로 밟았을 때의 실측 누적이다. 첫 진입 전송량 기준(JS + CSS, gz).
 
-```
+```text
 베이스라인                                    165.04
   + CSS 배럴 정리(−18.99) · 중복버전 dedupe(−2.25)
                                               143.80   (−12.9%)  ← 앱 단독

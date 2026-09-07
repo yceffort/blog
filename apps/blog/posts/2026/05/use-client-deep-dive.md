@@ -53,7 +53,7 @@ export function Counter() {
 
 `'use client'` 디렉티브는 **모듈 그래프의 경계를 정의**한다. 더 정확히는, 서버 → 클라이언트로 넘어가는 **단방향 경계의 시작점**이다. 한 모듈에 `'use client'`가 있으면, 그 모듈이 import하는 모든 모듈은 — 별도로 `'use client'`를 적지 않아도 — 자동으로 클라이언트 번들 그래프에 포함된다.
 
-```
+```text
 app/page.tsx           ← Server Component (default)
   └─ import Layout     ← Server Component
        └─ import Counter      ← 'use client' (경계!)
@@ -139,7 +139,7 @@ CommonJS 모듈에 대해서는 더 단순한 경로를 탄다 — 모듈 전체
 
 같은 모듈은 클라이언트 번들에서는 본문이 그대로 남는다. webpack의 클라이언트 레이어는 `'use client'` 디렉티브를 (린트 외에는) 사실상 무시하고, 모듈을 평범한 자바스크립트로 컴파일한다. 그 결과 `Counter` 컴포넌트의 진짜 구현은 **클라이언트 chunk에만 존재**한다.
 
-```
+```text
 원본 모듈 → ┬─ RSC 서버 빌드: 메타데이터 stub만
             └─ 클라이언트 빌드: 본문 그대로 + 별도 chunk
 ```
@@ -325,7 +325,7 @@ webpack은 기본적으로 entry point에서 시작해 import graph를 따라가
 
 답: **별도의 entry point를 추가로 만든다**. 이게 `flight-client-entry-plugin`의 역할이다[^2].
 
-```
+```text
 서버 entry (RSC)
   └─ Server Component
        └─ "이 자리에 ClientShell이 있다" (registerClientReference)
@@ -467,7 +467,7 @@ function serializeByValueID(id) {
 
 React element의 직렬화 형태를 떠올려 보자.
 
-```
+```text
 ["$", "type", null, props]
  ↑    ↑
  element marker
@@ -480,7 +480,7 @@ type 슬롯의 클라이언트 참조는 "이 컴포넌트의 코드는 lazy하�
 
 `emitImportChunk`는 매니페스트에서 lookup한 메타데이터(`[id, chunks, name, async]`)를 별도의 chunk로 emit한다. Flight Protocol의 행 기반 스트리밍 구조 안에서 이 chunk는 `I` 행으로 직렬화된다.
 
-```
+```text
 I:5:["5234",["12","static/chunks/12-abc.js"],"Counter",0]
 0:["$","$L5",null,{"initial":42}]
 ```
@@ -705,7 +705,7 @@ export function requireModule(metadata) {
 
 여기서부터 멘탈 모델이 흔들리기 쉽다. 단순한 그림은 이렇다.
 
-```
+```text
 [브라우저 첫 요청]
 1. 서버에서 HTML 렌더링 → Streaming
 2. 브라우저 hydration
@@ -716,7 +716,7 @@ export function requireModule(metadata) {
 
 그런데 RSC가 들어오면 서버 측이 더 복잡해진다.
 
-```
+```text
 [브라우저 첫 요청]
 1. RSC 서버: 서버 컴포넌트 트리를 Flight 스트림으로 렌더링
    - 클라이언트 컴포넌트는 $L<id> + import metadata로 직렬화

@@ -129,7 +129,7 @@ CMD ["node", "dist/server.js"]
 
 <style scoped>section { font-size: 18px; }</style>
 
-```
+```text
   패키지 A ──►┌──────────────┐
   패키지 B ──►│ 서비스(Next.js)│── 번들 ──► 사용자
   패키지 C ──►└──────────────┘
@@ -234,7 +234,7 @@ describe('my test', () => {
 
 `mocha-sugar`가 `mocha`를 `dependencies`에 넣으면?
 
-```
+```text
 my-project
 ├── mocha@10.0.0                     ← npx mocha가 실행하는 mocha (글로벌 세팅)
 └── node_modules/mocha-sugar/
@@ -280,7 +280,7 @@ my-project
 
 npm 3에서 `node_modules`를 **nested → flat** 구조로 바꿈
 
-```
+```text
 # npm 1~2 (nested) — 패키지마다 자기 의존성을 중첩으로 가짐
 node_modules/
 ├── A/
@@ -311,7 +311,7 @@ flat 구조에서 peerDeps까지 자동으로 끼워넣으면 호이스팅 충�
 
 → **자동 설치를 제거하고 경고만 출력**하는 것으로 후퇴
 
-```
+```text
 npm WARN mocha-junit-reporter@2.0.0 requires a peer of mocha@>=6
 but none is installed. You must install peer dependencies yourself.
 ```
@@ -538,7 +538,7 @@ peerDeps에 넣은 패키지는 **개발 시에는** devDependencies에도 넣�
 
 semver에서 `0.x`는 "아직 안정되지 않은 API"를 의미하며, `^`의 범위 해석이 달라진다
 
-```
+```text
 ^1.2.3  →  >=1.2.3 <2.0.0   (메이저 고정)
 ^0.2.3  →  >=0.2.3 <0.3.0   (마이너 고정 — 훨씬 좁음!)
 ^0.0.3  →  >=0.0.3 <0.0.4   (패치 고정 — 사실상 고정 버전)
@@ -586,7 +586,7 @@ semver에서 `0.x`는 "아직 안정되지 않은 API"를 의미하며, `^`의 �
 - npm/yarn의 flat `node_modules`와 달리, pnpm은 **symlink 기반** 구조
 - phantom dependency를 **크게 줄여주지만**, `hoist=true`(기본값)에서는 일부 unlisted dependency 접근이 가능할 수 있음
 
-```
+```text
 node_modules/
 ├── .pnpm/                    ← 실제 패키지가 여기에 설치됨
 │   ├── lodash@4.17.21/
@@ -844,7 +844,7 @@ npm explain react         # 왜 이 버전이 설치되었는지 추적
 
 예: 내 서비스는 React 19인데, 어떤 라이브러리가 `"react": "^18.0.0"`만 peerDep으로 선언
 
-```
+```text
 npm warn ERESOLVE Could not resolve dependency:
 npm warn peer react@"^18.0.0" from some-ui-lib@3.2.1
 ```
@@ -1048,7 +1048,7 @@ function usePromise(promise) {
 
 번들러는 Node.js module resolution 알고리즘을 따름 — `import`하는 파일 위치에서 **가장 가까운 `node_modules`** 의 버전을 선택
 
-```
+```text
 node_modules/
 ├── lodash@4.17.21/          ← 최상위에 hoisting된 버전
 ├── A/                       ← lodash@4를 import → 최상위 4.17.21 사용
@@ -1150,7 +1150,7 @@ node_modules/
 
 **된다.** `@types/react`도 사실상 **싱글턴이 보장되어야 하는 패키지**
 
-```
+```text
 node_modules/
 ├── @types/react@19/          ← 내 프로젝트
 └── some-ui-lib/

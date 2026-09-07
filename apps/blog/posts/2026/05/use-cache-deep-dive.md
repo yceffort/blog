@@ -493,7 +493,7 @@ async function getProductPrice(productId: string, currency: string) {
 
 흐름은 이렇다.
 
-```
+```text
 1. 인자 직렬화 → encodeReply (Flight)
 2. 캐시 키 구성 → [buildId, id, args, hmrRefreshHash?]
 3. ResumeDataCache(RDC) 조회

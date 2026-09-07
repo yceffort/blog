@@ -912,7 +912,7 @@ React Native는 iOS나 안드로이드와 같은 시뮬레이터로만 테스트
 
 `console.log` `console.warn`을 사용할 수 있다. React Native v0.29에서는 아래 명령어로도 가능하다.
 
-```
+```text
 $ react-native log-ios
 $ react-native log-android
 ```

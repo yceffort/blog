@@ -88,7 +88,7 @@ OpenNext의 작동 방식은 다음과 같다:
 
 AWS의 경우를 예로 들면:
 
-```
+```text
 .next/ (Next.js 빌드 출력)
   ↓ OpenNext 변환
 .open-next/
@@ -182,7 +182,7 @@ vinext의 RSC 구현은 `@vitejs/plugin-rsc`(Vite 공식 RSC 플러그인) 위�
 
 이 두 프로젝트의 차이는 단순한 구현 방식의 차이가 아니라, **의존 관계의 방향**이 다르다.
 
-```
+```text
 OpenNext:
   next build → .next/ (비공개 출력물) → OpenNext 변환 → 플랫폼 배포
   ⚠️ .next/ 형식이 바뀌면 깨짐
@@ -253,7 +253,7 @@ vinext가 AI로 만들어질 수 있었던 핵심 이유는, Next.js가 이미 *
 
 [paddo.dev의 분석](https://paddo.dev/blog/vinext-test-suites-are-specs/)이 이 점을 정확히 짚었다: Next.js의 2,000개 이상의 유닛 테스트와 400개 이상의 E2E 테스트[^5]는 사실상 **실행 가능한 명세(executable specification)**였다. AI는 문서를 읽고 해석하는 것보다, 테스트를 통과시키는 것에 훨씬 능하다. "이 입력에 이 출력이 나와야 한다"는 명확한 계약이 있으면, AI는 그 계약을 만족시키는 코드를 효율적으로 생성할 수 있다.
 
-```
+```text
 기존 AI 코딩:
   모호한 요구사항 → AI가 "추측"으로 코드 작성 → 사람이 검증
 

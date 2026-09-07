@@ -226,7 +226,7 @@ The second is the key. **It is an admission that at the time of the initial merg
 
 The reporter did not stop there. Within minutes of finding the first UB, they discovered another one.
 
-```
+```text
 error: Undefined Behavior: trying to retag from <wildcard> for Unique
 permission at alloc309[0x0], but no exposed tags have suitable
 permission in the borrow stack for this location

@@ -52,7 +52,7 @@ myEmitter.emit('myevent')
 console.log('I am the last log line')
 ```
 
-```
+```text
 handler1: myevent was fired!
 handler2: myevent was fired!
 handler3: myevent was fired!

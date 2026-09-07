@@ -182,7 +182,7 @@ try {
 }
 ```
 
-```
+```text
 forEach 1
 forEach 2
 forEach 3
@@ -208,7 +208,7 @@ try {
 }
 ```
 
-```
+```text
 map 1
 map 2
 map 3

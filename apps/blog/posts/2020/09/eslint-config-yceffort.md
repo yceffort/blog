@@ -26,7 +26,7 @@ https://github.com/yceffort/eslint-config-yceffort/packages
 
 패키지를 올리는 것은 꽤나 단순하지만, 사용하는 입장에서 `.npmrc`에 `registry`를 아래 처럼 별도로 등록해줘야 하는 허들이 있었다. https://docs.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages
 
-```
+```text
 registry=https://npm.pkg.github.comOWNER
 @OWNER:registry=npm.pkg.github.com
 @OWNER:registry=npm.pkg.github.com

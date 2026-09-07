@@ -246,7 +246,7 @@ Webkit은 오픈소스 렌더링 엔진으로, 리눅스 플랫폼에서 사용�
 
 예를 들어 이 수학언어는 아래처럼 표현할 수 있을 것이다.
 
-```
+```text
 INTEGER: 0|[1-9][0-9]*
 PLUS: +
 MINUS: -
@@ -256,7 +256,7 @@ MINUS: -
 
 신택스는 보통 [BNF](https://ko.wikipedia.org/wiki/%EB%B0%B0%EC%BB%A4%EC%8A%A4-%EB%82%98%EC%9A%B0%EB%A5%B4_%ED%91%9C%EA%B8%B0%EB%B2%95)라고 부르는 형식을 따라서 정의한다.
 
-```
+```text
 expression := term operation term
 operation := PLUS | MINUS
 term := INTEGER | expression

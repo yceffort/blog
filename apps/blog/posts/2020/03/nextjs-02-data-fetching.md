@@ -118,7 +118,7 @@ export async function getStaticProps(_: NextPageContext) {
 
 빌드를 해보면 아래와 같이 메시지가 출력된다.
 
-```
+```text
 ...
 Automatically optimizing pages ..fetchData in build time!
 Automatically optimizing pages
@@ -391,7 +391,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 개 떡 같은 코드지만 (...) `getStaticPaths`는 `/todo/0` 부터 `/todo/9`까지만 미리 빌드 타임에 만들어 둔다.
 
-```
+```text
  ● /todo/[id]                                                 378 B       68.1 kB
     ├ /todo/0
     ├ /todo/1
@@ -426,7 +426,7 @@ export async function getServerSideProps(context) {
 
 빌드를 하게 되면, 아래와 같이 나타난다.
 
-```
+```text
 Page                                                           Size     First Load
 ...
 ├ λ /server                                                    415 B       68.2 kB

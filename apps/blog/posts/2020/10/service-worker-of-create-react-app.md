@@ -195,7 +195,7 @@ export function unregister() {
 
 `create-react-app`으로 리액트 어플리케이션을 만들면, 아래와 같은 구조를 띄고 있을 것이다.
 
-```
+```text
 ├── README.md
 ├── node_modules
 ├── package.json
@@ -240,7 +240,7 @@ serviceWorker.register()
 - 이조건을 삭제하여 development에서도 실행하는 방법. 그러나 잠재적인 이슈가 있을 수 있다.
 - 리액트 애플리케이션을 프로덕션 버전으로 만들어서, 서빙하는 방법. 아래와 같은 방법으로 사용하면 된다.
 
-```
+```text
 $ yarn global add serve
 $ yarn build
 $ serve -s build
@@ -272,7 +272,7 @@ window.addEventListener('load', () => {
 
 그리고, Google의 workbox plugin을 추가한다. [Google's Workbox plugin](https://developers.google.com/web/tools/workbox/guides/codelabs/webpack)
 
-```
+```text
 npm install --save-dev workbox-build
 ```
 

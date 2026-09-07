@@ -125,7 +125,7 @@ markdown에 pretter를 적용하고 싶었는데, mathjax 를 위해 사용한 �
 
 ### mathjax error 에러
 
-```
+```text
 14:11:12.944    error CHTML - Unknown character: U+BE14 in MathJax_Main,MathJax_Size1,MathJax_AMS
 14:11:12.945    error CHTML - Unknown character: U+B85D in MathJax_Main,MathJax_Size1,MathJax_AMS
 14:11:12.946    error CHTML - Unknown character: U+B2F9 in MathJax_Main,MathJax_Size1,MathJax_AMS

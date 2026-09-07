@@ -122,7 +122,7 @@ oxfmt --migrate prettier
 
 계획에 없던 마지막 작업. pnpm을 11로 올리자 첫 실행부터 경고가 나왔다.
 
-```
+```text
 The "pnpm" field in package.json is no longer read by pnpm
 ```
 

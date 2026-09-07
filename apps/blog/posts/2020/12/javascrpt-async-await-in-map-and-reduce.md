@@ -37,7 +37,7 @@ console.table(messages)
 
 이렇게 하면 될 것 같지만?
 
-```
+```text
 (6) [Promise, Promise, Promise, Promise, Promise, Promise]
 0: Promise {<pending>}
 1: Promise {<pending>}

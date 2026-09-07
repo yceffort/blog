@@ -136,14 +136,14 @@ published: false
 
 **개발자:**
 
-```
+```text
 - React, TypeScript, Next.js 사용
 - 쇼핑몰 프로젝트 진행
 ```
 
 **기획자:**
 
-```
+```text
 - 커머스 앱 신규 기능 기획
 - 개발팀, 디자인팀과 협업
 ```
@@ -156,13 +156,13 @@ published: false
 
 **개발자:**
 
-```
+```text
 - 상품 목록 초기 로딩 2.3초 → 0.6초 단축 (Code Splitting 적용)
 ```
 
 **기획자:**
 
-```
+```text
 - 수강신청 단계 5단계 → 2단계로 축소 설계
 - 동기 8명 대상 테스트, 평균 완료 시간 47초 → 18초
 ```
@@ -276,14 +276,14 @@ published: false
 
 **개발자:**
 
-```
+```text
 Frontend: React, Vue, Angular, Svelte, Next.js
 Backend: Node.js, Express, Django, Spring
 ```
 
 **기획자:**
 
-```
+```text
 Methods: 애자일, 스크럼, 디자인 씽킹, 린 UX
 Analysis: GA, Amplitude, SQL, A/B 테스트
 ```

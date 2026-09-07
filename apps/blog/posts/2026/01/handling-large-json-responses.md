@@ -106,7 +106,7 @@ try {
 
 [NDJSON](https://github.com/ndjson/ndjson-spec)(Newline Delimited JSON)은 각 줄이 독립적인 JSON 객체인 형식이다. JSON Lines(JSONL)라고도 불린다.
 
-```
+```text
 {"id":1,"name":"Alice","email":"alice@example.com"}
 {"id":2,"name":"Bob","email":"bob@example.com"}
 {"id":3,"name":"Charlie","email":"charlie@example.com"}
@@ -1121,7 +1121,7 @@ function createDebugStream(url, onData) {
 
 어떤 방식을 선택해야 할지 고민된다면 다음 플로차트를 참고하자.
 
-```
+```text
 데이터 크기가 10MB 미만인가?
 ├─ Yes → JSON.parse()로 충분하다
 └─ No → 서버 API를 수정할 수 있는가?

@@ -131,7 +131,7 @@ React의 렌더링은 **트리 탐색**이다.
 
 증권 HTS, 코인 거래소, 실시간 대시보드 같은 도메인을 생각해보자.
 
-```
+```text
 웹소켓으로 호가 데이터 수신 → setState → 리렌더
 ```
 
@@ -308,7 +308,7 @@ function useSearch({query, limit}) {
 
 ## 원칙 정리
 
-```
+```text
 객체를 받는다 → destructure해서 primitive만 deps에
 ```
 
@@ -477,7 +477,7 @@ function Form() {
 
 ## 판단 기준
 
-```
+```text
 "이걸 안 쓰면 뭐가 깨지는가?"
 ```
 
@@ -866,7 +866,7 @@ function Price({ticker}) {
 
 ## 렌더링 최적화 판단 순서
 
-```
+```text
 1. 진짜 느린가?
    → Profiler로 측정. 느리지 않으면 여기서 멈춘다.
 

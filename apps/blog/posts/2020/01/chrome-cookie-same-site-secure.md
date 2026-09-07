@@ -29,7 +29,7 @@ https://bugs.chromium.org/p/chromium/issues/detail?id=1019168#c26
 
 생각해보니 네이버 페이에서도 아래와 같은 메일을 받은 기억이 난다.
 
-```
+```text
 안녕하세요. 네이버페이입니다.
 구글에서 서비스하고 있는 크롬 브라우저 80버전에서부터 변경될 새로운 쿠키 정책 ( SameSite Cookie ) 에 따라
 네이버페이 Javascript SDK PC 결제창 호출 방식 중 레이어 타입 지원을 종료하게 될 예정입니다.
@@ -59,13 +59,13 @@ https://bugs.chromium.org/p/chromium/issues/detail?id=1019168#c26
 
 쿠키는 키=값 이라는 쌍으로 이루어져있으며, 쿠키 유효 기간, 도메인 등을 정보로 가지고 있다. 예를 들어, 웹사이트에서 '새로운 상품' 을 알려주는 팝업이 있다고 가정하자. 대게 이런 웹사이트는 X일간 해당 정보를 표시하지 않는다, 라는 옵션을 사용자에게 선택할 수 있게 해준다. 웹사이트에서는 보통 이 정보를 쿠키를 이용해서 저장하며, HTTPS를 통해 전달할 것이다. 그리고 아마도 헤더는 아래와 같이 생겼을 것이다.
 
-```
+```text
 Set-Cookie: visited=true; Max-Age=2600000; Secure
 ```
 
 만약 사용자가 이전에 보지 않음 체크를 한 유저라면, 그리고 보안연결 상태이고 n일가나 미만이라면, 브라우저가 페이지 요청시 다음 헤더를 전송한다.
 
-```
+```text
 Cookie: visited=true
 ```
 
@@ -100,7 +100,7 @@ SameSite 정책으로 돌아와서, 사이트 방문시 현재 방문한 사이�
 
 `SameSite=Strict`는 쿠키 전송을 first-party cookie로만 제한한다. 이 경우, 쿠키의 사이트가 브라우저 URL 표시줄에 일치하는 경우에만 전송한다.
 
-```
+```text
 Set-Cookie: visited=true; SameSite=Strict
 ```
 
@@ -110,7 +110,7 @@ Set-Cookie: visited=true; SameSite=Strict
 
 아까 힙합곡 예시로 돌아가보자.
 
-```
+```text
 Set-Cookie: visited=true; SameSite=Lax
 ```
 
@@ -142,7 +142,7 @@ Lax 설정시 embedded된 음성 파일 요청시에는 쿠키가 들어가지 �
 
 - `SameSite=None`을 쓰고 싶다면 Secure 플래그를 활성화 해야 한다.
 
-```
+```text
    > Rejected | Set-Cookie: widget_session=abc123; SameSite=None
    > Accepted | Set-Cookie: widget_session=abc123; SameSite=None; Secure
 ```

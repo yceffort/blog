@@ -227,7 +227,7 @@ pub fn run() {
 
 `run()` 함수 내부에 있는 것들이 순차적으로 실행될 것이다.
 
-```
+```text
 Hello from Rust!
 My number is: 10
 ```

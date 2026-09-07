@@ -25,7 +25,7 @@ published: true
 
 ## 1부 복습 — 지도
 
-```
+```text
 throw
   │ ① 포착      ✅ 1부 — 전역 핸들러(onerror 교체) + 몽키패치
   ▼
@@ -65,7 +65,7 @@ Relay 파이프라인과 소스맵 복원
 
 self-hosted 문서 기준 실제 파이프라인:
 
-```
+```text
 SDK
  └→ Relay          (DSN 검증, inbound filter, rate limit, 정규화, PII 스크러빙)
      └→ Kafka
@@ -259,7 +259,7 @@ initial_context={
 
 Sentry에는 내장 규칙 파일이 있다 (`all-platforms@2026-01-20.txt`, 약 500줄):
 
-```
+```text
 ## js
 path:**/node_modules/** -app
 
@@ -294,7 +294,7 @@ fingerprint: ['{{ default }}', error.endpoint]
 
 **서버 측** — 배포 없이 대시보드에서 규칙으로:
 
-```
+```text
 error.type:DatabaseUnavailable         -> system-down
 stack.function:"query_database"        -> {{ default }}, {{ transaction }}
 ```
@@ -566,7 +566,7 @@ function assert(condition: unknown, message: string): asserts condition {
 
 Next.js에서는 서버·엣지·클라이언트 **세 런타임에서 SDK가 따로 초기화**된다:
 
-```
+```text
 instrumentation.ts          서버·엣지 config 로드 (register())
                             + onRequestError = Sentry.captureRequestError
 instrumentation-client.ts   브라우저 SDK 초기화 ← 1부에서 본 세계

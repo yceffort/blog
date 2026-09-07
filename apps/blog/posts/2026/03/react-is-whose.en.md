@@ -96,7 +96,7 @@ Same pattern. Next.js declared Server Actions "stable" (October 2023) **about 14
 
 In summary, the flow looks like this:
 
-```
+```text
 React team designs the concept
     ↓
 Next.js implements it first and declares it "stable"
@@ -302,14 +302,14 @@ The most notable phenomenon in the React–Next.js relationship is the **inversi
 
 Traditionally, the library/framework relationship works like this:
 
-```
+```text
 Library defines the API → Framework implements/extends
 React defines the component model → Next.js adds routing/SSR
 ```
 
 But the recent React–Next.js relationship has become:
 
-```
+```text
 Next.js implements first → React retroactively standardizes
 Next.js 13.4 declares RSC "stable" → 19 months later, React 19 officially stabilizes it
 Next.js 14 declares Server Actions "stable" → 14 months later, React 19 officially stabilizes them

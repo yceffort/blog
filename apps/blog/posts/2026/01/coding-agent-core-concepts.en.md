@@ -61,7 +61,7 @@ Rules files emerged to solve these problems. Instead of repeatedly entering the 
 
 ### Evolution
 
-```
+```text
 Single rules file → Multiple sub-files → Eventually merged into unified static context
 ```
 
@@ -73,7 +73,7 @@ In Claude Code, the `CLAUDE.md` file serves this role.
 
 **File Location and Hierarchy:**
 
-```
+```text
 your-project/
 ├── CLAUDE.md                    # Project root (applies globally)
 ├── .claude/
@@ -151,7 +151,7 @@ Commands solve this by executing common workflows with a single command. They ca
 
 **File Structure:**
 
-```
+```text
 your-project/
 ├── .claude/
 │   └── commands/
@@ -445,20 +445,20 @@ For all discovered vulnerabilities, provide:
 
 **Automatic Invocation:** Claude automatically selects appropriate sub-agents based on task description.
 
-```
+```text
 User: "Check this PR for security vulnerabilities"
 Claude: (automatically invokes security-reviewer sub-agent)
 ```
 
 **Explicit Invocation:**
 
-```
+```text
 User: "Use the security-reviewer agent to review the auth module"
 ```
 
 **Parallel Invocation:**
 
-```
+```text
 User: "Run these in parallel" or "Do some research on this"
 ```
 
@@ -708,7 +708,7 @@ Skills solve all these issues:
 
 ### Skill Structure
 
-```
+```text
 skills/
 ├── code-review/
 │   ├── SKILL.md              # Skill definition (required)
@@ -827,7 +827,7 @@ pyright-lsp@claude-plugins-official     # Python type checking
 
 Create hooks interactively instead of writing JSON directly.
 
-```
+```text
 /hookify "Run prettier after saving files"
 ```
 
@@ -1088,7 +1088,7 @@ Next.js 15 + Prisma + PostgreSQL
 
 Long exploration tasks should be separated into Sub-agents to avoid polluting the main context.
 
-```
+```text
 // ❌ Bad: Direct exploration in main
 "Find and organize all API endpoints"
 → Contents of dozens of files pile up in main context
@@ -1273,7 +1273,7 @@ Sometimes agents don't follow what's written in CLAUDE.md.
 
 Let's see how to structure this in an actual project.
 
-```
+```text
 your-project/
 ├── .claude/
 │   ├── settings.json           # Hooks configuration

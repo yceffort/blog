@@ -425,7 +425,7 @@ function createResource(promise) {
 
 ## promise가 resolve되면?
 
-```
+```text
 1. Profile 렌더 → throw promise
 2. React: 가장 가까운 Suspense를 찾아 fallback을 화면에 표시
 3. React: 잡아둔 promise에 "끝나면 알려줘"라고 .then을 걸어둠
@@ -737,7 +737,7 @@ function handleChange(e) {
 
 transition 렌더는 화면을 유지한 채 뒤에서, 중간중간 브라우저에 양보(yield)하며 **끊어서** 진행된다. 그 틈에 값이 바뀌면?
 
-```
+```text
 1. 렌더 시작: <A>가 store를 읽음 → 1
 2. React가 잠시 양보 → 그 틈에 이벤트가 store를 2로 변경
 3. 렌더 재개: <B>가 같은 store를 읽음 → 2
@@ -1223,7 +1223,7 @@ const {data, error} = useQuery({
 
 **그게 바로 이 강의 내용입니다.** App Router는 `loading.tsx`/`error.tsx`를 둔 세그먼트마다 자동으로 경계를 감싼다:
 
-```
+```text
 <ErrorBoundary fallback={<Error />}>      ← error.tsx
   <Suspense fallback={<Loading />}>       ← loading.tsx
     <Page />

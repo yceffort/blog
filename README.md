@@ -4,7 +4,7 @@ A monorepo containing yceffort's blog and research projects.
 
 ## Structure
 
-```
+```text
 ├── apps/
 │   ├── blog/          # Main blog (yceffort.kr)
 │   └── research/      # Research slides (research.yceffort.kr)

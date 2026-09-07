@@ -21,7 +21,7 @@ github repository of <https://yceffort.kr>
 
 포스트는 `/posts/YYYY/MM/DD/post-slug.md` 형식으로 저장합니다.
 
-```
+```text
 posts/
 └── 2024/
     └── 01/

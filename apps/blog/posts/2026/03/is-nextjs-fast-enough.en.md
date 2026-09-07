@@ -97,7 +97,7 @@ Benchmark numbers alone aren't enough. We need to understand **why** it's slow. 
 
 Here's roughly how a single SSR request is processed in the Next.js App Router:
 
-```
+```text
 Request received
   → Route matching (filesystem-based routing)
   → Layout tree construction (resolving nested layout.tsx)

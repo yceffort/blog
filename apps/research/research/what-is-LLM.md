@@ -159,7 +159,7 @@ INSERT INTO fruits VALUES ('apple', 'red', 'fruit');
 
 ### 🧠 LLM 방식
 
-```
+```text
 "apple"이 입력되면...
 파라미터 1: 0.23  ← "과일"과의 연관성
 파라미터 2: -0.15 ← "빨간색"과의 연관성

@@ -139,7 +139,7 @@ await caches.delete('pages-v0') // 버킷 통째로 삭제 (버전 청소용)
 
 첫 번째는 처음 쓰는 사람 대부분이 밟는 것으로, **Response의 바디는 스트림이라 한 번만 읽을 수 있다.** 네트워크에서 받은 응답을 `respondWith()`로 돌려주면서 캐시에도 넣으려면, 저장용 사본을 `response.clone()`으로 떠야 한다. 순서를 놓치면 이런 에러를 만난다.
 
-```
+```text
 TypeError: Failed to execute 'text' on 'Response': body stream already read
 ```
 

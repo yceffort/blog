@@ -85,7 +85,7 @@ export default function SubChild() {
 }
 ```
 
-```
+```text
 Home: :r0:
 Sub Child::r1:
 child: :r2:

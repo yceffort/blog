@@ -133,7 +133,7 @@ console.log('dummy.prototype.prop: ' + dummy.prototype.prop)
 console.log('dummy.prototype.foo:  ' + dummy.prototype.foo)
 ```
 
-```
+```text
 d.prop:      some value
 d.foo:       bar
 dummy.prop:           undefined

@@ -142,7 +142,7 @@ The promise of Edge was simple: if a user in Seoul has their request processed b
 
 The problem is that real-world web applications almost always **access a database.** And the database isn't at the Edge. In most cases, it's concentrated in one or two regions.
 
-```
+```text
 [User: Seoul] → [Edge Node: Seoul] → [DB: us-east-1]
                   ↑ Code runs here          ↑ Data lives here
                   RTT: ~2ms                 RTT: ~150ms
@@ -152,14 +152,14 @@ Code execution happens in Seoul, but fetching data still requires a round trip t
 
 In contrast, a Node.js Serverless Function can be co-located with the DB:
 
-```
+```text
 [User: Seoul] → [Serverless: us-east-1] → [DB: us-east-1]
                   RTT: ~150ms                RTT: ~2ms
 ```
 
 Total latency was comparable, or when multiple DB queries were needed, Serverless was actually faster. For N+1 query patterns, Edge was disastrous:
 
-```
+```text
 Edge:    150ms × N (cross-ocean trip per query)
 Node.js: 150ms + 2ms × N (first request crosses the ocean, rest are local)
 ```
@@ -181,7 +181,7 @@ Either way, Edge Runtime struggled to offer a clear benefit over Node.js Serverl
 
 The difficulty of databases on Edge isn't just about latency. There's also the **connection management** problem. Traditional servers maintain a connection pool with the database, reusing connections across requests. But Edge Isolates are short-lived. When the request ends, the Isolate disappears, and so does the connection. Every request has to establish a new TCP connection.
 
-```
+```text
 Traditional Server:
 [Server Start] → [Create Connection Pool (5)] → Reuse per request
 
@@ -211,7 +211,7 @@ Fluid Compute was announced in February 2025 as Vercel's new compute model. Posi
 2. **Concurrency**: A single instance can handle multiple requests simultaneously, accepting new requests during I/O idle time.
 3. **Fast initialization**: With a Rust-based runtime and bytecode caching, even when cold starts occur, initialization time is reduced.
 
-```
+```text
 Traditional Serverless:
 Request 1 → [Cold Start + Execute] → Terminate
 Request 2 → [Cold Start + Execute] → Terminate  ← Cold start every time
@@ -251,7 +251,7 @@ In summary, Cloudflare's approach was not "let's run existing Node.js apps on Ed
 
 [Turso](https://turso.tech/) is an Edge database based on SQLite, using read replicas deployed to Edge locations worldwide. Writes go to the primary region, but reads are served from the nearest replica.
 
-```
+```text
 [User: Seoul] → [Edge Node: Seoul] → [Turso Read Replica: Seoul]
                                       RTT: ~2ms ✓
 ```

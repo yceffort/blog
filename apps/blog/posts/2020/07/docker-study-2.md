@@ -19,7 +19,7 @@ template: post
 
 도커가 설치된 호스트에서 `ifconfig` 나 `ip addr`과 같은 명령어로 네트워크를 확인해보자.
 
-```
+```text
 ubuntu@study:~$ ifconfig
 docker0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255

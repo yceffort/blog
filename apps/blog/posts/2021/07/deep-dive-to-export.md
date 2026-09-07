@@ -353,7 +353,7 @@ hello()
 export const hi = () => console.log('hi')
 ```
 
-```
+```text
 hello()
 ^
 
@@ -390,7 +390,7 @@ export default hi
 
 이것도, 실패한다.
 
-```
+```text
 hello();
 ^
 

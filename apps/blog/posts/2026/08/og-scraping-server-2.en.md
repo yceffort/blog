@@ -60,13 +60,13 @@ Follow the most commonly cited AWS scenario and it goes like this.
 
 The attacker pastes a link into a post.
 
-```
+```text
 http://169.254.169.254/latest/meta-data/iam/security-credentials/
 ```
 
 Our server opens that URL to build a preview card, and the response contains the name of the IAM role attached to the instance. The attacker appends that name and pastes once more.
 
-```
+```text
 http://169.254.169.254/latest/meta-data/iam/security-credentials/og-scraper-role
 ```
 
@@ -140,7 +140,7 @@ So do you just check the `hostname` you got from parsing? Not on its own.
 
 Because a domain name can point at any IP at all. The attacker just sets the A record for their own domain like this.
 
-```
+```text
 evil.example.com.   IN  A   127.0.0.1
 ```
 
@@ -191,7 +191,7 @@ Say you have done all of the above. You parsed, you checked the resolved IP, you
 
 Say `example.com` is on the allowlist, and the attacker pastes this.
 
-```
+```text
 https://example.com/redirect?to=http://169.254.169.254/
 ```
 
@@ -312,7 +312,7 @@ export function isPublicAddress(ip: string): boolean {
 
 Why that first line is needed is the important part. Given a string that is not an IP, `blocked.check()` does not throw, it quietly answers "not blocked." Checked directly, it looks like this.
 
-```
+```text
 "localhost"    check => false   (not blocked)
 ""             check => false
 "999.1.1.1"    check => false
@@ -352,7 +352,7 @@ Feed the same values in without stripping and it comes out like this.
 
 There is a condition on that last row, though. The `64:ff9b::` form (NAT64) is not unwrapped automatically. It was blocked above because the code earlier has `64:ff9b::/96` written into it directly, and take that line out and the results split.
 
-```
+```text
 64:ff9b::a9fe:a9fe -> passes (vulnerable)
 ::ffff:a9fe:a9fe   -> blocked
 ```
@@ -436,7 +436,7 @@ export const scrapeAgent = new Agent({
 
 The last two lines were not there originally. I first wrote it to pick a single address and return that, and running it, the very first request died.
 
-```
+```text
 single   -> throw TypeError: Invalid IP address: undefined   (options.all = [true])
 array    -> status 200                                        (options.all = [true])
 ```
@@ -463,7 +463,7 @@ With not a single DNS lookup between check time and use time, the TOCTOU window 
 
 Using `every` is deliberate too. The attacker can hand you A records like this.
 
-```
+```text
 evil.com.  IN  A  93.184.216.34    <- public
 evil.com.  IN  A  169.254.169.254  <- private
 ```
@@ -486,7 +486,7 @@ const paranoid = new Agent({
 
 The result was this.
 
-```
+```text
 http://localhost:9004/   -> blocked                 | lookup called 1 time
 http://127.0.0.1:9004/   -> status 200 INTERNAL     | lookup called 0 times
 http://[::1]:9005/       -> status 200 INTERNAL     | lookup called 0 times
@@ -496,7 +496,7 @@ http://[::1]:9005/       -> status 200 INTERNAL     | lookup called 0 times
 
 So the URL validation side has to catch IP literals, and there is one more layer here. `URL.hostname` **keeps the brackets on an IPv6 literal.**
 
-```
+```text
 http://127.0.0.1/               hostname = "127.0.0.1"                isIP = 4
 http://[::1]/                   hostname = "[::1]"                    isIP = 0
 http://[::ffff:a9fe:a9fe]/      hostname = "[::ffff:a9fe:a9fe]"       isIP = 0
@@ -602,7 +602,7 @@ The genuinely dangerous side, though, is not this code but the side that just us
 
 And here is one more thing I wrote first and got wrong. Following older docs I wrote that you turn it off with `maxRedirections: 0`, and checking on undici 8, here is what happens.
 
-```
+```text
 maxRedirections: 0 -> status 302
 maxRedirections: 3 -> throw InvalidArgumentError: maxRedirections is not supported, use the redirect interceptor
 ```
@@ -710,7 +710,7 @@ It is more accurate to say the two have different purposes. Which sites you allo
 
 The attacker hands you a URL like this.
 
-```
+```text
 https://evil.com/infinite   ->  the response never ends
 https://evil.com/10gb.html  ->  enormous HTML
 ```

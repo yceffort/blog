@@ -99,7 +99,7 @@ image render               *
 <img src="elope.gif" />
 ```
 
-```
+```text
 aphid.js        ====     xxx
 bmovie.js       =====xx
 seaserpent.js   =====  xx

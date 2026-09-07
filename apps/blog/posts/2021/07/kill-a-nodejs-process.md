@@ -95,7 +95,7 @@ Promise.reject(new Error('oh no'))
 })()
 ```
 
-```
+```text
 (node:52298) UnhandledPromiseRejectionWarning: Error: oh no
     at Object.<anonymous> (/tmp/reject.js:1:16)
     ... TRUNCATED ...
@@ -116,7 +116,7 @@ Event Emitter는 nodejs에서 흔한 패턴으로, 라이브러리와 애플리�
 
 Event Emitter가 `error` 이벤트를 발생시켰는데 여기에 아무런 리스너가 없다면, Emitter가 내보낸 인수를 던진다. 그렇게 되면 에러가 나서 프로세스가 종료된다.
 
-```
+```text
 events.js:306
     throw err; // Unhandled 'error' event
     ^

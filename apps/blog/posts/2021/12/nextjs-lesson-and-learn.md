@@ -114,7 +114,7 @@ export function getServerSideProps() {
 
 버튼을 누르면
 
-```
+```text
 getInitailProps!
 getServerSideProps
 getInitailProps!

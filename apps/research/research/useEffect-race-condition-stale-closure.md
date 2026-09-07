@@ -65,7 +65,7 @@ React의 기본 모델은 "state/props를 선언하면 화면이 따라온다"�
 
 ## 실행 타이밍 (기본)
 
-```
+```text
 1. render  — 컴포넌트 함수 실행, 가상 트리 계산 (순수해야 함)
 2. commit  — React가 실제 DOM에 반영
 3. paint   — 브라우저가 화면에 그림
@@ -157,7 +157,7 @@ const handleBuy = () => {
 
 ## 판별 플로우차트
 
-```
+```text
 렌더 중 계산 가능?     → 렌더 중 (Effect ❌)
 사용자 액션 반응?       → 이벤트 핸들러 (Effect ❌)
 prop으로 state 동기화?  → state lifting (Effect ❌)
@@ -196,7 +196,7 @@ useEffect(() => {
 
 `a` → `ab` 빠르게 입력했을 때:
 
-```
+```text
 시간 ──────────────────────────────▶
  a   ├──── fetch "a"  (3초) ──────┤ 응답 도착
  ab    ├── fetch "ab" (1초) ─┤ 응답 도착
@@ -348,7 +348,7 @@ function Counter() {
 3. **두 번째 렌더**: `Counter()`가 다시 실행되고 새로운 `count = 1`이 생기지만, **deps가 `[]`라 Effect는 재실행되지 않는다** → 첫 렌더의 interval 콜백이 그대로 살아 있음.
 4. 다음 tick에서도 `setCount(0 + 1)` → 화면 `1`에서 고정.
 
-```
+```text
 첫 렌더 → count=0 ─┐
 두 번째 렌더 → count=1 (새) │  첫 렌더의 interval 콜백은
 세 번째 렌더 → count=1 ──┘  여전히 "count=0"을 움켜쥠
@@ -492,7 +492,7 @@ useEffect(() => {
 
 ## Strict Mode가 강제하는 규율
 
-```
+```text
 dev에서만: mount → unmount → mount (의도적으로 두 번)
 ```
 
@@ -512,7 +512,7 @@ dev에서만: mount → unmount → mount (의도적으로 두 번)
 
 ## 세 가지 Effect 훅
 
-```
+```text
 render → [insertion effect] → DOM mutation → [layout effect] → paint → [effect]
 ```
 
@@ -573,7 +573,7 @@ useInsertionEffect(() => {
 
 **전제**: React 18부터 렌더를 여러 조각으로 쪼개 실행할 수 있다 (concurrent rendering). 즉, **한 번의 렌더 패스 중간에 React가 잠시 멈췄다가 이어 그릴 수 있다**.
 
-```
+```text
 1. 외부 스토어 값 = 10
 2. 컴포넌트 A 렌더 → 10 읽음
 3. React가 양보 (yield) — 다른 급한 일 처리
@@ -650,7 +650,7 @@ const isOnline = useSyncExternalStore(
 
 ## render-as-you-fetch vs fetch-on-render
 
-```
+```text
 기존 (fetch-on-render):
   렌더 → mount → useEffect fetch → 로딩 상태
   [부모] → [자식 mount → fetch] → [손자 mount → fetch]  ← waterfall
@@ -725,7 +725,7 @@ function useChat(roomId) {
 
 ## useEffect 의사결정 순서
 
-```
+```text
 1. React 바깥과 동기화? 아니면 → Effect 아님
 2. 외부 스토어 구독? → useSyncExternalStore
 3. 데이터 페칭? → Server Component / use() / React Query

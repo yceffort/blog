@@ -99,7 +99,7 @@ const hello = new Hell()
 hello.#message
 ```
 
-```
+```text
 Uncaught SyntaxError: Private field '#message' must be declared in an enclosing class
 ```
 

@@ -144,7 +144,7 @@ CSSOM이 생성되기 전까지, 브라우저는 처리되는 모든 컨텐츠�
 </html>
 ```
 
-```
+```text
 interactive: 229ms, dcl: 230ms, complete: 956ms
 ```
 

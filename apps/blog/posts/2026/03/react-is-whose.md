@@ -96,7 +96,7 @@ Next.js가 RSC를 "안정(stable)"이라 선언한 시점(2023년 5월)과 React
 
 정리하면 이런 흐름이다:
 
-```
+```text
 React 팀이 개념을 설계
     ↓
 Next.js에서 먼저 구현 및 "안정화" 선언
@@ -324,14 +324,14 @@ React와 Next.js의 관계에서 가장 주목할 만한 현상은 **의존 방�
 
 전통적으로 라이브러리/프레임워크 관계는 이런 방향이다:
 
-```
+```text
 라이브러리가 API를 정의 → 프레임워크가 구현/확장
 React가 컴포넌트 모델을 정의 → Next.js가 라우팅/SSR을 추가
 ```
 
 하지만 최근 React-Next.js의 관계는 이렇게 되었다:
 
-```
+```text
 Next.js에서 먼저 구현 → React가 사후적으로 스펙화
 Next.js 13.4가 RSC "안정화" → 19개월 후 React 19가 공식 안정화
 Next.js 14가 Server Actions "안정화" → 14개월 후 React 19가 공식 안정화

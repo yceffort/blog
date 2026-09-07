@@ -319,7 +319,7 @@ trusted publisher는 OIDC를 사용한다. 흐름은 다음과 같다.
 
 공격자의 페이로드는 단순히 의존성을 오염시키는 데서 그치지 않았다. release 워크플로우가 실행될 때 **runner 프로세스의 메모리에서 OIDC 토큰을 직접 추출**했다.
 
-```
+```text
 /proc/*/cmdline      → Runner.Worker 프로세스 식별
 /proc/<pid>/maps     → 메모리 맵 조회
 /proc/<pid>/mem      → 메모리 덤프

@@ -31,7 +31,7 @@ template: post
 
 ## contribution의 기준
 
-```
+```text
 What counts as a contribution
 On your profile page, certain actions count as contributions:
 

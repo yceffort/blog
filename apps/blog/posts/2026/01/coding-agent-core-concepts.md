@@ -61,7 +61,7 @@ Rules 파일은 이러한 문제를 해결하기 위해 등장했다. 매 대화
 
 ### 발전 과정
 
-```
+```text
 단일 rules 파일 → 여러 sub-files로 분리 → 결국 하나의 정적 컨텍스트로 병합
 ```
 
@@ -73,7 +73,7 @@ Claude Code에서는 `CLAUDE.md` 파일이 이 역할을 한다.
 
 **파일 위치와 계층 구조:**
 
-```
+```text
 your-project/
 ├── CLAUDE.md                    # 프로젝트 루트 (전체 적용)
 ├── .claude/
@@ -151,7 +151,7 @@ Commands는 이런 반복 작업을 한 번의 명령어로 실행할 수 있게
 
 **파일 위치:**
 
-```
+```text
 your-project/
 ├── .claude/
 │   └── commands/
@@ -447,20 +447,20 @@ model: sonnet
 
 **자동 호출:** Claude가 작업 설명(description)을 보고 적절한 서브에이전트를 자동 선택한다.
 
-```
+```text
 사용자: "이 PR의 보안 취약점을 확인해줘"
 Claude: (security-reviewer 서브에이전트 자동 호출)
 ```
 
 **명시적 호출:**
 
-```
+```text
 사용자: "security-reviewer 에이전트를 사용해서 인증 모듈을 검토해줘"
 ```
 
 **병렬 호출:**
 
-```
+```text
 사용자: "이걸 병렬로 실행해줘" 또는 "리서치 좀 해줘"
 ```
 
@@ -710,7 +710,7 @@ Skills는 이 모든 것을 해결한다:
 
 ### 스킬의 구조
 
-```
+```text
 skills/
 ├── code-review/
 │   ├── SKILL.md              # 스킬 정의 (필수)
@@ -829,7 +829,7 @@ pyright-lsp@claude-plugins-official     # Python 타입 체킹
 
 JSON을 직접 작성하는 대신 대화형으로 훅을 만들 수 있다.
 
-```
+```text
 /hookify "파일 저장 후 prettier 실행해줘"
 ```
 
@@ -1090,7 +1090,7 @@ Next.js 15 + Prisma + PostgreSQL
 
 긴 탐색 작업은 Sub-agent로 분리하면 메인 컨텍스트가 오염되지 않는다.
 
-```
+```text
 // ❌ 나쁜 예: 메인에서 직접 탐색
 "모든 API 엔드포인트를 찾아서 정리해줘"
 → 수십 개 파일 내용이 메인 컨텍스트에 쌓임
@@ -1275,7 +1275,7 @@ CLAUDE.md에 적어도 따르지 않는 경우가 있다.
 
 실제 프로젝트에서 어떻게 구성하는지 예시를 보자.
 
-```
+```text
 your-project/
 ├── .claude/
 │   ├── settings.json           # Hooks 설정

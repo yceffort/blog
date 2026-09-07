@@ -40,7 +40,7 @@ image = mpimg.imread(f)
 print('Image dimensions:', image.shape)
 ```
 
-```
+```text
 Image dimensions: (410, 770, 4)
 ```
 
@@ -60,7 +60,7 @@ y = 300
 print(gray_image[y,x])
 ```
 
-```
+```text
 0.543404
 ```
 
@@ -74,7 +74,7 @@ print('Max: ', max_val)
 print('Min: ', min_val)
 ```
 
-```
+```text
 Max:  0.9646824
 Min:  0.040556863
 ```
@@ -119,7 +119,7 @@ image = mpimg.imread(f, 0)
 print('This image is:', type(image), 'with dimensions:', image.shape)
 ```
 
-```
+```text
 This image is: <class 'numpy.ndarray'> with dimensions: (480, 852, 3)
 ```
 

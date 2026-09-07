@@ -388,7 +388,7 @@ console.log(regex.test('01-01-190'))
 
 이제 다음 정규식에 맞는 글자들은..
 
-```
+```text
 git
 giit
 gggt

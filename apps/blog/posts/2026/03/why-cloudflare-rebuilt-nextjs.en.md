@@ -84,7 +84,7 @@ OpenNext operates as follows:
 
 Taking AWS as an example:
 
-```
+```text
 .next/ (Next.js build output)
   ↓ OpenNext conversion
 .open-next/
@@ -176,7 +176,7 @@ However, `@vitejs/plugin-rsc` itself is still in its early stages, and there are
 
 The difference between these two projects is not merely about implementation approach — **the direction of dependency** is different.
 
-```
+```text
 OpenNext:
   next build → .next/ (private output) → OpenNext conversion → platform deployment
   ⚠️ Breaks if .next/ format changes
@@ -245,7 +245,7 @@ The key reason vinext could be built with AI was that Next.js had already publis
 
 [An analysis by paddo.dev](https://paddo.dev/blog/vinext-test-suites-are-specs/) nailed this point: Next.js's 2,000+ unit tests and 400+ E2E tests[^5] were effectively an **executable specification**. AI is far better at passing tests than reading and interpreting documentation. When there is a clear contract — "this input should produce this output" — AI can efficiently generate code that satisfies it.
 
-```
+```text
 Traditional AI coding:
   Ambiguous requirements → AI "guesses" code → Human verifies
 

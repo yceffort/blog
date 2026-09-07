@@ -360,14 +360,14 @@ export function processReply(
 
 **JSON 경로**: 인자가 원시 타입, 배열, 일반 객체만으로 구성된 경우. 가장 가볍다.
 
-```
+```text
 // incrementLike(42) 호출 시
 "42"
 ```
 
 **FormData 경로**: Blob, ReadableStream, 다른 서버 참조 등 복잡한 타입이 포함된 경우. `FormData`의 각 파트에 개별 값을 넣는다.
 
-```
+```text
 ------WebKitFormBoundary
 Content-Disposition: form-data; name="0"
 42
@@ -801,7 +801,7 @@ Next.js에서 사용하는 특수 FormData 필드명:
 
 JavaScript가 로딩 중(hydration 전)에 사용자가 폼을 제출하면, React는 이를 큐에 넣고 hydration이 완료되면 **재생(replay)** 한다.
 
-```
+```text
 1. 서버에서 HTML 렌더링 → 브라우저에 전송
 2. 사용자가 즉시 폼 제출 (JS 아직 미로드)
 3. 제출이 큐에 저장됨
@@ -923,7 +923,7 @@ export async function createPost(formData: FormData) {
 
 서버 함수의 순차 실행은 **서버 전체가 아니라 개별 클라이언트(브라우저 탭) 단위**의 동작이다. 정확히 말하면, React의 클라이언트 런타임이 서버 함수 호출을 **하나씩 디스패치**한다. 서버가 첫 번째 요청의 응답을 반환하기 전에 두 번째 요청을 보내지 않는다.
 
-```
+```text
 사용자 A의 브라우저:  [action1] ──완료──> [action2] ──완료──> [action3]
 사용자 B의 브라우저:  [action1] ──완료──> [action2]
                      ↑ 서로 독립적으로 병렬 처리됨
@@ -1145,7 +1145,7 @@ function serializeServerReference(request, serverReference) {
 
 실제 Flight 스트림에서는 이런 형태가 된다.
 
-```
+```text
 5:{"id":"abc123#deletePost","bound":null}
 0:["$","form",null,{"action":"$h5"}]
 ```

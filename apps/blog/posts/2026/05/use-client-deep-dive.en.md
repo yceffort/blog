@@ -52,7 +52,7 @@ There's a common misconception we need to address first: the idea that "only com
 
 The `'use client'` directive **defines module graph boundaries**. More precisely, it's the starting point of a **unidirectional boundary** from server → client. When a module has `'use client'`, all modules it imports — even without their own `'use client'` — are automatically included in the client bundle graph.
 
-```
+```text
 app/page.tsx           ← Server Component (default)
   └─ import Layout     ← Server Component
        └─ import Counter      ← 'use client' (boundary!)
@@ -138,7 +138,7 @@ For CommonJS modules, it takes a simpler path — replacing the entire module wi
 
 The same module keeps its body intact in the client bundle. Webpack's client layer essentially ignores the `'use client'` directive (except for linting) and compiles the module as regular JavaScript. As a result, the real implementation of the `Counter` component **exists only in the client chunk**.
 
-```
+```text
 Original module → ┬─ RSC server build: metadata stub only
                   └─ Client build: body as-is + separate chunk
 ```
@@ -324,7 +324,7 @@ Webpack fundamentally starts from an entry point and creates chunks by following
 
 Answer: **Create additional separate entry points**. This is the role of `flight-client-entry-plugin`[^2].
 
-```
+```text
 Server entry (RSC)
   └─ Server Component
        └─ "ClientShell exists here" (registerClientReference)
@@ -466,7 +466,7 @@ The key branch is `parent[0] === REACT_ELEMENT_TYPE && parentPropertyName === '1
 
 Let's recall the serialized form of React elements:
 
-```
+```text
 ["$", "type", null, props]
  ↑    ↑
  element marker
@@ -479,7 +479,7 @@ A client reference in the type slot means "this component's code will be loaded 
 
 `emitImportChunk` emits metadata (`[id, chunks, name, async]`) looked up from the manifest as a separate chunk. Within Flight Protocol's row-based streaming structure, this chunk is serialized as an `I` row.
 
-```
+```text
 I:5:["5234",["12","static/chunks/12-abc.js"],"Counter",0]
 0:["$","$L5",null,{"initial":42}]
 ```
@@ -704,7 +704,7 @@ What this means: **Even if the same module is imported in multiple places, chunk
 
 This is where mental models start to wobble. The simple picture looks like this:
 
-```
+```text
 [Browser's first request]
 1. HTML rendering on server → Streaming
 2. Browser hydration
@@ -715,7 +715,7 @@ This is where mental models start to wobble. The simple picture looks like this:
 
 But when RSC enters the picture, the server side becomes more complex:
 
-```
+```text
 [Browser's first request]
 1. RSC server: Renders server component tree as Flight stream
    - Client components are serialized as $L<id> + import metadata

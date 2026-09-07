@@ -94,7 +94,7 @@ description: '해봤지만 해보지 않았습니다'
 
 Javascript Self-Profiling API를 호출하려면, HTML 페이지에 `js-profiling`이라고 하는 [문서 정책](https://w3c.github.io/webappsec-permissions-policy/document-policy.html)이 있어야 한다. 일반적으로 `Document-Policy`라고 하는 HTTP 응답헤더 또는 `<iframe policy="">`를 통해 구현할 수 있다.
 
-```
+```text
 Document-Policy: js-profiling
 ```
 
@@ -336,7 +336,7 @@ const observer = new PerformanceObserver(function (list) {
 
 `parentId`를 재귀적으로 체이닝 하다보면, 전체 스택을 볼 수 있다. 이 경우, 이 스택에는 두개의 프레임만 존재한다.
 
-```
+```text
 frameId:4
 frameId:3
 ```
@@ -353,7 +353,7 @@ frameId:3
 
 따라서 위의 `228.59999990463257`에 있는 샘플 스택은 다음과 같다.
 
-```
+```text
 B()
 A()
 ```

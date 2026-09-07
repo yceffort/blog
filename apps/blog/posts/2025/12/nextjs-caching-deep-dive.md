@@ -483,7 +483,7 @@ export const getPost = cache(async (slug: string) => {
 
 "요청이 끝나면 캐시가 사라진다"는 말이 혼란스러울 수 있다. 그럼 캐시가 아닌 것 아닌가?
 
-```
+```text
 사용자 A가 /profile 페이지 접속
     ↓
 서버에서 렌더링 시작 (하나의 "요청")
@@ -500,7 +500,7 @@ export const getPost = cache(async (slug: string) => {
 
 하지만 다음 요청은 **새로 시작**한다:
 
-```
+```text
 사용자 A 요청 → getUser('123') 실행 → 캐시 → 응답 → 캐시 삭제
 사용자 B 요청 → getUser('123') 다시 실행 → 새 캐시 → 응답 → 캐시 삭제
 ```
@@ -629,7 +629,7 @@ ls .next/cache/fetch-cache/
 
 Next.js 서버는 캐시 가능한 fetch 응답을 받을 때마다 파일시스템에 기록한다:
 
-```
+```text
 1. fetch() 호출 (cache: 'force-cache' 또는 revalidate 설정)
      ↓
 2. .next/cache/fetch-cache/ 디렉토리 확인
@@ -827,7 +827,7 @@ export default async function Page() {
 
 **왜 필요한가?**
 
-```
+```text
 동적 렌더링 (Full Route Cache 없음):
   사용자 요청 → 서버에서 렌더링 → HTML 생성 → 응답
 
@@ -958,7 +958,7 @@ Router Cache는 4가지 캐시 중 유일하게 **클라이언트(브라우저)*
 
 **왜 필요한가?**
 
-```
+```text
 일반적인 SPA 네비게이션:
   링크 클릭 → 서버 요청 → 응답 대기 → 렌더링
 
@@ -1431,7 +1431,7 @@ NEXT_PRIVATE_DEBUG_CACHE=1
 
 이 설정을 켜면 다음과 같은 로그를 볼 수 있다:
 
-```
+```text
 [cache] GET https://api.example.com/posts HIT
 [cache] GET https://api.example.com/users MISS
 ```
@@ -1464,7 +1464,7 @@ curl -I https://your-site.com/page
 
 **Self-hosted 환경에서의 헤더:**
 
-```
+```text
 cache-control: s-maxage=3600, stale-while-revalidate=31536000
 ```
 

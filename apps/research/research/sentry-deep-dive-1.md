@@ -133,7 +133,7 @@ try {
 
 ## 개념 4. 오늘 따라갈 지도
 
-```
+```text
 throw
   │ ① 포착      브라우저 어딘가에서 Sentry가 줍는다
   ▼
@@ -201,7 +201,7 @@ function instrumentError(): void {
 
 SDK 본체(수백 KB)를 CDN에서 **비동기로 늦게 로드**하는 초소형 스니펫이다.
 
-```
+```text
 페이지 로드 ──→ Loader Script 실행 ──→ ... ──→ SDK 본체 로드 완료
                 (자기 onerror 설치)     ↑
                                   이 사이에 난 에러는?
@@ -531,7 +531,7 @@ export const defaultStackParser = createStackParser(
 
 `Client._processEvent`가 실행하는 순서. **순서 자체가 중요하다:**
 
-```
+```text
 1. sampleRate 랜덤 샘플링        ← 에러 이벤트만, 가장 먼저
 2. prepareEvent
    ├─ applyClientOptions          (environment/release 채우기)
@@ -610,7 +610,7 @@ envelope, transport, rate limit
 Sentry가 서버로 보내는 모든 것은 **envelope(봉투)**라는 규격으로 포장된다.
 종류가 다른 데이터들을 **한 번의 HTTP 요청에 묶어 보내기 위한** 포장 단위다.
 
-```
+```text
 {"event_id":"9ec7...","sent_at":"2026-08-05T..."}     ← 봉투 헤더: 누가·언제
 {"type":"event"}                                      ← 아이템 헤더: 내용물의 종류
 {"exception":{...},"tags":{...},"breadcrumbs":[...]}  ← 페이로드: 내용물
@@ -675,7 +675,7 @@ keepalive: pendingBodySize <= 60_000 && pendingCount < 15,
 
 서버 응답에 이 헤더가 오면:
 
-```
+```text
 X-Sentry-Rate-Limits: 60:error;transaction:organization
 ```
 

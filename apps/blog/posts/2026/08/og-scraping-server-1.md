@@ -113,7 +113,7 @@ pie showData
 
 규모도 같이 봐야 한다. 링크 미리보기는 대개 트래픽이 작은 기능이다. 일 5,000건이라고 가정하면,
 
-```
+```text
 5,000 / 86,400초 ≈ 0.06 TPS
 피크를 평균의 10배로 잡아도 1 TPS 미만
 ```
@@ -252,7 +252,7 @@ new TextDecoder('euc-kr').decode(bytes) // CP949 확장 문자가 깨진다
 
 많은 사이트가 미리보기 봇에만 OG 태그를 내준다. 이런 이름들이다.
 
-```
+```text
 facebookexternalhit/1.1
 Twitterbot/1.0
 Slackbot-LinkExpanding 1.0
@@ -268,7 +268,7 @@ Discordbot/2.0
 
 권하고 싶은 쪽은 자체 UA에 연락처를 넣는 것이다.
 
-```
+```text
 MyPreviewBot/1.0 (+https://example.com/bot)
 ```
 
@@ -441,7 +441,7 @@ const html =
 
 이 문자열을 `htmlparser2`에 넣고 `attribs.content`를 받아보면 결과가 이렇다.
 
-```
+```text
 opts= undefined                 -> "A & B <script> 발"
 opts= {"decodeEntities":false}  -> "A &amp; B &lt;script&gt; &#48156;"
 ```
@@ -515,7 +515,7 @@ opts= {"decodeEntities":false}  -> "A &amp; B &lt;script&gt; &#48156;"
 
 그래서 목표를 두 개로 쪼갠다.
 
-```
+```text
 ① API 에러율   = 실패 응답 / 전체 API 요청          ← 반복 요청발 실패만 캐시로 개선된다
 ② 커버리지     = 성공한 고유 URL / 시도한 고유 URL   ← 스크래핑 품질로 개선된다
 ```
@@ -548,7 +548,7 @@ flowchart TB
 
 캐시를 논하기 전에 "같은 URL"이 무엇인지 정해야 한다. 아래는 사람 눈에는 같은 페이지지만 문자열로는 전부 다르다.
 
-```
+```text
 https://Example.com/a?b=1&c=2
 https://example.com/a?c=2&b=1
 https://example.com/a?b=1&c=2#section
@@ -651,7 +651,7 @@ function ttlFor(result: OgResult): number {
 
 `h`가 0.95보다 크면 95번째 백분위가 히트 구간 안에 들어오므로 P95는 5ms 언저리가 되고 목표는 자동으로 달성된다. `h`가 0.95보다 작으면 P95는 미스 구간에 있고, 미스 분포에서 몇 번째 백분위인지는 이렇게 나온다.
 
-```
+```text
 q = (0.95 - h) / (1 - h)
 ```
 
@@ -682,7 +682,7 @@ q = (0.95 - h) / (1 - h)
 
 히트율은 고유 URL 비율에서 나온다.
 
-```
+```text
 히트율 ≈ 1 - (TTL 기간 내 고유 URL 수 / TTL 기간 내 전체 요청 수)
 ```
 

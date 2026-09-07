@@ -86,7 +86,7 @@ async function getProducts() {
 
 7가지 조건:
 
-```
+```text
 1. 같은 입력이면 같은 출력
 2. 캐시 키 cardinality가 낮음
 3. 여러 사용자가 같은 결과를 봄
@@ -242,7 +242,7 @@ const getData = $$reactCache__('default', '<id>', 1, $$cache0$$, userId)
 
 빌드 타임에 박힌 `$$reactCache__`는 결국 `cache()` 함수를 가리킨다 (`use-cache-wrapper.ts`).
 
-```
+```text
 1. 인자 직렬화 → encodeReply (Flight)
 2. 캐시 키 구성 → [buildId, id, args, hmrHash?]
 3. ResumeDataCache(RDC) 조회

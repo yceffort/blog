@@ -267,7 +267,7 @@ Suspense를 활용하면 서버 컴포넌트가 데이터를 가져올 때, 서�
 
 꽤 간단한 형태로 구성되어 있다. 한줄에 JSON blob 데이터가 있고, 여기에 ID로 태그되어 있는 간단한 형식이다.
 
-```
+```text
 M1:{"id":"./src/ClientComponent.client.js","chunks":["client1"],"name":""}
 J0:["$","@1",null,{"children":["$","span",null,{"children":"Hello from server land"}]}]
 ```
@@ -316,7 +316,7 @@ export default function OuterServerComponent() {
 
 위 예제에서, RSC 스트림은 아래와 같이 나타난다.
 
-```
+```text
 M1:{"id":"./src/ClientComponent.client.js","chunks":["client1"],"name":""}
 S2:"react.suspense"
 J0:["$","@1",null,{"children":[["$","span",null,{"children":"Hello from server land"}],["$","$2",null,{"fallback":"Loading tweets...","children":"@3"}]]}]
