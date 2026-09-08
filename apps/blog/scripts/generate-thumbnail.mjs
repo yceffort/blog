@@ -345,7 +345,7 @@ async function processPost(clients, path, {force, rescene, dryRun}) {
     return
   }
 
-  const prompt = `Flat editorial illustration of a technical concept, drawn like a clear explanatory diagram, 16:9, clean outlines, simple shapes, subtle risograph grain. Color scheme: ${scheme}. No text, no letters, no numbers, no logos, no human faces. Composition: ${COMPOSITIONS[composition]}\n\nScene: ${scene}`
+  const prompt = `Technical explanatory diagram in flat vector illustration style, 16:9. One consistent viewpoint for the whole picture: straight-on front view or isometric, never mixed. Every object is a simple geometric icon (rounded boxes, panels, arrows, windows) with a uniform-weight black outline and a flat solid fill. No shading, no gradients, no cast shadows, no lighting effects, no texture, no 3D rendering, no photorealism, no clutter. At most three ink colors plus the background, generous empty margin around the subject. Color scheme: ${scheme}. No text, no letters, no numbers, no logos, no human faces. Composition: ${COMPOSITIONS[composition]}\n\nScene: ${scene}`
   const raw = await generateImage(clients.geminiKey, prompt)
   const hero = fm.art.hero
   const layers =
