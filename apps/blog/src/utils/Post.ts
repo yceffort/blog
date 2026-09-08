@@ -51,9 +51,6 @@ export function buildArtThumbnail(seed: string, art?: ArtSpec): string {
   if (art?.tone) {
     params.set('tone', art.tone)
   }
-  if (art?.hero) {
-    params.set('hero', art.hero)
-  }
   return `/api/og/art?${params.toString()}`
 }
 
