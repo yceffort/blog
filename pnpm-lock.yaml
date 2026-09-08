@@ -278,6 +278,9 @@ importers:
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
+      undraw-svg:
+        specifier: 2.0.0
+        version: 2.0.0
 
   apps/research:
     dependencies:
@@ -3696,6 +3699,14 @@ packages:
 
   undici-types@8.3.0:
     resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
+
+  undraw-svg@2.0.0:
+    resolution: {integrity: sha512-bO7s1xPlet1Rh2XWZhwGwMJpalRadUZ0i7HUAY9kA/Pds85ZwKjwewuQuDzxAHpr5a3J0yXu6GhnFPIwjUMf3A==}
+    peerDependencies:
+      vue: ^3.0.0
+    peerDependenciesMeta:
+      vue:
+        optional: true
 
   unicorn-magic@0.4.0:
     resolution: {integrity: sha512-wH590V9VNgYH9g3lH9wWjTrUoKsjLF6sGLjhR4sH1LWpLmCOH0Zf7PukhDA8BiS7KHe4oPNkcTHqYkj7SOGUOw==}
@@ -7421,6 +7432,8 @@ snapshots:
   uc.micro@2.1.0: {}
 
   undici-types@8.3.0: {}
+
+  undraw-svg@2.0.0: {}
 
   unicorn-magic@0.4.0: {}
 
