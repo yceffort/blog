@@ -3,7 +3,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
-import {useEffect, useState, type ReactNode} from 'react'
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+  type RefObject,
+} from 'react'
 
 import {SiteConfig} from '@/config'
 import {useLocale} from '@/hooks/useLocale'
@@ -115,8 +121,60 @@ function HeaderNav() {
   )
 }
 
+// 모바일에서 아래로 스크롤하면 헤더를 숨기고, 위로 스크롤하거나 화면을 탭하면 다시 보인다
+const HIDE_AFTER = 80
+const DIRECTION_THRESHOLD = 8
+
+function useHideHeaderOnScroll(headerRef: RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    const header = headerRef.current
+    if (!header) {
+      return undefined
+    }
+
+    let lastY = window.scrollY
+    let hidden = false
+
+    const setHidden = (next: boolean) => {
+      if (hidden === next) {
+        return
+      }
+      hidden = next
+      header.dataset.hidden = next ? 'true' : 'false'
+    }
+
+    const onScroll = () => {
+      const y = window.scrollY
+      const delta = y - lastY
+      if (y <= 0) {
+        setHidden(false)
+        lastY = y
+        return
+      }
+      if (Math.abs(delta) < DIRECTION_THRESHOLD) {
+        return
+      }
+      setHidden(delta > 0 && y > HIDE_AFTER)
+      lastY = y
+    }
+
+    const onClick = () => {
+      setHidden(false)
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true})
+    window.addEventListener('click', onClick)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('click', onClick)
+    }
+  }, [headerRef])
+}
+
 function Header({enSlugs}: {enSlugs: string[]}) {
   const [tweaksOpen, setTweaksOpen] = useState(false)
+  const headerRef = useRef<HTMLElement>(null)
+  useHideHeaderOnScroll(headerRef)
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -130,7 +188,7 @@ function Header({enSlugs}: {enSlugs: string[]}) {
 
   return (
     <>
-      <header className="site-header">
+      <header ref={headerRef} className="site-header">
         <div className="site-header-inner">
           <HeaderLogo />
           <div className="header-right">
