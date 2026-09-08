@@ -11,6 +11,7 @@ thumbnail: /thumbnails/2026/05/use-client-deep-dive.png
 series: Directive Deep Dive
 seriesOrder: 1
 art:
+  undraw: web-app
   layout: rings
   hue: violet
   tone: dark

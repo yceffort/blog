@@ -11,6 +11,7 @@ thumbnail: /thumbnails/2026/05/use-cache-deep-dive.png
 series: Directive Deep Dive
 seriesOrder: 3
 art:
+  undraw: database-tables
   layout: rings
   hue: violet
   tone: dark

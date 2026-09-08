@@ -6,6 +6,7 @@ published: true
 date: 2026-07-22 12:00:00
 description: '🙇🏻‍♂️'
 art:
+  undraw: launch-day
   layout: contours
   hue: warm
   tone: light

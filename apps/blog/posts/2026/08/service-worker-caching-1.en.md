@@ -12,6 +12,7 @@ thumbnail: /thumbnails/2026/08/service-worker-caching-1.png
 series: 'Service Worker Caching Deep Dive'
 seriesOrder: 1
 art:
+  undraw: firewall
   layout: bands
   hue: cyan
   tone: light

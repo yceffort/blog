@@ -11,6 +11,8 @@ published: false
 date: 2026-09-06 18:00:00
 description: 'markdownlint-cli2를 Rust로 다시 만들어 12일 만에 결과 264,114건이 바이트 단위로 같아졌다. 규칙 53개를 옮기는 데는 이틀이 걸렸고 나머지 열흘은 같다는 것을 증명하는 데 썼다. 그 과정에서 37배 빠른 파서를 버렸고, 스펙대로 고친 코드를 되돌렸고, 적대 리뷰 1,600회에서 11건이 더 나왔다. Bun의 Rust 포팅과 같은 레시피를 오라클 없이 따라가면 무엇이 달라지는지에 관한 기록이다.'
 thumbnail: /thumbnails/2026/09/porting-markdownlint-cli2-to-rust.png
+art:
+  undraw: algorithm-execution
 ---
 
 ## Table of Contents

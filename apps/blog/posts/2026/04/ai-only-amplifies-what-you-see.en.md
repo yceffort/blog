@@ -11,6 +11,7 @@ published: true
 date: 2026-04-20 12:00:00
 description: "I'm definitely coding faster, but why are my codebase and skills staying the same? Examining the gap between perceived and proven benefits."
 art:
+  undraw: growth-chart
   layout: bauhaus
   hue: slate
   tone: light

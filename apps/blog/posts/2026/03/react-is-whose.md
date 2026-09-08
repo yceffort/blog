@@ -13,6 +13,7 @@ thumbnail: '/thumbnails/2026/03/react-is-whose.png'
 series: 'Next.js의 현주소'
 seriesOrder: 3
 art:
+  undraw: guidelines
   layout: bands
   hue: violet
   tone: light

@@ -15,9 +15,8 @@ thumbnail: /thumbnails/2026/08/og-scraping-server-1.png
 series: 'OG Scraping Server Design Notes'
 seriesOrder: 1
 art:
-  scene: 'Rows of identical sealed envelopes stacked neatly, one envelope torn open revealing a mismatched broken wax seal inside'
-  composition: pattern
-  layout: bands
+  undraw: local-server
+  layout: codePanel
   hue: cyan
   tone: light
   hero: 'P95 1초 미만'

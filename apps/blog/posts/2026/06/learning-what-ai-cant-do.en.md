@@ -13,6 +13,7 @@ series: 'Judgment in the AI Era'
 seriesOrder: 3
 thumbnail: /thumbnails/2026/06/learning-what-ai-cant-do.png
 art:
+  undraw: open-book
   layout: glyph
   hue: violet
   tone: dark

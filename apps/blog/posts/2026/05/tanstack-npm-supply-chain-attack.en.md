@@ -11,6 +11,7 @@ date: 2026-05-16 12:00:00
 description: 'Analysis of the @tanstack/* supply chain incident. The risks of pull_request_target, GitHub Actions cache, and OIDC trusted publishers, and how to defend against them.'
 thumbnail: /thumbnails/2026/05/tanstack-npm-supply-chain-attack.png
 art:
+  undraw: safe
   layout: stripes
   hue: rose
   tone: dark

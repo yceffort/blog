@@ -12,6 +12,7 @@ description: 'Hey Edge Middleware, how have you been?'
 series: 'The State of Next.js'
 seriesOrder: 1
 art:
+  undraw: going-downwards
   layout: bands
   hue: blue
   tone: dark

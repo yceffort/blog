@@ -12,8 +12,7 @@ thumbnail: /thumbnails/2026/08/service-worker-caching-3.png
 series: '서비스 워커 캐싱 딥다이브'
 seriesOrder: 3
 art:
-  scene: 'A single glass jar sits nearly empty on a vast table, while a stopwatch beside it drips molten wax through a tiny funnel.'
-  composition: vast
+  undraw: data-transfer
   layout: gridChart
   hue: cyan
   tone: light

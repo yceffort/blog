@@ -12,6 +12,7 @@ date: 2026-05-15 02:00:00
 description: 'Bun moved roughly 960,000 lines from Zig to Rust in six days using Claude Code. The meaning here is not code quality but OSS governance and resource asymmetry.'
 thumbnail: /thumbnails/2026/05/bun-rust-rewrite-real-story.png
 art:
+  undraw: ai-code-generation
   layout: stripes
   hue: rose
   tone: dark

@@ -13,7 +13,8 @@ thumbnail: /thumbnails/2026/08/k8s-for-frontend-4.png
 series: 'Kubernetes for Frontend Developers'
 seriesOrder: 4
 art:
-  layout: bands
+  undraw: server-failure
+  layout: halftone
   hue: blue
   tone: dark
   hero: 'CrashLoopBackOff'

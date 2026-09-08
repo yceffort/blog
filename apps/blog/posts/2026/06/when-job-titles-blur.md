@@ -13,6 +13,7 @@ series: 'AI 시대의 판단'
 seriesOrder: 2
 thumbnail: /thumbnails/2026/06/when-job-titles-blur.png
 art:
+  undraw: hr-presentation
   layout: bauhaus
   hue: slate
   tone: light

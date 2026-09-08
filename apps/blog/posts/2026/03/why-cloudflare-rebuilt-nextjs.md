@@ -12,6 +12,7 @@ description: 'vinext가 던진 질문은?'
 series: 'Next.js의 현주소'
 seriesOrder: 2
 art:
+  undraw: server-cluster
   layout: bands
   hue: blue
   tone: light

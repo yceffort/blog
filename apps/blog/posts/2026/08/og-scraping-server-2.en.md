@@ -13,8 +13,7 @@ thumbnail: /thumbnails/2026/08/og-scraping-server-2.png
 series: 'OG Scraping Server Design Notes'
 seriesOrder: 2
 art:
-  scene: 'A padlocked front gate stands wide open, while a tiny unlocked side door lets a paper airplane slip through the wall behind it.'
-  composition: diagonal
+  undraw: security-on
   layout: stripes
   hue: rose
   tone: dark

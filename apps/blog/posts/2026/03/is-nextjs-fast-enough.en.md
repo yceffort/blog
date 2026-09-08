@@ -13,6 +13,7 @@ thumbnail: '/thumbnails/2026/03/is-nextjs-fast-enough.png'
 series: 'The State of Next.js'
 seriesOrder: 4
 art:
+  undraw: app-benchmarks
   layout: gridChart
   hue: warm
   tone: light

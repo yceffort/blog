@@ -11,6 +11,7 @@ date: 2026-05-09 12:54:08
 description: 'A good package has to be user-friendly not just in features, but in dependencies, version bumps, compatibility, and release policy.'
 thumbnail: /thumbnails/2026/05/good-package-for-long-term-users.png
 art:
+  undraw: static-assets
   layout: rings
   hue: blue
   tone: light

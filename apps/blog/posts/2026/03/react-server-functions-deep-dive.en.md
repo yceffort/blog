@@ -11,6 +11,7 @@ thumbnail: /thumbnails/2026/03/react-server-functions-deep-dive.png
 series: Directive Deep Dive
 seriesOrder: 2
 art:
+  undraw: code-deployed
   layout: codePanel
   hue: violet
   tone: dark

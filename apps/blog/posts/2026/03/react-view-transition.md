@@ -8,6 +8,7 @@ published: true
 date: 2026-03-02 10:45:38
 description: 'View Transition API를 React가 감싸면 어떻게 되는가'
 art:
+  undraw: zoom-in
   layout: rings
   hue: violet
   tone: light

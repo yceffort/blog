@@ -8,6 +8,7 @@ published: true
 date: 2026-03-02 10:45:38
 description: 'What happens when React wraps the View Transition API'
 art:
+  undraw: zoom-in
   layout: rings
   hue: violet
   tone: light

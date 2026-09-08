@@ -16,9 +16,8 @@ slide: og-scraping-server-nodejs-1
 series: 'OG 스크래핑 서버 설계 노트'
 seriesOrder: 1
 art:
-  scene: 'Rows of identical sealed envelopes stacked neatly, one envelope torn open revealing a mismatched broken wax seal inside'
-  composition: pattern
-  layout: bands
+  undraw: local-server
+  layout: codePanel
   hue: cyan
   tone: light
   hero: 'P95 1초 미만'

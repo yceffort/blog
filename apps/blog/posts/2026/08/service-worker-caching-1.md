@@ -12,6 +12,7 @@ thumbnail: /thumbnails/2026/08/service-worker-caching-1.png
 series: '서비스 워커 캐싱 딥다이브'
 seriesOrder: 1
 art:
+  undraw: firewall
   layout: bands
   hue: cyan
   tone: light

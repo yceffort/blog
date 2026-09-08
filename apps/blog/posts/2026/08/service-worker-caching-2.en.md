@@ -12,9 +12,8 @@ thumbnail: /thumbnails/2026/08/service-worker-caching-2.png
 series: 'Service Worker Caching Deep Dive'
 seriesOrder: 2
 art:
-  scene: 'a paper airplane flying through an open window into a stormy sky, leaving a glowing trail of small photographs behind it'
-  composition: diagonal
-  layout: bands
+  undraw: cloud-files
+  layout: steps
   hue: cyan
   tone: dark
   hero: '634ms → 525ms'

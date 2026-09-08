@@ -12,6 +12,7 @@ series: 디렉티브 딥다이브
 seriesOrder: 1
 slide: use-client-deep-dive
 art:
+  undraw: web-app
   layout: rings
   hue: violet
   tone: dark

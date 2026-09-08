@@ -13,6 +13,7 @@ thumbnail: /thumbnails/2026/08/k8s-for-frontend-5.png
 series: '프론트엔드 개발자가 알아야 할 쿠버네티스'
 seriesOrder: 5
 art:
+  undraw: data-trends
   layout: gridChart
   hue: blue
   tone: dark

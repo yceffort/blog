@@ -13,7 +13,8 @@ thumbnail: /thumbnails/2026/08/nodejs-k8s-pod-sizing.png
 series: '프론트엔드 개발자가 알아야 할 쿠버네티스'
 seriesOrder: 6
 art:
-  layout: gridChart
+  undraw: server-status
+  layout: steps
   hue: warm
   tone: dark
   hero: '201MB → 593MB'

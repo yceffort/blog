@@ -8,6 +8,7 @@ published: true
 date: 2026-02-27 10:00:00
 description: 'A preview of section 5.2 (Pitfalls of the vm Module) from the upcoming Node.js Deep Dive book.'
 art:
+  undraw: dev-environment
   layout: rings
   hue: violet
   tone: dark

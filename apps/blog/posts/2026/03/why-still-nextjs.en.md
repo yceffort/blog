@@ -13,6 +13,7 @@ thumbnail: /thumbnails/2026/03/why-still-nextjs.png
 series: 'The State of Next.js'
 seriesOrder: 5
 art:
+  undraw: building
   layout: columns
   hue: slate
   tone: light

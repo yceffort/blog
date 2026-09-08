@@ -13,6 +13,7 @@ series: 'Judgment in the AI Era'
 seriesOrder: 2
 thumbnail: /thumbnails/2026/06/when-job-titles-blur.png
 art:
+  undraw: hr-presentation
   layout: bauhaus
   hue: slate
   tone: light
