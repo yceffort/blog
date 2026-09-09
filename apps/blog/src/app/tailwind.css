@@ -1308,7 +1308,7 @@ body[data-minimal='true'] .hero-title .accent {
 .reading-progress-fill {
   stroke: var(--primary);
   stroke-dasharray: 100.53;
-  stroke-dashoffset: calc(100.53 - (100.53 * var(--progress, 0) / 100));
+  stroke-dashoffset: calc(100.53px - (100.53px * var(--progress, 0) / 100));
   transition: stroke-dashoffset 120ms linear;
 }
 .reading-progress-num {
