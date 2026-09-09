@@ -936,6 +936,12 @@ body[data-minimal='true'] .hero-title .accent {
   align-items: center;
   gap: 8px;
 }
+.post-row .series {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink-3);
+}
 .post-row-tags {
   display: flex;
   flex-wrap: wrap;
@@ -1620,13 +1626,19 @@ body[data-minimal='true'] .hero-title .accent {
   border-left: 3px solid var(--primary);
   border-radius: 0 10px 10px 0;
   background: color-mix(in oklab, var(--primary) 6%, var(--surface));
-  font-family: var(--font-serif), serif;
   font-size: 17px;
-  font-style: italic;
+  font-style: normal;
   color: var(--ink);
 }
 .post-article blockquote p {
   margin: 0;
+}
+.post-article blockquote p + p {
+  margin-top: 12px;
+}
+.post-article blockquote p:first-of-type::before,
+.post-article blockquote p:last-of-type::after {
+  content: none;
 }
 .post-article a {
   text-decoration: underline;
