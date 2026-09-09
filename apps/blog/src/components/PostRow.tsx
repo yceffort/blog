@@ -23,6 +23,7 @@ export default function PostRow({
       tags,
       thumbnail,
       series,
+      seriesOrder,
       published,
     },
     readingTime,
@@ -76,7 +77,13 @@ export default function PostRow({
 
       <div className="post-row-body">
         <div className="post-row-head">
-          {series && <span className="series">◆ {series}</span>}
+          {series && (
+            <span className="series">
+              ◆ {series}
+              {seriesOrder != null &&
+                ` · ${pathPrefix ? `Part ${seriesOrder}` : `${seriesOrder}편`}`}
+            </span>
+          )}
           <ViewTransition name={`${transitionName}-tags`}>
             <div className="post-row-tags">
               {tags.slice(0, 3).map((tag) => (
