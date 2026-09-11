@@ -20,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Detect added posts
+      - name: Detect new or newly published posts
         id: added
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
@@ -33,7 +33,17 @@ jobs:
             if [ "$base" = "0000000000000000000000000000000000000000" ]; then
               base="HEAD^"
             fi
-            files=$(git diff --name-only --diff-filter=A "$base" HEAD -- 'apps/blog/posts/**/*.md' 'apps/blog/series/*.md' | grep -v '\.en\.md$' || true)
+            added=$(git diff --name-only --diff-filter=A "$base" HEAD -- 'apps/blog/posts/**/*.md' 'apps/blog/series/*.md' | grep -v '\.en\.md$' || true)
+            # A draft committed with `published: false` and flipped to true later
+            # is a modification (M), not an addition, so --diff-filter=A misses
+            # it and the post goes out without a notification.
+            flipped=$(git diff --name-only --diff-filter=M "$base" HEAD -- 'apps/blog/posts/**/*.md' | grep -v '\.en\.md$' | while read -r f; do
+              if git diff -U0 "$base" HEAD -- "$f" | grep -q '^-published: false' \
+                && git diff -U0 "$base" HEAD -- "$f" | grep -q '^+published: true'; then
+                echo "$f"
+              fi
+            done)
+            files=$(printf '%s\n%s\n' "$added" "$flipped" | sed '/^$/d')
           fi
           echo "files<<EOF" >> "$GITHUB_OUTPUT"
           echo "$files" >> "$GITHUB_OUTPUT"
