@@ -1,5 +1,5 @@
 ---
-title: 'typescript@7을 설치하면 벌어지는 일들: 블로그 모노레포 마이그레이션 기록'
+title: '<em>typescript@7</em>을 설치하면 벌어지는 일들: 블로그 모노레포 마이그레이션 기록'
 tags:
   - typescript
   - oxc
