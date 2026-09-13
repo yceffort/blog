@@ -1,0 +1,179 @@
+'use client'
+
+import Image from 'next/image'
+import {useState, useCallback, useEffect, useRef} from 'react'
+import {createPortal} from 'react-dom'
+
+import * as imageZoomStyles from './ImageZoom.styles'
+interface ImageZoomProps {
+  src: string
+  alt: string
+  width: number
+  height: number
+  isExternal?: boolean
+}
+export default function ImageZoom({
+  src,
+  alt,
+  width,
+  height,
+  isExternal,
+}: ImageZoomProps) {
+  const [isZoomed, setIsZoomed] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const imageRef = useRef<HTMLButtonElement>(null)
+  const [imageRect, setImageRect] = useState<DOMRect | null>(null)
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true)
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current)
+      }
+    }
+  }, [])
+  const handleOpen = useCallback(() => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current)
+      closeTimeoutRef.current = null
+    }
+    if (imageRef.current) {
+      setImageRect(imageRef.current.getBoundingClientRect())
+    }
+    setIsZoomed(true)
+    requestAnimationFrame(() => {
+      setIsAnimating(true)
+    })
+  }, [])
+  const handleClose = useCallback(() => {
+    setIsAnimating(false)
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsZoomed(false)
+      setImageRect(null)
+      closeTimeoutRef.current = null
+    }, 300)
+  }, [])
+  useEffect(() => {
+    if (!isZoomed) {
+      return undefined
+    }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleClose()
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = ''
+    }
+  }, [isZoomed, handleClose])
+  const calculateTransform = () => {
+    if (!imageRect) {
+      return {}
+    }
+    const viewportWidth = window.innerWidth
+    const viewportHeight = window.innerHeight
+    const padding = 40
+    const maxWidth = viewportWidth - padding * 2
+    const maxHeight = viewportHeight - padding * 2
+    const aspectRatio = width / height
+    let targetWidth = maxWidth
+    let targetHeight = targetWidth / aspectRatio
+    if (targetHeight > maxHeight) {
+      targetHeight = maxHeight
+      targetWidth = targetHeight * aspectRatio
+    }
+    const scale = targetWidth / imageRect.width
+    const imageCenterX = imageRect.left + imageRect.width / 2
+    const imageCenterY = imageRect.top + imageRect.height / 2
+    const viewportCenterX = viewportWidth / 2
+    const viewportCenterY = viewportHeight / 2
+    const translateX = viewportCenterX - imageCenterX
+    const translateY = viewportCenterY - imageCenterY
+    return {
+      transform: isAnimating
+        ? `translate(${translateX}px, ${translateY}px) scale(${scale})`
+        : 'translate(0, 0) scale(1)',
+    }
+  }
+  const ImageComponent = isExternal ? (
+    // oxlint-disable-next-line next/no-img-element -- 외부 이미지는 next/image 최적화 대상이 아니다
+    <img src={src} alt={alt} width={width} height={height} />
+  ) : (
+    <Image
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      placeholder="empty"
+      crossOrigin="anonymous"
+    />
+  )
+  return (
+    <>
+      <button
+        type="button"
+        ref={imageRef}
+        onClick={handleOpen}
+        className={imageZoomStyles.button}
+        aria-label="이미지 확대"
+      >
+        {ImageComponent}
+      </button>
+
+      {mounted &&
+        isZoomed &&
+        createPortal(
+          <div
+            className={imageZoomStyles.div}
+            role="presentation"
+            onClick={handleClose}
+          >
+            <div
+              className={`${imageZoomStyles.div4} ${isAnimating ? imageZoomStyles.div2 : imageZoomStyles.div3}`}
+            />
+
+            {imageRect && (
+              <div
+                className={imageZoomStyles.div5}
+                style={{
+                  left: imageRect.left,
+                  top: imageRect.top,
+                  width: imageRect.width,
+                  height: imageRect.height,
+                  ...calculateTransform(),
+                }}
+              >
+                <div className={imageZoomStyles.div6}>{ImageComponent}</div>
+              </div>
+            )}
+
+            <button
+              className={`${imageZoomStyles.button3} ${isAnimating ? imageZoomStyles.button2 : imageZoomStyles.div3}`}
+              onClick={handleClose}
+              aria-label="Close"
+            >
+              <svg
+                className={imageZoomStyles.svg}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>,
+          document.body,
+        )}
+    </>
+  )
+}

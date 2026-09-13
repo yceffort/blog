@@ -1,0 +1,1135 @@
+{
+  "metadata": {
+    "startedAt": "2026-09-13T08:30:58.410Z",
+    "settings": {
+      "rounds": 5,
+      "cpuSlowdown": 20,
+      "latencyMs": 400,
+      "downloadKbps": 400,
+      "uploadKbps": 400,
+      "settleMs": 5000,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "routes": ["/", "/2026/08/k8s-for-frontend-1"]
+    },
+    "variants": {
+      "before": "http://localhost:3103",
+      "after": "http://localhost:3100"
+    },
+    "host": {
+      "platform": "darwin",
+      "arch": "arm64",
+      "cpu": "Apple M5"
+    },
+    "browserExecutable": "/Users/yceffort/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+    "headless": true,
+    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Mobile Safari/537.36",
+    "blockedUrls": [
+      "*://*.google-analytics.com/*",
+      "*://*.googletagmanager.com/*"
+    ],
+    "notes": [
+      "Production servers; each trial launches a fresh Chrome with an isolated profile.",
+      "Server routes/assets are warmed once; browser HTTP cache is disabled and cleared every trial.",
+      "CPU and network throttling use Chrome DevTools Protocol, not simulated Lighthouse throttling.",
+      "Animations and canvas rendering run normally. Tracing is enabled equally for both variants.",
+      "All metrics stop five seconds after load, document.fonts.ready, and network idle.",
+      "loadBlockingMs sums long-task time beyond 50 ms from FCP to the measurement end; it is not Lighthouse TBT.",
+      "LCP/CLS are lab observations within this window, not field Core Web Vitals or an INP measurement.",
+      "Main-thread Performance counters include the same observation window; throttling is relative to this host CPU."
+    ],
+    "before": {
+      "buildId": "WTen4F2u62be-iCsxkXSf",
+      "commit": "7c4fa58e83afe3ee3ab03e95869a454c9972bb65",
+      "workingTree": "M apps/blog/next.config.ts\n?? node_modules\n?? packages/shared/node_modules"
+    },
+    "after": {
+      "buildId": "XT98exsOyijeIQUK65BLx",
+      "commit": "7c4fa58e83afe3ee3ab03e95869a454c9972bb65",
+      "workingTree": "M AGENTS.md\n M apps/blog/package.json\n M apps/blog/postcss.config.js\n M apps/blog/src/app/[year]/[...slug]/layout.tsx\n M apps/blog/src/app/[year]/[...slug]/loading.tsx\n M apps/blog/src/app/[year]/[...slug]/page.tsx\n M apps/blog/src/app/about/page.tsx\n M apps/blog/src/app/en/[year]/[...slug]/loading.tsx\n M apps/blog/src/app/en/[year]/[...slug]/page.tsx\n M apps/blog/src/app/en/layout.tsx\n M apps/blog/src/app/en/page.tsx\n M apps/blog/src/app/en/pages/[id]/page.tsx\n M apps/blog/src/app/layout.tsx\n M apps/blog/src/app/not-found.tsx\n M apps/blog/src/app/offline/page.tsx\n M apps/blog/src/app/page.tsx\n M apps/blog/src/app/pages/[id]/page.tsx\n M apps/blog/src/app/resume/page.tsx\n M apps/blog/src/app/series/[slug]/page.tsx\n M apps/blog/src/app/series/page.tsx\n M apps/blog/src/app/tags/[tag]/pages/[id]/page.tsx\n D apps/blog/src/app/tailwind.css\n D apps/blog/src/components/AmbientEffects.tsx\n D apps/blog/src/components/AnnouncementBanner.tsx\n D apps/blog/src/components/BotTracker.tsx\n D apps/blog/src/components/CodeBlock.tsx\n D apps/blog/src/components/Footer.tsx\n D apps/blog/src/components/GoogleAnalyticsPageViewTracker.tsx\n D apps/blog/src/components/GoogleAnalyticsWebVitalsTracker.tsx\n D apps/blog/src/components/HeroE.tsx\n D apps/blog/src/components/ImageZoom.tsx\n D apps/blog/src/components/InternalNavTracker.tsx\n D apps/blog/src/components/LanguageSwitch.tsx\n D apps/blog/src/components/LayoutWrapper.tsx\n D apps/blog/src/components/LiveDemo.tsx\n D apps/blog/src/components/MDXComponents.tsx\n D apps/blog/src/components/Mermaid.tsx\n D apps/blog/src/components/MobileNav.tsx\n D apps/blog/src/components/NavigationDirection.tsx\n D apps/blog/src/components/OutboundLinkTracker.tsx\n D apps/blog/src/components/PopularSeriesCard.tsx\n D apps/blog/src/components/PostArticle.tsx\n D apps/blog/src/components/PostCard.tsx\n D apps/blog/src/components/PostRow.tsx\n D apps/blog/src/components/ProfileImage.tsx\n D apps/blog/src/components/PullToRefresh.tsx\n D apps/blog/src/components/PushAlertTooltip.tsx\n D apps/blog/src/components/RecentRow.tsx\n D apps/blog/src/components/RelatedPosts.tsx\n D apps/blog/src/components/ScrollTop.tsx\n D apps/blog/src/components/SectionContainer.tsx\n D apps/blog/src/components/SeriesNavigation.tsx\n D apps/blog/src/components/SeriesPrevNext.tsx\n D apps/blog/src/components/SeriesRow.tsx\n D apps/blog/src/components/ServiceWorkerRegistration.tsx\n D apps/blog/src/components/SetHtmlLang.tsx\n D apps/blog/src/components/SiteSearch.tsx\n D apps/blog/src/components/SubscribeCta.tsx\n D apps/blog/src/components/TableOfContents.tsx\n D apps/blog/src/components/Tag.tsx\n D apps/blog/src/components/TweaksPanel.tsx\n D apps/blog/src/components/about-fx/HeroFxA.tsx\n D apps/blog/src/components/about-fx/HeroFxB.tsx\n M apps/blog/src/components/about/AboutHero.tsx\n M apps/blog/src/components/about/AboutIntro.tsx\n M apps/blog/src/components/about/ProjectTags.tsx\n M apps/blog/src/components/icons/index.tsx\n D apps/blog/src/components/layouts/ListLayout.tsx\n D apps/blog/src/components/layouts/PageNumber.tsx\n D apps/blog/src/components/layouts/Post/math.tsx\n M apps/blog/src/utils/Markdown.ts\n M apps/blog/stylelint.config.js\n D apps/blog/tailwind.config.js\n M apps/research/src/components/MobileNav.tsx\n M apps/research/src/components/icons/index.tsx\n M packages/shared/src/components/MobileNav.tsx\n M packages/shared/src/components/SocialIcon.tsx\n M pnpm-lock.yaml\n?? apps/blog/.babelrc.json\n?? apps/blog/scripts/check-page-style-parity.mjs\n?? apps/blog/scripts/check-style-parity.mjs\n?? apps/blog/scripts/compare-performance.mjs\n?? apps/blog/scripts/postcss-imports.cjs\n?? apps/blog/scripts/postcss-optimize.cjs\n?? apps/blog/src/app/archive/archive.css\n?? apps/blog/src/app/globals.css\n?? apps/blog/src/app/not-found.styles.ts\n?? apps/blog/src/app/tags/tags.css\n?? apps/blog/src/components/about/HeroFxA.tsx\n?? apps/blog/src/components/about/HeroFxB.tsx\n?? apps/blog/src/components/about/about.css\n?? apps/blog/src/components/analytics/\n?? apps/blog/src/components/home/\n?? apps/blog/src/components/icons/SocialIcon.styles.ts\n?? apps/blog/src/components/layout/\n?? apps/blog/src/components/post/\n?? apps/blog/src/components/pwa/\n?? apps/blog/src/components/search/\n?? apps/blog/src/components/series/\n?? apps/blog/src/components/settings/\n?? apps/blog/src/styles/\n?? apps/blog/tests/\n?? apps/research/research/cdn-and-http-cache.md"
+    },
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/153.0.8010.12",
+      "revision": "@971a7443b0c9b0a9b2860529b33331b76077ec62",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+      "jsVersion": "15.3.76.4"
+    },
+    "finishedAt": "2026-09-13T08:41:14.235Z"
+  },
+  "summary": [
+    {
+      "route": "/",
+      "variant": "before",
+      "runs": 5,
+      "values": {
+        "fcpMs": {
+          "median": 4796,
+          "min": 4776,
+          "max": 4816
+        },
+        "lcpMs": {
+          "median": 5748,
+          "min": 5740,
+          "max": 5780
+        },
+        "cls": {
+          "median": 0.0025214955910319477,
+          "min": 0.0025214955910319477,
+          "max": 0.0025214955910319477
+        },
+        "loadMs": {
+          "median": 11544.400000035763,
+          "min": 11543.200000047684,
+          "max": 11589.5
+        },
+        "taskMs": {
+          "median": 8497.785,
+          "min": 8298.402,
+          "max": 10614.327
+        },
+        "scriptMs": {
+          "median": 609.325,
+          "min": 583.954,
+          "max": 660.246
+        },
+        "styleMs": {
+          "median": 680.21,
+          "min": 650.0939999999999,
+          "max": 958.001
+        },
+        "layoutMs": {
+          "median": 580.477,
+          "min": 572.247,
+          "max": 623.638
+        },
+        "loadBlockingMs": {
+          "median": 330,
+          "min": 291,
+          "max": 576
+        },
+        "transferBytes": {
+          "median": 828342,
+          "min": 828336,
+          "max": 828349
+        },
+        "cssBytes": {
+          "median": 28844,
+          "min": 28839,
+          "max": 29229
+        },
+        "jsBytes": {
+          "median": 203700,
+          "min": 203700,
+          "max": 203700
+        },
+        "requestCount": {
+          "median": 40,
+          "min": 40,
+          "max": 40
+        }
+      }
+    },
+    {
+      "route": "/",
+      "variant": "after",
+      "runs": 5,
+      "values": {
+        "fcpMs": {
+          "median": 4596,
+          "min": 4580,
+          "max": 4668
+        },
+        "lcpMs": {
+          "median": 5572,
+          "min": 5560,
+          "max": 5580
+        },
+        "cls": {
+          "median": 0.0025214955910319477,
+          "min": 0.0025214955910319477,
+          "max": 0.003658543636350809
+        },
+        "loadMs": {
+          "median": 11577.800000011921,
+          "min": 11571.300000011921,
+          "max": 11586
+        },
+        "taskMs": {
+          "median": 8716.829,
+          "min": 8610.446,
+          "max": 10716.926000000001
+        },
+        "scriptMs": {
+          "median": 615.597,
+          "min": 599.5899999999999,
+          "max": 638.181
+        },
+        "styleMs": {
+          "median": 660.965,
+          "min": 632.5600000000001,
+          "max": 981.699
+        },
+        "layoutMs": {
+          "median": 608.692,
+          "min": 606.437,
+          "max": 638.2139999999999
+        },
+        "loadBlockingMs": {
+          "median": 334,
+          "min": 324,
+          "max": 341
+        },
+        "transferBytes": {
+          "median": 830921,
+          "min": 830906,
+          "max": 830927
+        },
+        "cssBytes": {
+          "median": 26867,
+          "min": 26862,
+          "max": 27248
+        },
+        "jsBytes": {
+          "median": 207371,
+          "min": 207371,
+          "max": 207371
+        },
+        "requestCount": {
+          "median": 41,
+          "min": 41,
+          "max": 41
+        }
+      }
+    },
+    {
+      "route": "/2026/08/k8s-for-frontend-1",
+      "variant": "before",
+      "runs": 5,
+      "values": {
+        "fcpMs": {
+          "median": 5928,
+          "min": 5900,
+          "max": 5932
+        },
+        "lcpMs": {
+          "median": 8640,
+          "min": 8612,
+          "max": 8680
+        },
+        "cls": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "loadMs": {
+          "median": 11277,
+          "min": 11273,
+          "max": 11302.800000011921
+        },
+        "taskMs": {
+          "median": 11103.548,
+          "min": 10715.315,
+          "max": 12053.429000000002
+        },
+        "scriptMs": {
+          "median": 836.822,
+          "min": 813.77,
+          "max": 850.525
+        },
+        "styleMs": {
+          "median": 1187.607,
+          "min": 1124.136,
+          "max": 1282.046
+        },
+        "layoutMs": {
+          "median": 2137.482,
+          "min": 2129.759,
+          "max": 2150.161
+        },
+        "loadBlockingMs": {
+          "median": 2115,
+          "min": 2100,
+          "max": 2202
+        },
+        "transferBytes": {
+          "median": 1157743,
+          "min": 1157729,
+          "max": 1157744
+        },
+        "cssBytes": {
+          "median": 28835,
+          "min": 28831,
+          "max": 28841
+        },
+        "jsBytes": {
+          "median": 417421,
+          "min": 417421,
+          "max": 417421
+        },
+        "requestCount": {
+          "median": 67,
+          "min": 67,
+          "max": 67
+        }
+      }
+    },
+    {
+      "route": "/2026/08/k8s-for-frontend-1",
+      "variant": "after",
+      "runs": 5,
+      "values": {
+        "fcpMs": {
+          "median": 5724,
+          "min": 5660,
+          "max": 5736
+        },
+        "lcpMs": {
+          "median": 8480,
+          "min": 8456,
+          "max": 8576
+        },
+        "cls": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "loadMs": {
+          "median": 11392.200000047684,
+          "min": 11360.5,
+          "max": 11409
+        },
+        "taskMs": {
+          "median": 11393.376999999999,
+          "min": 11225.252999999999,
+          "max": 15054.982
+        },
+        "scriptMs": {
+          "median": 882.226,
+          "min": 823.14,
+          "max": 949.658
+        },
+        "styleMs": {
+          "median": 1244.981,
+          "min": 1157.6219999999998,
+          "max": 1737.321
+        },
+        "layoutMs": {
+          "median": 2159.497,
+          "min": 2133.2810000000004,
+          "max": 2271.2439999999997
+        },
+        "loadBlockingMs": {
+          "median": 2074,
+          "min": 2071,
+          "max": 2345
+        },
+        "transferBytes": {
+          "median": 1164802,
+          "min": 1164794,
+          "max": 1164810
+        },
+        "cssBytes": {
+          "median": 26865,
+          "min": 26859,
+          "max": 26867
+        },
+        "jsBytes": {
+          "median": 422511,
+          "min": 422511,
+          "max": 422511
+        },
+        "requestCount": {
+          "median": 68,
+          "min": 68,
+          "max": 68
+        }
+      }
+    }
+  ],
+  "trials": [
+    {
+      "name": "home-before-1",
+      "variant": "before",
+      "route": "/",
+      "round": 1,
+      "fcpMs": 4776,
+      "lcpMs": 5748,
+      "lcpElement": {
+        "time": 5748,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3103/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.0025214955910319477,
+      "domContentLoadedMs": 9965.300000011921,
+      "loadMs": 11544.400000035763,
+      "observationEndMs": 24480.5,
+      "loadBlockingMs": 291,
+      "longTaskCount": 4,
+      "longTaskMs": 491,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 400
+      },
+      "taskMs": 8497.785,
+      "scriptMs": 583.954,
+      "layoutMs": 605.687,
+      "styleMs": 650.0939999999999,
+      "heapBytes": 5492548,
+      "requestCount": 40,
+      "transferBytes": 828342,
+      "cssBytes": 28839,
+      "jsBytes": 203700,
+      "fontBytes": 237918,
+      "imageBytes": 26924,
+      "trace": "home-before-1.trace.json.gz"
+    },
+    {
+      "name": "home-after-1",
+      "variant": "after",
+      "route": "/",
+      "round": 1,
+      "fcpMs": 4596,
+      "lcpMs": 5576,
+      "lcpElement": {
+        "time": 5576,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3100/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.0025214955910319477,
+      "domContentLoadedMs": 9893.800000011921,
+      "loadMs": 11571.300000011921,
+      "observationEndMs": 24548,
+      "loadBlockingMs": 324,
+      "longTaskCount": 4,
+      "longTaskMs": 524,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 400
+      },
+      "taskMs": 8681.708999999999,
+      "scriptMs": 599.5899999999999,
+      "layoutMs": 609.625,
+      "styleMs": 632.5600000000001,
+      "heapBytes": 5630224,
+      "requestCount": 41,
+      "transferBytes": 830921,
+      "cssBytes": 26868,
+      "jsBytes": 207371,
+      "fontBytes": 237917,
+      "imageBytes": 26926,
+      "trace": "home-after-1.trace.json.gz"
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-after-1",
+      "variant": "after",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 1,
+      "fcpMs": 5736,
+      "lcpMs": 8484,
+      "lcpElement": {
+        "time": 8484,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 5964.599999964237,
+      "loadMs": 11360.5,
+      "observationEndMs": 32508.5,
+      "loadBlockingMs": 2072,
+      "longTaskCount": 8,
+      "longTaskMs": 2472,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 400
+      },
+      "taskMs": 11393.376999999999,
+      "scriptMs": 834.865,
+      "layoutMs": 2176.153,
+      "styleMs": 1244.981,
+      "heapBytes": 11126396,
+      "requestCount": 68,
+      "transferBytes": 1164794,
+      "cssBytes": 26867,
+      "jsBytes": 422511,
+      "fontBytes": 237913,
+      "imageBytes": 1925,
+      "trace": "2026_08_k8s-for-frontend-1-after-1.trace.json.gz"
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-before-1",
+      "variant": "before",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 1,
+      "fcpMs": 5932,
+      "lcpMs": 8644,
+      "lcpElement": {
+        "time": 8644,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 6017.5,
+      "loadMs": 11277,
+      "observationEndMs": 32474.100000023842,
+      "loadBlockingMs": 2101,
+      "longTaskCount": 8,
+      "longTaskMs": 2501,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 11103.548,
+      "scriptMs": 836.822,
+      "layoutMs": 2137.621,
+      "styleMs": 1187.607,
+      "heapBytes": 7953464,
+      "requestCount": 67,
+      "transferBytes": 1157744,
+      "cssBytes": 28836,
+      "jsBytes": 417421,
+      "fontBytes": 237931,
+      "imageBytes": 1925,
+      "trace": "2026_08_k8s-for-frontend-1-before-1.trace.json.gz"
+    },
+    {
+      "name": "home-after-2",
+      "variant": "after",
+      "route": "/",
+      "round": 2,
+      "fcpMs": 4648,
+      "lcpMs": 5580,
+      "lcpElement": {
+        "time": 5580,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3100/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.003658543636350809,
+      "domContentLoadedMs": 9879.399999976158,
+      "loadMs": 11579.199999988079,
+      "observationEndMs": 24612.899999976158,
+      "loadBlockingMs": 330,
+      "longTaskCount": 5,
+      "longTaskMs": 802,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 400
+      },
+      "taskMs": 8716.829,
+      "scriptMs": 629.984,
+      "layoutMs": 607.168,
+      "styleMs": 649.332,
+      "heapBytes": 5638268,
+      "requestCount": 41,
+      "transferBytes": 830927,
+      "cssBytes": 26867,
+      "jsBytes": 207371,
+      "fontBytes": 237926,
+      "imageBytes": 26924,
+      "trace": "home-after-2.trace.json.gz"
+    },
+    {
+      "name": "home-before-2",
+      "variant": "before",
+      "route": "/",
+      "round": 2,
+      "fcpMs": 4796,
+      "lcpMs": 5756,
+      "lcpElement": {
+        "time": 5756,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3103/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.0025214955910319477,
+      "domContentLoadedMs": 9968.600000023842,
+      "loadMs": 11543.200000047684,
+      "observationEndMs": 24394.400000035763,
+      "loadBlockingMs": 331,
+      "longTaskCount": 4,
+      "longTaskMs": 531,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 400
+      },
+      "taskMs": 8523.461000000001,
+      "scriptMs": 609.325,
+      "layoutMs": 572.247,
+      "styleMs": 670.35,
+      "heapBytes": 5483692,
+      "requestCount": 40,
+      "transferBytes": 828349,
+      "cssBytes": 28844,
+      "jsBytes": 203700,
+      "fontBytes": 237920,
+      "imageBytes": 26924,
+      "trace": "home-before-2.trace.json.gz"
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-before-2",
+      "variant": "before",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 2,
+      "fcpMs": 5904,
+      "lcpMs": 8612,
+      "lcpElement": {
+        "time": 8612,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 5999.100000023842,
+      "loadMs": 11273,
+      "observationEndMs": 32516.30000001192,
+      "loadBlockingMs": 2100,
+      "longTaskCount": 8,
+      "longTaskMs": 2500,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 10987.853000000001,
+      "scriptMs": 815.496,
+      "layoutMs": 2133.928,
+      "styleMs": 1155.907,
+      "heapBytes": 9765424,
+      "requestCount": 67,
+      "transferBytes": 1157729,
+      "cssBytes": 28831,
+      "jsBytes": 417421,
+      "fontBytes": 237921,
+      "imageBytes": 1925,
+      "trace": "2026_08_k8s-for-frontend-1-before-2.trace.json.gz"
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-after-2",
+      "variant": "after",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 2,
+      "fcpMs": 5660,
+      "lcpMs": 8460,
+      "lcpElement": {
+        "time": 8460,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 7991,
+      "loadMs": 11392.200000047684,
+      "observationEndMs": 32509.600000023842,
+      "loadBlockingMs": 2074,
+      "longTaskCount": 8,
+      "longTaskMs": 2474,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 11244.123,
+      "scriptMs": 823.14,
+      "layoutMs": 2159.497,
+      "styleMs": 1217.64,
+      "heapBytes": 10531160,
+      "requestCount": 68,
+      "transferBytes": 1164810,
+      "cssBytes": 26859,
+      "jsBytes": 422511,
+      "fontBytes": 237937,
+      "imageBytes": 1925,
+      "trace": "2026_08_k8s-for-frontend-1-after-2.trace.json.gz"
+    },
+    {
+      "name": "home-before-3",
+      "variant": "before",
+      "route": "/",
+      "round": 3,
+      "fcpMs": 4800,
+      "lcpMs": 5780,
+      "lcpElement": {
+        "time": 5780,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3103/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.0025214955910319477,
+      "domContentLoadedMs": 9918,
+      "loadMs": 11543.600000023842,
+      "observationEndMs": 24446.899999976158,
+      "loadBlockingMs": 330,
+      "longTaskCount": 4,
+      "longTaskMs": 530,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 8457.981,
+      "scriptMs": 618.752,
+      "layoutMs": 580.477,
+      "styleMs": 680.21,
+      "heapBytes": 5493584,
+      "requestCount": 40,
+      "transferBytes": 828348,
+      "cssBytes": 29229,
+      "jsBytes": 203700,
+      "fontBytes": 237534,
+      "imageBytes": 26924,
+      "trace": "home-before-3.trace.json.gz"
+    },
+    {
+      "name": "home-after-3",
+      "variant": "after",
+      "route": "/",
+      "round": 3,
+      "fcpMs": 4580,
+      "lcpMs": 5564,
+      "lcpElement": {
+        "time": 5564,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3100/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.0025214955910319477,
+      "domContentLoadedMs": 9873.400000035763,
+      "loadMs": 11575.699999988079,
+      "observationEndMs": 24563.19999998808,
+      "loadBlockingMs": 337,
+      "longTaskCount": 4,
+      "longTaskMs": 537,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 8610.446,
+      "scriptMs": 615.597,
+      "layoutMs": 606.437,
+      "styleMs": 660.965,
+      "heapBytes": 5648068,
+      "requestCount": 41,
+      "transferBytes": 830925,
+      "cssBytes": 26862,
+      "jsBytes": 207371,
+      "fontBytes": 237929,
+      "imageBytes": 26924,
+      "trace": "home-after-3.trace.json.gz"
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-after-3",
+      "variant": "after",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 3,
+      "fcpMs": 5724,
+      "lcpMs": 8456,
+      "lcpElement": {
+        "time": 8456,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 5964.599999964237,
+      "loadMs": 11364.399999976158,
+      "observationEndMs": 32474.599999964237,
+      "loadBlockingMs": 2071,
+      "longTaskCount": 8,
+      "longTaskMs": 2471,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 400
+      },
+      "taskMs": 11225.252999999999,
+      "scriptMs": 887.675,
+      "layoutMs": 2133.2810000000004,
+      "styleMs": 1157.6219999999998,
+      "heapBytes": 8203468,
+      "requestCount": 68,
+      "transferBytes": 1164796,
+      "cssBytes": 26865,
+      "jsBytes": 422511,
+      "fontBytes": 237917,
+      "imageBytes": 1925,
+      "trace": "2026_08_k8s-for-frontend-1-after-3.trace.json.gz"
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-before-3",
+      "variant": "before",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 3,
+      "fcpMs": 5928,
+      "lcpMs": 8624,
+      "lcpElement": {
+        "time": 8624,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 6016.600000023842,
+      "loadMs": 11301.600000023842,
+      "observationEndMs": 31681,
+      "loadBlockingMs": 2142,
+      "longTaskCount": 8,
+      "longTaskMs": 2542,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 10715.315,
+      "scriptMs": 844.2429999999999,
+      "layoutMs": 2137.482,
+      "styleMs": 1124.136,
+      "heapBytes": 8822216,
+      "requestCount": 67,
+      "transferBytes": 1157743,
+      "cssBytes": 28833,
+      "jsBytes": 417421,
+      "fontBytes": 237933,
+      "imageBytes": 1925,
+      "trace": "2026_08_k8s-for-frontend-1-before-3.trace.json.gz"
+    },
+    {
+      "name": "home-after-4",
+      "variant": "after",
+      "route": "/",
+      "round": 4,
+      "fcpMs": 4588,
+      "lcpMs": 5572,
+      "lcpElement": {
+        "time": 5572,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3100/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.0025214955910319477,
+      "domContentLoadedMs": 9880.600000023842,
+      "loadMs": 11577.800000011921,
+      "observationEndMs": 24570.80000001192,
+      "loadBlockingMs": 334,
+      "longTaskCount": 5,
+      "longTaskMs": 584,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 8766.954,
+      "scriptMs": 605.285,
+      "layoutMs": 608.692,
+      "styleMs": 694.154,
+      "heapBytes": 5634984,
+      "requestCount": 41,
+      "transferBytes": 830906,
+      "cssBytes": 26866,
+      "jsBytes": 207371,
+      "fontBytes": 237906,
+      "imageBytes": 26924,
+      "trace": "home-after-4.trace.json.gz"
+    },
+    {
+      "name": "home-before-4",
+      "variant": "before",
+      "route": "/",
+      "round": 4,
+      "fcpMs": 4776,
+      "lcpMs": 5748,
+      "lcpElement": {
+        "time": 5748,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3103/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.0025214955910319477,
+      "domContentLoadedMs": 9977.699999988079,
+      "loadMs": 11546.099999964237,
+      "observationEndMs": 24395.399999976158,
+      "loadBlockingMs": 328,
+      "longTaskCount": 4,
+      "longTaskMs": 528,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 400
+      },
+      "taskMs": 8298.402,
+      "scriptMs": 585.831,
+      "layoutMs": 577.352,
+      "styleMs": 682.3059999999999,
+      "heapBytes": 5494072,
+      "requestCount": 40,
+      "transferBytes": 828336,
+      "cssBytes": 29220,
+      "jsBytes": 203700,
+      "fontBytes": 237531,
+      "imageBytes": 26924,
+      "trace": "home-before-4.trace.json.gz"
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-before-4",
+      "variant": "before",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 4,
+      "fcpMs": 5932,
+      "lcpMs": 8680,
+      "lcpElement": {
+        "time": 8680,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 6024.699999988079,
+      "loadMs": 11302.800000011921,
+      "observationEndMs": 32752,
+      "loadBlockingMs": 2202,
+      "longTaskCount": 8,
+      "longTaskMs": 2602,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 400
+      },
+      "taskMs": 11922.512999999999,
+      "scriptMs": 813.77,
+      "layoutMs": 2150.161,
+      "styleMs": 1227.8439999999998,
+      "heapBytes": 7893040,
+      "requestCount": 67,
+      "transferBytes": 1157743,
+      "cssBytes": 28841,
+      "jsBytes": 417421,
+      "fontBytes": 237925,
+      "imageBytes": 1925,
+      "trace": "2026_08_k8s-for-frontend-1-before-4.trace.json.gz"
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-after-4",
+      "variant": "after",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 4,
+      "fcpMs": 5668,
+      "lcpMs": 8576,
+      "lcpElement": {
+        "time": 8576,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 8064.600000023842,
+      "loadMs": 11409,
+      "observationEndMs": 33293,
+      "loadBlockingMs": 2345,
+      "longTaskCount": 8,
+      "longTaskMs": 2745,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 400
+      },
+      "taskMs": 15054.982,
+      "scriptMs": 949.658,
+      "layoutMs": 2271.2439999999997,
+      "styleMs": 1737.321,
+      "heapBytes": 8022432,
+      "requestCount": 68,
+      "transferBytes": 1164807,
+      "cssBytes": 26867,
+      "jsBytes": 422511,
+      "fontBytes": 237926,
+      "imageBytes": 1925,
+      "trace": "2026_08_k8s-for-frontend-1-after-4.trace.json.gz"
+    },
+    {
+      "name": "home-before-5",
+      "variant": "before",
+      "route": "/",
+      "round": 5,
+      "fcpMs": 4816,
+      "lcpMs": 5740,
+      "lcpElement": {
+        "time": 5740,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3103/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.0025214955910319477,
+      "domContentLoadedMs": 9975.100000023842,
+      "loadMs": 11589.5,
+      "observationEndMs": 24658,
+      "loadBlockingMs": 576,
+      "longTaskCount": 5,
+      "longTaskMs": 826,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 400
+      },
+      "taskMs": 10614.327,
+      "scriptMs": 660.246,
+      "layoutMs": 623.638,
+      "styleMs": 958.001,
+      "heapBytes": 5154080,
+      "requestCount": 40,
+      "transferBytes": 828341,
+      "cssBytes": 28840,
+      "jsBytes": 203700,
+      "fontBytes": 237916,
+      "imageBytes": 26924,
+      "trace": "home-before-5.trace.json.gz"
+    },
+    {
+      "name": "home-after-5",
+      "variant": "after",
+      "route": "/",
+      "round": 5,
+      "fcpMs": 4668,
+      "lcpMs": 5560,
+      "lcpElement": {
+        "time": 5560,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3100/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.0025214955910319477,
+      "domContentLoadedMs": 9876.400000035763,
+      "loadMs": 11586,
+      "observationEndMs": 24649.100000023842,
+      "loadBlockingMs": 341,
+      "longTaskCount": 3,
+      "longTaskMs": 491,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 10716.926000000001,
+      "scriptMs": 638.181,
+      "layoutMs": 638.2139999999999,
+      "styleMs": 981.699,
+      "heapBytes": 5590336,
+      "requestCount": 41,
+      "transferBytes": 830912,
+      "cssBytes": 27248,
+      "jsBytes": 207371,
+      "fontBytes": 237530,
+      "imageBytes": 26924,
+      "trace": "home-after-5.trace.json.gz"
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-after-5",
+      "variant": "after",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 5,
+      "fcpMs": 5736,
+      "lcpMs": 8480,
+      "lcpElement": {
+        "time": 8480,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 5969.100000023842,
+      "loadMs": 11396.200000047684,
+      "observationEndMs": 31795.700000047684,
+      "loadBlockingMs": 2162,
+      "longTaskCount": 8,
+      "longTaskMs": 2562,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 11952.732000000002,
+      "scriptMs": 882.226,
+      "layoutMs": 2159.042,
+      "styleMs": 1290.632,
+      "heapBytes": 8207256,
+      "requestCount": 68,
+      "transferBytes": 1164802,
+      "cssBytes": 26864,
+      "jsBytes": 422511,
+      "fontBytes": 237924,
+      "imageBytes": 1925,
+      "trace": "2026_08_k8s-for-frontend-1-after-5.trace.json.gz"
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-before-5",
+      "variant": "before",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 5,
+      "fcpMs": 5900,
+      "lcpMs": 8640,
+      "lcpElement": {
+        "time": 8640,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 5995.899999976158,
+      "loadMs": 11275.699999988079,
+      "observationEndMs": 32627,
+      "loadBlockingMs": 2115,
+      "longTaskCount": 8,
+      "longTaskMs": 2515,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 12053.429000000002,
+      "scriptMs": 850.525,
+      "layoutMs": 2129.759,
+      "styleMs": 1282.046,
+      "heapBytes": 8131616,
+      "requestCount": 67,
+      "transferBytes": 1157730,
+      "cssBytes": 28835,
+      "jsBytes": 417421,
+      "fontBytes": 237918,
+      "imageBytes": 1925,
+      "trace": "2026_08_k8s-for-frontend-1-before-5.trace.json.gz"
+    }
+  ]
+}

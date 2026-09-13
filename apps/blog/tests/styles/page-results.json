@@ -1,0 +1,385 @@
+{
+  "checkedAt": "2026-09-13T10:26:03.358451+00:00",
+  "baselineCommit": "7c4fa58e",
+  "comparisons": [
+    {
+      "name": "390-light-_",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-light-_en",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-light-_pages_1",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-light-_tags",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-light-_archive",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-light-_series",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-light-_series_k8s-for-frontend",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-light-_about",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/final-mobile"
+    },
+    {
+      "name": "390-light-_resume",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-light-_offline",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-light-_not-a-real-route",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-light-_2026_08_k8s-for-frontend-1",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/trimmed-mobile"
+    },
+    {
+      "name": "390-light-_2020_07_math-for-programmer-chapter2-3-rational-irrational-real-number",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/trimmed-mobile"
+    },
+    {
+      "name": "390-light-menu",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-light-search",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-light-settings",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-dark-_",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-dark-_en",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-dark-_pages_1",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-dark-_tags",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-dark-_archive",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-dark-_series",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-dark-_series_k8s-for-frontend",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-dark-_about",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/final-mobile"
+    },
+    {
+      "name": "390-dark-_resume",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-dark-_offline",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-dark-_not-a-real-route",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-dark-_2026_08_k8s-for-frontend-1",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/trimmed-mobile"
+    },
+    {
+      "name": "390-dark-_2020_07_math-for-programmer-chapter2-3-rational-irrational-real-number",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/trimmed-mobile"
+    },
+    {
+      "name": "390-dark-menu",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-dark-search",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "390-dark-settings",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/mobile"
+    },
+    {
+      "name": "1440-light-_",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-light-_en",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-light-_pages_1",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-light-_tags",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-light-_archive",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-light-_series",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-light-_series_k8s-for-frontend",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-light-_about",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/final-desktop"
+    },
+    {
+      "name": "1440-light-_resume",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-light-_offline",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-light-_not-a-real-route",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-light-_2026_08_k8s-for-frontend-1",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/trimmed-desktop"
+    },
+    {
+      "name": "1440-light-_2020_07_math-for-programmer-chapter2-3-rational-irrational-real-number",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/trimmed-desktop"
+    },
+    {
+      "name": "1440-light-search",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-light-settings",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-dark-_",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-dark-_en",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-dark-_pages_1",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-dark-_tags",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-dark-_archive",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-dark-_series",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-dark-_series_k8s-for-frontend",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-dark-_about",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/final-desktop"
+    },
+    {
+      "name": "1440-dark-_resume",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-dark-_offline",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-dark-_not-a-real-route",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-dark-_2026_08_k8s-for-frontend-1",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/trimmed-desktop"
+    },
+    {
+      "name": "1440-dark-_2020_07_math-for-programmer-chapter2-3-rational-irrational-real-number",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/trimmed-desktop"
+    },
+    {
+      "name": "1440-dark-search",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    },
+    {
+      "name": "1440-dark-settings",
+      "pixels": 0,
+      "differences": [],
+      "artifacts": "apps/blog/.cache/style-parity/full-migration/desktop"
+    }
+  ],
+  "notes": [
+    "62 page/state conditions at 390 and 1440 px, light and dark.",
+    "After the full matrix, 12 affected About/article conditions were rerun following the final dark heading and code-line-number fixes.",
+    "Computed element and rendered pseudo-element styles, content, geometry, and screenshots must match without tolerance.",
+    "Animations are frozen, canvas pixels are masked, and idle tag compositor layers are flattened for screenshots.",
+    "After trimming unused Markdown bindings, eight affected article/math conditions were rerun with no differences."
+  ]
+}

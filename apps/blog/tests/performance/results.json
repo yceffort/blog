@@ -1,0 +1,1235 @@
+{
+  "metadata": {
+    "startedAt": "2026-09-13T10:26:09.778Z",
+    "settings": {
+      "rounds": 5,
+      "cpuSlowdown": 20,
+      "latencyMs": 400,
+      "downloadKbps": 400,
+      "uploadKbps": 400,
+      "settleMs": 5000,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "routes": ["/", "/2026/08/k8s-for-frontend-1"]
+    },
+    "variants": {
+      "before": "http://localhost:3104",
+      "after": "http://localhost:3100"
+    },
+    "host": {
+      "platform": "darwin",
+      "arch": "arm64",
+      "cpu": "Apple M5"
+    },
+    "browserExecutable": "/Users/yceffort/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+    "headless": true,
+    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Mobile Safari/537.36",
+    "blockedUrls": [
+      "*://*.google-analytics.com/*",
+      "*://*.googletagmanager.com/*"
+    ],
+    "notes": [
+      "Production servers; each trial launches a fresh Chrome with an isolated profile.",
+      "Server routes/assets are warmed once; browser HTTP cache is disabled and cleared every trial.",
+      "CPU and network throttling use Chrome DevTools Protocol, not simulated Lighthouse throttling.",
+      "Animations and canvas rendering run normally. Tracing is enabled equally for both variants.",
+      "All metrics stop five seconds after load, document.fonts.ready, and network idle.",
+      "loadBlockingMs sums long-task time beyond 50 ms from FCP to the measurement end; it is not Lighthouse TBT.",
+      "LCP/CLS are lab observations within this window, not field Core Web Vitals or an INP measurement.",
+      "Main-thread Performance counters include the same observation window; throttling is relative to this host CPU."
+    ],
+    "before": {
+      "buildId": "_vKAKFES6yf2tACNvrOjx",
+      "commit": "7c4fa58e83afe3ee3ab03e95869a454c9972bb65",
+      "workingTree": ""
+    },
+    "after": {
+      "buildId": "Y2QI3Ceozq4GgC28vUE62",
+      "commit": "7c4fa58e83afe3ee3ab03e95869a454c9972bb65",
+      "workingTree": "M AGENTS.md\n M apps/blog/package.json\n M apps/blog/postcss.config.js\n M apps/blog/scripts/generate-undraw-thumbnail.mjs\n M apps/blog/src/app/[year]/[...slug]/layout.tsx\n M apps/blog/src/app/[year]/[...slug]/loading.tsx\n M apps/blog/src/app/[year]/[...slug]/page.tsx\n M apps/blog/src/app/about/page.tsx\n M apps/blog/src/app/api/og/route.tsx\n M apps/blog/src/app/archive/page.tsx\n M apps/blog/src/app/en/[year]/[...slug]/loading.tsx\n M apps/blog/src/app/en/[year]/[...slug]/page.tsx\n M apps/blog/src/app/en/layout.tsx\n M apps/blog/src/app/en/page.tsx\n M apps/blog/src/app/en/pages/[id]/page.tsx\n M apps/blog/src/app/layout.tsx\n M apps/blog/src/app/not-found.tsx\n M apps/blog/src/app/offline/page.tsx\n M apps/blog/src/app/page.tsx\n M apps/blog/src/app/pages/[id]/page.tsx\n M apps/blog/src/app/resume/page.tsx\n M apps/blog/src/app/series/[slug]/page.tsx\n M apps/blog/src/app/series/page.tsx\n M apps/blog/src/app/tags/[tag]/pages/[id]/page.tsx\n M apps/blog/src/app/tags/page.tsx\n D apps/blog/src/app/tailwind.css\n D apps/blog/src/components/AmbientEffects.tsx\n D apps/blog/src/components/AnnouncementBanner.tsx\n D apps/blog/src/components/BotTracker.tsx\n D apps/blog/src/components/CodeBlock.tsx\n D apps/blog/src/components/Footer.tsx\n D apps/blog/src/components/GoogleAnalyticsPageViewTracker.tsx\n D apps/blog/src/components/GoogleAnalyticsWebVitalsTracker.tsx\n D apps/blog/src/components/HeroE.tsx\n D apps/blog/src/components/ImageZoom.tsx\n D apps/blog/src/components/InternalNavTracker.tsx\n D apps/blog/src/components/LanguageSwitch.tsx\n D apps/blog/src/components/LayoutWrapper.tsx\n D apps/blog/src/components/LiveDemo.tsx\n D apps/blog/src/components/MDXComponents.tsx\n D apps/blog/src/components/Mermaid.tsx\n D apps/blog/src/components/MobileNav.tsx\n D apps/blog/src/components/NavigationDirection.tsx\n D apps/blog/src/components/OutboundLinkTracker.tsx\n D apps/blog/src/components/PopularSeriesCard.tsx\n D apps/blog/src/components/PostArticle.tsx\n D apps/blog/src/components/PostCard.tsx\n D apps/blog/src/components/PostRow.tsx\n D apps/blog/src/components/ProfileImage.tsx\n D apps/blog/src/components/PullToRefresh.tsx\n D apps/blog/src/components/PushAlertTooltip.tsx\n D apps/blog/src/components/RecentRow.tsx\n D apps/blog/src/components/RelatedPosts.tsx\n D apps/blog/src/components/ScrollTop.tsx\n D apps/blog/src/components/SectionContainer.tsx\n D apps/blog/src/components/SeriesNavigation.tsx\n D apps/blog/src/components/SeriesPrevNext.tsx\n D apps/blog/src/components/SeriesRow.tsx\n D apps/blog/src/components/ServiceWorkerRegistration.tsx\n D apps/blog/src/components/SetHtmlLang.tsx\n D apps/blog/src/components/SiteSearch.tsx\n D apps/blog/src/components/SubscribeCta.tsx\n D apps/blog/src/components/TableOfContents.tsx\n D apps/blog/src/components/Tag.tsx\n D apps/blog/src/components/TweaksPanel.tsx\n D apps/blog/src/components/about-fx/HeroFxA.tsx\n D apps/blog/src/components/about-fx/HeroFxB.tsx\n M apps/blog/src/components/about/AboutHero.tsx\n M apps/blog/src/components/about/AboutIntro.tsx\n M apps/blog/src/components/about/AboutTabs.tsx\n D apps/blog/src/components/about/ProjectTags.module.scss\n M apps/blog/src/components/about/ProjectTags.tsx\n D apps/blog/src/components/about/Resume.module.scss\n M apps/blog/src/components/about/Resume.tsx\n M apps/blog/src/components/icons/index.tsx\n D apps/blog/src/components/layouts/ListLayout.tsx\n D apps/blog/src/components/layouts/PageNumber.tsx\n D apps/blog/src/components/layouts/Post/math.tsx\n M apps/blog/src/utils/Markdown.ts\n M apps/blog/stylelint.config.js\n D apps/blog/tailwind.config.js\n M apps/research/src/components/MobileNav.tsx\n M apps/research/src/components/icons/index.tsx\n M packages/shared/src/components/MobileNav.tsx\n M packages/shared/src/components/SocialIcon.tsx\n M pnpm-lock.yaml\n?? apps/blog/.babelrc.json\n?? apps/blog/scripts/check-page-motion-parity.mjs\n?? apps/blog/scripts/check-page-style-parity.mjs\n?? apps/blog/scripts/check-style-parity.mjs\n?? apps/blog/scripts/compare-performance.mjs\n?? apps/blog/scripts/postcss-imports.cjs\n?? apps/blog/scripts/postcss-optimize.cjs\n?? apps/blog/src/app/archive/archive.styles.ts\n?? apps/blog/src/app/not-found.styles.ts\n?? apps/blog/src/app/tags/tags.styles.ts\n?? apps/blog/src/components/about/HeroFxA.tsx\n?? apps/blog/src/components/about/HeroFxB.tsx\n?? apps/blog/src/components/about/ProjectTags.styles.ts\n?? apps/blog/src/components/about/Resume.styles.ts\n?? apps/blog/src/components/about/about.styles.ts\n?? apps/blog/src/components/analytics/\n?? apps/blog/src/components/home/\n?? apps/blog/src/components/icons/SocialIcon.styles.ts\n?? apps/blog/src/components/layout/\n?? apps/blog/src/components/post/\n?? apps/blog/src/components/pwa/\n?? apps/blog/src/components/search/\n?? apps/blog/src/components/series/\n?? apps/blog/src/components/settings/\n?? apps/blog/src/styles/\n?? apps/blog/src/utils/markdownStyles.ts\n?? apps/blog/tests/\n?? apps/research/research/cdn-and-http-cache.md"
+    },
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/153.0.8010.12",
+      "revision": "@971a7443b0c9b0a9b2860529b33331b76077ec62",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+      "jsVersion": "15.3.76.4"
+    },
+    "finishedAt": "2026-09-13T10:36:47.216Z"
+  },
+  "summary": [
+    {
+      "route": "/",
+      "variant": "before",
+      "runs": 5,
+      "values": {
+        "fcpMs": {
+          "median": 4800,
+          "min": 4780,
+          "max": 4824
+        },
+        "lcpMs": {
+          "median": 5756,
+          "min": 5752,
+          "max": 5788
+        },
+        "cls": {
+          "median": 0.0025214955910319477,
+          "min": 0.0025214955910319477,
+          "max": 0.003658543636350809
+        },
+        "loadMs": {
+          "median": 11540.5,
+          "min": 11538.900000035763,
+          "max": 11545.699999988079
+        },
+        "taskMs": {
+          "median": 7664.758,
+          "min": 7589.194,
+          "max": 7853.25
+        },
+        "scriptMs": {
+          "median": 576.787,
+          "min": 573.561,
+          "max": 592.5409999999999
+        },
+        "styleMs": {
+          "median": 540.0120000000001,
+          "min": 523.598,
+          "max": 596.504
+        },
+        "layoutMs": {
+          "median": 584.545,
+          "min": 552.4409999999999,
+          "max": 588.515
+        },
+        "loadBlockingMs": {
+          "median": 282,
+          "min": 276,
+          "max": 314
+        },
+        "transferBytes": {
+          "median": 827432,
+          "min": 827424,
+          "max": 827435
+        },
+        "cssBytes": {
+          "median": 28841,
+          "min": 28838,
+          "max": 29239
+        },
+        "jsBytes": {
+          "median": 203640,
+          "min": 203640,
+          "max": 203640
+        },
+        "requestCount": {
+          "median": 39,
+          "min": 39,
+          "max": 39
+        },
+        "documentBytes": {
+          "median": 111429,
+          "min": 111429,
+          "max": 111429
+        },
+        "fetchBytes": {
+          "median": 130655,
+          "min": 130655,
+          "max": 130655
+        }
+      }
+    },
+    {
+      "route": "/",
+      "variant": "after",
+      "runs": 5,
+      "values": {
+        "fcpMs": {
+          "median": 7644,
+          "min": 7628,
+          "max": 7648
+        },
+        "lcpMs": {
+          "median": 13756,
+          "min": 13736,
+          "max": 13812
+        },
+        "cls": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "loadMs": {
+          "median": 12864.799999952316,
+          "min": 12860.100000023842,
+          "max": 12875.899999976158
+        },
+        "taskMs": {
+          "median": 8164.111,
+          "min": 8084.429,
+          "max": 8214.115
+        },
+        "scriptMs": {
+          "median": 615.903,
+          "min": 570.587,
+          "max": 647.918
+        },
+        "styleMs": {
+          "median": 773.405,
+          "min": 761.839,
+          "max": 809.994
+        },
+        "layoutMs": {
+          "median": 405.018,
+          "min": 397.837,
+          "max": 414.722
+        },
+        "loadBlockingMs": {
+          "median": 315,
+          "min": 295,
+          "max": 320
+        },
+        "transferBytes": {
+          "median": 905466,
+          "min": 905461,
+          "max": 905480
+        },
+        "cssBytes": {
+          "median": 67324,
+          "min": 67323,
+          "max": 67713
+        },
+        "jsBytes": {
+          "median": 214248,
+          "min": 214248,
+          "max": 214248
+        },
+        "requestCount": {
+          "median": 43,
+          "min": 43,
+          "max": 43
+        },
+        "documentBytes": {
+          "median": 125921,
+          "min": 125921,
+          "max": 125921
+        },
+        "fetchBytes": {
+          "median": 145047,
+          "min": 145047,
+          "max": 145047
+        }
+      }
+    },
+    {
+      "route": "/2026/08/k8s-for-frontend-1",
+      "variant": "before",
+      "runs": 5,
+      "values": {
+        "fcpMs": {
+          "median": 5944,
+          "min": 5924,
+          "max": 6304
+        },
+        "lcpMs": {
+          "median": 8560,
+          "min": 8496,
+          "max": 8580
+        },
+        "cls": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "loadMs": {
+          "median": 11270.800000011921,
+          "min": 11266.899999976158,
+          "max": 11301.5
+        },
+        "taskMs": {
+          "median": 10054.539,
+          "min": 9971.349,
+          "max": 10113.926
+        },
+        "scriptMs": {
+          "median": 785.673,
+          "min": 759.579,
+          "max": 820.392
+        },
+        "styleMs": {
+          "median": 1090.2359999999999,
+          "min": 1046.338,
+          "max": 1105.34
+        },
+        "layoutMs": {
+          "median": 2056.575,
+          "min": 2021.687,
+          "max": 2101.652
+        },
+        "loadBlockingMs": {
+          "median": 2004,
+          "min": 1990,
+          "max": 2066
+        },
+        "transferBytes": {
+          "median": 1157716,
+          "min": 1157712,
+          "max": 1157722
+        },
+        "cssBytes": {
+          "median": 28837,
+          "min": 28834,
+          "max": 28843
+        },
+        "jsBytes": {
+          "median": 417380,
+          "min": 417380,
+          "max": 417380
+        },
+        "requestCount": {
+          "median": 67,
+          "min": 67,
+          "max": 67
+        },
+        "documentBytes": {
+          "median": 55701,
+          "min": 55701,
+          "max": 55701
+        },
+        "fetchBytes": {
+          "median": 327939,
+          "min": 327939,
+          "max": 327939
+        }
+      }
+    },
+    {
+      "route": "/2026/08/k8s-for-frontend-1",
+      "variant": "after",
+      "runs": 5,
+      "values": {
+        "fcpMs": {
+          "median": 8828,
+          "min": 8804,
+          "max": 8840
+        },
+        "lcpMs": {
+          "median": 14380,
+          "min": 14364,
+          "max": 14432
+        },
+        "cls": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "loadMs": {
+          "median": 13376.600000023842,
+          "min": 13346.100000023842,
+          "max": 13380.399999976158
+        },
+        "taskMs": {
+          "median": 11114.673999999999,
+          "min": 11072.284,
+          "max": 11246.739
+        },
+        "scriptMs": {
+          "median": 844.346,
+          "min": 808.2470000000001,
+          "max": 878.091
+        },
+        "styleMs": {
+          "median": 2154.5879999999997,
+          "min": 2093.118,
+          "max": 2161.549
+        },
+        "layoutMs": {
+          "median": 1488.524,
+          "min": 1481.198,
+          "max": 1507.522
+        },
+        "loadBlockingMs": {
+          "median": 2239,
+          "min": 2085,
+          "max": 2303
+        },
+        "transferBytes": {
+          "median": 1417908,
+          "min": 1417899,
+          "max": 1417922
+        },
+        "cssBytes": {
+          "median": 67324,
+          "min": 67320,
+          "max": 67335
+        },
+        "jsBytes": {
+          "median": 434652,
+          "min": 434652,
+          "max": 434652
+        },
+        "requestCount": {
+          "median": 69,
+          "min": 69,
+          "max": 69
+        },
+        "documentBytes": {
+          "median": 105109,
+          "min": 105109,
+          "max": 105109
+        },
+        "fetchBytes": {
+          "median": 482887,
+          "min": 482887,
+          "max": 482887
+        }
+      }
+    }
+  ],
+  "trials": [
+    {
+      "name": "home-before-1",
+      "variant": "before",
+      "route": "/",
+      "round": 1,
+      "fcpMs": 4824,
+      "lcpMs": 5756,
+      "lcpElement": {
+        "time": 5756,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3104/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.0025214955910319477,
+      "domContentLoadedMs": 9965,
+      "loadMs": 11543.899999976158,
+      "observationEndMs": 24403.799999952316,
+      "loadBlockingMs": 276,
+      "longTaskCount": 3,
+      "longTaskMs": 645,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 400
+      },
+      "taskMs": 7853.25,
+      "scriptMs": 589.554,
+      "layoutMs": 585.2429999999999,
+      "styleMs": 568.206,
+      "heapBytes": 5470828,
+      "requestCount": 39,
+      "transferBytes": 827424,
+      "cssBytes": 28838,
+      "jsBytes": 203640,
+      "fontBytes": 237926,
+      "imageBytes": 26924,
+      "canceledRequests": [],
+      "trace": "home-before-1.trace.json.gz",
+      "documentBytes": 111429,
+      "fetchBytes": 130655
+    },
+    {
+      "name": "home-after-1",
+      "variant": "after",
+      "route": "/",
+      "round": 1,
+      "fcpMs": 7644,
+      "lcpMs": 13756,
+      "lcpElement": {
+        "time": 13756,
+        "size": 10335,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 9139.199999988079,
+      "loadMs": 12870.099999964237,
+      "observationEndMs": 26016.899999976158,
+      "loadBlockingMs": 309,
+      "longTaskCount": 6,
+      "longTaskMs": 686,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 350
+      },
+      "taskMs": 8087.796000000001,
+      "scriptMs": 615.903,
+      "layoutMs": 400,
+      "styleMs": 778.814,
+      "heapBytes": 4337528,
+      "requestCount": 43,
+      "transferBytes": 905480,
+      "cssBytes": 67324,
+      "jsBytes": 214248,
+      "fontBytes": 237930,
+      "imageBytes": 26924,
+      "canceledRequests": [],
+      "trace": "home-after-1.trace.json.gz",
+      "documentBytes": 125921,
+      "fetchBytes": 145047
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-after-1",
+      "variant": "after",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 1,
+      "fcpMs": 8804,
+      "lcpMs": 14380,
+      "lcpElement": {
+        "time": 14380,
+        "size": 10335,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 8970.400000035763,
+      "loadMs": 13350.600000023842,
+      "observationEndMs": 36755.19999998808,
+      "loadBlockingMs": 2303,
+      "longTaskCount": 10,
+      "longTaskMs": 2883,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 400
+      },
+      "taskMs": 11246.739,
+      "scriptMs": 844.346,
+      "layoutMs": 1507.522,
+      "styleMs": 2154.9809999999998,
+      "heapBytes": 8953460,
+      "requestCount": 69,
+      "transferBytes": 1417899,
+      "cssBytes": 67320,
+      "jsBytes": 434652,
+      "fontBytes": 237920,
+      "imageBytes": 1925,
+      "canceledRequests": [],
+      "trace": "2026_08_k8s-for-frontend-1-after-1.trace.json.gz",
+      "documentBytes": 105109,
+      "fetchBytes": 482887
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-before-1",
+      "variant": "before",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 1,
+      "fcpMs": 5928,
+      "lcpMs": 8580,
+      "lcpElement": {
+        "time": 8580,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 6014,
+      "loadMs": 11269.900000035763,
+      "observationEndMs": 31670.80000001192,
+      "loadBlockingMs": 2004,
+      "longTaskCount": 7,
+      "longTaskMs": 2354,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 9994.651999999998,
+      "scriptMs": 759.579,
+      "layoutMs": 2101.652,
+      "styleMs": 1067.055,
+      "heapBytes": 9721112,
+      "requestCount": 67,
+      "transferBytes": 1157716,
+      "cssBytes": 28837,
+      "jsBytes": 417380,
+      "fontBytes": 237922,
+      "imageBytes": 1925,
+      "canceledRequests": [],
+      "trace": "2026_08_k8s-for-frontend-1-before-1.trace.json.gz",
+      "documentBytes": 55701,
+      "fetchBytes": 327939
+    },
+    {
+      "name": "home-after-2",
+      "variant": "after",
+      "route": "/",
+      "round": 2,
+      "fcpMs": 7648,
+      "lcpMs": 13776,
+      "lcpElement": {
+        "time": 13776,
+        "size": 10335,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 9169.699999988079,
+      "loadMs": 12864.799999952316,
+      "observationEndMs": 26052.599999964237,
+      "loadBlockingMs": 295,
+      "longTaskCount": 5,
+      "longTaskMs": 620,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 350
+      },
+      "taskMs": 8084.429,
+      "scriptMs": 621.134,
+      "layoutMs": 405.018,
+      "styleMs": 773.405,
+      "heapBytes": 4371888,
+      "requestCount": 43,
+      "transferBytes": 905466,
+      "cssBytes": 67323,
+      "jsBytes": 214248,
+      "fontBytes": 237917,
+      "imageBytes": 26924,
+      "canceledRequests": [],
+      "trace": "home-after-2.trace.json.gz",
+      "documentBytes": 125921,
+      "fetchBytes": 145047
+    },
+    {
+      "name": "home-before-2",
+      "variant": "before",
+      "route": "/",
+      "round": 2,
+      "fcpMs": 4800,
+      "lcpMs": 5752,
+      "lcpElement": {
+        "time": 5752,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3104/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.0025214955910319477,
+      "domContentLoadedMs": 9968,
+      "loadMs": 11538.900000035763,
+      "observationEndMs": 24345.30000001192,
+      "loadBlockingMs": 314,
+      "longTaskCount": 3,
+      "longTaskMs": 464,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 7664.758,
+      "scriptMs": 573.561,
+      "layoutMs": 552.4409999999999,
+      "styleMs": 530.0129999999999,
+      "heapBytes": 5473356,
+      "requestCount": 39,
+      "transferBytes": 827433,
+      "cssBytes": 29231,
+      "jsBytes": 203640,
+      "fontBytes": 237542,
+      "imageBytes": 26924,
+      "canceledRequests": [],
+      "trace": "home-before-2.trace.json.gz",
+      "documentBytes": 111429,
+      "fetchBytes": 130655
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-before-2",
+      "variant": "before",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 2,
+      "fcpMs": 5924,
+      "lcpMs": 8532,
+      "lcpElement": {
+        "time": 8532,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 6014.400000035763,
+      "loadMs": 11270.800000011921,
+      "observationEndMs": 32567.900000035763,
+      "loadBlockingMs": 1994,
+      "longTaskCount": 8,
+      "longTaskMs": 2394,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 350
+      },
+      "taskMs": 10080.006999999998,
+      "scriptMs": 771.02,
+      "layoutMs": 2021.687,
+      "styleMs": 1046.338,
+      "heapBytes": 8327456,
+      "requestCount": 67,
+      "transferBytes": 1157715,
+      "cssBytes": 28834,
+      "jsBytes": 417380,
+      "fontBytes": 237924,
+      "imageBytes": 1925,
+      "canceledRequests": [],
+      "trace": "2026_08_k8s-for-frontend-1-before-2.trace.json.gz",
+      "documentBytes": 55701,
+      "fetchBytes": 327939
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-after-2",
+      "variant": "after",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 2,
+      "fcpMs": 8828,
+      "lcpMs": 14432,
+      "lcpElement": {
+        "time": 14432,
+        "size": 10335,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 8994.5,
+      "loadMs": 13380.399999976158,
+      "observationEndMs": 36878.30000001192,
+      "loadBlockingMs": 2235,
+      "longTaskCount": 10,
+      "longTaskMs": 2811,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 400
+      },
+      "taskMs": 11101.967999999999,
+      "scriptMs": 808.2470000000001,
+      "layoutMs": 1481.198,
+      "styleMs": 2161.549,
+      "heapBytes": 8165784,
+      "requestCount": 69,
+      "transferBytes": 1417921,
+      "cssBytes": 67335,
+      "jsBytes": 434652,
+      "fontBytes": 237927,
+      "imageBytes": 1925,
+      "canceledRequests": [],
+      "trace": "2026_08_k8s-for-frontend-1-after-2.trace.json.gz",
+      "documentBytes": 105109,
+      "fetchBytes": 482887
+    },
+    {
+      "name": "home-before-3",
+      "variant": "before",
+      "route": "/",
+      "round": 3,
+      "fcpMs": 4800,
+      "lcpMs": 5752,
+      "lcpElement": {
+        "time": 5752,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3104/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.003658543636350809,
+      "domContentLoadedMs": 9967.099999964237,
+      "loadMs": 11545.699999988079,
+      "observationEndMs": 24400.5,
+      "loadBlockingMs": 276,
+      "longTaskCount": 4,
+      "longTaskMs": 679,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 400
+      },
+      "taskMs": 7760.096,
+      "scriptMs": 574.886,
+      "layoutMs": 588.515,
+      "styleMs": 596.504,
+      "heapBytes": 5466372,
+      "requestCount": 39,
+      "transferBytes": 827429,
+      "cssBytes": 29239,
+      "jsBytes": 203640,
+      "fontBytes": 237530,
+      "imageBytes": 26924,
+      "canceledRequests": [],
+      "trace": "home-before-3.trace.json.gz",
+      "documentBytes": 111429,
+      "fetchBytes": 130655
+    },
+    {
+      "name": "home-after-3",
+      "variant": "after",
+      "route": "/",
+      "round": 3,
+      "fcpMs": 7628,
+      "lcpMs": 13736,
+      "lcpElement": {
+        "time": 13736,
+        "size": 10335,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 9164.299999952316,
+      "loadMs": 12860.599999964237,
+      "observationEndMs": 26043.099999964237,
+      "loadBlockingMs": 316,
+      "longTaskCount": 6,
+      "longTaskMs": 692,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 400
+      },
+      "taskMs": 8164.111,
+      "scriptMs": 570.587,
+      "layoutMs": 414.722,
+      "styleMs": 809.994,
+      "heapBytes": 4038088,
+      "requestCount": 43,
+      "transferBytes": 905470,
+      "cssBytes": 67323,
+      "jsBytes": 214248,
+      "fontBytes": 237921,
+      "imageBytes": 26924,
+      "canceledRequests": [],
+      "trace": "home-after-3.trace.json.gz",
+      "documentBytes": 125921,
+      "fetchBytes": 145047
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-after-3",
+      "variant": "after",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 3,
+      "fcpMs": 8816,
+      "lcpMs": 14364,
+      "lcpElement": {
+        "time": 14364,
+        "size": 10335,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 8982.399999976158,
+      "loadMs": 13346.100000023842,
+      "observationEndMs": 37476.30000001192,
+      "loadBlockingMs": 2243,
+      "longTaskCount": 10,
+      "longTaskMs": 2824,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 11114.673999999999,
+      "scriptMs": 878.091,
+      "layoutMs": 1501.779,
+      "styleMs": 2107.235,
+      "heapBytes": 10651180,
+      "requestCount": 69,
+      "transferBytes": 1417922,
+      "cssBytes": 67324,
+      "jsBytes": 434652,
+      "fontBytes": 237939,
+      "imageBytes": 1925,
+      "canceledRequests": [],
+      "trace": "2026_08_k8s-for-frontend-1-after-3.trace.json.gz",
+      "documentBytes": 105109,
+      "fetchBytes": 482887
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-before-3",
+      "variant": "before",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 3,
+      "fcpMs": 6304,
+      "lcpMs": 8496,
+      "lcpElement": {
+        "time": 8496,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 7230.599999964237,
+      "loadMs": 11290.5,
+      "observationEndMs": 31651,
+      "loadBlockingMs": 2015,
+      "longTaskCount": 8,
+      "longTaskMs": 2794,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 400
+      },
+      "taskMs": 10113.926,
+      "scriptMs": 811.506,
+      "layoutMs": 2092.694,
+      "styleMs": 1105.34,
+      "heapBytes": 8148620,
+      "requestCount": 67,
+      "transferBytes": 1157712,
+      "cssBytes": 28835,
+      "jsBytes": 417380,
+      "fontBytes": 237920,
+      "imageBytes": 1925,
+      "canceledRequests": [],
+      "trace": "2026_08_k8s-for-frontend-1-before-3.trace.json.gz",
+      "documentBytes": 55701,
+      "fetchBytes": 327939
+    },
+    {
+      "name": "home-after-4",
+      "variant": "after",
+      "route": "/",
+      "round": 4,
+      "fcpMs": 7644,
+      "lcpMs": 13812,
+      "lcpElement": {
+        "time": 13812,
+        "size": 10335,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 9164.199999988079,
+      "loadMs": 12875.899999976158,
+      "observationEndMs": 26105.5,
+      "loadBlockingMs": 320,
+      "longTaskCount": 6,
+      "longTaskMs": 697,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 400
+      },
+      "taskMs": 8214.115,
+      "scriptMs": 647.918,
+      "layoutMs": 407.314,
+      "styleMs": 762.8340000000001,
+      "heapBytes": 4387928,
+      "requestCount": 43,
+      "transferBytes": 905463,
+      "cssBytes": 67326,
+      "jsBytes": 214248,
+      "fontBytes": 237911,
+      "imageBytes": 26924,
+      "canceledRequests": [],
+      "trace": "home-after-4.trace.json.gz",
+      "documentBytes": 125921,
+      "fetchBytes": 145047
+    },
+    {
+      "name": "home-before-4",
+      "variant": "before",
+      "route": "/",
+      "round": 4,
+      "fcpMs": 4792,
+      "lcpMs": 5756,
+      "lcpElement": {
+        "time": 5756,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3104/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.0025214955910319477,
+      "domContentLoadedMs": 9967.800000011921,
+      "loadMs": 11540.300000011921,
+      "observationEndMs": 24336.900000035763,
+      "loadBlockingMs": 312,
+      "longTaskCount": 3,
+      "longTaskMs": 462,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 400
+      },
+      "taskMs": 7630.964000000001,
+      "scriptMs": 592.5409999999999,
+      "layoutMs": 569.31,
+      "styleMs": 540.0120000000001,
+      "heapBytes": 5462132,
+      "requestCount": 39,
+      "transferBytes": 827435,
+      "cssBytes": 28839,
+      "jsBytes": 203640,
+      "fontBytes": 237936,
+      "imageBytes": 26924,
+      "canceledRequests": [],
+      "trace": "home-before-4.trace.json.gz",
+      "documentBytes": 111429,
+      "fetchBytes": 130655
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-before-4",
+      "variant": "before",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 4,
+      "fcpMs": 5944,
+      "lcpMs": 8560,
+      "lcpElement": {
+        "time": 8560,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 6014.600000023842,
+      "loadMs": 11301.5,
+      "observationEndMs": 32238.600000023842,
+      "loadBlockingMs": 2066,
+      "longTaskCount": 8,
+      "longTaskMs": 2466,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 10054.539,
+      "scriptMs": 785.673,
+      "layoutMs": 2050.398,
+      "styleMs": 1090.2359999999999,
+      "heapBytes": 8111604,
+      "requestCount": 67,
+      "transferBytes": 1157720,
+      "cssBytes": 28837,
+      "jsBytes": 417380,
+      "fontBytes": 237926,
+      "imageBytes": 1925,
+      "canceledRequests": [],
+      "trace": "2026_08_k8s-for-frontend-1-before-4.trace.json.gz",
+      "documentBytes": 55701,
+      "fetchBytes": 327939
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-after-4",
+      "variant": "after",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 4,
+      "fcpMs": 8840,
+      "lcpMs": 14412,
+      "lcpElement": {
+        "time": 14412,
+        "size": 10335,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 9007.5,
+      "loadMs": 13378.199999988079,
+      "observationEndMs": 37304.89999997616,
+      "loadBlockingMs": 2239,
+      "longTaskCount": 10,
+      "longTaskMs": 2819,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 350
+      },
+      "taskMs": 11124.352,
+      "scriptMs": 856.865,
+      "layoutMs": 1483.0890000000002,
+      "styleMs": 2093.118,
+      "heapBytes": 8507012,
+      "requestCount": 69,
+      "transferBytes": 1417902,
+      "cssBytes": 67324,
+      "jsBytes": 434652,
+      "fontBytes": 237919,
+      "imageBytes": 1925,
+      "canceledRequests": [],
+      "trace": "2026_08_k8s-for-frontend-1-after-4.trace.json.gz",
+      "documentBytes": 105109,
+      "fetchBytes": 482887
+    },
+    {
+      "name": "home-before-5",
+      "variant": "before",
+      "route": "/",
+      "round": 5,
+      "fcpMs": 4780,
+      "lcpMs": 5788,
+      "lcpElement": {
+        "time": 5788,
+        "size": 70844,
+        "tag": "IMG",
+        "text": "",
+        "url": "http://localhost:3104/_next/image?url=%2Fapi%2Fog%2Fart%3Fv%3D6%26slug%3D2026%252F09%252Fnpm-deep-dive-sejong-books%26layout%3Dbauhaus%26hue%3Dblue%26tone%3Dlight&w=828&q=75"
+      },
+      "cls": 0.0025214955910319477,
+      "domContentLoadedMs": 9918.100000023842,
+      "loadMs": 11540.5,
+      "observationEndMs": 24402.80000001192,
+      "loadBlockingMs": 282,
+      "longTaskCount": 3,
+      "longTaskMs": 432,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 400
+      },
+      "taskMs": 7589.194,
+      "scriptMs": 576.787,
+      "layoutMs": 584.545,
+      "styleMs": 523.598,
+      "heapBytes": 5516412,
+      "requestCount": 39,
+      "transferBytes": 827432,
+      "cssBytes": 28841,
+      "jsBytes": 203640,
+      "fontBytes": 237931,
+      "imageBytes": 26924,
+      "canceledRequests": [],
+      "trace": "home-before-5.trace.json.gz",
+      "documentBytes": 111429,
+      "fetchBytes": 130655
+    },
+    {
+      "name": "home-after-5",
+      "variant": "after",
+      "route": "/",
+      "round": 5,
+      "fcpMs": 7640,
+      "lcpMs": 13756,
+      "lcpElement": {
+        "time": 13756,
+        "size": 10335,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 9165.699999988079,
+      "loadMs": 12860.100000023842,
+      "observationEndMs": 25979.80000001192,
+      "loadBlockingMs": 315,
+      "longTaskCount": 6,
+      "longTaskMs": 694,
+      "touch": true,
+      "connection": {
+        "downlink": 0.35,
+        "rtt": 400
+      },
+      "taskMs": 8194.624,
+      "scriptMs": 581.3190000000001,
+      "layoutMs": 397.837,
+      "styleMs": 761.839,
+      "heapBytes": 4038232,
+      "requestCount": 43,
+      "transferBytes": 905461,
+      "cssBytes": 67713,
+      "jsBytes": 214248,
+      "fontBytes": 237522,
+      "imageBytes": 26924,
+      "canceledRequests": [],
+      "trace": "home-after-5.trace.json.gz",
+      "documentBytes": 125921,
+      "fetchBytes": 145047
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-after-5",
+      "variant": "after",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 5,
+      "fcpMs": 8836,
+      "lcpMs": 14380,
+      "lcpElement": {
+        "time": 14380,
+        "size": 10335,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 8996.400000035763,
+      "loadMs": 13376.600000023842,
+      "observationEndMs": 37116.80000001192,
+      "loadBlockingMs": 2085,
+      "longTaskCount": 9,
+      "longTaskMs": 2606,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 450
+      },
+      "taskMs": 11072.284,
+      "scriptMs": 815.239,
+      "layoutMs": 1488.524,
+      "styleMs": 2154.5879999999997,
+      "heapBytes": 12102176,
+      "requestCount": 69,
+      "transferBytes": 1417908,
+      "cssBytes": 67325,
+      "jsBytes": 434652,
+      "fontBytes": 237924,
+      "imageBytes": 1925,
+      "canceledRequests": [],
+      "trace": "2026_08_k8s-for-frontend-1-after-5.trace.json.gz",
+      "documentBytes": 105109,
+      "fetchBytes": 482887
+    },
+    {
+      "name": "2026_08_k8s-for-frontend-1-before-5",
+      "variant": "before",
+      "route": "/2026/08/k8s-for-frontend-1",
+      "round": 5,
+      "fcpMs": 5972,
+      "lcpMs": 8572,
+      "lcpElement": {
+        "time": 8572,
+        "size": 34238,
+        "tag": "H1",
+        "text": "프론트엔드 개발자를 위한 쿠버네티스 개념 지도: 파드에서 오토스케일러까지",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 6058.399999976158,
+      "loadMs": 11266.899999976158,
+      "observationEndMs": 31648.399999976158,
+      "loadBlockingMs": 1990,
+      "longTaskCount": 7,
+      "longTaskMs": 2340,
+      "touch": true,
+      "connection": {
+        "downlink": 0.4,
+        "rtt": 400
+      },
+      "taskMs": 9971.349,
+      "scriptMs": 820.392,
+      "layoutMs": 2056.575,
+      "styleMs": 1098.3560000000002,
+      "heapBytes": 8154340,
+      "requestCount": 67,
+      "transferBytes": 1157722,
+      "cssBytes": 28843,
+      "jsBytes": 417380,
+      "fontBytes": 237922,
+      "imageBytes": 1925,
+      "canceledRequests": [],
+      "trace": "2026_08_k8s-for-frontend-1-before-5.trace.json.gz",
+      "documentBytes": 55701,
+      "fetchBytes": 327939
+    }
+  ]
+}

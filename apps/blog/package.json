@@ -9,6 +9,10 @@
     "dev": "next dev",
     "lint:style": "stylelint '**/*.{css,scss}'",
     "lint:style:fix": "stylelint --fix '**/*.{css,scss}'",
+    "test:styles": "node scripts/check-style-parity.mjs && node scripts/check-markdown-styles.mjs",
+    "test:styles:pages": "node scripts/check-page-style-parity.mjs",
+    "test:styles:motion": "node scripts/check-page-motion-parity.mjs",
+    "test:performance": "node scripts/compare-performance.mjs",
     "start": "next start"
   },
   "dependencies": {
@@ -16,9 +20,7 @@
     "@google-analytics/data": "^7.0.0",
     "@panzoom/panzoom": "^4.6.2",
     "@react-three/fiber": "^9.7.0",
-    "@tailwindcss/forms": "^0.5.11",
-    "@tailwindcss/postcss": "^4.3.3",
-    "@tailwindcss/typography": "^0.5.20",
+    "@stylexjs/stylex": "^0.19.0",
     "@yceffort/shared": "workspace:*",
     "date-fns": "^4.4.0",
     "front-matter": "^4.0.2",
@@ -42,7 +44,6 @@
     "remark-math": "^6.0.0",
     "remark-toc": "^9.0.0",
     "sharp": "^0.35.3",
-    "tailwindcss": "^4.3.3",
     "three": "^0.185.1",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0",
@@ -50,7 +51,11 @@
     "web-vitals": "^6.1.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.7",
     "@naverpay/stylelint-config": "^1.0.0",
+    "@playwright/test": "^1.63.0",
+    "@stylexjs/babel-plugin": "^0.19.0",
+    "@stylexjs/postcss-plugin": "^0.19.0",
     "@stylistic/stylelint-plugin": "^5.3.0",
     "@types/hast": "^3.0.5",
     "@types/node": "^26.2.0",
@@ -58,9 +63,9 @@
     "@types/react-dom": "^19.2.4",
     "@types/three": "^0.185.4",
     "github-slugger": "^2.0.0",
+    "lightningcss": "1.32.0",
     "remark-mdx": "^3.1.1",
     "remark-parse": "^11.0.0",
-    "sass": "^1.104.0",
     "stylelint": "^17.14.1",
     "typescript": "^7.0.2",
     "undraw-svg": "2.0.0"

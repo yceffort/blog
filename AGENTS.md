@@ -6,7 +6,7 @@
 - `apps/blog` — Next.js 16 메인 블로그 (yceffort.kr)
 - `apps/research` — Next.js 리서치 사이트 (research.yceffort.kr)
 - `packages/shared` — 공유 패키지
-- Tailwind CSS 4, React 19, TypeScript 5
+- StyleX (`apps/blog`), Tailwind CSS 4 (`apps/research`), React 19, TypeScript 5
 
 ## 포스트
 
