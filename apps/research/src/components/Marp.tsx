@@ -87,7 +87,8 @@ export function Marp({
             )
             element.innerHTML = svg
           } catch (error) {
-            element.innerHTML = `<div style="color: red;">Mermaid Error: ${String(error)}</div>`
+            element.style.color = 'red'
+            element.textContent = `Mermaid Error: ${String(error)}`
           }
         }
       }
