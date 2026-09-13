@@ -1,9 +1,11 @@
 import type {Metadata} from 'next'
 import Link from 'next/link'
 
+import * as tagsStyles from '@/app/tags/tags.styles'
+import * as heroStyles from '@/components/home/hero.styles'
+import * as ambientStyles from '@/components/layout/ambient.styles'
 import {SiteConfig} from '@/config'
 import {getAllTagsFromPosts} from '@/utils/Post'
-
 export const metadata: Metadata = {
   title: 'Tags',
   description: 'All tags',
@@ -11,7 +13,6 @@ export const metadata: Metadata = {
     canonical: `${SiteConfig.url}/tags`,
   },
 }
-
 const TAG_PALETTE: [string, string][] = [
   ['#a78bfa', '#6d28d9'],
   ['#f472b6', '#9d174d'],
@@ -24,7 +25,6 @@ const TAG_PALETTE: [string, string][] = [
   ['#c084fc', '#6b21a8'],
   ['#60a5fa', '#1e40af'],
 ]
-
 function tagHash(tag: string) {
   let hash = 0
   for (let i = 0; i < tag.length; i++) {
@@ -32,29 +32,35 @@ function tagHash(tag: string) {
   }
   return Math.abs(hash) % TAG_PALETTE.length
 }
-
 export default async function TagsPage() {
   const tags = await getAllTagsFromPosts()
   const totalPosts = tags.reduce((sum, t) => sum + t.count, 0)
   const maxCount = tags.reduce((max, t) => Math.max(max, t.count), 1)
-
   return (
-    <div className="page-view">
-      <section className="page-hero">
-        <div className="hero-eyebrow">
-          <span className="dot" />
+    <div className={`page-view ${ambientStyles.page_view}`}>
+      <section className={`page-hero ${tagsStyles.page_hero}`}>
+        <div
+          className={`hero-eyebrow ${heroStyles.hero_eyebrow} ${tagsStyles.hero_eyebrow}`}
+        >
+          <span className={`dot ${heroStyles.dot}`} />
           {tags.length} TAGS · {totalPosts} POSTS
         </div>
-        <h1 className="page-title">
-          TAGS<span className="accent">,</span>
+        <h1 className={`page-title ${tagsStyles.page_title}`}>
+          {'TAGS'}
+          <span className={`accent ${heroStyles.accent} ${tagsStyles.accent}`}>
+            ,
+          </span>
           <br />
-          <span className="stroke">every</span> topic.
+          <span className={`stroke ${heroStyles.stroke} ${tagsStyles.stroke}`}>
+            every
+          </span>
+          {' topic.'}
         </h1>
-        <p className="page-sub">
+        <p className={`page-sub ${tagsStyles.page_sub}`}>
           Topics grouped by tag. Click any chip to jump to the tag’s post list.
         </p>
       </section>
-      <div className="tag-grid">
+      <div className={`tag-grid ${tagsStyles.tag_grid}`}>
         {tags.map(({tag, count}, i) => {
           const size = 0.8 + (count / maxCount) * 1.2
           const [c1] = TAG_PALETTE[tagHash(tag)]
@@ -62,7 +68,7 @@ export default async function TagsPage() {
             <Link
               key={tag}
               href={`/tags/${tag}/pages/1`}
-              className="tchip"
+              className={`tchip ${tagsStyles.tchip}`}
               style={{
                 fontSize: `${14 * size}px`,
                 padding: `${8 * Math.sqrt(size)}px ${16 * Math.sqrt(size)}px`,
@@ -70,8 +76,8 @@ export default async function TagsPage() {
                 animationDelay: `${i * 32}ms`,
               }}
             >
-              <span className="n">{tag}</span>
-              <span className="c">{count}</span>
+              <span className={`n ${tagsStyles.n}`}>{tag}</span>
+              <span className={`c ${tagsStyles.c}`}>{count}</span>
             </Link>
           )
         })}

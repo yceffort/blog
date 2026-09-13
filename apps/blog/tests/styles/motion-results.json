@@ -1,0 +1,86 @@
+[
+  {
+    "width": 390,
+    "theme": "light",
+    "route": "/",
+    "passed": true,
+    "animations": 25
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "route": "/about",
+    "passed": true,
+    "animations": 4
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "route": "/2026/08/k8s-for-frontend-1",
+    "passed": true,
+    "animations": 8
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "route": "/",
+    "passed": true,
+    "animations": 25
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "route": "/about",
+    "passed": true,
+    "animations": 4
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "route": "/2026/08/k8s-for-frontend-1",
+    "passed": true,
+    "animations": 8
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "route": "/",
+    "passed": true,
+    "animations": 25
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "route": "/about",
+    "passed": true,
+    "animations": 4
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "route": "/2026/08/k8s-for-frontend-1",
+    "passed": true,
+    "animations": 8
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "route": "/",
+    "passed": true,
+    "animations": 25
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "route": "/about",
+    "passed": true,
+    "animations": 4
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "route": "/2026/08/k8s-for-frontend-1",
+    "passed": true,
+    "animations": 8
+  }
+]

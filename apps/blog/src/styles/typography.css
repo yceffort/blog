@@ -1,0 +1,790 @@
+/* Typography for generated Markdown; descendants opt out with markdown-exempt. */
+@layer typography {
+  .markdown-body {
+    --blog-prose-bold: #101828;
+    --blog-prose-bullets: #d1d5dc;
+    --blog-prose-captions: #6a7282;
+    --blog-prose-counters: #6a7282;
+    --blog-prose-headings: #101828;
+    --blog-prose-hr: #e5e7eb;
+    --blog-prose-kbd-shadows: #1018281a;
+    --blog-prose-kbd: #101828;
+    --blog-prose-lead: #4a5565;
+    --blog-prose-pre-bg: #1e2939;
+    --blog-prose-pre-code: #e5e7eb;
+    --blog-prose-quote-borders: #e5e7eb;
+    --blog-prose-quotes: #101828;
+    --blog-prose-td-borders: #e5e7eb;
+    --blog-prose-th-borders: #d1d5dc;
+
+    max-width: 65ch;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: lab(26.8019% 1.35387 -4.68303);
+  }
+  .markdown-body
+    :where(kbd):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    padding-top: 0.1875em;
+    padding-bottom: 0.1875em;
+    border-radius: 0.3125rem;
+    box-shadow:
+      0 0 0 1px var(--blog-prose-kbd-shadows),
+      0 3px 0 var(--blog-prose-kbd-shadows);
+    font-family: inherit;
+    font-size: 0.875em;
+    font-weight: 500;
+    color: var(--blog-prose-kbd);
+    padding-inline: 0.375em;
+  }
+  .markdown-body
+    :where(pre):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    overflow-x: auto;
+    margin-top: 1.71429em;
+    margin-bottom: 1.71429em;
+    padding-top: 0.857143em;
+    padding-bottom: 0.857143em;
+    border-radius: 0.375rem;
+    background-color: var(--blog-prose-pre-bg);
+    font-size: 0.875em;
+    font-weight: 400;
+    line-height: 1.71429;
+    color: var(--blog-prose-pre-code);
+    padding-inline: 1.14286em;
+  }
+  .markdown-body
+    :where(thead th):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    padding-bottom: 0.571429em;
+    font-weight: 600;
+    vertical-align: bottom;
+    color: var(--blog-prose-headings);
+    padding-inline: 0.571429em;
+  }
+  .markdown-body
+    :where(tbody td, tfoot td):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    padding-top: 0.571429em;
+    padding-bottom: 0.571429em;
+    padding-inline: 0.571429em;
+  }
+  .markdown-body
+    :where(a):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    font-weight: 500;
+    text-decoration: underline;
+    color: lab(48.295% 38.3129 -81.9673);
+  }
+  .markdown-body
+    :where(blockquote):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 1.6em;
+    margin-bottom: 1.6em;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--blog-prose-quotes);
+    quotes: '“' '”' '‘' '’';
+    border-inline-start-color: var(--blog-prose-quote-borders);
+    border-inline-start-width: 0.25rem;
+    padding-inline-start: 1em;
+  }
+  .markdown-body
+    :where(a):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ):hover {
+    color: lab(38.4009% 52.6132 -92.3857);
+  }
+  .markdown-body
+    :where(code):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    font-size: 0.875em;
+    font-weight: 600;
+    color: lab(56.9303% 76.8162 -8.07021);
+  }
+  .markdown-body
+    :where(a):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    )
+    code {
+    color: lab(59.866% 22.4834 -64.4485);
+  }
+  .markdown-dark:is(.dark *)
+    :where(a):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    )
+    code {
+    color: lab(59.866% 22.4834 -64.4485);
+  }
+  .markdown-dark:is(.dark *)
+    :where(a):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    color: lab(59.866% 22.4834 -64.4485);
+  }
+  .markdown-dark:is(.dark *)
+    :where(a):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ):hover {
+    color: lab(74.0235% 8.54138 -41.6075);
+  }
+  .markdown-dark:is(.dark *) {
+    color: lab(84.9837% 0.601262 -2.17986);
+  }
+  .markdown-dark:is(.dark *)
+    :where(h1, h2, h3, h4, h5, h6):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    color: lab(96.1634% 0.0993311 -0.364041);
+  }
+  .markdown-dark:is(.dark *)
+    :where(blockquote):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    border-left-color: lab(26.8019% 1.35387 -4.68303);
+    color: lab(96.1634% 0.0993311 -0.364041);
+  }
+  .markdown-dark:is(.dark *)
+    :where(thead):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    )
+    th {
+    color: lab(96.1634% 0.0993311 -0.364041);
+  }
+  .markdown-dark:is(.dark *)
+    :where(strong):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    color: lab(96.1634% 0.0993311 -0.364041);
+  }
+  .markdown-body
+    :where(strong):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    font-weight: 600;
+    color: var(--blog-prose-bold);
+  }
+  .markdown-body
+    :where(figcaption):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 0.857143em;
+    font-size: 0.875em;
+    line-height: 1.42857;
+    color: var(--blog-prose-captions);
+  }
+  .markdown-body
+    :where(dt):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 1.25em;
+    font-weight: 600;
+    color: var(--blog-prose-headings);
+  }
+  .markdown-body
+    :where(h4):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--blog-prose-headings);
+  }
+  .markdown-body
+    :where(h3):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 1.6em;
+    margin-bottom: 0.6em;
+    font-size: 1.25em;
+    font-weight: 600;
+    line-height: 1.6;
+    color: var(--blog-prose-headings);
+  }
+  .markdown-body
+    :where(h2):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 2em;
+    margin-bottom: 1em;
+    font-size: 1.5em;
+    font-weight: 700;
+    line-height: 1.33333;
+    color: var(--blog-prose-headings);
+  }
+  .markdown-body
+    :where(h1):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 0;
+    margin-bottom: 0.888889em;
+    font-size: 2.25em;
+    font-weight: 800;
+    line-height: 1.11111;
+    color: var(--blog-prose-headings);
+  }
+  .markdown-body
+    :where([class~='lead']):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+    font-size: 1.25em;
+    line-height: 1.6;
+    color: var(--blog-prose-lead);
+  }
+  .markdown-body
+    :where(code):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    )::after {
+    content: '`';
+  }
+  .markdown-body
+    :where(code):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    )::before {
+    content: '`';
+  }
+  .markdown-body
+    :where(blockquote p:last-of-type):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    )::after {
+    content: close-quote;
+  }
+  .markdown-body
+    :where(blockquote p:first-of-type):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    )::before {
+    content: open-quote;
+  }
+  .markdown-body
+    :where(picture):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    display: block;
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+  .markdown-body
+    :where(table):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    table-layout: auto;
+    width: 100%;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    font-size: 0.875em;
+    line-height: 1.71429;
+  }
+  .markdown-body
+    :where(h1, h2):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+  .markdown-body
+    :where(ol[type='1']):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    list-style-type: decimal;
+  }
+  .markdown-body
+    :where(ol):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    list-style-type: decimal;
+    padding-inline-start: 1.625em;
+  }
+  .markdown-body
+    :where(ul):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    list-style-type: disc;
+    padding-inline-start: 1.625em;
+  }
+  .markdown-body
+    :where(ol[type='a' s]):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    list-style-type: lower-alpha;
+  }
+  .markdown-body
+    :where(ol[type='a']):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    list-style-type: lower-alpha;
+  }
+  .markdown-body
+    :where(ol[type='i']):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    list-style-type: lower-roman;
+  }
+  .markdown-body
+    :where(ol[type='i' s]):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    list-style-type: lower-roman;
+  }
+  .markdown-body
+    :where(ol[type='A']):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    list-style-type: upper-alpha;
+  }
+  .markdown-body
+    :where(ol[type='A' s]):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    list-style-type: upper-alpha;
+  }
+  .markdown-body
+    :where(ol[type='I' s]):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    list-style-type: upper-roman;
+  }
+  .markdown-body
+    :where(ol[type='I']):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    list-style-type: upper-roman;
+  }
+  .markdown-body
+    :where(tbody td:last-child, tfoot td:last-child):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    padding-inline-end: 0;
+  }
+  .markdown-body
+    :where(thead th:last-child):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    padding-inline-end: 0;
+  }
+  .markdown-body
+    :where(ul > li):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    padding-inline-start: 0.375em;
+  }
+  .markdown-body
+    :where(ol > li):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    padding-inline-start: 0.375em;
+  }
+  .markdown-body
+    :where(thead th:first-child):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    padding-inline-start: 0;
+  }
+  .markdown-body
+    :where(tbody td:first-child, tfoot td:first-child):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    padding-inline-start: 0;
+  }
+  .markdown-body
+    :where(dd):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    padding-inline-start: 1.625em;
+    margin-top: 0.5em;
+  }
+  .markdown-body
+    :where(th, td):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    text-align: start;
+  }
+  .markdown-body
+    :where(tbody td):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    vertical-align: baseline;
+  }
+  .markdown-body
+    :where(tfoot td):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    vertical-align: top;
+  }
+  .markdown-dark:is(.dark *)
+    :where(hr):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    border-color: lab(26.8019% 1.35387 -4.68303);
+  }
+  .markdown-dark:is(.dark *)
+    :where(tbody):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    )
+    tr {
+    border-bottom-color: lab(26.8019% 1.35387 -4.68303);
+  }
+  .markdown-body
+    :where(hr):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 3em;
+    margin-bottom: 3em;
+    border-top-width: 1px;
+    border-color: var(--blog-prose-hr) var(--blog-prose-hr) var(--blog-prose-hr) var(--blog-prose-hr);
+  }
+  .markdown-body
+    :where(tbody tr):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    border-bottom-width: 1px;
+    border-bottom-color: var(--blog-prose-td-borders);
+  }
+  .markdown-body
+    :where(thead):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    border-bottom-width: 1px;
+    border-bottom-color: var(--blog-prose-th-borders);
+  }
+  .markdown-body
+    :is(tbody tr:last-child):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    border-bottom-width: 0;
+  }
+  .markdown-body
+    :where(tfoot):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    border-top-width: 1px;
+    border-top-color: var(--blog-prose-th-borders);
+  }
+  .markdown-body
+    :where(li):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+  .markdown-body
+    :where(ul ul, ul ol, ol ul, ol ol):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 0.75em;
+    margin-bottom: 0.75em;
+  }
+  .markdown-body
+    :where(.markdown-body > ul > li p):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 0.75em;
+    margin-bottom: 0.75em;
+  }
+  .markdown-body
+    :where(picture > img):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .markdown-body
+    :where(.markdown-body > ul > li > p:last-child):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-bottom: 1.25em;
+  }
+  .markdown-body
+    :where(p):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+  }
+  .markdown-body
+    :where(.markdown-body > ol > li > p:last-child):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-bottom: 1.25em;
+  }
+  .markdown-body
+    :where(dl):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+  }
+  .markdown-body
+    :where(img):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+  .markdown-body
+    :where(video):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+  .markdown-body
+    :where(figure):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+  .markdown-body
+    :where(.markdown-body > ul > li > p:first-child):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 1.25em;
+  }
+  .markdown-body
+    :where(.markdown-body > ol > li > p:first-child):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 1.25em;
+  }
+  .markdown-body
+    :where(ul > li):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    )::marker {
+    color: var(--blog-prose-bullets);
+  }
+  .markdown-body
+    :where(ol > li):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    )::marker {
+    font-weight: 400;
+    color: var(--blog-prose-counters);
+  }
+  .markdown-body
+    :where(pre code):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    padding: 0;
+    border-width: 0;
+    border-radius: 0;
+    background-color: #0000;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+  }
+  .markdown-body
+    :where(a strong):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    color: inherit;
+  }
+  .markdown-body
+    :where(h1 strong):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    font-weight: 900;
+    color: inherit;
+  }
+  .markdown-body
+    :where(h3 code):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    font-size: 0.9em;
+    color: inherit;
+  }
+  .markdown-body
+    :where(h4 strong):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    font-weight: 700;
+    color: inherit;
+  }
+  .markdown-body
+    :where(h3 strong):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    font-weight: 700;
+    color: inherit;
+  }
+  .markdown-body
+    :where(thead th code):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    color: inherit;
+  }
+  .markdown-body
+    :where(h4 code):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    color: inherit;
+  }
+  .markdown-body
+    :where(a code):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    color: inherit;
+  }
+  .markdown-body
+    :where(blockquote code):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    color: inherit;
+  }
+  .markdown-body
+    :where(h1 code):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    color: inherit;
+  }
+  .markdown-body
+    :where(h2 code):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    font-size: 0.875em;
+    color: inherit;
+  }
+  .markdown-body
+    :where(h2 strong):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    font-weight: 800;
+    color: inherit;
+  }
+  .markdown-body
+    :where(thead th strong):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    color: inherit;
+  }
+  .markdown-body
+    :where(blockquote strong):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    color: inherit;
+  }
+  .markdown-body
+    :where(pre code):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    )::before {
+    content: none;
+  }
+  .markdown-body
+    :where(pre code):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    )::after {
+    content: none;
+  }
+}
+@layer typographyFinal {
+  :where(.compact-stack > :not(:last-child)) {
+    --blog-space-x-reverse: 0;
+
+    margin-inline: calc(calc(var(--spacing) * 2) * var(--blog-space-x-reverse))
+      calc(calc(var(--spacing) * 2) * calc(1 - var(--blog-space-x-reverse)));
+  }
+  :where(.social-links > :not(:last-child)) {
+    --blog-space-x-reverse: 0;
+
+    margin-inline: calc(calc(var(--spacing) * 4) * var(--blog-space-x-reverse))
+      calc(calc(var(--spacing) * 4) * calc(1 - var(--blog-space-x-reverse)));
+  }
+  .markdown-body
+    :where(figure > *):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .markdown-body
+    :where(.markdown-body > :last-child):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-bottom: 0;
+  }
+  .markdown-body
+    :where(h4 + *):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 0;
+  }
+  .markdown-body
+    :where(hr + *):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 0;
+  }
+  .markdown-body
+    :where(h2 + *):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 0;
+  }
+  .markdown-body
+    :where(.markdown-body > :first-child):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 0;
+  }
+  .markdown-body
+    :where(h3 + *):not(
+      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
+    ) {
+    margin-top: 0;
+  }
+}
+
+@supports (color: lab(0% 0 0)) {
+  @layer typography {
+    .markdown-body {
+      --blog-prose-bold: lab(8.11897% 0.811279 -12.254);
+      --blog-prose-bullets: lab(85.1236% -0.612259 -3.7138);
+      --blog-prose-captions: lab(47.7841% -0.393182 -10.0268);
+      --blog-prose-counters: lab(47.7841% -0.393182 -10.0268);
+      --blog-prose-headings: lab(8.11897% 0.811279 -12.254);
+      --blog-prose-hr: lab(91.6229% -0.159115 -2.26791);
+      --blog-prose-kbd-shadows: lab(8.11897% 0.811279 -12.254 / 0.1);
+      --blog-prose-kbd: lab(8.11897% 0.811279 -12.254);
+      --blog-prose-lead: lab(35.6337% -1.58697 -10.8425);
+      --blog-prose-pre-bg: lab(16.1051% -1.18239 -11.7533);
+      --blog-prose-pre-code: lab(91.6229% -0.159115 -2.26791);
+      --blog-prose-quote-borders: lab(91.6229% -0.159115 -2.26791);
+      --blog-prose-quotes: lab(8.11897% 0.811279 -12.254);
+      --blog-prose-td-borders: lab(91.6229% -0.159115 -2.26791);
+      --blog-prose-th-borders: lab(85.1236% -0.612259 -3.7138);
+    }
+  }
+}
+
+@media (min-width: 48rem) {
+  @layer typographyFinal {
+    :where(.not-found-layout > :not(:last-child)) {
+      --blog-space-x-reverse: 0;
+
+      margin-inline: calc(
+          calc(var(--spacing) * 6) * var(--blog-space-x-reverse)
+        )
+        calc(calc(var(--spacing) * 6) * calc(1 - var(--blog-space-x-reverse)));
+    }
+    :where(.not-found-heading > :not(:last-child)) {
+      --blog-space-y-reverse: 0;
+
+      margin-block: calc(calc(var(--spacing) * 5) * var(--blog-space-y-reverse))
+        calc(calc(var(--spacing) * 5) * calc(1 - var(--blog-space-y-reverse)));
+    }
+  }
+}

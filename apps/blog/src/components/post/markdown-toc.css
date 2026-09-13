@@ -1,0 +1,335 @@
+/* The table of contents generated inside Markdown. */
+@layer site {
+  .markdown-body h2[id^='table-of-contents'] + ul {
+    padding: calc(var(--spacing) * 5);
+    border-width: 1px;
+    border-style: var(--blog-border-style) var(--blog-border-style) var(--blog-border-style) var(--blog-border-style);
+    border-color: oklch(92% 0.004 286.32);
+    border-radius: var(--radius-lg);
+    background-color: oklch(98.5% 0 none);
+    margin-block: calc(var(--spacing) * 6);
+    list-style-type: none;
+  }
+  .markdown-body
+    h2[id^='table-of-contents']
+    + ul
+    > li
+    > ul
+    > li
+    > ul
+    > li
+    > ul
+    > li
+    > a {
+    display: block;
+    font-size: var(--text-xs);
+    line-height: var(--blog-leading, var(--text-xs--line-height));
+    color: oklch(70.5% 0.015 286.067);
+    transition-duration: var(
+      --blog-duration,
+      var(--default-transition-duration)
+    );
+    transition-property:
+      color, background-color, border-color, outline-color,
+      text-decoration-color, fill, stroke, --blog-gradient-from,
+      --blog-gradient-via, --blog-gradient-to;
+    transition-timing-function: var(
+      --blog-ease,
+      var(--default-transition-timing-function)
+    );
+    padding-block: calc(var(--spacing) * 0.5);
+    text-decoration-line: none;
+  }
+  .markdown-body h2[id^='table-of-contents'] + ul > li > ul > li > ul > li > a {
+    display: block;
+    font-size: var(--text-xs);
+    line-height: var(--blog-leading, var(--text-xs--line-height));
+    color: oklch(55.2% 0.016 285.938);
+    transition-duration: var(
+      --blog-duration,
+      var(--default-transition-duration)
+    );
+    transition-property:
+      color, background-color, border-color, outline-color,
+      text-decoration-color, fill, stroke, --blog-gradient-from,
+      --blog-gradient-via, --blog-gradient-to;
+    transition-timing-function: var(
+      --blog-ease,
+      var(--default-transition-timing-function)
+    );
+    padding-block: var(--spacing);
+    text-decoration-line: none;
+  }
+  .markdown-body h2[id^='table-of-contents'] + ul > li > ul > li > a {
+    display: block;
+    font-size: var(--text-sm);
+    line-height: var(--blog-leading, var(--text-sm--line-height));
+    color: oklch(44.2% 0.017 285.786);
+    transition-duration: var(
+      --blog-duration,
+      var(--default-transition-duration)
+    );
+    transition-property:
+      color, background-color, border-color, outline-color,
+      text-decoration-color, fill, stroke, --blog-gradient-from,
+      --blog-gradient-via, --blog-gradient-to;
+    transition-timing-function: var(
+      --blog-ease,
+      var(--default-transition-timing-function)
+    );
+    padding-block: var(--spacing);
+    text-decoration-line: none;
+  }
+  .markdown-body h2[id^='table-of-contents'] + ul > li > a {
+    display: block;
+    font-weight: var(--font-weight-semibold);
+    color: oklch(27.4% 0.006 286.033);
+    transition-duration: var(
+      --blog-duration,
+      var(--default-transition-duration)
+    );
+    transition-property:
+      color, background-color, border-color, outline-color,
+      text-decoration-color, fill, stroke, --blog-gradient-from,
+      --blog-gradient-via, --blog-gradient-to;
+    transition-timing-function: var(
+      --blog-ease,
+      var(--default-transition-timing-function)
+    );
+    padding-block: var(--spacing);
+    text-decoration-line: none;
+  }
+  .markdown-body h2[id^='table-of-contents'] + ul:is(.dark *) {
+    border-color: oklch(37% 0.013 285.805);
+    background-color: color-mix(
+      in oklab,
+      oklch(27.4% 0.006 286.033) 50%,
+      transparent
+    );
+  }
+  .markdown-body
+    h2[id^='table-of-contents']
+    + ul
+    > li
+    > ul
+    > li
+    > ul
+    > li
+    > ul
+    > li
+    > a:is(.dark *) {
+    color: oklch(55.2% 0.016 285.938);
+  }
+  .markdown-body
+    h2[id^='table-of-contents']
+    + ul
+    > li
+    > ul
+    > li
+    > a:is(.dark *) {
+    color: oklch(70.5% 0.015 286.067);
+  }
+  .markdown-body
+    h2[id^='table-of-contents']
+    + ul
+    > li
+    > ul
+    > li
+    > ul
+    > li
+    > a:is(.dark *) {
+    color: oklch(70.5% 0.015 286.067);
+  }
+  .markdown-body h2[id^='table-of-contents'] + ul > li > a:is(.dark *) {
+    color: oklch(92% 0.004 286.32);
+  }
+  .markdown-body
+    h2[id^='table-of-contents']
+    + ul
+    > li
+    > ul
+    > li
+    > ul
+    > li
+    > ul {
+    margin-top: var(--spacing);
+    margin-bottom: calc(var(--spacing) * 2) !important;
+    padding-left: calc(var(--spacing) * 3);
+    border-left: 2px var(--blog-border-style) oklch(96.7% 0.001 286.375);
+    border-color: oklch(96.7% 0.001 286.375);
+    list-style-type: none;
+  }
+  .markdown-body h2[id^='table-of-contents'] + ul > li > ul {
+    margin-top: var(--spacing);
+    margin-bottom: calc(var(--spacing) * 2) !important;
+    padding-left: calc(var(--spacing) * 4);
+    border-left: 2px var(--blog-border-style) oklch(92% 0.004 286.32);
+    border-color: oklch(92% 0.004 286.32);
+    list-style-type: none;
+  }
+  .markdown-body h2[id^='table-of-contents'] + ul > li > ul > li > ul {
+    margin-top: var(--spacing);
+    margin-bottom: calc(var(--spacing) * 2) !important;
+    padding-left: calc(var(--spacing) * 4);
+    border-left: 2px var(--blog-border-style) oklch(92% 0.004 286.32);
+    border-color: oklch(92% 0.004 286.32);
+    list-style-type: none;
+  }
+  .markdown-body
+    h2[id^='table-of-contents']
+    + ul
+    > li
+    > ul
+    > li
+    > ul:is(.dark *) {
+    border-color: oklch(37% 0.013 285.805);
+  }
+  .markdown-body
+    h2[id^='table-of-contents']
+    + ul
+    > li
+    > ul
+    > li
+    > ul
+    > li
+    > ul:is(.dark *) {
+    border-color: oklch(37% 0.013 285.805);
+  }
+  .markdown-body h2[id^='table-of-contents']:is(.dark *) {
+    border-color: oklch(37% 0.013 285.805);
+  }
+  .markdown-body h2[id^='table-of-contents'] + ul > li > ul:is(.dark *) {
+    border-color: oklch(37% 0.013 285.805);
+  }
+  .markdown-body h2[id^='table-of-contents'] {
+    margin-top: calc(var(--spacing) * 8);
+    margin-bottom: calc(var(--spacing) * 4);
+    padding-bottom: calc(var(--spacing) * 2);
+    border-bottom: 1px var(--blog-border-style) oklch(92% 0.004 286.32);
+    border-color: oklch(92% 0.004 286.32);
+  }
+  .markdown-body h2[id^='table-of-contents'] + ul > li {
+    margin-top: 0;
+    padding-left: 0 !important;
+  }
+  .markdown-body h2[id^='table-of-contents'] + ul > li > ul > li {
+    margin-top: var(--spacing);
+    padding-left: 0 !important;
+  }
+  .markdown-body
+    h2[id^='table-of-contents']
+    + ul
+    > li
+    > ul
+    > li
+    > ul
+    > li
+    > ul
+    > li {
+    margin-top: var(--spacing);
+    padding-left: 0 !important;
+  }
+  .markdown-body h2[id^='table-of-contents'] + ul > li > ul > li > ul > li {
+    margin-top: var(--spacing);
+    padding-left: 0 !important;
+  }
+  .markdown-body h2[id^='table-of-contents'] + ul > li > ul > li::before {
+    display: none;
+  }
+  .markdown-body h2[id^='table-of-contents'] + ul > li::before {
+    display: none;
+  }
+  .markdown-body
+    h2[id^='table-of-contents']
+    + ul
+    > li
+    > ul
+    > li
+    > ul
+    > li
+    > ul
+    > li::before {
+    display: none;
+  }
+  .markdown-body
+    h2[id^='table-of-contents']
+    + ul
+    > li
+    > ul
+    > li
+    > ul
+    > li::before {
+    display: none;
+  }
+}
+
+@media (hover: hover) {
+  @layer site {
+    .markdown-body
+      h2[id^='table-of-contents']
+      + ul
+      > li
+      > ul
+      > li
+      > ul
+      > li
+      > a:hover {
+      color: oklch(51.1% 0.262 276.966);
+    }
+    .markdown-body h2[id^='table-of-contents'] + ul > li > ul > li > a:hover {
+      color: oklch(51.1% 0.262 276.966);
+    }
+    .markdown-body h2[id^='table-of-contents'] + ul > li > a:hover {
+      color: oklch(51.1% 0.262 276.966);
+    }
+    .markdown-body
+      h2[id^='table-of-contents']
+      + ul
+      > li
+      > ul
+      > li
+      > ul
+      > li
+      > ul
+      > li
+      > a:hover {
+      color: oklch(51.1% 0.262 276.966);
+    }
+    .markdown-body h2[id^='table-of-contents'] + ul > li > a:is(.dark *):hover {
+      color: oklch(67.3% 0.182 276.935);
+    }
+    .markdown-body
+      h2[id^='table-of-contents']
+      + ul
+      > li
+      > ul
+      > li
+      > ul
+      > li
+      > ul
+      > li
+      > a:is(.dark *):hover {
+      color: oklch(67.3% 0.182 276.935);
+    }
+    .markdown-body
+      h2[id^='table-of-contents']
+      + ul
+      > li
+      > ul
+      > li
+      > ul
+      > li
+      > a:is(.dark *):hover {
+      color: oklch(67.3% 0.182 276.935);
+    }
+    .markdown-body
+      h2[id^='table-of-contents']
+      + ul
+      > li
+      > ul
+      > li
+      > a:is(.dark *):hover {
+      color: oklch(67.3% 0.182 276.935);
+    }
+  }
+}

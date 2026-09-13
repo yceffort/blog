@@ -1,0 +1,27 @@
+/* Document anchors and shared element behavior. */
+@layer site {
+  a {
+    word-break: break-all;
+  }
+  h1 {
+    scroll-margin-top: 6rem;
+  }
+  h3 {
+    scroll-margin-top: 6rem;
+  }
+  h5 {
+    scroll-margin-top: 6rem;
+  }
+  h4 {
+    scroll-margin-top: 6rem;
+  }
+  h6 {
+    scroll-margin-top: 6rem;
+  }
+  h2 {
+    scroll-margin-top: 6rem;
+  }
+  html {
+    scroll-padding-top: 6rem;
+  }
+}

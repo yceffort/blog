@@ -1,23 +1,27 @@
-import {EmphasizedTitle} from '@yceffort/shared/components'
 import {notFound} from 'next/navigation'
 
-import {PostArticle} from '@/components/PostArticle'
-import RecentRow from '@/components/RecentRow'
+import * as recentStyles from '@/components/home/recent.styles'
+import RecentRow from '@/components/home/RecentRow'
+import * as ambientStyles from '@/components/layout/ambient.styles'
+import * as sectionStyles from '@/components/layout/section.styles'
+import {EmphasizedTitle} from '@/components/post/EmphasizedTitle'
+import {PostArticle} from '@/components/post/PostArticle'
+import * as readingProgressStyles from '@/components/post/reading-progress.styles'
+import * as seriesStyles from '@/components/series/series.styles'
 import {SiteConfig} from '@/config'
 import {buildOgImageUrl} from '@/utils/og'
 import {resolveThumbnail} from '@/utils/Post'
 import {findSeriesBySlug, getAllSeries} from '@/utils/Series'
-
 export async function generateMetadata(props: {
-  params: Promise<{slug: string}>
+  params: Promise<{
+    slug: string
+  }>
 }) {
   const {slug} = await props.params
   const series = await findSeriesBySlug(slug)
-
   if (!series) {
     return {}
   }
-
   return {
     title: series.name,
     description: series.description,
@@ -44,32 +48,35 @@ export async function generateMetadata(props: {
     },
   }
 }
-
 export async function generateStaticParams() {
   const series = await getAllSeries()
-  return series.map(({slug}) => ({slug}))
+  return series.map(({slug}) => ({
+    slug,
+  }))
 }
-
 export default async function SeriesDetailPage(props: {
-  params: Promise<{slug: string}>
+  params: Promise<{
+    slug: string
+  }>
 }) {
   const {slug} = await props.params
   const series = await findSeriesBySlug(slug)
-
   if (!series) {
     return notFound()
   }
-
   const {title, description, body, path, posts} = series
-
   return (
-    <div className="page-view series-view">
-      <section className="post-masthead">
-        <div className="post-eyebrow">◆ SERIES · {posts.length} POSTS</div>
-        <h1 className="post-title">
+    <div className={`page-view series-view ${ambientStyles.page_view}`}>
+      <section
+        className={`post-masthead ${readingProgressStyles.post_masthead}`}
+      >
+        <div className={`post-eyebrow ${readingProgressStyles.post_eyebrow}`}>
+          ◆ SERIES · {posts.length} POSTS
+        </div>
+        <h1 className={`post-title ${readingProgressStyles.post_title}`}>
           <EmphasizedTitle title={title} />
         </h1>
-        <p className="page-sub">{description}</p>
+        <p className={`page-sub ${seriesStyles.description}`}>{description}</p>
       </section>
 
       {body.trim() && (
@@ -79,19 +86,24 @@ export default async function SeriesDetailPage(props: {
         </div>
       )}
 
-      <div className="sec-head">
+      <div className={`sec-head ${sectionStyles.sec_head}`}>
         <div>
-          <span className="sec-count">
+          <span className={`sec-count ${sectionStyles.sec_count}`}>
             {String(posts.length).padStart(2, '0')} ITEMS
           </span>
-          <h2>전체 글</h2>
+          <h2 className={sectionStyles.element_h2}>전체 글</h2>
         </div>
-        <div className="line" />
-        <div className="hint">in order</div>
+        <div className={`line ${sectionStyles.line}`} />
+        <div className={`hint ${sectionStyles.hint}`}>in order</div>
       </div>
-      <section className="rec-list series-thread">
+      <section className={`rec-list series-thread ${recentStyles.rec_list}`}>
         {posts.map((post, i) => (
-          <RecentRow key={post.fields.slug} post={post} index={i} />
+          <RecentRow
+            key={post.fields.slug}
+            post={post}
+            index={i}
+            variant="series"
+          />
         ))}
       </section>
     </div>

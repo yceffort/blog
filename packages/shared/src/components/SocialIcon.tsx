@@ -9,6 +9,17 @@ import {
   YoutubeIcon,
 } from './icons/social'
 
+export interface SocialIconClassNames {
+  size4: string
+  size5: string
+  size6: string
+  size8: string
+  size10: string
+  link: string
+  label: string
+  icon: string
+}
+
 type IconType =
   | 'mail'
   | 'github'
@@ -26,23 +37,24 @@ const Components: Record<IconType, FC<{className: string}>> = {
   twitter: TwitterIcon,
 }
 
-const sizeClasses: Record<number, string> = {
-  4: 'h-4 w-4',
-  5: 'h-5 w-5',
-  6: 'h-6 w-6',
-  8: 'h-8 w-8',
-  10: 'h-10 w-10',
-}
-
 const SocialIcon = ({
   kind,
   href,
   size = 8,
+  classNames,
 }: {
   kind: IconType
   href: string
   size?: 4 | 5 | 6 | 8 | 10
+  classNames: SocialIconClassNames
 }) => {
+  const sizeClasses: Record<number, string> = {
+    4: classNames.size4,
+    5: classNames.size5,
+    6: classNames.size6,
+    8: classNames.size8,
+    10: classNames.size10,
+  }
   if (!href) {
     return null
   }
@@ -51,15 +63,13 @@ const SocialIcon = ({
 
   return (
     <a
-      className="text-sm text-gray-500 transition hover:text-gray-600"
+      className={classNames.link}
       target="_blank"
       rel="noopener noreferrer"
       href={href}
     >
-      <span className="sr-only">{kind}</span>
-      <SocialSvg
-        className={`fill-current text-gray-700 hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400 ${sizeClasses[size]}`}
-      />
+      <span className={classNames.label}>{kind}</span>
+      <SocialSvg className={`${classNames.icon} ${sizeClasses[size]}`} />
     </a>
   )
 }
