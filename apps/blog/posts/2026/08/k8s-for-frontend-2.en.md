@@ -1,5 +1,5 @@
 ---
-title: 'How My Next.js App Becomes a Pod: A Record of Opening Up Containers and Pods'
+title: 'How My Next.js App Becomes a <em>Pod</em>: A Record of Opening Up Containers and Pods'
 tags:
   - kubernetes
   - docker

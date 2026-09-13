@@ -1,5 +1,5 @@
 ---
-title: 'OG 스크래핑 서버를 Node.js로 짓는다면 (1): 런타임 선택부터 에러율과 지연까지'
+title: '<em>OG 스크래핑 서버</em>를 Node.js로 짓는다면 (1): 런타임 선택부터 에러율과 지연까지'
 tags:
   - nodejs
   - web

@@ -1,5 +1,5 @@
 ---
-title: 'Next.js turbopack에서 싱글톤이 두 개가 됐다: scope hoisting 버그와 순환 import'
+title: 'Next.js turbopack에서 <em>싱글톤이 두 개</em>가 됐다: scope hoisting 버그와 순환 import'
 tags:
   - turbopack
   - nextjs

@@ -1,5 +1,5 @@
 ---
-title: "Autoscaling Is Automatic but Not Instant: HPA's Timeline, Measured Segment by Segment"
+title: "Autoscaling Is Automatic but <em>Not Instant</em>: HPA's Timeline, Measured Segment by Segment"
 tags:
   - kubernetes
   - autoscaling

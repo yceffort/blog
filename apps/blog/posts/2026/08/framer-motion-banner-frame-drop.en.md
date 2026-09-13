@@ -1,5 +1,5 @@
 ---
-title: 'Killing Frame Drops in a framer-motion Banner: Two Wrong Turns and One Easing Function'
+title: 'Killing <em>Frame Drops</em> in a framer-motion Banner: Two Wrong Turns and One Easing Function'
 tags:
   - framer-motion
   - performance

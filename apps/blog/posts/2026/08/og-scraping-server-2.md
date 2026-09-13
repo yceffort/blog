@@ -1,5 +1,5 @@
 ---
-title: 'OG 스크래핑 서버를 Node.js로 짓는다면 (2): SSRF는 어떻게 뚫리는가'
+title: '<em>OG 스크래핑 서버</em>를 Node.js로 짓는다면 (2): SSRF는 어떻게 뚫리는가'
 tags:
   - nodejs
   - security

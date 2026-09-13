@@ -1,5 +1,5 @@
 ---
-title: 'framer-motion 배너에서 프레임드랍 없애기: 두 번의 삽질과 이징 함수'
+title: 'framer-motion 배너에서 <em>프레임드랍</em> 없애기: 두 번의 삽질과 이징 함수'
 tags:
   - framer-motion
   - performance

@@ -1,5 +1,5 @@
 ---
-title: 'Building an OG Scraping Server in Node.js (2): How SSRF Gets Through'
+title: 'Building an <em>OG Scraping Server</em> in Node.js (2): How SSRF Gets Through'
 tags:
   - nodejs
   - security

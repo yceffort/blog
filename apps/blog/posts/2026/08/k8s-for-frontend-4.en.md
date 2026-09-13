@@ -1,5 +1,5 @@
 ---
-title: 'How Do Pods Terminate? Measuring the Causes and Fixes of Deploy-Time Errors'
+title: 'How Do Pods <em>Terminate</em>? Measuring the Causes and Fixes of Deploy-Time Errors'
 tags:
   - kubernetes
   - nextjs

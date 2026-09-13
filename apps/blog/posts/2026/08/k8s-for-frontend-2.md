@@ -1,5 +1,5 @@
 ---
-title: '내 Next.js 앱은 어떻게 파드가 되는가: 컨테이너와 파드를 직접 열어본 기록'
+title: '내 Next.js 앱은 어떻게 <em>파드</em>가 되는가: 컨테이너와 파드를 직접 열어본 기록'
 tags:
   - kubernetes
   - docker

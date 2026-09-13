@@ -1,5 +1,5 @@
 ---
-title: 'Building an OG Scraping Server in Node.js (1): From Runtime Choice to Error Rate and Latency'
+title: 'Building an <em>OG Scraping Server</em> in Node.js (1): From Runtime Choice to Error Rate and Latency'
 tags:
   - nodejs
   - web

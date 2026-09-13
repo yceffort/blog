@@ -1,5 +1,5 @@
 ---
-title: '『npm Deep Dive』가 2026년 세종도서 학술부문에 선정되었습니다'
+title: '『<em>npm Deep Dive</em>』가 2026년 세종도서 학술부문에 선정되었습니다'
 tags:
   - nodejs
   - javascript

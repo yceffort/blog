@@ -1,5 +1,5 @@
 ---
-title: 'number-flow를 구형 브라우저로 이식하기: 다섯 가지 결정과 두 가지 번복'
+title: '<em>number-flow</em>를 구형 브라우저로 이식하기: 다섯 가지 결정과 두 가지 번복'
 tags:
   - javascript
   - animation

@@ -1,5 +1,5 @@
 ---
-title: '오토스케일링은 자동이지만 즉시가 아니다: HPA의 시간을 구간별로 실측한 기록'
+title: '오토스케일링은 자동이지만 <em>즉시가 아니다</em>: HPA의 시간을 구간별로 실측한 기록'
 tags:
   - kubernetes
   - autoscaling

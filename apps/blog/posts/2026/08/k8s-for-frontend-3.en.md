@@ -1,5 +1,5 @@
 ---
-title: 'How Does Traffic Reach My Pod? From ClusterIP to port-forward'
+title: 'How Does <em>Traffic</em> Reach My Pod? From ClusterIP to port-forward'
 tags:
   - kubernetes
   - networking

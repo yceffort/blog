@@ -1,5 +1,5 @@
 ---
-title: 'Next.js Turbopack Turned One Singleton into Two: A Scope Hoisting Bug and a Circular Import'
+title: 'Next.js Turbopack Turned <em>One Singleton into Two</em>: A Scope Hoisting Bug and a Circular Import'
 tags:
   - turbopack
   - nextjs

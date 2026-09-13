@@ -1,5 +1,5 @@
 ---
-title: 'A Kubernetes Concept Map for Frontend Developers: From Pods to Autoscalers'
+title: 'A <em>Kubernetes Concept Map</em> for Frontend Developers: From Pods to Autoscalers'
 tags:
   - kubernetes
   - frontend

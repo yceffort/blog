@@ -1,5 +1,5 @@
 ---
-title: 'Porting number-flow to Old Browsers: Five Decisions and Two Reversals'
+title: 'Porting <em>number-flow</em> to Old Browsers: Five Decisions and Two Reversals'
 tags:
   - javascript
   - animation

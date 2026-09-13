@@ -1,5 +1,5 @@
 ---
-title: '트래픽은 어떻게 내 파드에 도착하는가: ClusterIP부터 port-forward까지'
+title: '<em>트래픽</em>은 어떻게 내 파드에 도착하는가: ClusterIP부터 port-forward까지'
 tags:
   - kubernetes
   - networking
