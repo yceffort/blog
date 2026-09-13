@@ -159,7 +159,7 @@ export async function GET(request: Request) {
   unblockSvgLoader()
   const {searchParams} = new URL(request.url)
   const slug = searchParams.get('slug') ?? 'yceffort'
-  const title = searchParams.get('title')
+  const title = searchParams.get('title')?.slice(0, 200) || null
   const tag = searchParams.get('tag')
   const layoutName = searchParams.get('layout')
   const hueName = searchParams.get('hue')
@@ -168,14 +168,17 @@ export async function GET(request: Request) {
 
   const hash = hashCode(slug)
   const rand = mulberry32(hash)
-  const hueIndices = (hueName && HUES[hueName]) || null
+  const hueIndices =
+    hueName && Object.hasOwn(HUES, hueName) ? HUES[hueName] : null
   const [c1, c2] = hueIndices
     ? DUOS[hueIndices[hash % hueIndices.length]]
     : DUOS[hash % DUOS.length]
 
   const layoutRoll = Math.floor(rand() * LAYOUTS.length)
   const layout =
-    (layoutName && LAYOUT_BY_NAME[layoutName]) || LAYOUTS[layoutRoll]
+    layoutName && Object.hasOwn(LAYOUT_BY_NAME, layoutName)
+      ? LAYOUT_BY_NAME[layoutName]
+      : LAYOUTS[layoutRoll]
   const rolledPaper = pickPaper(rand)
   const wantDark = tone === 'dark' ? true : tone === 'light' ? false : null
   const paper = (() => {
