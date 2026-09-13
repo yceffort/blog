@@ -347,6 +347,7 @@
     const similarityResult = document.getElementById('similarity-result');
     const corpusInput = document.getElementById('corpus-input');
     const queryInput = document.getElementById('query-input');
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 
     let extractor = null;
 
@@ -416,12 +417,12 @@
         similarityResult.style.display = 'block';
         similarityResult.innerHTML = `
           <div style="margin-bottom: 0.5rem; color: #888; font-size: 0.875rem;">
-            쿼리: "${query}"
+            쿼리: "${esc(query)}"
           </div>
           ${results.map((r, i) => `
             <div style="display: flex; align-items: center; padding: 0.75rem; background: ${i === 0 ? '#064e3b' : '#0d0d0d'}; border-radius: 4px; margin-bottom: 0.5rem;">
               <div style="flex: 1;">
-                <div style="color: ${i === 0 ? '#6ee7b7' : '#e5e5e5'};">${r.text}</div>
+                <div style="color: ${i === 0 ? '#6ee7b7' : '#e5e5e5'};">${esc(r.text)}</div>
               </div>
               <div style="font-family: monospace; font-weight: 600; color: ${r.similarity > 0.7 ? '#10b981' : r.similarity > 0.4 ? '#f59e0b' : '#888'};">
                 ${(r.similarity * 100).toFixed(1)}%
@@ -438,7 +439,7 @@
       } catch (e) {
         similarityStatus.textContent = '';
         similarityResult.style.display = 'block';
-        similarityResult.innerHTML = `<p style="color: #ef4444;">오류: ${e.message}</p>`;
+        similarityResult.innerHTML = `<p style="color: #ef4444;">오류: ${esc(e.message)}</p>`;
       }
 
       similarityBtn.disabled = false;
@@ -518,7 +519,7 @@
         // 결과 표시
         classificationResult.innerHTML = results.map((r, i) => {
           const pct = (r.score * 100).toFixed(1);
-          const label = r.label.split(',')[0]; // 첫 번째 라벨만
+          const label = esc(r.label.split(',')[0]); // 첫 번째 라벨만
           const isTop = i === 0;
           return `
             <div style="margin-bottom: 0.5rem;">
@@ -534,7 +535,7 @@
         }).join('');
 
       } catch (e) {
-        classificationResult.innerHTML = `<div style="color: #ef4444;">오류: ${e.message}</div>`;
+        classificationResult.innerHTML = `<div style="color: #ef4444;">오류: ${esc(e.message)}</div>`;
         classificationStatus.textContent = '';
       }
     }
