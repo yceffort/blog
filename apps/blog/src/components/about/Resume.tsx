@@ -1,365 +1,329 @@
+import Link from 'next/link'
+
+import {openSourceProjects} from './openSourceProjects'
+import {ProjectTags} from './ProjectTags'
+
+import styles from './Resume.module.scss'
+
+const sections = [
+  {id: 'experience', label: '경력'},
+  {id: 'publications', label: '저술·번역'},
+  {id: 'open-source', label: '오픈소스'},
+  {id: 'activities', label: '발표·활동'},
+  {id: 'education', label: '학력'},
+]
+
+const experience = [
+  {
+    company: '네이버 파이낸셜',
+    role: 'Frontend Engineer · 카드FE 리더',
+    period: '2020.09 — 2026.03',
+    description: '금융 서비스 개발과 프론트엔드 조직의 공통 기반 구축',
+    contributions: [
+      '마이데이터, 회원 인증, 카드탭 등 모바일 금융 서비스 개발',
+      'SPA에서 SSR로 전환하고, Next.js·Koa·쿠버네티스 기반 서비스 설계·배포·운영',
+      '공통 ESLint 설정과 플러그인, 상태 관리 라이브러리, 디자인 시스템 개발·운영',
+      '프로젝트 생성 도구와 Node.js CLI, 업무 생산성을 위한 MCP 제작',
+      '팀의 코드 리뷰와 멘토링을 주도하고 공통 npm 패키지를 개발·공개',
+    ],
+    stack:
+      'React · TypeScript · Next.js · Node.js · Kubernetes · pnpm · Turborepo',
+    link: {
+      href: 'https://github.com/orgs/NaverPayDev/repositories',
+      label: '공개 패키지 보기',
+    },
+  },
+  {
+    company: '트리플',
+    role: 'Frontend Engineer',
+    period: '2019.05 — 2020.08',
+    description: '여행의 탐색부터 예약·결제까지 이어지는 웹 서비스 개발',
+    contributions: [
+      '글로벌 도시 검색과 항공권 판매 서비스 개발·운영',
+      '결제 서비스와 공통 컴포넌트를 JavaScript에서 TypeScript로 전환',
+      '판매자와 사용자 간 1:1 문의 채팅 서비스 개발',
+    ],
+    stack: 'React · TypeScript · Next.js · Koa · Docker · Amazon ECS',
+  },
+  {
+    company: '카카오',
+    role: 'Software Engineer',
+    period: '2016.09 — 2019.05',
+    description: '카카오 같이가치의 프론트엔드와 서버 개발·운영',
+    contributions: [
+      'AngularJS 기반 레거시 애플리케이션을 Angular로 전환',
+      '관리자 도구를 개발하고 Ruby on Rails 기반 서버를 함께 운영',
+    ],
+    stack: 'Angular · TypeScript · Ruby on Rails · MySQL · Redis',
+  },
+  {
+    company: '삼성SDS',
+    role: 'Software Engineer',
+    period: '2014.03 — 2016.06',
+    description: '글로벌 의료 솔루션 개발과 신기술 개념 검증',
+    contributions: [
+      '해외 병원용 EHR 솔루션과 간호 병동 서비스 개발',
+      'iOS 비콘 기반 실내 내비게이션과 금융 고객사 블록체인 PoC 개발',
+      'Python을 활용한 데이터 정합성·유효성 검증',
+    ],
+    stack: 'Delphi · Oracle DB · Spring · JavaScript · Python',
+  },
+]
+
+const publications = [
+  {
+    title: '프런트엔드 성능 최적화 Deep Dive',
+    role: '단독 저자',
+    subject: '네트워크부터 브라우저와 프레임워크까지, 성능을 이해하는 원리',
+    href: 'https://wikibook.co.kr/frontend-optimization/',
+  },
+  {
+    title: 'npm Deep Dive',
+    role: '공동 저자',
+    subject: '모듈 시스템, 패키지 관리와 JavaScript 생태계',
+    href: 'https://wikibook.co.kr/npm-deep-dive/',
+  },
+  {
+    title: '모던 리액트 Deep Dive',
+    role: '단독 저자',
+    subject: 'React의 동작 원리와 웹 애플리케이션 개발',
+    href: 'https://wikibook.co.kr/react-deep-dive/',
+  },
+  {
+    title: '리액트 인터뷰 가이드',
+    role: '번역',
+    subject: '질문과 답으로 살펴보는 React 개발 지식',
+    href: 'https://wikibook.co.kr/react-interview-guide/',
+  },
+]
+
 export function Resume() {
   return (
-    <div className="w-full space-y-8 pb-12">
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-        <section className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-800/50 md:p-10">
-          <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100">
-            Profile
-          </h2>
-          <ul className="space-y-2 text-gray-600 dark:text-gray-300">
-            <li>
-              <span className="font-semibold">생년월일:</span> 1988.10.24
-            </li>
-            <li>
-              <span className="font-semibold">이메일:</span>{' '}
-              <a
-                href="mailto:root@yceffort.kr"
-                className="text-primary-600 hover:underline dark:text-primary-400"
-              >
-                root@yceffort.kr
-              </a>
-            </li>
-          </ul>
-        </section>
-
-        <section className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-800/50 md:p-10">
-          <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100">
-            Key Expertise
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {['JavaScript', 'TypeScript', 'React', 'Next.js', 'Node.js'].map(
-              (skill) => (
-                <span
-                  key={skill}
-                  className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800 dark:bg-gray-800 dark:text-gray-200"
-                >
-                  {skill}
-                </span>
-              ),
-            )}
-          </div>
-        </section>
-      </div>
-
-      <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800/50 md:p-12">
-        <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-gray-100">
-          Summary
-        </h2>
-        <p className="leading-relaxed text-gray-600 dark:text-gray-300">
-          10년 이상의 프론트엔드 개발 경험을 보유한 엔지니어로, React와
-          TypeScript를 기반으로 네이버 파이낸셜에서 대규모 금융 서비스를
-          설계·운영하며, 조직의 기술 표준과 공통 라이브러리를 구축하여 개발
-          생산성 향상에 기여했습니다. 또한 기술 서적 집필과 오픈소스 활동을 통해
-          개발 커뮤니티에 적극적으로 기여하고 있습니다.
+    <div className={styles.resume}>
+      <header className={styles.summary}>
+        <p className={styles.eyebrow}>EXPERIENCE & CONTRIBUTIONS</p>
+        <h2>서비스 개발부터 팀이 일하는 기반까지.</h2>
+        <p className={styles.lead}>
+          2014년부터 다양한 도메인의 소프트웨어를 만들고 운영해 왔습니다.
+          프론트엔드 팀을 이끌고, 여러 서비스가 함께 쓰는 라이브러리와 도구를
+          만들었습니다. 그 과정에서 얻은 경험을 책과 글, 오픈소스로 나눕니다.
         </p>
-      </section>
+        <p className={styles.status}>
+          <span aria-hidden="true" />
+          프론트엔드 엔지니어 · 재직 중
+        </p>
+        <dl className={styles.expertise}>
+          <div>
+            <dt>서비스 개발</dt>
+            <dd>React · TypeScript · Next.js</dd>
+          </div>
+          <div>
+            <dt>운영과 성능</dt>
+            <dd>Node.js · Kubernetes · 웹 성능</dd>
+          </div>
+          <div>
+            <dt>팀의 개발 기반</dt>
+            <dd>공통 라이브러리 · CLI · 코드 리뷰</dd>
+          </div>
+        </dl>
+      </header>
 
-      <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800/50 md:p-12">
-        <h2 className="mb-8 text-2xl font-bold text-gray-900 dark:text-gray-100">
-          Employment History
-        </h2>
-        <ol className="relative border-l border-gray-200 dark:border-gray-700">
-          <li className="mb-10 ml-6">
-            <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-800">
-              <span className="h-3 w-3 rounded-full bg-gray-400 dark:bg-gray-500" />
-            </span>
-            <h3 className="mb-1 flex items-center text-lg font-semibold text-gray-900 dark:text-gray-100">
-              Frontend Engineer, NAVER Financial Corp.
-            </h3>
-            <time className="mb-2 block text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-              2020.09 ~ 2026.03
-            </time>
-            <div className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-              <ul className="list-disc space-y-2 pl-5">
-                <li>
-                  <span className="font-semibold text-gray-700 dark:text-gray-200">
-                    카드FE 리더
-                  </span>
-                  <ul className="mt-1 list-circle space-y-1 pl-5 text-sm">
-                    <li>
-                      마이데이터(은행, 카드, 증권, 보험, 연금, PFMS) 및 회원
-                      인증, 카드탭, 카드 관련 서비스 등 다양한 서비스 개발
-                    </li>
-                    <li>
-                      React, Next.js, K8S, Koa를 기반으로 모바일 지향 서비스
-                      개발
-                    </li>
-                    <li>SPA에서 SSR 전환, 마이크로 서비스 설계, 운영, 배포</li>
-                    <li>Node.js(Koa) 기반 서버 개발</li>
-                    <li>팀원들의 성장을 위한 멘토링과 코드 리뷰 주도</li>
+      <div className={styles.layout}>
+        <nav className={styles.nav} aria-label="이력서 목차">
+          {sections.map(({id, label}, index) => (
+            <a key={id} href={`#${id}`}>
+              <span aria-hidden="true">0{index + 1}</span>
+              {label}
+            </a>
+          ))}
+        </nav>
+
+        <div className={styles.content}>
+          <section
+            id="experience"
+            className={styles.section}
+            aria-labelledby="experience-title"
+          >
+            <div className={styles.sectionHeading}>
+              <h2 id="experience-title">경력</h2>
+              <span>Experience</span>
+            </div>
+            <p className={styles.sectionNote}>
+              이전에 근무한 곳에서의 경험입니다.
+            </p>
+            <ol className={styles.timeline}>
+              {experience.map((job) => (
+                <li key={job.company} className={styles.job}>
+                  <div className={styles.jobHeading}>
+                    <h3>{job.company}</h3>
+                    <span className={styles.period}>{job.period}</span>
+                  </div>
+                  <p className={styles.role}>{job.role}</p>
+                  <p className={styles.jobDescription}>{job.description}</p>
+                  <ul className={styles.contributions}>
+                    {job.contributions.map((contribution) => (
+                      <li key={contribution}>{contribution}</li>
+                    ))}
                   </ul>
+                  <p className={styles.stack}>{job.stack}</p>
+                  {job.link ? (
+                    <a className={styles.textLink} href={job.link.href}>
+                      {job.link.label} <span aria-hidden="true">↗</span>
+                    </a>
+                  ) : null}
                 </li>
-                <li>
-                  <span className="font-semibold text-gray-700 dark:text-gray-200">
-                    프론트엔드 조직의 공통 라이브러리 개발
-                  </span>
-                  <ul className="mt-1 list-circle space-y-1 pl-5 text-sm">
-                    <li>
-                      `eslint-config`, `create-**-apps` 등 여러 마이크로
-                      서비스에서 공통적으로 사용하는 패키지 개발
-                    </li>
-                    <li>커스텀 ESLint 설정 및 플러그인 제작, 배포</li>
-                    <li>리액트 기반 상태 관리 라이브러리 개발 및 운영</li>
-                    <li>개발에 필요한 Node.js 기반 CLI 개발 및 운영</li>
-                    <li>디자인 시스템 구축 및 유지보수</li>
-                    <li>
-                      다양한 npm 패키지 개발{' '}
-                      <a
-                        href="https://github.com/orgs/NaverPayDev/repositories"
-                        className="text-primary-600 hover:underline dark:text-primary-400"
-                      >
-                        Link
+              ))}
+            </ol>
+          </section>
+
+          <section
+            id="publications"
+            className={styles.section}
+            aria-labelledby="publications-title"
+          >
+            <div className={styles.sectionHeading}>
+              <h2 id="publications-title">저술·번역</h2>
+              <span>Publications</span>
+            </div>
+            <ul className={styles.books}>
+              {publications.map((book) => (
+                <li key={book.href}>
+                  <a className={styles.book} href={book.href}>
+                    <span className={styles.bookRole}>{book.role}</span>
+                    <h3>{book.title}</h3>
+                    <p>{book.subject}</p>
+                    <span className={styles.bookLink}>
+                      출판사에서 보기 <span aria-hidden="true">↗</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p className={styles.writing}>
+              <span className={styles.eyebrow}>WRITING NOW</span>
+              <Link href="/2026/09/who-learns-to-judge-beta-reader">
+                남은 판단은 누가 배우는가 <span aria-hidden="true">↗</span>
+              </Link>
+              <span>
+                AI 시대의 개발자, 판단과 학습에 관한 에세이 · 가제, 집필 중
+              </span>
+            </p>
+          </section>
+
+          <section
+            id="open-source"
+            className={styles.section}
+            aria-labelledby="open-source-title"
+          >
+            <div className={styles.sectionHeading}>
+              <h2 id="open-source-title">오픈소스</h2>
+              <span>Open source</span>
+            </div>
+            <ul className={styles.entries}>
+              {openSourceProjects.map((project) => (
+                <li key={project.href}>
+                  <span className={styles.period}>{project.category}</span>
+                  <div>
+                    <h3>
+                      <a href={project.href}>
+                        {project.name} <span aria-hidden="true">↗</span>
                       </a>
-                    </li>
-                    <li>
-                      내부 생산성 향상을 위한 MCP(Model Context Protocol) 제작
-                    </li>
-                  </ul>
+                    </h3>
+                    <p>{project.description}</p>
+                    <ProjectTags tags={project.tags} />
+                  </div>
                 </li>
-              </ul>
-            </div>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              <span className="font-semibold">Tech Stack:</span> React,
-              TypeScript, JavaScript, MobX, Next.js, SCSS, react-query, SWR,
-              styled-components, Koa, K8S, Rollup, esbuild, Vite, pnpm/npm
-              workspaces, Turborepo
-            </p>
-          </li>
-          <li className="mb-10 ml-6">
-            <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-800">
-              <span className="h-3 w-3 rounded-full bg-gray-400 dark:bg-gray-500" />
-            </span>
-            <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-gray-100">
-              Frontend Engineer, Triple Corp.
-            </h3>
-            <time className="mb-2 block text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-              2019.05 ~ 2020.08
-            </time>
-            <div className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-              <ul className="list-disc space-y-1 pl-5">
-                <li>트리플 애플리케이션 프론트엔드 서비스 개발</li>
-                <li>
-                  JavaScript로 작성된 결제 서비스 및 공통 컴포넌트를
-                  TypeScript로 변환
-                </li>
-                <li>글로벌 도시 검색 서비스 개발</li>
-                <li>항공권 판매 서비스 개발 및 관리</li>
-                <li>판매자-사용자 간 1:1 문의 채팅 서비스 개발</li>
-              </ul>
-            </div>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              <span className="font-semibold">Tech Stack:</span> React,
-              TypeScript, JavaScript, Next.js, styled-components, Lerna, Koa,
-              Docker, Amazon ECS
-            </p>
-          </li>
-          <li className="mb-10 ml-6">
-            <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-800">
-              <span className="h-3 w-3 rounded-full bg-gray-400 dark:bg-gray-500" />
-            </span>
-            <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-gray-100">
-              Software Engineer, Kakao Corp.
-            </h3>
-            <time className="mb-2 block text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-              2016.09 ~ 2019.05
-            </time>
-            <div className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-              <ul className="list-disc space-y-1 pl-5">
-                <li>
-                  <a
-                    href="https://together.kakao.com/"
-                    className="text-primary-600 hover:underline dark:text-primary-400"
-                  >
-                    카카오 같이가치
-                  </a>{' '}
-                  서비스 개발
-                </li>
-                <li>
-                  AngularJS로 작성된 레거시 애플리케이션을 Angular로 업그레이드
-                </li>
-                <li>AngularJS 기반 관리자 어드민 개발 및 운영</li>
-                <li>서비스 전반을 풀스택으로 관리</li>
-              </ul>
-            </div>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              <span className="font-semibold">Tech Stack:</span> Angular,
-              AngularJS, JavaScript, TypeScript, Ruby on Rails, MySQL, Redis
-            </p>
-          </li>
-          <li className="ml-6">
-            <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-800">
-              <span className="h-3 w-3 rounded-full bg-gray-400 dark:bg-gray-500" />
-            </span>
-            <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-gray-100">
-              Software Engineer, Samsung SDS
-            </h3>
-            <time className="mb-2 block text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-              2014.03 ~ 2016.06
-            </time>
-            <div className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-              <ul className="list-disc space-y-1 pl-5">
-                <li>글로벌 EHR(Electronic Healthcare Record) 솔루션 개발</li>
-                <li>해외 병원용 EHR 솔루션 및 간호 병동 서비스 개발</li>
-                <li>
-                  실내 내비게이션 시스템 POC - iOS 기반 비콘 위치 추적
-                  애플리케이션 개발
-                </li>
-                <li>Python을 활용한 데이터 정합성 및 유효성 계산</li>
-                <li>
-                  블록체인 시스템 POC - 금융 고객사를 위한 블록체인 시스템 POC
-                  개발
-                </li>
-              </ul>
-            </div>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              <span className="font-semibold">Tech Stack:</span> Delphi, Oracle
-              DB, Spring, Custom blockchain, JavaScript, HTML, CSS
-            </p>
-          </li>
-        </ol>
-      </section>
+              ))}
+            </ul>
+          </section>
 
-      <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800/50 md:p-12">
-        <h2 className="mb-8 text-2xl font-bold text-gray-900 dark:text-gray-100">
-          Education
-        </h2>
-        <ol className="relative border-l border-gray-200 dark:border-gray-700">
-          <li className="mb-10 ml-6">
-            <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-800">
-              <span className="h-3 w-3 rounded-full bg-gray-400 dark:bg-gray-500" />
-            </span>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              한국과학기술원 (KAIST) 대전캠퍼스
-            </h3>
-            <time className="mb-2 block text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-              2018.03 ~ 2020.02
-            </time>
-            <p className="text-gray-500 dark:text-gray-400">
-              기술경영전문대학원 석사과정 졸업 (Highest Honor, GPA 4.23 / 4.3)
-            </p>
-          </li>
-          <li className="ml-6">
-            <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-800 dark:ring-gray-800">
-              <span className="h-3 w-3 rounded-full bg-gray-400 dark:bg-gray-500" />
-            </span>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              동국대학교 서울캠퍼스
-            </h3>
-            <time className="mb-2 block text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-              2007.03 ~ 2014.02
-            </time>
-            <p className="text-gray-500 dark:text-gray-400">
-              국제통상학 전공, 영어통번역학 복수전공 학사과정 졸업
-            </p>
-          </li>
-        </ol>
-      </section>
+          <section
+            id="activities"
+            className={styles.section}
+            aria-labelledby="activities-title"
+          >
+            <div className={styles.sectionHeading}>
+              <h2 id="activities-title">발표·활동</h2>
+              <span>Beyond work</span>
+            </div>
+            <ul className={styles.entries}>
+              <li>
+                <span className={styles.period}>2024</span>
+                <div>
+                  <h3>DAN24 컨퍼런스 발표</h3>
+                  <p>웹 서비스 번들 사이즈 최적화를 주제로 발표했습니다.</p>
+                </div>
+              </li>
+              <li>
+                <span className={styles.period}>2021.01 — 2021.12</span>
+                <div>
+                  <h3>SSAFY 멘토</h3>
+                  <p>
+                    삼성 청년 소프트웨어 아카데미에서 프로그래밍 질의응답과 칼럼
+                    작성으로 청년 개발자들의 학습을 도왔습니다.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span className={styles.period}>2018 — 현재</span>
+                <div>
+                  <h3>
+                    <Link href="/">
+                      기술 블로그 yceffort.kr <span aria-hidden="true">↗</span>
+                    </Link>
+                  </h3>
+                  <p>
+                    블로그를 직접 개발·운영하며 프레임워크 내부 동작, 성능과
+                    운영, 개발 도구, AI와 함께 일하는 경험을 기록합니다.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span className={styles.period}>2016.03 — 현재</span>
+                <div>
+                  <h3>
+                    <a href="https://jumpsp.org/">
+                      사단법인 점프 이사 <span aria-hidden="true">↗</span>
+                    </a>
+                  </h3>
+                  <p>
+                    Google Cloud Platform을 활용한 업무 자동화와 프로그래밍
+                    교육에 참여하고 있습니다.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </section>
 
-      <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800/50 md:p-12">
-        <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-gray-100">
-          Extra-Curricular Activities
-        </h2>
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              Jump Board Member
-            </h3>
-            <time className="block text-sm text-gray-500 dark:text-gray-400">
-              2016.03 ~ 현재
-            </time>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">
-              <a
-                href="https://jumpsp.org/"
-                className="text-primary-600 hover:underline dark:text-primary-400"
-              >
-                점프
-              </a>{' '}
-              이사로 활동하며 Google Cloud Platform을 활용해 업무 자동화 및
-              프로그래밍 교육을 담당하고 있습니다.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              yceffort.kr
-            </h3>
-            <time className="block text-sm text-gray-500 dark:text-gray-400">
-              2018 ~
-            </time>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">
-              개인 블로그를 통해 프로그래밍 인사이트와 고민을 공유합니다.
-              블로그는 직접 개발하여 운영중입니다.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              Samsung Software Academy For Youth (SSAFY) 멘토
-            </h3>
-            <time className="block text-sm text-gray-500 dark:text-gray-400">
-              2021.01 ~ 2021.12
-            </time>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">
-              삼성 청년 소프트웨어 아카데미에서 청년들의 멘토로 참여해
-              프로그래밍 관련 질의응답과 칼럼 작성을 진행했습니다.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              DAN24 컨퍼런스 발표
-            </h3>
-            <time className="block text-sm text-gray-500 dark:text-gray-400">
-              2024
-            </time>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">
-              네이버 개발자 컨퍼런스 DAN24에서 &apos;웹 서비스 번들 사이즈
-              최적화&apos; 세션을 발표했습니다.
-            </p>
-          </div>
+          <section
+            id="education"
+            className={styles.section}
+            aria-labelledby="education-title"
+          >
+            <div className={styles.sectionHeading}>
+              <h2 id="education-title">학력</h2>
+              <span>Education</span>
+            </div>
+            <ul className={styles.entries}>
+              <li>
+                <span className={styles.period}>2018.03 — 2020.02</span>
+                <div>
+                  <h3>한국과학기술원 (KAIST)</h3>
+                  <p>기술경영전문대학원 석사</p>
+                  <p className={styles.honor}>Highest Honor · GPA 4.23 / 4.3</p>
+                </div>
+              </li>
+              <li>
+                <span className={styles.period}>2007.03 — 2014.02</span>
+                <div>
+                  <h3>동국대학교</h3>
+                  <p>국제통상학 전공 · 영어통번역학 복수전공 학사</p>
+                </div>
+              </li>
+            </ul>
+          </section>
         </div>
-      </section>
-
-      <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800/50 md:p-12">
-        <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-gray-100">
-          Publishing
-        </h2>
-        <ul className="list-disc space-y-2 pl-5 text-gray-600 dark:text-gray-300">
-          <li>
-            모던 리액트 Deep Dive (단독 저자) -{' '}
-            <a
-              href="https://wikibook.co.kr/react-deep-dive/"
-              className="text-primary-600 hover:underline dark:text-primary-400"
-            >
-              wikibook.co.kr
-            </a>
-          </li>
-          <li>
-            리액트 인터뷰 가이드 (번역) -{' '}
-            <a
-              href="https://wikibook.co.kr/react-interview-guide/"
-              className="text-primary-600 hover:underline dark:text-primary-400"
-            >
-              wikibook.co.kr
-            </a>
-          </li>
-          <li>
-            npm deep dive (공동 저자) -{' '}
-            <a
-              href="https://wikibook.co.kr/npm-deep-dive/"
-              className="text-primary-600 hover:underline dark:text-primary-400"
-            >
-              wikibook.co.kr
-            </a>
-          </li>
-          <li>
-            프런트엔드 성능 최적화 Deep Dive (단독 저자) -{' '}
-            <a
-              href="https://wikibook.co.kr/frontend-optimization/"
-              className="text-primary-600 hover:underline dark:text-primary-400"
-            >
-              wikibook.co.kr
-            </a>
-          </li>
-        </ul>
-      </section>
+      </div>
     </div>
   )
 }

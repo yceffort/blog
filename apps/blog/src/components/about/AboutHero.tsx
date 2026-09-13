@@ -24,8 +24,8 @@ export function AboutHero() {
           <span className="sr-only">{SiteConfig.author.name}.</span>
         </div>
         <p className="page-sub">
-          확장 가능한 시스템, 공유 라이브러리, 개발자 도구처럼 팀의 생산성을
-          높이는 일에 관심이 많습니다. 화려함보다 본질을 중요하게 생각합니다.
+          웹이 동작하는 원리를 파고들고, 직접 만들고 측정한 경험을 글과 도구로
+          나눕니다. 요즘은 AI와 함께 일하는 개발자의 판단과 학습을 고민합니다.
         </p>
         <div className="about-socials">
           <a href={`mailto:${SiteConfig.author.contacts.email}`}>
