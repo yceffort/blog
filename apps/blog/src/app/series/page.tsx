@@ -20,21 +20,15 @@ export default async function SeriesPage() {
   return (
     <div className={`page-view ${ambientStyles.page_view}`}>
       <section className={`page-hero ${tagsStyles.page_hero}`}>
-        <div
-          className={`hero-eyebrow ${heroStyles.hero_eyebrow} ${tagsStyles.hero_eyebrow}`}
-        >
+        <div className={`hero-eyebrow ${tagsStyles.hero_eyebrow}`}>
           <span className={`dot ${heroStyles.dot}`} />
           {series.length} SERIES · {totalPosts} POSTS
         </div>
         <h1 className={`page-title ${tagsStyles.page_title}`}>
           {'SERIES'}
-          <span className={`accent ${heroStyles.accent} ${tagsStyles.accent}`}>
-            ,
-          </span>
+          <span className={`accent ${tagsStyles.accent}`}>,</span>
           <br />
-          <span className={`stroke ${heroStyles.stroke} ${tagsStyles.stroke}`}>
-            one
-          </span>
+          <span className={`stroke ${tagsStyles.stroke}`}>one</span>
           {' thread.'}
         </h1>
         <p className={`page-sub ${tagsStyles.page_sub}`}>

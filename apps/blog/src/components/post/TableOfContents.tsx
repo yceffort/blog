@@ -216,7 +216,6 @@ function FloatingTOC({
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className={readingProgressStyles.element_svg}
             >
               <path d="M18 6 6 18" />
               <path d="m6 6 12 12" />
@@ -242,13 +241,7 @@ function FloatingTOC({
         data-show={showScrollTop ? 'true' : 'false'}
         aria-label="Scroll to top"
       >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className={readingProgressStyles.element_svg}
-        >
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
           <path
             fillRule="evenodd"
             d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z"
@@ -268,7 +261,10 @@ function FloatingTOC({
           ['--progress' as never]: `${progress}`,
         }}
       >
-        <svg viewBox="0 0 36 36" className={readingProgressStyles.element_svg}>
+        <svg
+          viewBox="0 0 36 36"
+          className={readingProgressStyles.reading_progress_dial_svg}
+        >
           <circle
             cx="18"
             cy="18"
@@ -316,7 +312,6 @@ function FloatingTOC({
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className={readingProgressStyles.element_svg}
         >
           <circle cx="18" cy="5" r="3" />
           <circle cx="6" cy="12" r="3" />

@@ -7,26 +7,11 @@ const styles = stylex.create({
   },
   element_h1: {
     '@layer site': {
-      marginTop: {
-        default: null,
-        ':is(.archive-head h1)': '8px',
-      },
-      fontSize: {
-        default: null,
-        ':is(.archive-head h1)': '32px',
-      },
-      fontWeight: {
-        default: null,
-        ':is(.archive-head h1)': '800',
-      },
-      letterSpacing: {
-        default: null,
-        ':is(.archive-head h1)': '-0.02em',
-      },
-      color: {
-        default: null,
-        ':is(.archive-head h1)': 'var(--ink)',
-      },
+      marginTop: '8px',
+      fontSize: '32px',
+      fontWeight: '800',
+      letterSpacing: '-0.02em',
+      color: 'var(--ink)',
     },
   },
   archive_sub: {
@@ -57,34 +42,16 @@ const styles = stylex.create({
   },
   element_h2: {
     '@layer site': {
-      fontSize: {
-        default: null,
-        ':is(.archive-year-head h2)': '22px',
-      },
-      fontWeight: {
-        default: null,
-        ':is(.archive-year-head h2)': '700',
-      },
-      color: {
-        default: null,
-        ':is(.archive-year-head h2)': 'var(--ink)',
-      },
+      fontSize: '22px',
+      fontWeight: '700',
+      color: 'var(--ink)',
     },
   },
   element_span: {
     '@layer site': {
-      fontFamily: {
-        default: null,
-        ':is(.archive-year-head span)': 'var(--font-mono), monospace',
-      },
-      fontSize: {
-        default: null,
-        ':is(.archive-year-head span)': '12px',
-      },
-      color: {
-        default: null,
-        ':is(.archive-year-head span)': 'var(--ink-4)',
-      },
+      fontFamily: 'var(--font-mono), monospace',
+      fontSize: '12px',
+      color: 'var(--ink-4)',
     },
   },
   archive_list: {
@@ -101,6 +68,10 @@ const styles = stylex.create({
       borderRadius: '8px',
       transition: 'background-color 140ms ease,\n    color 140ms ease',
       gap: '14px',
+      '--archive-item-title-color': {
+        default: null,
+        ':hover': 'var(--primary)',
+      },
       backgroundColor: {
         default: null,
         ':hover': 'var(--surface)',
@@ -180,22 +151,7 @@ const styles = stylex.create({
     '@layer site': {
       fontSize: '14.5px',
       lineHeight: '1.5',
-      color: {
-        default: 'var(--ink-2)',
-        ':is(.archive-item:hover .archive-title)': 'var(--primary)',
-      },
-    },
-  },
-  element_canvas: {
-    '@layer site': {
-      display: {
-        default: null,
-        '@media (prefers-reduced-motion: reduce)': {
-          default: null,
-          ':is(.hero-fx-canvas canvas)': 'none',
-          ':is(.hero-fx-b canvas)': 'none',
-        },
-      },
+      color: 'var(--archive-item-title-color, var(--ink-2))',
     },
   },
 })
@@ -214,4 +170,3 @@ export const archive_list = stylex.props(styles.archive_list).className!
 export const archive_item = stylex.props(styles.archive_item).className!
 export const archive_date = stylex.props(styles.archive_date).className!
 export const archive_title = stylex.props(styles.archive_title).className!
-export const element_canvas = stylex.props(styles.element_canvas).className!

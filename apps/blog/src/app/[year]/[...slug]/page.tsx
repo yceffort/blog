@@ -8,7 +8,6 @@ import Script from 'next/script'
 import {connection} from 'next/server'
 import {ViewTransition} from 'react'
 
-import * as heroStyles from '@/components/home/hero.styles'
 import * as ambientStyles from '@/components/layout/ambient.styles'
 import MathLoader from '@/components/post/math'
 import {PostArticle} from '@/components/post/PostArticle'
@@ -216,9 +215,7 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
           href="/"
           className={`post-back ${readingProgressStyles.post_back}`}
         >
-          <span
-            className={`dot ${heroStyles.dot} ${readingProgressStyles.dot}`}
-          >
+          <span className={`dot ${readingProgressStyles.dot}`}>
             <svg
               width="12"
               height="12"
@@ -256,7 +253,7 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
             <h1 className={`post-title ${readingProgressStyles.post_title}`}>
               {titleParts.map((part, i) =>
                 part.emphasis ? (
-                  <em key={i} className={readingProgressStyles.element_em}>
+                  <em key={i} className={readingProgressStyles.title_em}>
                     {part.text}
                   </em>
                 ) : (

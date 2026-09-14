@@ -18,7 +18,7 @@ export default function RelatedPosts({
       <h2 className="post-related-title">{title}</h2>
       <ul className={`post-row-list ${listStyles.post_row_list}`}>
         {posts.map((post) => (
-          <li key={post.fields.slug} className={listStyles.element_li}>
+          <li key={post.fields.slug} className={listStyles.post_row_list_li}>
             <PostRow post={post} pathPrefix={pathPrefix} />
           </li>
         ))}

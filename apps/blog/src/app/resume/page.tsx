@@ -21,16 +21,16 @@ export default function Page() {
       >
         <div>
           <p
-            className={`resume-eyebrow ${resumeStyles.resume_eyebrow} ${resumeStyles.resume_eyebrow} ${resumeStyles.element_p}`}
+            className={`resume-eyebrow ${resumeStyles.resume_eyebrow} ${resumeStyles.resume_eyebrow}`}
           >
             FRONTEND ENGINEER · WRITER
           </p>
           <h1 className={resumeStyles.element_h1}>
             {SiteConfig.author.name}
-            <span className={resumeStyles.element_span}>.</span>
+            <span className={resumeStyles.resume_pageHeader_span}>.</span>
           </h1>
           <p
-            className={`resume-headerNote ${resumeStyles.resume_headerNote} ${resumeStyles.resume_headerNote} ${resumeStyles.element_p}`}
+            className={`resume-headerNote ${resumeStyles.resume_headerNote} ${resumeStyles.resume_headerNote}`}
           >
             만들고 운영하며 쌓아 온 경험을 기록합니다.
           </p>
@@ -40,21 +40,16 @@ export default function Page() {
         >
           <a
             href={`mailto:${SiteConfig.author.contacts.email}`}
-            className={resumeStyles.element_a}
+            className={resumeStyles.resume_link_hover}
           >
-            {SiteConfig.author.contacts.email}{' '}
-            <span aria-hidden="true" className={resumeStyles.element_span}>
-              ↗
-            </span>
+            {SiteConfig.author.contacts.email} <span aria-hidden="true">↗</span>
           </a>
           <a
             href={SiteConfig.author.contacts.github}
-            className={resumeStyles.element_a}
+            className={resumeStyles.resume_link_hover}
           >
             {'GitHub '}
-            <span aria-hidden="true" className={resumeStyles.element_span}>
-              ↗
-            </span>
+            <span aria-hidden="true">↗</span>
           </a>
         </div>
       </header>

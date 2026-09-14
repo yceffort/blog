@@ -178,11 +178,14 @@ const diagramStyles = stylex.create({
   svg: {
     '@layer site': {
       maxWidth: 'none !important',
-      maxHeight: {
-        default: null,
-        ':is(.mermaid-zoom *, .mermaid-zoom-content *)': 'none !important',
-      },
+    },
+  },
+  // 확대 오버레이(.mermaid-zoom / .mermaid-zoom-content) 안의 사본에만 적용한다
+  zoomSvg: {
+    '@layer site': {
+      maxHeight: 'none !important',
     },
   },
 })
 export const diagramSvg = stylex.props(diagramStyles.svg).className!
+export const diagramZoomSvg = stylex.props(diagramStyles.zoomSvg).className!

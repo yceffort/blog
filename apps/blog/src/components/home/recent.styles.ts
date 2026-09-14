@@ -94,231 +94,99 @@ const styles = stylex.create({
           ':hover': 'scroll',
         },
       },
+      '--rec-row-rarrow-color': {
+        default: null,
+        ':hover': 'var(--primary)',
+      },
+      '--rec-row-rarrow-transform': {
+        default: null,
+        ':hover': 'translateX(4px)',
+      },
     },
   },
   rn: {
     '@layer site': {
-      fontFamily: {
-        default: null,
-        ':is(.rec-row .rn)': 'var(--font-mono), monospace',
-      },
-      fontSize: {
-        default: null,
-        ':is(.rec-row .rn)': '12px',
-      },
-      letterSpacing: {
-        default: null,
-        ':is(.rec-row .rn)': '0.1em',
-      },
-      color: {
-        default: null,
-        ':is(.rec-row .rn)': 'var(--ink-4)',
-      },
+      fontFamily: 'var(--font-mono), monospace',
+      fontSize: '12px',
+      letterSpacing: '0.1em',
+      color: 'var(--ink-4)',
     },
   },
   element_h4: {
     '@layer site': {
-      overflow: {
-        default: null,
-        ':is(.rec-row h4)': 'hidden',
-      },
-      display: {
-        default: null,
-        ':is(.rec-row h4)': '-webkit-box',
-      },
-      fontSize: {
-        default: null,
-        ':is(.rec-row h4)': '16px',
-      },
-      fontWeight: {
-        default: null,
-        ':is(.rec-row h4)': '700',
-      },
-      lineHeight: {
-        default: null,
-        ':is(.rec-row h4)': '1.4',
-      },
-      letterSpacing: {
-        default: null,
-        ':is(.rec-row h4)': '-0.01em',
-      },
-      color: {
-        default: null,
-        ':is(.rec-row h4)': 'var(--ink)',
-      },
-      WebkitLineClamp: {
-        default: null,
-        ':is(.rec-row h4)': '2',
-      },
-      WebkitBoxOrient: {
-        default: null,
-        ':is(.rec-row h4)': 'vertical',
-      },
+      overflow: 'hidden',
+      display: '-webkit-box',
+      fontSize: '16px',
+      fontWeight: '700',
+      lineHeight: '1.4',
+      letterSpacing: '-0.01em',
+      color: 'var(--ink)',
+      WebkitLineClamp: '2',
+      WebkitBoxOrient: 'vertical',
     },
   },
   rtags: {
     '@layer site': {
-      display: {
-        default: null,
-        ':is(.rec-row .rtags)': 'flex',
-      },
-      flexWrap: {
-        default: null,
-        ':is(.rec-row .rtags)': 'wrap',
-      },
-      marginTop: {
-        default: null,
-        ':is(.rec-row .rtags)': '6px',
-      },
-      fontFamily: {
-        default: null,
-        ':is(.rec-row .rtags)': 'var(--font-mono), monospace',
-      },
-      fontSize: {
-        default: null,
-        ':is(.rec-row .rtags)': '10.5px',
-      },
-      letterSpacing: {
-        default: null,
-        ':is(.rec-row .rtags)': '0.08em',
-      },
-      textTransform: {
-        default: null,
-        ':is(.rec-row .rtags)': 'uppercase',
-      },
-      color: {
-        default: null,
-        ':is(.rec-row .rtags)': 'var(--ink-3)',
-      },
-      gap: {
-        default: null,
-        ':is(.rec-row .rtags)': '4px',
-      },
+      display: 'flex',
+      flexWrap: 'wrap',
+      marginTop: '6px',
+      fontFamily: 'var(--font-mono), monospace',
+      fontSize: '10.5px',
+      letterSpacing: '0.08em',
+      textTransform: 'uppercase',
+      color: 'var(--ink-3)',
+      gap: '4px',
     },
   },
   rd: {
     '@layer site': {
-      overflow: {
-        default: null,
-        ':is(.rec-row .rd)': 'hidden',
-      },
+      overflow: 'hidden',
       display: {
-        default: null,
-        ':is(.rec-row .rd)': '-webkit-box',
-        '@media (max-width: 900px)': {
-          default: null,
-          ':is(.rec-row .rd)': 'none',
-        },
+        default: '-webkit-box',
+        '@media (max-width: 900px)': 'none',
       },
-      fontSize: {
-        default: null,
-        ':is(.rec-row .rd)': '13px',
-      },
-      lineHeight: {
-        default: null,
-        ':is(.rec-row .rd)': '1.55',
-      },
-      color: {
-        default: null,
-        ':is(.rec-row .rd)': 'var(--ink-3)',
-      },
-      WebkitLineClamp: {
-        default: null,
-        ':is(.rec-row .rd)': '2',
-      },
-      WebkitBoxOrient: {
-        default: null,
-        ':is(.rec-row .rd)': 'vertical',
-      },
+      fontSize: '13px',
+      lineHeight: '1.55',
+      color: 'var(--ink-3)',
+      WebkitLineClamp: '2',
+      WebkitBoxOrient: 'vertical',
     },
   },
   rmeta: {
     '@layer site': {
-      fontFamily: {
-        default: null,
-        ':is(.rec-row .rmeta)': 'var(--font-mono), monospace',
-      },
-      fontSize: {
-        default: null,
-        ':is(.rec-row .rmeta)': '11px',
-      },
-      letterSpacing: {
-        default: null,
-        ':is(.rec-row .rmeta)': '0.05em',
-      },
-      textAlign: {
-        default: null,
-        ':is(.rec-row .rmeta)': 'right',
-      },
-      color: {
-        default: null,
-        ':is(.rec-row .rmeta)': 'var(--ink-3)',
-      },
+      fontFamily: 'var(--font-mono), monospace',
+      fontSize: '11px',
+      letterSpacing: '0.05em',
+      textAlign: 'right',
+      color: 'var(--ink-3)',
       display: {
         default: null,
-        '@media (max-width: 900px)': {
-          default: null,
-          ':is(.rec-row .rmeta)': 'none',
-        },
+        '@media (max-width: 900px)': 'none',
       },
     },
   },
   element_b: {
     '@layer site': {
-      display: {
-        default: null,
-        ':is(.rec-row .rmeta b)': 'block',
-      },
-      marginBottom: {
-        default: null,
-        ':is(.rec-row .rmeta b)': '2px',
-      },
-      fontSize: {
-        default: null,
-        ':is(.rec-row .rmeta b)': '12px',
-      },
-      fontWeight: {
-        default: null,
-        ':is(.rec-row .rmeta b)': '600',
-      },
-      color: {
-        default: null,
-        ':is(.rec-row .rmeta b)': 'var(--ink-2)',
-      },
+      display: 'block',
+      marginBottom: '2px',
+      fontSize: '12px',
+      fontWeight: '600',
+      color: 'var(--ink-2)',
     },
   },
   rarrow: {
     '@layer site': {
-      color: {
-        default: null,
-        ':is(.rec-row .rarrow)': 'var(--ink-3)',
-        ':is(.rec-row:hover .rarrow)': 'var(--primary)',
-      },
-      transition: {
-        default: null,
-        ':is(.rec-row .rarrow)':
-          'transform 220ms cubic-bezier(0.2, 0.9, 0.2, 1),\n    color 180ms',
-      },
-      transform: {
-        default: null,
-        ':is(.rec-row:hover .rarrow)': 'translateX(4px)',
-      },
+      color: 'var(--rec-row-rarrow-color, var(--ink-3))',
+      transition:
+        'transform 220ms cubic-bezier(0.2, 0.9, 0.2, 1),\n    color 180ms',
+      transform: 'var(--rec-row-rarrow-transform, none)',
     },
   },
   element_a: {
     '@layer site': {
-      position: {
-        default: null,
-        ':is(.rec-row > a)': 'absolute',
-      },
-      inset: {
-        default: null,
-        ':is(.rec-row > a)': '0',
-      },
-      zIndex: {
-        default: null,
-        ':is(.rec-row > a)': '3',
-      },
+      position: 'absolute',
+      inset: '0',
+      zIndex: '3',
     },
   },
 })

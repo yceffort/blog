@@ -1,5 +1,4 @@
 import * as stylex from '@stylexjs/stylex'
-
 const styles = stylex.create({
   visually_hidden: {
     '@layer site': {
@@ -8,18 +7,9 @@ const styles = stylex.create({
       width: '1px',
       height: '1px',
       padding: '0',
-      borderTopWidth: '0',
-      borderTopStyle: 'none',
-      borderTopColor: 'currentColor',
-      borderRightWidth: '0',
-      borderRightStyle: 'none',
-      borderRightColor: 'currentColor',
-      borderBottomWidth: '0',
-      borderBottomStyle: 'none',
-      borderBottomColor: 'currentColor',
-      borderLeftWidth: '0',
-      borderLeftStyle: 'none',
-      borderLeftColor: 'currentColor',
+      borderWidth: '0',
+      borderStyle: 'none',
+      borderColor: 'currentColor',
       whiteSpace: 'nowrap',
       clip: 'rect(0, 0, 0, 0)',
     },
@@ -33,13 +23,6 @@ const styles = stylex.create({
       padding: '10px 16px',
       borderRadius: '8px',
       backgroundColor: 'var(--primary)',
-      backgroundImage: 'none',
-      backgroundPosition: 'initial',
-      backgroundSize: 'auto',
-      backgroundRepeat: 'repeat',
-      backgroundOrigin: 'padding-box',
-      backgroundClip: 'border-box',
-      backgroundAttachment: 'scroll',
       fontSize: '14px',
       fontWeight: '600',
       color: '#fff',
@@ -55,6 +38,5 @@ const styles = stylex.create({
     },
   },
 })
-
 export const visuallyHidden = stylex.props(styles.visually_hidden).className!
 export const skipLink = stylex.props(styles.skip_link).className!

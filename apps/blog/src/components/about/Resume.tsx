@@ -117,24 +117,27 @@ export function Resume() {
         className={`resume-summary ${resumeStyles.resume_summary} ${resumeStyles.resume_summary}`}
       >
         <p
-          className={`resume-eyebrow ${resumeStyles.resume_eyebrow} ${resumeStyles.resume_eyebrow} ${resumeStyles.element_p}`}
+          className={`resume-eyebrow ${resumeStyles.resume_eyebrow} ${resumeStyles.resume_eyebrow}`}
         >
           EXPERIENCE & CONTRIBUTIONS
         </p>
-        <h2 className={resumeStyles.element_h2}>
+        <h2 className={resumeStyles.resume_summary_h2}>
           서비스 개발부터 팀이 일하는 기반까지.
         </h2>
         <p
-          className={`resume-lead ${resumeStyles.resume_lead} ${resumeStyles.resume_lead} ${resumeStyles.element_p}`}
+          className={`resume-lead ${resumeStyles.resume_lead} ${resumeStyles.resume_lead}`}
         >
           2014년부터 다양한 도메인의 소프트웨어를 만들고 운영해 왔습니다.
           프론트엔드 팀을 이끌고, 여러 서비스가 함께 쓰는 라이브러리와 도구를
           만들었습니다. 그 과정에서 얻은 경험을 책과 글, 오픈소스로 나눕니다.
         </p>
         <p
-          className={`resume-status ${resumeStyles.resume_status} ${resumeStyles.resume_status} ${resumeStyles.element_p}`}
+          className={`resume-status ${resumeStyles.resume_status} ${resumeStyles.resume_status}`}
         >
-          <span aria-hidden="true" className={resumeStyles.element_span} />
+          <span
+            aria-hidden="true"
+            className={resumeStyles.resume_status_span}
+          />
           프론트엔드 엔지니어 · 재직 중
         </p>
         <dl
@@ -169,8 +172,12 @@ export function Resume() {
           aria-label="이력서 목차"
         >
           {sections.map(({id, label}, index) => (
-            <a key={id} href={`#${id}`} className={resumeStyles.element_a}>
-              <span aria-hidden="true" className={resumeStyles.element_span}>
+            <a
+              key={id}
+              href={`#${id}`}
+              className={resumeStyles.resume_nav_link}
+            >
+              <span aria-hidden="true" className={resumeStyles.resume_nav_span}>
                 0{index + 1}
               </span>
               {label}
@@ -189,13 +196,18 @@ export function Resume() {
             <div
               className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading} ${resumeStyles.resume_sectionHeading}`}
             >
-              <h2 id="experience-title" className={resumeStyles.element_h2}>
+              <h2
+                id="experience-title"
+                className={resumeStyles.resume_sectionHeading_h2}
+              >
                 경력
               </h2>
-              <span className={resumeStyles.element_span}>Experience</span>
+              <span className={resumeStyles.resume_sectionHeading_span}>
+                Experience
+              </span>
             </div>
             <p
-              className={`resume-sectionNote ${resumeStyles.resume_sectionNote} ${resumeStyles.resume_sectionNote} ${resumeStyles.element_p}`}
+              className={`resume-sectionNote ${resumeStyles.resume_sectionNote} ${resumeStyles.resume_sectionNote}`}
             >
               이전에 근무한 곳에서의 경험입니다.
             </p>
@@ -205,25 +217,25 @@ export function Resume() {
               {experience.map((job) => (
                 <li
                   key={job.company}
-                  className={`resume-job ${resumeStyles.resume_job} ${resumeStyles.resume_job} ${resumeStyles.element_li}`}
+                  className={`resume-job ${resumeStyles.resume_job} ${resumeStyles.resume_job}`}
                 >
                   <div
                     className={`resume-jobHeading ${resumeStyles.resume_jobHeading} ${resumeStyles.resume_jobHeading}`}
                   >
                     <h3 className={resumeStyles.element_h3}>{job.company}</h3>
                     <span
-                      className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period} ${resumeStyles.element_span}`}
+                      className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
                     >
                       {job.period}
                     </span>
                   </div>
                   <p
-                    className={`resume-role ${resumeStyles.resume_role} ${resumeStyles.resume_role} ${resumeStyles.element_p}`}
+                    className={`resume-role ${resumeStyles.resume_role} ${resumeStyles.resume_role}`}
                   >
                     {job.role}
                   </p>
                   <p
-                    className={`resume-jobDescription ${resumeStyles.resume_jobDescription} ${resumeStyles.resume_jobDescription} ${resumeStyles.element_p}`}
+                    className={`resume-jobDescription ${resumeStyles.resume_jobDescription} ${resumeStyles.resume_jobDescription}`}
                   >
                     {job.description}
                   </p>
@@ -233,29 +245,23 @@ export function Resume() {
                     {job.contributions.map((contribution) => (
                       <li
                         key={contribution}
-                        className={resumeStyles.element_li}
+                        className={resumeStyles.resume_contributions_li}
                       >
                         {contribution}
                       </li>
                     ))}
                   </ul>
                   <p
-                    className={`resume-stack ${resumeStyles.resume_stack} ${resumeStyles.resume_stack} ${resumeStyles.element_p}`}
+                    className={`resume-stack ${resumeStyles.resume_stack} ${resumeStyles.resume_stack}`}
                   >
                     {job.stack}
                   </p>
                   {job.link ? (
                     <a
-                      className={`resume-textLink ${resumeStyles.resume_textLink} ${resumeStyles.resume_textLink} ${resumeStyles.element_a}`}
+                      className={`resume-textLink ${resumeStyles.resume_textLink} ${resumeStyles.resume_textLink} ${resumeStyles.resume_link_hover}`}
                       href={job.link.href}
                     >
-                      {job.link.label}{' '}
-                      <span
-                        aria-hidden="true"
-                        className={resumeStyles.element_span}
-                      >
-                        ↗
-                      </span>
+                      {job.link.label} <span aria-hidden="true">↗</span>
                     </a>
                   ) : null}
                 </li>
@@ -271,60 +277,58 @@ export function Resume() {
             <div
               className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading} ${resumeStyles.resume_sectionHeading}`}
             >
-              <h2 id="publications-title" className={resumeStyles.element_h2}>
+              <h2
+                id="publications-title"
+                className={resumeStyles.resume_sectionHeading_h2}
+              >
                 저술·번역
               </h2>
-              <span className={resumeStyles.element_span}>Publications</span>
+              <span className={resumeStyles.resume_sectionHeading_span}>
+                Publications
+              </span>
             </div>
             <ul
               className={`resume-books ${resumeStyles.resume_books} ${resumeStyles.resume_books}`}
             >
               {publications.map((book) => (
-                <li key={book.href} className={resumeStyles.element_li}>
+                <li key={book.href}>
                   <a
-                    className={`resume-book ${resumeStyles.resume_book} ${resumeStyles.resume_book} ${resumeStyles.element_a}`}
+                    className={`resume-book ${resumeStyles.resume_book} ${resumeStyles.resume_book} ${resumeStyles.resume_link_hover}`}
                     href={book.href}
                   >
                     <span
-                      className={`resume-bookRole ${resumeStyles.resume_bookRole} ${resumeStyles.resume_bookRole} ${resumeStyles.element_span}`}
+                      className={`resume-bookRole ${resumeStyles.resume_bookRole} ${resumeStyles.resume_bookRole}`}
                     >
                       {book.role}
                     </span>
                     <h3 className={resumeStyles.element_h3}>{book.title}</h3>
-                    <p className={resumeStyles.element_p}>{book.subject}</p>
+                    <p className={resumeStyles.resume_book_p}>{book.subject}</p>
                     <span
-                      className={`resume-bookLink ${resumeStyles.resume_bookLink} ${resumeStyles.resume_bookLink} ${resumeStyles.element_span}`}
+                      className={`resume-bookLink ${resumeStyles.resume_bookLink} ${resumeStyles.resume_bookLink}`}
                     >
                       {'출판사에서 보기 '}
-                      <span
-                        aria-hidden="true"
-                        className={resumeStyles.element_span}
-                      >
-                        ↗
-                      </span>
+                      <span aria-hidden="true">↗</span>
                     </span>
                   </a>
                 </li>
               ))}
             </ul>
             <p
-              className={`resume-writing ${resumeStyles.resume_writing} ${resumeStyles.resume_writing} ${resumeStyles.element_p}`}
+              className={`resume-writing ${resumeStyles.resume_writing} ${resumeStyles.resume_writing}`}
             >
               <span
-                className={`resume-eyebrow ${resumeStyles.resume_eyebrow} ${resumeStyles.resume_eyebrow} ${resumeStyles.element_span}`}
+                className={`resume-eyebrow ${resumeStyles.resume_eyebrow} ${resumeStyles.resume_eyebrow}`}
               >
                 WRITING NOW
               </span>
               <Link
                 href="/2026/09/who-learns-to-judge-beta-reader"
-                className={resumeStyles.element_a}
+                className={resumeStyles.resume_writing_link}
               >
                 {'남은 판단은 누가 배우는가 '}
-                <span aria-hidden="true" className={resumeStyles.element_span}>
-                  ↗
-                </span>
+                <span aria-hidden="true">↗</span>
               </Link>
-              <span className={resumeStyles.element_span}>
+              <span className={resumeStyles.resume_writing_span}>
                 AI 시대의 개발자, 판단과 학습에 관한 에세이 · 가제, 집필 중
               </span>
             </p>
@@ -338,32 +342,37 @@ export function Resume() {
             <div
               className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading} ${resumeStyles.resume_sectionHeading}`}
             >
-              <h2 id="open-source-title" className={resumeStyles.element_h2}>
+              <h2
+                id="open-source-title"
+                className={resumeStyles.resume_sectionHeading_h2}
+              >
                 오픈소스
               </h2>
-              <span className={resumeStyles.element_span}>Open source</span>
+              <span className={resumeStyles.resume_sectionHeading_span}>
+                Open source
+              </span>
             </div>
             <ul className="resume-entries">
               {openSourceProjects.map((project) => (
-                <li key={project.href} className={resumeStyles.element_li}>
+                <li
+                  key={project.href}
+                  className={resumeStyles.resume_entries_li}
+                >
                   <span
-                    className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period} ${resumeStyles.element_span}`}
+                    className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
                   >
                     {project.category}
                   </span>
                   <div>
                     <h3 className={resumeStyles.element_h3}>
-                      <a href={project.href} className={resumeStyles.element_a}>
-                        {project.name}{' '}
-                        <span
-                          aria-hidden="true"
-                          className={resumeStyles.element_span}
-                        >
-                          ↗
-                        </span>
+                      <a
+                        href={project.href}
+                        className={resumeStyles.resume_link_hover}
+                      >
+                        {project.name} <span aria-hidden="true">↗</span>
                       </a>
                     </h3>
-                    <p className={resumeStyles.element_p}>
+                    <p className={resumeStyles.resume_entries_p}>
                       {project.description}
                     </p>
                     <ProjectTags tags={project.tags} />
@@ -381,15 +390,20 @@ export function Resume() {
             <div
               className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading} ${resumeStyles.resume_sectionHeading}`}
             >
-              <h2 id="activities-title" className={resumeStyles.element_h2}>
+              <h2
+                id="activities-title"
+                className={resumeStyles.resume_sectionHeading_h2}
+              >
                 발표·활동
               </h2>
-              <span className={resumeStyles.element_span}>Beyond work</span>
+              <span className={resumeStyles.resume_sectionHeading_span}>
+                Beyond work
+              </span>
             </div>
             <ul className="resume-entries">
-              <li className={resumeStyles.element_li}>
+              <li className={resumeStyles.resume_entries_li}>
                 <span
-                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period} ${resumeStyles.element_span}`}
+                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
                 >
                   2024
                 </span>
@@ -397,52 +411,47 @@ export function Resume() {
                   <h3 className={resumeStyles.element_h3}>
                     DAN24 컨퍼런스 발표
                   </h3>
-                  <p className={resumeStyles.element_p}>
+                  <p className={resumeStyles.resume_entries_p}>
                     웹 서비스 번들 사이즈 최적화를 주제로 발표했습니다.
                   </p>
                 </div>
               </li>
-              <li className={resumeStyles.element_li}>
+              <li className={resumeStyles.resume_entries_li}>
                 <span
-                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period} ${resumeStyles.element_span}`}
+                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
                 >
                   2021.01 — 2021.12
                 </span>
                 <div>
                   <h3 className={resumeStyles.element_h3}>SSAFY 멘토</h3>
-                  <p className={resumeStyles.element_p}>
+                  <p className={resumeStyles.resume_entries_p}>
                     삼성 청년 소프트웨어 아카데미에서 프로그래밍 질의응답과 칼럼
                     작성으로 청년 개발자들의 학습을 도왔습니다.
                   </p>
                 </div>
               </li>
-              <li className={resumeStyles.element_li}>
+              <li className={resumeStyles.resume_entries_li}>
                 <span
-                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period} ${resumeStyles.element_span}`}
+                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
                 >
                   2018 — 현재
                 </span>
                 <div>
                   <h3 className={resumeStyles.element_h3}>
-                    <Link href="/" className={resumeStyles.element_a}>
+                    <Link href="/" className={resumeStyles.resume_link_hover}>
                       {'기술 블로그 yceffort.kr '}
-                      <span
-                        aria-hidden="true"
-                        className={resumeStyles.element_span}
-                      >
-                        ↗
-                      </span>
+                      <span aria-hidden="true">↗</span>
                     </Link>
                   </h3>
-                  <p className={resumeStyles.element_p}>
+                  <p className={resumeStyles.resume_entries_p}>
                     블로그를 직접 개발·운영하며 프레임워크 내부 동작, 성능과
                     운영, 개발 도구, AI와 함께 일하는 경험을 기록합니다.
                   </p>
                 </div>
               </li>
-              <li className={resumeStyles.element_li}>
+              <li className={resumeStyles.resume_entries_li}>
                 <span
-                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period} ${resumeStyles.element_span}`}
+                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
                 >
                   2016.03 — 현재
                 </span>
@@ -450,18 +459,13 @@ export function Resume() {
                   <h3 className={resumeStyles.element_h3}>
                     <a
                       href="https://jumpsp.org/"
-                      className={resumeStyles.element_a}
+                      className={resumeStyles.resume_link_hover}
                     >
                       {'사단법인 점프 이사 '}
-                      <span
-                        aria-hidden="true"
-                        className={resumeStyles.element_span}
-                      >
-                        ↗
-                      </span>
+                      <span aria-hidden="true">↗</span>
                     </a>
                   </h3>
-                  <p className={resumeStyles.element_p}>
+                  <p className={resumeStyles.resume_entries_p}>
                     Google Cloud Platform을 활용한 업무 자동화와 프로그래밍
                     교육에 참여하고 있습니다.
                   </p>
@@ -478,15 +482,20 @@ export function Resume() {
             <div
               className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading} ${resumeStyles.resume_sectionHeading}`}
             >
-              <h2 id="education-title" className={resumeStyles.element_h2}>
+              <h2
+                id="education-title"
+                className={resumeStyles.resume_sectionHeading_h2}
+              >
                 학력
               </h2>
-              <span className={resumeStyles.element_span}>Education</span>
+              <span className={resumeStyles.resume_sectionHeading_span}>
+                Education
+              </span>
             </div>
             <ul className="resume-entries">
-              <li className={resumeStyles.element_li}>
+              <li className={resumeStyles.resume_entries_li}>
                 <span
-                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period} ${resumeStyles.element_span}`}
+                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
                 >
                   2018.03 — 2020.02
                 </span>
@@ -494,25 +503,25 @@ export function Resume() {
                   <h3 className={resumeStyles.element_h3}>
                     한국과학기술원 (KAIST)
                   </h3>
-                  <p className={resumeStyles.element_p}>
+                  <p className={resumeStyles.resume_entries_p}>
                     기술경영전문대학원 석사
                   </p>
                   <p
-                    className={`resume-honor ${resumeStyles.resume_honor} ${resumeStyles.resume_honor} ${resumeStyles.element_p}`}
+                    className={`resume-honor ${resumeStyles.resume_honor} ${resumeStyles.resume_honor}`}
                   >
                     Highest Honor · GPA 4.23 / 4.3
                   </p>
                 </div>
               </li>
-              <li className={resumeStyles.element_li}>
+              <li className={resumeStyles.resume_entries_li}>
                 <span
-                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period} ${resumeStyles.element_span}`}
+                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
                 >
                   2007.03 — 2014.02
                 </span>
                 <div>
                   <h3 className={resumeStyles.element_h3}>동국대학교</h3>
-                  <p className={resumeStyles.element_p}>
+                  <p className={resumeStyles.resume_entries_p}>
                     국제통상학 전공 · 영어통번역학 복수전공 학사
                   </p>
                 </div>

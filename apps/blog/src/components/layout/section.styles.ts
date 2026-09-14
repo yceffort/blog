@@ -11,192 +11,55 @@ const styles = stylex.create({
   },
   sec_count: {
     '@layer site': {
-      display: {
-        default: null,
-        ':is(.sec-head .sec-count)': 'block',
-      },
-      marginBottom: {
-        default: null,
-        ':is(.sec-head .sec-count)': '6px',
-      },
-      fontFamily: {
-        default: null,
-        ':is(.sec-head .sec-count)': 'var(--font-mono), monospace',
-      },
-      fontSize: {
-        default: null,
-        ':is(.sec-head .sec-count)': '11px',
-      },
-      letterSpacing: {
-        default: null,
-        ':is(.sec-head .sec-count)': '0.15em',
-      },
-      textTransform: {
-        default: null,
-        ':is(.sec-head .sec-count)': 'uppercase',
-      },
-      color: {
-        default: null,
-        ':is(.sec-head .sec-count)': 'var(--ink-3)',
-      },
+      display: 'block',
+      marginBottom: '6px',
+      fontFamily: 'var(--font-mono), monospace',
+      fontSize: '11px',
+      letterSpacing: '0.15em',
+      textTransform: 'uppercase',
+      color: 'var(--ink-3)',
     },
   },
   element_h2: {
     '@layer site': {
-      fontSize: {
-        default: null,
-        ':is(.sec-head h2)': 'clamp(28px, 4vw, 48px)',
-      },
-      fontWeight: {
-        default: null,
-        ':is(.sec-head h2)': '900',
-      },
-      lineHeight: {
-        default: null,
-        ':is(.sec-head h2)': '1.05',
-      },
-      letterSpacing: {
-        default: null,
-        ':is(.sec-head h2)': '-0.03em',
-      },
-      color: {
-        default: null,
-        ':is(.sec-head h2)': 'var(--ink)',
-      },
+      fontSize: 'clamp(28px, 4vw, 48px)',
+      fontWeight: '900',
+      lineHeight: '1.05',
+      letterSpacing: '-0.03em',
+      color: 'var(--ink)',
     },
   },
   element_em: {
     '@layer site': {
-      fontFamily: {
-        default: null,
-        ':is(.sec-head h2 em)': 'var(--font-serif), serif',
-      },
-      fontStyle: {
-        default: null,
-        ':is(.sec-head h2 em)': 'italic',
-      },
-      fontWeight: {
-        default: null,
-        ':is(.sec-head h2 em)': '500',
-      },
-      color: {
-        default: null,
-        ':is(.sec-head h2 em)': 'var(--ink-3)',
-      },
+      fontFamily: 'var(--font-serif), serif',
+      fontStyle: 'italic',
+      fontWeight: '500',
+      color: 'var(--ink-3)',
     },
   },
   line: {
     '@layer site': {
-      flex: {
-        default: null,
-        ':is(.sec-head .line)': '1',
-      },
-      height: {
-        default: null,
-        ':is(.sec-head .line)': '1px',
-      },
-      marginBottom: {
-        default: null,
-        ':is(.sec-head .line)': '18px',
-      },
-      backgroundColor: {
-        default: null,
-        ':is(.sec-head .line)': 'transparent',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.sec-head .line)': 'transparent',
-        },
-      },
+      flex: '1',
+      height: '1px',
+      marginBottom: '18px',
+      backgroundColor: 'transparent',
       backgroundImage: {
-        default: null,
-        ':is(.sec-head .line)':
+        default:
           'linear-gradient(\n    90deg,\n    var(--border-2),\n    var(--border)\n  )',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.sec-head .line)':
-            'linear-gradient(\n    90deg,\n    var(--border-2),\n    color-mix(in oklab, var(--border) 30%, transparent)\n  )',
-        },
-      },
-      backgroundPosition: {
-        default: null,
-        ':is(.sec-head .line)': 'initial',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.sec-head .line)': 'initial',
-        },
-      },
-      backgroundSize: {
-        default: null,
-        ':is(.sec-head .line)': 'auto',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.sec-head .line)': 'auto',
-        },
-      },
-      backgroundRepeat: {
-        default: null,
-        ':is(.sec-head .line)': 'repeat',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.sec-head .line)': 'repeat',
-        },
-      },
-      backgroundOrigin: {
-        default: null,
-        ':is(.sec-head .line)': 'padding-box',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.sec-head .line)': 'padding-box',
-        },
-      },
-      backgroundClip: {
-        default: null,
-        ':is(.sec-head .line)': 'border-box',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.sec-head .line)': 'border-box',
-        },
-      },
-      backgroundAttachment: {
-        default: null,
-        ':is(.sec-head .line)': 'scroll',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.sec-head .line)': 'scroll',
-        },
+        '@supports (color: color-mix(in lab, red, red))':
+          'linear-gradient(\n    90deg,\n    var(--border-2),\n    color-mix(in oklab, var(--border) 30%, transparent)\n  )',
       },
     },
   },
   hint: {
     '@layer site': {
-      marginBottom: {
-        default: null,
-        ':is(.sec-head .hint)': '18px',
-      },
-      fontFamily: {
-        default: null,
-        ':is(.sec-head .hint)': 'var(--font-mono), monospace',
-      },
-      fontSize: {
-        default: null,
-        ':is(.sec-head .hint)': '11px',
-      },
-      letterSpacing: {
-        default: null,
-        ':is(.sec-head .hint)': '0.08em',
-      },
-      textTransform: {
-        default: null,
-        ':is(.sec-head .hint)': 'uppercase',
-      },
-      whiteSpace: {
-        default: null,
-        ':is(.sec-head .hint)': 'nowrap',
-      },
-      color: {
-        default: null,
-        ':is(.sec-head .hint)': 'var(--ink-4)',
-      },
+      marginBottom: '18px',
+      fontFamily: 'var(--font-mono), monospace',
+      fontSize: '11px',
+      letterSpacing: '0.08em',
+      textTransform: 'uppercase',
+      whiteSpace: 'nowrap',
+      color: 'var(--ink-4)',
     },
   },
 })

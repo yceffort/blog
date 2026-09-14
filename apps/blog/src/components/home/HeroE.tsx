@@ -2,7 +2,6 @@
 
 import {memo, useEffect, useRef} from 'react'
 
-import * as tagsStyles from '@/app/tags/tags.styles'
 import * as heroStyles from '@/components/home/hero.styles'
 
 const YEAR = new Date().getFullYear()
@@ -60,33 +59,19 @@ const Hero = memo(function HeroBase({
     <section className={`home-hero ${heroStyles.home_hero}`}>
       <div className={`home-hero-inner ${heroStyles.home_hero_inner}`}>
         <div className="hero-main">
-          <div
-            className={`hero-eyebrow ${heroStyles.hero_eyebrow} ${tagsStyles.hero_eyebrow}`}
-          >
+          <div className={`hero-eyebrow ${heroStyles.hero_eyebrow}`}>
             <span className={`dot ${heroStyles.dot}`} />
             LIVE · SEOUL · {YEAR}
           </div>
           <h1 ref={titleRef} className={`hero-title ${heroStyles.hero_title}`}>
             <span className={`ln ${heroStyles.ln}`}>GRIND.</span>
             <span className={`ln ${heroStyles.ln}`}>
-              <span
-                className={`accent ${heroStyles.accent} ${tagsStyles.accent}`}
-              >
-                LEARN
-              </span>
-              <span
-                className={`stroke ${heroStyles.stroke} ${tagsStyles.stroke}`}
-              >
-                ,
-              </span>
+              <span className={`accent ${heroStyles.accent}`}>LEARN</span>
+              <span className={`stroke ${heroStyles.stroke}`}>,</span>
             </span>
             <span className={`ln ${heroStyles.ln}`}>
               REPEAT
-              <span
-                className={`accent ${heroStyles.accent} ${tagsStyles.accent}`}
-              >
-                .
-              </span>
+              <span className={`accent ${heroStyles.accent}`}>.</span>
             </span>
           </h1>
           <div className={`hero-sub ${heroStyles.hero_sub}`}>
@@ -96,7 +81,6 @@ const Hero = memo(function HeroBase({
                 style={{
                   color: 'var(--ink)',
                 }}
-                className={heroStyles.element_b}
               >
                 yceffort
               </b>
@@ -106,19 +90,19 @@ const Hero = memo(function HeroBase({
             </p>
             <div className={`hero-stats ${heroStyles.hero_stats}`}>
               <span>
-                <b className={heroStyles.element_b}>
+                <b className={heroStyles.hero_stats_b}>
                   {String(postCount).padStart(3, '0')}
                 </b>
                 posts
               </span>
               <span>
-                <b className={heroStyles.element_b}>
+                <b className={heroStyles.hero_stats_b}>
                   {String(tagCount).padStart(3, '0')}
                 </b>
                 tags
               </span>
               <span>
-                <b className={heroStyles.element_b}>
+                <b className={heroStyles.hero_stats_b}>
                   {String(yearsWriting).padStart(2, '0')}y
                 </b>
                 writing

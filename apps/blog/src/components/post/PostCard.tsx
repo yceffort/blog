@@ -118,7 +118,7 @@ export default function PostCard({
                 fill
                 sizes="(min-width: 1024px) 33vw, 100vw"
                 priority={priority}
-                className={listStyles.element_img}
+                className={listStyles.post_card_thumb_img}
               />
             </div>
           </ViewTransition>
@@ -126,10 +126,14 @@ export default function PostCard({
 
         <div className={`body ${listStyles.body}`}>
           {badge ? (
-            <span className={`series ${listStyles.series}`}>◆ {badge}</span>
+            <span className={`series ${listStyles.post_card_series}`}>
+              ◆ {badge}
+            </span>
           ) : (
             series && (
-              <span className={`series ${listStyles.series}`}>◆ {series}</span>
+              <span className={`series ${listStyles.post_card_series}`}>
+                ◆ {series}
+              </span>
             )
           )}
           <ViewTransition name={`${transitionName}-tags`}>
