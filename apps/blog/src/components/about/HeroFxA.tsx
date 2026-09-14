@@ -5,7 +5,6 @@ import {Canvas, useFrame, useThree} from '@react-three/fiber'
 import {useEffect, useMemo, useRef, useState} from 'react'
 import * as THREE from 'three'
 
-import * as archiveStyles from '@/app/archive/archive.styles'
 import * as aboutStyles from '@/components/about/about.styles'
 const TEXT = 'yceffort.'
 function sampleTextPoints(text: string, density: number) {
@@ -226,7 +225,6 @@ export default function HeroFxA() {
           antialias: true,
           alpha: true,
         }}
-        className={archiveStyles.element_canvas}
       >
         <ambientLight intensity={0.6} />
         <directionalLight position={[3, 4, 5]} intensity={0.9} />

@@ -39,21 +39,15 @@ export default async function TagsPage() {
   return (
     <div className={`page-view ${ambientStyles.page_view}`}>
       <section className={`page-hero ${tagsStyles.page_hero}`}>
-        <div
-          className={`hero-eyebrow ${heroStyles.hero_eyebrow} ${tagsStyles.hero_eyebrow}`}
-        >
+        <div className={`hero-eyebrow ${tagsStyles.hero_eyebrow}`}>
           <span className={`dot ${heroStyles.dot}`} />
           {tags.length} TAGS · {totalPosts} POSTS
         </div>
         <h1 className={`page-title ${tagsStyles.page_title}`}>
           {'TAGS'}
-          <span className={`accent ${heroStyles.accent} ${tagsStyles.accent}`}>
-            ,
-          </span>
+          <span className={`accent ${tagsStyles.accent}`}>,</span>
           <br />
-          <span className={`stroke ${heroStyles.stroke} ${tagsStyles.stroke}`}>
-            every
-          </span>
+          <span className={`stroke ${tagsStyles.stroke}`}>every</span>
           {' topic.'}
         </h1>
         <p className={`page-sub ${tagsStyles.page_sub}`}>

@@ -72,7 +72,7 @@ export default function PopularSeriesCard({
           alt=""
           fill
           sizes="(min-width: 1024px) 33vw, 100vw"
-          className={listStyles.element_img}
+          className={listStyles.post_card_thumb_img}
         />
       </div>
       <div className={`body ${listStyles.body}`}>

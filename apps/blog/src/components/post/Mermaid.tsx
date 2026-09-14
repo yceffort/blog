@@ -139,7 +139,10 @@ export default function Mermaid({chart}: {chart: string}) {
                 svgElement.style.height = `${viewBoxHeight}px`
               }
             }
-            setSvgMarkup(svgElement.outerHTML)
+            // 확대 오버레이 안에 들어가는 사본만 max-height 해제가 필요하다
+            const zoomSvg = svgElement.cloneNode(true) as SVGSVGElement
+            zoomSvg.classList.add(...mermaidStyles.diagramZoomSvg.split(' '))
+            setSvgMarkup(zoomSvg.outerHTML)
           } else {
             setSvgMarkup(svg)
           }

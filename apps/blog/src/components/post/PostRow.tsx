@@ -82,20 +82,20 @@ export default function PostRow({
               alt=""
               fill
               sizes="(min-width: 768px) 120px, 84px"
-              className={listStyles.element_img}
+              className={listStyles.post_row_thumb_img}
             />
           </div>
         </ViewTransition>
       ) : (
         <div
-          className={`post-row-thumb post-row-thumb-empty ${listStyles.post_row_thumb} ${listStyles.post_row_thumb_empty}`}
+          className={`post-row-thumb post-row-thumb-empty ${listStyles.post_row_thumb_empty_box}`}
           aria-hidden="true"
         >
           <svg
             viewBox="0 0 48 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={listStyles.element_svg}
+            className={listStyles.post_row_thumb_empty_svg}
           >
             <path
               d="M8 10h22M8 16h32M8 22h18"
@@ -111,7 +111,7 @@ export default function PostRow({
       <div className={`post-row-body ${listStyles.post_row_body}`}>
         <div className={`post-row-head ${listStyles.post_row_head}`}>
           {series && (
-            <span className={`series ${listStyles.series}`}>
+            <span className={`series ${listStyles.post_row_series}`}>
               ◆ {series}
               {seriesOrder != null &&
                 ` · ${pathPrefix ? `Part ${seriesOrder}` : `${seriesOrder}편`}`}
@@ -150,7 +150,7 @@ export default function PostRow({
       </div>
 
       <svg
-        className={`post-row-arrow ${listStyles.post_row_arrow} ${listStyles.element_svg}`}
+        className={`post-row-arrow ${listStyles.post_row_arrow}`}
         width="18"
         height="18"
         viewBox="0 0 24 24"

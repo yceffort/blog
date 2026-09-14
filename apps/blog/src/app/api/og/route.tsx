@@ -1,6 +1,5 @@
 import {ImageResponse} from 'next/og'
 
-import * as listStyles from '@/components/post/list.styles'
 import {SiteConfig} from '@/config'
 import {unblockSvgLoader} from '@/utils/ogSharpUnblock'
 export async function GET(request: Request) {
@@ -83,7 +82,6 @@ export async function GET(request: Request) {
             filter: hasThumbnail ? 'blur(1px)' : 'blur(3px)',
             transform: 'scale(1.02)',
           }}
-          className={listStyles.element_img}
         />
 
         {/* Content Layer */}

@@ -30,7 +30,7 @@ export default function PageNumber({
         )}
       </div>
       <div
-        className={`pagination-slot end ${paginationStyles.pagination_slot}`}
+        className={`pagination-slot end ${paginationStyles.pagination_slot} ${paginationStyles.pagination_slot_end}`}
       >
         {hasNextPage && (
           <Link

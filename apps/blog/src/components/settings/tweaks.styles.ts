@@ -20,18 +20,9 @@ const styles = stylex.create({
         default: '20px',
         '@media (max-width: 639px)': '4px 20px 24px',
       },
-      borderTopWidth: {
-        default: '1px',
-        '@media (max-width: 639px)': '1px',
-      },
-      borderTopStyle: {
-        default: 'solid',
-        '@media (max-width: 639px)': 'solid',
-      },
-      borderTopColor: {
-        default: 'var(--border-2)',
-        '@media (max-width: 639px)': 'var(--border-2)',
-      },
+      borderTopWidth: '1px',
+      borderTopStyle: 'solid',
+      borderTopColor: 'var(--border-2)',
       borderRightWidth: {
         default: '1px',
         '@media (max-width: 639px)': '0',
@@ -82,50 +73,15 @@ const styles = stylex.create({
           'color-mix(in oklab, var(--surface) 96%, transparent)',
         '@media (max-width: 639px)': 'var(--surface)',
       },
-      backgroundImage: {
-        default: 'none',
-        '@supports (color: color-mix(in lab, red, red))': 'none',
-        '@media (max-width: 639px)': 'none',
-      },
-      backgroundPosition: {
-        default: 'initial',
-        '@supports (color: color-mix(in lab, red, red))': 'initial',
-        '@media (max-width: 639px)': 'initial',
-      },
-      backgroundSize: {
-        default: 'auto',
-        '@supports (color: color-mix(in lab, red, red))': 'auto',
-        '@media (max-width: 639px)': 'auto',
-      },
-      backgroundRepeat: {
-        default: 'repeat',
-        '@supports (color: color-mix(in lab, red, red))': 'repeat',
-        '@media (max-width: 639px)': 'repeat',
-      },
-      backgroundOrigin: {
-        default: 'padding-box',
-        '@supports (color: color-mix(in lab, red, red))': 'padding-box',
-        '@media (max-width: 639px)': 'padding-box',
-      },
-      backgroundClip: {
-        default: 'border-box',
-        '@supports (color: color-mix(in lab, red, red))': 'border-box',
-        '@media (max-width: 639px)': 'border-box',
-      },
-      backgroundAttachment: {
-        default: 'scroll',
-        '@supports (color: color-mix(in lab, red, red))': 'scroll',
-        '@media (max-width: 639px)': 'scroll',
-      },
       fontSize: '13px',
       color: 'var(--ink)',
       transform: {
         default: 'translateY(-14px) scale(0.94)',
-        ":is(.tweaks-panel[data-open='true'])": 'none',
         '@media (max-width: 639px)': {
           default: 'translateY(100%)',
-          ":is(.tweaks-panel[data-open='true'])": 'none',
+          ':is([data-open="true"])': 'none',
         },
+        ':is([data-open="true"])': 'none',
       },
       transformOrigin: {
         default: 'top right',
@@ -139,11 +95,11 @@ const styles = stylex.create({
       },
       opacity: {
         default: '0',
-        ":is(.tweaks-panel[data-open='true'])": '1',
+        ':is([data-open="true"])': '1',
       },
       pointerEvents: {
         default: 'none',
-        ":is(.tweaks-panel[data-open='true'])": 'auto',
+        ':is([data-open="true"])': 'auto',
       },
       willChange: 'transform, opacity',
       overflowY: {
@@ -334,126 +290,48 @@ const styles = stylex.create({
   },
   element_h3: {
     '@layer site': {
-      display: {
-        default: null,
-        ':is(.tweaks-panel h3)': 'flex',
-      },
-      alignItems: {
-        default: null,
-        ':is(.tweaks-panel h3)': 'center',
-      },
-      justifyContent: {
-        default: null,
-        ':is(.tweaks-panel h3)': 'space-between',
-      },
-      marginBottom: {
-        default: null,
-        ':is(.tweaks-panel h3)': '14px',
-      },
-      fontSize: {
-        default: null,
-        ':is(.tweaks-panel h3)': '14px',
-      },
-      fontWeight: {
-        default: null,
-        ':is(.tweaks-panel h3)': '700',
-      },
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: '14px',
+      fontSize: '14px',
+      fontWeight: '700',
     },
   },
   x: {
     '@layer site': {
-      padding: {
-        default: null,
-        ':is(.tweaks-panel .x)': '0 4px',
-      },
-      fontSize: {
-        default: null,
-        ':is(.tweaks-panel .x)': '22px',
-      },
-      lineHeight: {
-        default: null,
-        ':is(.tweaks-panel .x)': '1',
-      },
-      color: {
-        default: null,
-        ':is(.tweaks-panel .x)': 'var(--ink-3)',
-      },
-      cursor: {
-        default: null,
-        ':is(.tweaks-panel .x)': 'pointer',
-      },
+      padding: '0 4px',
+      fontSize: '22px',
+      lineHeight: '1',
+      color: 'var(--ink-3)',
+      cursor: 'pointer',
     },
   },
   element_label: {
     '@layer site': {
-      display: {
-        default: null,
-        ':is(.tweaks-panel label)': 'block',
-      },
-      marginBottom: {
-        default: null,
-        ':is(.tweaks-panel label)': '8px',
-      },
-      fontFamily: {
-        default: null,
-        ':is(.tweaks-panel label)': 'var(--font-mono), monospace',
-      },
-      fontSize: {
-        default: null,
-        ':is(.tweaks-panel label)': '10px',
-      },
-      letterSpacing: {
-        default: null,
-        ':is(.tweaks-panel label)': '0.08em',
-      },
-      textTransform: {
-        default: null,
-        ':is(.tweaks-panel label)': 'uppercase',
-      },
-      color: {
-        default: null,
-        ':is(.tweaks-panel label)': 'var(--ink-3)',
-      },
+      display: 'block',
+      marginBottom: '8px',
+      fontFamily: 'var(--font-mono), monospace',
+      fontSize: '10px',
+      letterSpacing: '0.08em',
+      textTransform: 'uppercase',
+      color: 'var(--ink-3)',
     },
   },
   tweaks_label: {
     '@layer site': {
-      display: {
-        default: null,
-        ':is(.tweaks-panel .tweaks-label)': 'block',
-      },
-      marginBottom: {
-        default: null,
-        ':is(.tweaks-panel .tweaks-label)': '8px',
-      },
-      fontFamily: {
-        default: null,
-        ':is(.tweaks-panel .tweaks-label)': 'var(--font-mono), monospace',
-      },
-      fontSize: {
-        default: null,
-        ':is(.tweaks-panel .tweaks-label)': '10px',
-      },
-      letterSpacing: {
-        default: null,
-        ':is(.tweaks-panel .tweaks-label)': '0.08em',
-      },
-      textTransform: {
-        default: null,
-        ':is(.tweaks-panel .tweaks-label)': 'uppercase',
-      },
-      color: {
-        default: null,
-        ':is(.tweaks-panel .tweaks-label)': 'var(--ink-3)',
-      },
+      display: 'block',
+      marginBottom: '8px',
+      fontFamily: 'var(--font-mono), monospace',
+      fontSize: '10px',
+      letterSpacing: '0.08em',
+      textTransform: 'uppercase',
+      color: 'var(--ink-3)',
     },
   },
-  tweaks_row: {
+  tweaks_row_next: {
     '@layer site': {
-      marginTop: {
-        default: null,
-        ':is(.tweaks-row + .tweaks-row)': '16px',
-      },
+      marginTop: '16px',
     },
   },
   tweaks_swatches: {
@@ -466,29 +344,11 @@ const styles = stylex.create({
     '@layer site': {
       width: '28px',
       height: '28px',
-      borderTopWidth: '2px',
-      borderTopStyle: 'solid',
-      borderTopColor: {
+      borderWidth: '2px',
+      borderStyle: 'solid',
+      borderColor: {
         default: 'transparent',
-        ":is(.tweaks-sw[data-on='true'])": 'var(--ink)',
-      },
-      borderRightWidth: '2px',
-      borderRightStyle: 'solid',
-      borderRightColor: {
-        default: 'transparent',
-        ":is(.tweaks-sw[data-on='true'])": 'var(--ink)',
-      },
-      borderBottomWidth: '2px',
-      borderBottomStyle: 'solid',
-      borderBottomColor: {
-        default: 'transparent',
-        ":is(.tweaks-sw[data-on='true'])": 'var(--ink)',
-      },
-      borderLeftWidth: '2px',
-      borderLeftStyle: 'solid',
-      borderLeftColor: {
-        default: 'transparent',
-        ":is(.tweaks-sw[data-on='true'])": 'var(--ink)',
+        ':is([data-on="true"])': 'var(--ink)',
       },
       borderRadius: '8px',
       transition: 'border-color 150ms',
@@ -501,51 +361,14 @@ const styles = stylex.create({
       gridTemplateColumns: 'repeat(3, 1fr)',
       gap: '6px',
       padding: '3px',
-      borderTopWidth: '1px',
-      borderTopStyle: 'solid',
-      borderTopColor: 'var(--border)',
-      borderRightWidth: '1px',
-      borderRightStyle: 'solid',
-      borderRightColor: 'var(--border)',
-      borderBottomWidth: '1px',
-      borderBottomStyle: 'solid',
-      borderBottomColor: 'var(--border)',
-      borderLeftWidth: '1px',
-      borderLeftStyle: 'solid',
-      borderLeftColor: 'var(--border)',
+      borderWidth: '1px',
+      borderStyle: 'solid',
+      borderColor: 'var(--border)',
       borderRadius: '10px',
       backgroundColor: {
         default: 'var(--surface-2)',
         '@supports (color: color-mix(in lab, red, red))':
           'color-mix(in oklab, var(--surface-2) 70%, transparent)',
-      },
-      backgroundImage: {
-        default: 'none',
-        '@supports (color: color-mix(in lab, red, red))': 'none',
-      },
-      backgroundPosition: {
-        default: 'initial',
-        '@supports (color: color-mix(in lab, red, red))': 'initial',
-      },
-      backgroundSize: {
-        default: 'auto',
-        '@supports (color: color-mix(in lab, red, red))': 'auto',
-      },
-      backgroundRepeat: {
-        default: 'repeat',
-        '@supports (color: color-mix(in lab, red, red))': 'repeat',
-      },
-      backgroundOrigin: {
-        default: 'padding-box',
-        '@supports (color: color-mix(in lab, red, red))': 'padding-box',
-      },
-      backgroundClip: {
-        default: 'border-box',
-        '@supports (color: color-mix(in lab, red, red))': 'border-box',
-      },
-      backgroundAttachment: {
-        default: 'scroll',
-        '@supports (color: color-mix(in lab, red, red))': 'scroll',
       },
     },
   },
@@ -563,7 +386,7 @@ const styles = stylex.create({
       color: {
         default: 'var(--ink-3)',
         ':hover': 'var(--ink)',
-        ":is(.tweaks-theme-btn[data-on='true'])": 'var(--primary)',
+        ':is([data-on="true"])': 'var(--primary)',
       },
       transition:
         'color 160ms ease,\n    background-color 180ms ease,\n    box-shadow 180ms ease',
@@ -573,10 +396,10 @@ const styles = stylex.create({
         '@supports (color: color-mix(in lab, red, red))': {
           default: null,
           ':hover': 'color-mix(in oklab, var(--surface) 70%, transparent)',
-          ":is(.tweaks-theme-btn[data-on='true'])":
+          ':is([data-on="true"])':
             'color-mix(in oklab, var(--primary) 14%, var(--surface))',
         },
-        ":is(.tweaks-theme-btn[data-on='true'])": 'var(--primary)',
+        ':is([data-on="true"])': 'var(--primary)',
       },
       backgroundImage: {
         default: null,
@@ -584,9 +407,9 @@ const styles = stylex.create({
         '@supports (color: color-mix(in lab, red, red))': {
           default: null,
           ':hover': 'none',
-          ":is(.tweaks-theme-btn[data-on='true'])": 'none',
+          ':is([data-on="true"])': 'none',
         },
-        ":is(.tweaks-theme-btn[data-on='true'])": 'none',
+        ':is([data-on="true"])': 'none',
       },
       backgroundPosition: {
         default: null,
@@ -594,9 +417,9 @@ const styles = stylex.create({
         '@supports (color: color-mix(in lab, red, red))': {
           default: null,
           ':hover': 'initial',
-          ":is(.tweaks-theme-btn[data-on='true'])": 'initial',
+          ':is([data-on="true"])': 'initial',
         },
-        ":is(.tweaks-theme-btn[data-on='true'])": 'initial',
+        ':is([data-on="true"])': 'initial',
       },
       backgroundSize: {
         default: null,
@@ -604,9 +427,9 @@ const styles = stylex.create({
         '@supports (color: color-mix(in lab, red, red))': {
           default: null,
           ':hover': 'auto',
-          ":is(.tweaks-theme-btn[data-on='true'])": 'auto',
+          ':is([data-on="true"])': 'auto',
         },
-        ":is(.tweaks-theme-btn[data-on='true'])": 'auto',
+        ':is([data-on="true"])': 'auto',
       },
       backgroundRepeat: {
         default: null,
@@ -614,9 +437,9 @@ const styles = stylex.create({
         '@supports (color: color-mix(in lab, red, red))': {
           default: null,
           ':hover': 'repeat',
-          ":is(.tweaks-theme-btn[data-on='true'])": 'repeat',
+          ':is([data-on="true"])': 'repeat',
         },
-        ":is(.tweaks-theme-btn[data-on='true'])": 'repeat',
+        ':is([data-on="true"])': 'repeat',
       },
       backgroundOrigin: {
         default: null,
@@ -624,9 +447,9 @@ const styles = stylex.create({
         '@supports (color: color-mix(in lab, red, red))': {
           default: null,
           ':hover': 'padding-box',
-          ":is(.tweaks-theme-btn[data-on='true'])": 'padding-box',
+          ':is([data-on="true"])': 'padding-box',
         },
-        ":is(.tweaks-theme-btn[data-on='true'])": 'padding-box',
+        ':is([data-on="true"])': 'padding-box',
       },
       backgroundClip: {
         default: null,
@@ -634,9 +457,9 @@ const styles = stylex.create({
         '@supports (color: color-mix(in lab, red, red))': {
           default: null,
           ':hover': 'border-box',
-          ":is(.tweaks-theme-btn[data-on='true'])": 'border-box',
+          ':is([data-on="true"])': 'border-box',
         },
-        ":is(.tweaks-theme-btn[data-on='true'])": 'border-box',
+        ':is([data-on="true"])': 'border-box',
       },
       backgroundAttachment: {
         default: null,
@@ -644,19 +467,18 @@ const styles = stylex.create({
         '@supports (color: color-mix(in lab, red, red))': {
           default: null,
           ':hover': 'scroll',
-          ":is(.tweaks-theme-btn[data-on='true'])": 'scroll',
+          ':is([data-on="true"])': 'scroll',
         },
-        ":is(.tweaks-theme-btn[data-on='true'])": 'scroll',
+        ':is([data-on="true"])': 'scroll',
       },
       boxShadow: {
         default: null,
         '@supports (color: color-mix(in lab, red, red))': {
           default: null,
-          ":is(.tweaks-theme-btn[data-on='true'])":
+          ':is([data-on="true"])':
             'inset 0 0 0 1px color-mix(in oklab, var(--primary) 35%, transparent)',
         },
-        ":is(.tweaks-theme-btn[data-on='true'])":
-          'inset 0 0 0 1px var(--primary)',
+        ':is([data-on="true"])': 'inset 0 0 0 1px var(--primary)',
       },
     },
   },
@@ -664,11 +486,11 @@ const styles = stylex.create({
     '@layer site': {
       width: {
         default: null,
-        ":is(.tweaks-panel input[type='range'])": '100%',
+        ':is([type="range"])': '100%',
       },
       accentColor: {
         default: null,
-        ":is(.tweaks-panel input[type='range'])": 'var(--primary)',
+        ':is([type="range"])': 'var(--primary)',
       },
     },
   },
@@ -698,29 +520,11 @@ const styles = stylex.create({
     },
     '@layer site': {
       flexShrink: '0',
-      borderTopWidth: '1px',
-      borderTopStyle: 'solid',
-      borderTopColor: {
+      borderWidth: '1px',
+      borderStyle: 'solid',
+      borderColor: {
         default: 'var(--border)',
-        ":is(.tweaks-switch[data-on='true'])": 'var(--primary)',
-      },
-      borderRightWidth: '1px',
-      borderRightStyle: 'solid',
-      borderRightColor: {
-        default: 'var(--border)',
-        ":is(.tweaks-switch[data-on='true'])": 'var(--primary)',
-      },
-      borderBottomWidth: '1px',
-      borderBottomStyle: 'solid',
-      borderBottomColor: {
-        default: 'var(--border)',
-        ":is(.tweaks-switch[data-on='true'])": 'var(--primary)',
-      },
-      borderLeftWidth: '1px',
-      borderLeftStyle: 'solid',
-      borderLeftColor: {
-        default: 'var(--border)',
-        ":is(.tweaks-switch[data-on='true'])": 'var(--primary)',
+        ':is([data-on="true"])': 'var(--primary)',
       },
       cursor: 'pointer',
     },
@@ -752,112 +556,70 @@ const styles = stylex.create({
       default: null,
       '@layer site': {
         default: 'var(--bg-2)',
-        ":is(.tweaks-switch[data-on='true'])": 'var(--primary)',
+        ':is([data-on="true"])': 'var(--primary)',
       },
       '::after': {
         default: null,
         '@layer site': {
           default: 'var(--ink-3)',
-          ":is(.tweaks-switch[data-on='true'])": '#fff',
+          ':is([data-on="true"])': '#fff',
         },
       },
     },
     backgroundImage: {
       default: null,
-      '@layer site': {
-        default: 'none',
-        ":is(.tweaks-switch[data-on='true'])": 'none',
-      },
+      '@layer site': 'none',
       '::after': {
         default: null,
-        '@layer site': {
-          default: 'none',
-          ":is(.tweaks-switch[data-on='true'])": 'none',
-        },
+        '@layer site': 'none',
       },
     },
     backgroundPosition: {
       default: null,
-      '@layer site': {
-        default: 'initial',
-        ":is(.tweaks-switch[data-on='true'])": 'initial',
-      },
+      '@layer site': 'initial',
       '::after': {
         default: null,
-        '@layer site': {
-          default: 'initial',
-          ":is(.tweaks-switch[data-on='true'])": 'initial',
-        },
+        '@layer site': 'initial',
       },
     },
     backgroundSize: {
       default: null,
-      '@layer site': {
-        default: 'auto',
-        ":is(.tweaks-switch[data-on='true'])": 'auto',
-      },
+      '@layer site': 'auto',
       '::after': {
         default: null,
-        '@layer site': {
-          default: 'auto',
-          ":is(.tweaks-switch[data-on='true'])": 'auto',
-        },
+        '@layer site': 'auto',
       },
     },
     backgroundRepeat: {
       default: null,
-      '@layer site': {
-        default: 'repeat',
-        ":is(.tweaks-switch[data-on='true'])": 'repeat',
-      },
+      '@layer site': 'repeat',
       '::after': {
         default: null,
-        '@layer site': {
-          default: 'repeat',
-          ":is(.tweaks-switch[data-on='true'])": 'repeat',
-        },
+        '@layer site': 'repeat',
       },
     },
     backgroundOrigin: {
       default: null,
-      '@layer site': {
-        default: 'padding-box',
-        ":is(.tweaks-switch[data-on='true'])": 'padding-box',
-      },
+      '@layer site': 'padding-box',
       '::after': {
         default: null,
-        '@layer site': {
-          default: 'padding-box',
-          ":is(.tweaks-switch[data-on='true'])": 'padding-box',
-        },
+        '@layer site': 'padding-box',
       },
     },
     backgroundClip: {
       default: null,
-      '@layer site': {
-        default: 'border-box',
-        ":is(.tweaks-switch[data-on='true'])": 'border-box',
-      },
+      '@layer site': 'border-box',
       '::after': {
         default: null,
-        '@layer site': {
-          default: 'border-box',
-          ":is(.tweaks-switch[data-on='true'])": 'border-box',
-        },
+        '@layer site': 'border-box',
       },
     },
     backgroundAttachment: {
       default: null,
-      '@layer site': {
-        default: 'scroll',
-        ":is(.tweaks-switch[data-on='true'])": 'scroll',
-      },
+      '@layer site': 'scroll',
       '::after': {
         default: null,
-        '@layer site': {
-          default: 'scroll',
-          ":is(.tweaks-switch[data-on='true'])": 'scroll',
-        },
+        '@layer site': 'scroll',
       },
     },
     transition: {
@@ -888,7 +650,7 @@ const styles = stylex.create({
         default: null,
         '@layer site': {
           default: '2px',
-          ":is(.tweaks-switch[data-on='true'])": '18px',
+          ':is([data-on="true"])': '18px',
         },
       },
     },
@@ -902,7 +664,7 @@ export const element_h3 = stylex.props(styles.element_h3).className!
 export const x = stylex.props(styles.x).className!
 export const element_label = stylex.props(styles.element_label).className!
 export const tweaks_label = stylex.props(styles.tweaks_label).className!
-export const tweaks_row = stylex.props(styles.tweaks_row).className!
+export const tweaks_row_next = stylex.props(styles.tweaks_row_next).className!
 export const tweaks_swatches = stylex.props(styles.tweaks_swatches).className!
 export const tweaks_sw = stylex.props(styles.tweaks_sw).className!
 export const tweaks_theme = stylex.props(styles.tweaks_theme).className!

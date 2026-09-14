@@ -86,6 +86,13 @@ const sx = stylex.create({
     '@layer utilities': {
       minWidth: '0px',
       flex: '1',
+      '--announcement-link-translate': {
+        default: null,
+        '@media (hover: hover)': {
+          default: null,
+          ':hover': 'calc(var(--spacing) * 0.5) var(--blog-translate-y)',
+        },
+      },
     },
   },
   span: {
@@ -210,22 +217,7 @@ const sx = stylex.create({
         'var(--blog-ease, var(--default-transition-timing-function))',
       transitionDuration:
         'var(--blog-duration, var(--default-transition-duration))',
-      '--blog-translate-x': {
-        default: null,
-        '@media (hover: hover)': {
-          default: null,
-          ':is(:where(.announcement-link):hover *)':
-            'calc(var(--spacing) * 0.5)',
-        },
-      },
-      translate: {
-        default: null,
-        '@media (hover: hover)': {
-          default: null,
-          ':is(:where(.announcement-link):hover *)':
-            'var(--blog-translate-x) var(--blog-translate-y)',
-        },
-      },
+      translate: 'var(--announcement-link-translate, none)',
     },
   },
   button: {

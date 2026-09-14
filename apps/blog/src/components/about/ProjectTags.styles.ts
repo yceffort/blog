@@ -16,14 +16,8 @@ const styles = stylex.create({
   },
   element_li: {
     '@layer site': {
-      margin: {
-        default: null,
-        ':is(.projecttags-tags li)': '0',
-      },
-      padding: {
-        default: null,
-        ':is(.projecttags-tags li)': '0',
-      },
+      margin: '0',
+      padding: '0',
     },
   },
 })
