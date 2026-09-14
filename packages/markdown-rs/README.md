@@ -49,6 +49,18 @@ corepack pnpm --filter blog build
 
 `pkg/markdown_rs.wasm`은 약 2.49MiB이며 저장소에 포함한다. Rust를 수정하면 바이너리도 다시 빌드해 함께 반영한다. 일반 Next.js 배포 빌드는 이 파일을 사용하므로 Rust와 wasi-sdk가 필요 없다. Next.js는 패키지를 `serverExternalPackages`로 불러오며 `outputFileTracingIncludes`에 WASM 파일을 포함한다.
 
+커밋할 바이너리는 Linux CI의 생성물을 기준으로 한다. Rust와 wasi-sdk 버전을 고정하고 경로를 제거해도 이번 macOS 빌드와 Linux 빌드의 코드 섹션은 달랐다. 두 바이너리의 전체 HAST는 글과 시리즈 462개에서 코드 색상과 MathML까지 일치했지만, 바이트가 달라진 컴파일러 내부 경로까지 확인한 것은 아니다. 로컬 빌드는 개발 검증에 쓰고, CI가 다시 만든 바이너리와 커밋된 파일의 바이트 일치 검사는 유지한다.
+
+macOS에서 Rust를 수정하고 푸시한 뒤 바이너리 일치 검사만 실패하면, 해당 커밋의 CI가 보존한 `ci-markdown-wasm` 아티팩트를 받아 비교한다. 다른 소스 커밋의 아티팩트를 사용하지 않는다. 빌드 로그의 SHA-256과 대조하고 아래 검증을 통과한 파일을 커밋한 뒤 CI를 다시 실행한다. 아티팩트 보존 기간은 3일이다.
+
+```sh
+GH_HOST=github.com gh run download <run-id> -n ci-markdown-wasm -D .cache/ci-markdown-wasm
+shasum -a 256 .cache/ci-markdown-wasm/markdown_rs.wasm
+cp .cache/ci-markdown-wasm/markdown_rs.wasm packages/markdown-rs/pkg/markdown_rs.wasm
+corepack pnpm --filter @yceffort/markdown-rs parity
+corepack pnpm build:blog
+```
+
 런타임에는 Node의 [WASI preview1 API](https://nodejs.org/docs/v24.20.0/api/wasi.html)를 사용한다. Node 24에서 이 API는 실험적 기능이며 초기화 시 경고가 출력된다. 이전 `wasm32-unknown-unknown` 바이너리와 달리 호스트 import가 있다. 노출하는 ABI는 `alloc`, `dealloc`, `render_json_ptr`, `free_result`이며 메모리 소유권은 `src/lib.rs`와 `index.js`에 정의되어 있다.
 
 ## 호환성 검사
