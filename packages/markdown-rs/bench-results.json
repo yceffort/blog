@@ -1,0 +1,77 @@
+{
+  "startedAt": "2026-09-14T06:51:23.928Z",
+  "finishedAt": "2026-09-14T06:52:03.254Z",
+  "node": "v24.20.0",
+  "host": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "release": "25.6.0",
+    "cpu": "Apple M1"
+  },
+  "ref": "f27162bd4e2406acc22f0fdc3085d8ef30c4e1f1",
+  "sourceSha256": {
+    "pnpm-lock.yaml": "bd1bcd16ec7e120623f4dab061cbb2787def8b8775e748ddfbf97393cf75523e",
+    "packages/markdown-rs/index.js": "5dabd7b83c91487dbcf4288df703500041dda1761bbed21604506237ef0745b7",
+    "packages/markdown-rs/pkg/markdown_rs.wasm": "53d854e3e243950b6a7504e630a24da01d3964fe7d83e750ea1449c83f9d2298",
+    "packages/markdown-rs/scripts/bench.mjs": "035df08421e434912b64544201f4474336150f68f961d980da5fb2a31f45a5c6",
+    "packages/markdown-rs/scripts/js-hast-pipeline.mjs": "dde3207d96df924389147c9021661b3f74a93d3102a97a4ba4e855e668b2a0d1",
+    "packages/markdown-rs/scripts/js-pipeline.mjs": "73792203ac52c6bf54c424182992e4171ee55325f1f1e2c807f5d10a12152d96"
+  },
+  "corpus": {
+    "posts": 453,
+    "sha256": "5f3d33f714e8f0116e985ccd23f1a0f42a3a890d7812d8fdceb2603143694d0e"
+  },
+  "scope": "Markdown body -> HAST, including KaTeX and Prism; no JS code generation, React rendering, image metadata, or StyleX token rewriting.",
+  "conditions": "One process, reused processors and WASM instance, full-corpus validation and one warmup pass per variant, six alternating AB/BA pairs. Imports, file reads, frontmatter parsing and validation are outside timing.",
+  "summary": {
+    "js": {
+      "medianMs": 4110.727375000002,
+      "minMs": 4101.198250000001,
+      "maxMs": 4127.392584000001
+    },
+    "rust": {
+      "medianMs": 2416.1777920000022,
+      "minMs": 2402.0791669999962,
+      "maxMs": 2581.738874999999
+    }
+  },
+  "speedup": 1.7013348059942761,
+  "trials": [
+    {
+      "round": 1,
+      "order": ["js", "rust"],
+      "jsMs": 4125.659041999999,
+      "rustMs": 2581.738874999999
+    },
+    {
+      "round": 2,
+      "order": ["rust", "js"],
+      "rustMs": 2402.0791669999962,
+      "jsMs": 4101.198250000001
+    },
+    {
+      "round": 3,
+      "order": ["js", "rust"],
+      "jsMs": 4109.389917,
+      "rustMs": 2425.987291999998
+    },
+    {
+      "round": 4,
+      "order": ["rust", "js"],
+      "rustMs": 2403.560959000002,
+      "jsMs": 4127.392584000001
+    },
+    {
+      "round": 5,
+      "order": ["js", "rust"],
+      "jsMs": 4112.064833000004,
+      "rustMs": 2423.2626670000027
+    },
+    {
+      "round": 6,
+      "order": ["rust", "js"],
+      "rustMs": 2409.0929170000018,
+      "jsMs": 4102.997583000004
+    }
+  ]
+}

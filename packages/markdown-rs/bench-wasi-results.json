@@ -1,0 +1,78 @@
+{
+  "startedAt": "2026-09-14T09:05:49.881Z",
+  "finishedAt": "2026-09-14T09:06:43.626Z",
+  "node": "v24.20.0",
+  "host": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "release": "25.6.0",
+    "cpu": "Apple M1"
+  },
+  "ref": "f27162bd4e2406acc22f0fdc3085d8ef30c4e1f1",
+  "sourceSha256": {
+    "pnpm-lock.yaml": "a4ed9864f9eb01b8f8932784cd79ea0f334d4f1744051f41113dbbffe367e9c6",
+    "packages/markdown-rs/index.js": "ab899846aff1c75d932f975ea166bbd37f3df467a7ffd45f7d860e2560e3d4a0",
+    "packages/markdown-rs/pkg/markdown_rs.wasm": "614d4c6fbbe527302d501cb1c851dad6a473f4f9efb959e0f03fffb6b5fe5364",
+    "packages/markdown-rs/scripts/bench.mjs": "d3fb534539f3e636fa335cafcd16c4229c1f781ec742c6f3ef71e192d5d1a836",
+    "packages/markdown-rs/scripts/js-hast-pipeline.mjs": "dde3207d96df924389147c9021661b3f74a93d3102a97a4ba4e855e668b2a0d1",
+    "packages/markdown-rs/scripts/js-pipeline.mjs": "73792203ac52c6bf54c424182992e4171ee55325f1f1e2c807f5d10a12152d96",
+    "packages/markdown-rs/scripts/normalize-rendered.mjs": "eaf97c1cb0346263b8307471fec65c0eff3bba41ecc9001a7ad55fd924e48a50"
+  },
+  "corpus": {
+    "posts": 453,
+    "sha256": "3e30abc9ec483a09739398eedce322f4ed06de74ad2ab4d9dc827e9e07949de6"
+  },
+  "scope": "Markdown body -> HAST. JS uses KaTeX/Prism; WASM uses math-core/syntect-Oniguruma. Token colors and math markup differ. Validation compares code text/line metadata, TeX/display mode and remaining HAST. Excludes JS code generation, React rendering, image metadata and StyleX token rewriting.",
+  "conditions": "One process, reused processors and WASM instance, full-corpus validation and one warmup pass per variant, six alternating AB/BA pairs. Imports, file reads, frontmatter parsing and validation are outside timing.",
+  "summary": {
+    "js": {
+      "medianMs": 4490.530770999998,
+      "minMs": 4449.576083000007,
+      "maxMs": 4533.421041000001
+    },
+    "rust": {
+      "medianMs": 4463.9754170000015,
+      "minMs": 4444.5984169999865,
+      "maxMs": 4505.136917000003
+    }
+  },
+  "speedup": 1.0059488127777019,
+  "trials": [
+    {
+      "round": 1,
+      "order": ["js", "rust"],
+      "jsMs": 4533.421041000001,
+      "rustMs": 4505.136917000003
+    },
+    {
+      "round": 2,
+      "order": ["rust", "js"],
+      "rustMs": 4451.298041000002,
+      "jsMs": 4494.593957999998
+    },
+    {
+      "round": 3,
+      "order": ["js", "rust"],
+      "jsMs": 4486.467583999998,
+      "rustMs": 4473.580291999999
+    },
+    {
+      "round": 4,
+      "order": ["rust", "js"],
+      "rustMs": 4460.4155420000025,
+      "jsMs": 4449.576083000007
+    },
+    {
+      "round": 5,
+      "order": ["js", "rust"],
+      "jsMs": 4518.997917000001,
+      "rustMs": 4467.5352920000005
+    },
+    {
+      "round": 6,
+      "order": ["rust", "js"],
+      "rustMs": 4444.5984169999865,
+      "jsMs": 4456.869959000003
+    }
+  ]
+}
