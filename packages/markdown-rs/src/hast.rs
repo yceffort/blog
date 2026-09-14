@@ -61,6 +61,7 @@ pub enum MdxAttribute {
 pub enum MdxAttributeValue {
     Literal(String),
     Expression(MdxAttributeValueExpression),
+    Resolved(Value),
 }
 
 /// `height={680}` 같은 표현식 값. `data.literal` 에 Rust 쪽에서 평가한 리터럴을 담는다.

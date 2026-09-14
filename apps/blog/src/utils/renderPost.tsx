@@ -2,25 +2,12 @@ import {renderMarkdown} from '@yceffort/markdown-rs'
 import type {Evaluater} from 'hast-util-to-jsx-runtime'
 import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
 import {Fragment, jsx, jsxs} from 'react/jsx-runtime'
-import rehypeKatex from 'rehype-katex'
-import prism from 'rehype-prism-plus'
-import {unified} from 'unified'
 
 import MDXComponents from '@/components/post/MDXComponents'
-import imageMetadataPlugin from '@/utils/imageMetadata'
-import {parseCodeSnippet} from '@/utils/Markdown'
 
-// 마크다운 -> hast 는 Rust(wasm) 가 만든다: 파싱(GFM, 수식, MDX 문법, CJK 강조),
-// 목차, 제목 id, 코드 파일명, 제목 링크까지. 나머지 네 단계는 JS 에 남는다.
-// 코드 하이라이트는 Prism 을 그대로 써야 기존 글의 색이 바뀌지 않는다.
-// parseCodeSnippet 은 Prism 이 붙인 토큰 클래스를 StyleX 클래스로 갈아끼우므로 Prism 뒤에 와야 한다.
-export async function renderPost(body: string, path: string) {
-  const tree = await unified()
-    .use(rehypeKatex)
-    .use(prism, {showLineNumbers: true})
-    .use(parseCodeSnippet)
-    .use(imageMetadataPlugin, {path})
-    .run(renderMarkdown(body))
+// 마크다운 처리와 이미지 메타데이터는 WASM에서 끝내고 HAST를 React에 연결한다.
+export function renderPost(body: string, path: string) {
+  const tree = renderMarkdown(body, path)
 
   return toJsxRuntime(tree, {
     Fragment,

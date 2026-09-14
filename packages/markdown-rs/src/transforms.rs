@@ -1,5 +1,5 @@
 //! rehype 단계 이식: rehype-slug, extractCodeFilename, rehype-autolink-headings.
-//! parseCodeSnippet 은 prism 뒤에 와야 해서 JS 에 남겨 둔다.
+//! 코드 토큰과 줄 메타데이터는 highlight.rs에서 처리한다.
 
 use serde_json::json;
 

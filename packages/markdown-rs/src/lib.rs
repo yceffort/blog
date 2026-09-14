@@ -1,14 +1,14 @@
 //! yceffort.kr 포스트용 마크다운 파이프라인. 마크다운(MDX 문법 포함)을 받아
-//! 블로그의 remark/rehype 플러그인 체인과 같은 hast 트리를 만든다.
+//! React에 전달할 hast 트리를 만든다. 코드 색상은 syntect, 수식은 MathML을 쓴다.
 //!
 //! 순서: 파싱(GFM, math, MDX, CJK 강조) -> unravel -> toc -> to_hast -> slug ->
-//! code filename -> 제목 자동 링크.
-//!
-//! 코드 하이라이트는 여기서 하지 않는다. Prism(rehype-prism-plus)과 토큰이 완전히
-//! 같은 구현이 Rust 에 없어서, 바꾸면 기존 글 4555개의 코드 색이 12% 달라진다.
-//! KaTeX, 하이라이트, 이미지 크기(sharp)는 JS 쪽에서 hast 위에 이어서 돌린다.
+//! code filename -> 제목 자동 링크 -> 수식 -> 하이라이트 -> MDX 리터럴 검증.
+//! render_json에 포스트 경로를 전달하면 WASI의 /public에서 이미지 크기도 읽는다.
 
 mod hast;
+mod highlight;
+mod images;
+mod math;
 mod mdx;
 mod slug_table;
 mod slugger;
@@ -58,19 +58,29 @@ pub fn render(body: &str) -> Result<Node, String> {
     transforms::slug_headings(&mut tree);
     transforms::extract_code_filename(&mut tree);
     transforms::autolink_headings(&mut tree);
+    math::apply(&mut tree)?;
+    highlight::apply(&mut tree)?;
+    mdx::resolve(&mut tree)?;
     Ok(tree)
 }
 
 #[derive(Deserialize)]
 struct Request {
     body: String,
+    path: Option<String>,
 }
 
-/// JSON 요청 `{body}` -> JSON 응답 `{ok, hast}` 또는 `{ok: false, error}`.
+/// JSON 요청 `{body, path?}` -> JSON 응답 `{ok, hast}` 또는 `{ok: false, error}`.
 pub fn render_json(input: &str) -> String {
     let result = serde_json::from_str::<Request>(input)
         .map_err(|e| format!("invalid request: {e}"))
-        .and_then(|req| render(&req.body));
+        .and_then(|req| {
+            let mut tree = render(&req.body)?;
+            if let Some(path) = req.path {
+                images::apply(&mut tree, &path, std::path::Path::new("/public"));
+            }
+            Ok(tree)
+        });
     match result {
         Ok(hast) => serde_json::json!({"ok": true, "hast": hast}).to_string(),
         Err(error) => serde_json::json!({"ok": false, "error": error}).to_string(),
@@ -103,7 +113,9 @@ pub unsafe extern "C" fn render_json_ptr(ptr: *const u8, len: usize) -> *mut u8 
     let input = std::slice::from_raw_parts(ptr, len);
     let output = match std::str::from_utf8(input) {
         Ok(s) => render_json(s),
-        Err(e) => serde_json::json!({"ok": false, "error": format!("invalid utf-8: {e}")}).to_string(),
+        Err(e) => {
+            serde_json::json!({"ok": false, "error": format!("invalid utf-8: {e}")}).to_string()
+        }
     };
     let bytes = output.into_bytes();
     let mut buf = Vec::<u8>::with_capacity(4 + bytes.len());
@@ -118,7 +130,10 @@ pub unsafe extern "C" fn render_json_ptr(ptr: *const u8, len: usize) -> *mut u8 
 #[no_mangle]
 pub unsafe extern "C" fn free_result(ptr: *mut u8) {
     let len = u32::from_le_bytes([*ptr, *ptr.add(1), *ptr.add(2), *ptr.add(3)]) as usize;
-    drop(Box::from_raw(std::ptr::slice_from_raw_parts_mut(ptr, 4 + len)));
+    drop(Box::from_raw(std::ptr::slice_from_raw_parts_mut(
+        ptr,
+        4 + len,
+    )));
 }
 
 #[cfg(test)]
@@ -152,7 +167,10 @@ mod tests {
     fn korean_emphasis_closes_next_to_a_particle() {
         // remark-cjk-friendly 규칙. CommonMark 그대로면 이 강조는 닫히지 않는다.
         assert_eq!(render_sketch("**강조**는"), "p(strong(\"강조\"),\"는\")");
-        assert_eq!(render_sketch("**(괄호)**뒤"), "p(strong(\"(괄호)\"),\"뒤\")");
+        assert_eq!(
+            render_sketch("**(괄호)**뒤"),
+            "p(strong(\"(괄호)\"),\"뒤\")"
+        );
         // CommonMark 규칙 자체는 그대로다.
         assert_eq!(render_sketch("a ** b ** c"), "p(\"a ** b ** c\")");
     }
@@ -178,7 +196,10 @@ mod tests {
         );
         let json = serde_json::to_string(&render("## Contents\n\n## 첫 절\n").unwrap()).unwrap();
         // 링크는 제목 id 와 같은 규칙(github-slugger)으로 만들고 URI 로 인코딩한다.
-        assert!(json.contains(r##""href":"#%EC%B2%AB-%EC%A0%88""##), "{json}");
+        assert!(
+            json.contains(r##""href":"#%EC%B2%AB-%EC%A0%88""##),
+            "{json}"
+        );
         assert!(json.contains(r#""id":"첫-절""#), "{json}");
     }
 
@@ -200,10 +221,33 @@ mod tests {
     }
 
     #[test]
-    fn keeps_mdx_expressions_for_the_caller_to_reject() {
-        // 표현식은 노드로 남겨 JS 쪽에서 막는다. import/export 는 평문이 된다.
-        let json = serde_json::to_string(&render("a {2 + 2} b\n").unwrap()).unwrap();
-        assert!(json.contains(r#"{"type":"mdxTextExpression","value":"2 + 2"}"#), "{json}");
-        assert_eq!(render_sketch("import a from 'b'\n"), r#"p("import a from 'b'")"#);
+    fn rejects_mdx_expressions_without_evaluating_javascript() {
+        assert!(render("a {2 + 2} b\n")
+            .unwrap_err()
+            .contains("MDX expression"));
+        assert!(render("<Demo {...props} />")
+            .unwrap_err()
+            .contains("spread attribute"));
+        assert!(render("<Demo height={props.height} />")
+            .unwrap_err()
+            .contains("must be a literal"));
+        assert_eq!(
+            render_sketch("import a from 'b'\n"),
+            r#"p("import a from 'b'")"#
+        );
+    }
+
+    #[test]
+    fn resolves_mdx_literals_and_removes_comments() {
+        let json = serde_json::to_value(render("<Demo height={680} enabled={false} name={'demo'} empty={null} />\n\n{/* comment */}\n").unwrap()).unwrap();
+        let children = json["children"].as_array().unwrap();
+        assert!(!children
+            .iter()
+            .any(|node| node["type"] == "mdxFlowExpression"));
+        let attrs = &children[0]["attributes"];
+        assert_eq!(attrs[0]["value"], 680);
+        assert_eq!(attrs[1]["value"], false);
+        assert_eq!(attrs[2]["value"], "demo");
+        assert_eq!(attrs[3]["value"], serde_json::Value::Null);
     }
 }

@@ -9,7 +9,6 @@ import {connection} from 'next/server'
 import {ViewTransition} from 'react'
 
 import * as ambientStyles from '@/components/layout/ambient.styles'
-import MathLoader from '@/components/post/math'
 import {PostArticle} from '@/components/post/PostArticle'
 import ProfileImage from '@/components/post/ProfileImage'
 import * as readingProgressStyles from '@/components/post/reading-progress.styles'
@@ -21,7 +20,6 @@ import SeriesNavigation from '@/components/series/SeriesNavigation'
 import SeriesPrevNext from '@/components/series/SeriesPrevNext'
 import {SiteConfig} from '@/config'
 import {buildBlogPostingJsonLd, buildBreadcrumbJsonLd} from '@/utils/jsonLd'
-import {hasMath} from '@/utils/Markdown'
 import {buildOgImageUrl} from '@/utils/og'
 import {
   findPostByYearAndSlug,
@@ -208,7 +206,6 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
       >
         {JSON.stringify(jsonLd)}
       </Script>
-      {hasMath(body) && <MathLoader />}
       <div
         className={`page-view ${ambientStyles.page_view} ${stylex.props(sx.div).className}`}
       >

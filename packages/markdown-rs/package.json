@@ -9,7 +9,8 @@
   "files": [
     "index.js",
     "index.d.ts",
-    "pkg"
+    "pkg",
+    "SYNTAX-LICENSES.txt"
   ],
   "scripts": {
     "bench": "node scripts/bench.mjs",
@@ -21,6 +22,7 @@
     "@mdx-js/mdx": "^3.1.1",
     "front-matter": "^4.0.2",
     "github-slugger": "2.0.0",
+    "next-mdx-remote-client": "2.1.12",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-katex": "^7.0.1",
     "rehype-prism-plus": "^2.0.2",
@@ -28,6 +30,9 @@
     "remark-cjk-friendly": "^2.3.1",
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
+    "remark-mdx": "3.1.1",
+    "remark-parse": "11.0.0",
+    "remark-rehype": "11.1.2",
     "remark-toc": "^9.0.0",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0",

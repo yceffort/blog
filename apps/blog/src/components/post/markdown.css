@@ -1,5 +1,76 @@
 /* Code highlighting and generated diagram content. */
+@font-face {
+  font-family: "Libertinus Math";
+  src: url("/fonts/math/LibertinusMath-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
 @layer site {
+  math {
+    font-family: "Libertinus Math", math;
+  }
+  math[display="block"] {
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: block;
+    max-width: 100%;
+    margin-block: 1em;
+  }
+  .token.tag,
+  .token.boolean,
+  .token.deleted {
+    color: #dc2626;
+  }
+  .token.attr-name,
+  .token.class-name {
+    color: #ca8a04;
+  }
+  .token.string,
+  .token.attr-value,
+  .token.inserted {
+    color: #16a34a;
+  }
+  .token.punctuation {
+    color: #1f2937;
+  }
+  .token.keyword {
+    color: #9333ea;
+  }
+  .token.function,
+  .token.number {
+    color: #2563eb;
+  }
+  .token.comment {
+    font-style: italic;
+    color: oklch(55.2% 0.016 285.938);
+  }
+  .dark .token.tag,
+  .dark .token.boolean,
+  .dark .token.deleted {
+    color: #f99;
+  }
+  .dark .token.attr-name,
+  .dark .token.class-name {
+    color: #ffeb99;
+  }
+  .dark .token.string,
+  .dark .token.attr-value,
+  .dark .token.inserted {
+    color: #a4f4c0;
+  }
+  .dark .token.punctuation {
+    color: #fff;
+  }
+  .dark .token.keyword {
+    color: #d7a9ff;
+  }
+  .dark .token.function,
+  .dark .token.number {
+    color: #98dcff;
+  }
+  .dark .token.comment {
+    color: oklch(70.5% 0.015 286.067);
+  }
   .code-line.deleted {
     background-color: color-mix(
       in srgb,
@@ -108,6 +179,13 @@
   }
 }
 
+@supports (not (-moz-appearance: none)) {
+  @layer site {
+    math mover[accent="true" i] > mo:nth-child(2) {
+      margin-bottom: 0.15ex;
+    }
+  }
+}
 @supports (color: color-mix(in lab, red, red)) {
   @layer site {
     .highlight-line {

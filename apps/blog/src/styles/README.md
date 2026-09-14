@@ -56,7 +56,7 @@ A rule that only long-form pages need belongs in `reading.css`; anything the hea
 
 `tokens.stylex.ts` defines the shared CSS-variable names used by both authoring formats. Semantic markers such as `post-article`, `series-thread`, and `markdown-exempt` remain where CSS or DOM behavior needs them.
 
-Markdown styling does not require a rehype traversal or generated classes on every heading, paragraph, link, Prism token, or KaTeX node. MDX wrappers preserve incoming properties and add only the styles they own. Code highlighting still uses `parseCodeSnippet`; image metadata and the other Markdown plugins are unchanged.
+Markdown styling does not require a rehype traversal or generated classes on every heading, paragraph, link, Prism token, or KaTeX node. MDX wrappers preserve incoming properties and add only the styles they own. WASM produces the code token classes, line metadata, MathML and image dimensions. `post/markdown.css` colors those token classes and supplies the local math font; `parseCodeSnippet` is no longer part of the render path.
 
 ## Compilation and verification
 

@@ -1,20 +1,15 @@
-// 새 파이프라인(Rust hast + JS 후처리)과 기존 JS 파이프라인의 hast 를 포스트 전체에서
-// 그대로 비교한다. 하이라이트까지 JS 로 같으므로 차이가 있으면 안 된다.
-//
 // 사용법: node scripts/parity.mjs [--verbose] [file...]
 import {globSync, readFileSync} from 'node:fs'
 import {resolve} from 'node:path'
 
-import rehypeKatex from 'rehype-katex'
-import prism from 'rehype-prism-plus'
-import {unified} from 'unified'
-
 import {renderMarkdown} from '../index.js'
 import {
+  normalizeHast,
   runJsPipeline,
   splitFrontMatter,
   stripPositions,
 } from './js-pipeline.mjs'
+import {normalizeRendered} from './normalize-rendered.mjs'
 
 const args = process.argv.slice(2)
 const verbose = args.includes('--verbose')
@@ -27,41 +22,8 @@ const files = targets.length
       .map((f) => resolve(root, f))
       .toSorted()
 
-// apps/blog/src/utils/renderPost.tsx 의 JS 후처리와 같은 구성(sharp 를 쓰는
-// imageMetadata 는 두 쪽 모두에서 빼고 비교한다).
-const post = unified().use(rehypeKatex).use(prism, {showLineNumbers: true})
-
-function normalize(node) {
-  if (Array.isArray(node)) {
-    return node
-      .filter(
-        (n) =>
-          !(
-            n?.type?.startsWith('mdx') &&
-            n.type.endsWith('Expression') &&
-            n.value.trim() === ''
-          ),
-      )
-      .map(normalize)
-  }
-  if (!node || typeof node !== 'object') return node
-  // MDX 속성 표현식: Rust 는 리터럴로 평가해 둔다. JS 쪽 값도 같은 모양으로 맞춘다.
-  if (node.type === 'mdxJsxAttributeValueExpression') {
-    try {
-      return JSON.parse(node.value)
-    } catch {
-      return node.value
-    }
-  }
-  const out = {}
-  for (const [k, v] of Object.entries(node)) {
-    if (k === 'position') continue
-    if (k === 'data' && node.type?.startsWith('mdx')) continue
-    out[k] = normalize(v)
-  }
-  return out
-}
-
+// 코드의 원문과 줄 메타데이터, 수식의 TeX와 표시 모드, 나머지 HAST를 비교한다.
+// 토큰 색상과 수식 내부 마크업, 이미지 크기와 React 렌더는 별도 검증 대상이다.
 function firstDiff(a, b, path = '$') {
   if (a === b) return null
   if (
@@ -113,7 +75,7 @@ for (const file of files) {
   let now
   const r0 = performance.now()
   try {
-    now = await post.run(renderMarkdown(body))
+    now = renderMarkdown(body)
   } catch (error) {
     rustMs += performance.now() - r0
     failures.push({file, diff: {path: 'new pipeline error', a: String(error)}})
@@ -121,7 +83,10 @@ for (const file of files) {
   }
   rustMs += performance.now() - r0
 
-  const diff = firstDiff(normalize(now), normalize(stripPositions(js.hast2)))
+  const diff = firstDiff(
+    normalizeRendered(normalizeHast(now)),
+    normalizeRendered(normalizeHast(stripPositions(js.hast2))),
+  )
   if (diff) {
     failures.push({file, diff})
   } else {

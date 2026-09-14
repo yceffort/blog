@@ -1,4 +1,4 @@
-// 현재 블로그가 쓰는 JS 파이프라인(next-mdx-remote-client 설정과 동일)을 그대로 돌려
+// 교체 전 JS 파이프라인(next-mdx-remote-client 설정과 동일)을 그대로 돌려
 // 중간 산출물(mdast, hast)을 뽑는다. Rust 구현의 parity 기준.
 import {createProcessor} from '@mdx-js/mdx'
 import frontMatter from 'front-matter'
@@ -14,7 +14,7 @@ import {visit} from 'unist-util-visit'
 import {VFile} from 'vfile'
 
 // apps/blog/src/utils/Markdown.ts 에 있던 플러그인 (Rust 로 옮기기 전 원본).
-function extractCodeFilename() {
+export function extractCodeFilename() {
   return (tree) => {
     visit(tree, 'element', (node, index, parent) => {
       if (node.tagName !== 'pre' || !parent || typeof index !== 'number') return
@@ -39,7 +39,7 @@ function extractCodeFilename() {
 }
 
 // katex 없이 비교할 때 수식 노드를 자리표시자로 바꿔 prism 이 건드리지 않게 한다.
-// Rust 출력은 parity.mjs 의 normalize 가 같은 모양으로 맞춘다.
+// Rust 출력은 normalizeHast가 같은 모양으로 맞춘다.
 function mathStub() {
   return (tree) => {
     visit(tree, 'element', (node, index, parent) => {
@@ -99,6 +99,37 @@ export function stripPositions(node) {
     return out
   }
   return node
+}
+
+export function normalizeHast(node) {
+  if (Array.isArray(node)) {
+    return node
+      .filter(
+        (n) =>
+          !(
+            n?.type?.startsWith('mdx') &&
+            n.type.endsWith('Expression') &&
+            n.value.trim() === ''
+          ),
+      )
+      .map(normalizeHast)
+  }
+  if (!node || typeof node !== 'object') return node
+  // MDX 속성 표현식: Rust는 리터럴로 평가해 둔다. JS 쪽도 같은 모양으로 맞춘다.
+  if (node.type === 'mdxJsxAttributeValueExpression') {
+    try {
+      return JSON.parse(node.value)
+    } catch {
+      return node.value
+    }
+  }
+  const out = {}
+  for (const [k, v] of Object.entries(node)) {
+    if (k === 'position') continue
+    if (k === 'data' && node.type?.startsWith('mdx')) continue
+    out[k] = normalizeHast(v)
+  }
+  return out
 }
 
 function createPipeline({katex = true} = {}) {

@@ -1,7 +1,58 @@
 //! MDX 표현식 속성(`height={680}`) 의 리터럴 평가. JS 를 실행하지 않고
-//! 숫자, 불리언, null, 문자열 리터럴만 받아들인다. 그 밖의 표현식은 그대로 넘긴다.
+//! 숫자, 불리언, null, 문자열 리터럴만 받아들인다. 그 밖의 표현식은 거부한다.
 
+use crate::hast::{MdxAttribute, MdxAttributeValue, Node};
 use serde_json::Value;
+
+pub fn resolve(node: &mut Node) -> Result<(), String> {
+    match node {
+        Node::MdxJsxFlowElement(el) | Node::MdxJsxTextElement(el) => {
+            for attribute in &mut el.attributes {
+                match attribute {
+                    MdxAttribute::Expression { value } => {
+                        return Err(format!(
+                            "MDX spread attribute is not supported: {{{value}}}"
+                        ));
+                    }
+                    MdxAttribute::Attribute {
+                        name,
+                        value: Some(value),
+                    } => {
+                        if let MdxAttributeValue::Expression(expression) = value {
+                            let literal = expression.data.get("literal").ok_or_else(|| {
+                                format!(
+                                    "MDX attribute expression must be a literal: {name}={{{}}}",
+                                    expression.value
+                                )
+                            })?;
+                            *value = MdxAttributeValue::Resolved(literal.clone());
+                        }
+                    }
+                    _ => {}
+                }
+            }
+        }
+        Node::MdxFlowExpression { value } | Node::MdxTextExpression { value } => {
+            return Err(format!(
+                "MDX expression is not supported: {{{}}}",
+                value.chars().take(80).collect::<String>()
+            ));
+        }
+        _ => {}
+    }
+    if let Some(children) = node.children_mut() {
+        children.retain(|child| {
+            !matches!(child,
+                Node::MdxFlowExpression { value } | Node::MdxTextExpression { value }
+                    if value.trim().is_empty() || value.trim().starts_with("/*")
+            )
+        });
+        for child in children {
+            resolve(child)?;
+        }
+    }
+    Ok(())
+}
 
 pub fn eval_literal(source: &str) -> Option<Value> {
     let s = source.trim();
