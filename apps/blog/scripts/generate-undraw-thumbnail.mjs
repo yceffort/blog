@@ -12,7 +12,13 @@
  * --force  frontmatter의 undraw 이름을 무시하고 다시 고른다
  * 키: .env.local의 ANTHROPIC_API_KEY, ANTHROPIC_WORKSPACE_ID
  */
-import {existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync} from 'node:fs'
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from 'node:fs'
 import {dirname, resolve} from 'node:path'
 
 import Anthropic from '@anthropic-ai/sdk'
@@ -92,14 +98,21 @@ function readPost(path) {
     (fm.match(new RegExp(`^${key}: (.*)$`, 'm')) || [])[1]
       ?.replace(/^'|'$/g, '')
       .replace(/''/g, "'") ?? ''
-  const artField = (key) => (fm.match(new RegExp(`^  ${key}: (.*)$`, 'm')) || [])[1]
-  const slug = path.replace(/^.*\/(posts|series)\//, (_, dir) => (dir === 'series' ? 'series/' : '')).replace(/\.md$/, '')
+  const artField = (key) =>
+    (fm.match(new RegExp(`^  ${key}: (.*)$`, 'm')) || [])[1]
+  const slug = path
+    .replace(/^.*\/(posts|series)\//, (_, dir) =>
+      dir === 'series' ? 'series/' : '',
+    )
+    .replace(/\.md$/, '')
   return {
     path,
     slug,
     title: field('title').replace(/<\/?em>/g, ''),
     description: field('description'),
-    hue: HUES.includes(artField('hue')) ? artField('hue') : HUES[hashCode(slug) % HUES.length],
+    hue: HUES.includes(artField('hue'))
+      ? artField('hue')
+      : HUES[hashCode(slug) % HUES.length],
     undraw: artField('undraw'),
   }
 }
@@ -141,7 +154,9 @@ ${posts.map((p) => `- slug: ${p.slug}\n  title: ${p.title}\n  description: ${p.d
     ],
   })
   const text = res.content.map((c) => c.text ?? '').join('')
-  const picks = JSON.parse(text.slice(text.indexOf('['), text.lastIndexOf(']') + 1))
+  const picks = JSON.parse(
+    text.slice(text.indexOf('['), text.lastIndexOf(']') + 1),
+  )
   const map = new Map(picks.map((p) => [p.slug, p.pick]))
   for (const p of posts) {
     if (!catalog.includes(map.get(p.slug))) {
@@ -152,10 +167,10 @@ ${posts.map((p) => `- slug: ${p.slug}\n  title: ${p.title}\n  description: ${p.d
 }
 
 async function render(post) {
-  const svg = readFileSync(resolve(SVG_DIR, `${post.undraw}.svg`), 'utf-8').replace(
-    /<svg /,
-    `<svg color="${ACCENT[post.hue]}" `,
-  )
+  const svg = readFileSync(
+    resolve(SVG_DIR, `${post.undraw}.svg`),
+    'utf-8',
+  ).replace(/<svg /, `<svg color="${ACCENT[post.hue]}" `)
   const illo = await sharp(Buffer.from(svg))
     .resize({width: 920, height: 540, fit: 'inside'})
     .png()
@@ -164,7 +179,12 @@ async function render(post) {
   const outPath = resolve(THUMB_DIR, `${post.slug}.webp`)
   mkdirSync(dirname(outPath), {recursive: true})
   await sharp({
-    create: {width: WIDTH, height: HEIGHT, channels: 3, background: PAPER[post.hue]},
+    create: {
+      width: WIDTH,
+      height: HEIGHT,
+      channels: 3,
+      background: PAPER[post.hue],
+    },
   })
     .composite([
       {
@@ -192,13 +212,21 @@ async function main() {
 
   const claude = new Anthropic({
     apiKey: loadEnv('ANTHROPIC_API_KEY'),
-    defaultHeaders: {'anthropic-workspace-id': loadEnv('ANTHROPIC_WORKSPACE_ID')},
+    defaultHeaders: {
+      'anthropic-workspace-id': loadEnv('ANTHROPIC_WORKSPACE_ID'),
+    },
   })
   const catalog = loadCatalog()
-  const posts = paths.map(readPost).toSorted((a, b) => b.slug.localeCompare(a.slug))
-  const used = new Set(posts.filter((p) => !force && p.undraw).map((p) => p.undraw))
+  const posts = paths
+    .map(readPost)
+    .toSorted((a, b) => b.slug.localeCompare(a.slug))
+  const used = new Set(
+    posts.filter((p) => !force && p.undraw).map((p) => p.undraw),
+  )
   const pending = posts.filter((p) => force || !p.undraw)
-  console.log(`catalog ${catalog.length}, posts ${posts.length}, to pick ${pending.length}`)
+  console.log(
+    `catalog ${catalog.length}, posts ${posts.length}, to pick ${pending.length}`,
+  )
 
   for (let i = 0; i < pending.length; i += BATCH) {
     const batch = pending.slice(i, i + BATCH)
@@ -212,7 +240,9 @@ async function main() {
         writeUndrawToFrontmatter(enPath, post.undraw)
       }
     }
-    console.log(`picked ${Math.min(i + BATCH, pending.length)}/${pending.length}`)
+    console.log(
+      `picked ${Math.min(i + BATCH, pending.length)}/${pending.length}`,
+    )
   }
 
   for (const post of posts) {
