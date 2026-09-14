@@ -7,7 +7,10 @@
         "dev": false,
         "runtimeInjection": false,
         "treeshakeCompensation": true,
-        "unstable_moduleResolution": {"type": "commonJS"}
+        "unstable_moduleResolution": {
+          "type": "commonJS"
+        },
+        "styleResolution": "application-order"
       }
     ]
   ]
