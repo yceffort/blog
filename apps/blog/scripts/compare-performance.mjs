@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import {execFileSync} from 'node:child_process'
+import {createHash} from 'node:crypto'
 import {mkdir, readFile, writeFile} from 'node:fs/promises'
 import {cpus, platform, arch} from 'node:os'
 import {dirname, resolve} from 'node:path'
@@ -17,6 +18,7 @@ assert.ok(
 const outputDir = resolve(output ?? resolve(blogRoot, '.cache/performance'))
 const settings = {
   rounds: Number(process.env.PERF_ROUNDS ?? 5),
+  repeatVisit: process.env.PERF_REPEAT_VISIT === '1',
   cpuSlowdown: Number(process.env.PERF_CPU ?? 20),
   latencyMs: Number(process.env.PERF_LATENCY_MS ?? 400),
   downloadKbps: Number(process.env.PERF_DOWNLOAD_KBPS ?? 400),
@@ -55,6 +57,9 @@ const variants = {before: beforeUrl, after: afterUrl}
 const results = []
 const metadata = {
   startedAt: new Date().toISOString(),
+  harnessSha256: createHash('sha256')
+    .update(await readFile(fileURLToPath(import.meta.url)))
+    .digest('hex'),
   settings,
   variants,
   host: {platform: platform(), arch: arch(), cpu: cpus()[0]?.model},
@@ -63,8 +68,12 @@ const metadata = {
   emulatedUserAgent: contextOptions.userAgent,
   blockedUrls,
   notes: [
-    'Production servers; each trial launches a fresh Chrome with an isolated profile.',
-    'Server routes/assets are warmed once; browser HTTP cache is disabled and cleared every trial.',
+    settings.repeatVisit
+      ? 'Production servers; each first/repeat pair launches a fresh Chrome with an isolated profile.'
+      : 'Production servers; each trial launches a fresh Chrome with an isolated profile.',
+    settings.repeatVisit
+      ? 'Server routes/assets are warmed once. Each pair uses a fresh Chrome/profile with cache enabled: first navigation then the same-page navigation via about:blank, retaining HTTP cache. Service workers stay blocked.'
+      : 'Server routes/assets are warmed once; browser HTTP cache is disabled and cleared every trial.',
     'CPU and network throttling use Chrome DevTools Protocol, not simulated Lighthouse throttling.',
     'Animations and canvas rendering run normally. Tracing is enabled equally for both variants.',
     'All metrics stop five seconds after load, document.fonts.ready, and network idle.',
@@ -93,8 +102,18 @@ for (const [variant, directory] of Object.entries({
   }
 }
 function observe() {
-  const data = {lcp: null, shifts: [], longTasks: []}
+  const data = {lcp: null, shifts: [], longTasks: [], bodyReadyMs: null}
   window.__blogPerformance = data
+  const bodyObserver = new MutationObserver(() => {
+    const article = document.querySelector(
+      'article.post-article:not([aria-hidden="true"])',
+    )
+    if (article && article.textContent.length > 100) {
+      data.bodyReadyMs = performance.now()
+      bodyObserver.disconnect()
+    }
+  })
+  bodyObserver.observe(document, {subtree: true, childList: true})
   new PerformanceObserver((list) => {
     for (const entry of list.getEntries())
       data.lcp = {
@@ -115,17 +134,22 @@ function observe() {
       data.longTasks.push({start: entry.startTime, duration: entry.duration})
   }).observe({type: 'longtask', buffered: true})
 }
+async function attachSession(context, page) {
+  const session = await context.newCDPSession(page)
+  await session.send('Network.enable')
+  await session.send('Network.setBlockedURLs', {urls: blockedUrls})
+  await session.send('Network.setBypassServiceWorker', {bypass: true})
+  return session
+}
 async function createBrowser() {
   const browser = await chromium.launch(browserOptions)
   const context = await browser.newContext(contextOptions)
   await context.addInitScript(() => localStorage.setItem('theme', 'light'))
   const page = await context.newPage()
   page.setDefaultNavigationTimeout(180000)
-  const session = await context.newCDPSession(page)
-  await session.send('Network.enable')
-  await session.send('Network.setBlockedURLs', {urls: blockedUrls})
-  await session.send('Network.setBypassServiceWorker', {bypass: true})
-  return {browser, page, session}
+  await page.addInitScript(observe)
+  const session = await attachSession(context, page)
+  return {browser, context, page, session}
 }
 async function stopTrace(session, filename) {
   const completed = new Promise((resolveEvent) =>
@@ -163,18 +187,24 @@ async function warmServers() {
     }
   }
 }
-async function measure(variant, route, round) {
-  const {browser, page, session} = await createBrowser()
-  const name = `${route === '/' ? 'home' : route.slice(1).replaceAll('/', '_')}-${variant}-${round + 1}`
+async function measureVisit(variant, route, round, visit, {page, session}) {
+  const name = `${route === '/' ? 'home' : route.slice(1).replaceAll('/', '_')}-${variant}-${round + 1}${settings.repeatVisit ? `-${visit}` : ''}`
   const requests = new Map(),
     failures = [],
     pageErrors = []
   const appliedRules = new Set()
+  const cacheHits = new Set()
+  const onPageError = (error) => pageErrors.push(error.message)
   let tracing = false
   try {
     metadata.browser ??= await session.send('Browser.getVersion')
-    await session.send('Network.setCacheDisabled', {cacheDisabled: true})
-    await session.send('Network.clearBrowserCache')
+    await session.send('Network.setCacheDisabled', {
+      cacheDisabled: !settings.repeatVisit,
+    })
+    if (visit === 'first') await session.send('Network.clearBrowserCache')
+    session.on('Network.requestServedFromCache', ({requestId}) =>
+      cacheHits.add(requestId),
+    )
     await session.send('Emulation.setCPUThrottlingRate', {
       rate: settings.cpuSlowdown,
     })
@@ -226,8 +256,7 @@ async function measure(variant, route, round) {
           canceled: event.canceled ?? false,
         })
     })
-    page.on('pageerror', (error) => pageErrors.push(error.message))
-    await page.addInitScript(observe)
+    page.on('pageerror', onPageError)
     await session.send('Performance.enable', {timeDomain: 'timeTicks'})
     const start = Object.fromEntries(
       (await session.send('Performance.getMetrics')).metrics.map(
@@ -244,11 +273,18 @@ async function measure(variant, route, round) {
       waitUntil: 'load',
     })
     assert.equal(response.status(), 200)
+    if (route !== '/')
+      await page.waitForFunction(
+        () => window.__blogPerformance.bodyReadyMs !== null,
+      )
     await page.evaluate(() => document.fonts.ready.then(() => undefined))
     await page.waitForLoadState('networkidle', {timeout: 180000})
     await page.waitForTimeout(settings.settleMs)
     const timing = await page.evaluate(() => {
       const data = window.__blogPerformance
+      const article = document.querySelector(
+        'article.post-article:not([aria-hidden="true"])',
+      )
       const navigation = performance.getEntriesByType('navigation')[0]
       const fcp = performance.getEntriesByName('first-contentful-paint')[0]
         ?.startTime
@@ -271,6 +307,16 @@ async function measure(variant, route, round) {
       }
       const end = performance.now()
       return {
+        ttfbMs: navigation.responseStart,
+        responseEndMs: navigation.responseEnd,
+        bodyReadyMs: data.bodyReadyMs,
+        bodyTextLength: article?.textContent.length ?? 0,
+        mathNodes: article?.querySelectorAll('math').length ?? 0,
+        codeLines: article?.querySelectorAll('.code-line').length ?? 0,
+        fonts: [...document.fonts].map((font) => ({
+          family: font.family,
+          status: font.status,
+        })),
         fcpMs: fcp,
         lcpMs: data.lcp?.time,
         lcpElement: data.lcp,
@@ -305,7 +351,10 @@ async function measure(variant, route, round) {
         ({name: metric, value}) => [metric, value],
       ),
     )
-    const resources = structuredClone([...requests.values()])
+    const resources = [...requests.entries()].map(([id, item]) => ({
+      ...item,
+      fromCache: cacheHits.has(id) || item.fromDiskCache,
+    }))
     await stopTrace(session, resolve(outputDir, `${name}.trace.json.gz`))
     tracing = false
     await session.send('Emulation.setCPUThrottlingRate', {rate: 1})
@@ -314,18 +363,26 @@ async function measure(variant, route, round) {
         .filter((item) => !type || item.type === type)
         .reduce((sum, item) => sum + item.encodedBytes, 0)
     assert.ok(
-      ruleIds.some((id) => appliedRules.has(id)),
-      'No requests confirmed the configured network throttle',
+      ruleIds.some((id) => appliedRules.has(id)) ||
+        (visit === 'repeat' &&
+          resources.length > 0 &&
+          resources.every((item) => item.fromCache)),
+      'No network request confirmed the configured throttle and this was not a fully cached repeat',
     )
     assert.ok(
       timing.touch && timing.fcpMs > 0 && timing.lcpMs > 0,
       'Missing mobile/paint measurements',
     )
+    if (route.includes('math-for-programmer'))
+      assert.equal(timing.mathNodes, 31)
+    if (route.includes('k8s-for-frontend')) assert.ok(timing.codeLines > 0)
     assert.deepEqual(pageErrors, [], 'JavaScript errors invalidate the trial')
     assert.ok(
       resources.every(
         (item) =>
-          item.status < 400 && !item.fromDiskCache && !item.fromServiceWorker,
+          item.status < 400 &&
+          (visit === 'repeat' || !item.fromDiskCache) &&
+          !item.fromServiceWorker,
       ),
       'Failed or cached resources invalidate the trial',
     )
@@ -337,6 +394,7 @@ async function measure(variant, route, round) {
       name,
       variant,
       route,
+      visit,
       round: round + 1,
       ...timing,
       taskMs: (end.TaskDuration - start.TaskDuration) * 1000,
@@ -345,6 +403,7 @@ async function measure(variant, route, round) {
       styleMs: (end.RecalcStyleDuration - start.RecalcStyleDuration) * 1000,
       heapBytes: end.JSHeapUsedSize,
       requestCount: resources.length,
+      cachedRequests: resources.filter((item) => item.fromCache).length,
       transferBytes: total(),
       cssBytes: total('Stylesheet'),
       jsBytes: total('Script'),
@@ -365,11 +424,28 @@ async function measure(variant, route, round) {
     )
   } finally {
     if (tracing) await session.send('Tracing.end').catch(() => {})
-    await browser.close()
+    page.off('pageerror', onPageError)
+  }
+}
+async function measure(variant, route, round) {
+  const client = await createBrowser()
+  try {
+    await measureVisit(variant, route, round, 'first', client)
+    if (settings.repeatVisit) {
+      await client.session.detach()
+      await client.page.goto('about:blank')
+      client.session = await attachSession(client.context, client.page)
+      await measureVisit(variant, route, round, 'repeat', client)
+    }
+  } finally {
+    await client.browser.close()
   }
 }
 function summary() {
   const fields = [
+    'ttfbMs',
+    'responseEndMs',
+    'bodyReadyMs',
     'fcpMs',
     'lcpMs',
     'cls',
@@ -382,31 +458,45 @@ function summary() {
     'transferBytes',
     'cssBytes',
     'jsBytes',
+    'fontBytes',
+    'imageBytes',
     'requestCount',
+    'cachedRequests',
   ]
   const groups = []
   for (const route of settings.routes) {
     for (const variant of Object.keys(variants)) {
-      const rows = results.filter(
-        (row) => row.route === route && row.variant === variant,
-      )
-      const values = Object.fromEntries(
-        fields.map((field) => {
-          const sorted = rows.map((row) => row[field]).toSorted((a, b) => a - b)
-          return [
-            field,
-            {
-              median:
-                (sorted[Math.floor((sorted.length - 1) / 2)] +
-                  sorted[Math.ceil((sorted.length - 1) / 2)]) /
-                2,
-              min: sorted[0],
-              max: sorted.at(-1),
-            },
-          ]
-        }),
-      )
-      groups.push({route, variant, runs: rows.length, values})
+      for (const visit of settings.repeatVisit
+        ? ['first', 'repeat']
+        : ['first']) {
+        const rows = results.filter(
+          (row) =>
+            row.route === route &&
+            row.variant === variant &&
+            row.visit === visit,
+        )
+        const values = Object.fromEntries(
+          fields.map((field) => {
+            const sorted = rows
+              .map((row) => row[field])
+              .filter((value) => Number.isFinite(value))
+              .toSorted((a, b) => a - b)
+            if (!sorted.length) return [field, null]
+            return [
+              field,
+              {
+                median:
+                  (sorted[Math.floor((sorted.length - 1) / 2)] +
+                    sorted[Math.ceil((sorted.length - 1) / 2)]) /
+                  2,
+                min: sorted[0],
+                max: sorted.at(-1),
+              },
+            ]
+          }),
+        )
+        groups.push({route, variant, visit, runs: rows.length, values})
+      }
     }
   }
   return groups

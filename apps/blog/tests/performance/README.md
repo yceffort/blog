@@ -1,6 +1,6 @@
 # Performance comparison
 
-The latest recorded comparison is in [RESULTS.md](RESULTS.md), with every trial in [results.json](results.json). The first, utility-only migration is archived in [ROUND-1.md](ROUND-1.md) and [round-1.json](round-1.json).
+The final StyleX comparison is in [RESULTS.md](RESULTS.md), with every trial in [results.json](results.json). The first, utility-only migration is archived in [ROUND-1.md](ROUND-1.md) and [round-1.json](round-1.json). The later comparison of the complete StyleX and WASM migrations, including first and repeat visits, is in [series-overall/README.md](series-overall/README.md); it uses different throttling settings and a baseline from before both migrations.
 
 The runner is [`scripts/compare-performance.mjs`](../../scripts/compare-performance.mjs). It drives a fresh Google Chrome for Testing process through Playwright and the **Chrome DevTools Protocol (CDP)**. It records real throttled navigation and DevTools traces, rather than calculating a simulated Lighthouse score.
 
