@@ -2,12 +2,10 @@ import {ImageResponse} from 'next/og'
 
 import {SiteConfig} from '@/config'
 import {unblockSvgLoader} from '@/utils/ogSharpUnblock'
-
 export async function GET(request: Request) {
   try {
     unblockSvgLoader()
     const {searchParams} = new URL(request.url)
-
     const title = searchParams.get('title')
     const description = searchParams.get('description')
     const tagsParam = searchParams.get('tags')
@@ -23,11 +21,11 @@ export async function GET(request: Request) {
       address: isLarge ? 32 : 26,
     }
     const descMaxLength = isLarge ? 60 : 80
-
     if (!title) {
-      return new Response('Missing title', {status: 400})
+      return new Response('Missing title', {
+        status: 400,
+      })
     }
-
     const urlParam = searchParams.get('url')
     const thumbnailParam = searchParams.get('thumbnail')
     const address =
@@ -38,12 +36,10 @@ export async function GET(request: Request) {
     const protocol = request.headers.get('x-forwarded-proto') || 'http'
     const host = request.headers.get('host')
     const baseUrl = `${protocol}://${host}`
-
     const hasThumbnail = !!thumbnailParam
     const imageUrl = hasThumbnail
       ? `${baseUrl}${thumbnailParam}`
       : `${baseUrl}/${type === 'page' ? 'og-background-page.jpg' : 'og-background.jpg'}`
-
     const imageRes = await fetch(imageUrl)
     if (!imageRes.ok) {
       throw new Error(`Failed to fetch image: ${imageUrl}`)
@@ -56,13 +52,11 @@ export async function GET(request: Request) {
     // Using NanumGothicBold.ttf for thicker, clearer text
     const fontUrl =
       'https://cdn.jsdelivr.net/gh/fonts-archive/NanumGothic/NanumGothicBold.ttf'
-
     const fontRes = await fetch(fontUrl)
     if (!fontRes.ok) {
       throw new Error(`Failed to fetch font: ${fontUrl}`)
     }
     const fontData = await fontRes.arrayBuffer()
-
     return new ImageResponse(
       <div
         style={{
@@ -106,7 +100,9 @@ export async function GET(request: Request) {
                   backgroundImage:
                     'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.25) 100%)',
                 }
-              : {backgroundColor: 'rgba(0, 0, 0, 0.4)'}),
+              : {
+                  backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                }),
           }}
         >
           {/* Title */}

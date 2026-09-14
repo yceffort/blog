@@ -1,0 +1,44 @@
+/* User appearance preferences on the document. */
+@layer preferences {
+  body[data-accent='emerald'] {
+    --primary-2: #38bdf8;
+    --primary-3: #fbbf24;
+    --primary: #34d399;
+  }
+  body[data-accent='cyan'] {
+    --primary-2: #a78bfa;
+    --primary-3: #34d399;
+    --primary: #38bdf8;
+  }
+  body[data-accent='rose'] {
+    --primary-2: #fb923c;
+    --primary-3: #fbbf24;
+    --primary: #f472b6;
+  }
+  body[data-accent='amber'] {
+    --primary-2: #fb923c;
+    --primary-3: #f472b6;
+    --primary: #fbbf24;
+  }
+  body[data-minimal='true'] .hero-title .accent {
+    animation: none 0s ease 0s 1 normal none running;
+  }
+  body[data-minimal='true'] .hero-eyebrow .dot {
+    animation: none 0s ease 0s 1 normal none running;
+  }
+  body[data-minimal='true'] {
+    background-image: none;
+  }
+  body[data-minimal='true'] #anim-bg {
+    display: none;
+  }
+  body[data-minimal='true'] #grain {
+    display: none;
+  }
+  body[data-minimal='true'] #cursor-glow {
+    display: none;
+  }
+  body[data-grain='false'] #grain {
+    display: none;
+  }
+}

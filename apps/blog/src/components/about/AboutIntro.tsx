@@ -1,12 +1,33 @@
+import * as stylex from '@stylexjs/stylex'
 import Link from 'next/link'
 
 import {openSourceProjects} from './openSourceProjects'
 import {ProjectTags} from './ProjectTags'
 
+import '@/styles/reading.css'
+const sx = stylex.create({
+  div: {
+    '@layer utilities': {
+      paddingTop: 'calc(var(--spacing) * 8)',
+      paddingBottom: 'calc(var(--spacing) * 8)',
+      gridColumn: {
+        default: null,
+        '@media (width >= 80rem)': 'span 2 / span 2',
+      },
+    },
+  },
+  div2: {
+    '@layer utilities': {
+      maxWidth: 'none',
+    },
+  },
+})
 export function AboutIntro() {
   return (
-    <div className="pt-8 pb-8 xl:col-span-2">
-      <div className="prose max-w-none dark:prose-dark">
+    <div className={stylex.props(sx.div).className}>
+      <div
+        className={`markdown-body markdown-dark ${stylex.props(sx.div2).className}`}
+      >
         <p>
           안녕하세요. 프론트엔드 엔지니어 yceffort입니다. 2014년부터
           소프트웨어를 개발해 왔고, 현재도 프론트엔드 엔지니어로 일하고
@@ -25,36 +46,40 @@ export function AboutIntro() {
         <h2>관심을 두고 있는 것들</h2>
         <ul>
           <li>
-            <strong>프레임워크 아래에서 일어나는 일.</strong> React의 렌더링과
-            Next.js의 캐시, JavaScript 모듈과 번들러의 동작을 살펴봅니다.{' '}
+            <strong>프레임워크 아래에서 일어나는 일.</strong>
+            {
+              ' React의 렌더링과 Next.js의 캐시, JavaScript 모듈과 번들러의 동작을 살펴봅니다.'
+            }{' '}
             <Link href="/2026/08/turbopack-scope-hoisting-singleton-split">
               소스에서는 하나였던 싱글톤이 빌드 뒤에 두 개가 된 문제
             </Link>
-            처럼, 추상화 아래로 내려가야 설명되는 현상에 관심이 많습니다.
+            {'처럼, 추상화 아래로 내려가야 설명되는 현상에 관심이 많습니다.'}
           </li>
           <li>
-            <strong>측정으로 확인하는 성능과 운영.</strong> 브라우저와
-            네트워크의 병목부터 Node.js 서버와 쿠버네티스의 배포 문제까지
-            따라갑니다. 이 블로그도 직접 개발하고 운영하며,{' '}
+            <strong>측정으로 확인하는 성능과 운영.</strong>
+            {
+              ' 브라우저와 네트워크의 병목부터 Node.js 서버와 쿠버네티스의 배포 문제까지 따라갑니다. 이 블로그도 직접 개발하고 운영하며,'
+            }{' '}
             <Link href="/2026/08/service-worker-caching-3">
               서비스 워커의 비용을 실사용자 데이터와 실험으로 비교
             </Link>
-            하는 등 개선 효과와 측정의 한계를 함께 확인합니다.
+            {'하는 등 개선 효과와 측정의 한계를 함께 확인합니다.'}
           </li>
           <li>
-            <strong>오래 믿고 쓸 수 있는 개발 도구.</strong> 공통 라이브러리와
-            CLI, 패키지 관리와 공급망 보안에 관심이 있습니다. 기능과 속도만큼
-            호환성과 유지보수 비용을 중요하게 생각합니다. 최근에는{' '}
+            <strong>오래 믿고 쓸 수 있는 개발 도구.</strong>
+            {
+              ' 공통 라이브러리와 CLI, 패키지 관리와 공급망 보안에 관심이 있습니다. 기능과 속도만큼 호환성과 유지보수 비용을 중요하게 생각합니다. 최근에는'
+            }{' '}
             <Link href="/2026/09/porting-markdownlint-cli2-to-rust">
               매일 쓰는 마크다운 린터를 Rust로 옮기며
             </Link>
-            , 기존 도구와 같은 결과를 내는 데 필요한 일을 기록했습니다.
+            {', 기존 도구와 같은 결과를 내는 데 필요한 일을 기록했습니다.'}
           </li>
           <li>
-            <strong>AI와 함께 일하는 개발자의 판단과 학습.</strong> 코딩
-            에이전트를 일상적으로 사용하면서, 생성된 코드를 무엇으로 검증할지,
-            코드를 덜 읽게 된 환경에서 개발자는 어떻게 판단을 배울지 고민합니다.
-            도구를 쓰는 제 경험과 다른 개발자들의 이야기를 글로 옮기고 있습니다.
+            <strong>AI와 함께 일하는 개발자의 판단과 학습.</strong>
+            {
+              ' 코딩 에이전트를 일상적으로 사용하면서, 생성된 코드를 무엇으로 검증할지, 코드를 덜 읽게 된 환경에서 개발자는 어떻게 판단을 배울지 고민합니다. 도구를 쓰는 제 경험과 다른 개발자들의 이야기를 글로 옮기고 있습니다.'
+            }
           </li>
         </ul>
 
@@ -112,18 +137,20 @@ export function AboutIntro() {
         <ul>
           {openSourceProjects.map((project) => (
             <li key={project.href}>
-              <a href={project.href}>{project.name}</a> — {project.description}
+              <a href={project.href}>{project.name}</a>
+              {' — '}
+              {project.description}
               <ProjectTags tags={project.tags} />
             </li>
           ))}
         </ul>
         <h2>코드로 돕는 일</h2>
         <p>
-          2016년부터 사단법인 <a href="https://jumpsp.org/">점프</a>의 이사로
-          활동하며 업무 자동화와 프로그래밍 교육에 참여하고 있습니다. 2021년에는
-          삼성 청년 소프트웨어 아카데미(SSAFY)에서 멘토로 활동했습니다. 함께
-          일하는 사람의 반복 작업을 줄이고, 누군가가 스스로 문제를 풀 수 있도록
-          돕는 일에도 시간을 쓰고 있습니다.
+          {'2016년부터 사단법인 '}
+          <a href="https://jumpsp.org/">점프</a>
+          {
+            '의 이사로 활동하며 업무 자동화와 프로그래밍 교육에 참여하고 있습니다. 2021년에는 삼성 청년 소프트웨어 아카데미(SSAFY)에서 멘토로 활동했습니다. 함께 일하는 사람의 반복 작업을 줄이고, 누군가가 스스로 문제를 풀 수 있도록 돕는 일에도 시간을 쓰고 있습니다.'
+          }
         </p>
       </div>
     </div>
