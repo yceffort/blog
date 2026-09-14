@@ -35,6 +35,18 @@
     opacity: 0;
   }
 }
+@keyframes circle-clip {
+  from {
+    clip-path: circle(
+      0% at var(--theme-toggle-x, 50%) var(--theme-toggle-y, 50%)
+    );
+  }
+  to {
+    clip-path: circle(
+      150% at var(--theme-toggle-x, 50%) var(--theme-toggle-y, 50%)
+    );
+  }
+}
 
 @layer site {
   [data-vt-direction='back']::view-transition-new(root) {

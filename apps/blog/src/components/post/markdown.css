@@ -85,6 +85,15 @@
       transparent
     );
   }
+  .code-line {
+    display: block;
+    margin-right: -16px;
+    margin-left: -16px;
+    padding-right: 16px;
+    padding-left: 16px;
+    border-left-width: 4px;
+    border-left-color: transparent;
+  }
   .highlight-line {
     margin-right: -16px;
     margin-left: -16px;
@@ -126,20 +135,25 @@
   pre code:is(.dark *) {
     color: oklch(96.7% 0.001 286.375);
   }
+
+  /* 렌더러가 각주 라벨(to_hast.rs)에 붙이는 클래스다. */
+  .sr-only {
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    border-width: 0;
+    border-style: none;
+    border-color: currentColor;
+    white-space: nowrap;
+    clip: rect(0, 0, 0, 0);
+  }
   .mermaid-zoom-content {
     display: inline-block;
     cursor: grab;
     touch-action: none;
     user-select: none;
-  }
-  .code-line {
-    display: block;
-    margin-right: -16px;
-    margin-left: -16px;
-    padding-right: 16px;
-    padding-left: 16px;
-    border-left-width: 4px;
-    border-left-color: transparent;
   }
   .code-highlight {
     float: left;
