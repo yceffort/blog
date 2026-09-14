@@ -1,0 +1,540 @@
+{
+  "comparison": {
+    "before": "322601592c28d3094207a071f20d0d4df452d779",
+    "after": "118a94668cfd9d7032ded2c0186138bc72bcd71b"
+  },
+  "resultsSha256": "b513a549e9d5bd3a4c3acdb2380b2047eb5acc7cafc2f5d37730f443900929a6",
+  "notes": [
+    "Extracted from the four existing after/first math-page traces. No new benchmark was run.",
+    "Trace times are microseconds. Relative milliseconds are (event.ts - navigationStart.ts) / 1000.",
+    "The final LCP candidate is matched to the main document navigationId.",
+    "Trace event timestamps and rounded Performance API LCP times differ slightly.",
+    "Temporal order does not isolate font loading from MathML markup, layout or LCP candidate changes."
+  ],
+  "runs": [
+    {
+      "round": 1,
+      "traceFile": "2020_07_math-for-programmer-chapter1-2-set-after-1-first.trace.json.gz",
+      "traceGzipSha256": "5f7f05baa17158d915ea000a1dcc51e240627e4ea0e3456768d5d451340d4ed5",
+      "navigationId": "60F95C971DA775B7CFDB304C9400C9AC",
+      "fontUrl": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+      "fontEncodedBytes": 342093,
+      "performanceApi": {
+        "bodyReadyMs": 1108.1000001430511,
+        "lcpMs": 5644,
+        "lcpElement": {
+          "time": 5644,
+          "size": 20672,
+          "tag": "P",
+          "text": "개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 { } 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.",
+          "url": ""
+        }
+      },
+      "traceRelativeMs": {
+        "fontRequest": 1225.051,
+        "fontRequestFinished": 5575.075,
+        "fontLoaded": 5574.512,
+        "lcpCandidate": 5643.44,
+        "fontLoadedToLcp": 68.928
+      },
+      "traceEvents": [
+        {
+          "args": {
+            "data": {
+              "documentLoaderURL": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+              "isLoadingMainFrame": true,
+              "isOutermostMainFrame": true,
+              "navigationId": "60F95C971DA775B7CFDB304C9400C9AC"
+            },
+            "frame": "9EE373AD93F32AC2652DEBD3A57622C1"
+          },
+          "cat": "blink.user_timing",
+          "name": "navigationStart",
+          "ph": "R",
+          "pid": 67637,
+          "s": "t",
+          "tid": 23374599,
+          "ts": 1372853315757
+        },
+        {
+          "args": {
+            "data": {
+              "fetchPriorityHint": "auto",
+              "frame": "9EE373AD93F32AC2652DEBD3A57622C1",
+              "initiator": {
+                "fetchType": "css",
+                "type": "parser",
+                "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css"
+              },
+              "isLinkPreload": false,
+              "priority": "VeryHigh",
+              "renderBlocking": "non_blocking",
+              "requestId": "67637.61",
+              "requestMethod": "GET",
+              "resourceType": "Font",
+              "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2"
+            }
+          },
+          "cat": "devtools.timeline",
+          "name": "ResourceSendRequest",
+          "ph": "I",
+          "pid": 67637,
+          "s": "t",
+          "tid": 23374599,
+          "ts": 1372854540808,
+          "tts": 1052123
+        },
+        {
+          "args": {
+            "data": {
+              "decodedBodyLength": 341752,
+              "didFail": false,
+              "encodedDataLength": 342093,
+              "finishTime": 1372858.876755,
+              "requestId": "67637.61"
+            }
+          },
+          "cat": "devtools.timeline",
+          "name": "ResourceFinish",
+          "ph": "I",
+          "pid": 67637,
+          "s": "t",
+          "tid": 23374599,
+          "ts": 1372858890832,
+          "tts": 4724110
+        },
+        {
+          "args": {
+            "name": "LibertinusMath-Regular",
+            "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2"
+          },
+          "cat": "devtools.timeline",
+          "dur": 3,
+          "name": "RemoteFontLoaded",
+          "ph": "X",
+          "pid": 67637,
+          "tdur": 2,
+          "tid": 23374599,
+          "ts": 1372858890269,
+          "tts": 4723549
+        },
+        {
+          "args": {
+            "data": {
+              "candidateIndex": 5,
+              "isMainFrame": true,
+              "isOutermostMainFrame": true,
+              "navigationId": "60F95C971DA775B7CFDB304C9400C9AC",
+              "nodeId": 104,
+              "nodeName": "P",
+              "performanceTimelineNavigationId": 9792,
+              "size": 20672,
+              "type": "text"
+            },
+            "frame": "9EE373AD93F32AC2652DEBD3A57622C1"
+          },
+          "cat": "loading,rail,devtools.timeline",
+          "name": "largestContentfulPaint::Candidate",
+          "ph": "R",
+          "pid": 67637,
+          "s": "t",
+          "tid": 23374599,
+          "ts": 1372858959197
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "traceFile": "2020_07_math-for-programmer-chapter1-2-set-after-2-first.trace.json.gz",
+      "traceGzipSha256": "01233060091e1d0cb2356e14c070179e719d965a439cfd48d1174dd4a6df98a7",
+      "navigationId": "314E377FD3EE71DC382F86E722C0578C",
+      "fontUrl": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+      "fontEncodedBytes": 342093,
+      "performanceApi": {
+        "bodyReadyMs": 1100.2999999523163,
+        "lcpMs": 5648,
+        "lcpElement": {
+          "time": 5648,
+          "size": 20672,
+          "tag": "P",
+          "text": "개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 { } 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.",
+          "url": ""
+        }
+      },
+      "traceRelativeMs": {
+        "fontRequest": 1216.799,
+        "fontRequestFinished": 5568.345,
+        "fontLoaded": 5568.263,
+        "lcpCandidate": 5645.537,
+        "fontLoadedToLcp": 77.274
+      },
+      "traceEvents": [
+        {
+          "args": {
+            "data": {
+              "documentLoaderURL": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+              "isLoadingMainFrame": true,
+              "isOutermostMainFrame": true,
+              "navigationId": "314E377FD3EE71DC382F86E722C0578C"
+            },
+            "frame": "96AAE2ECF5EA4A904396F0893D55EE15"
+          },
+          "cat": "blink.user_timing",
+          "name": "navigationStart",
+          "ph": "R",
+          "pid": 67893,
+          "s": "t",
+          "tid": 23378355,
+          "ts": 1372994616346
+        },
+        {
+          "args": {
+            "data": {
+              "fetchPriorityHint": "auto",
+              "frame": "96AAE2ECF5EA4A904396F0893D55EE15",
+              "initiator": {
+                "fetchType": "css",
+                "type": "parser",
+                "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css"
+              },
+              "isLinkPreload": false,
+              "priority": "VeryHigh",
+              "renderBlocking": "non_blocking",
+              "requestId": "67893.61",
+              "requestMethod": "GET",
+              "resourceType": "Font",
+              "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2"
+            }
+          },
+          "cat": "devtools.timeline",
+          "name": "ResourceSendRequest",
+          "ph": "I",
+          "pid": 67893,
+          "s": "t",
+          "tid": 23378355,
+          "ts": 1372995833145,
+          "tts": 1051736
+        },
+        {
+          "args": {
+            "data": {
+              "decodedBodyLength": 341752,
+              "didFail": false,
+              "encodedDataLength": 342093,
+              "finishTime": 1373000.170778,
+              "requestId": "67893.61"
+            }
+          },
+          "cat": "devtools.timeline",
+          "name": "ResourceFinish",
+          "ph": "I",
+          "pid": 67893,
+          "s": "t",
+          "tid": 23378355,
+          "ts": 1373000184691,
+          "tts": 4732787
+        },
+        {
+          "args": {
+            "name": "LibertinusMath-Regular",
+            "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2"
+          },
+          "cat": "devtools.timeline",
+          "dur": 2,
+          "name": "RemoteFontLoaded",
+          "ph": "X",
+          "pid": 67893,
+          "tdur": 2,
+          "tid": 23378355,
+          "ts": 1373000184609,
+          "tts": 4732706
+        },
+        {
+          "args": {
+            "data": {
+              "candidateIndex": 5,
+              "isMainFrame": true,
+              "isOutermostMainFrame": true,
+              "navigationId": "314E377FD3EE71DC382F86E722C0578C",
+              "nodeId": 104,
+              "nodeName": "P",
+              "performanceTimelineNavigationId": 7403,
+              "size": 20672,
+              "type": "text"
+            },
+            "frame": "96AAE2ECF5EA4A904396F0893D55EE15"
+          },
+          "cat": "loading,rail,devtools.timeline",
+          "name": "largestContentfulPaint::Candidate",
+          "ph": "R",
+          "pid": 67893,
+          "s": "t",
+          "tid": 23378355,
+          "ts": 1373000261883
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "traceFile": "2020_07_math-for-programmer-chapter1-2-set-after-3-first.trace.json.gz",
+      "traceGzipSha256": "d2e2dfb1077bf95fce8e7fe319feea70052ba86f25f44164b2a88bf816fe57d8",
+      "navigationId": "D9F2C89CF59FE72D9C155647A0C4932E",
+      "fontUrl": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+      "fontEncodedBytes": 342093,
+      "performanceApi": {
+        "bodyReadyMs": 1098.5,
+        "lcpMs": 5636,
+        "lcpElement": {
+          "time": 5636,
+          "size": 20672,
+          "tag": "P",
+          "text": "개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 { } 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.",
+          "url": ""
+        }
+      },
+      "traceRelativeMs": {
+        "fontRequest": 1215.57,
+        "fontRequestFinished": 5567.133,
+        "fontLoaded": 5567.061,
+        "lcpCandidate": 5635.504,
+        "fontLoadedToLcp": 68.443
+      },
+      "traceEvents": [
+        {
+          "args": {
+            "data": {
+              "documentLoaderURL": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+              "isLoadingMainFrame": true,
+              "isOutermostMainFrame": true,
+              "navigationId": "D9F2C89CF59FE72D9C155647A0C4932E"
+            },
+            "frame": "E63680FFF1EA94A5DC43A1C058313B8E"
+          },
+          "cat": "blink.user_timing",
+          "name": "navigationStart",
+          "ph": "R",
+          "pid": 68092,
+          "s": "t",
+          "tid": 23383567,
+          "ts": 1373200513374
+        },
+        {
+          "args": {
+            "data": {
+              "fetchPriorityHint": "auto",
+              "frame": "E63680FFF1EA94A5DC43A1C058313B8E",
+              "initiator": {
+                "fetchType": "css",
+                "type": "parser",
+                "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css"
+              },
+              "isLinkPreload": false,
+              "priority": "VeryHigh",
+              "renderBlocking": "non_blocking",
+              "requestId": "68092.61",
+              "requestMethod": "GET",
+              "resourceType": "Font",
+              "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2"
+            }
+          },
+          "cat": "devtools.timeline",
+          "name": "ResourceSendRequest",
+          "ph": "I",
+          "pid": 68092,
+          "s": "t",
+          "tid": 23383567,
+          "ts": 1373201728944,
+          "tts": 1044563
+        },
+        {
+          "args": {
+            "data": {
+              "decodedBodyLength": 341752,
+              "didFail": false,
+              "encodedDataLength": 342093,
+              "finishTime": 1373206.067914,
+              "requestId": "68092.61"
+            }
+          },
+          "cat": "devtools.timeline",
+          "name": "ResourceFinish",
+          "ph": "I",
+          "pid": 68092,
+          "s": "t",
+          "tid": 23383567,
+          "ts": 1373206080507,
+          "tts": 4721029
+        },
+        {
+          "args": {
+            "name": "LibertinusMath-Regular",
+            "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2"
+          },
+          "cat": "devtools.timeline",
+          "dur": 2,
+          "name": "RemoteFontLoaded",
+          "ph": "X",
+          "pid": 68092,
+          "tdur": 1,
+          "tid": 23383567,
+          "ts": 1373206080435,
+          "tts": 4720959
+        },
+        {
+          "args": {
+            "data": {
+              "candidateIndex": 5,
+              "isMainFrame": true,
+              "isOutermostMainFrame": true,
+              "navigationId": "D9F2C89CF59FE72D9C155647A0C4932E",
+              "nodeId": 105,
+              "nodeName": "P",
+              "performanceTimelineNavigationId": 2042,
+              "size": 20672,
+              "type": "text"
+            },
+            "frame": "E63680FFF1EA94A5DC43A1C058313B8E"
+          },
+          "cat": "loading,rail,devtools.timeline",
+          "name": "largestContentfulPaint::Candidate",
+          "ph": "R",
+          "pid": 68092,
+          "s": "t",
+          "tid": 23383567,
+          "ts": 1373206148878
+        }
+      ]
+    },
+    {
+      "round": 4,
+      "traceFile": "2020_07_math-for-programmer-chapter1-2-set-after-4-first.trace.json.gz",
+      "traceGzipSha256": "706af734021e741b8926faa3fe3bd2e6892bc8bb88ae66e931ad3a8eecbdfbe9",
+      "navigationId": "5628F37DC7D3951F479ED346C5BEDC41",
+      "fontUrl": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+      "fontEncodedBytes": 342093,
+      "performanceApi": {
+        "bodyReadyMs": 1097.7000000476837,
+        "lcpMs": 5636,
+        "lcpElement": {
+          "time": 5636,
+          "size": 20672,
+          "tag": "P",
+          "text": "개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 { } 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.",
+          "url": ""
+        }
+      },
+      "traceRelativeMs": {
+        "fontRequest": 1215.563,
+        "fontRequestFinished": 5567.095,
+        "fontLoaded": 5567.016,
+        "lcpCandidate": 5635.741,
+        "fontLoadedToLcp": 68.725
+      },
+      "traceEvents": [
+        {
+          "args": {
+            "data": {
+              "documentLoaderURL": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+              "isLoadingMainFrame": true,
+              "isOutermostMainFrame": true,
+              "navigationId": "5628F37DC7D3951F479ED346C5BEDC41"
+            },
+            "frame": "F7C75210751121A61632CDFC7A321BF4"
+          },
+          "cat": "blink.user_timing",
+          "name": "navigationStart",
+          "ph": "R",
+          "pid": 68497,
+          "s": "t",
+          "tid": 23388159,
+          "ts": 1373340883975
+        },
+        {
+          "args": {
+            "data": {
+              "fetchPriorityHint": "auto",
+              "frame": "F7C75210751121A61632CDFC7A321BF4",
+              "initiator": {
+                "fetchType": "css",
+                "type": "parser",
+                "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css"
+              },
+              "isLinkPreload": false,
+              "priority": "VeryHigh",
+              "renderBlocking": "non_blocking",
+              "requestId": "68497.61",
+              "requestMethod": "GET",
+              "resourceType": "Font",
+              "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2"
+            }
+          },
+          "cat": "devtools.timeline",
+          "name": "ResourceSendRequest",
+          "ph": "I",
+          "pid": 68497,
+          "s": "t",
+          "tid": 23388159,
+          "ts": 1373342099538,
+          "tts": 1053804
+        },
+        {
+          "args": {
+            "data": {
+              "decodedBodyLength": 341752,
+              "didFail": false,
+              "encodedDataLength": 342093,
+              "finishTime": 1373346.437409,
+              "requestId": "68497.61"
+            }
+          },
+          "cat": "devtools.timeline",
+          "name": "ResourceFinish",
+          "ph": "I",
+          "pid": 68497,
+          "s": "t",
+          "tid": 23388159,
+          "ts": 1373346451070,
+          "tts": 4726010
+        },
+        {
+          "args": {
+            "name": "LibertinusMath-Regular",
+            "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2"
+          },
+          "cat": "devtools.timeline",
+          "dur": 3,
+          "name": "RemoteFontLoaded",
+          "ph": "X",
+          "pid": 68497,
+          "tdur": 2,
+          "tid": 23388159,
+          "ts": 1373346450991,
+          "tts": 4725933
+        },
+        {
+          "args": {
+            "data": {
+              "candidateIndex": 5,
+              "isMainFrame": true,
+              "isOutermostMainFrame": true,
+              "navigationId": "5628F37DC7D3951F479ED346C5BEDC41",
+              "nodeId": 104,
+              "nodeName": "P",
+              "performanceTimelineNavigationId": 8136,
+              "size": 20672,
+              "type": "text"
+            },
+            "frame": "F7C75210751121A61632CDFC7A321BF4"
+          },
+          "cat": "loading,rail,devtools.timeline",
+          "name": "largestContentfulPaint::Candidate",
+          "ph": "R",
+          "pid": 68497,
+          "s": "t",
+          "tid": 23388159,
+          "ts": 1373346519716
+        }
+      ]
+    }
+  ]
+}

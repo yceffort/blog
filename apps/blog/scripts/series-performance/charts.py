@@ -13,6 +13,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
+from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
 from matplotlib.ticker import FuncFormatter, MaxNLocator
 
@@ -60,7 +61,8 @@ def samples(route, visit, field, scale=1):
     ]
 
 
-def chart(name, title, rows, unit, limit, subtitle, decimals=0):
+def chart(name, title, rows, unit, limit, subtitle, decimals=0,
+          labels=("변경 전", "변경 후")):
     height = 2.8 + len(rows) * 1.02
     fig = plt.figure(figsize=(8, height), facecolor="white")
     ax = fig.add_axes([0.24, 1.05 / height, 0.64, (height - 2.45) / height])
@@ -99,8 +101,8 @@ def chart(name, title, rows, unit, limit, subtitle, decimals=0):
     fig.text(0.05, 1 - 0.68 / height, subtitle, fontsize=15, color="#475569", va="top")
     fig.legend(
         handles=[
-            Patch(facecolor=colors[0], hatch="///", edgecolor="white", label="변경 전"),
-            Patch(facecolor=colors[1], label="변경 후"),
+            Patch(facecolor=colors[0], hatch="///", edgecolor="white", label=labels[0]),
+            Patch(facecolor=colors[1], label=labels[1]),
         ],
         loc="upper left", bbox_to_anchor=(0.22, 1 - 0.95 / height),
         ncol=2, frameon=False, fontsize=17, borderaxespad=0,
@@ -155,4 +157,60 @@ chart(
                     if row["variant"] == variant] for variant in variants])],
     "빌드 시간 (초)", 215, "매번 .next 삭제 / 의존성 설치와 WASM 재컴파일 제외", 2,
 )
-print(f"Generated 7 SVG charts in {OUTPUT}")
+
+investigation = json.loads((DATA / "lcp-investigation.json").read_text())["results"]
+conditions = [
+    ("control", "기존 설정"),
+    ("instant-font", "수식 글꼴\n즉시 전달"),
+    ("delayed-font", "수식 글꼴 요청\n1.5초 지연"),
+    ("no-view-transition", "화면 전환 해제"),
+    ("system-ui", "공통 웹 글꼴 제외"),
+]
+markers = {"H1": "s", "P": "o", "SPAN": "^"}
+fig = plt.figure(figsize=(8, 8), facecolor="white")
+ax = fig.add_axes([0.29, 0.15, 0.66, 0.64])
+for position, (variant, _label) in zip(reversed(range(5)), conditions):
+    rows = [row for row in investigation if row["variant"] == variant]
+    assert len(rows) == 3, (variant, len(rows))
+    values = [row["lcp"][-1]["time"] for row in rows]
+    ax.hlines(position, min(values), max(values), color="#cbd5e1", linewidth=2)
+    for offset, row in zip([0.24, 0, -0.24], rows):
+        lcp = row["lcp"][-1]
+        ax.scatter(lcp["time"], position + offset, marker=markers[lcp["tag"]],
+                   s=60, color=colors[1], zorder=3)
+        ax.text(lcp["time"] + 120, position + offset, f'{lcp["time"]:,}',
+                va="center", fontsize=13)
+ax.set_yticks(list(reversed(range(5))), [label for _, label in conditions])
+ax.set_ylim(-0.55, 4.55)
+ax.set_xlim(0, 7000)
+ax.set_xticks([0, 2000, 4000, 6000], ["0", "2,000", "4,000", "6,000"])
+ax.tick_params(axis="both", length=0, pad=10, labelsize=16)
+ax.set_xlabel("LCP (ms)", fontsize=17, labelpad=12)
+ax.grid(axis="x", color="#e2e8f0", linewidth=0.7)
+for spine in ax.spines.values():
+    spine.set_visible(False)
+title = "글꼴 전송과 LCP 대상을 나눠봤다"
+fig.text(0.05, 0.97, title, fontsize=24, fontweight="bold", va="top")
+fig.text(0.05, 0.91, "같은 빌드, 조건별 3회 / 점 하나가 한 번의 측정", fontsize=16, color="#475569")
+fig.legend(handles=[Line2D([], [], marker=markers[tag], color=colors[1],
+                           linestyle="none", label=label)
+                    for tag, label in [("H1", "제목"), ("P", "본문 문단"), ("SPAN", "모집 배너")]],
+           loc="upper center", bbox_to_anchor=(0.53, 0.885), ncol=3, frameon=False, fontsize=16)
+fig.text(0.05, 0.035, "수식 글꼴과 MathML은 모든 조건에서 유지 / 선: 관측 범위", fontsize=14, color="#475569")
+svg_path = OUTPUT / "lcp-investigation.svg"
+fig.savefig(svg_path, metadata={"Date": None, "Title": title})
+svg = re.sub(r"<!DOCTYPE[^>]*>\s*", "", svg_path.read_text())
+svg_path.write_text("\n".join(line.rstrip() for line in svg.splitlines()) + "\n")
+fig.savefig(PREVIEWS / "lcp-investigation.png", dpi=120)
+plt.close(fig)
+font_visits = json.loads((DATA / "font-removal-results.json").read_text())["results"]
+for metric, limit in [("FCP", 2500), ("LCP", 6700)]:
+    chart(
+        f"font-removal-{metric.lower()}", f"일반 웹 글꼴을 제거한 뒤의 {metric}",
+        [(label, [[row[f"{metric.lower()}Ms"] for row in font_visits
+                   if row["route"] == route and row["variant"] == variant]
+                  for variant in variants]) for label, route in routes],
+        f"{metric} (ms)", limit, "실제 코드 수정 후 재빌드 / 첫 방문 / 수식 전용 글꼴 유지",
+        labels=("웹 글꼴 유지", "시스템 글꼴"),
+    )
+print(f"Generated 10 SVG charts in {OUTPUT}")

@@ -1,0 +1,11 @@
+{
+  "baseProductionCommit": "118a94668cfd9d7032ded2c0186138bc72bcd71b",
+  "fontRemovalCommit": "973aba65a7f1a0b89ad44db30df8c687e0dd8bb5",
+  "command": "corepack pnpm build:blog",
+  "exitCode": 0,
+  "wallMs": 25357.93891712092,
+  "note": "Single validation build, not a repeated build-time benchmark. Content and public modification times copied from the frozen after worktree and compared before building. No Rust/WASM rebuild.",
+  "mathFontSha256": "28966800a6319cb1ce4bd03ff698e2ebca6acd8e8a07b29c825ee8fa44deb4fd",
+  "pnpmShim": "PATH contains a pnpm wrapper calling corepack pnpm. The first attempt failed before Next.js started because pnpm was absent from PATH.",
+  "buildId": "FmWTpOMqMLRvaQ3BtuNUN"
+}

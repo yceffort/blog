@@ -81,9 +81,69 @@ node apps/blog/scripts/series-performance/check-timing.mjs .cache/series-perform
 
 ## 다시 실행하기
 
-### 글의 그래프만 다시 만들기
+### 수식 글의 LCP 원인 대조
 
-[`charts.py`](../../../scripts/series-performance/charts.py)는 보존한 `results.json`과 `builds.json`의 개별 실행에서 중앙값과 최소, 최대값을 계산해 SVG 7개를 만든다. 벤치마크는 다시 실행하지 않는다. SVG는 `apps/blog/public/2026/09/images/blog-performance`, 확인용 PNG는 `.cache/series-performance/charts`에 저장한다. 그래프의 선은 네 번의 관측 범위이며 신뢰구간이 아니다.
+[`diagnose-lcp.mjs`](../../../scripts/series-performance/diagnose-lcp.mjs)는 변경 후 커밋 `118a9466`의 기존 프로덕션 빌드에서 수식 글 하나를 측정한다. 첫 48회와 별개로 조건 다섯 개를 세 번씩 실행한 15회는 [lcp-investigation.json](lcp-investigation.json)에 보존했다. CPU 4배 감속, 지연 150ms, 다운로드와 업로드 각각 1,600Kbps와 같은 화면 크기를 유지한다. 매번 새 브라우저를 띄우고 순서를 라운드마다 뒤집는다. 계측 코드 해시와 브라우저 버전도 원자료에 있다.
+
+모든 조건에서 CDP Fetch로 수식 글꼴 URL만 가로챈다. 대조군은 즉시 원래 요청을 이어 보낸다. 즉시 전달 조건은 미리 받은 동일한 글꼴 바이트로 응답해 네트워크 전송 대기를 제거한다. 요청 지연 조건은 네트워크 요청마다 한 번만 1,500ms를 기다렸다가 이어 보낸다. 같은 요청에 Fetch 이벤트가 두 번 발생할 수 있어 `networkId`로 중복 지연을 막는다. 별도의 두 조건은 `document.startViewTransition` 해제와 공통 웹 글꼴 제외다.
+
+공통 웹 글꼴 제외는 `Inter`, `JetBrains Mono`, `Fraunces`에 쓰는 CSS 변수 세 개를 시스템 글꼴로 덮어쓰고 `/_next/static/media/*.woff2`의 미리 불러오기 요청을 차단하는 실험이다. `next/font`를 삭제하고 다시 빌드한 결과는 아니다. 모든 조건에서 MathML 31개와 동일한 본문 HTML 해시를 확인했고, 브라우저가 받은 수식 글꼴의 SHA-256도 원본과 대조했다. 수식 글꼴의 내용이나 크기를 바꾸지 않았다.
+
+| 조건                | FCP 중앙값 | LCP 3회 (최종 대상)                            | 공통 글꼴 전송 |
+| ------------------- | ---------: | ---------------------------------------------- | -------------: |
+| 기존 설정           |    1,448ms | 5,636ms (문단), 1,552ms (제목), 5,636ms (문단) |       168.3KiB |
+| 수식 글꼴 즉시 전달 |    1,456ms | 2,804ms (배너), 2,792ms (배너), 1,524ms (제목) |       168.3KiB |
+| 수식 글꼴 요청 지연 |    1,448ms | 1,528ms (제목), 6,020ms (문단), 6,028ms (문단) |       168.3KiB |
+| 화면 전환 해제      |    1,456ms | 5,640ms (문단), 5,660ms (문단), 5,640ms (문단) |       168.3KiB |
+| 공통 웹 글꼴 제외   |      688ms | 2,312ms (배너), 2,316ms (배너), 2,368ms (배너) |           0KiB |
+
+수식 글꼴을 즉시 전달하면 늦은 문단 후보가 사라졌고, 요청을 늦춘 조건에서 문단이 최종 후보인 실행은 약 6초가 됐다. 다만 대조군에서도 제목이 최종 후보로 남는 실행이 있어, 최종 LCP가 항상 수식 글꼴의 완료 시각을 따라가지는 않는다. 화면 전환을 끈 세 번도 약 5.6초였으므로 화면 전환만으로 지연을 설명하는 가설은 철회했다. 공통 글꼴을 제외하면 FCP가 줄었지만 LCP 대상도 배너로 바뀌었고, 수식 글꼴 응답은 여전히 약 4.8초에 완료됐다.
+
+이 표의 전송량은 Resource Timing의 `transferSize` 합계다. 헤더 비용을 포함하며, 기존 48회의 CDP 바이트 합계와 집계 경로는 다르다. 공통 글꼴을 제외한 세 번 모두 해당 요청의 전송량이 0인지 확인했다. 배너가 표시되는 날짜에 대한 제약은 기존 측정과 같다.
+
+같은 프로덕션 빌드를 3222 포트에 준비한 뒤 저장소 루트에서 실행한다. 개발 서버와 다른 빌드, 브라우저 실험은 함께 실행하지 않는다.
+
+```sh
+LCP_CASES=control,instant-font,delayed-font,no-view-transition,system-ui LCP_ROUNDS=3 node apps/blog/scripts/series-performance/diagnose-lcp.mjs .cache/series-performance/lcp-final
+```
+
+첫 네 번의 추적에서 글꼴과 LCP 시각을 발췌한 기록은 [lcp-font-timing.json](lcp-font-timing.json)에 있다. 해당 발췌와 위 대조 실험은 다른 실행이다.
+
+로딩 중 화면 확인 두 번도 따로 실행해 [lcp-visual-check.json](lcp-visual-check.json)에 보존했다. 약 2초에 제목과 첫 문단의 시작이 이미 보였고, 수식 글꼴은 로딩 중이었다. 최종 LCP는 5,640ms와 5,632ms였다. `LCP_SNAPSHOTS=1`은 `document.fonts.ready`를 기다리지 않는 CDP `Page.captureScreenshot`으로 로딩 중 화면을 저장한다. 화면을 수집하는 부가 작업이 있으므로 이 실행을 위 15회와 합산하지 않았다. 본문에 실은 첫 화면의 파일 해시도 기록했다.
+
+```sh
+LCP_CASES=control LCP_ROUNDS=2 LCP_SNAPSHOTS=1 node apps/blog/scripts/series-performance/diagnose-lcp.mjs .cache/series-performance/lcp-early-paint
+```
+
+### 일반 웹 글꼴 제거 후 실제 페이지 비교
+
+실제 일반 웹 글꼴 제거 후의 비교는 [font-removal-results.json](font-removal-results.json)에 보존했다. 이 파일의 `before`는 최초 비교의 변경 후 커밋 `118a9466`이고, `after`는 일반 웹 글꼴을 제거한 `973aba65`다. 최초 비교의 `before`인 Tailwind 버전과 혼동하지 않는다. 홈, 코드 글, 수식 글의 첫 방문을 양쪽 네 번씩 총 24회 측정했다. 재방문은 이 추가 비교에 포함하지 않았다.
+
+`973aba65`의 별도 worktree에 최초 비교의 `after`에서 `posts`, `series`, `public`을 수정 시각을 보존해 복사했다. 세 디렉터리의 모든 파일 해시와 공개 자산의 초 단위 수정 시각이 같은지 검사한 뒤 해당 커밋의 잠금 파일로 설치하고 `pnpm build:blog`를 실행했다. [font-removal-build.json](font-removal-build.json)에 빌드 ID, 커밋, 수식 글꼴 해시와 성공 여부가 있다. 이 빌드는 성공 검증 한 번이며 기존 네 번의 빌드 시간 통계에 섞지 않았다.
+
+두 서버는 3222와 3223에서 실행했다. 원인 대조 스크립트의 요청 가로채기나 CSS 주입은 쓰지 않고, `973aba65`에 보존된 `compare-performance.mjs`로 실제 페이지를 측정했다. 개발 서버와 다른 빌드는 종료한 상태였다. 아래 명령은 위 입력을 준비하고 서버를 실행한 뒤 저장소 루트에서 실행한다.
+
+| 경로    | FCP 제거 전 | FCP 제거 후 | LCP 제거 전 | LCP 제거 후 |
+| ------- | ----------: | ----------: | ----------: | ----------: |
+| 홈      |     1,626ms |       868ms |     1,684ms |     2,376ms |
+| 코드 글 |     2,146ms |       870ms |     3,150ms |     2,250ms |
+| 수식 글 |     1,514ms |       758ms |     5,650ms |     2,352ms |
+
+표는 각각 네 번의 중앙값이다. 수식 글의 제거 후 LCP는 2,320ms, 2,392ms, 2,336ms, 2,368ms였다. 제거 전 네 번은 모두 본문 문단, 제거 후 네 번은 모두 모집 배너가 최종 대상이었다. 홈은 썸네일에서 배너로 바뀌면서 LCP가 늦어졌다. 코드 글은 양쪽 모두 같은 배너였다. 전체 24회 CLS는 0이었다.
+
+제거 후 12회 모두 일반 웹 글꼴의 요청과 글꼴 정의가 없었고, 세 경로의 LCP는 모두 5,000ms 미만이었다. 수식 글은 네 번 모두 MathML 31개와 수식 전용 글꼴의 HTTP 200 응답을 확인했다. 수식 글꼴 전송량은 약 334KiB로 유지됐다. 최초 48회나 요청을 가로챈 원인 대조 15회와 이 수치를 합산하지 않았다.
+
+```sh
+PERF_ROUNDS=4 PERF_CPU=4 PERF_LATENCY_MS=150 PERF_DOWNLOAD_KBPS=1600 PERF_UPLOAD_KBPS=1600 PERF_REPEAT_VISIT=0 \
+PERF_ROUTES=/,/2026/08/k8s-for-frontend-1,/2020/07/math-for-programmer-chapter1-2-set \
+PERF_BEFORE_DIR="$PWD/.cache/series-performance/after/apps/blog" \
+PERF_AFTER_DIR="$PWD/.cache/series-performance/font-removal/apps/blog" \
+node .cache/series-performance/font-removal/apps/blog/scripts/compare-performance.mjs http://127.0.0.1:3222 http://127.0.0.1:3223 .cache/series-performance/font-removal-browser
+```
+
+### 그래프 생성
+
+[`charts.py`](../../../scripts/series-performance/charts.py)는 보존한 `results.json`과 `builds.json`의 개별 실행에서 중앙값과 최소, 최대값을 계산해 SVG 7개를 만든다. `lcp-investigation.json`에서는 조건별 LCP 세 번을 모두 표시하는 그래프 한 개, `font-removal-results.json`에서는 실제 글꼴 제거 전후의 FCP와 LCP 그래프 두 개를 추가로 만든다. 벤치마크는 다시 실행하지 않는다. SVG는 `apps/blog/public/2026/09/images/blog-performance`, 확인용 PNG는 `.cache/series-performance/charts`에 저장한다. 그래프의 선은 관측 범위이며 신뢰구간이 아니다.
 
 저장소 루트에서 uv로 실행하면 스크립트에 고정한 Matplotlib 3.10.9를 사용한다. 기본 글꼴은 macOS의 Apple SD Gothic Neo다. 다른 환경에서는 `CHART_FONT`에 한글을 지원하는 글꼴 파일의 경로를 지정한다. SVG에는 글자 윤곽을 포함하므로 독자의 기기에 같은 글꼴이 없어도 표시된다.
 
