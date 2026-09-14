@@ -30,39 +30,12 @@ const styles = stylex.create({
     '@layer site': {
       position: 'fixed',
       zIndex: '0',
-      backgroundColor: {
-        default: 'transparent',
-        '@supports (color: color-mix(in lab, red, red))': 'transparent',
-      },
+      backgroundColor: 'transparent',
       backgroundImage: {
         default:
           'radial-gradient(\n      800px circle at 10% 10%,\n      var(--primary),\n      transparent 60%\n    ),\n    radial-gradient(\n      600px circle at 90% 80%,\n      var(--primary-3),\n      transparent 60%\n    )',
         '@supports (color: color-mix(in lab, red, red))':
           'radial-gradient(\n      800px circle at 10% 10%,\n      color-mix(in oklab, var(--primary) 15%, transparent),\n      transparent 60%\n    ),\n    radial-gradient(\n      600px circle at 90% 80%,\n      color-mix(in oklab, var(--primary-3) 10%, transparent),\n      transparent 60%\n    )',
-      },
-      backgroundPosition: {
-        default: 'initial',
-        '@supports (color: color-mix(in lab, red, red))': 'initial',
-      },
-      backgroundSize: {
-        default: 'auto',
-        '@supports (color: color-mix(in lab, red, red))': 'auto',
-      },
-      backgroundRepeat: {
-        default: 'repeat',
-        '@supports (color: color-mix(in lab, red, red))': 'repeat',
-      },
-      backgroundOrigin: {
-        default: 'padding-box',
-        '@supports (color: color-mix(in lab, red, red))': 'padding-box',
-      },
-      backgroundClip: {
-        default: 'border-box',
-        '@supports (color: color-mix(in lab, red, red))': 'border-box',
-      },
-      backgroundAttachment: {
-        default: 'scroll',
-        '@supports (color: color-mix(in lab, red, red))': 'scroll',
       },
       opacity: '0.6',
       inset: '0',
@@ -81,12 +54,6 @@ const styles = stylex.create({
       backgroundColor: 'transparent',
       backgroundImage:
         'radial-gradient(\n    circle,\n    var(--primary) 0%,\n    transparent 60%\n  )',
-      backgroundPosition: 'initial',
-      backgroundSize: 'auto',
-      backgroundRepeat: 'repeat',
-      backgroundOrigin: 'padding-box',
-      backgroundClip: 'border-box',
-      backgroundAttachment: 'scroll',
       transform: 'translate(-50%, -50%)',
       transition:
         'left 400ms cubic-bezier(0.2, 0.9, 0.2, 1),\n    top 400ms cubic-bezier(0.2, 0.9, 0.2, 1)',

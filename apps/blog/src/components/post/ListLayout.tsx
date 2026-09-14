@@ -27,7 +27,7 @@ export default function ListLayout({
         {posts.map((post, index) => (
           <li
             key={`${post.fields.slug}_${index}`}
-            className={listStyles.element_li}
+            className={listStyles.post_row_list_li}
           >
             <PostRow post={post} pathPrefix={pathPrefix} />
           </li>

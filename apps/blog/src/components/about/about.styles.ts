@@ -23,301 +23,171 @@ const styles = stylex.create({
       color: 'var(--ink-2)',
     },
   },
-  element_a: {
+  about_social_link: {
     '@layer site': {
-      display: {
-        default: null,
-        ':is(.about-socials a)': 'inline-flex',
-      },
-      alignItems: {
-        default: null,
-        ':is(.about-socials a)': 'center',
-      },
-      padding: {
-        default: null,
-        ':is(.about-socials a)': '8px 14px',
-        ':is(.tabs a)': '12px 24px',
-      },
-      borderTopWidth: {
-        default: null,
-        ':is(.about-socials a)': '1px',
-      },
-      borderTopStyle: {
-        default: null,
-        ':is(.about-socials a)': 'solid',
-      },
+      display: 'inline-flex',
+      alignItems: 'center',
+      padding: '8px 14px',
+      borderTopWidth: '1px',
+      borderTopStyle: 'solid',
       borderTopColor: {
-        default: null,
-        ':is(.about-socials a)': 'var(--border)',
-        ':is(.about-socials a:hover)': 'var(--primary)',
+        default: 'var(--border)',
+        ':hover': 'var(--primary)',
       },
-      borderRightWidth: {
-        default: null,
-        ':is(.about-socials a)': '1px',
-      },
-      borderRightStyle: {
-        default: null,
-        ':is(.about-socials a)': 'solid',
-      },
+      borderRightWidth: '1px',
+      borderRightStyle: 'solid',
       borderRightColor: {
-        default: null,
-        ':is(.about-socials a)': 'var(--border)',
-        ':is(.about-socials a:hover)': 'var(--primary)',
+        default: 'var(--border)',
+        ':hover': 'var(--primary)',
       },
-      borderBottomWidth: {
-        default: null,
-        ':is(.about-socials a)': '1px',
-      },
-      borderBottomStyle: {
-        default: null,
-        ':is(.about-socials a)': 'solid',
-      },
+      borderBottomWidth: '1px',
+      borderBottomStyle: 'solid',
       borderBottomColor: {
-        default: null,
-        ':is(.about-socials a)': 'var(--border)',
-        ':is(.about-socials a:hover)': 'var(--primary)',
+        default: 'var(--border)',
+        ':hover': 'var(--primary)',
       },
-      borderLeftWidth: {
-        default: null,
-        ':is(.about-socials a)': '1px',
-      },
-      borderLeftStyle: {
-        default: null,
-        ':is(.about-socials a)': 'solid',
-      },
+      borderLeftWidth: '1px',
+      borderLeftStyle: 'solid',
       borderLeftColor: {
-        default: null,
-        ':is(.about-socials a)': 'var(--border)',
-        ':is(.about-socials a:hover)': 'var(--primary)',
+        default: 'var(--border)',
+        ':hover': 'var(--primary)',
       },
-      borderRadius: {
-        default: null,
-        ':is(.about-socials a)': '8px',
-      },
-      gap: {
-        default: null,
-        ':is(.about-socials a)': '8px',
-      },
+      borderRadius: '8px',
+      gap: '8px',
       color: {
         default: null,
-        ':is(.about-socials a:hover)': 'var(--primary)',
-        ':is(.tabs a)': 'var(--ink-3)',
-        ":is(.tabs a[data-active='true'])": 'var(--ink)',
+        ':hover': 'var(--primary)',
       },
-      flex: {
-        default: null,
-        ':is(.tabs a)': '1',
+      backgroundColor: 'var(--surface)',
+      backgroundImage: 'none',
+      backgroundPosition: 'initial',
+      backgroundSize: 'auto',
+      backgroundRepeat: 'repeat',
+      backgroundOrigin: 'padding-box',
+      backgroundClip: 'border-box',
+      backgroundAttachment: 'scroll',
+      transition: 'all 200ms',
+    },
+  },
+  about_tab_link: {
+    '@layer site': {
+      padding: '12px 24px',
+      color: {
+        default: 'var(--ink-3)',
+        ':is([data-active="true"])': 'var(--ink)',
       },
-      fontSize: {
-        default: null,
-        ':is(.tabs a)': '14px',
-      },
-      fontWeight: {
-        default: null,
-        ':is(.tabs a)': '600',
-      },
-      letterSpacing: {
-        default: null,
-        ':is(.tabs a)': '-0.01em',
-      },
-      textAlign: {
-        default: null,
-        ':is(.tabs a)': 'center',
-      },
-      textDecoration: {
-        default: null,
-        ':is(.tabs a)': 'none',
-      },
+      flex: '1',
+      fontSize: '14px',
+      fontWeight: '600',
+      letterSpacing: '-0.01em',
+      textAlign: 'center',
+      textDecoration: 'none',
     },
     backgroundColor: {
       default: null,
-      '@layer site': {
-        default: null,
-        ':is(.about-socials a)': 'var(--surface)',
-      },
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': 'var(--primary)',
-        },
+        '@layer site': 'var(--primary)',
       },
     },
     backgroundImage: {
       default: null,
-      '@layer site': {
-        default: null,
-        ':is(.about-socials a)': 'none',
-      },
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': 'none',
-        },
+        '@layer site': 'none',
       },
     },
     backgroundPosition: {
       default: null,
-      '@layer site': {
-        default: null,
-        ':is(.about-socials a)': 'initial',
-      },
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': 'initial',
-        },
+        '@layer site': 'initial',
       },
     },
     backgroundSize: {
       default: null,
-      '@layer site': {
-        default: null,
-        ':is(.about-socials a)': 'auto',
-      },
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': 'auto',
-        },
+        '@layer site': 'auto',
       },
     },
     backgroundRepeat: {
       default: null,
-      '@layer site': {
-        default: null,
-        ':is(.about-socials a)': 'repeat',
-      },
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': 'repeat',
-        },
+        '@layer site': 'repeat',
       },
     },
     backgroundOrigin: {
       default: null,
-      '@layer site': {
-        default: null,
-        ':is(.about-socials a)': 'padding-box',
-      },
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': 'padding-box',
-        },
+        '@layer site': 'padding-box',
       },
     },
     backgroundClip: {
       default: null,
-      '@layer site': {
-        default: null,
-        ':is(.about-socials a)': 'border-box',
-      },
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': 'border-box',
-        },
+        '@layer site': 'border-box',
       },
     },
     backgroundAttachment: {
       default: null,
-      '@layer site': {
-        default: null,
-        ':is(.about-socials a)': 'scroll',
-      },
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': 'scroll',
-        },
+        '@layer site': 'scroll',
       },
     },
     transition: {
       default: null,
-      '@layer site': {
-        default: null,
-        ':is(.about-socials a)': 'all 200ms',
-        ':is(.tabs a)': 'color 180ms',
-      },
+      '@layer site': 'color 180ms',
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': 'transform 240ms cubic-bezier(0.2, 0.9, 0.2, 1)',
-        },
+        '@layer site': 'transform 240ms cubic-bezier(0.2, 0.9, 0.2, 1)',
       },
     },
     position: {
       default: null,
-      '@layer site': {
-        default: null,
-        ':is(.tabs a)': 'relative',
-      },
+      '@layer site': 'relative',
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': 'absolute',
-        },
+        '@layer site': 'absolute',
       },
     },
     content: {
       default: null,
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': "''",
-        },
+        '@layer site': "''",
       },
     },
     right: {
       default: null,
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': '0',
-        },
+        '@layer site': '0',
       },
     },
     bottom: {
       default: null,
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': '-1px',
-        },
+        '@layer site': '-1px',
       },
     },
     left: {
       default: null,
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': '0',
-        },
+        '@layer site': '0',
       },
     },
     height: {
       default: null,
       '::after': {
         default: null,
-        '@layer site': {
-          default: null,
-          ':is(.tabs a)': '2px',
-        },
+        '@layer site': '2px',
       },
     },
     transform: {
@@ -325,9 +195,8 @@ const styles = stylex.create({
       '::after': {
         default: null,
         '@layer site': {
-          default: null,
-          ':is(.tabs a)': 'scaleX(0)',
-          ":is(.tabs a[data-active='true'])": 'scaleX(1)',
+          default: 'scaleX(0)',
+          ':is([data-active="true"])': 'scaleX(1)',
         },
       },
     },
@@ -354,26 +223,11 @@ const styles = stylex.create({
   element_canvas: {
     '@layer site': {
       display: {
-        default: null,
-        ':is(.page-title-fx canvas)': 'block',
-        ':is(.hero-fx-b canvas)': 'block',
+        default: 'block',
+        '@media (prefers-reduced-motion: reduce)': 'none',
       },
-      width: {
-        default: null,
-        ':is(.page-title-fx canvas)': '100% !important',
-      },
-      height: {
-        default: null,
-        ':is(.page-title-fx canvas)': '100% !important',
-      },
-      borderRadius: {
-        default: null,
-        ':is(.hero-fx-b canvas)': '50%',
-      },
-      cursor: {
-        default: null,
-        ':is(.hero-fx-b canvas)': 'crosshair',
-      },
+      borderRadius: '50%',
+      cursor: 'crosshair',
     },
   },
   hero_fx_canvas: {
@@ -425,7 +279,10 @@ const styles = stylex.create({
 // Resolve locally so the compiler can erase style composition.
 export const about_hero = stylex.props(styles.about_hero).className!
 export const about_socials = stylex.props(styles.about_socials).className!
-export const element_a = stylex.props(styles.element_a).className!
+export const about_social_link = stylex.props(
+  styles.about_social_link,
+).className!
+export const about_tab_link = stylex.props(styles.about_tab_link).className!
 export const tabs = stylex.props(styles.tabs).className!
 export const page_title_fx = stylex.props(styles.page_title_fx).className!
 export const element_canvas = stylex.props(styles.element_canvas).className!

@@ -277,7 +277,7 @@ export default function TweaksPanel({open, onClose}: Props) {
         </button>
       </h3>
 
-      <div className={`tweaks-row ${tweaksStyles.tweaks_row}`}>
+      <div className="tweaks-row">
         <div className={`tweaks-label ${tweaksStyles.tweaks_label}`}>theme</div>
         <div className={`tweaks-theme ${tweaksStyles.tweaks_theme}`}>
           {THEMES.map(({key, label, Icon}) => (
@@ -296,7 +296,7 @@ export default function TweaksPanel({open, onClose}: Props) {
         </div>
       </div>
 
-      <div className={`tweaks-row ${tweaksStyles.tweaks_row}`}>
+      <div className={`tweaks-row ${tweaksStyles.tweaks_row_next}`}>
         <div className={`tweaks-label ${tweaksStyles.tweaks_label}`}>
           accent palette
         </div>
@@ -316,7 +316,7 @@ export default function TweaksPanel({open, onClose}: Props) {
         </div>
       </div>
 
-      <div className={`tweaks-row ${tweaksStyles.tweaks_row}`}>
+      <div className={`tweaks-row ${tweaksStyles.tweaks_row_next}`}>
         <label
           className={`tweaks-label ${tweaksStyles.tweaks_label} ${tweaksStyles.element_label}`}
           htmlFor="tweaks-tilt"
@@ -339,7 +339,7 @@ export default function TweaksPanel({open, onClose}: Props) {
       </div>
 
       <div
-        className={`tweaks-row tweaks-toggle ${tweaksStyles.tweaks_row} ${tweaksStyles.tweaks_toggle}`}
+        className={`tweaks-row tweaks-toggle ${tweaksStyles.tweaks_row_next} ${tweaksStyles.tweaks_toggle}`}
       >
         <div
           className={`tweaks-label ${tweaksStyles.tweaks_label}`}
@@ -367,7 +367,7 @@ export default function TweaksPanel({open, onClose}: Props) {
 
       {pushState !== 'unsupported' && (
         <div
-          className={`tweaks-row tweaks-toggle ${tweaksStyles.tweaks_row} ${tweaksStyles.tweaks_toggle}`}
+          className={`tweaks-row tweaks-toggle ${tweaksStyles.tweaks_row_next} ${tweaksStyles.tweaks_toggle}`}
         >
           <div
             className={`tweaks-label ${tweaksStyles.tweaks_label}`}
@@ -396,7 +396,7 @@ export default function TweaksPanel({open, onClose}: Props) {
       )}
 
       <div
-        className={`tweaks-row tweaks-toggle ${tweaksStyles.tweaks_row} ${tweaksStyles.tweaks_toggle}`}
+        className={`tweaks-row tweaks-toggle ${tweaksStyles.tweaks_row_next} ${tweaksStyles.tweaks_toggle}`}
       >
         <div
           className={`tweaks-label ${tweaksStyles.tweaks_label}`}

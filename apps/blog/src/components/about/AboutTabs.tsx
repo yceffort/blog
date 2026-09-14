@@ -9,7 +9,7 @@ export function AboutTabs({active}: {active: 'about' | 'resume'}) {
         href="/about"
         data-active={active === 'about'}
         aria-current={active === 'about' ? 'page' : undefined}
-        className={aboutStyles.element_a}
+        className={aboutStyles.about_tab_link}
       >
         About
       </Link>
@@ -17,7 +17,7 @@ export function AboutTabs({active}: {active: 'about' | 'resume'}) {
         href="/resume"
         data-active={active === 'resume'}
         aria-current={active === 'resume' ? 'page' : undefined}
-        className={aboutStyles.element_a}
+        className={aboutStyles.about_tab_link}
       >
         Resume
       </Link>

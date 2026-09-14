@@ -4,7 +4,6 @@ import Link from 'next/link'
 
 import * as archiveStyles from '@/app/archive/archive.styles'
 import * as ambientStyles from '@/components/layout/ambient.styles'
-import * as sectionStyles from '@/components/layout/section.styles'
 import {SiteConfig} from '@/config'
 import type {Post} from '@/type'
 import {getAllPosts} from '@/utils/Post'
@@ -31,11 +30,7 @@ export default async function ArchivePage() {
   return (
     <div className={`page-view archive-view ${ambientStyles.page_view}`}>
       <header className={`archive-head ${archiveStyles.archive_head}`}>
-        <span
-          className={`sec-count ${sectionStyles.sec_count} ${archiveStyles.element_span}`}
-        >
-          ARCHIVE
-        </span>
+        <span className="sec-count">ARCHIVE</span>
         <h1 className={archiveStyles.element_h1}>전체 글</h1>
         <p className={`archive-sub ${archiveStyles.archive_sub}`}>
           {posts.length}개의 글 · {years.length}개 연도
@@ -67,12 +62,12 @@ export default async function ArchivePage() {
                     prefetch={false}
                   >
                     <span
-                      className={`archive-date ${archiveStyles.archive_date} ${archiveStyles.element_span}`}
+                      className={`archive-date ${archiveStyles.archive_date}`}
                     >
                       {post.frontMatter.date.slice(5, 10)}
                     </span>
                     <span
-                      className={`archive-title ${archiveStyles.archive_title} ${archiveStyles.element_span}`}
+                      className={`archive-title ${archiveStyles.archive_title}`}
                     >
                       {stripTitleEmphasis(post.frontMatter.title)}
                     </span>

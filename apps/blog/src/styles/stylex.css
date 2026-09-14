@@ -5,6 +5,7 @@
 @import './transitions.css';
 @import './typography.css';
 @import '../components/settings/appearance.css';
+@import '../components/about/hero-fx.css';
 @import '../components/post/article.css';
 @import '../components/post/markdown.css';
 @import '../components/post/markdown-toc.css';

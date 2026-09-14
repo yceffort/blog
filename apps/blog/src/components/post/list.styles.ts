@@ -9,20 +9,11 @@ const styles = stylex.create({
       borderTopColor: 'var(--border)',
     },
   },
-  element_li: {
+  post_row_list_li: {
     '@layer site': {
-      borderBottomWidth: {
-        default: null,
-        ':is(.post-row-list > li)': '1px',
-      },
-      borderBottomStyle: {
-        default: null,
-        ':is(.post-row-list > li)': 'solid',
-      },
-      borderBottomColor: {
-        default: null,
-        ':is(.post-row-list > li)': 'var(--border)',
-      },
+      borderBottomWidth: '1px',
+      borderBottomStyle: 'solid',
+      borderBottomColor: 'var(--border)',
     },
   },
   post_row: {
@@ -108,6 +99,18 @@ const styles = stylex.create({
           ':hover': 'scroll',
         },
       },
+      '--post-row-title-color': {
+        default: null,
+        ':hover': 'var(--primary)',
+      },
+      '--post-row-arrow-color': {
+        default: null,
+        ':hover': 'var(--primary)',
+      },
+      '--post-row-arrow-transform': {
+        default: null,
+        ':hover': 'translateX(3px)',
+      },
     },
   },
   post_row_link: {
@@ -125,103 +128,46 @@ const styles = stylex.create({
         default: '96px',
         '@media (max-width: 640px)': '72px',
       },
-      borderTopWidth: '1px',
-      borderTopStyle: 'solid',
-      borderTopColor: 'var(--border)',
-      borderRightWidth: '1px',
-      borderRightStyle: 'solid',
-      borderRightColor: 'var(--border)',
-      borderBottomWidth: '1px',
-      borderBottomStyle: 'solid',
-      borderBottomColor: 'var(--border)',
-      borderLeftWidth: '1px',
-      borderLeftStyle: 'solid',
-      borderLeftColor: 'var(--border)',
+      borderWidth: '1px',
+      borderStyle: 'solid',
+      borderColor: 'var(--border)',
       borderRadius: '10px',
       backgroundColor: 'var(--surface-2)',
-      backgroundImage: 'none',
-      backgroundPosition: 'initial',
-      backgroundSize: 'auto',
-      backgroundRepeat: 'repeat',
-      backgroundOrigin: 'padding-box',
-      backgroundClip: 'border-box',
-      backgroundAttachment: 'scroll',
       aspectRatio: '3 / 2',
     },
   },
-  element_img: {
+  // `.post-card .thumb img` 전용. `.post-row-thumb img`는 post_row_thumb_img를 쓴다
+  post_card_thumb_img: {
     '@layer site': {
-      objectFit: {
-        default: null,
-        ':is(.post-row-thumb img)': 'cover',
-        ':is(.post-card .thumb img)': 'cover',
-      },
-      transition: {
-        default: null,
-        ':is(.post-card .thumb img)':
-          'transform 700ms cubic-bezier(0.2, 0.9, 0.2, 1)',
-      },
-      transform: {
-        default: null,
-        ':is(.post-card:hover .thumb img)': 'scale(1.05)',
-      },
+      objectFit: 'cover',
+      transition: 'transform 700ms cubic-bezier(0.2, 0.9, 0.2, 1)',
+      transform: 'var(--post-card-thumb-transform, none)',
+    },
+  },
+  post_row_thumb_img: {
+    '@layer site': {
+      objectFit: 'cover',
     },
   },
   post_row_thumb_empty: {
     '@layer site': {
       display: 'grid',
       placeItems: 'center',
-      backgroundColor: {
-        default: 'transparent',
-        '@supports (color: color-mix(in lab, red, red))': 'transparent',
-      },
+      backgroundColor: 'transparent',
       backgroundImage: {
         default:
           'linear-gradient(\n    135deg,\n    var(--primary),\n    var(--primary-3)\n  )',
         '@supports (color: color-mix(in lab, red, red))':
           'linear-gradient(\n    135deg,\n    color-mix(in oklab, var(--primary) 10%, var(--surface-2)),\n    color-mix(in oklab, var(--primary-3) 7%, var(--surface-2))\n  )',
       },
-      backgroundPosition: {
-        default: 'initial',
-        '@supports (color: color-mix(in lab, red, red))': 'initial',
-      },
-      backgroundSize: {
-        default: 'auto',
-        '@supports (color: color-mix(in lab, red, red))': 'auto',
-      },
-      backgroundRepeat: {
-        default: 'repeat',
-        '@supports (color: color-mix(in lab, red, red))': 'repeat',
-      },
-      backgroundOrigin: {
-        default: 'padding-box',
-        '@supports (color: color-mix(in lab, red, red))': 'padding-box',
-      },
-      backgroundClip: {
-        default: 'border-box',
-        '@supports (color: color-mix(in lab, red, red))': 'border-box',
-      },
-      backgroundAttachment: {
-        default: 'scroll',
-        '@supports (color: color-mix(in lab, red, red))': 'scroll',
-      },
       color: 'var(--ink-3)',
     },
   },
-  element_svg: {
+  post_row_thumb_empty_svg: {
     '@layer site': {
-      width: {
-        default: null,
-        ':is(.post-row-thumb-empty svg)': '60%',
-      },
-      height: {
-        default: null,
-        ':is(.post-row-thumb-empty svg)': 'auto',
-      },
-      color: {
-        default: null,
-        ':is(.post-row-thumb-empty svg)': 'var(--ink-4)',
-      },
+      width: '60%',
+      height: 'auto',
+      color: 'var(--ink-4)',
     },
   },
   post_row_body: {
@@ -242,170 +188,35 @@ const styles = stylex.create({
   },
   series: {
     '@layer site': {
-      fontSize: {
-        default: null,
-        ':is(.post-row .series)': '12px',
-        ':is(.post-card .series)': '11.5px',
-      },
-      fontWeight: {
-        default: null,
-        ':is(.post-row .series)': '500',
-        ':is(.post-card .series)': '500',
-      },
-      lineHeight: {
-        default: null,
-        ':is(.post-row .series)': '1.4',
-      },
-      color: {
-        default: null,
-        ':is(.post-row .series)': 'var(--ink-3)',
-        ':is(.post-card .series)': '#22c55e',
-      },
-      display: {
-        default: null,
-        ':is(.post-card .series)': 'inline-flex',
-      },
-      alignItems: {
-        default: null,
-        ':is(.post-card .series)': 'center',
-      },
-      width: {
-        default: null,
-        ':is(.post-card .series)': 'fit-content',
-      },
-      padding: {
-        default: null,
-        ':is(.post-card .series)': '3px 9px',
-      },
-      borderTopWidth: {
-        default: null,
-        ':is(.post-card .series)': '1px',
-      },
-      borderTopStyle: {
-        default: null,
-        ':is(.post-card .series)': 'solid',
-      },
-      borderTopColor: {
-        default: null,
-        ':is(.post-card .series)':
-          'color-mix(in oklab, #22c55e 30%, transparent)',
-      },
-      borderRightWidth: {
-        default: null,
-        ':is(.post-card .series)': '1px',
-      },
-      borderRightStyle: {
-        default: null,
-        ':is(.post-card .series)': 'solid',
-      },
-      borderRightColor: {
-        default: null,
-        ':is(.post-card .series)':
-          'color-mix(in oklab, #22c55e 30%, transparent)',
-      },
-      borderBottomWidth: {
-        default: null,
-        ':is(.post-card .series)': '1px',
-      },
-      borderBottomStyle: {
-        default: null,
-        ':is(.post-card .series)': 'solid',
-      },
-      borderBottomColor: {
-        default: null,
-        ':is(.post-card .series)':
-          'color-mix(in oklab, #22c55e 30%, transparent)',
-      },
-      borderLeftWidth: {
-        default: null,
-        ':is(.post-card .series)': '1px',
-      },
-      borderLeftStyle: {
-        default: null,
-        ':is(.post-card .series)': 'solid',
-      },
-      borderLeftColor: {
-        default: null,
-        ':is(.post-card .series)':
-          'color-mix(in oklab, #22c55e 30%, transparent)',
-      },
-      borderRadius: {
-        default: null,
-        ':is(.post-card .series)': '999px',
-      },
+      fontWeight: '500',
+    },
+  },
+  series_in_post_row: {
+    '@layer site': {
+      fontSize: '12px',
+      lineHeight: '1.4',
+      color: 'var(--ink-3)',
+    },
+  },
+  series_in_post_card: {
+    '@layer site': {
+      fontSize: '11.5px',
+      color: '#22c55e',
+      display: 'inline-flex',
+      alignItems: 'center',
+      width: 'fit-content',
+      padding: '3px 9px',
+      borderWidth: '1px',
+      borderStyle: 'solid',
+      borderColor: 'color-mix(in oklab, #22c55e 30%, transparent)',
+      borderRadius: '999px',
       backgroundColor: {
-        default: null,
-        ':is(.post-card .series)': '#22c55e',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.post-card .series)':
-            'color-mix(in oklab, #22c55e 12%, var(--surface))',
-        },
+        default: '#22c55e',
+        '@supports (color: color-mix(in lab, red, red))':
+          'color-mix(in oklab, #22c55e 12%, var(--surface))',
       },
-      backgroundImage: {
-        default: null,
-        ':is(.post-card .series)': 'none',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.post-card .series)': 'none',
-        },
-      },
-      backgroundPosition: {
-        default: null,
-        ':is(.post-card .series)': 'initial',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.post-card .series)': 'initial',
-        },
-      },
-      backgroundSize: {
-        default: null,
-        ':is(.post-card .series)': 'auto',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.post-card .series)': 'auto',
-        },
-      },
-      backgroundRepeat: {
-        default: null,
-        ':is(.post-card .series)': 'repeat',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.post-card .series)': 'repeat',
-        },
-      },
-      backgroundOrigin: {
-        default: null,
-        ':is(.post-card .series)': 'padding-box',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.post-card .series)': 'padding-box',
-        },
-      },
-      backgroundClip: {
-        default: null,
-        ':is(.post-card .series)': 'border-box',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.post-card .series)': 'border-box',
-        },
-      },
-      backgroundAttachment: {
-        default: null,
-        ':is(.post-card .series)': 'scroll',
-        '@supports (color: color-mix(in lab, red, red))': {
-          default: null,
-          ':is(.post-card .series)': 'scroll',
-        },
-      },
-      transform: {
-        default: null,
-        ':is(.post-card .series)': 'translateZ(14px)',
-      },
-      gap: {
-        default: null,
-        ':is(.post-card .series)': '6px',
-      },
+      transform: 'translateZ(14px)',
+      gap: '6px',
     },
   },
   post_row_tags: {
@@ -426,10 +237,7 @@ const styles = stylex.create({
       fontWeight: '700',
       lineHeight: '1.35',
       letterSpacing: '-0.015em',
-      color: {
-        default: 'var(--ink)',
-        ':is(.post-row:hover .post-row-title)': 'var(--primary)',
-      },
+      color: 'var(--post-row-title-color, var(--ink))',
       WebkitLineClamp: {
         default: '2',
         '@media (max-width: 640px)': '3',
@@ -465,16 +273,10 @@ const styles = stylex.create({
   },
   post_row_arrow: {
     '@layer site': {
-      color: {
-        default: 'var(--ink-4)',
-        ':is(.post-row:hover .post-row-arrow)': 'var(--primary)',
-      },
+      color: 'var(--post-row-arrow-color, var(--ink-4))',
       transition:
         'transform 220ms cubic-bezier(0.2, 0.9, 0.2, 1),\n    color 180ms ease',
-      transform: {
-        default: null,
-        ':is(.post-row:hover .post-row-arrow)': 'translateX(3px)',
-      },
+      transform: 'var(--post-row-arrow-transform, none)',
       display: {
         default: null,
         '@media (max-width: 640px)': 'none',
@@ -537,6 +339,10 @@ const styles = stylex.create({
             '0 10px 40px -20px\n    color-mix(in oklab, var(--primary) 80%, transparent)',
         },
       },
+      '--post-card-thumb-transform': {
+        default: null,
+        ':hover': 'scale(1.05)',
+      },
     },
     position: {
       default: null,
@@ -559,10 +365,7 @@ const styles = stylex.create({
       '@layer site': 'var(--surface)',
       '::after': {
         default: null,
-        '@layer site': {
-          default: 'transparent',
-          '@supports (color: color-mix(in lab, red, red))': 'transparent',
-        },
+        '@layer site': 'transparent',
       },
     },
     backgroundImage: {
@@ -583,10 +386,7 @@ const styles = stylex.create({
       '@layer site': 'initial',
       '::after': {
         default: null,
-        '@layer site': {
-          default: 'initial',
-          '@supports (color: color-mix(in lab, red, red))': 'initial',
-        },
+        '@layer site': 'initial',
       },
     },
     backgroundSize: {
@@ -594,10 +394,7 @@ const styles = stylex.create({
       '@layer site': 'auto',
       '::after': {
         default: null,
-        '@layer site': {
-          default: 'auto',
-          '@supports (color: color-mix(in lab, red, red))': 'auto',
-        },
+        '@layer site': 'auto',
       },
     },
     backgroundRepeat: {
@@ -605,10 +402,7 @@ const styles = stylex.create({
       '@layer site': 'repeat',
       '::after': {
         default: null,
-        '@layer site': {
-          default: 'repeat',
-          '@supports (color: color-mix(in lab, red, red))': 'repeat',
-        },
+        '@layer site': 'repeat',
       },
     },
     backgroundOrigin: {
@@ -616,10 +410,7 @@ const styles = stylex.create({
       '@layer site': 'padding-box',
       '::after': {
         default: null,
-        '@layer site': {
-          default: 'padding-box',
-          '@supports (color: color-mix(in lab, red, red))': 'padding-box',
-        },
+        '@layer site': 'padding-box',
       },
     },
     backgroundClip: {
@@ -627,10 +418,7 @@ const styles = stylex.create({
       '@layer site': 'border-box',
       '::after': {
         default: null,
-        '@layer site': {
-          default: 'border-box',
-          '@supports (color: color-mix(in lab, red, red))': 'border-box',
-        },
+        '@layer site': 'border-box',
       },
     },
     backgroundAttachment: {
@@ -638,10 +426,7 @@ const styles = stylex.create({
       '@layer site': 'scroll',
       '::after': {
         default: null,
-        '@layer site': {
-          default: 'scroll',
-          '@supports (color: color-mix(in lab, red, red))': 'scroll',
-        },
+        '@layer site': 'scroll',
       },
     },
     transition: {
@@ -686,268 +471,86 @@ const styles = stylex.create({
   },
   element_a: {
     '@layer site': {
-      position: {
-        default: null,
-        ':is(.post-card > a)': 'absolute',
-      },
-      inset: {
-        default: null,
-        ':is(.post-card > a)': '0',
-      },
-      zIndex: {
-        default: null,
-        ':is(.post-card > a)': '3',
-      },
+      position: 'absolute',
+      inset: '0',
+      zIndex: '3',
     },
   },
   thumb: {
     '@layer site': {
-      overflow: {
-        default: null,
-        ':is(.post-card .thumb)': 'hidden',
-      },
-      position: {
-        default: null,
-        ':is(.post-card .thumb)': 'relative',
-      },
-      borderBottomWidth: {
-        default: null,
-        ':is(.post-card .thumb)': '1px',
-      },
-      borderBottomStyle: {
-        default: null,
-        ':is(.post-card .thumb)': 'solid',
-      },
-      borderBottomColor: {
-        default: null,
-        ':is(.post-card .thumb)': 'var(--border)',
-      },
-      backgroundColor: {
-        default: null,
-        ':is(.post-card .thumb)': 'var(--surface-2)',
-      },
-      backgroundImage: {
-        default: null,
-        ':is(.post-card .thumb)': 'none',
-      },
-      backgroundPosition: {
-        default: null,
-        ':is(.post-card .thumb)': 'initial',
-      },
-      backgroundSize: {
-        default: null,
-        ':is(.post-card .thumb)': 'auto',
-      },
-      backgroundRepeat: {
-        default: null,
-        ':is(.post-card .thumb)': 'repeat',
-      },
-      backgroundOrigin: {
-        default: null,
-        ':is(.post-card .thumb)': 'padding-box',
-      },
-      backgroundClip: {
-        default: null,
-        ':is(.post-card .thumb)': 'border-box',
-      },
-      backgroundAttachment: {
-        default: null,
-        ':is(.post-card .thumb)': 'scroll',
-      },
-      aspectRatio: {
-        default: null,
-        ':is(.post-card .thumb)': '16 / 9',
-      },
+      overflow: 'hidden',
+      position: 'relative',
+      borderBottomWidth: '1px',
+      borderBottomStyle: 'solid',
+      borderBottomColor: 'var(--border)',
+      backgroundColor: 'var(--surface-2)',
+      aspectRatio: '16 / 9',
     },
   },
   body: {
     '@layer site': {
-      display: {
-        default: null,
-        ':is(.post-card .body)': 'flex',
-      },
-      flex: {
-        default: null,
-        ':is(.post-card .body)': '1',
-      },
-      flexDirection: {
-        default: null,
-        ':is(.post-card .body)': 'column',
-      },
-      padding: {
-        default: null,
-        ':is(.post-card .body)': '18px 20px 20px',
-      },
-      gap: {
-        default: null,
-        ':is(.post-card .body)': '10px',
-      },
+      display: 'flex',
+      flex: '1',
+      flexDirection: 'column',
+      padding: '18px 20px 20px',
+      gap: '10px',
     },
   },
   tag_row: {
     '@layer site': {
-      display: {
-        default: null,
-        ':is(.post-card .tag-row)': 'flex',
-      },
-      flexWrap: {
-        default: null,
-        ':is(.post-card .tag-row)': 'wrap',
-      },
-      gap: {
-        default: null,
-        ':is(.post-card .tag-row)': '6px',
-      },
-      transform: {
-        default: null,
-        ':is(.post-card .tag-row)': 'translateZ(12px)',
-      },
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '6px',
+      transform: 'translateZ(12px)',
     },
   },
   element_h3: {
     '@layer site': {
-      overflow: {
-        default: null,
-        ':is(.post-card h3)': 'hidden',
-      },
-      display: {
-        default: null,
-        ':is(.post-card h3)': '-webkit-box',
-      },
-      marginTop: {
-        default: null,
-        ':is(.post-card h3)': '2px',
-      },
-      fontSize: {
-        default: null,
-        ':is(.post-card h3)': '17px',
-      },
-      fontWeight: {
-        default: null,
-        ':is(.post-card h3)': '700',
-      },
-      lineHeight: {
-        default: null,
-        ':is(.post-card h3)': '1.35',
-      },
-      letterSpacing: {
-        default: null,
-        ':is(.post-card h3)': '-0.015em',
-      },
-      color: {
-        default: null,
-        ':is(.post-card h3)': 'var(--ink)',
-      },
-      transform: {
-        default: null,
-        ':is(.post-card h3)': 'translateZ(20px)',
-      },
-      WebkitLineClamp: {
-        default: null,
-        ':is(.post-card h3)': '2',
-      },
-      WebkitBoxOrient: {
-        default: null,
-        ':is(.post-card h3)': 'vertical',
-      },
+      overflow: 'hidden',
+      display: '-webkit-box',
+      marginTop: '2px',
+      fontSize: '17px',
+      fontWeight: '700',
+      lineHeight: '1.35',
+      letterSpacing: '-0.015em',
+      color: 'var(--ink)',
+      transform: 'translateZ(20px)',
+      WebkitLineClamp: '2',
+      WebkitBoxOrient: 'vertical',
     },
   },
   desc: {
     '@layer site': {
-      overflow: {
-        default: null,
-        ':is(.post-card p.desc)': 'hidden',
-      },
-      display: {
-        default: null,
-        ':is(.post-card p.desc)': '-webkit-box',
-      },
-      fontSize: {
-        default: null,
-        ':is(.post-card p.desc)': '13px',
-      },
-      lineHeight: {
-        default: null,
-        ':is(.post-card p.desc)': '1.55',
-      },
-      color: {
-        default: null,
-        ':is(.post-card p.desc)': 'var(--ink-3)',
-      },
-      transform: {
-        default: null,
-        ':is(.post-card p.desc)': 'translateZ(8px)',
-      },
-      WebkitLineClamp: {
-        default: null,
-        ':is(.post-card p.desc)': '2',
-      },
-      WebkitBoxOrient: {
-        default: null,
-        ':is(.post-card p.desc)': 'vertical',
-      },
+      overflow: 'hidden',
+      display: '-webkit-box',
+      fontSize: '13px',
+      lineHeight: '1.55',
+      color: 'var(--ink-3)',
+      transform: 'translateZ(8px)',
+      WebkitLineClamp: '2',
+      WebkitBoxOrient: 'vertical',
     },
   },
   meta: {
     '@layer site': {
-      display: {
-        default: null,
-        ':is(.post-card .meta)': 'flex',
-      },
-      alignItems: {
-        default: null,
-        ':is(.post-card .meta)': 'center',
-      },
-      marginTop: {
-        default: null,
-        ':is(.post-card .meta)': 'auto',
-      },
-      paddingTop: {
-        default: null,
-        ':is(.post-card .meta)': '10px',
-      },
-      fontSize: {
-        default: null,
-        ':is(.post-card .meta)': '12px',
-      },
-      color: {
-        default: null,
-        ':is(.post-card .meta)': 'var(--ink-4)',
-      },
-      transform: {
-        default: null,
-        ':is(.post-card .meta)': 'translateZ(6px)',
-      },
-      gap: {
-        default: null,
-        ':is(.post-card .meta)': '6px',
-      },
+      display: 'flex',
+      alignItems: 'center',
+      marginTop: 'auto',
+      paddingTop: '10px',
+      fontSize: '12px',
+      color: 'var(--ink-4)',
+      transform: 'translateZ(6px)',
+      gap: '6px',
     },
   },
   tag_chip: {
     '@layer site': {
       padding: '3px 9px',
-      borderTopWidth: '1px',
-      borderTopStyle: 'solid',
-      borderTopColor: 'var(--border)',
-      borderRightWidth: '1px',
-      borderRightStyle: 'solid',
-      borderRightColor: 'var(--border)',
-      borderBottomWidth: '1px',
-      borderBottomStyle: 'solid',
-      borderBottomColor: 'var(--border)',
-      borderLeftWidth: '1px',
-      borderLeftStyle: 'solid',
-      borderLeftColor: 'var(--border)',
+      borderWidth: '1px',
+      borderStyle: 'solid',
+      borderColor: 'var(--border)',
       borderRadius: '999px',
       backgroundColor: 'var(--surface-2)',
-      backgroundImage: 'none',
-      backgroundPosition: 'initial',
-      backgroundSize: 'auto',
-      backgroundRepeat: 'repeat',
-      backgroundOrigin: 'padding-box',
-      backgroundClip: 'border-box',
-      backgroundAttachment: 'scroll',
       fontSize: '11px',
       fontWeight: '500',
       whiteSpace: 'nowrap',
@@ -958,18 +561,37 @@ const styles = stylex.create({
 
 // Resolve locally so the compiler can erase style composition.
 export const post_row_list = stylex.props(styles.post_row_list).className!
-export const element_li = stylex.props(styles.element_li).className!
+export const post_row_list_li = stylex.props(styles.post_row_list_li).className!
 export const post_row = stylex.props(styles.post_row).className!
 export const post_row_link = stylex.props(styles.post_row_link).className!
 export const post_row_thumb = stylex.props(styles.post_row_thumb).className!
-export const element_img = stylex.props(styles.element_img).className!
-export const post_row_thumb_empty = stylex.props(
+export const post_card_thumb_img = stylex.props(
+  styles.post_card_thumb_img,
+).className!
+export const post_row_thumb_img = stylex.props(
+  styles.post_row_thumb_img,
+).className!
+// Composed so the empty variant wins over the base thumb deterministically,
+// instead of depending on the order the two class strings are emitted in.
+export const post_row_thumb_empty_box = stylex.props(
+  styles.post_row_thumb,
   styles.post_row_thumb_empty,
 ).className!
-export const element_svg = stylex.props(styles.element_svg).className!
+export const post_row_thumb_empty_svg = stylex.props(
+  styles.post_row_thumb_empty_svg,
+).className!
 export const post_row_body = stylex.props(styles.post_row_body).className!
 export const post_row_head = stylex.props(styles.post_row_head).className!
-export const series = stylex.props(styles.series).className!
+export const post_row_series = stylex.props(
+  styles.series,
+  styles.series_in_post_row,
+).className!
+export const post_card_series = stylex.props(
+  styles.series,
+  styles.series_in_post_card,
+).className!
+// PopularSeriesCard renders its chip inside `.post-card`.
+export const series = post_card_series
 export const post_row_tags = stylex.props(styles.post_row_tags).className!
 export const post_row_title = stylex.props(styles.post_row_title).className!
 export const post_row_desc = stylex.props(styles.post_row_desc).className!

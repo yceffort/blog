@@ -1,6 +1,5 @@
 import * as stylex from '@stylexjs/stylex'
 
-import * as heroStyles from '@/components/home/hero.styles'
 import * as ambientStyles from '@/components/layout/ambient.styles'
 import * as readingProgressStyles from '@/components/post/reading-progress.styles'
 
@@ -101,9 +100,7 @@ export default function PostLoading() {
         className={`post-back ${readingProgressStyles.post_back}`}
         aria-hidden="true"
       >
-        <span
-          className={`dot ${heroStyles.dot} ${readingProgressStyles.dot}`}
-        />
+        <span className={`dot ${readingProgressStyles.dot}`} />
         <span
           style={{
             visibility: 'hidden',

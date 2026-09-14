@@ -2,7 +2,6 @@
 
 import {useEffect, useRef} from 'react'
 
-import * as archiveStyles from '@/app/archive/archive.styles'
 import * as aboutStyles from '@/components/about/about.styles'
 const SIZE = 320
 const STEP = 3
@@ -139,10 +138,7 @@ export default function HeroFxB() {
       ref={wrapRef}
       className={`hero-fx-canvas hero-fx-b ${aboutStyles.hero_fx_canvas} ${aboutStyles.hero_fx_b}`}
     >
-      <canvas
-        ref={canvasRef}
-        className={`${aboutStyles.element_canvas} ${archiveStyles.element_canvas}`}
-      />
+      <canvas ref={canvasRef} className={aboutStyles.element_canvas} />
       <div className={`hero-fx-hint ${aboutStyles.hero_fx_hint}`}>
         hover the portrait
       </div>

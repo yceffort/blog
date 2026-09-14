@@ -100,7 +100,7 @@ function HeaderLogo() {
       className={stylex.props(sx.link).className}
     >
       <div className={`logo-ring ${headerStyles.logo_ring}`} aria-hidden="true">
-        <span className={headerStyles.element_span}>
+        <span className={headerStyles.logo_ring_span}>
           <Image
             src={profile}
             alt=""
@@ -151,6 +151,7 @@ function HeaderNav() {
           'data-active': active ? 'true' : 'false',
           'data-external': external ? 'true' : 'false',
         } as const
+        const labelClassName = `nav-link-label ${active ? headerStyles.nav_link_label_active : ''}`
         if (external) {
           return (
             <a
@@ -161,11 +162,7 @@ function HeaderNav() {
               {...common}
               className={common.className}
             >
-              <span
-                className={`nav-link-label ${headerStyles.nav_link_label} ${headerStyles.element_span}`}
-              >
-                {link.label}
-              </span>
+              <span className={labelClassName}>{link.label}</span>
               <svg
                 className={`nav-link-ext ${headerStyles.nav_link_ext}`}
                 width="11"
@@ -191,11 +188,7 @@ function HeaderNav() {
             {...common}
             className={common.className}
           >
-            <span
-              className={`nav-link-label ${headerStyles.nav_link_label} ${headerStyles.element_span}`}
-            >
-              {link.label}
-            </span>
+            <span className={labelClassName}>{link.label}</span>
           </Link>
         )
       })}
@@ -272,14 +265,12 @@ function Header({enSlugs}: {enSlugs: string[]}) {
           <div className={`header-right ${headerStyles.header_right}`}>
             <HeaderNav />
             <span
-              className={`header-sep ${headerStyles.header_sep} ${headerStyles.element_span}`}
+              className={`header-sep ${headerStyles.header_sep}`}
               aria-hidden="true"
             />
             <div className={`header-icons ${headerStyles.header_icons}`}>
               <SiteSearch />
-              <span
-                className={`${stylex.props(sx.span).className} ${headerStyles.element_span}`}
-              >
+              <span className={stylex.props(sx.span).className}>
                 <button
                   type="button"
                   className={`icon-btn ${headerStyles.icon_btn}`}
