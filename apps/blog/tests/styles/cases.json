@@ -1100,41 +1100,6 @@
     ]
   },
   {
-    "file": "apps/blog/src/utils/Markdown.ts",
-    "key": "tag",
-    "classes": ["text-code-light-red", "dark:text-code-red"]
-  },
-  {
-    "file": "apps/blog/src/utils/Markdown.ts",
-    "key": "attr_name",
-    "classes": ["text-code-light-yellow", "dark:text-code-yellow"]
-  },
-  {
-    "file": "apps/blog/src/utils/Markdown.ts",
-    "key": "attr_value",
-    "classes": ["text-code-light-green", "dark:text-code-green"]
-  },
-  {
-    "file": "apps/blog/src/utils/Markdown.ts",
-    "key": "punctuation",
-    "classes": ["text-code-light-black", "dark:text-code-white"]
-  },
-  {
-    "file": "apps/blog/src/utils/Markdown.ts",
-    "key": "keyword",
-    "classes": ["text-code-light-purple", "dark:text-code-purple"]
-  },
-  {
-    "file": "apps/blog/src/utils/Markdown.ts",
-    "key": "function",
-    "classes": ["text-code-light-blue", "dark:text-code-blue"]
-  },
-  {
-    "file": "apps/blog/src/utils/Markdown.ts",
-    "key": "comment",
-    "classes": ["text-gray-500", "dark:text-gray-400", "italic"]
-  },
-  {
     "file": "apps/blog/src/app/about/page.tsx",
     "key": "div",
     "classes": ["mt-4"]

@@ -139,6 +139,12 @@ const escapeAttribute = (value) =>
     .replaceAll('&', '&amp;')
     .replaceAll('"', '&quot;')
     .replaceAll('<', '&lt;')
+// AnnouncementBanner.tsx 는 링크에 `announcement-link` 와 StyleX 의 link 클래스를
+// 함께 붙인다. --announcement-link-translate 를 hover 에서 세우는 쪽은 후자다.
+const BANNER = 'apps/blog/src/components/layout/AnnouncementBanner.styles.ts'
+const bannerLink = compiled.get(BANNER)?.link
+assert.ok(bannerLink, `Missing ${BANNER}: link`)
+
 function fixture(migrated) {
   return cases
     .map(({file, key, classes}, index) => {
@@ -154,12 +160,17 @@ function fixture(migrated) {
             )
             .join(' ')}`
         : classes.join(' ')
-      return `<section class="${migrated ? 'announcement-link' : 'group'}"><button id="case-${index}" class="${escapeAttribute(className)}"><span>Style parity · 한글 123</span></button></section>`
+      const wrapper = migrated ? `announcement-link ${bannerLink}` : 'group'
+      return `<section class="${escapeAttribute(wrapper)}"><button id="case-${index}" class="${escapeAttribute(className)}"><span>Style parity · 한글 123</span></button></section>`
     })
     .join('\n')
 }
+// 글꼴은 기준 동결 이후 의도적으로 바꿨으므로 비교 대상에서 뺀다. 다만 글꼴이
+// 다르면 글자 폭을 따라 width 와 transform-origin 까지 갈리므로, 두 페이지의
+// 글꼴을 같은 값으로 고정해 나머지 기하 비교는 그대로 유효하게 둔다.
+const IGNORED_PROPERTIES = new Set(['font-family'])
 const freeze =
-  '* {animation-play-state: paused !important; caret-color: transparent !important;}'
+  '* {animation-play-state: paused !important; caret-color: transparent !important; font-family: sans-serif !important;}'
 const browser = await chromium.launch()
 const context = await browser.newContext({
   viewport: {width: 1440, height: 900},
@@ -266,6 +277,7 @@ try {
           for (let index = 0; index < cases.length; index++) {
             checks++
             for (const [property, value] of Object.entries(a[index])) {
+              if (IGNORED_PROPERTIES.has(property)) continue
               // Only the three explicitly renamed gradient transition targets differ by name.
               const actual =
                 property === 'transition-property'
@@ -307,4 +319,7 @@ assert.equal(
 )
 console.log(
   `${checks} style comparisons passed (${cases.length} style groups, 10 widths, 2 themes, 2 motion preferences, 4 interaction states).`,
+)
+console.log(
+  `Not compared: ${[...IGNORED_PROPERTIES].join(', ')}. Both pages render with a pinned font so the remaining geometry stays comparable.`,
 )
