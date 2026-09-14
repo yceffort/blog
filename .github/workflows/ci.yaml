@@ -63,9 +63,20 @@ jobs:
       # 배포(Vercel)는 wasi-sdk 없이 커밋된 wasm 을 그대로 싣는다. 방금 소스에서
       # 다시 빌드한 결과와 다르면 CI 가 검사한 바이너리와 배포되는 바이너리가 갈린다.
       - name: Committed wasm matches the Rust source
+        id: wasmcheck
         run: |
+          git show HEAD:packages/markdown-rs/pkg/markdown_rs.wasm | sha256sum
+          sha256sum packages/markdown-rs/pkg/markdown_rs.wasm
           git diff --exit-code -- packages/markdown-rs/pkg/markdown_rs.wasm \
-            || { echo "::error::pkg/markdown_rs.wasm is stale. Run 'pnpm --filter @yceffort/markdown-rs build' and commit the result."; exit 1; }
+            || { echo "::error::pkg/markdown_rs.wasm differs from the CI build. Compare the ci-markdown-wasm artifact before updating the committed binary."; exit 1; }
+
+      - name: Preserve mismatched wasm for comparison
+        if: failure() && steps.wasmcheck.conclusion == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-markdown-wasm
+          path: packages/markdown-rs/pkg/markdown_rs.wasm
+          retention-days: 3
 
   verify:
     name: Verify
