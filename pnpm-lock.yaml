@@ -154,6 +154,9 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.20
         version: 0.5.20(tailwindcss@4.3.3)
+      '@yceffort/markdown-rs':
+        specifier: workspace:*
+        version: link:../../packages/markdown-rs
       '@yceffort/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -166,6 +169,9 @@ importers:
       glob:
         specifier: ^13.0.6
         version: 13.0.6
+      hast-util-to-jsx-runtime:
+        specifier: ^2.3.6
+        version: 2.3.6(supports-color@10.2.2)
       isbot:
         specifier: ^5.2.1
         version: 5.2.1
@@ -178,9 +184,6 @@ importers:
       next:
         specifier: ^16.3.1
         version: 16.3.1(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.102.0)
-      next-mdx-remote-client:
-        specifier: ^2.1.12
-        version: 2.1.12(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@10.2.2)(unified@11.0.5)
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -196,30 +199,18 @@ importers:
       reading-time:
         specifier: ^1.5.0
         version: 1.5.0
-      rehype-autolink-headings:
-        specifier: ^7.1.0
-        version: 7.1.0
       rehype-katex:
         specifier: ^7.0.1
         version: 7.0.1
       rehype-prism-plus:
         specifier: ^2.0.2
         version: 2.0.2
-      rehype-slug:
-        specifier: ^6.0.0
-        version: 6.0.0
       remark-cjk-friendly:
         specifier: ^2.3.1
         version: 2.3.1(@types/mdast@4.0.4)(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@10.2.2))(unified@11.0.5)
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1(supports-color@10.2.2)
-      remark-math:
-        specifier: ^6.0.0
-        version: 6.0.0(supports-color@10.2.2)
-      remark-toc:
-        specifier: ^9.0.0
-        version: 9.0.0
       sharp:
         specifier: ^0.35.3
         version: 0.35.3(@types/node@26.2.0)
@@ -266,9 +257,6 @@ importers:
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
-      remark-mdx:
-        specifier: ^3.1.1
-        version: 3.1.1(supports-color@10.2.2)
       remark-parse:
         specifier: ^11.0.0
         version: 11.0.0(supports-color@10.2.2)
@@ -363,6 +351,51 @@ importers:
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
+
+  packages/markdown-rs:
+    devDependencies:
+      '@mdx-js/mdx':
+        specifier: ^3.1.1
+        version: 3.1.1(supports-color@10.2.2)
+      front-matter:
+        specifier: ^4.0.2
+        version: 4.0.2
+      github-slugger:
+        specifier: 2.0.0
+        version: 2.0.0
+      rehype-autolink-headings:
+        specifier: ^7.1.0
+        version: 7.1.0
+      rehype-katex:
+        specifier: ^7.0.1
+        version: 7.0.1
+      rehype-prism-plus:
+        specifier: ^2.0.2
+        version: 2.0.2
+      rehype-slug:
+        specifier: ^6.0.0
+        version: 6.0.0
+      remark-cjk-friendly:
+        specifier: ^2.3.1
+        version: 2.3.1(@types/mdast@4.0.4)(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@10.2.2))(unified@11.0.5)
+      remark-gfm:
+        specifier: ^4.0.1
+        version: 4.0.1(supports-color@10.2.2)
+      remark-math:
+        specifier: ^6.0.0
+        version: 6.0.0(supports-color@10.2.2)
+      remark-toc:
+        specifier: ^9.0.0
+        version: 9.0.0
+      unified:
+        specifier: ^11.0.5
+        version: 11.0.5
+      unist-util-visit:
+        specifier: ^5.1.0
+        version: 5.1.0
+      vfile:
+        specifier: ^6.0.3
+        version: 6.0.3
 
   packages/shared:
     dependencies:
@@ -757,12 +790,6 @@ packages:
 
   '@mdx-js/mdx@3.1.1':
     resolution: {integrity: sha512-f6ZO2ifpwAQIpzGWaBQT2TXxPv6z3RBzQKpVftEWN78Vl/YweF1uwussDx8ECAXVtr3Rs89fKyG9YlzUs9DyGQ==}
-
-  '@mdx-js/react@3.1.1':
-    resolution: {integrity: sha512-f++rKLQgUVYDAtECQ6fn/is15GkEH9+nZPM3MS0RcxVqoTfawHvDlSCH7JbMhAM6uJ32v3eXLvLmLvjGu7PTQw==}
-    peerDependencies:
-      '@types/react': '>=16'
-      react: '>=16'
 
   '@mermaid-js/parser@1.2.1':
     resolution: {integrity: sha512-n12NohV3mrUyUL2o93IgG/ifeW9FTyeJn3zDxkhwa8MJ9Fxg3HQMlA3RiGmD/3UnJvheztkjjQAjA2T4LmUcpw==}
@@ -3053,13 +3080,6 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  next-mdx-remote-client@2.1.12:
-    resolution: {integrity: sha512-KDfhIk5aEM0kkZ0xQ8XBkmo4O5xmJeGWUomm40Ac/xhkt5sIDOTmTU/QFfmJGLJUJipD5o0BAHqVSIZKuXgNEw==}
-    engines: {node: '>=20.9.0'}
-    peerDependencies:
-      react: '>= 19.1.0'
-      react-dom: '>= 19.1.0'
-
   next-themes@0.4.6:
     resolution: {integrity: sha512-pZvgD5L0IEvX5/9GWyHMf3m8BKiVQwsCMHfoFosXtXBMnaS0ZnIJ9ST4b4NqLVKDEm8QBxoNNGNaBv2JNF6XNA==}
     peerDependencies:
@@ -3098,10 +3118,6 @@ packages:
   node-fetch@3.3.2:
     resolution: {integrity: sha512-dRB78srN/l6gqWulah9SrxeYnxeddIG30+GOqK/9OlLVyLg3HPnr6SqOWTWOXKRwC2eGYCkZ59NNuSgvSrpgOA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-
-  non-error@0.1.0:
-    resolution: {integrity: sha512-TMB1uHiGsHRGv1uYclfhivcnf0/PdFp2pNqRxXjncaAsjYMoisaQJI+SSZCqRq+VliwRTC8tsMQfmrWjDMhkPQ==}
-    engines: {node: '>=20'}
 
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
@@ -3372,11 +3388,6 @@ packages:
   remark-math@6.0.0:
     resolution: {integrity: sha512-MMqgnP74Igy+S3WwnhQ7kqGlEerTETXMvJhrUzDikVZ2/uogJCb+WHUg97hK9/jcfc0dkD73s3LN8zU49cTEtA==}
 
-  remark-mdx-remove-esm@1.3.2:
-    resolution: {integrity: sha512-BvL8VSdVXy9S7NlHP56nUJAHFc45h5E9HnHiLUGHe5tw3Yvm/3cVZvAzlkEEh2i+fkq2uKrf2xn5VmItBhMypA==}
-    peerDependencies:
-      unified: ^11
-
   remark-mdx@3.1.1:
     resolution: {integrity: sha512-Pjj2IYlUY3+D8x00UJsIOg5BEvfMyeI+2uLPn9VO9Wg4MEtN/VTIq2NEJQfde9PnX15KgtHyl9S0BcTnWrIuWg==}
 
@@ -3462,10 +3473,6 @@ packages:
     resolution: {integrity: sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==}
     engines: {node: '>=10'}
     hasBin: true
-
-  serialize-error@13.0.1:
-    resolution: {integrity: sha512-bBZaRwLH9PN5HbLCjPId4dP5bNGEtumcErgOX952IsvOhVPrm3/AeK1y0UHA/QaPG701eg0yEnOKsCOC6X/kaA==}
-    engines: {node: '>=20'}
 
   sharp@0.35.3:
     resolution: {integrity: sha512-ej0zVHuZGHCiABXcNxeYhpRnPNPAcvbG8RMdBAhDAxLKkCRVSpK3Iyu7qbqw3JMzoj0REeM6f3tJLtVwl0023Q==}
@@ -3642,10 +3649,6 @@ packages:
     resolution: {integrity: sha512-9kY+CygyYM6j02t5YFHbNz2FN5QmYGv9zAjVp4lCDjlCw7amdckXlEt/bjMhUIfj4ThGRE4gCUH5+yGnNuPo5A==}
     engines: {node: '>=10.0.0'}
 
-  tagged-tag@1.0.0:
-    resolution: {integrity: sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng==}
-    engines: {node: '>=20'}
-
   tailwindcss@4.3.3:
     resolution: {integrity: sha512-gOhV3P7ufE62QDGg1zVaTgCR+EtPv92k2nIhVcVKcLmxT1sUBsQGhnZj175j+MqRt4zLF7ic+sCYjfhxMxj7YQ==}
 
@@ -3687,10 +3690,6 @@ packages:
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
-
-  type-fest@5.8.0:
-    resolution: {integrity: sha512-YGYEVz3Fm5iy/AybuA0oyNFq7H4CgQNfRp/qfe8nurE1kuCeNm3/vfm9X4Mtl+qLyaKJUh5xrFZwogr41SMjYA==}
-    engines: {node: '>=20'}
 
   typescript@7.0.2:
     resolution: {integrity: sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA==}
@@ -3736,9 +3735,6 @@ packages:
   unist-util-remove-position@5.0.0:
     resolution: {integrity: sha512-Hp5Kh3wLxv0PHj9m2yZhhLt58KzPtEYKQQ4yxfYFEO7EvHwzyDYnduhHnY1mDxoqr7VUwVuHXk9RXKIiYS1N8Q==}
 
-  unist-util-remove@4.0.0:
-    resolution: {integrity: sha512-b4gokeGId57UVRX/eVKej5gXqGlc9+trkORhFJpu9raqZkZhU0zm8Doi05+HaiBsMEIJowL+2WtQ5ItjsngPXg==}
-
   unist-util-stringify-position@4.0.0:
     resolution: {integrity: sha512-0ASV06AAoKCDkS2+xw5RXJywruurpbC4JZSm7nr7MOt1ojAzvyyaO+UxZf18j8FCF6kmzCZKcAgN/yu2gm2XgQ==}
 
@@ -3765,9 +3761,6 @@ packages:
 
   vfile-location@5.0.3:
     resolution: {integrity: sha512-5yXvWDEgqeiYiBe1lbxYF7UMAIm/IcopxMHrMQDq3nvKcjPKIhZklUKL+AE7J7uApI4kwe2snsK+eI6UTj9EHg==}
-
-  vfile-matter@5.0.1:
-    resolution: {integrity: sha512-o6roP82AiX0XfkyTHyRCMXgHfltUNlXSEqCIS80f+mbAyiQBE2fxtDVMtseyytGx75sihiJFo/zR6r/4LTs2Cw==}
 
   vfile-message@4.0.3:
     resolution: {integrity: sha512-QTHzsGd1EhbZs4AsQ20JX1rC3cOlt/IWJruk893DfLRr57lcnOeMaWG4K0JrRta4mIJZKth2Au3mM3u03/JWKw==}
@@ -3829,11 +3822,6 @@ packages:
   y18n@5.0.8:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
     engines: {node: '>=10'}
-
-  yaml@2.9.0:
-    resolution: {integrity: sha512-2AvhNX3mb8zd6Zy7INTtSpl1F15HW6Wnqj0srWlkKLcpYl/gMIMJiyuGq2KeI2YFxUPjdlB+3Lc10seMLtL4cA==}
-    engines: {node: '>= 14.6'}
-    hasBin: true
 
   yargs-parser@21.1.1:
     resolution: {integrity: sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==}
@@ -4195,12 +4183,6 @@ snapshots:
       vfile: 6.0.3
     transitivePeerDependencies:
       - supports-color
-
-  '@mdx-js/react@3.1.1(@types/react@19.2.18)(react@19.2.8)':
-    dependencies:
-      '@types/mdx': 2.0.14
-      '@types/react': 19.2.18
-      react: 19.2.8
 
   '@mermaid-js/parser@1.2.1':
     dependencies:
@@ -6541,23 +6523,6 @@ snapshots:
 
   nanoid@3.3.18: {}
 
-  next-mdx-remote-client@2.1.12(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@10.2.2)(unified@11.0.5):
-    dependencies:
-      '@babel/code-frame': 7.29.7
-      '@mdx-js/mdx': 3.1.1(supports-color@10.2.2)
-      '@mdx-js/react': 3.1.1(@types/react@19.2.18)(react@19.2.8)
-      '@types/mdx': 2.0.14
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
-      remark-mdx-remove-esm: 1.3.2(unified@11.0.5)
-      serialize-error: 13.0.1
-      vfile: 6.0.3
-      vfile-matter: 5.0.1
-    transitivePeerDependencies:
-      - '@types/react'
-      - supports-color
-      - unified
-
   next-themes@0.4.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
     dependencies:
       react: 19.2.8
@@ -6625,8 +6590,6 @@ snapshots:
       data-uri-to-buffer: 4.0.1
       fetch-blob: 3.2.0
       formdata-polyfill: 4.0.10
-
-  non-error@0.1.0: {}
 
   normalize-path@3.0.0: {}
 
@@ -6985,12 +6948,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  remark-mdx-remove-esm@1.3.2(unified@11.0.5):
-    dependencies:
-      '@types/mdast': 4.0.4
-      unified: 11.0.5
-      unist-util-remove: 4.0.0
-
   remark-mdx@3.1.1(supports-color@10.2.2):
     dependencies:
       mdast-util-mdx: 3.0.0(supports-color@10.2.2)
@@ -7095,11 +7052,6 @@ snapshots:
       kind-of: 6.0.3
 
   semver@7.8.5: {}
-
-  serialize-error@13.0.1:
-    dependencies:
-      non-error: 0.1.0
-      type-fest: 5.8.0
 
   sharp@0.35.3(@types/node@26.2.0):
     dependencies:
@@ -7370,8 +7322,6 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
 
-  tagged-tag@1.0.0: {}
-
   tailwindcss@4.3.3: {}
 
   tapable@2.3.3: {}
@@ -7404,10 +7354,6 @@ snapshots:
   ts-dedent@2.3.0: {}
 
   tslib@2.8.1: {}
-
-  type-fest@5.8.0:
-    dependencies:
-      tagged-tag: 1.0.0
 
   typescript@7.0.2:
     optionalDependencies:
@@ -7478,12 +7424,6 @@ snapshots:
       '@types/unist': 3.0.3
       unist-util-visit: 5.1.0
 
-  unist-util-remove@4.0.0:
-    dependencies:
-      '@types/unist': 3.0.3
-      unist-util-is: 6.0.1
-      unist-util-visit-parents: 6.0.2
-
   unist-util-stringify-position@4.0.0:
     dependencies:
       '@types/unist': 3.0.3
@@ -7516,11 +7456,6 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
       vfile: 6.0.3
-
-  vfile-matter@5.0.1:
-    dependencies:
-      vfile: 6.0.3
-      yaml: 2.9.0
 
   vfile-message@4.0.3:
     dependencies:
@@ -7587,8 +7522,6 @@ snapshots:
       cssfilter: 0.0.10
 
   y18n@5.0.8: {}
-
-  yaml@2.9.0: {}
 
   yargs-parser@21.1.1: {}
 
