@@ -43,6 +43,8 @@ corepack pnpm --filter blog build
 
 환경 변수를 생략하면 저장소의 `.cache/wasi-sdk/wasi-sdk-27.0-{arch}-{platform}`에서 찾는다. macOS 플랫폼 이름은 `macos`다. Apple Silicon 배포 파일의 SHA-256은 `055c3dc2766772c38e71a05d353e35c322c7b2c6458a36a26a836f9808a550f8`이다. 빌드는 SDK의 Clang과 llvm-ar를 지정하고 `cargo build --locked --release --target wasm32-wasip1 --lib`를 실행한다.
 
+빌드 스크립트는 Rust의 `--remap-path-prefix`로 Cargo 홈과 패키지 경로를 각각 `/cargo`와 `/src/markdown-rs`로 고정한다. 패닉 메시지 등에 개발자 홈의 절대 경로가 들어가면 같은 소스라도 CI에서 다시 만든 WASM과 바이트가 달라지므로, 커밋할 바이너리는 이 스크립트로 생성한다.
+
 `Cargo.lock`에서 math-core의 내부 렌더러도 0.5.0에 고정했다. 같은 0.5 계열의 후속 내부 렌더러는 더 높은 Rust 버전을 요구하므로 lockfile 없이 의존성을 다시 해결하지 않는다. Xcode 명령 선택 경로가 깨진 로컬 환경에서는 설치된 Xcode의 SDK와 Clang 경로를 `SDKROOT`, `CC`, `AR`, `CARGO_TARGET_AARCH64_APPLE_DARWIN_LINKER`로 지정해 검증했다.
 
 `pkg/markdown_rs.wasm`은 약 2.49MiB이며 저장소에 포함한다. Rust를 수정하면 바이너리도 다시 빌드해 함께 반영한다. 일반 Next.js 배포 빌드는 이 파일을 사용하므로 Rust와 wasi-sdk가 필요 없다. Next.js는 패키지를 `serverExternalPackages`로 불러오며 `outputFileTracingIncludes`에 WASM 파일을 포함한다.
