@@ -3,6 +3,8 @@ import Link from 'next/link'
 
 import {openSourceProjects} from './openSourceProjects'
 import {ProjectTags} from './ProjectTags'
+
+import '@/styles/reading.css'
 const sx = stylex.create({
   div: {
     '@layer utilities': {
