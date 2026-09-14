@@ -6,6 +6,11 @@ use syntect::{
     parsing::{ParseState, Scope, ScopeStack, SyntaxSet},
 };
 
+/// syntect 는 한 줄 안의 개별 토큰 길이에 대해 2차식으로 느려진다. 저장소의 실제
+/// 코드블록 최장 줄은 601자이므로 이 상한은 기존 글을 그대로 토큰화하면서
+/// base64 한 줄 같은 장문에서 빌드가 멈춘 듯 보이는 것만 막는다.
+const MAX_TOKENIZED_LINE: usize = 2048;
+
 static SYNTAXES: OnceLock<SyntaxSet> = OnceLock::new();
 static TOKENS: OnceLock<Vec<(Scope, &'static str)>> = OnceLock::new();
 
@@ -116,23 +121,27 @@ fn highlight(pre: &mut Element) -> Result<(), String> {
         .collect::<String>();
     let mut lines = Vec::new();
     for (index, line) in source.split_inclusive('\n').enumerate() {
-        let ops = parser
-            .parse_line(line, ss)
-            .map_err(|e| format!("{language} highlighting: {e}"))?;
         let mut children = Vec::new();
-        for (text, op) in ScopeRegionIterator::new(&ops, line) {
-            scopes.apply(op).map_err(|e| e.to_string())?;
-            if text.is_empty() {
-                continue;
+        if line.len() > MAX_TOKENIZED_LINE {
+            children.push(Node::text(line));
+        } else {
+            let ops = parser
+                .parse_line(line, ss)
+                .map_err(|e| format!("{language} highlighting: {e}"))?;
+            for (text, op) in ScopeRegionIterator::new(&ops, line) {
+                scopes.apply(op).map_err(|e| e.to_string())?;
+                if text.is_empty() {
+                    continue;
+                }
+                children.push(match token_type(&scopes) {
+                    Some(kind) => Node::element(
+                        "span",
+                        props(vec![("className", class_list(&["token", kind]))]),
+                        vec![Node::text(text)],
+                    ),
+                    None => Node::text(text),
+                });
             }
-            children.push(match token_type(&scopes) {
-                Some(kind) => Node::element(
-                    "span",
-                    props(vec![("className", class_list(&["token", kind]))]),
-                    vec![Node::text(text)],
-                ),
-                None => Node::text(text),
-            });
         }
         let mut classes = vec!["code-line"];
         if numbered {
@@ -176,6 +185,31 @@ fn highlighted(meta: &str, line: usize) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn leaves_a_very_long_line_untokenized() {
+        let long = "x".repeat(MAX_TOKENIZED_LINE + 1);
+        let node = crate::render(&format!("```js\nconst a = 1\nconst b = '{long}'\n```\n")).unwrap();
+        // 원문은 그대로 남는다.
+        assert_eq!(
+            node.text_content(),
+            format!("const a = 1\nconst b = '{long}'\n")
+        );
+        let value = serde_json::to_value(node).unwrap();
+        let lines = value["children"][0]["children"][0]["children"]
+            .as_array()
+            .unwrap()
+            .clone();
+        // 짧은 줄은 계속 토큰화한다.
+        assert!(lines[0]["children"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|child| child["tagName"] == "span"));
+        // 상한을 넘은 줄은 토큰 span 없이 텍스트 하나다.
+        assert_eq!(lines[1]["children"].as_array().unwrap().len(), 1);
+        assert_eq!(lines[1]["children"][0]["type"], "text");
+    }
 
     #[test]
     fn preserves_line_controls_and_filename() {

@@ -187,6 +187,15 @@ mod tests {
     }
 
     #[test]
+    fn does_not_anchor_a_heading_without_an_id() {
+        // 슬러그가 비면 rehype-slug 처럼 id="" 는 남기되 앵커는 붙이지 않는다.
+        // (sketch 는 빈 id 도 `#` 로 표시한다. 앵커가 있었다면 a(span()) 이 앞에 온다.)
+        assert_eq!(render_sketch("## 🚀"), "h2#(\"🚀\")");
+        // id 가 있으면 평소대로 앵커가 붙는다.
+        assert_eq!(render_sketch("## a"), "h2#a(a(span()),\"a\")");
+    }
+
+    #[test]
     fn builds_a_table_of_contents() {
         let out = render_sketch("## Table of Contents\n\n## 첫 절\n\n### 하위\n");
         // 목차 제목 다음에 중첩 목록이 들어간다.
@@ -235,6 +244,13 @@ mod tests {
             render_sketch("import a from 'b'\n"),
             r#"p("import a from 'b'")"#
         );
+        // 주석이 앞에 붙었다고 거부 경로를 우회하지 않는다.
+        assert!(render("{/* c */ value}\n")
+            .unwrap_err()
+            .contains("MDX expression"));
+        assert!(render("a {/* c */ b} c\n")
+            .unwrap_err()
+            .contains("MDX expression"));
     }
 
     #[test]

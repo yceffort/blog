@@ -66,7 +66,14 @@ pub fn autolink_headings(root: &mut Node) {
         if heading_rank(el).is_none() {
             return;
         }
-        let Some(id) = el.properties.get("id").and_then(|v| v.as_str()).map(str::to_string) else {
+        // rehype-autolink-headings 는 id 를 truthy 검사하므로 빈 id 는 건너뛴다.
+        let Some(id) = el
+            .properties
+            .get("id")
+            .and_then(|v| v.as_str())
+            .filter(|id| !id.is_empty())
+            .map(str::to_string)
+        else {
             return;
         };
         let icon = Node::element(

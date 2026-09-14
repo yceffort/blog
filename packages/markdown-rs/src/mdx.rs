@@ -44,7 +44,7 @@ pub fn resolve(node: &mut Node) -> Result<(), String> {
         children.retain(|child| {
             !matches!(child,
                 Node::MdxFlowExpression { value } | Node::MdxTextExpression { value }
-                    if value.trim().is_empty() || value.trim().starts_with("/*")
+                    if is_only_comments(value)
             )
         });
         for child in children {
@@ -52,6 +52,28 @@ pub fn resolve(node: &mut Node) -> Result<(), String> {
         }
     }
     Ok(())
+}
+
+/// 값이 공백과 주석으로만 이루어졌는지 본다. 주석 뒤에 표현식이 붙어 있으면
+/// 제거 대상이 아니라 거부 대상이다.
+fn is_only_comments(value: &str) -> bool {
+    let bytes = value.as_bytes();
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i].is_ascii_whitespace() {
+            i += 1;
+        } else if bytes[i] == b'/' && bytes.get(i + 1) == Some(&b'*') {
+            let Some(end) = value[i + 2..].find("*/") else {
+                return false;
+            };
+            i += 2 + end + 2;
+        } else if bytes[i] == b'/' && bytes.get(i + 1) == Some(&b'/') {
+            i += value[i..].find('\n').map_or(bytes.len() - i, |n| n + 1);
+        } else {
+            return false;
+        }
+    }
+    true
 }
 
 pub fn eval_literal(source: &str) -> Option<Value> {
@@ -86,6 +108,20 @@ pub fn eval_literal(source: &str) -> Option<Value> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn only_comments() {
+        assert!(is_only_comments(""));
+        assert!(is_only_comments("  \n "));
+        assert!(is_only_comments("/* a */"));
+        assert!(is_only_comments(" /* a */ /* b */ "));
+        assert!(is_only_comments("// a\n"));
+        // 주석 뒤에 표현식이 붙으면 제거 대상이 아니다.
+        assert!(!is_only_comments("/* a */ b"));
+        assert!(!is_only_comments("x /* a */"));
+        // 닫히지 않은 블록 주석도 제거하지 않는다.
+        assert!(!is_only_comments("/* a"));
+    }
 
     #[test]
     fn literals() {
