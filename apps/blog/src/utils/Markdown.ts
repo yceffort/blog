@@ -99,42 +99,6 @@ export function parseCodeSnippet() {
     })
   }
 }
-export function extractCodeFilename() {
-  return (tree: Root) => {
-    visit(tree, 'element', (node: Element, index, parent) => {
-      if (node.tagName !== 'pre') {
-        return
-      }
-      if (!parent || typeof index !== 'number') {
-        return
-      }
-      const codeElement = node.children.find(
-        (child): child is Element =>
-          child.type === 'element' && child.tagName === 'code',
-      )
-      if (!codeElement) {
-        return
-      }
-      const className = codeElement.properties?.className
-      if (!Array.isArray(className)) {
-        return
-      }
-      const langClass = className.find(
-        (c) => typeof c === 'string' && c.startsWith('language-'),
-      )
-      if (typeof langClass !== 'string') {
-        return
-      }
-      const match = langClass.match(/^language-(\w+):(.+)$/)
-      if (match) {
-        const [, lang, filename] = match
-        codeElement.properties.className = [`language-${lang}`]
-        codeElement.properties['data-filename'] = filename
-      }
-    })
-  }
-}
-
 // KaTeX ships a 66 KB font set and a render-blocking CDN stylesheet, so only
 // posts that can contain math should load it. remark-math reads `$...$` and
 // `$$...$$`; this check is deliberately wider than the parser (a dollar sign in

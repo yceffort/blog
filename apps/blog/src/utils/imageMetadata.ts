@@ -53,7 +53,10 @@ async function addMetadata(node: ImageElement, postPath: string) {
     // nothing to do
   }
 
-  node.properties.alt = src
+  // 저자가 적은 대체 텍스트를 덮어쓰지 않는다. 비어 있을 때만 경로로 채운다.
+  if (!node.properties.alt) {
+    node.properties.alt = src
+  }
   node.properties.src = imageUrl
 }
 
