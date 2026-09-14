@@ -141,15 +141,11 @@ PERF_AFTER_DIR="$PWD/.cache/series-performance/font-removal/apps/blog" \
 node .cache/series-performance/font-removal/apps/blog/scripts/compare-performance.mjs http://127.0.0.1:3222 http://127.0.0.1:3223 .cache/series-performance/font-removal-browser
 ```
 
-### 그래프 생성
+### 본문의 Mermaid 그래프
 
-[`charts.py`](../../../scripts/series-performance/charts.py)는 보존한 `results.json`과 `builds.json`의 개별 실행에서 중앙값과 최소, 최대값을 계산해 SVG 7개를 만든다. `lcp-investigation.json`에서는 조건별 LCP 세 번을 모두 표시하는 그래프 한 개, `font-removal-results.json`에서는 실제 글꼴 제거 전후의 FCP와 LCP 그래프 두 개를 추가로 만든다. 벤치마크는 다시 실행하지 않는다. SVG는 `apps/blog/public/2026/09/images/blog-performance`, 확인용 PNG는 `.cache/series-performance/charts`에 저장한다. 그래프의 선은 관측 범위이며 신뢰구간이 아니다.
+1편과 3편의 그래프는 본문 안의 Mermaid 코드로 작성했다. 별도의 이미지 생성 도구는 필요하지 않으며 블로그의 기존 Mermaid 렌더러가 표시한다. `results.json`과 `builds.json`, `font-removal-results.json`의 개별 실행에서 중앙값을 계산해 막대에 넣었다. 시간 축과 전송량 축은 모두 0에서 시작하며, 실행 범위는 본문과 원자료에 남겼다. 최초 마이그레이션 비교와 실제 일반 글꼴 제거 전후는 서로 다른 실험이다.
 
-저장소 루트에서 uv로 실행하면 스크립트에 고정한 Matplotlib 3.10.9를 사용한다. 기본 글꼴은 macOS의 Apple SD Gothic Neo다. 다른 환경에서는 `CHART_FONT`에 한글을 지원하는 글꼴 파일의 경로를 지정한다. SVG에는 글자 윤곽을 포함하므로 독자의 기기에 같은 글꼴이 없어도 표시된다.
-
-```sh
-uv run apps/blog/scripts/series-performance/charts.py
-```
+원인 대조 도식에는 `lcp-investigation.json`의 다섯 조건별 LCP 세 번과 최종 대상을 모두 적었다. 로딩 중 화면을 보여 주는 PNG는 실제 화면 캡처이므로 유지했다. 기존 Matplotlib 생성 스크립트와 사용하지 않는 SVG 10개는 제거했다.
 
 ### 벤치마크 다시 실행하기
 

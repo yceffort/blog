@@ -373,6 +373,50 @@ KaTeX 조건부 로딩도 수식 파서 자체를 바꾼 작업은 아니다. �
 
 ## 전체 변경을 마친 뒤 다시 확인한 결과
 
-여기까지의 수치는 StyleX 전환과 KaTeX 조건부 로딩, 본문 CSS 분리 단계의 결과다. 이후 마크다운 처리를 WASM으로 옮기고 글 목록 메타데이터 재사용까지 적용한 블로그 전체의 결과는 [3부에서 같은 조건으로 다시 측정했다](/2026/09/blog-performance-after-migrations). 최초 전체 비교에서는 홈 FCP가 비슷했고, 수식 글은 글꼴 전송량이 늘면서 LCP가 늦어졌다. 이 글의 홈 FCP 4.9% 감소를 최종 구성의 개선율로 이어 붙일 수는 없었다. 비교 커밋과 감속 조건부터 다른 실험이다.
+여기까지의 수치는 StyleX 전환과 KaTeX 조건부 로딩, 본문 CSS 분리 단계의 결과다. 이후 마크다운 처리를 WASM으로 옮기고 글 목록 메타데이터 재사용까지 적용한 블로그 전체의 결과는 [세 번째 편에서 같은 조건으로 다시 측정했다](/2026/09/blog-performance-after-migrations). 최초 전체 비교에서는 홈 FCP가 비슷했고, 수식 글은 글꼴 전송량이 늘면서 LCP가 늦어졌다. 이 글의 홈 FCP 4.9% 감소를 최종 구성의 개선율로 이어 붙일 수는 없었다. 비교 커밋과 감속 조건부터 다른 실험이다.
 
-그래서 수식 전용 글꼴은 유지하고 일반 웹 글꼴인 `Inter`, `JetBrains Mono`, `Fraunces`를 실제 코드에서 제거했다. 시스템 글꼴로 바꾸면서 글자 모양과 줄바꿈은 달라졌지만, 브라우저가 받던 공통 글꼴 약 168KiB를 없앴다. 재빌드 후 수식 글의 FCP 중앙값은 1,514ms에서 758ms, LCP는 5,650ms에서 2,352ms로 줄었다. 이 변경은 StyleX 전환과 별개이므로 홈 LCP가 늦어진 결과를 포함한 경로별 수치와 그래프는 3부에 모았다. 이 전환에서 얻은 것은 스타일을 관리할 위치가 분명해졌다는 점이고, 첫 화면의 비용을 줄이는 일은 사용하는 자원까지 살펴봐야 했다.
+그래서 수식 전용 글꼴은 유지하고 일반 웹 글꼴인 `Inter`, `JetBrains Mono`, `Fraunces`를 실제 코드에서 제거했다. 시스템 글꼴로 바꾸면서 글자 모양과 줄바꿈은 달라졌지만, 브라우저가 받던 공통 글꼴 약 168KiB를 없앴다. 재빌드 후 수식 글의 FCP 중앙값은 1,514ms에서 758ms, LCP는 5,650ms에서 2,352ms로 줄었다. 이 변경은 StyleX 전환과 별개이므로 홈 LCP가 늦어진 결과도 아래 그래프에 함께 표시했다. 측정 조건과 원인 대조는 세 번째 편에 자세히 적었다. 이 전환에서 얻은 것은 스타일을 관리할 위치가 분명해졌다는 점이다. 첫 화면의 비용을 줄이는 일은 사용하는 자원까지 따로 살펴봐야 했다.
+
+아래 그래프는 위의 StyleX 전환 단계별 표와 다른 실험이다. 일반 웹 글꼴 제거 직전과 직후를 CPU 4배 감속, 지연 150ms, 전송 속도 1,600Kbps에서 경로별 네 번씩 비교했다. 막대는 중앙값이며, 각 경로의 전과 후를 비교하면 된다. 실행 범위는 세 번째 편에 적었다. 수식 전용 글꼴은 양쪽 모두 유지했다.
+
+```mermaid
+---
+config:
+  xyChart:
+    width: 340
+    height: 300
+    titleFontSize: 18
+    xAxis:
+      labelFontSize: 14
+    yAxis:
+      labelFontSize: 12
+    showDataLabel: true
+    showDataLabelOutsideBar: true
+---
+xychart-beta horizontal
+    title "일반 글꼴 제거 전후 FCP"
+    x-axis ["홈 전", "홈 후", "코드 전", "코드 후", "수식 전", "수식 후"]
+    y-axis "ms" 0 --> 3000
+    bar [1626, 868, 2146, 870, 1514, 758]
+```
+
+```mermaid
+---
+config:
+  xyChart:
+    width: 340
+    height: 300
+    titleFontSize: 18
+    xAxis:
+      labelFontSize: 14
+    yAxis:
+      labelFontSize: 12
+    showDataLabel: true
+    showDataLabelOutsideBar: true
+---
+xychart-beta horizontal
+    title "일반 글꼴 제거 전후 LCP"
+    x-axis ["홈 전", "홈 후", "코드 전", "코드 후", "수식 전", "수식 후"]
+    y-axis "ms" 0 --> 7500
+    bar [1684, 2376, 3150, 2250, 5650, 2352]
+```
