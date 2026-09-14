@@ -348,6 +348,9 @@ importers:
       '@mdx-js/mdx':
         specifier: ^3.1.1
         version: 3.1.1(supports-color@10.2.2)
+      '@types/node':
+        specifier: ^26.2.0
+        version: 26.2.0
       front-matter:
         specifier: ^4.0.2
         version: 4.0.2
@@ -390,6 +393,9 @@ importers:
       remark-toc:
         specifier: ^9.0.0
         version: 9.0.0
+      sharp:
+        specifier: ^0.35.3
+        version: 0.35.3(@types/node@26.2.0)
       unified:
         specifier: ^11.0.5
         version: 11.0.5

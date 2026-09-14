@@ -22,8 +22,14 @@ const files = targets.length
       .map((f) => resolve(root, f))
       .toSorted()
 
-// 코드의 원문과 줄 메타데이터, 수식의 TeX와 표시 모드, 나머지 HAST를 비교한다.
-// 토큰 색상과 수식 내부 마크업, 이미지 크기와 React 렌더는 별도 검증 대상이다.
+// 렌더 경로(renderPost.tsx)와 같은 조건으로 맞춘다. 바인딩은 최초 호출 시
+// 작업 디렉터리의 public 을 WASI 에 연결하므로 그 전에 옮겨야 한다.
+const blogRoot = resolve(root, 'apps/blog')
+const publicDir = resolve(blogRoot, 'public')
+process.chdir(blogRoot)
+
+// 코드의 원문과 줄 메타데이터, 수식의 TeX와 표시 모드, 이미지 경로와 크기,
+// 나머지 HAST를 비교한다. 토큰 색상과 수식 내부 마크업, React 렌더는 별도 검증 대상이다.
 function firstDiff(a, b, path = '$') {
   if (a === b) return null
   if (
@@ -67,7 +73,7 @@ const t0 = performance.now()
 let rustMs = 0
 for (const file of files) {
   const body = splitFrontMatter(readFileSync(file, 'utf8'))
-  const js = await runJsPipeline(body, file)
+  const js = await runJsPipeline(body, file, {publicDir})
   if (js.error) {
     failures.push({file, diff: {path: 'js error', b: js.error}})
     continue
@@ -75,7 +81,7 @@ for (const file of files) {
   let now
   const r0 = performance.now()
   try {
-    now = renderMarkdown(body)
+    now = renderMarkdown(body, file)
   } catch (error) {
     rustMs += performance.now() - r0
     failures.push({file, diff: {path: 'new pipeline error', a: String(error)}})

@@ -323,7 +323,7 @@ function checkFile(file) {
   // 멈추지 않고 renderPost.tsx와 같은 JSX 변환까지 돌린다. 실제 컴포넌트 구현은 없어도
   // 되지만(이름은 스텁으로 잇는다) 트리를 JSX로 못 바꾸는 글은 여기서 걸린다.
   try {
-    toJsxRuntime(renderMarkdown(body), {
+    toJsxRuntime(renderMarkdown(body, file), {
       Fragment,
       jsx,
       jsxs,
@@ -354,6 +354,10 @@ const files = targets.length
         (file) => file.startsWith(POSTS_DIR) || file.startsWith(SERIES_DIR),
       )
   : [...postFiles, ...seriesFiles]
+
+// renderPost.tsx 와 같은 조건으로 렌더한다. 바인딩이 최초 호출 시 작업 디렉터리의
+// public 을 WASI 에 연결하므로 이미지 단계를 거치려면 그 전에 옮겨야 한다.
+process.chdir(BLOG_DIR)
 
 let errorCount = 0
 let warnCount = 0

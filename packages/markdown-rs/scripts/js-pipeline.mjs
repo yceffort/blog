@@ -1,3 +1,6 @@
+import {readFileSync} from 'node:fs'
+import {join} from 'node:path'
+
 // 교체 전 JS 파이프라인(next-mdx-remote-client 설정과 동일)을 그대로 돌려
 // 중간 산출물(mdast, hast)을 뽑는다. Rust 구현의 parity 기준.
 import {createProcessor} from '@mdx-js/mdx'
@@ -10,6 +13,7 @@ import remarkCjkFriendly from 'remark-cjk-friendly'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import remarkToc from 'remark-toc'
+import sharp from 'sharp'
 import {visit} from 'unist-util-visit'
 import {VFile} from 'vfile'
 
@@ -82,6 +86,48 @@ function mathStub() {
   }
 }
 
+// apps/blog/src/utils/imageMetadata.ts 에 있던 플러그인 (b536d191 의 alt 수정 반영).
+// Rust 의 src/images.rs 가 대체한 단계이므로 parity 기준에 반드시 있어야 한다.
+export function imageMetadata({publicDir}) {
+  return async (tree, file) => {
+    const postPath = file.path ?? ''
+    const start = postPath.indexOf('/posts')
+    const end = postPath.lastIndexOf('/')
+    if (start === -1 || end === -1) return
+    const segments = postPath.slice(start + '/posts'.length, end).split('/')
+    const directory =
+      segments.length > 2
+        ? [segments[1], segments[2]].join('/')
+        : postPath.slice(start + '/posts'.length, end)
+    const nodes = []
+    visit(tree, 'element', (node) => {
+      if (node.tagName === 'img' && typeof node.properties?.src === 'string') {
+        nodes.push(node)
+      }
+    })
+    for (const node of nodes) {
+      const {src} = node.properties
+      if (!src || src.startsWith('http')) continue
+      const url = `/${directory}/${src.slice(src.indexOf('/') + 1)}`
+      try {
+        const {width, height} = await sharp(
+          readFileSync(join(publicDir, url)),
+        ).metadata()
+        if (width && height) {
+          node.properties.width = width
+          node.properties.height = height
+        }
+      } catch {
+        // 원본과 같이 읽기 실패는 무시한다.
+      }
+      if (!node.properties.alt) {
+        node.properties.alt = src
+      }
+      node.properties.src = url
+    }
+  }
+}
+
 function capture(key) {
   return () => (tree, file) => {
     file.data[key] = structuredClone(tree)
@@ -132,7 +178,7 @@ export function normalizeHast(node) {
   return out
 }
 
-function createPipeline({katex = true} = {}) {
+function createPipeline({katex = true, publicDir} = {}) {
   return createProcessor({
     remarkPlugins: [
       remarkMath,
@@ -149,6 +195,7 @@ function createPipeline({katex = true} = {}) {
       capture('hast1'),
       [prism, {showLineNumbers: true}],
       rehypeAutolinkHeadings,
+      ...(publicDir ? [[imageMetadata, {publicDir}]] : []),
       capture('hast2'),
     ],
   })
@@ -174,7 +221,6 @@ export function splitFrontMatter(raw) {
 }
 
 if (process.argv[1] === new URL(import.meta.url).pathname) {
-  const {readFileSync} = await import('node:fs')
   const [, , target, key = 'hast2'] = process.argv
   const body = splitFrontMatter(readFileSync(target, 'utf8'))
   const data = await runJsPipeline(body, target)
