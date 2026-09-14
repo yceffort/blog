@@ -81,6 +81,18 @@ node apps/blog/scripts/series-performance/check-timing.mjs .cache/series-perform
 
 ## 다시 실행하기
 
+### 글의 그래프만 다시 만들기
+
+[`charts.py`](../../../scripts/series-performance/charts.py)는 보존한 `results.json`과 `builds.json`의 개별 실행에서 중앙값과 최소, 최대값을 계산해 SVG 7개를 만든다. 벤치마크는 다시 실행하지 않는다. SVG는 `apps/blog/public/2026/09/images/blog-performance`, 확인용 PNG는 `.cache/series-performance/charts`에 저장한다. 그래프의 선은 네 번의 관측 범위이며 신뢰구간이 아니다.
+
+저장소 루트에서 uv로 실행하면 스크립트에 고정한 Matplotlib 3.10.9를 사용한다. 기본 글꼴은 macOS의 Apple SD Gothic Neo다. 다른 환경에서는 `CHART_FONT`에 한글을 지원하는 글꼴 파일의 경로를 지정한다. SVG에는 글자 윤곽을 포함하므로 독자의 기기에 같은 글꼴이 없어도 표시된다.
+
+```sh
+uv run apps/blog/scripts/series-performance/charts.py
+```
+
+### 벤치마크 다시 실행하기
+
 현재 HEAD와 현재 콘텐츠로 새 비교를 만들려면 비어 있는 `.cache/series-performance`에서 다음 명령을 실행한다. 기존 디렉터리 아래에는 등록된 Git worktree가 있으므로 파일만 옮겨서 재사용하지 않는다. 과거 결과를 보존할 때는 별도 작업 디렉터리를 사용하는 편이 간단하다.
 
 ```sh
