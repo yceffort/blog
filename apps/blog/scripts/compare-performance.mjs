@@ -79,7 +79,8 @@ const metadata = {
     'All metrics stop five seconds after load, document.fonts.ready, and network idle.',
     'loadBlockingMs sums long-task time beyond 50 ms from FCP to the measurement end; it is not Lighthouse TBT.',
     'LCP/CLS are lab observations within this window, not field Core Web Vitals or an INP measurement.',
-    'Main-thread Performance counters include the same observation window; throttling is relative to this host CPU.',
+    'Main-thread Performance counters are cumulative over each trial observation window, and that window varies per trial; compare them only alongside observationEndMs. Throttling is relative to this host CPU.',
+    'transferBytes and the per-type byte counts include only requests that finished inside the window; unfinishedRequests reports how many were dropped.',
   ],
 }
 for (const [variant, directory] of Object.entries({
@@ -238,6 +239,7 @@ async function measureVisit(variant, route, round, visit, {page, session}) {
         fromDiskCache: response.fromDiskCache ?? false,
         fromServiceWorker: response.fromServiceWorker ?? false,
         encodedBytes: response.encodedDataLength ?? 0,
+        finished: false,
       }),
     )
     session.on('Network.dataReceived', ({requestId, encodedDataLength}) => {
@@ -246,7 +248,9 @@ async function measureVisit(variant, route, round, visit, {page, session}) {
     })
     session.on('Network.loadingFinished', ({requestId, encodedDataLength}) => {
       const request = requests.get(requestId)
-      if (request) request.encodedBytes = encodedDataLength
+      if (!request) return
+      request.encodedBytes = encodedDataLength
+      request.finished = true
     })
     session.on('Network.loadingFailed', (event) => {
       if (event.blockedReason !== 'inspector')
@@ -358,9 +362,12 @@ async function measureVisit(variant, route, round, visit, {page, session}) {
     await stopTrace(session, resolve(outputDir, `${name}.trace.json.gz`))
     tracing = false
     await session.send('Emulation.setCPUThrottlingRate', {rate: 1})
+    // 관찰 창이 닫힐 때 아직 전송 중이던 요청은 헤더와 일부 청크만 남는다. 그걸
+    // 완료 요청과 함께 더하면 전송량이 빌드가 아니라 창이 언제 닫혔는지의 함수가 된다.
+    const unfinished = resources.filter((item) => !item.finished)
     const total = (type) =>
       resources
-        .filter((item) => !type || item.type === type)
+        .filter((item) => item.finished && (!type || item.type === type))
         .reduce((sum, item) => sum + item.encodedBytes, 0)
     assert.ok(
       ruleIds.some((id) => appliedRules.has(id)) ||
@@ -404,6 +411,9 @@ async function measureVisit(variant, route, round, visit, {page, session}) {
       heapBytes: end.JSHeapUsedSize,
       requestCount: resources.length,
       cachedRequests: resources.filter((item) => item.fromCache).length,
+      // 전송량 집계에서 빠진 요청 수. 0 이 아니면 그 그룹의 바이트 수는 하한이다.
+      unfinishedRequests: unfinished.length,
+      unfinishedUrls: unfinished.map((item) => item.url),
       transferBytes: total(),
       cssBytes: total('Stylesheet'),
       jsBytes: total('Script'),
@@ -455,6 +465,7 @@ function summary() {
     'styleMs',
     'layoutMs',
     'loadBlockingMs',
+    'observationEndMs',
     'transferBytes',
     'cssBytes',
     'jsBytes',
@@ -462,6 +473,7 @@ function summary() {
     'imageBytes',
     'requestCount',
     'cachedRequests',
+    'unfinishedRequests',
   ]
   const groups = []
   for (const route of settings.routes) {
