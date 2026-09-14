@@ -61,7 +61,7 @@ syntect가 느린 이유를 WASM이라는 실행 형식 하나로 설명할 수�
 
 Oniguruma는 C 라이브러리다. Rust 코드의 기능 플래그만 바꾸면 끝나는 것이 아니라, C 코드가 요구하는 헤더와 표준 라이브러리도 WASM 타깃에 맞춰야 했다. 여기서는 [wasi-sdk 27](https://github.com/WebAssembly/wasi-sdk/releases/tag/wasi-sdk-27)의 Clang과 libc를 쓰고 Rust 타깃을 `wasm32-wasip1`로 바꿨다. Node의 [WASI API](https://nodejs.org/docs/v24.20.0/api/wasi.html)가 모듈의 시스템 호출을 연결한다. 정규식 매칭 자체를 JS로 넘기는 구조는 아니다.
 
-별도 Oniguruma WASM 실험도 같은 2,587개 입력을 처리했고, 예열 후 6회 중앙값은 689.7ms였다. 블록 수와 파싱 위치 체크섬이 초기 실험과 일치했다. 이 측정은 초기 fancy-regex/Prism 비교와 별도 프로세스에서 실행했으며 원시 기록은 `experiments/syntect/wasm-onig.json`에 남겼다. 다만 이 입력은 syntect 기본 문법에 없는 TypeScript와 TSX, JSX를 제외한 것이므로 블로그 전체의 교체 성능을 대신할 수 없다. 실제 렌더러에는 [two-face](https://github.com/CosmicHorrorDev/two-face)의 bat 기반 문법을 넣어 이 언어들을 처리하고, 전체 글의 HAST 변환은 뒤에서 별도로 쟀다.
+별도 Oniguruma WASM 실험도 같은 2,587개 입력을 처리했고, 예열 후 6회 중앙값은 689.7ms였다. 블록 수와 파싱 위치 체크섬이 초기 실험과 일치했다. 이 측정은 초기 fancy-regex/Prism 비교와 별도 프로세스에서 실행했으며 원시 기록은 `experiments/syntect/wasm-onig.json`에 남겼다. 두 실행의 Node 메이저는 다르다. 2,341.5ms는 Node v26.0.0, 689.7ms는 v24.20.0에서 쟀다. WASM을 실행하는 것이 곧 V8이므로 이 차이를 엔진 교체 효과에서 분리하지는 못했다. 다만 이 입력은 syntect 기본 문법에 없는 TypeScript와 TSX, JSX를 제외한 것이므로 블로그 전체의 교체 성능을 대신할 수 없다. 실제 렌더러에는 [two-face](https://github.com/CosmicHorrorDev/two-face)의 bat 기반 문법을 넣어 이 언어들을 처리하고, 전체 글의 HAST 변환은 뒤에서 별도로 쟀다.
 
 하이라이트 출력은 syntect의 scope를 블로그의 `token keyword`, `token string`, `token comment` 같은 클래스로 매핑해 만든다. 여러 줄에 걸친 주석과 문자열은 코드 블록 안에서 파싱 상태를 이어 간다. 줄 번호와 강조 범위, diff 줄과 파일명은 별도로 유지한다. 기존 CSS 팔레트를 가져왔지만 어떤 문자를 어느 토큰으로 판정하는지가 달라지므로 이전 색상과 같지는 않다. 등록되지 않은 언어는 평문으로 남겨 코드 자체를 읽을 수 있게 했다.
 
