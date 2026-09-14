@@ -139,11 +139,13 @@ const styles = stylex.create({
         default: 'transparent',
         ':hover': 'var(--border-2)',
         ':is([data-active="true"])': 'var(--primary)',
+        ':is([data-active="true"]):hover': 'var(--primary)',
       },
       color: {
         default: 'var(--ink-3)',
         ':hover': 'var(--ink)',
         ':is([data-active="true"])': 'var(--primary)',
+        ':is([data-active="true"]):hover': 'var(--primary)',
       },
       transition: 'all 180ms',
       fontWeight: {

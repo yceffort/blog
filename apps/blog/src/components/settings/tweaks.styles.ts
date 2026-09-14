@@ -387,6 +387,7 @@ const styles = stylex.create({
         default: 'var(--ink-3)',
         ':hover': 'var(--ink)',
         ':is([data-on="true"])': 'var(--primary)',
+        ':is([data-on="true"]):hover': 'var(--primary)',
       },
       transition:
         'color 160ms ease,\n    background-color 180ms ease,\n    box-shadow 180ms ease',
@@ -398,8 +399,11 @@ const styles = stylex.create({
           ':hover': 'color-mix(in oklab, var(--surface) 70%, transparent)',
           ':is([data-on="true"])':
             'color-mix(in oklab, var(--primary) 14%, var(--surface))',
+          ':is([data-on="true"]):hover':
+            'color-mix(in oklab, var(--primary) 14%, var(--surface))',
         },
         ':is([data-on="true"])': 'var(--primary)',
+        ':is([data-on="true"]):hover': 'var(--primary)',
       },
       backgroundImage: {
         default: null,
@@ -408,8 +412,10 @@ const styles = stylex.create({
           default: null,
           ':hover': 'none',
           ':is([data-on="true"])': 'none',
+          ':is([data-on="true"]):hover': 'none',
         },
         ':is([data-on="true"])': 'none',
+        ':is([data-on="true"]):hover': 'none',
       },
       backgroundPosition: {
         default: null,
@@ -418,8 +424,10 @@ const styles = stylex.create({
           default: null,
           ':hover': 'initial',
           ':is([data-on="true"])': 'initial',
+          ':is([data-on="true"]):hover': 'initial',
         },
         ':is([data-on="true"])': 'initial',
+        ':is([data-on="true"]):hover': 'initial',
       },
       backgroundSize: {
         default: null,
@@ -428,8 +436,10 @@ const styles = stylex.create({
           default: null,
           ':hover': 'auto',
           ':is([data-on="true"])': 'auto',
+          ':is([data-on="true"]):hover': 'auto',
         },
         ':is([data-on="true"])': 'auto',
+        ':is([data-on="true"]):hover': 'auto',
       },
       backgroundRepeat: {
         default: null,
@@ -438,8 +448,10 @@ const styles = stylex.create({
           default: null,
           ':hover': 'repeat',
           ':is([data-on="true"])': 'repeat',
+          ':is([data-on="true"]):hover': 'repeat',
         },
         ':is([data-on="true"])': 'repeat',
+        ':is([data-on="true"]):hover': 'repeat',
       },
       backgroundOrigin: {
         default: null,
@@ -448,8 +460,10 @@ const styles = stylex.create({
           default: null,
           ':hover': 'padding-box',
           ':is([data-on="true"])': 'padding-box',
+          ':is([data-on="true"]):hover': 'padding-box',
         },
         ':is([data-on="true"])': 'padding-box',
+        ':is([data-on="true"]):hover': 'padding-box',
       },
       backgroundClip: {
         default: null,
@@ -458,8 +472,10 @@ const styles = stylex.create({
           default: null,
           ':hover': 'border-box',
           ':is([data-on="true"])': 'border-box',
+          ':is([data-on="true"]):hover': 'border-box',
         },
         ':is([data-on="true"])': 'border-box',
+        ':is([data-on="true"]):hover': 'border-box',
       },
       backgroundAttachment: {
         default: null,
@@ -468,8 +484,10 @@ const styles = stylex.create({
           default: null,
           ':hover': 'scroll',
           ':is([data-on="true"])': 'scroll',
+          ':is([data-on="true"]):hover': 'scroll',
         },
         ':is([data-on="true"])': 'scroll',
+        ':is([data-on="true"]):hover': 'scroll',
       },
       boxShadow: {
         default: null,

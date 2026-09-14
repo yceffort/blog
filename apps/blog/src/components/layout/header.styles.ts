@@ -181,6 +181,7 @@ const styles = stylex.create({
         default: 'var(--ink-3)',
         ':hover': 'var(--ink)',
         ':is([data-active="true"])': 'var(--ink)',
+        ':is([data-active="true"]):hover': 'var(--ink)',
       },
       transition:
         'color 180ms ease,\n    background-color 220ms ease,\n    box-shadow 220ms ease',
@@ -192,8 +193,10 @@ const styles = stylex.create({
           default: null,
           ':hover': 'color-mix(in oklab, var(--surface-2) 80%, transparent)',
           ':is([data-active="true"])': 'transparent',
+          ':is([data-active="true"]):hover': 'transparent',
         },
         ':is([data-active="true"])': 'transparent',
+        ':is([data-active="true"]):hover': 'transparent',
       },
       backgroundImage: {
         default: null,
@@ -203,8 +206,12 @@ const styles = stylex.create({
           ':hover': 'none',
           ':is([data-active="true"])':
             'linear-gradient(\n    180deg,\n    color-mix(in oklab, var(--primary) 18%, var(--surface)),\n    color-mix(in oklab, var(--primary) 10%, var(--surface))\n  )',
+          ':is([data-active="true"]):hover':
+            'linear-gradient(\n    180deg,\n    color-mix(in oklab, var(--primary) 18%, var(--surface)),\n    color-mix(in oklab, var(--primary) 10%, var(--surface))\n  )',
         },
         ':is([data-active="true"])':
+          'linear-gradient(\n    180deg,\n    var(--primary),\n    var(--primary)\n  )',
+        ':is([data-active="true"]):hover':
           'linear-gradient(\n    180deg,\n    var(--primary),\n    var(--primary)\n  )',
       },
       backgroundPosition: {
@@ -214,8 +221,10 @@ const styles = stylex.create({
           default: null,
           ':hover': 'initial',
           ':is([data-active="true"])': 'initial',
+          ':is([data-active="true"]):hover': 'initial',
         },
         ':is([data-active="true"])': 'initial',
+        ':is([data-active="true"]):hover': 'initial',
       },
       backgroundSize: {
         default: null,
@@ -224,8 +233,10 @@ const styles = stylex.create({
           default: null,
           ':hover': 'auto',
           ':is([data-active="true"])': 'auto',
+          ':is([data-active="true"]):hover': 'auto',
         },
         ':is([data-active="true"])': 'auto',
+        ':is([data-active="true"]):hover': 'auto',
       },
       backgroundRepeat: {
         default: null,
@@ -234,8 +245,10 @@ const styles = stylex.create({
           default: null,
           ':hover': 'repeat',
           ':is([data-active="true"])': 'repeat',
+          ':is([data-active="true"]):hover': 'repeat',
         },
         ':is([data-active="true"])': 'repeat',
+        ':is([data-active="true"]):hover': 'repeat',
       },
       backgroundOrigin: {
         default: null,
@@ -244,8 +257,10 @@ const styles = stylex.create({
           default: null,
           ':hover': 'padding-box',
           ':is([data-active="true"])': 'padding-box',
+          ':is([data-active="true"]):hover': 'padding-box',
         },
         ':is([data-active="true"])': 'padding-box',
+        ':is([data-active="true"]):hover': 'padding-box',
       },
       backgroundClip: {
         default: null,
@@ -254,8 +269,10 @@ const styles = stylex.create({
           default: null,
           ':hover': 'border-box',
           ':is([data-active="true"])': 'border-box',
+          ':is([data-active="true"]):hover': 'border-box',
         },
         ':is([data-active="true"])': 'border-box',
+        ':is([data-active="true"]):hover': 'border-box',
       },
       backgroundAttachment: {
         default: null,
@@ -264,8 +281,10 @@ const styles = stylex.create({
           default: null,
           ':hover': 'scroll',
           ':is([data-active="true"])': 'scroll',
+          ':is([data-active="true"]):hover': 'scroll',
         },
         ':is([data-active="true"])': 'scroll',
+        ':is([data-active="true"]):hover': 'scroll',
       },
       boxShadow: {
         default: null,
