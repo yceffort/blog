@@ -69,10 +69,15 @@ export default function HeroFxB() {
       }
       rafRef.current = requestAnimationFrame(tick)
     }
+    // 이미지 로드는 언마운트보다 늦게 끝날 수 있다. 그때 루프를 시작하면 취소할 방법이 없다.
+    let cancelled = false
     const img = new Image()
     img.src = '/profile.jpeg'
     img.crossOrigin = 'anonymous'
-    img.addEventListener('load', () => {
+    const onLoad = () => {
+      if (cancelled) {
+        return
+      }
       const sample = document.createElement('canvas')
       sample.width = SIZE
       sample.height = SIZE
@@ -111,7 +116,8 @@ export default function HeroFxB() {
       }
       particlesRef.current = particles
       tick()
-    })
+    }
+    img.addEventListener('load', onLoad)
     const onMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect()
       mouseRef.current.x = ((e.clientX - rect.left) / rect.width) * SIZE
@@ -126,6 +132,8 @@ export default function HeroFxB() {
     wrap.addEventListener('pointermove', onMove)
     wrap.addEventListener('pointerleave', onLeave)
     return () => {
+      cancelled = true
+      img.removeEventListener('load', onLoad)
       wrap.removeEventListener('pointermove', onMove)
       wrap.removeEventListener('pointerleave', onLeave)
       if (rafRef.current) {
