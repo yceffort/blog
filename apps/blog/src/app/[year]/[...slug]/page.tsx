@@ -21,6 +21,7 @@ import SeriesNavigation from '@/components/series/SeriesNavigation'
 import SeriesPrevNext from '@/components/series/SeriesPrevNext'
 import {SiteConfig} from '@/config'
 import {buildBlogPostingJsonLd, buildBreadcrumbJsonLd} from '@/utils/jsonLd'
+import {hasMath} from '@/utils/Markdown'
 import {buildOgImageUrl} from '@/utils/og'
 import {
   findPostByYearAndSlug,
@@ -207,7 +208,7 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
       >
         {JSON.stringify(jsonLd)}
       </Script>
-      <MathLoader />
+      {hasMath(body) && <MathLoader />}
       <div
         className={`page-view ${ambientStyles.page_view} ${stylex.props(sx.div).className}`}
       >

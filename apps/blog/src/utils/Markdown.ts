@@ -134,3 +134,11 @@ export function extractCodeFilename() {
     })
   }
 }
+
+// KaTeX ships a 66 KB font set and a render-blocking CDN stylesheet, so only
+// posts that can contain math should load it. remark-math reads `$...$` and
+// `$$...$$`; this check is deliberately wider than the parser (a dollar sign in
+// prose or a shell snippet also counts) so it can never miss real math.
+export function hasMath(body: string): boolean {
+  return /\$\$/.test(body) || /\$[^$\n]+\$/.test(body)
+}
