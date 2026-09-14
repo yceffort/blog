@@ -29,7 +29,10 @@ module.exports = () => ({
         node.replaceWith(imported.nodes)
       }
     }
-    if (result.opts.from?.endsWith('/src/styles/stylex.css')) {
+    if (
+      result.opts.from?.endsWith('/src/styles/stylex.css') ||
+      result.opts.from?.endsWith('/src/styles/reading.css')
+    ) {
       await inline(root, result.opts.from, [result.opts.from])
     }
   },

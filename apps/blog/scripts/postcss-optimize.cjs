@@ -7,7 +7,10 @@ module.exports = () => ({
   OnceExit(root, {result, postcss}) {
     if (
       process.env.NODE_ENV !== 'production' ||
-      !result.opts.from?.endsWith('/src/styles/stylex.css')
+      !(
+        result.opts.from?.endsWith('/src/styles/stylex.css') ||
+        result.opts.from?.endsWith('/src/styles/reading.css')
+      )
     ) {
       return
     }

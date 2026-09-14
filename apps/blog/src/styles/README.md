@@ -38,17 +38,21 @@ Shared accessibility styles belong in `styles/accessibility.styles.ts`. A compon
 
 ## CSS boundaries
 
-`stylex.css` is the shared CSS entry. Its imports have these owners:
+`stylex.css` is the global CSS entry and `reading.css` the long-form one. Their imports have these owners:
 
 - `browser.css`: reset, non-inheriting custom-property registrations, selection, and the theme-fade fallback.
 - `base.css` and `elements.css`: document element defaults and anchor behavior.
 - `theme.css`: document colors and fonts; next-themes supplies the `dark` marker.
 - `transitions.css`: navigation and theme View Transitions.
+- `spacing.css`: the flow spacing Tailwind's `space-*` utilities used to provide for layout wrappers outside Markdown.
+- `reading.css`: the long-form entry. It is imported by the components that render Markdown, not by `stylex.css`, so list, tag and archive routes never download it. Its members are `typography.css`, `post/article.css`, `post/markdown.css` and `post/markdown-toc.css`.
 - `typography.css`: Markdown typography and contextual spacing. Nested content can opt out with `markdown-exempt`.
 - `post/article.css`: article and series-content selectors, including external-link indicators.
 - `post/markdown.css` and `post/markdown-toc.css`: code/diagram output and generated tables of contents.
 - `settings/appearance.css`: user-selected palettes and effects. The `preferences` layer follows component styles so minimal mode can disable their animations.
 - `about/hero-fx.css`: the two rules that target the `<canvas>` React Three Fiber renders, which takes no class of its own.
+
+A rule that only long-form pages need belongs in `reading.css`; anything the header, footer or list routes rely on belongs in the global entry. `typography.css` held two Tailwind `space-*` leftovers that the footer and the 404 page depended on, and moving the file without them broke every list route.
 
 `tokens.stylex.ts` defines the shared CSS-variable names used by both authoring formats. Semantic markers such as `post-article`, `series-thread`, and `markdown-exempt` remain where CSS or DOM behavior needs them.
 
