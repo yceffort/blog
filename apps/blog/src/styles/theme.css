@@ -1,6 +1,9 @@
 /* Document colors, fonts, and light/dark theme values. */
 @layer site {
   html {
+    --font-sans: system-ui;
+    --font-mono: ui-monospace;
+    --font-serif: ui-serif;
     --accent: #14b8a6;
     --bg-2: #f2f2f5;
     --bg: #fafafa;

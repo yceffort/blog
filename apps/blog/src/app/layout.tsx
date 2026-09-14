@@ -1,29 +1,12 @@
+import * as stylex from '@stylexjs/stylex'
 import {Providers} from '@yceffort/shared/components'
 import type {Metadata} from 'next'
-import {Fraunces, Inter, JetBrains_Mono} from 'next/font/google'
 import Script from 'next/script'
-import {Suspense, type ReactNode} from 'react'
 
 import '@/styles/stylex.css'
 import '@/styles/tokens.stylex'
 
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-sans',
-})
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-mono',
-})
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-serif',
-  style: ['italic', 'normal'],
-})
-import * as stylex from '@stylexjs/stylex'
+import {Suspense, type ReactNode} from 'react'
 
 import {BotTracker} from '@/components/analytics/BotTracker'
 import {GoogleAnalyticsPageViewTracker} from '@/components/analytics/GoogleAnalyticsPageViewTracker'
@@ -121,12 +104,7 @@ export default async function Layout({children}: {children: ReactNode}) {
   const enSlugs = (await getAllPosts('en')).map((post) => post.fields.slug)
   return (
     <>
-      <html
-        lang="ko"
-        data-scroll-behavior="smooth"
-        suppressHydrationWarning
-        className={`${inter.variable} ${jetbrainsMono.variable} ${fraunces.variable}`}
-      >
+      <html lang="ko" data-scroll-behavior="smooth" suppressHydrationWarning>
         <head>
           <script
             dangerouslySetInnerHTML={{
