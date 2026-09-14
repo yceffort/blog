@@ -2716,6 +2716,35 @@ code {
 .code-line.deleted {
   @apply bg-red-500/20;
 }
+
+/* Prism 토큰 색. 전에는 parseCodeSnippet 이 hast 에서 클래스를 갈아끼웠다.
+   클래스를 그대로 두고 여기서 칠하면 그 단계가 필요 없다. */
+
+.token.tag,
+.token.boolean,
+.token.deleted {
+  @apply text-code-light-red dark:text-code-red;
+}
+.token.attr-name {
+  @apply text-code-light-yellow dark:text-code-yellow;
+}
+.token.attr-value,
+.token.string,
+.token.inserted {
+  @apply text-code-light-green dark:text-code-green;
+}
+.token.punctuation {
+  @apply text-code-light-black dark:text-code-white;
+}
+.token.keyword {
+  @apply text-code-light-purple dark:text-code-purple;
+}
+.token.function {
+  @apply text-code-light-blue dark:text-code-blue;
+}
+.token.comment {
+  @apply text-gray-500 italic dark:text-gray-400;
+}
 .highlight-line {
   margin-right: -16px;
   margin-left: -16px;
