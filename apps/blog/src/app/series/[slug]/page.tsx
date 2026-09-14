@@ -12,6 +12,8 @@ import {SiteConfig} from '@/config'
 import {buildOgImageUrl} from '@/utils/og'
 import {resolveThumbnail} from '@/utils/Post'
 import {findSeriesBySlug, getAllSeries} from '@/utils/Series'
+
+import '@/styles/reading.css'
 export async function generateMetadata(props: {
   params: Promise<{
     slug: string

@@ -12,6 +12,8 @@ import remarkToc from 'remark-toc'
 import MDXComponents from '@/components/post/MDXComponents'
 import imageMetadataPlugin from '@/utils/imageMetadata'
 import {extractCodeFilename, parseCodeSnippet} from '@/utils/Markdown'
+
+import '@/styles/reading.css'
 const sx = stylex.create({
   article: {
     '@layer utilities': {

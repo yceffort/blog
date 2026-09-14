@@ -3,6 +3,8 @@ import * as stylex from '@stylexjs/stylex'
 import * as ambientStyles from '@/components/layout/ambient.styles'
 import * as readingProgressStyles from '@/components/post/reading-progress.styles'
 
+import '@/styles/reading.css'
+
 const pulseAnimation = stylex.keyframes({
   '50%': {
     opacity: '0.5',
