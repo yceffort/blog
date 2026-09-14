@@ -45,9 +45,11 @@ corepack pnpm --filter blog build
 
 빌드 스크립트는 Rust의 `--remap-path-prefix`로 Cargo 홈과 패키지 경로를 각각 `/cargo`와 `/src/markdown-rs`로 고정한다. 패닉 메시지 등에 개발자 홈의 절대 경로가 들어가면 같은 소스라도 CI에서 다시 만든 WASM과 바이트가 달라지므로, 커밋할 바이너리는 이 스크립트로 생성한다.
 
+스크립트는 컴파일만 하고 `pkg/markdown_rs.wasm`은 건드리지 않는다. 그 파일을 갱신하려면 `MARKDOWN_RS_WRITE_PKG=1`을 준다. 커밋된 바이너리는 Linux CI 산출물이므로 다른 플랫폼에서 덮어쓰면 소스를 고치지 않아도 워킹트리가 더러워진다. CI 의 build 잡만 이 변수를 설정하며, 로컬에서는 컴파일 오류만 확인하고 파일은 그대로 둔다.
+
 `Cargo.lock`에서 math-core의 내부 렌더러도 0.5.0에 고정했다. 같은 0.5 계열의 후속 내부 렌더러는 더 높은 Rust 버전을 요구하므로 lockfile 없이 의존성을 다시 해결하지 않는다. Xcode 명령 선택 경로가 깨진 로컬 환경에서는 설치된 Xcode의 SDK와 Clang 경로를 `SDKROOT`, `CC`, `AR`, `CARGO_TARGET_AARCH64_APPLE_DARWIN_LINKER`로 지정해 검증했다.
 
-`pkg/markdown_rs.wasm`은 약 2.49MiB이며 저장소에 포함한다. Rust를 수정하면 바이너리도 다시 빌드해 함께 반영한다. 일반 Next.js 배포 빌드는 이 파일을 사용하므로 Rust와 wasi-sdk가 필요 없다. Next.js는 패키지를 `serverExternalPackages`로 불러오며 `outputFileTracingIncludes`에 WASM 파일을 포함한다.
+`pkg/markdown_rs.wasm`은 약 2.49MiB이며 저장소에 포함한다. Rust를 수정하면 바이너리도 함께 반영하되, 커밋할 파일은 위의 CI 아티팩트 절차로 받는다. 일반 Next.js 배포 빌드는 이 파일을 사용하므로 Rust와 wasi-sdk가 필요 없다. Next.js는 패키지를 `serverExternalPackages`로 불러오며 `outputFileTracingIncludes`에 WASM 파일을 포함한다.
 
 커밋할 바이너리는 Linux CI의 생성물을 기준으로 한다. Rust와 wasi-sdk 버전을 고정하고 경로를 제거해도 이번 macOS 빌드와 Linux 빌드의 코드 섹션은 달랐다. 두 바이너리의 전체 HAST는 글과 시리즈 462개에서 코드 색상과 MathML까지 일치했지만, 바이트가 달라진 컴파일러 내부 경로까지 확인한 것은 아니다. 로컬 빌드는 개발 검증에 쓰고, CI가 다시 만든 바이너리와 커밋된 파일의 바이트 일치 검사는 유지한다.
 

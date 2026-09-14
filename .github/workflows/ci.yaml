@@ -59,6 +59,8 @@ jobs:
       - run: pnpm build
         env:
           WASI_SDK_PATH: ${{ runner.temp }}/wasi-sdk-27.0-x86_64-linux
+          # 커밋된 바이너리를 갱신해 아래 대조를 성립시키는 것은 이 잡뿐이다.
+          MARKDOWN_RS_WRITE_PKG: '1'
 
       # 배포(Vercel)는 wasi-sdk 없이 커밋된 wasm 을 그대로 싣는다. 방금 소스에서
       # 다시 빌드한 결과와 다르면 CI 가 검사한 바이너리와 배포되는 바이너리가 갈린다.

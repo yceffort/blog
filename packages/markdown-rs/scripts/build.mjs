@@ -1,4 +1,6 @@
-// cargo 로 wasm 을 빌드해 pkg/ 에 복사한다. rust-toolchain.toml 이 wasm32 타깃을 요구한다.
+// cargo 로 wasm 을 빌드한다. 커밋 대상인 pkg/ 에 쓰는 것은 MARKDOWN_RS_WRITE_PKG=1
+// 일 때뿐이다. 커밋된 바이너리는 Linux CI 산출물이므로 다른 플랫폼에서 덮어쓰면
+// 소스를 고치지 않아도 워킹트리가 더러워진다. rust-toolchain.toml 이 wasm32 타깃을 요구한다.
 import {execFileSync} from 'node:child_process'
 import {copyFileSync, existsSync, mkdirSync, statSync} from 'node:fs'
 import {homedir} from 'node:os'
@@ -43,6 +45,12 @@ execFileSync(
   },
 )
 const built = resolve(root, 'target/wasm32-wasip1/release/markdown_rs.wasm')
+if (process.env.MARKDOWN_RS_WRITE_PKG !== '1') {
+  console.log(
+    `built ${(statSync(built).size / 1024 / 1024).toFixed(2)} MB; pkg/markdown_rs.wasm left untouched (set MARKDOWN_RS_WRITE_PKG=1 to update it)`,
+  )
+  process.exit(0)
+}
 mkdirSync(resolve(root, 'pkg'), {recursive: true})
 const out = resolve(root, 'pkg/markdown_rs.wasm')
 copyFileSync(built, out)
