@@ -17,7 +17,7 @@ const targets = args.filter((a) => !a.startsWith('--'))
 const root = resolve(import.meta.dirname, '../../..')
 const files = targets.length
   ? targets.map((f) => resolve(f))
-  : globSync('apps/blog/posts/**/*.md', {cwd: root})
+  : globSync('apps/blog/posts/**/*.md*', {cwd: root})
       .concat(globSync('apps/blog/series/*.md', {cwd: root}))
       .map((f) => resolve(root, f))
       .toSorted()

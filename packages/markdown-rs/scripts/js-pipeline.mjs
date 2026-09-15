@@ -149,16 +149,19 @@ export function stripPositions(node) {
 
 export function normalizeHast(node) {
   if (Array.isArray(node)) {
-    return node
-      .filter(
-        (n) =>
-          !(
-            n?.type?.startsWith('mdx') &&
-            n.type.endsWith('Expression') &&
-            n.value.trim() === ''
-          ),
-      )
-      .map(normalizeHast)
+    return (
+      node
+        // 빈 표현식과 주석만 있는 표현식({/* ... */})은 Rust 가 노드로 남기지 않는다.
+        .filter(
+          (n) =>
+            !(
+              n?.type?.startsWith('mdx') &&
+              n.type.endsWith('Expression') &&
+              /^\s*(\/\*[\s\S]*?\*\/\s*)*$/.test(n.value)
+            ),
+        )
+        .map(normalizeHast)
+    )
   }
   if (!node || typeof node !== 'object') return node
   // MDX 속성 표현식: Rust는 리터럴로 평가해 둔다. JS 쪽도 같은 모양으로 맞춘다.
