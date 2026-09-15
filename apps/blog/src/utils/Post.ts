@@ -57,7 +57,8 @@ export function buildArtThumbnail(seed: string, art?: ArtSpec): string {
 export type {Locale}
 
 // cache()는 요청 단위 중복 제거라 빌드 워커가 페이지를 여러 장 그릴 때 페이지마다 글 전체를
-// 다시 읽는다. 빌드와 요청 시점에는 글이 바뀌지 않으므로 워커 수명 동안 재사용한다.
+// 다시 읽는다. 빌드와 요청 시점에는 글이 바뀌지 않으므로 프로세스 수명 동안 재사용한다.
+// 프로덕션 런타임(서버 인스턴스)에서도 같은 Map 이 살아 있어 전체 글을 메모리에 들고 있는다.
 // 개발 모드는 초안 수정이 곧바로 반영되어야 하므로 채우지 않는다.
 const allPostsCache = new Map<Locale, Post[]>()
 
