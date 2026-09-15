@@ -24,6 +24,8 @@ Keep media, support, and state conditions inside the affected property's value. 
 
 A condition key must describe the element it is attached to, never an ancestor. `':hover'`, `':last-child'` and `':is([data-open="true"])'` are fine; `':is(.post-card:hover .thumb img)'` is not, because the wrapping selector reintroduces the CSS-file cascade that owning styles per element is meant to replace, and it makes the compiler pad every rule with extra specificity.
 
+The one ancestor allowed is the document theme marker: `':is(.dark *)'` (and `':is(.dark *):hover'`). `next-themes` sets `.dark` on `<html>`, no element can own that state, and the alternative of a custom property per themed value would duplicate every color token. Keep it to theme colors; do not use it for layout.
+
 Three rules cover what a descendant selector used to do:
 
 - **A parent state changes a child.** The parent sets a custom property under its own state; the child reads it with the value it had before as the fallback. `post_card` sets `'--post-card-thumb-transform'` under `':hover'` and the image uses `transform: 'var(--post-card-thumb-transform, none)'`.
