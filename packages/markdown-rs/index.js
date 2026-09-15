@@ -55,12 +55,12 @@ export function renderMarkdown(body, path) {
   try {
     outputPtr = exports.render_json_ptr(inputPtr, input.length)
   } catch (error) {
-    // trap 이후의 인스턴스 상태는 믿지 않는다. 다음 호출에서 새로 만든다.
+    // trap 이후의 인스턴스 상태는 믿지 않는다. 입력 버퍼도 해제하지 않고 인스턴스째 버린다.
+    // (trap 난 인스턴스에 dealloc 을 부르면 그 trap 이 원래 오류를 덮는다.)
     instance = undefined
     throw error
-  } finally {
-    exports.dealloc(inputPtr, input.length)
   }
+  exports.dealloc(inputPtr, input.length)
   // 호출 중 메모리가 늘어났을 수 있으므로 buffer 를 다시 읽는다.
   const memory = new Uint8Array(exports.memory.buffer)
   const length = new DataView(exports.memory.buffer).getUint32(outputPtr, true)
