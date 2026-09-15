@@ -45,7 +45,8 @@
   }
   html,
   body {
-    min-height: 100vh;
+    /* 모바일 브라우저의 100vh 는 주소창을 뺀 높이보다 커서 항상 스크롤을 만든다 */
+    min-height: 100dvh;
     background: var(--bg);
     color: var(--ink);
   }

@@ -19,7 +19,10 @@ export const styles = stylex.create({
     '@layer site': {
       position: 'relative',
       width: '100%',
-      maxWidth: '100%',
+      // 16:9 슬라이드가 뷰포트 높이를 넘지 않도록 폭을 높이에 맞춰 제한한다.
+      // 가로로 든 휴대폰(예: 844x390)에서 슬라이드가 잘리고 스크롤이 생기던 문제를 없앤다.
+      // 2px 는 슬라이드 프레임의 상하 테두리
+      maxWidth: 'min(100%, calc((100dvh - 2px) * 16 / 9 + 2px))',
       margin: '0 auto',
     },
   },
