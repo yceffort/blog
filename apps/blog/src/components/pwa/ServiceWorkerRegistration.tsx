@@ -101,11 +101,7 @@ export function ServiceWorkerRegistration() {
   return (
     <output
       className={
-        stylex.props(sx.output3).className +
-        ' ' +
-        (visible
-          ? stylex.props(sx.output).className
-          : stylex.props(sx.output2).className)
+        stylex.props(sx.output3, visible ? sx.output : sx.output2).className
       }
     >
       {savedPath.startsWith('/en')

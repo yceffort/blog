@@ -93,11 +93,7 @@ export default function ScrollTop() {
       type="button"
       onClick={handleScrollTop}
       className={
-        stylex.props(sx.button3).className +
-        ' ' +
-        (show
-          ? stylex.props(sx.button).className
-          : stylex.props(sx.button2).className)
+        stylex.props(sx.button3, show ? sx.button : sx.button2).className
       }
     >
       <svg

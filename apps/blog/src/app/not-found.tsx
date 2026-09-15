@@ -16,11 +16,7 @@ export default function NotFound() {
           👀
         </p>
         <Link href="/">
-          <button
-            className={`focus:shadow-outline-blue ${notFoundStyles.button}`}
-          >
-            Back to blog
-          </button>
+          <button className={notFoundStyles.button}>Back to blog</button>
         </Link>
       </div>
     </div>

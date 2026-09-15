@@ -16,28 +16,20 @@ const sx = stylex.create({
 export default function Page() {
   return (
     <div className={`page-view ${ambientStyles.page_view}`}>
-      <header
-        className={`resume-pageHeader ${resumeStyles.resume_pageHeader} ${resumeStyles.resume_pageHeader}`}
-      >
+      <header className={`resume-pageHeader ${resumeStyles.resume_pageHeader}`}>
         <div>
-          <p
-            className={`resume-eyebrow ${resumeStyles.resume_eyebrow} ${resumeStyles.resume_eyebrow}`}
-          >
+          <p className={`resume-eyebrow ${resumeStyles.resume_eyebrow}`}>
             FRONTEND ENGINEER · WRITER
           </p>
           <h1 className={resumeStyles.element_h1}>
             {SiteConfig.author.name}
             <span className={resumeStyles.resume_pageHeader_span}>.</span>
           </h1>
-          <p
-            className={`resume-headerNote ${resumeStyles.resume_headerNote} ${resumeStyles.resume_headerNote}`}
-          >
+          <p className={`resume-headerNote ${resumeStyles.resume_headerNote}`}>
             만들고 운영하며 쌓아 온 경험을 기록합니다.
           </p>
         </div>
-        <div
-          className={`resume-contacts ${resumeStyles.resume_contacts} ${resumeStyles.resume_contacts}`}
-        >
+        <div className={`resume-contacts ${resumeStyles.resume_contacts}`}>
           <a
             href={`mailto:${SiteConfig.author.contacts.email}`}
             className={resumeStyles.resume_link_hover}

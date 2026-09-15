@@ -144,7 +144,7 @@ export default function HeroFxB() {
   return (
     <div
       ref={wrapRef}
-      className={`hero-fx-canvas hero-fx-b ${aboutStyles.hero_fx_canvas} ${aboutStyles.hero_fx_b}`}
+      className={`hero-fx-canvas hero-fx-b ${aboutStyles.hero_fx_b_canvas}`}
     >
       <canvas ref={canvasRef} className={aboutStyles.element_canvas} />
       <div className={`hero-fx-hint ${aboutStyles.hero_fx_hint}`}>

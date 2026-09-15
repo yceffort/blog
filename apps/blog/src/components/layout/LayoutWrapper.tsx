@@ -147,11 +147,13 @@ function HeaderNav() {
         const external = link.path.startsWith('http')
         const active = !external && isActive(link.path)
         const common = {
-          className: 'nav-link ' + headerStyles.nav_link + ' ',
+          className: 'nav-link ' + headerStyles.nav_link,
           'data-active': active ? 'true' : 'false',
           'data-external': external ? 'true' : 'false',
         } as const
-        const labelClassName = `nav-link-label ${active ? headerStyles.nav_link_label_active : ''}`
+        const labelClassName = active
+          ? `nav-link-label ${headerStyles.nav_link_label_active}`
+          : 'nav-link-label'
         if (external) {
           return (
             <a

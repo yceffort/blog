@@ -123,6 +123,13 @@ const sx = stylex.create({
         default: null,
         ':focus': 'none',
       },
+      // 원래 붙어 있던 focus:shadow-outline-blue 는 Tailwind 설정에 없어 한 번도 생성된 적이
+      // 없었다. 키보드 포커스 표시를 링 변수로 대신한다.
+      '--blog-ring-shadow': {
+        default: null,
+        ':focus-visible':
+          '0 0 0 3px color-mix(in oklab, var(--color-blue-500) 50%, transparent)',
+      },
       outline: {
         default: null,
         ':focus': {

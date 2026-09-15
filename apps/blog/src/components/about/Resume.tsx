@@ -110,39 +110,27 @@ const publications = [
 ]
 export function Resume() {
   return (
-    <div
-      className={`resume-resume ${resumeStyles.resume_resume} ${resumeStyles.resume_resume}`}
-    >
-      <header
-        className={`resume-summary ${resumeStyles.resume_summary} ${resumeStyles.resume_summary}`}
-      >
-        <p
-          className={`resume-eyebrow ${resumeStyles.resume_eyebrow} ${resumeStyles.resume_eyebrow}`}
-        >
+    <div className={`resume-resume ${resumeStyles.resume_resume}`}>
+      <header className={`resume-summary ${resumeStyles.resume_summary}`}>
+        <p className={`resume-eyebrow ${resumeStyles.resume_eyebrow}`}>
           EXPERIENCE & CONTRIBUTIONS
         </p>
         <h2 className={resumeStyles.resume_summary_h2}>
           서비스 개발부터 팀이 일하는 기반까지.
         </h2>
-        <p
-          className={`resume-lead ${resumeStyles.resume_lead} ${resumeStyles.resume_lead}`}
-        >
+        <p className={`resume-lead ${resumeStyles.resume_lead}`}>
           2014년부터 다양한 도메인의 소프트웨어를 만들고 운영해 왔습니다.
           프론트엔드 팀을 이끌고, 여러 서비스가 함께 쓰는 라이브러리와 도구를
           만들었습니다. 그 과정에서 얻은 경험을 책과 글, 오픈소스로 나눕니다.
         </p>
-        <p
-          className={`resume-status ${resumeStyles.resume_status} ${resumeStyles.resume_status}`}
-        >
+        <p className={`resume-status ${resumeStyles.resume_status}`}>
           <span
             aria-hidden="true"
             className={resumeStyles.resume_status_span}
           />
           프론트엔드 엔지니어 · 재직 중
         </p>
-        <dl
-          className={`resume-expertise ${resumeStyles.resume_expertise} ${resumeStyles.resume_expertise}`}
-        >
+        <dl className={`resume-expertise ${resumeStyles.resume_expertise}`}>
           <div>
             <dt className={resumeStyles.element_dt}>서비스 개발</dt>
             <dd className={resumeStyles.element_dd}>
@@ -164,11 +152,9 @@ export function Resume() {
         </dl>
       </header>
 
-      <div
-        className={`resume-layout ${resumeStyles.resume_layout} ${resumeStyles.resume_layout}`}
-      >
+      <div className={`resume-layout ${resumeStyles.resume_layout}`}>
         <nav
-          className={`resume-nav ${resumeStyles.resume_nav} ${resumeStyles.resume_nav}`}
+          className={`resume-nav ${resumeStyles.resume_nav}`}
           aria-label="이력서 목차"
         >
           {sections.map(({id, label}, index) => (
@@ -185,16 +171,14 @@ export function Resume() {
           ))}
         </nav>
 
-        <div
-          className={`resume-content ${resumeStyles.resume_content} ${resumeStyles.resume_content}`}
-        >
+        <div className={`resume-content ${resumeStyles.resume_content}`}>
           <section
             id="experience"
-            className={`resume-section ${resumeStyles.resume_section} ${resumeStyles.resume_section}`}
+            className={`resume-section ${resumeStyles.resume_section}`}
             aria-labelledby="experience-title"
           >
             <div
-              className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading} ${resumeStyles.resume_sectionHeading}`}
+              className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading}`}
             >
               <h2
                 id="experience-title"
@@ -207,40 +191,36 @@ export function Resume() {
               </span>
             </div>
             <p
-              className={`resume-sectionNote ${resumeStyles.resume_sectionNote} ${resumeStyles.resume_sectionNote}`}
+              className={`resume-sectionNote ${resumeStyles.resume_sectionNote}`}
             >
               이전에 근무한 곳에서의 경험입니다.
             </p>
-            <ol
-              className={`resume-timeline ${resumeStyles.resume_timeline} ${resumeStyles.resume_timeline}`}
-            >
+            <ol className={`resume-timeline ${resumeStyles.resume_timeline}`}>
               {experience.map((job) => (
                 <li
                   key={job.company}
-                  className={`resume-job ${resumeStyles.resume_job} ${resumeStyles.resume_job}`}
+                  className={`resume-job ${resumeStyles.resume_job}`}
                 >
                   <div
-                    className={`resume-jobHeading ${resumeStyles.resume_jobHeading} ${resumeStyles.resume_jobHeading}`}
+                    className={`resume-jobHeading ${resumeStyles.resume_jobHeading}`}
                   >
                     <h3 className={resumeStyles.element_h3}>{job.company}</h3>
                     <span
-                      className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
+                      className={`resume-period ${resumeStyles.resume_period}`}
                     >
                       {job.period}
                     </span>
                   </div>
-                  <p
-                    className={`resume-role ${resumeStyles.resume_role} ${resumeStyles.resume_role}`}
-                  >
+                  <p className={`resume-role ${resumeStyles.resume_role}`}>
                     {job.role}
                   </p>
                   <p
-                    className={`resume-jobDescription ${resumeStyles.resume_jobDescription} ${resumeStyles.resume_jobDescription}`}
+                    className={`resume-jobDescription ${resumeStyles.resume_jobDescription}`}
                   >
                     {job.description}
                   </p>
                   <ul
-                    className={`resume-contributions ${resumeStyles.resume_contributions} ${resumeStyles.resume_contributions}`}
+                    className={`resume-contributions ${resumeStyles.resume_contributions}`}
                   >
                     {job.contributions.map((contribution) => (
                       <li
@@ -251,14 +231,12 @@ export function Resume() {
                       </li>
                     ))}
                   </ul>
-                  <p
-                    className={`resume-stack ${resumeStyles.resume_stack} ${resumeStyles.resume_stack}`}
-                  >
+                  <p className={`resume-stack ${resumeStyles.resume_stack}`}>
                     {job.stack}
                   </p>
                   {job.link ? (
                     <a
-                      className={`resume-textLink ${resumeStyles.resume_textLink} ${resumeStyles.resume_textLink} ${resumeStyles.resume_link_hover}`}
+                      className={`resume-textLink ${resumeStyles.resume_textLink} ${resumeStyles.resume_link_hover}`}
                       href={job.link.href}
                     >
                       {job.link.label} <span aria-hidden="true">↗</span>
@@ -271,11 +249,11 @@ export function Resume() {
 
           <section
             id="publications"
-            className={`resume-section ${resumeStyles.resume_section} ${resumeStyles.resume_section}`}
+            className={`resume-section ${resumeStyles.resume_section}`}
             aria-labelledby="publications-title"
           >
             <div
-              className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading} ${resumeStyles.resume_sectionHeading}`}
+              className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading}`}
             >
               <h2
                 id="publications-title"
@@ -287,24 +265,22 @@ export function Resume() {
                 Publications
               </span>
             </div>
-            <ul
-              className={`resume-books ${resumeStyles.resume_books} ${resumeStyles.resume_books}`}
-            >
+            <ul className={`resume-books ${resumeStyles.resume_books}`}>
               {publications.map((book) => (
                 <li key={book.href}>
                   <a
-                    className={`resume-book ${resumeStyles.resume_book} ${resumeStyles.resume_book} ${resumeStyles.resume_link_hover}`}
+                    className={`resume-book ${resumeStyles.resume_book} ${resumeStyles.resume_link_hover}`}
                     href={book.href}
                   >
                     <span
-                      className={`resume-bookRole ${resumeStyles.resume_bookRole} ${resumeStyles.resume_bookRole}`}
+                      className={`resume-bookRole ${resumeStyles.resume_bookRole}`}
                     >
                       {book.role}
                     </span>
                     <h3 className={resumeStyles.element_h3}>{book.title}</h3>
                     <p className={resumeStyles.resume_book_p}>{book.subject}</p>
                     <span
-                      className={`resume-bookLink ${resumeStyles.resume_bookLink} ${resumeStyles.resume_bookLink}`}
+                      className={`resume-bookLink ${resumeStyles.resume_bookLink}`}
                     >
                       {'출판사에서 보기 '}
                       <span aria-hidden="true">↗</span>
@@ -313,12 +289,8 @@ export function Resume() {
                 </li>
               ))}
             </ul>
-            <p
-              className={`resume-writing ${resumeStyles.resume_writing} ${resumeStyles.resume_writing}`}
-            >
-              <span
-                className={`resume-eyebrow ${resumeStyles.resume_eyebrow} ${resumeStyles.resume_eyebrow}`}
-              >
+            <p className={`resume-writing ${resumeStyles.resume_writing}`}>
+              <span className={`resume-eyebrow ${resumeStyles.resume_eyebrow}`}>
                 WRITING NOW
               </span>
               <Link
@@ -336,11 +308,11 @@ export function Resume() {
 
           <section
             id="open-source"
-            className={`resume-section ${resumeStyles.resume_section} ${resumeStyles.resume_section}`}
+            className={`resume-section ${resumeStyles.resume_section}`}
             aria-labelledby="open-source-title"
           >
             <div
-              className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading} ${resumeStyles.resume_sectionHeading}`}
+              className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading}`}
             >
               <h2
                 id="open-source-title"
@@ -359,7 +331,7 @@ export function Resume() {
                   className={resumeStyles.resume_entries_li}
                 >
                   <span
-                    className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
+                    className={`resume-period ${resumeStyles.resume_period}`}
                   >
                     {project.category}
                   </span>
@@ -384,11 +356,11 @@ export function Resume() {
 
           <section
             id="activities"
-            className={`resume-section ${resumeStyles.resume_section} ${resumeStyles.resume_section}`}
+            className={`resume-section ${resumeStyles.resume_section}`}
             aria-labelledby="activities-title"
           >
             <div
-              className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading} ${resumeStyles.resume_sectionHeading}`}
+              className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading}`}
             >
               <h2
                 id="activities-title"
@@ -402,9 +374,7 @@ export function Resume() {
             </div>
             <ul className="resume-entries">
               <li className={resumeStyles.resume_entries_li}>
-                <span
-                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
-                >
+                <span className={`resume-period ${resumeStyles.resume_period}`}>
                   2024
                 </span>
                 <div>
@@ -417,9 +387,7 @@ export function Resume() {
                 </div>
               </li>
               <li className={resumeStyles.resume_entries_li}>
-                <span
-                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
-                >
+                <span className={`resume-period ${resumeStyles.resume_period}`}>
                   2021.01 — 2021.12
                 </span>
                 <div>
@@ -431,9 +399,7 @@ export function Resume() {
                 </div>
               </li>
               <li className={resumeStyles.resume_entries_li}>
-                <span
-                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
-                >
+                <span className={`resume-period ${resumeStyles.resume_period}`}>
                   2018 — 현재
                 </span>
                 <div>
@@ -450,9 +416,7 @@ export function Resume() {
                 </div>
               </li>
               <li className={resumeStyles.resume_entries_li}>
-                <span
-                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
-                >
+                <span className={`resume-period ${resumeStyles.resume_period}`}>
                   2016.03 — 현재
                 </span>
                 <div>
@@ -476,11 +440,11 @@ export function Resume() {
 
           <section
             id="education"
-            className={`resume-section ${resumeStyles.resume_section} ${resumeStyles.resume_section}`}
+            className={`resume-section ${resumeStyles.resume_section}`}
             aria-labelledby="education-title"
           >
             <div
-              className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading} ${resumeStyles.resume_sectionHeading}`}
+              className={`resume-sectionHeading ${resumeStyles.resume_sectionHeading}`}
             >
               <h2
                 id="education-title"
@@ -494,9 +458,7 @@ export function Resume() {
             </div>
             <ul className="resume-entries">
               <li className={resumeStyles.resume_entries_li}>
-                <span
-                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
-                >
+                <span className={`resume-period ${resumeStyles.resume_period}`}>
                   2018.03 — 2020.02
                 </span>
                 <div>
@@ -506,17 +468,13 @@ export function Resume() {
                   <p className={resumeStyles.resume_entries_p}>
                     기술경영전문대학원 석사
                   </p>
-                  <p
-                    className={`resume-honor ${resumeStyles.resume_honor} ${resumeStyles.resume_honor}`}
-                  >
+                  <p className={`resume-honor ${resumeStyles.resume_honor}`}>
                     Highest Honor · GPA 4.23 / 4.3
                   </p>
                 </div>
               </li>
               <li className={resumeStyles.resume_entries_li}>
-                <span
-                  className={`resume-period ${resumeStyles.resume_period} ${resumeStyles.resume_period}`}
-                >
+                <span className={`resume-period ${resumeStyles.resume_period}`}>
                   2007.03 — 2014.02
                 </span>
                 <div>

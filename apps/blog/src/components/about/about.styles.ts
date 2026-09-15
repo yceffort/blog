@@ -294,4 +294,9 @@ export const hero_fx_hint_touch = stylex.props(
 export const hero_fx_hint_desktop = stylex.props(
   styles.hero_fx_hint_desktop,
 ).className!
-export const hero_fx_b = stylex.props(styles.hero_fx_b).className!
+// hero_fx_canvas(100%)와 hero_fx_b(320px)는 같은 속성을 정의하므로 여기서 합성한다.
+// 클래스 문자열로 이어 붙이면 승자가 CSS 파일 순서에 달린다.
+export const hero_fx_b_canvas = stylex.props(
+  styles.hero_fx_canvas,
+  styles.hero_fx_b,
+).className!
