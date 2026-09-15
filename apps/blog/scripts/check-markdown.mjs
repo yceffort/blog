@@ -29,6 +29,12 @@ import remarkGfm from 'remark-gfm'
 import remarkParse from 'remark-parse'
 import {unified} from 'unified'
 
+import {
+  collectMathCodepoints,
+  formatUnicode,
+  readSubsetCodepoints,
+} from './math-glyphs.mjs'
+
 const BLOG_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const POSTS_DIR = join(BLOG_DIR, 'posts')
 const SERIES_DIR = join(BLOG_DIR, 'series')
@@ -307,6 +313,32 @@ const createStubEvaluater = () => ({
   },
 })
 
+// 수식 글꼴은 글에서 쓰는 글리프만 남긴 서브셋이라(scripts/subset-math-font.mjs) 서브셋에 없는
+// 글자는 시스템 글꼴로 떨어져 모양이 어긋난다. hast 에는 위치가 없어 줄 번호는 못 준다.
+const subsetCodepoints = readSubsetCodepoints()
+function checkMathGlyphs(tree, report) {
+  if (!subsetCodepoints) {
+    return
+  }
+  const missing = [...collectMathCodepoints(tree)].filter(
+    (codepoint) => !subsetCodepoints.has(codepoint),
+  )
+  if (missing.length > 0) {
+    report(
+      'warn',
+      0,
+      `수식 글꼴 서브셋에 없는 글자: ${missing
+        .map(
+          (codepoint) =>
+            `${String.fromCodePoint(codepoint)}(${formatUnicode(codepoint)})`,
+        )
+        .join(
+          ' ',
+        )} (node scripts/subset-math-font.mjs 로 서브셋을 다시 만들 것)`,
+    )
+  }
+}
+
 function checkFile(file) {
   const raw = readFileSync(file, 'utf8')
   const {attributes, body} = frontMatter(raw)
@@ -323,7 +355,9 @@ function checkFile(file) {
   // 멈추지 않고 renderPost.tsx와 같은 JSX 변환까지 돌린다. 실제 컴포넌트 구현은 없어도
   // 되지만(이름은 스텁으로 잇는다) 트리를 JSX로 못 바꾸는 글은 여기서 걸린다.
   try {
-    toJsxRuntime(renderMarkdown(body, file), {
+    const tree = renderMarkdown(body, file)
+    checkMathGlyphs(tree, report)
+    toJsxRuntime(tree, {
       Fragment,
       jsx,
       jsxs,
