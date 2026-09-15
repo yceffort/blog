@@ -1,0 +1,3400 @@
+{
+  "metadata": {
+    "startedAt": "2026-09-15T03:02:51.293Z",
+    "harnessSha256": "93b31eae12cff5aba2f1e03083e9213cb2a6534f6758d93d6b45253f55410e8c",
+    "settings": {
+      "rounds": 4,
+      "repeatVisit": false,
+      "cpuSlowdown": 4,
+      "latencyMs": 150,
+      "downloadKbps": 1600,
+      "uploadKbps": 1600,
+      "settleMs": 5000,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "routes": ["/2020/07/math-for-programmer-chapter1-2-set"]
+    },
+    "variants": {
+      "before": "http://127.0.0.1:3222",
+      "after": "http://127.0.0.1:3223"
+    },
+    "host": {
+      "platform": "darwin",
+      "arch": "arm64",
+      "cpu": "Apple M5"
+    },
+    "browserExecutable": "/Users/yceffort/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+    "headless": true,
+    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Mobile Safari/537.36",
+    "blockedUrls": [
+      "*://*.google-analytics.com/*",
+      "*://*.googletagmanager.com/*"
+    ],
+    "notes": [
+      "Production servers; each trial launches a fresh Chrome with an isolated profile.",
+      "Server routes/assets are warmed once; browser HTTP cache is disabled and cleared every trial.",
+      "CPU and network throttling use Chrome DevTools Protocol, not simulated Lighthouse throttling.",
+      "Animations and canvas rendering run normally. Tracing is enabled equally for both variants.",
+      "All metrics stop five seconds after load, document.fonts.ready, and network idle.",
+      "loadBlockingMs sums long-task time beyond 50 ms from FCP to the measurement end; it is not Lighthouse TBT.",
+      "LCP/CLS are lab observations within this window, not field Core Web Vitals or an INP measurement.",
+      "Main-thread Performance counters are cumulative over each trial observation window, and that window varies per trial; compare them only alongside observationEndMs. Throttling is relative to this host CPU.",
+      "transferBytes and the per-type byte counts include only requests that finished inside the window; unfinishedRequests reports how many were dropped."
+    ],
+    "before": {
+      "buildId": "jujg9Z3QtQP5MzWJUlD6V",
+      "commit": "d6ceb2fc62fcddf026942fcb7bcaa8f5825c243f",
+      "workingTree": ""
+    },
+    "after": {
+      "buildId": "2ae2HV6I9diU4QcjcL8rU",
+      "commit": "d6ceb2fc62fcddf026942fcb7bcaa8f5825c243f",
+      "workingTree": "R  apps/blog/public/fonts/math/LibertinusMath-Regular.woff2 -> apps/blog/fonts/LibertinusMath-Regular.woff2\n M apps/blog/scripts/check-markdown.mjs\n M packages/markdown-rs/README.md\n?? apps/blog/public/fonts/math/LibertinusMath-Regular.woff2\n?? apps/blog/public/fonts/math/NOTICE.txt\n?? apps/blog/public/fonts/math/unicodes.txt\n?? apps/blog/scripts/math-glyphs.mjs\n?? apps/blog/scripts/subset-math-font.mjs"
+    },
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/153.0.8010.12",
+      "revision": "@971a7443b0c9b0a9b2860529b33331b76077ec62",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+      "jsVersion": "15.3.76.4"
+    },
+    "finishedAt": "2026-09-15T03:04:23.016Z"
+  },
+  "summary": [
+    {
+      "route": "/2020/07/math-for-programmer-chapter1-2-set",
+      "variant": "before",
+      "visit": "first",
+      "runs": 4,
+      "values": {
+        "ttfbMs": {
+          "median": 3.350000023841858,
+          "min": 2.5,
+          "max": 4.799999952316284
+        },
+        "responseEndMs": {
+          "median": 297.05000001192093,
+          "min": 296.19999998807907,
+          "max": 304.19999998807907
+        },
+        "bodyReadyMs": {
+          "median": 504.14999997615814,
+          "min": 498,
+          "max": 508.80000001192093
+        },
+        "fcpMs": {
+          "median": 728,
+          "min": 712,
+          "max": 732
+        },
+        "lcpMs": {
+          "median": 2254,
+          "min": 2252,
+          "max": 2256
+        },
+        "cls": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "loadMs": {
+          "median": 4801.9000000059605,
+          "min": 4799,
+          "max": 4804.899999976158
+        },
+        "taskMs": {
+          "median": 912.1895,
+          "min": 901.375,
+          "max": 943.686
+        },
+        "scriptMs": {
+          "median": 99.65100000000001,
+          "min": 92.027,
+          "max": 104.917
+        },
+        "styleMs": {
+          "median": 148.586,
+          "min": 147.552,
+          "max": 151.208
+        },
+        "layoutMs": {
+          "median": 169.798,
+          "min": 166.42000000000002,
+          "max": 176.067
+        },
+        "loadBlockingMs": {
+          "median": 1,
+          "min": 1,
+          "max": 1
+        },
+        "observationEndMs": {
+          "median": 11055.40000000596,
+          "min": 11047,
+          "max": 11060
+        },
+        "transferBytes": {
+          "median": 963632,
+          "min": 963632,
+          "max": 963632
+        },
+        "cssBytes": {
+          "median": 30442,
+          "min": 30442,
+          "max": 30442
+        },
+        "jsBytes": {
+          "median": 211994,
+          "min": 211994,
+          "max": 211994
+        },
+        "fontBytes": {
+          "median": 342093,
+          "min": 342093,
+          "max": 342093
+        },
+        "imageBytes": {
+          "median": 23295,
+          "min": 23295,
+          "max": 23295
+        },
+        "requestCount": {
+          "median": 30,
+          "min": 30,
+          "max": 30
+        },
+        "cachedRequests": {
+          "median": 2,
+          "min": 2,
+          "max": 2
+        },
+        "unfinishedRequests": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      }
+    },
+    {
+      "route": "/2020/07/math-for-programmer-chapter1-2-set",
+      "variant": "after",
+      "visit": "first",
+      "runs": 4,
+      "values": {
+        "ttfbMs": {
+          "median": 3.199999988079071,
+          "min": 2.700000047683716,
+          "max": 4.5
+        },
+        "responseEndMs": {
+          "median": 305.55000001192093,
+          "min": 300.10000002384186,
+          "max": 308
+        },
+        "bodyReadyMs": {
+          "median": 514.25,
+          "min": 497.10000002384186,
+          "max": 516.8999999761581
+        },
+        "fcpMs": {
+          "median": 730,
+          "min": 716,
+          "max": 732
+        },
+        "lcpMs": {
+          "median": 2084,
+          "min": 2064,
+          "max": 2092
+        },
+        "cls": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "loadMs": {
+          "median": 1941.699999988079,
+          "min": 1917.699999988079,
+          "max": 1943.7000000476837
+        },
+        "taskMs": {
+          "median": 862.3145,
+          "min": 853.3989999999999,
+          "max": 884.889
+        },
+        "scriptMs": {
+          "median": 100.49700000000001,
+          "min": 95.082,
+          "max": 105.392
+        },
+        "styleMs": {
+          "median": 144.58599999999998,
+          "min": 137.37099999999998,
+          "max": 151.81
+        },
+        "layoutMs": {
+          "median": 162.643,
+          "min": 161.203,
+          "max": 167.97699999999998
+        },
+        "loadBlockingMs": {
+          "median": 1.5,
+          "min": 0,
+          "max": 2
+        },
+        "observationEndMs": {
+          "median": 9531.999999970198,
+          "min": 9515,
+          "max": 9539.700000047684
+        },
+        "transferBytes": {
+          "median": 647792,
+          "min": 647792,
+          "max": 647792
+        },
+        "cssBytes": {
+          "median": 30442,
+          "min": 30442,
+          "max": 30442
+        },
+        "jsBytes": {
+          "median": 211994,
+          "min": 211994,
+          "max": 211994
+        },
+        "fontBytes": {
+          "median": 26503,
+          "min": 26503,
+          "max": 26503
+        },
+        "imageBytes": {
+          "median": 23295,
+          "min": 23295,
+          "max": 23295
+        },
+        "requestCount": {
+          "median": 30,
+          "min": 30,
+          "max": 30
+        },
+        "cachedRequests": {
+          "median": 2,
+          "min": 2,
+          "max": 2
+        },
+        "unfinishedRequests": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      }
+    }
+  ],
+  "results": [
+    {
+      "name": "2020_07_math-for-programmer-chapter1-2-set-before-1",
+      "variant": "before",
+      "route": "/2020/07/math-for-programmer-chapter1-2-set",
+      "visit": "first",
+      "round": 1,
+      "ttfbMs": 4.799999952316284,
+      "responseEndMs": 296.19999998807907,
+      "bodyReadyMs": 504.5999999642372,
+      "bodyTextLength": 7502,
+      "mathNodes": 31,
+      "codeLines": 0,
+      "fonts": [
+        {
+          "family": "Libertinus Math",
+          "status": "loaded"
+        }
+      ],
+      "fcpMs": 732,
+      "lcpMs": 2256,
+      "lcpElement": {
+        "time": 2256,
+        "size": 10032,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 706.7999999523163,
+      "loadMs": 4804.899999976158,
+      "observationEndMs": 11059.5,
+      "loadBlockingMs": 1,
+      "longTaskCount": 2,
+      "longTaskMs": 249,
+      "touch": true,
+      "connection": {
+        "downlink": 1.65,
+        "rtt": 150
+      },
+      "taskMs": 917.4440000000001,
+      "scriptMs": 99.372,
+      "layoutMs": 176.067,
+      "styleMs": 147.552,
+      "heapBytes": 5938296,
+      "requestCount": 30,
+      "cachedRequests": 2,
+      "unfinishedRequests": 0,
+      "unfinishedUrls": [],
+      "transferBytes": 963632,
+      "cssBytes": 30442,
+      "jsBytes": 211994,
+      "fontBytes": 342093,
+      "imageBytes": 23295,
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+          "type": "Document",
+          "status": 200,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 28851,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 1925,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2nx-wrvswlkpp.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6627,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/03it0rvsdhn6a.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 23815,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1'/%3E%3Cpath d='M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1'/%3E%3C/svg%3E",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 2746,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 4678,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 8211,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10271,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6354,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1lcho7h0qpy0u.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10237,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 21370,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/39-kythtjmtba.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 31915,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 45711,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 71800,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 694,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 702,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 12301,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 98096,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 118848,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 721,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 7509,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9862,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 611,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9598,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "type": "Font",
+          "status": 200,
+          "mimeType": "font/woff2",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 342093,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/favicon/favicon.ico",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/x-icon",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9794,
+          "finished": true,
+          "fromCache": false
+        }
+      ],
+      "canceledRequests": [],
+      "trace": "2020_07_math-for-programmer-chapter1-2-set-before-1.trace.json.gz"
+    },
+    {
+      "name": "2020_07_math-for-programmer-chapter1-2-set-after-1",
+      "variant": "after",
+      "route": "/2020/07/math-for-programmer-chapter1-2-set",
+      "visit": "first",
+      "round": 1,
+      "ttfbMs": 2.700000047683716,
+      "responseEndMs": 306.2000000476837,
+      "bodyReadyMs": 516.8000000119209,
+      "bodyTextLength": 7502,
+      "mathNodes": 31,
+      "codeLines": 0,
+      "fonts": [
+        {
+          "family": "Libertinus Math",
+          "status": "loaded"
+        }
+      ],
+      "fcpMs": 732,
+      "lcpMs": 2092,
+      "lcpElement": {
+        "time": 2092,
+        "size": 10032,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 707.9000000357628,
+      "loadMs": 1943.7000000476837,
+      "observationEndMs": 9539.700000047684,
+      "loadBlockingMs": 0,
+      "longTaskCount": 2,
+      "longTaskMs": 237,
+      "touch": true,
+      "connection": {
+        "downlink": 1.6,
+        "rtt": 150
+      },
+      "taskMs": 853.3989999999999,
+      "scriptMs": 95.082,
+      "layoutMs": 163.809,
+      "styleMs": 137.37099999999998,
+      "heapBytes": 6796372,
+      "requestCount": 30,
+      "cachedRequests": 2,
+      "unfinishedRequests": 0,
+      "unfinishedUrls": [],
+      "transferBytes": 647792,
+      "cssBytes": 30442,
+      "jsBytes": 211994,
+      "fontBytes": 26503,
+      "imageBytes": 23295,
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3223/2020/07/math-for-programmer-chapter1-2-set",
+          "type": "Document",
+          "status": 200,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 28849,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 1925,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/2nx-wrvswlkpp.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6627,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/03it0rvsdhn6a.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 23815,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1'/%3E%3Cpath d='M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1'/%3E%3C/svg%3E",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/3dfio-m6748_e.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 2746,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 4678,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/3ptkgpnolcmqc.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 8211,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1ohpnv6e06g0p.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10271,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1xazbb1qsgize.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6354,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1lcho7h0qpy0u.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10237,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/fonts/math/LibertinusMath-Regular.woff2",
+          "type": "Font",
+          "status": 200,
+          "mimeType": "font/woff2",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 26503,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 21370,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/39-kythtjmtba.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 31915,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/0eti7nj10lus9.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 45711,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/2q1hf616yo1-d.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 71800,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 687,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/en?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 698,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 12298,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/?_rsc=BacanlJ4kLKCpO0J",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 97973,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/en?_rsc=GMMW1808pLOjGvJ9",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 118744,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/tags/algorithm/pages/1?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 718,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 7505,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/favicon/favicon.ico",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/x-icon",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9794,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1a3twp8vdjd8t.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9862,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/0woks0rh_9oqe.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 611,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1iorscktdaj84.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9598,
+          "finished": true,
+          "fromCache": false
+        }
+      ],
+      "canceledRequests": [],
+      "trace": "2020_07_math-for-programmer-chapter1-2-set-after-1.trace.json.gz"
+    },
+    {
+      "name": "2020_07_math-for-programmer-chapter1-2-set-after-2",
+      "variant": "after",
+      "route": "/2020/07/math-for-programmer-chapter1-2-set",
+      "visit": "first",
+      "round": 2,
+      "ttfbMs": 3.5,
+      "responseEndMs": 304.89999997615814,
+      "bodyReadyMs": 511.69999998807907,
+      "bodyTextLength": 7502,
+      "mathNodes": 31,
+      "codeLines": 0,
+      "fonts": [
+        {
+          "family": "Libertinus Math",
+          "status": "loaded"
+        }
+      ],
+      "fcpMs": 728,
+      "lcpMs": 2084,
+      "lcpElement": {
+        "time": 2084,
+        "size": 10032,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 702.7999999523163,
+      "loadMs": 1943.699999988079,
+      "observationEndMs": 9537.699999988079,
+      "loadBlockingMs": 2,
+      "longTaskCount": 2,
+      "longTaskMs": 239,
+      "touch": true,
+      "connection": {
+        "downlink": 1.5,
+        "rtt": 150
+      },
+      "taskMs": 862.903,
+      "scriptMs": 98.358,
+      "layoutMs": 161.203,
+      "styleMs": 144.784,
+      "heapBytes": 6758696,
+      "requestCount": 30,
+      "cachedRequests": 2,
+      "unfinishedRequests": 0,
+      "unfinishedUrls": [],
+      "transferBytes": 647792,
+      "cssBytes": 30442,
+      "jsBytes": 211994,
+      "fontBytes": 26503,
+      "imageBytes": 23295,
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3223/2020/07/math-for-programmer-chapter1-2-set",
+          "type": "Document",
+          "status": 200,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 28849,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 1925,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/2nx-wrvswlkpp.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6627,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/03it0rvsdhn6a.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 23815,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1'/%3E%3Cpath d='M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1'/%3E%3C/svg%3E",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/3dfio-m6748_e.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 2746,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 4678,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/3ptkgpnolcmqc.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 8211,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1ohpnv6e06g0p.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10271,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1xazbb1qsgize.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6354,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1lcho7h0qpy0u.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10237,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/fonts/math/LibertinusMath-Regular.woff2",
+          "type": "Font",
+          "status": 200,
+          "mimeType": "font/woff2",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 26503,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 21370,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/39-kythtjmtba.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 31915,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/0eti7nj10lus9.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 45711,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/2q1hf616yo1-d.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 71800,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 687,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/en?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 698,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 12298,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/?_rsc=BacanlJ4kLKCpO0J",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 97973,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/en?_rsc=GMMW1808pLOjGvJ9",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 118744,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/tags/algorithm/pages/1?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 718,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 7505,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/favicon/favicon.ico",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/x-icon",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9794,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1a3twp8vdjd8t.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9862,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/0woks0rh_9oqe.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 611,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1iorscktdaj84.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9598,
+          "finished": true,
+          "fromCache": false
+        }
+      ],
+      "canceledRequests": [],
+      "trace": "2020_07_math-for-programmer-chapter1-2-set-after-2.trace.json.gz"
+    },
+    {
+      "name": "2020_07_math-for-programmer-chapter1-2-set-before-2",
+      "variant": "before",
+      "route": "/2020/07/math-for-programmer-chapter1-2-set",
+      "visit": "first",
+      "round": 2,
+      "ttfbMs": 2.600000023841858,
+      "responseEndMs": 297.9000000357628,
+      "bodyReadyMs": 498,
+      "bodyTextLength": 7502,
+      "mathNodes": 31,
+      "codeLines": 0,
+      "fonts": [
+        {
+          "family": "Libertinus Math",
+          "status": "loaded"
+        }
+      ],
+      "fcpMs": 712,
+      "lcpMs": 2252,
+      "lcpElement": {
+        "time": 2252,
+        "size": 10032,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 686.8000000119209,
+      "loadMs": 4799,
+      "observationEndMs": 11051.300000011921,
+      "loadBlockingMs": 1,
+      "longTaskCount": 2,
+      "longTaskMs": 236,
+      "touch": true,
+      "connection": {
+        "downlink": 1.6,
+        "rtt": 150
+      },
+      "taskMs": 901.375,
+      "scriptMs": 92.027,
+      "layoutMs": 166.42000000000002,
+      "styleMs": 151.208,
+      "heapBytes": 5947532,
+      "requestCount": 30,
+      "cachedRequests": 2,
+      "unfinishedRequests": 0,
+      "unfinishedUrls": [],
+      "transferBytes": 963632,
+      "cssBytes": 30442,
+      "jsBytes": 211994,
+      "fontBytes": 342093,
+      "imageBytes": 23295,
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+          "type": "Document",
+          "status": 200,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 28851,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 1925,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2nx-wrvswlkpp.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6627,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/03it0rvsdhn6a.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 23815,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1'/%3E%3Cpath d='M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1'/%3E%3C/svg%3E",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 2746,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 4678,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 8211,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10271,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6354,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1lcho7h0qpy0u.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10237,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 21370,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/39-kythtjmtba.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 31915,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 45711,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 71800,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 694,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 702,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 12301,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 98096,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 118848,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 721,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 7509,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9862,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 611,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9598,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "type": "Font",
+          "status": 200,
+          "mimeType": "font/woff2",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 342093,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/favicon/favicon.ico",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/x-icon",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9794,
+          "finished": true,
+          "fromCache": false
+        }
+      ],
+      "canceledRequests": [],
+      "trace": "2020_07_math-for-programmer-chapter1-2-set-before-2.trace.json.gz"
+    },
+    {
+      "name": "2020_07_math-for-programmer-chapter1-2-set-before-3",
+      "variant": "before",
+      "route": "/2020/07/math-for-programmer-chapter1-2-set",
+      "visit": "first",
+      "round": 3,
+      "ttfbMs": 2.5,
+      "responseEndMs": 304.19999998807907,
+      "bodyReadyMs": 508.80000001192093,
+      "bodyTextLength": 7502,
+      "mathNodes": 31,
+      "codeLines": 0,
+      "fonts": [
+        {
+          "family": "Libertinus Math",
+          "status": "loaded"
+        }
+      ],
+      "fcpMs": 728,
+      "lcpMs": 2252,
+      "lcpElement": {
+        "time": 2252,
+        "size": 10032,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 702.5,
+      "loadMs": 4804.800000011921,
+      "observationEndMs": 11060,
+      "loadBlockingMs": 1,
+      "longTaskCount": 2,
+      "longTaskMs": 239,
+      "touch": true,
+      "connection": {
+        "downlink": 1.65,
+        "rtt": 150
+      },
+      "taskMs": 906.935,
+      "scriptMs": 99.93,
+      "layoutMs": 169.546,
+      "styleMs": 148.914,
+      "heapBytes": 5988104,
+      "requestCount": 30,
+      "cachedRequests": 2,
+      "unfinishedRequests": 0,
+      "unfinishedUrls": [],
+      "transferBytes": 963632,
+      "cssBytes": 30442,
+      "jsBytes": 211994,
+      "fontBytes": 342093,
+      "imageBytes": 23295,
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+          "type": "Document",
+          "status": 200,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 28851,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 1925,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2nx-wrvswlkpp.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6627,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/03it0rvsdhn6a.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 23815,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1'/%3E%3Cpath d='M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1'/%3E%3C/svg%3E",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 2746,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 4678,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 8211,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10271,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6354,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1lcho7h0qpy0u.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10237,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 21370,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/39-kythtjmtba.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 31915,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 45711,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 71800,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 694,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 702,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 12301,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 98096,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 118848,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 721,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 7509,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9862,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 611,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9598,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "type": "Font",
+          "status": 200,
+          "mimeType": "font/woff2",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 342093,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/favicon/favicon.ico",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/x-icon",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9794,
+          "finished": true,
+          "fromCache": false
+        }
+      ],
+      "canceledRequests": [],
+      "trace": "2020_07_math-for-programmer-chapter1-2-set-before-3.trace.json.gz"
+    },
+    {
+      "name": "2020_07_math-for-programmer-chapter1-2-set-after-3",
+      "variant": "after",
+      "route": "/2020/07/math-for-programmer-chapter1-2-set",
+      "visit": "first",
+      "round": 3,
+      "ttfbMs": 4.5,
+      "responseEndMs": 300.10000002384186,
+      "bodyReadyMs": 497.10000002384186,
+      "bodyTextLength": 7502,
+      "mathNodes": 31,
+      "codeLines": 0,
+      "fonts": [
+        {
+          "family": "Libertinus Math",
+          "status": "loaded"
+        }
+      ],
+      "fcpMs": 716,
+      "lcpMs": 2064,
+      "lcpElement": {
+        "time": 2064,
+        "size": 10032,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 691.5,
+      "loadMs": 1917.699999988079,
+      "observationEndMs": 9515,
+      "loadBlockingMs": 1,
+      "longTaskCount": 2,
+      "longTaskMs": 241,
+      "touch": true,
+      "connection": {
+        "downlink": 1.45,
+        "rtt": 150
+      },
+      "taskMs": 884.889,
+      "scriptMs": 102.63600000000001,
+      "layoutMs": 167.97699999999998,
+      "styleMs": 151.81,
+      "heapBytes": 6758668,
+      "requestCount": 30,
+      "cachedRequests": 2,
+      "unfinishedRequests": 0,
+      "unfinishedUrls": [],
+      "transferBytes": 647792,
+      "cssBytes": 30442,
+      "jsBytes": 211994,
+      "fontBytes": 26503,
+      "imageBytes": 23295,
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3223/2020/07/math-for-programmer-chapter1-2-set",
+          "type": "Document",
+          "status": 200,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 28849,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 1925,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/2nx-wrvswlkpp.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6627,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/03it0rvsdhn6a.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 23815,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1'/%3E%3Cpath d='M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1'/%3E%3C/svg%3E",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/3dfio-m6748_e.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 2746,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 4678,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/3ptkgpnolcmqc.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 8211,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1ohpnv6e06g0p.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10271,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1xazbb1qsgize.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6354,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1lcho7h0qpy0u.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10237,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/fonts/math/LibertinusMath-Regular.woff2",
+          "type": "Font",
+          "status": 200,
+          "mimeType": "font/woff2",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 26503,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 21370,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/39-kythtjmtba.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 31915,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/0eti7nj10lus9.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 45711,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/2q1hf616yo1-d.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 71800,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 687,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/en?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 698,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 12298,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/?_rsc=BacanlJ4kLKCpO0J",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 97973,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/en?_rsc=GMMW1808pLOjGvJ9",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 118744,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/tags/algorithm/pages/1?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 718,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 7505,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/favicon/favicon.ico",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/x-icon",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9794,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1a3twp8vdjd8t.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9862,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/0woks0rh_9oqe.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 611,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1iorscktdaj84.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9598,
+          "finished": true,
+          "fromCache": false
+        }
+      ],
+      "canceledRequests": [],
+      "trace": "2020_07_math-for-programmer-chapter1-2-set-after-3.trace.json.gz"
+    },
+    {
+      "name": "2020_07_math-for-programmer-chapter1-2-set-after-4",
+      "variant": "after",
+      "route": "/2020/07/math-for-programmer-chapter1-2-set",
+      "visit": "first",
+      "round": 4,
+      "ttfbMs": 2.899999976158142,
+      "responseEndMs": 308,
+      "bodyReadyMs": 516.8999999761581,
+      "bodyTextLength": 7502,
+      "mathNodes": 31,
+      "codeLines": 0,
+      "fonts": [
+        {
+          "family": "Libertinus Math",
+          "status": "loaded"
+        }
+      ],
+      "fcpMs": 732,
+      "lcpMs": 2084,
+      "lcpElement": {
+        "time": 2084,
+        "size": 10032,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 708.7999999523163,
+      "loadMs": 1939.699999988079,
+      "observationEndMs": 9526.299999952316,
+      "loadBlockingMs": 2,
+      "longTaskCount": 2,
+      "longTaskMs": 240,
+      "touch": true,
+      "connection": {
+        "downlink": 1.4,
+        "rtt": 150
+      },
+      "taskMs": 861.726,
+      "scriptMs": 105.392,
+      "layoutMs": 161.477,
+      "styleMs": 144.38799999999998,
+      "heapBytes": 6751248,
+      "requestCount": 30,
+      "cachedRequests": 2,
+      "unfinishedRequests": 0,
+      "unfinishedUrls": [],
+      "transferBytes": 647792,
+      "cssBytes": 30442,
+      "jsBytes": 211994,
+      "fontBytes": 26503,
+      "imageBytes": 23295,
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3223/2020/07/math-for-programmer-chapter1-2-set",
+          "type": "Document",
+          "status": 200,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 28849,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 1925,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/2nx-wrvswlkpp.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6627,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/03it0rvsdhn6a.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 23815,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1'/%3E%3Cpath d='M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1'/%3E%3C/svg%3E",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/3dfio-m6748_e.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 2746,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 4678,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/3ptkgpnolcmqc.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 8211,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1ohpnv6e06g0p.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10271,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1xazbb1qsgize.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6354,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1lcho7h0qpy0u.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10237,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 21370,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/fonts/math/LibertinusMath-Regular.woff2",
+          "type": "Font",
+          "status": 200,
+          "mimeType": "font/woff2",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 26503,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/0eti7nj10lus9.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 45711,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/39-kythtjmtba.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 31915,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/2q1hf616yo1-d.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 71800,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 687,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/en?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 698,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 12298,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/?_rsc=BacanlJ4kLKCpO0J",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 97973,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/en?_rsc=GMMW1808pLOjGvJ9",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 118744,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/tags/algorithm/pages/1?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 718,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 7505,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/favicon/favicon.ico",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/x-icon",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9794,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1a3twp8vdjd8t.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9862,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/0woks0rh_9oqe.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 611,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3223/_next/static/chunks/1iorscktdaj84.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9598,
+          "finished": true,
+          "fromCache": false
+        }
+      ],
+      "canceledRequests": [],
+      "trace": "2020_07_math-for-programmer-chapter1-2-set-after-4.trace.json.gz"
+    },
+    {
+      "name": "2020_07_math-for-programmer-chapter1-2-set-before-4",
+      "variant": "before",
+      "route": "/2020/07/math-for-programmer-chapter1-2-set",
+      "visit": "first",
+      "round": 4,
+      "ttfbMs": 4.100000023841858,
+      "responseEndMs": 296.19999998807907,
+      "bodyReadyMs": 503.69999998807907,
+      "bodyTextLength": 7502,
+      "mathNodes": 31,
+      "codeLines": 0,
+      "fonts": [
+        {
+          "family": "Libertinus Math",
+          "status": "loaded"
+        }
+      ],
+      "fcpMs": 728,
+      "lcpMs": 2256,
+      "lcpElement": {
+        "time": 2256,
+        "size": 10032,
+        "tag": "SPAN",
+        "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+        "url": ""
+      },
+      "cls": 0,
+      "domContentLoadedMs": 701.1000000238419,
+      "loadMs": 4799,
+      "observationEndMs": 11047,
+      "loadBlockingMs": 1,
+      "longTaskCount": 2,
+      "longTaskMs": 243,
+      "touch": true,
+      "connection": {
+        "downlink": 1.45,
+        "rtt": 150
+      },
+      "taskMs": 943.686,
+      "scriptMs": 104.917,
+      "layoutMs": 170.05,
+      "styleMs": 148.258,
+      "heapBytes": 5959996,
+      "requestCount": 30,
+      "cachedRequests": 2,
+      "unfinishedRequests": 0,
+      "unfinishedUrls": [],
+      "transferBytes": 963632,
+      "cssBytes": 30442,
+      "jsBytes": 211994,
+      "fontBytes": 342093,
+      "imageBytes": 23295,
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+          "type": "Document",
+          "status": 200,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 28851,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 1925,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/03it0rvsdhn6a.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 23815,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2nx-wrvswlkpp.css",
+          "type": "Stylesheet",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6627,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1'/%3E%3Cpath d='M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1'/%3E%3C/svg%3E",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 0,
+          "finished": true,
+          "fromCache": true
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 2746,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 4678,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 8211,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10271,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 6354,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1lcho7h0qpy0u.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 10237,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "type": "Image",
+          "status": 200,
+          "mimeType": "image/avif",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 21370,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/39-kythtjmtba.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 31915,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 45711,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 71800,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 694,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 702,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 12301,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 98096,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 118848,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=6hNcGUaLfKvjancj",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 721,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "type": "Fetch",
+          "status": 200,
+          "mimeType": "text/x-component",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 7509,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9862,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 611,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "type": "Script",
+          "status": 200,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9598,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "type": "Font",
+          "status": 200,
+          "mimeType": "font/woff2",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 342093,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/favicon/apple-touch-icon.png",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 39146,
+          "finished": true,
+          "fromCache": false
+        },
+        {
+          "url": "http://127.0.0.1:3222/favicon/favicon.ico",
+          "type": "Other",
+          "status": 200,
+          "mimeType": "image/x-icon",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "encodedBytes": 9794,
+          "finished": true,
+          "fromCache": false
+        }
+      ],
+      "canceledRequests": [],
+      "trace": "2020_07_math-for-programmer-chapter1-2-set-before-4.trace.json.gz"
+    }
+  ]
+}

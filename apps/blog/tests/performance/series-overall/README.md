@@ -143,6 +143,33 @@ PERF_AFTER_DIR="$PWD/.cache/series-performance/font-removal/apps/blog" \
 node .cache/series-performance/font-removal/apps/blog/scripts/compare-performance.mjs http://127.0.0.1:3222 http://127.0.0.1:3223 .cache/series-performance/font-removal-browser
 ```
 
+### 수식 글꼴 서브셋 전후 비교
+
+수식 글꼴을 글에서 쓰는 글리프만 남긴 서브셋으로 바꾼 뒤의 비교는 [font-subset-results.json](font-subset-results.json)에 보존했다. `before`는 PR #829를 머지한 `d6ceb2fc`의 전체 글꼴(341,752바이트, SHA-256 `28966800…`)이고, `after`는 같은 커밋에 서브셋 글꼴(26,164바이트, SHA-256 `a6c2452d…`)만 바꿔 넣은 작업 트리다. 코드와 글, 공개 자산은 같고 글꼴 파일 하나만 다르다. 수식 글의 첫 방문만 양쪽 네 번씩 총 8회 측정했으며 홈과 코드 글, 재방문은 포함하지 않았다.
+
+서브셋은 [`subset-math-font.mjs`](../../../scripts/subset-math-font.mjs)가 만든다. posts와 series를 전부 렌더해 `<math>` 안의 코드포인트를 모으고, 글자 하나짜리 `<mi>`는 브라우저의 italic mapping 결과(U+1D400 블록)와 원래 글자를 둘 다 넣는다. 원래 글자를 빼면 그리는 글리프는 같아도 Chromium이 `<mi>` 상자 높이를 시스템 글꼴로 재서 배치가 달라졌다. 전체 글꼴과 서브셋을 각각 서빙하는 두 서버에서 수식 글 12편의 `<math>` 145개를 `getBoundingClientRect`로 대조해 0건의 차이를 확인했고, CDP `CSS.getPlatformFontsForNode`로 모든 글리프가 Libertinus Math로 그려진 것도 확인했다(한글이 들어간 `<mi>` 넷은 원본에도 없어 양쪽 모두 시스템 글꼴이다). 글리프는 4,221개에서 230개로 줄었고 MATH 테이블과 늘어나는 글리프 6개(괄호, 중괄호, 세로줄, 근호)의 변형과 조립 정보, `ssty` 대체 글리프는 원본과 같다.
+
+| 항목                   |           서브셋 전 |         서브셋 후 |
+| ---------------------- | ------------------: | ----------------: |
+| 수식 글꼴 전송         | 342,093B (334.1KiB) | 26,503B (25.9KiB) |
+| 전체 전송              |            941.0KiB |          632.6KiB |
+| 글꼴 응답 완료 (추적)  |     4,798ms~4,805ms |   1,371ms~1,403ms |
+| FCP 중앙값             |               728ms |             730ms |
+| LCP 중앙값 (최종 대상) |      2,254ms (배너) |    2,084ms (배너) |
+| `load` 중앙값          |             4,802ms |           1,942ms |
+
+LCP 후보 이력은 추적 파일의 `largestContentfulPaint::Candidate`에서 읽었다. 여덟 번 모두 썸네일(1,600), 제목(5,092), 배너(10,032)의 세 후보로 끝났고 글꼴 도착 뒤에 문단이 다시 기록된 실행은 없었다. 서브셋 전에는 글꼴이 배너보다 약 2.5초 늦게 도착했고, 서브셋 후에는 배너보다 약 0.7초 먼저 도착한다. 배너가 사라진 뒤 문단이 최종 후보가 되더라도 글꼴 도착이 그보다 앞서므로 글꼴 때문에 늦게 기록될 여지가 없어졌다. 측정일은 2026년 9월 15일이고 배너는 여전히 표시됐다. FCP는 같았고 CLS는 8회 모두 0이었다.
+
+두 서버는 3222(전체 글꼴)와 3223(서브셋)에서 실행했다. 전체 글꼴 쪽은 `main`을 `.cache/series-performance/full-font`에 detached worktree로 꺼내 빌드했다.
+
+```sh
+PERF_ROUNDS=4 PERF_CPU=4 PERF_LATENCY_MS=150 PERF_DOWNLOAD_KBPS=1600 PERF_UPLOAD_KBPS=1600 PERF_REPEAT_VISIT=0 \
+PERF_ROUTES=/2020/07/math-for-programmer-chapter1-2-set \
+PERF_BEFORE_DIR="$PWD/.cache/series-performance/full-font/apps/blog" \
+PERF_AFTER_DIR="$PWD/apps/blog" \
+node apps/blog/scripts/compare-performance.mjs http://127.0.0.1:3222 http://127.0.0.1:3223 .cache/series-performance/font-subset-browser
+```
+
 ### 본문의 Mermaid 그래프
 
 1편과 3편의 그래프는 본문 안의 Mermaid 코드로 작성했다. 별도의 이미지 생성 도구는 필요하지 않으며 블로그의 기존 Mermaid 렌더러가 표시한다. `results.json`과 `builds.json`, `font-removal-results.json`의 개별 실행에서 중앙값을 계산해 막대에 넣었다. 시간 축과 전송량 축은 모두 0에서 시작하며, 실행 범위는 본문과 원자료에 남겼다. 최초 마이그레이션 비교와 실제 일반 글꼴 제거 전후는 서로 다른 실험이다.
