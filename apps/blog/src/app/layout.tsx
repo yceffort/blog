@@ -1,47 +1,42 @@
-import './tailwind.css'
+import * as stylex from '@stylexjs/stylex'
 import {Providers} from '@yceffort/shared/components'
 import type {Metadata} from 'next'
-import {Fraunces, Inter, JetBrains_Mono} from 'next/font/google'
 import Script from 'next/script'
+
+import '@/styles/stylex.css'
+import '@/styles/tokens.stylex'
+
 import {Suspense, type ReactNode} from 'react'
 
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-sans',
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-mono',
-})
-
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-serif',
-  style: ['italic', 'normal'],
-})
-
-import AmbientEffects from '@/components/AmbientEffects'
-import {BotTracker} from '@/components/BotTracker'
-import {GoogleAnalyticsPageViewTracker} from '@/components/GoogleAnalyticsPageViewTracker'
-import {GoogleAnalyticsWebVitalsTracker} from '@/components/GoogleAnalyticsWebVitalsTracker'
-import {InternalNavTracker} from '@/components/InternalNavTracker'
-import LayoutWrapper from '@/components/LayoutWrapper'
-import NavigationDirection from '@/components/NavigationDirection'
-import {OutboundLinkTracker} from '@/components/OutboundLinkTracker'
-import PullToRefresh from '@/components/PullToRefresh'
-import {ServiceWorkerRegistration} from '@/components/ServiceWorkerRegistration'
+import {BotTracker} from '@/components/analytics/BotTracker'
+import {GoogleAnalyticsPageViewTracker} from '@/components/analytics/GoogleAnalyticsPageViewTracker'
+import {GoogleAnalyticsWebVitalsTracker} from '@/components/analytics/GoogleAnalyticsWebVitalsTracker'
+import {InternalNavTracker} from '@/components/analytics/InternalNavTracker'
+import {OutboundLinkTracker} from '@/components/analytics/OutboundLinkTracker'
+import AmbientEffects from '@/components/layout/AmbientEffects'
+import LayoutWrapper from '@/components/layout/LayoutWrapper'
+import NavigationDirection from '@/components/layout/NavigationDirection'
+import PullToRefresh from '@/components/pwa/PullToRefresh'
+import {ServiceWorkerRegistration} from '@/components/pwa/ServiceWorkerRegistration'
 import {SiteConfig} from '@/config'
 import {buildOgImageUrl} from '@/utils/og'
 import {getAllPosts} from '@/utils/Post'
-
+const sx = stylex.create({
+  body: {
+    '@layer utilities': {
+      WebkitFontSmoothing: 'antialiased',
+      MozOsxFontSmoothing: 'grayscale',
+    },
+  },
+})
 export const metadata: Metadata = {
   title: SiteConfig.title,
   description: SiteConfig.url,
-  authors: [{name: SiteConfig.author.name}],
+  authors: [
+    {
+      name: SiteConfig.author.name,
+    },
+  ],
   referrer: 'origin-when-cross-origin',
   creator: SiteConfig.author.name,
   publisher: SiteConfig.author.name,
@@ -101,27 +96,20 @@ export const metadata: Metadata = {
     },
   },
 }
-
 const GA_MEASUREMENT_ID = SiteConfig.googleAnalyticsId
 // 로컬에서 프로덕션 빌드를 띄우면(next start) NODE_ENV가 production이라 아래 가드를
 // 통과하고, 개발 중 조회가 운영 GA4에 그대로 섞인다. 실제 서비스 호스트에서만 켠다.
 const GA_HOST = new URL(SiteConfig.url).hostname
-
 export default async function Layout({children}: {children: ReactNode}) {
   const enSlugs = (await getAllPosts('en')).map((post) => post.fields.slug)
-
   return (
     <>
-      <html
-        lang="ko"
-        data-scroll-behavior="smooth"
-        suppressHydrationWarning
-        className={`${inter.variable} ${jetbrainsMono.variable} ${fraunces.variable}`}
-      >
+      <html lang="ko" data-scroll-behavior="smooth" suppressHydrationWarning>
         <head>
           <script
             dangerouslySetInnerHTML={{
-              __html: `(function(){try{var m=document.cookie.match(/(?:^|;\\s*)tw-theme=([^;]+)/);if(m){localStorage.setItem('theme',decodeURIComponent(m[1]));}}catch(e){}})();`,
+              __html:
+                "(function(){try{var m=document.cookie.match(/(?:^|;\\s*)tw-theme=([^;]+)/);if(m){localStorage.setItem('theme',decodeURIComponent(m[1]));}}catch(e){}})();",
             }}
           />
           <link
@@ -147,7 +135,7 @@ export default async function Layout({children}: {children: ReactNode}) {
           <meta name="theme-color" content="#ffffff" />
           <meta name="mobile-web-app-capable" content="yes" />
         </head>
-        <body className="antialiased">
+        <body className={stylex.props(sx.body).className}>
           <Suspense fallback={null}>
             <NavigationDirection />
           </Suspense>

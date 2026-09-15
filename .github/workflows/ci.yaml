@@ -49,7 +49,67 @@ jobs:
       - run: corepack prepare --activate
       - run: pnpm install --frozen-lockfile
 
+      - name: Install WASI SDK
+        working-directory: ${{ runner.temp }}
+        run: |
+          curl --fail --location --retry 3 https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-27/wasi-sdk-27.0-x86_64-linux.tar.gz --output wasi-sdk.tar.gz
+          echo "b7d4d944c88503e4f21d84af07ac293e3440b1b6210bfd7fe78e0afd92c23bc2  wasi-sdk.tar.gz" | sha256sum --check
+          tar -xzf wasi-sdk.tar.gz
+
       - run: pnpm build
+        env:
+          WASI_SDK_PATH: ${{ runner.temp }}/wasi-sdk-27.0-x86_64-linux
+          # 커밋된 바이너리를 갱신해 아래 대조를 성립시키는 것은 이 잡뿐이다.
+          MARKDOWN_RS_WRITE_PKG: '1'
+
+      # 배포(Vercel)는 wasi-sdk 없이 커밋된 wasm 을 그대로 싣는다. 방금 소스에서
+      # 다시 빌드한 결과와 다르면 CI 가 검사한 바이너리와 배포되는 바이너리가 갈린다.
+      - name: Committed wasm matches the Rust source
+        id: wasmcheck
+        run: |
+          git show HEAD:packages/markdown-rs/pkg/markdown_rs.wasm | sha256sum
+          sha256sum packages/markdown-rs/pkg/markdown_rs.wasm
+          git diff --exit-code -- packages/markdown-rs/pkg/markdown_rs.wasm \
+            || { echo "::error::pkg/markdown_rs.wasm differs from the CI build. Compare the ci-markdown-wasm artifact before updating the committed binary."; exit 1; }
+
+      - name: Preserve mismatched wasm for comparison
+        if: failure() && steps.wasmcheck.conclusion == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-markdown-wasm
+          path: packages/markdown-rs/pkg/markdown_rs.wasm
+          retention-days: 3
+
+  verify:
+    name: Verify
+    runs-on: ubuntu-latest
+    needs: [lint-and-prettier]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # cargo test 는 네이티브 빌드라 wasi-sdk 가 필요 없다.
+      # 버전은 packages/markdown-rs/rust-toolchain.toml 이 정한다.
+      - name: Rust tests
+        run: pnpm --filter @yceffort/markdown-rs test
+
+      # 커밋된 wasm 으로 글과 시리즈 전체를 기존 JS 파이프라인과 대조한다.
+      - name: Markdown parity
+        run: pnpm --filter @yceffort/markdown-rs parity
+
+      - name: Install Chromium
+        run: pnpm --filter blog exec playwright install --with-deps chromium
+
+      - name: Style parity
+        run: pnpm --filter blog test:styles
 
   lighthouse:
     # 임시막기

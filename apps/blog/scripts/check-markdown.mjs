@@ -19,12 +19,13 @@ import {existsSync, readdirSync, readFileSync, statSync} from 'node:fs'
 import {basename, dirname, join, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
 
+import {renderMarkdown} from '@yceffort/markdown-rs'
 import frontMatter from 'front-matter'
 import GithubSlugger, {slug as slugify} from 'github-slugger'
+import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
+import {Fragment, jsx, jsxs} from 'react/jsx-runtime'
 import remarkCjkFriendly from 'remark-cjk-friendly'
 import remarkGfm from 'remark-gfm'
-import remarkMath from 'remark-math'
-import remarkMdx from 'remark-mdx'
 import remarkParse from 'remark-parse'
 import {unified} from 'unified'
 
@@ -88,13 +89,8 @@ function toPublicPath(postPath, src) {
   return `/${imgDir}/${src.slice(src.indexOf('/') + 1)}`
 }
 
+// 본문 휴리스틱(취소선, 짝 안 맞는 강조)용 트리. 위치 정보가 필요해 remark로 읽는다.
 const parser = unified().use(remarkParse).use(remarkGfm).use(remarkCjkFriendly)
-// MDXRemote가 md를 MDX로 읽으므로 파싱 가능 여부는 실제 remark 플러그인 구성 그대로 본다.
-const mdxParser = unified()
-  .use(remarkParse)
-  .use(remarkGfm)
-  .use(remarkMath)
-  .use(remarkMdx)
 
 const postFiles = [...walkFiles(POSTS_DIR)]
 const seriesFiles = readdirSync(SERIES_DIR)
@@ -241,6 +237,22 @@ function checkBody(file, body, tree, report) {
       }
     }
 
+    // 예전 MDX 파이프라인은 import/export를 실행했지만 지금은 평문으로 렌더된다.
+    // 문장이 아니라 진짜 구문일 때만 잡는다.
+    if (
+      node.type === 'paragraph' &&
+      node.children[0]?.type === 'text' &&
+      /^(?:import\s.*\sfrom\s['"]|export\s(?:default|const|function|class)\s)/.test(
+        node.children[0].value,
+      )
+    ) {
+      report(
+        'error',
+        line,
+        'MDX import/export는 지원하지 않는다 (본문에 그대로 보인다)',
+      )
+    }
+
     if (node.type === 'image' && isPost && !/^https?:/.test(node.url)) {
       const publicPath = toPublicPath(file, node.url)
       if (!existsSync(join(PUBLIC_DIR, publicPath))) {
@@ -278,6 +290,23 @@ function checkBody(file, body, tree, report) {
   }
 }
 
+// renderPost.tsx의 MDXComponents 자리를 메우는 스텁. tsx라 이 스크립트에서 못 읽으므로
+// 이름이 무엇이든 컴포넌트가 있다고 보고 넘긴다. 여기서 잡는 것은 컴포넌트가 실제로
+// 있는지가 아니라 트리가 JSX로 바뀌는지다.
+const stub = () => null
+const jsxStubs = new Proxy({}, {get: () => stub, has: () => true})
+const createStubEvaluater = () => ({
+  evaluateExpression(expression) {
+    if (expression.type !== 'Identifier') {
+      throw new Error(`MDX expression is not supported: ${expression.type}`)
+    }
+    return stub
+  },
+  evaluateProgram() {
+    throw new Error('MDX import/export is not supported')
+  },
+})
+
 function checkFile(file) {
   const raw = readFileSync(file, 'utf8')
   const {attributes, body} = frontMatter(raw)
@@ -290,15 +319,22 @@ function checkFile(file) {
 
   checkFrontMatter(file, attributes, report)
 
-  // MDXRemote가 md를 MDX로 파싱하므로 본문의 { 나 < 하나가 빌드를 통째로 깨뜨린다.
+  // 본문을 MDX로 읽으므로 { 나 < 하나가 빌드를 통째로 깨뜨린다. hast를 만드는 데서
+  // 멈추지 않고 renderPost.tsx와 같은 JSX 변환까지 돌린다. 실제 컴포넌트 구현은 없어도
+  // 되지만(이름은 스텁으로 잇는다) 트리를 JSX로 못 바꾸는 글은 여기서 걸린다.
   try {
-    mdxParser.parse(body)
+    toJsxRuntime(renderMarkdown(body, file), {
+      Fragment,
+      jsx,
+      jsxs,
+      components: jsxStubs,
+      createEvaluater: createStubEvaluater,
+    })
   } catch (error) {
-    const line = (error.line ?? 1) + lineOffset
     found.push({
       severity: 'error',
-      line,
-      message: `MDX로 파싱할 수 없다: ${error.reason ?? error.message}`,
+      line: 1,
+      message: `렌더할 수 없다: ${error.message}`,
     })
   }
 
@@ -318,6 +354,10 @@ const files = targets.length
         (file) => file.startsWith(POSTS_DIR) || file.startsWith(SERIES_DIR),
       )
   : [...postFiles, ...seriesFiles]
+
+// renderPost.tsx 와 같은 조건으로 렌더한다. 바인딩이 최초 호출 시 작업 디렉터리의
+// public 을 WASI 에 연결하므로 이미지 단계를 거치려면 그 전에 옮겨야 한다.
+process.chdir(BLOG_DIR)
 
 let errorCount = 0
 let warnCount = 0

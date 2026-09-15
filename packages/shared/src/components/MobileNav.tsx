@@ -5,6 +5,28 @@ import {usePathname} from 'next/navigation'
 import {memo, useCallback, useEffect, useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 
+export interface MobileNavClassNames {
+  root: string
+  toggle: string
+  toggleIcon: string
+  visible: string
+  hidden: string
+  backdrop: string
+  sheetVisible: string
+  sheetHidden: string
+  sheet: string
+  dialog: string
+  handleContainer: string
+  handle: string
+  heading: string
+  nav: string
+  link: string
+  index: string
+  label: string
+  activeDot: string
+  close: string
+}
+
 interface MenuItem {
   label: string
   path: string
@@ -12,11 +34,15 @@ interface MenuItem {
 
 interface MobileNavProps {
   menu: MenuItem[]
+  classNames: MobileNavClassNames
 }
 
 const EXIT_MS = 280
 
-const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
+const MobileNav = memo(function MobileNavBase({
+  menu,
+  classNames,
+}: MobileNavProps) {
   const pathname = usePathname() ?? '/'
   const [rendered, setRendered] = useState(false)
   const [open, setOpen] = useState(false)
@@ -91,17 +117,17 @@ const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
   }
 
   return (
-    <div className="sm:hidden">
+    <div className={classNames.root}>
       <button
         type="button"
-        className="flex h-10 w-10 items-center justify-center rounded-lg transition-colors"
+        className={classNames.toggle}
         aria-label="Toggle Menu"
         aria-expanded={open}
         onClick={toggleNav}
         style={{color: 'var(--ink-2)'}}
       >
         <svg
-          className="h-6 w-6"
+          className={classNames.toggleIcon}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -119,8 +145,8 @@ const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
         createPortal(
           <>
             <div
-              className={`fixed inset-0 z-[100] transition-opacity duration-300 ${
-                open ? 'opacity-100' : 'pointer-events-none opacity-0'
+              className={`${classNames.backdrop} ${
+                open ? classNames.visible : classNames.hidden
               }`}
               style={{
                 background: 'rgba(0, 0, 0, 0.55)',
@@ -132,15 +158,13 @@ const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
             />
 
             <div
-              className={`fixed inset-x-0 bottom-0 z-[101] transition-[translate,opacity] duration-300 ease-out ${
-                open
-                  ? 'translate-y-0 opacity-100'
-                  : 'pointer-events-none translate-y-full opacity-0'
+              className={`${classNames.sheet} ${
+                open ? classNames.sheetVisible : classNames.sheetHidden
               }`}
             >
               <dialog
                 open
-                className="block w-full rounded-t-[28px] px-5 pb-7 pt-3"
+                className={classNames.dialog}
                 style={{
                   background: 'var(--surface)',
                   borderTop: '1px solid var(--border-2)',
@@ -149,15 +173,15 @@ const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
                 aria-modal="true"
                 aria-label="Navigation menu"
               >
-                <div className="mb-5 flex justify-center">
+                <div className={classNames.handleContainer}>
                   <div
-                    className="h-[5px] w-11 rounded-full"
+                    className={classNames.handle}
                     style={{background: 'var(--border-2)'}}
                   />
                 </div>
 
                 <div
-                  className="mb-3 px-3 text-[10px] font-medium uppercase"
+                  className={classNames.heading}
                   style={{
                     color: 'var(--ink-4)',
                     fontFamily: 'var(--font-mono), monospace',
@@ -167,7 +191,7 @@ const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
                   Navigation
                 </div>
 
-                <nav className="flex flex-col gap-1">
+                <nav className={classNames.nav}>
                   {menu.map((link, i) => {
                     const external = link.path.startsWith('http')
                     const active = isActive(link.path)
@@ -182,13 +206,12 @@ const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
                               'inset 0 0 0 1px color-mix(in oklab, var(--primary) 28%, transparent)',
                           }
                         : undefined,
-                      className:
-                        'group relative flex items-center gap-4 rounded-2xl px-4 py-3.5 transition-colors',
+                      className: classNames.link,
                     } as const
                     const content = (
                       <>
                         <span
-                          className="text-[11px] tabular-nums"
+                          className={classNames.index}
                           style={{
                             fontFamily: 'var(--font-mono), monospace',
                             color: active ? 'var(--primary)' : 'var(--ink-4)',
@@ -198,7 +221,7 @@ const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
                           {String(i + 1).padStart(2, '0')}
                         </span>
                         <span
-                          className="flex-1 text-[17px] font-semibold"
+                          className={classNames.label}
                           style={{
                             color: active ? 'var(--ink)' : 'var(--ink-2)',
                             letterSpacing: '-0.01em',
@@ -224,7 +247,7 @@ const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
                           </svg>
                         ) : active ? (
                           <span
-                            className="h-1.5 w-1.5 rounded-full"
+                            className={classNames.activeDot}
                             style={{
                               background: 'var(--primary-3)',
                               boxShadow: '0 0 10px var(--primary-3)',
@@ -269,7 +292,7 @@ const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
 
                 <button
                   type="button"
-                  className="mt-5 w-full rounded-2xl py-3.5 text-sm font-medium transition-colors"
+                  className={classNames.close}
                   style={{
                     background: 'var(--surface-2)',
                     color: 'var(--ink-3)',

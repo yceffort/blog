@@ -2,10 +2,11 @@ import {stripTitleEmphasis} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 import Link from 'next/link'
 
+import * as archiveStyles from '@/app/archive/archive.styles'
+import * as ambientStyles from '@/components/layout/ambient.styles'
 import {SiteConfig} from '@/config'
 import type {Post} from '@/type'
 import {getAllPosts} from '@/utils/Post'
-
 export const metadata: Metadata = {
   title: 'Archive',
   description: `${SiteConfig.title}의 전체 글을 연도별로 모아봅니다.`,
@@ -13,10 +14,8 @@ export const metadata: Metadata = {
     canonical: `${SiteConfig.url}/archive`,
   },
 }
-
 export default async function ArchivePage() {
   const posts = await getAllPosts('ko')
-
   const byYear = new Map<number, Post[]>()
   for (const post of posts) {
     const year = new Date(post.frontMatter.date).getFullYear()
@@ -28,13 +27,12 @@ export default async function ArchivePage() {
     }
   }
   const years = [...byYear.keys()].toSorted((a, b) => b - a)
-
   return (
-    <div className="page-view archive-view">
-      <header className="archive-head">
+    <div className={`page-view archive-view ${ambientStyles.page_view}`}>
+      <header className={`archive-head ${archiveStyles.archive_head}`}>
         <span className="sec-count">ARCHIVE</span>
-        <h1>전체 글</h1>
-        <p className="archive-sub">
+        <h1 className={archiveStyles.element_h1}>전체 글</h1>
+        <p className={`archive-sub ${archiveStyles.archive_sub}`}>
           {posts.length}개의 글 · {years.length}개 연도
         </p>
       </header>
@@ -42,23 +40,35 @@ export default async function ArchivePage() {
       {years.map((year) => {
         const yearPosts = byYear.get(year) ?? []
         return (
-          <section key={year} id={`${year}`} className="archive-year">
-            <div className="archive-year-head">
-              <h2>{year}</h2>
-              <span>{yearPosts.length}</span>
+          <section
+            key={year}
+            id={`${year}`}
+            className={`archive-year ${archiveStyles.archive_year}`}
+          >
+            <div
+              className={`archive-year-head ${archiveStyles.archive_year_head}`}
+            >
+              <h2 className={archiveStyles.element_h2}>{year}</h2>
+              <span className={archiveStyles.element_span}>
+                {yearPosts.length}
+              </span>
             </div>
-            <ul className="archive-list">
+            <ul className={`archive-list ${archiveStyles.archive_list}`}>
               {yearPosts.map((post) => (
                 <li key={post.fields.slug}>
                   <Link
                     href={`/${post.fields.slug}`}
-                    className="archive-item"
+                    className={`archive-item ${archiveStyles.archive_item}`}
                     prefetch={false}
                   >
-                    <span className="archive-date">
+                    <span
+                      className={`archive-date ${archiveStyles.archive_date}`}
+                    >
                       {post.frontMatter.date.slice(5, 10)}
                     </span>
-                    <span className="archive-title">
+                    <span
+                      className={`archive-title ${archiveStyles.archive_title}`}
+                    >
                       {stripTitleEmphasis(post.frontMatter.title)}
                     </span>
                   </Link>

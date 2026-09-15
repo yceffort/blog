@@ -7,7 +7,7 @@ pre-commit:
       run: pnpm exec oxlint --type-aware --fix {staged_files}
       stage_fixed: true
     oxfmt:
-      glob: '*.{ts,cts,tsx,js,cjs,jsx,json,md,yaml,yml}'
+      glob: '*.{ts,cts,tsx,js,cjs,jsx,json,md,yaml,yml,toml}'
       exclude: 'labs/**'
       run: pnpm exec oxfmt {staged_files}
       stage_fixed: true

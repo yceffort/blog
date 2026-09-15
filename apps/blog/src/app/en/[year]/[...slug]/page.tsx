@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex'
 import {parseTitleEmphasis, stripTitleEmphasis} from '@yceffort/shared/utils'
 import {format} from 'date-fns'
 import {cacheLife, cacheTag} from 'next/cache'
@@ -6,15 +7,16 @@ import {notFound, permanentRedirect} from 'next/navigation'
 import Script from 'next/script'
 import {ViewTransition} from 'react'
 
-import MathLoader from '@/components/layouts/Post/math'
-import {PostArticle} from '@/components/PostArticle'
-import ProfileImage from '@/components/ProfileImage'
-import RelatedPosts from '@/components/RelatedPosts'
-import SeriesNavigation from '@/components/SeriesNavigation'
-import SeriesPrevNext from '@/components/SeriesPrevNext'
-import SubscribeCta from '@/components/SubscribeCta'
-import TableOfContents from '@/components/TableOfContents'
-import Tag from '@/components/Tag'
+import * as ambientStyles from '@/components/layout/ambient.styles'
+import {PostArticle} from '@/components/post/PostArticle'
+import ProfileImage from '@/components/post/ProfileImage'
+import * as readingProgressStyles from '@/components/post/reading-progress.styles'
+import RelatedPosts from '@/components/post/RelatedPosts'
+import SubscribeCta from '@/components/post/SubscribeCta'
+import TableOfContents from '@/components/post/TableOfContents'
+import Tag from '@/components/post/Tag'
+import SeriesNavigation from '@/components/series/SeriesNavigation'
+import SeriesPrevNext from '@/components/series/SeriesPrevNext'
 import {SiteConfig} from '@/config'
 import {buildBlogPostingJsonLd, buildBreadcrumbJsonLd} from '@/utils/jsonLd'
 import {buildOgImageUrl} from '@/utils/og'
@@ -24,20 +26,26 @@ import {
   getRelatedPosts,
   getSeriesPosts,
 } from '@/utils/Post'
-
+const sx = stylex.create({
+  div: {
+    '@layer utilities': {
+      position: 'relative',
+    },
+  },
+})
 export async function generateMetadata(props: {
-  params: Promise<{year: string; slug: string[]}>
+  params: Promise<{
+    year: string
+    slug: string[]
+  }>
 }) {
   const params = await props.params
   const {year, slug} = params
   const post = await findPostByYearAndSlug(year, slug, 'en')
-
   if (!post) {
     return {}
   }
-
   const plainTitle = stripTitleEmphasis(post.frontMatter.title)
-
   return {
     title: plainTitle,
     description: post.frontMatter.description,
@@ -76,21 +84,24 @@ export async function generateMetadata(props: {
     },
   }
 }
-
 export async function generateStaticParams() {
   const slugs = await getPrerenderSlugs('en')
   return slugs.map((slug) => {
     const [year, ...rest] = slug.split('/')
-    return {year, slug: rest}
+    return {
+      year,
+      slug: rest,
+    }
   })
 }
-
 export default async function EnPostPage(props: {
-  params: Promise<{year: string; slug: string[]}>
+  params: Promise<{
+    year: string
+    slug: string[]
+  }>
 }) {
   const params = await props.params
   const {year, slug} = params
-
   const post = await findPostByYearAndSlug(year, slug, 'en')
   if (!post) {
     // 번역이 없는 글은 404 대신 한국어 원문으로 보낸다
@@ -100,28 +111,23 @@ export default async function EnPostPage(props: {
     }
     return notFound()
   }
-
   if (process.env.NODE_ENV !== 'production') {
     return <EnPostBody year={year} slug={slug} />
   }
-
   return <CachedEnPostBody year={year} slug={slug} />
 }
-
 async function CachedEnPostBody({year, slug}: {year: string; slug: string[]}) {
   'use cache'
+
   cacheLife('max')
   cacheTag(`post:en/${year}/${slug.join('/')}`)
-
   return <EnPostBody year={year} slug={slug} />
 }
-
 async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
   const post = await findPostByYearAndSlug(year, slug, 'en')
   if (!post) {
     return null
   }
-
   const {
     frontMatter: {title, tags, date, description, series},
     body,
@@ -129,14 +135,11 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
     fields: {slug: postSlug},
     readingTime,
   } = post
-
   const relatedPosts = await getRelatedPosts(postSlug, tags, 'en')
   const seriesPosts = series ? await getSeriesPosts(series, 'en') : []
-
   const updatedAt = format(new Date(date), 'yyyy-MM-dd')
   const transitionName = `post-${postSlug.replace(/\//g, '-')}`
   const plainTitle = stripTitleEmphasis(title)
-
   const thumbnail = post.frontMatter.thumbnail
   const ogImageUrl = buildOgImageUrl({
     title: plainTitle,
@@ -145,9 +148,7 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
     path: '/en/' + postSlug,
     thumbnail,
   })
-
   const postYear = new Date(date).getFullYear()
-
   const postUrl = `${SiteConfig.url}/en/${postSlug}`
   const jsonLd = [
     buildBlogPostingJsonLd({
@@ -160,13 +161,17 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
       inLanguage: 'en',
     }),
     buildBreadcrumbJsonLd([
-      {name: 'Home', url: `${SiteConfig.url}/en`},
-      {name: plainTitle, url: postUrl},
+      {
+        name: 'Home',
+        url: `${SiteConfig.url}/en`,
+      },
+      {
+        name: plainTitle,
+        url: postUrl,
+      },
     ]),
   ]
-
   const titleParts = parseTitleEmphasis(title)
-
   return (
     <>
       <Script
@@ -176,10 +181,14 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
       >
         {JSON.stringify(jsonLd)}
       </Script>
-      <MathLoader />
-      <div className="page-view relative">
-        <Link href="/en" className="post-back">
-          <span className="dot">
+      <div
+        className={`page-view ${ambientStyles.page_view} ${stylex.props(sx.div).className}`}
+      >
+        <Link
+          href="/en"
+          className={`post-back ${readingProgressStyles.post_back}`}
+        >
+          <span className={`dot ${readingProgressStyles.dot}`}>
             <svg
               width="12"
               height="12"
@@ -195,46 +204,65 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
           BACK TO INDEX
         </Link>
 
-        <section className="post-masthead">
+        <section
+          className={`post-masthead ${readingProgressStyles.post_masthead}`}
+        >
           <div className="info">
-            <div className="post-eyebrow">◆ ESSAY</div>
-            <div className="post-author">
+            <div
+              className={`post-eyebrow ${readingProgressStyles.post_eyebrow}`}
+            >
+              ◆ ESSAY
+            </div>
+            <div className={`post-author ${readingProgressStyles.post_author}`}>
               <ProfileImage
                 size={40}
                 transitionName={`${transitionName}-avatar`}
               />
               <div>
-                <div className="nm">{SiteConfig.author.name}</div>
-                <div className="sub">
+                <div className={`nm ${readingProgressStyles.nm}`}>
+                  {SiteConfig.author.name}
+                </div>
+                <div className={`sub ${readingProgressStyles.sub}`}>
                   {updatedAt} · {readingTime} min read
                 </div>
               </div>
             </div>
             {tags && (
               <ViewTransition name={`${transitionName}-tags`}>
-                <div className="post-tags-row">
+                <div
+                  className={`post-tags-row ${readingProgressStyles.post_tags_row}`}
+                >
                   {tags.slice(0, 5).map((tag) => (
                     <Tag key={tag} text={tag} linked={false} />
                   ))}
                 </div>
               </ViewTransition>
             )}
-            <div className="post-stats">
+            <div className={`post-stats ${readingProgressStyles.post_stats}`}>
               <div>
-                <b>{readingTime}</b>min read
+                <b className={readingProgressStyles.element_b}>{readingTime}</b>
+                min read
               </div>
               <div>
-                <b>{postYear}</b>year
+                <b className={readingProgressStyles.element_b}>{postYear}</b>
+                year
               </div>
               <div>
-                <b>EN</b>translated
+                <b className={readingProgressStyles.element_b}>EN</b>
+                translated
               </div>
             </div>
           </div>
           <ViewTransition name={transitionName}>
-            <h1 className="post-title">
+            <h1 className={`post-title ${readingProgressStyles.post_title}`}>
               {titleParts.map((part, i) =>
-                part.emphasis ? <em key={i}>{part.text}</em> : part.text,
+                part.emphasis ? (
+                  <em key={i} className={readingProgressStyles.title_em}>
+                    {part.text}
+                  </em>
+                ) : (
+                  part.text
+                ),
               )}
             </h1>
           </ViewTransition>
@@ -271,7 +299,8 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
 
         <footer className="post-footer">
           <p className="post-author-note">
-            <Link href="/about">yceffort</Link> — frontend engineer.
+            <Link href="/about">yceffort</Link>
+            {' — frontend engineer.'}
           </p>
           <Link href="/en">&larr; Back to the blog</Link>
           <Link href={`/${postSlug}`} className="issue">

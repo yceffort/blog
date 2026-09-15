@@ -1,0 +1,6 @@
+/* Long-form reading styles. Imported by the components that render Markdown so
+   the list, tag and archive routes do not download them. */
+@import './typography.css';
+@import '../components/post/article.css';
+@import '../components/post/markdown.css';
+@import '../components/post/markdown-toc.css';

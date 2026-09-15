@@ -1,0 +1,5516 @@
+{
+  "metadata": {
+    "commit": "118a94668cfd9d7032ded2c0186138bc72bcd71b",
+    "startedAt": "2026-09-14T13:09:24.667Z",
+    "rounds": 3,
+    "cases": [
+      "control",
+      "instant-font",
+      "delayed-font",
+      "no-view-transition",
+      "system-ui"
+    ],
+    "contextOptions": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "isMobile": true,
+      "hasTouch": true,
+      "userAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Mobile Safari/537.36",
+      "colorScheme": "light",
+      "serviceWorkers": "block"
+    },
+    "screenshotsDuringLoad": false,
+    "fontSha256": "28966800a6319cb1ce4bd03ff698e2ebca6acd8e8a07b29c825ee8fa44deb4fd",
+    "fontBytes": 341752,
+    "harnessSha256": "d8488805a3bf5ea655eefe97055bd3903ab8cfa2beef2fb3747cf64e3a05245f",
+    "cpu": 4,
+    "latencyMs": 150,
+    "downloadBytesPerSecond": 200000,
+    "notes": [
+      "All cases intercept only the math font with CDP Fetch. Control continues immediately; instant-font fulfills the identical bytes locally; delayed-font waits 1500ms once per network request before continuing.",
+      "no-view-transition disables document.startViewTransition. system-ui overrides the three common font variables and blocks their preloaded WOFF2 URLs; MathML and its font remain unchanged.",
+      "This isolates browser behavior on the existing 118a9466 production build. It does not measure a rebuilt application with next/font removed.",
+      "Runs with screenshotsDuringLoad enabled are separate visual diagnostics and must not be pooled with the measurement runs."
+    ],
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "HeadlessChrome/153.0.8010.12",
+      "revision": "@971a7443b0c9b0a9b2860529b33331b76077ec62",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+      "jsVersion": "15.3.76.4"
+    }
+  },
+  "results": [
+    {
+      "variant": "control",
+      "round": 1,
+      "bodyReadyMs": 1110.2999999523163,
+      "lcp": [
+        {
+          "time": 1460,
+          "size": 270,
+          "tag": "A",
+          "text": "EN",
+          "url": "",
+          "rect": {
+            "x": 272,
+            "y": 20,
+            "width": 36,
+            "height": 36,
+            "top": 20,
+            "right": 308,
+            "bottom": 56,
+            "left": 272
+          }
+        },
+        {
+          "time": 1532,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.266353607177734,
+            "y": 17.266355514526367,
+            "width": 41.467288970947266,
+            "height": 41.46729278564453,
+            "top": 17.266355514526367,
+            "right": 74.733642578125,
+            "bottom": 58.7336483001709,
+            "left": 33.266353607177734
+          }
+        },
+        {
+          "time": 1544,
+          "size": 5226,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 219.841552734375,
+            "width": 326,
+            "height": 67.1875,
+            "top": 219.841552734375,
+            "right": 358,
+            "bottom": 287.029052734375,
+            "left": 32
+          }
+        },
+        {
+          "time": 3120,
+          "size": 10335,
+          "tag": "SPAN",
+          "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+          "url": "",
+          "rect": {
+            "x": 36,
+            "y": 736.75,
+            "width": 280,
+            "height": 41.25,
+            "top": 736.75,
+            "right": 316,
+            "bottom": 778,
+            "left": 36
+          }
+        },
+        {
+          "time": 5636,
+          "size": 20672,
+          "tag": "P",
+          "text": "개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 { } 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 775.625,
+            "width": 326,
+            "height": 143.984375,
+            "top": 775.625,
+            "right": 358,
+            "bottom": 919.609375,
+            "left": 32
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 5620.799999952316,
+          "families": [
+            "Inter Fallback",
+            "JetBrains Mono Fallback",
+            "JetBrains Mono",
+            "Inter",
+            "Libertinus Math"
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "start": 3042.5,
+          "fonts": "loading",
+          "ready": 3100.2000000476837,
+          "finished": 3430.4000000953674
+        },
+        {
+          "start": 3445.5,
+          "fonts": "loading",
+          "ready": 3476.7000000476837,
+          "finished": 3823.100000143051
+        },
+        {
+          "start": 3887.2999999523163,
+          "fonts": "loading",
+          "ready": 3934.7999999523163,
+          "finished": 4258.100000143051
+        }
+      ],
+      "fcp": 1460,
+      "mathNodes": 31,
+      "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 167.90000009536743,
+          "end": 1223.1000001430511,
+          "bytes": 36860
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 168.79999995231628,
+          "end": 1380.2000000476837,
+          "bytes": 45924
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 168.90000009536743,
+          "end": 1342.7999999523163,
+          "bytes": 40780
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 169.20000004768372,
+          "end": 1426.2999999523163,
+          "bytes": 48732
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 181.70000004768372,
+          "end": 1313.4000000953674,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 181.79999995231628,
+          "end": 406.5,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 181.90000009536743,
+          "end": 780.2000000476837,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 181.90000009536743,
+          "end": 1087.7999999523163,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 181.90000009536743,
+          "end": 1320.6000001430511,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 181.90000009536743,
+          "end": 1448,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 182.70000004768372,
+          "end": 2520.5,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 182.70000004768372,
+          "end": 2806.600000143051,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 182.79999995231628,
+          "end": 1599.2999999523163,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 183,
+          "end": 1771.2000000476837,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 183.20000004768372,
+          "end": 1943,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 183.20000004768372,
+          "end": 2206.7000000476837,
+          "bytes": 10094
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 183.20000004768372,
+          "end": 2392.9000000953674,
+          "bytes": 31409
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 183.29999995231628,
+          "end": 183.29999995231628,
+          "bytes": 0
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 190.20000004768372,
+          "end": 190.20000004768372,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 1228.5,
+          "end": 5550.600000143051,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1440.6000001430511,
+          "end": 2603.9000000953674,
+          "bytes": 21249
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2954.5,
+          "end": 2954.5,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 3038.2000000476837,
+          "end": 3204.2999999523163,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 3038.9000000953674,
+          "end": 3212.100000143051,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 3116.5,
+          "end": 3420.7000000476837,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 3215.2000000476837,
+          "end": 4891.700000047684,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 3220.100000143051,
+          "end": 5153.600000143051,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3871.2000000476837,
+          "end": 4231.900000095367,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 4235.900000095367,
+          "end": 4531.299999952316,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4899.600000143051,
+          "end": 5191.5,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 5160.799999952316,
+          "end": 5318.600000143051,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 5161,
+          "end": 5416.799999952316,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-19.0",
+          "networkId": "39649.61",
+          "frameId": "FB823E836A0C6F0B8B6F70377A0EFBA5",
+          "resourceType": "Font"
+        },
+        {
+          "requestId": "interception-job-21.0",
+          "networkId": "39649.61",
+          "frameId": "FB823E836A0C6F0B8B6F70377A0EFBA5",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "FB823E836A0C6F0B8B6F70377A0EFBA5",
+            "loaderId": "C0761D5AABE437CBC36329F1054CC3A7",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "instant-font",
+      "round": 1,
+      "bodyReadyMs": 1116.2000000476837,
+      "lcp": [
+        {
+          "time": 1456,
+          "size": 270,
+          "tag": "A",
+          "text": "EN",
+          "url": "",
+          "rect": {
+            "x": 272,
+            "y": 20,
+            "width": 36,
+            "height": 36,
+            "top": 20,
+            "right": 308,
+            "bottom": 56,
+            "left": 272
+          }
+        },
+        {
+          "time": 1516,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.26628494262695,
+            "y": 17.266284942626953,
+            "width": 41.46743392944336,
+            "height": 41.467430114746094,
+            "top": 17.266284942626953,
+            "right": 74.73371887207031,
+            "bottom": 58.73371505737305,
+            "left": 33.26628494262695
+          }
+        },
+        {
+          "time": 1528,
+          "size": 5226,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 219.84124755859375,
+            "width": 326,
+            "height": 67.1875,
+            "top": 219.84124755859375,
+            "right": 358,
+            "bottom": 287.02874755859375,
+            "left": 32
+          }
+        },
+        {
+          "time": 2804,
+          "size": 10335,
+          "tag": "SPAN",
+          "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+          "url": "",
+          "rect": {
+            "x": 36,
+            "y": 736.75,
+            "width": 280,
+            "height": 41.25,
+            "top": 736.75,
+            "right": 316,
+            "bottom": 778,
+            "left": 36
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 1504.7000000476837,
+          "families": [
+            "Inter Fallback",
+            "JetBrains Mono Fallback",
+            "Libertinus Math",
+            "JetBrains Mono",
+            "Inter"
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "start": 2722.2999999523163,
+          "fonts": "loaded",
+          "ready": 2783.2000000476837,
+          "finished": 3108.600000143051
+        },
+        {
+          "start": 3124.7999999523163,
+          "fonts": "loaded",
+          "ready": 3157.2000000476837,
+          "finished": 3508.9000000953674
+        },
+        {
+          "start": 3570.9000000953674,
+          "fonts": "loaded",
+          "ready": 3618.5,
+          "finished": 3942.4000000953674
+        }
+      ],
+      "fcp": 1456,
+      "mathNodes": 31,
+      "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 171.60000014305115,
+          "end": 1227,
+          "bytes": 36860
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 172.20000004768372,
+          "end": 1378.5,
+          "bytes": 45924
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 172.29999995231628,
+          "end": 1340.5,
+          "bytes": 40780
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 172.5,
+          "end": 1416.1000001430511,
+          "bytes": 48732
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 183.40000009536743,
+          "end": 1318.2000000476837,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 183.5,
+          "end": 410.2999999523163,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 183.5,
+          "end": 784.9000000953674,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 183.5,
+          "end": 1093.2000000476837,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 183.60000014305115,
+          "end": 1325,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 183.60000014305115,
+          "end": 1444.9000000953674,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 183.60000014305115,
+          "end": 2503.7999999523163,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 184.40000009536743,
+          "end": 2382.5,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 184.5,
+          "end": 1594.6000001430511,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 184.5,
+          "end": 1775,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 184.5,
+          "end": 1790.7999999523163,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 184.5,
+          "end": 1977,
+          "bytes": 10094
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 184.5,
+          "end": 2254.600000143051,
+          "bytes": 31409
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 184.60000014305115,
+          "end": 184.60000014305115,
+          "bytes": 0
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 189.20000004768372,
+          "end": 189.20000004768372,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 1233.5,
+          "end": 1239,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1435.6000001430511,
+          "end": 2360.5,
+          "bytes": 21249
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2644.2999999523163,
+          "end": 2644.2999999523163,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 2776.100000143051,
+          "end": 2937.2999999523163,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 2776.100000143051,
+          "end": 2945.5,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 2798,
+          "end": 3013.5,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 2942.7000000476837,
+          "end": 4085.100000143051,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 2950.5,
+          "end": 4235,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3556,
+          "end": 3897.7999999523163,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 3901.9000000953674,
+          "end": 4137.100000143051,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4093.100000143051,
+          "end": 4294.600000143051,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 4238.900000095367,
+          "end": 4400.700000047684,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 4239.900000095367,
+          "end": 4453.100000143051,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-19.0",
+          "networkId": "40308.61",
+          "frameId": "E63D910B61512F0D69F6C063BF586AB3",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "E63D910B61512F0D69F6C063BF586AB3",
+            "loaderId": "C065EDFB789132960AEE11E57EC9BC05",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "delayed-font",
+      "round": 1,
+      "bodyReadyMs": 1113.7000000476837,
+      "lcp": [
+        {
+          "time": 1420,
+          "size": 270,
+          "tag": "A",
+          "text": "EN",
+          "url": "",
+          "rect": {
+            "x": 272,
+            "y": 20,
+            "width": 36,
+            "height": 36,
+            "top": 20,
+            "right": 308,
+            "bottom": 56,
+            "left": 272
+          }
+        },
+        {
+          "time": 1472,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 32.98011016845703,
+            "y": 16.98011016845703,
+            "width": 42.03977966308594,
+            "height": 42.03977966308594,
+            "top": 16.98011016845703,
+            "right": 75.01988983154297,
+            "bottom": 59.01988983154297,
+            "left": 32.98011016845703
+          }
+        },
+        {
+          "time": 1528,
+          "size": 23400,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 218.90773010253906,
+            "width": 326,
+            "height": 67.18748474121094,
+            "top": 218.90773010253906,
+            "right": 358,
+            "bottom": 286.09521484375,
+            "left": 32
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 6013.299999952316,
+          "families": [
+            "Inter Fallback",
+            "JetBrains Mono Fallback",
+            "JetBrains Mono",
+            "Inter",
+            "Libertinus Math"
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "start": 2720.600000143051,
+          "fonts": "loading",
+          "ready": 2776.4000000953674,
+          "finished": 3103.5
+        },
+        {
+          "start": 3120.2000000476837,
+          "fonts": "loading",
+          "ready": 3159,
+          "finished": 3487
+        },
+        {
+          "start": 3548.100000143051,
+          "fonts": "loading",
+          "ready": 3595.600000143051,
+          "finished": 3903.100000143051
+        }
+      ],
+      "fcp": 1420,
+      "mathNodes": 31,
+      "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 164.90000009536743,
+          "end": 1222.6000001430511,
+          "bytes": 36860
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 165,
+          "end": 1335.2000000476837,
+          "bytes": 40780
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 165,
+          "end": 1373.4000000953674,
+          "bytes": 45924
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 165.60000014305115,
+          "end": 1410.7000000476837,
+          "bytes": 48732
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 175.10000014305115,
+          "end": 1312.7000000476837,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 175.5,
+          "end": 397.2000000476837,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 175.5,
+          "end": 1087.2999999523163,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 175.60000014305115,
+          "end": 771.7999999523163,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 175.60000014305115,
+          "end": 1319.9000000953674,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 175.60000014305115,
+          "end": 1439.9000000953674,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 175.60000014305115,
+          "end": 2498.7000000476837,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 176.29999995231628,
+          "end": 1589.7000000476837,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 176.29999995231628,
+          "end": 1770.5,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 176.29999995231628,
+          "end": 1786.1000001430511,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 176.29999995231628,
+          "end": 1973.9000000953674,
+          "bytes": 10094
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 176.29999995231628,
+          "end": 2250.4000000953674,
+          "bytes": 31409
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 176.29999995231628,
+          "end": 2378.5,
+          "bytes": 45563
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 176.40000009536743,
+          "end": 176.40000009536743,
+          "bytes": 0
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 182.40000009536743,
+          "end": 182.40000009536743,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 1222.5,
+          "end": 5933.400000095367,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1403.7999999523163,
+          "end": 2355.2999999523163,
+          "bytes": 21249
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2636.600000143051,
+          "end": 2636.600000143051,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 2716.5,
+          "end": 2872.4000000953674,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 2716.7999999523163,
+          "end": 2879.9000000953674,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 2793.9000000953674,
+          "end": 3112.7999999523163,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 2877.9000000953674,
+          "end": 4561,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 2883.5,
+          "end": 4822.700000047684,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3535.2000000476837,
+          "end": 3893.9000000953674,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 3897.7999999523163,
+          "end": 4192.400000095367,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4569.5,
+          "end": 4861.100000143051,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 4826.799999952316,
+          "end": 4988.799999952316,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 4826.900000095367,
+          "end": 5085.100000143051,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-19.0",
+          "networkId": "40822.61",
+          "frameId": "CB28F5083F019127766DFC97A59AF104",
+          "resourceType": "Font"
+        },
+        {
+          "requestId": "interception-job-23.0",
+          "networkId": "40822.61",
+          "frameId": "CB28F5083F019127766DFC97A59AF104",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "CB28F5083F019127766DFC97A59AF104",
+            "loaderId": "B24D69A18DDBC6E6DDC64FC85951907D",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "no-view-transition",
+      "round": 1,
+      "bodyReadyMs": 1110.1000001430511,
+      "lcp": [
+        {
+          "time": 1440,
+          "size": 270,
+          "tag": "A",
+          "text": "EN",
+          "url": "",
+          "rect": {
+            "x": 272,
+            "y": 20,
+            "width": 36,
+            "height": 36,
+            "top": 20,
+            "right": 308,
+            "bottom": 56,
+            "left": 272
+          }
+        },
+        {
+          "time": 1508,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.122371673583984,
+            "y": 17.122371673583984,
+            "width": 41.755252838134766,
+            "height": 41.75525665283203,
+            "top": 17.122371673583984,
+            "right": 74.87762451171875,
+            "bottom": 58.877628326416016,
+            "left": 33.122371673583984
+          }
+        },
+        {
+          "time": 1524,
+          "size": 5226,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 219.3092803955078,
+            "width": 326,
+            "height": 67.18748474121094,
+            "top": 219.3092803955078,
+            "right": 358,
+            "bottom": 286.49676513671875,
+            "left": 32
+          }
+        },
+        {
+          "time": 3096,
+          "size": 10335,
+          "tag": "SPAN",
+          "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+          "url": "",
+          "rect": {
+            "x": 36,
+            "y": 736.75,
+            "width": 280,
+            "height": 41.25,
+            "top": 736.75,
+            "right": 316,
+            "bottom": 778,
+            "left": 36
+          }
+        },
+        {
+          "time": 5640,
+          "size": 20672,
+          "tag": "P",
+          "text": "개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 { } 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 775.625,
+            "width": 326,
+            "height": 143.984375,
+            "top": 775.625,
+            "right": 358,
+            "bottom": 919.609375,
+            "left": 32
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 5625.100000143051,
+          "families": [
+            "Inter Fallback",
+            "JetBrains Mono Fallback",
+            "JetBrains Mono",
+            "Inter",
+            "Libertinus Math"
+          ]
+        }
+      ],
+      "transitions": [],
+      "fcp": 1440,
+      "mathNodes": 31,
+      "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 165.30000019073486,
+          "end": 1222,
+          "bytes": 36860
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 165.80000019073486,
+          "end": 1326.8000001907349,
+          "bytes": 40780
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 165.80000019073486,
+          "end": 1372.2000000476837,
+          "bytes": 45924
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 165.80000019073486,
+          "end": 1410,
+          "bytes": 48732
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 177.10000014305115,
+          "end": 1312.4000000953674,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 177.40000009536743,
+          "end": 405.30000019073486,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 177.5,
+          "end": 778.5,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 177.5,
+          "end": 1087.6000001430511,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 177.5,
+          "end": 1318.5,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 177.60000014305115,
+          "end": 1439.4000000953674,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 177.60000014305115,
+          "end": 1574.7000000476837,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 177.60000014305115,
+          "end": 2549.600000143051,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 177.60000014305115,
+          "end": 2804.5,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 178.40000009536743,
+          "end": 1762.6000001430511,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 178.40000009536743,
+          "end": 2377.100000143051,
+          "bytes": 31409
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 178.70000004768372,
+          "end": 178.70000004768372,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 178.70000004768372,
+          "end": 1919.1000001430511,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 178.70000004768372,
+          "end": 2195.9000000953674,
+          "bytes": 10094
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 183.90000009536743,
+          "end": 183.90000009536743,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 1225.7000000476837,
+          "end": 5549.300000190735,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1420.1000001430511,
+          "end": 2593.600000143051,
+          "bytes": 21249
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2951.600000143051,
+          "end": 2951.600000143051,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 3054.4000000953674,
+          "end": 3216.7000000476837,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 3054.5,
+          "end": 3223.9000000953674,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 3105.600000143051,
+          "end": 3396,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3219.600000143051,
+          "end": 3569.600000143051,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 3236.300000190735,
+          "end": 4896,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 3245.7000000476837,
+          "end": 5159.900000095367,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 3576,
+          "end": 3869.5,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4904.600000143051,
+          "end": 5197.200000047684,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 5164.300000190735,
+          "end": 5325.400000095367,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 5164.700000047684,
+          "end": 5422.700000047684,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-19.0",
+          "networkId": "41322.61",
+          "frameId": "A15F6D4FB9D1353288F8CEAAA475DB64",
+          "resourceType": "Font"
+        },
+        {
+          "requestId": "interception-job-21.0",
+          "networkId": "41322.61",
+          "frameId": "A15F6D4FB9D1353288F8CEAAA475DB64",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "A15F6D4FB9D1353288F8CEAAA475DB64",
+            "loaderId": "5E180A0E268870EBEEAC9C6B9758BC2C",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "system-ui",
+      "round": 1,
+      "bodyReadyMs": 672.7999999523163,
+      "lcp": [
+        {
+          "time": 688,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.85069274902344,
+            "y": 17.850690841674805,
+            "width": 40.298614501953125,
+            "height": 40.298614501953125,
+            "top": 17.850690841674805,
+            "right": 74.14930725097656,
+            "bottom": 58.14930534362793,
+            "left": 33.85069274902344
+          }
+        },
+        {
+          "time": 1048,
+          "size": 5092,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 222.74270629882812,
+            "width": 326,
+            "height": 67.1875,
+            "top": 222.74270629882812,
+            "right": 358,
+            "bottom": 289.9302062988281,
+            "left": 32
+          }
+        },
+        {
+          "time": 2312,
+          "size": 10032,
+          "tag": "SPAN",
+          "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+          "url": "",
+          "rect": {
+            "x": 36,
+            "y": 736.75,
+            "width": 280,
+            "height": 41.25,
+            "top": 736.75,
+            "right": 316,
+            "bottom": 778,
+            "left": 36
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 4854.700000047684,
+          "families": ["Libertinus Math"]
+        }
+      ],
+      "transitions": [
+        {
+          "start": 2210.5,
+          "fonts": "loading",
+          "ready": 2278.9000000953674,
+          "finished": 2611
+        },
+        {
+          "start": 2626.600000143051,
+          "fonts": "loading",
+          "ready": 2659,
+          "finished": 2978.2000000476837
+        },
+        {
+          "start": 3038.9000000953674,
+          "fonts": "loading",
+          "ready": 3084.2000000476837,
+          "finished": 3411.2999999523163
+        }
+      ],
+      "fcp": 688,
+      "mathNodes": 31,
+      "bodyFont": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 173.10000014305115,
+          "end": 173.10000014305115,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 173.20000004768372,
+          "end": 173.20000004768372,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 173.20000004768372,
+          "end": 173.20000004768372,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 173.20000004768372,
+          "end": 173.20000004768372,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 183.5,
+          "end": 374.7999999523163,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 184.20000004768372,
+          "end": 381.5,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 184.29999995231628,
+          "end": 434,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 184.29999995231628,
+          "end": 524.7999999523163,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 184.29999995231628,
+          "end": 598.7999999523163,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 184.40000009536743,
+          "end": 854.9000000953674,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 184.40000009536743,
+          "end": 1980,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 184.5,
+          "end": 1716.9000000953674,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 185.20000004768372,
+          "end": 817.4000000953674,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 185.20000004768372,
+          "end": 921.6000001430511,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 185.20000004768372,
+          "end": 1469.2999999523163,
+          "bytes": 31409
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 185.40000009536743,
+          "end": 1139.9000000953674,
+          "bytes": 6238
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 185.5,
+          "end": 185.5,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 185.5,
+          "end": 1258.5,
+          "bytes": 10094
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 190.90000009536743,
+          "end": 190.90000009536743,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/2c55a0e60120577a-s.0-dom-5bn10r2.woff2",
+          "start": 552.6000001430511,
+          "end": 552.6000001430511,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/9c72aa0f40e4eef8-s.1y4-pdgsjb-pw.woff2",
+          "start": 552.6000001430511,
+          "end": 552.6000001430511,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/ad66f9afd8947f86-s.3lvt2whj97whp.woff2",
+          "start": 552.6000001430511,
+          "end": 552.6000001430511,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/5476f68d60460930-s.2uwcyprjm3xu3.woff2",
+          "start": 552.6000001430511,
+          "end": 552.6000001430511,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/2bbe8d2671613f1f-s.0k62hbripvv8p.woff2",
+          "start": 553,
+          "end": 553,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/1bffadaabf893a1e-s.3-6t-g6q0vh0a.woff2",
+          "start": 553,
+          "end": 553,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 553,
+          "end": 553,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/13bf9871fe164e7f-s.2f7nqdagzwx2-.woff2",
+          "start": 553,
+          "end": 553,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/cc545e633e20c56d-s.176arc174-8zp.woff2",
+          "start": 553,
+          "end": 553,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/71b036adf157cdcf-s.0bp8oijd_gu96.woff2",
+          "start": 553,
+          "end": 553,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/89b21bb081cb7469-s.1fby2rem9ngyr.woff2",
+          "start": 553,
+          "end": 553,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3fe682a82f50d426-s.0vfdmo25voy_0.woff2",
+          "start": 553,
+          "end": 553,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 553,
+          "end": 553,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/50a3f1070da3c6cc-s.2xm1k7t3a0pcd.woff2",
+          "start": 553.1000001430511,
+          "end": 553.1000001430511,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/b887d91685b8c137-s.330vchwb4izzb.woff2",
+          "start": 553.1000001430511,
+          "end": 553.1000001430511,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 553.2000000476837,
+          "end": 553.2000000476837,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/1e219c03c996efbd-s.2qo5md4hn_gum.woff2",
+          "start": 553.7000000476837,
+          "end": 553.7000000476837,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/b35b0dbffda7f2c4-s.1d9rlgtqyj_-l.woff2",
+          "start": 553.7000000476837,
+          "end": 553.7000000476837,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 553.7000000476837,
+          "end": 553.7000000476837,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 869.7999999523163,
+          "end": 4806.799999952316,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1011.4000000953674,
+          "end": 1671.5,
+          "bytes": 21249
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 2052.600000143051,
+          "end": 2052.600000143051,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 2053.4000000953674,
+          "end": 2053.4000000953674,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 2053.4000000953674,
+          "end": 2053.4000000953674,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 2054.100000143051,
+          "end": 2054.100000143051,
+          "bytes": 0
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2130.2000000476837,
+          "end": 2130.2000000476837,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 2268.4000000953674,
+          "end": 2430.2999999523163,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 2268.5,
+          "end": 2437.4000000953674,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 2303,
+          "end": 2587.2999999523163,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 2436.600000143051,
+          "end": 4094.2999999523163,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 2440.9000000953674,
+          "end": 4356.299999952316,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3025.9000000953674,
+          "end": 3382.600000143051,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 3387.5,
+          "end": 3682.5,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4102.700000047684,
+          "end": 4394.200000047684,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 4360.900000095367,
+          "end": 4521.799999952316,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 4361.799999952316,
+          "end": 4620.400000095367,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-15.0",
+          "networkId": "41920.60",
+          "frameId": "32A465E95A004B312481FF262B55516F",
+          "resourceType": "Font"
+        },
+        {
+          "requestId": "interception-job-17.0",
+          "networkId": "41920.60",
+          "frameId": "32A465E95A004B312481FF262B55516F",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "32A465E95A004B312481FF262B55516F",
+            "loaderId": "FB618CC97D1669E5EF5D1DD731F53FFC",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "system-ui",
+      "round": 2,
+      "bodyReadyMs": 547.1999998092651,
+      "lcp": [
+        {
+          "time": 668,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.85116195678711,
+            "y": 17.851163864135742,
+            "width": 40.297672271728516,
+            "height": 40.29767608642578,
+            "top": 17.851163864135742,
+            "right": 74.14883422851562,
+            "bottom": 58.14883995056152,
+            "left": 33.85116195678711
+          }
+        },
+        {
+          "time": 1068,
+          "size": 5092,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 222.73887634277344,
+            "width": 326,
+            "height": 67.18751525878906,
+            "top": 222.73887634277344,
+            "right": 358,
+            "bottom": 289.9263916015625,
+            "left": 32
+          }
+        },
+        {
+          "time": 2316,
+          "size": 10032,
+          "tag": "SPAN",
+          "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+          "url": "",
+          "rect": {
+            "x": 36,
+            "y": 736.75,
+            "width": 280,
+            "height": 41.25,
+            "top": 736.75,
+            "right": 316,
+            "bottom": 778,
+            "left": 36
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 4866.899999856949,
+          "families": ["Libertinus Math"]
+        }
+      ],
+      "transitions": [
+        {
+          "start": 2235.7999999523163,
+          "fonts": "loading",
+          "ready": 2291.5999999046326,
+          "finished": 2635.5999999046326
+        },
+        {
+          "start": 2652.699999809265,
+          "fonts": "loading",
+          "ready": 2686.399999856949,
+          "finished": 3013.0999999046326
+        },
+        {
+          "start": 3088.5999999046326,
+          "fonts": "loading",
+          "ready": 3138.7999999523163,
+          "finished": 3463.2999999523163
+        }
+      ],
+      "fcp": 668,
+      "mathNodes": 31,
+      "bodyFont": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 174,
+          "end": 174,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 174.09999990463257,
+          "end": 174.09999990463257,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 174.5,
+          "end": 174.5,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 174.59999990463257,
+          "end": 174.59999990463257,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 184.89999985694885,
+          "end": 375.39999985694885,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 185.89999985694885,
+          "end": 382.89999985694885,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 186,
+          "end": 524.5999999046326,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 186.09999990463257,
+          "end": 434.59999990463257,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 186.19999980926514,
+          "end": 600.1999998092651,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 186.19999980926514,
+          "end": 855.8999998569489,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 186.5,
+          "end": 816.8999998569489,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 186.5,
+          "end": 922.2999999523163,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 186.5,
+          "end": 1709.8999998569489,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 186.5,
+          "end": 1980.0999999046326,
+          "bytes": 71661
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 186.69999980926514,
+          "end": 186.69999980926514,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 186.69999980926514,
+          "end": 1140.6999998092651,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 186.69999980926514,
+          "end": 1259.8999998569489,
+          "bytes": 10094
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 186.69999980926514,
+          "end": 1486.0999999046326,
+          "bytes": 31409
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 191.59999990463257,
+          "end": 191.59999990463257,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/2c55a0e60120577a-s.0-dom-5bn10r2.woff2",
+          "start": 552.5999999046326,
+          "end": 552.5999999046326,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/9c72aa0f40e4eef8-s.1y4-pdgsjb-pw.woff2",
+          "start": 552.8999998569489,
+          "end": 552.8999998569489,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/ad66f9afd8947f86-s.3lvt2whj97whp.woff2",
+          "start": 552.8999998569489,
+          "end": 552.8999998569489,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/5476f68d60460930-s.2uwcyprjm3xu3.woff2",
+          "start": 552.8999998569489,
+          "end": 552.8999998569489,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/2bbe8d2671613f1f-s.0k62hbripvv8p.woff2",
+          "start": 552.8999998569489,
+          "end": 552.8999998569489,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/1bffadaabf893a1e-s.3-6t-g6q0vh0a.woff2",
+          "start": 552.8999998569489,
+          "end": 552.8999998569489,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 552.8999998569489,
+          "end": 552.8999998569489,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/13bf9871fe164e7f-s.2f7nqdagzwx2-.woff2",
+          "start": 552.8999998569489,
+          "end": 552.8999998569489,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/cc545e633e20c56d-s.176arc174-8zp.woff2",
+          "start": 552.8999998569489,
+          "end": 552.8999998569489,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/71b036adf157cdcf-s.0bp8oijd_gu96.woff2",
+          "start": 552.8999998569489,
+          "end": 552.8999998569489,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/89b21bb081cb7469-s.1fby2rem9ngyr.woff2",
+          "start": 552.8999998569489,
+          "end": 552.8999998569489,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3fe682a82f50d426-s.0vfdmo25voy_0.woff2",
+          "start": 552.8999998569489,
+          "end": 552.8999998569489,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 553,
+          "end": 553,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/50a3f1070da3c6cc-s.2xm1k7t3a0pcd.woff2",
+          "start": 553,
+          "end": 553,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/b887d91685b8c137-s.330vchwb4izzb.woff2",
+          "start": 553,
+          "end": 553,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 553,
+          "end": 553,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/1e219c03c996efbd-s.2qo5md4hn_gum.woff2",
+          "start": 553.0999999046326,
+          "end": 553.0999999046326,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/b35b0dbffda7f2c4-s.1d9rlgtqyj_-l.woff2",
+          "start": 553.0999999046326,
+          "end": 553.0999999046326,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 553.0999999046326,
+          "end": 553.0999999046326,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 872.0999999046326,
+          "end": 4807.899999856949,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1019.1999998092651,
+          "end": 1680.5,
+          "bytes": 21249
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 2059.199999809265,
+          "end": 2059.199999809265,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 2060.399999856949,
+          "end": 2060.399999856949,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 2060.399999856949,
+          "end": 2060.399999856949,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 2060.5,
+          "end": 2060.5,
+          "bytes": 0
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2141.2999999523163,
+          "end": 2141.2999999523163,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 2231.2999999523163,
+          "end": 2393.5999999046326,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 2231.7999999523163,
+          "end": 2400.5,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 2313.399999856949,
+          "end": 2624.5999999046326,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 2403.5,
+          "end": 4080.5999999046326,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 2406.5999999046326,
+          "end": 4358,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3073.199999809265,
+          "end": 3427.399999856949,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 3434.699999809265,
+          "end": 3734.5,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4089.5999999046326,
+          "end": 4388.299999952316,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 4363.299999952316,
+          "end": 4522.5,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 4363.5,
+          "end": 4620.599999904633,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-15.0",
+          "networkId": "42267.61",
+          "frameId": "67C7410724E7BC66E483EC6778388F99",
+          "resourceType": "Font"
+        },
+        {
+          "requestId": "interception-job-17.0",
+          "networkId": "42267.61",
+          "frameId": "67C7410724E7BC66E483EC6778388F99",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "67C7410724E7BC66E483EC6778388F99",
+            "loaderId": "B423C01A97113BC3B149EF3CD310E865",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "no-view-transition",
+      "round": 2,
+      "bodyReadyMs": 1120.2999999523163,
+      "lcp": [
+        {
+          "time": 1484,
+          "size": 270,
+          "tag": "A",
+          "text": "EN",
+          "url": "",
+          "rect": {
+            "x": 272,
+            "y": 20,
+            "width": 36,
+            "height": 36,
+            "top": 20,
+            "right": 308,
+            "bottom": 56,
+            "left": 272
+          }
+        },
+        {
+          "time": 1568,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.1229362487793,
+            "y": 17.122936248779297,
+            "width": 41.75412368774414,
+            "height": 41.754127502441406,
+            "top": 17.122936248779297,
+            "right": 74.87705993652344,
+            "bottom": 58.8770637512207,
+            "left": 33.1229362487793
+          }
+        },
+        {
+          "time": 1576,
+          "size": 5226,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 219.308349609375,
+            "width": 326,
+            "height": 67.1875,
+            "top": 219.308349609375,
+            "right": 358,
+            "bottom": 286.495849609375,
+            "left": 32
+          }
+        },
+        {
+          "time": 3088,
+          "size": 10335,
+          "tag": "SPAN",
+          "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+          "url": "",
+          "rect": {
+            "x": 36,
+            "y": 736.75,
+            "width": 280,
+            "height": 41.25,
+            "top": 736.75,
+            "right": 316,
+            "bottom": 778,
+            "left": 36
+          }
+        },
+        {
+          "time": 5660,
+          "size": 20672,
+          "tag": "P",
+          "text": "개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 { } 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 775.625,
+            "width": 326,
+            "height": 143.984375,
+            "top": 775.625,
+            "right": 358,
+            "bottom": 919.609375,
+            "left": 32
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 5635.899999856949,
+          "families": [
+            "Inter Fallback",
+            "JetBrains Mono Fallback",
+            "JetBrains Mono",
+            "Inter",
+            "Libertinus Math"
+          ]
+        }
+      ],
+      "transitions": [],
+      "fcp": 1484,
+      "mathNodes": 31,
+      "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 169.79999995231628,
+          "end": 1225,
+          "bytes": 36860
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 170.29999995231628,
+          "end": 1382.5,
+          "bytes": 45924
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 170.39999985694885,
+          "end": 1337.5999999046326,
+          "bytes": 40780
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 170.39999985694885,
+          "end": 1420,
+          "bytes": 48732
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 182.89999985694885,
+          "end": 1322.5,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 183.19999980926514,
+          "end": 406.89999985694885,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 183.5,
+          "end": 775.1999998092651,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 183.5,
+          "end": 1089.8999998569489,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 183.89999985694885,
+          "end": 1330.0999999046326,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 183.89999985694885,
+          "end": 1451.2999999523163,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 183.89999985694885,
+          "end": 2546,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 183.89999985694885,
+          "end": 2785.2999999523163,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 184,
+          "end": 1593.1999998092651,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 184,
+          "end": 1772.7999999523163,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 184,
+          "end": 2380.899999856949,
+          "bytes": 31409
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 184.69999980926514,
+          "end": 1794.6999998092651,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 184.69999980926514,
+          "end": 2230.899999856949,
+          "bytes": 10094
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 184.79999995231628,
+          "end": 184.79999995231628,
+          "bytes": 0
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 189.69999980926514,
+          "end": 189.69999980926514,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 1233.8999998569489,
+          "end": 5560.799999952316,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1462.8999998569489,
+          "end": 2522.5999999046326,
+          "bytes": 21249
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2935.0999999046326,
+          "end": 2935.0999999046326,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 3043.5,
+          "end": 3206.399999856949,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 3043.7999999523163,
+          "end": 3213.399999856949,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 3087.5999999046326,
+          "end": 3377.699999809265,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3168.699999809265,
+          "end": 3520.199999809265,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 3215.5,
+          "end": 4870.399999856949,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 3219.899999856949,
+          "end": 5148.099999904633,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 3528.7999999523163,
+          "end": 3828.5,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4881.799999952316,
+          "end": 5178.599999904633,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 5153.099999904633,
+          "end": 5313.699999809265,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 5153.899999856949,
+          "end": 5410.699999809265,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-19.0",
+          "networkId": "42372.61",
+          "frameId": "9F1B43DEEC08F87F268BEFA2C2572DCF",
+          "resourceType": "Font"
+        },
+        {
+          "requestId": "interception-job-21.0",
+          "networkId": "42372.61",
+          "frameId": "9F1B43DEEC08F87F268BEFA2C2572DCF",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "9F1B43DEEC08F87F268BEFA2C2572DCF",
+            "loaderId": "F4D6565AD3493FB415DD95DDF5548AE7",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "delayed-font",
+      "round": 2,
+      "bodyReadyMs": 1114.4000000953674,
+      "lcp": [
+        {
+          "time": 1448,
+          "size": 270,
+          "tag": "A",
+          "text": "EN",
+          "url": "",
+          "rect": {
+            "x": 272,
+            "y": 20,
+            "width": 36,
+            "height": 36,
+            "top": 20,
+            "right": 308,
+            "bottom": 56,
+            "left": 272
+          }
+        },
+        {
+          "time": 1516,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.26676940917969,
+            "y": 17.266769409179688,
+            "width": 41.466461181640625,
+            "height": 41.466461181640625,
+            "top": 17.266769409179688,
+            "right": 74.73323059082031,
+            "bottom": 58.73323059082031,
+            "left": 33.26676940917969
+          }
+        },
+        {
+          "time": 1532,
+          "size": 5226,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 219.84332275390625,
+            "width": 326,
+            "height": 67.1875,
+            "top": 219.84332275390625,
+            "right": 358,
+            "bottom": 287.03082275390625,
+            "left": 32
+          }
+        },
+        {
+          "time": 2804,
+          "size": 10335,
+          "tag": "SPAN",
+          "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+          "url": "",
+          "rect": {
+            "x": 36,
+            "y": 736.75,
+            "width": 280,
+            "height": 41.25,
+            "top": 736.75,
+            "right": 316,
+            "bottom": 778,
+            "left": 36
+          }
+        },
+        {
+          "time": 6020,
+          "size": 20672,
+          "tag": "P",
+          "text": "개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 { } 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 775.625,
+            "width": 326,
+            "height": 143.984375,
+            "top": 775.625,
+            "right": 358,
+            "bottom": 919.609375,
+            "left": 32
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 6003.200000047684,
+          "families": [
+            "Inter Fallback",
+            "JetBrains Mono Fallback",
+            "JetBrains Mono",
+            "Inter",
+            "Libertinus Math"
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "start": 2726.4000000953674,
+          "fonts": "loading",
+          "ready": 2779.2999999523163,
+          "finished": 3110.4000000953674
+        },
+        {
+          "start": 3125.7000000476837,
+          "fonts": "loading",
+          "ready": 3160.4000000953674,
+          "finished": 3495.2999999523163
+        },
+        {
+          "start": 3571.4000000953674,
+          "fonts": "loading",
+          "ready": 3622.7000000476837,
+          "finished": 3927.2000000476837
+        }
+      ],
+      "fcp": 1448,
+      "mathNodes": 31,
+      "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 172.60000014305115,
+          "end": 1221.1000001430511,
+          "bytes": 36860
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 172.79999995231628,
+          "end": 1333.2999999523163,
+          "bytes": 40780
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 172.79999995231628,
+          "end": 1377.7000000476837,
+          "bytes": 45924
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 172.79999995231628,
+          "end": 1416.5,
+          "bytes": 48732
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 181.90000009536743,
+          "end": 410.40000009536743,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 181.90000009536743,
+          "end": 786.4000000953674,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 181.90000009536743,
+          "end": 1092.9000000953674,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 181.90000009536743,
+          "end": 1319,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 182.70000004768372,
+          "end": 1325.4000000953674,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 182.70000004768372,
+          "end": 1446.5,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 182.70000004768372,
+          "end": 1588.7000000476837,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 182.70000004768372,
+          "end": 2382.7999999523163,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 182.70000004768372,
+          "end": 2503.600000143051,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 183.20000004768372,
+          "end": 1768.7999999523163,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 183.29999995231628,
+          "end": 1790.7000000476837,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 183.29999995231628,
+          "end": 2255.9000000953674,
+          "bytes": 31409
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 183.5,
+          "end": 183.5,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 183.5,
+          "end": 1977.7999999523163,
+          "bytes": 10094
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 187.60000014305115,
+          "end": 187.60000014305115,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 1228.4000000953674,
+          "end": 5937.5,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1429.9000000953674,
+          "end": 2353.5,
+          "bytes": 21249
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2641.2000000476837,
+          "end": 2641.2000000476837,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 2723.2999999523163,
+          "end": 2886.4000000953674,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 2723.2999999523163,
+          "end": 2892.600000143051,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 2799.9000000953674,
+          "end": 3111.4000000953674,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 2892.2000000476837,
+          "end": 4566.100000143051,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 2898.2999999523163,
+          "end": 4843.700000047684,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3556.7000000476837,
+          "end": 3912.7999999523163,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 3918.2999999523163,
+          "end": 4213.799999952316,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4574.700000047684,
+          "end": 4872.600000143051,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 4848.299999952316,
+          "end": 5008.200000047684,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 4849.100000143051,
+          "end": 5106.299999952316,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-19.0",
+          "networkId": "42392.61",
+          "frameId": "8B73F75DE6C838D4759B2170EDB1B148",
+          "resourceType": "Font"
+        },
+        {
+          "requestId": "interception-job-23.0",
+          "networkId": "42392.61",
+          "frameId": "8B73F75DE6C838D4759B2170EDB1B148",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "8B73F75DE6C838D4759B2170EDB1B148",
+            "loaderId": "0F2C3BAF0179479AA4F025E18438C180",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "instant-font",
+      "round": 2,
+      "bodyReadyMs": 1124.4000000953674,
+      "lcp": [
+        {
+          "time": 1472,
+          "size": 270,
+          "tag": "A",
+          "text": "EN",
+          "url": "",
+          "rect": {
+            "x": 272,
+            "y": 20,
+            "width": 36,
+            "height": 36,
+            "top": 20,
+            "right": 308,
+            "bottom": 56,
+            "left": 272
+          }
+        },
+        {
+          "time": 1536,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.4101676940918,
+            "y": 17.41016960144043,
+            "width": 41.17966079711914,
+            "height": 41.179664611816406,
+            "top": 17.41016960144043,
+            "right": 74.58982849121094,
+            "bottom": 58.589834213256836,
+            "left": 33.4101676940918
+          }
+        },
+        {
+          "time": 1540,
+          "size": 5226,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 220.55796813964844,
+            "width": 326,
+            "height": 67.18751525878906,
+            "top": 220.55796813964844,
+            "right": 358,
+            "bottom": 287.7454833984375,
+            "left": 32
+          }
+        },
+        {
+          "time": 2792,
+          "size": 10335,
+          "tag": "SPAN",
+          "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+          "url": "",
+          "rect": {
+            "x": 36,
+            "y": 736.75,
+            "width": 280,
+            "height": 41.25,
+            "top": 736.75,
+            "right": 316,
+            "bottom": 778,
+            "left": 36
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 1522.5,
+          "families": [
+            "Inter Fallback",
+            "JetBrains Mono Fallback",
+            "Libertinus Math",
+            "JetBrains Mono",
+            "Inter"
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "start": 2722.7000000476837,
+          "fonts": "loaded",
+          "ready": 2777,
+          "finished": 3083.7000000476837
+        },
+        {
+          "start": 3099.100000143051,
+          "fonts": "loaded",
+          "ready": 3130.600000143051,
+          "finished": 3484.800000190735
+        },
+        {
+          "start": 3554.300000190735,
+          "fonts": "loaded",
+          "ready": 3610.5,
+          "finished": 3917.7000000476837
+        }
+      ],
+      "fcp": 1472,
+      "mathNodes": 31,
+      "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 174.40000009536743,
+          "end": 1230.2000000476837,
+          "bytes": 36860
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 175,
+          "end": 1380.7000000476837,
+          "bytes": 45924
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 175.10000014305115,
+          "end": 1321,
+          "bytes": 40780
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 175.10000014305115,
+          "end": 1418.5,
+          "bytes": 48732
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 186.20000004768372,
+          "end": 1327.7000000476837,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 186.80000019073486,
+          "end": 412.80000019073486,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 186.80000019073486,
+          "end": 780.8000001907349,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 186.80000019073486,
+          "end": 1096,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 186.90000009536743,
+          "end": 1334.9000000953674,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 186.90000009536743,
+          "end": 1448.7000000476837,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 186.90000009536743,
+          "end": 2506.2000000476837,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 187,
+          "end": 1583.4000000953674,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 187,
+          "end": 1771.2000000476837,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 187,
+          "end": 2385.300000190735,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 187.80000019073486,
+          "end": 2258.5,
+          "bytes": 31409
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 187.90000009536743,
+          "end": 187.90000009536743,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 187.90000009536743,
+          "end": 1793.6000001430511,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 187.90000009536743,
+          "end": 1973.3000001907349,
+          "bytes": 10094
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 192.80000019073486,
+          "end": 192.80000019073486,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 1238,
+          "end": 1243.1000001430511,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1452,
+          "end": 2354.800000190735,
+          "bytes": 21249
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2645.7000000476837,
+          "end": 2645.7000000476837,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 2727.800000190735,
+          "end": 2887.600000143051,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 2728.7000000476837,
+          "end": 2895.800000190735,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 2791.2000000476837,
+          "end": 3008.4000000953674,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 2893.100000143051,
+          "end": 4020.300000190735,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 2903.4000000953674,
+          "end": 4185.200000047684,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3541,
+          "end": 3885.9000000953674,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 3891.7000000476837,
+          "end": 4109.5,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4028.7000000476837,
+          "end": 4237.200000047684,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 4189.400000095367,
+          "end": 4349.800000190735,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 4189.5,
+          "end": 4403.400000095367,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-19.0",
+          "networkId": "42843.61",
+          "frameId": "4B3C0ED69BFCD1F965ACB80FC0C057FF",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "4B3C0ED69BFCD1F965ACB80FC0C057FF",
+            "loaderId": "58411A325CEE7A21C9A2FB069E87D09C",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "control",
+      "round": 2,
+      "bodyReadyMs": 1115.8999998569489,
+      "lcp": [
+        {
+          "time": 1436,
+          "size": 270,
+          "tag": "A",
+          "text": "EN",
+          "url": "",
+          "rect": {
+            "x": 272,
+            "y": 20,
+            "width": 36,
+            "height": 36,
+            "top": 20,
+            "right": 308,
+            "bottom": 56,
+            "left": 272
+          }
+        },
+        {
+          "time": 1488,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.12285232543945,
+            "y": 17.12285041809082,
+            "width": 41.75429916381836,
+            "height": 41.754295349121094,
+            "top": 17.12285041809082,
+            "right": 74.87715148925781,
+            "bottom": 58.877145767211914,
+            "left": 33.12285232543945
+          }
+        },
+        {
+          "time": 1552,
+          "size": 23400,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 218.9091796875,
+            "width": 326,
+            "height": 67.1875,
+            "top": 218.9091796875,
+            "right": 358,
+            "bottom": 286.0966796875,
+            "left": 32
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 5623.199999809265,
+          "families": [
+            "Inter Fallback",
+            "JetBrains Mono Fallback",
+            "JetBrains Mono",
+            "Inter",
+            "Libertinus Math"
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "start": 3028.899999856949,
+          "fonts": "loading",
+          "ready": 3086.899999856949,
+          "finished": 3398.199999809265
+        },
+        {
+          "start": 3413.399999856949,
+          "fonts": "loading",
+          "ready": 3444.199999809265,
+          "finished": 3763.699999809265
+        },
+        {
+          "start": 3820.5999999046326,
+          "fonts": "loading",
+          "ready": 3867.0999999046326,
+          "finished": 4196
+        }
+      ],
+      "fcp": 1436,
+      "mathNodes": 31,
+      "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 172.09999990463257,
+          "end": 1228.5999999046326,
+          "bytes": 36860
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 173,
+          "end": 1386.6999998092651,
+          "bytes": 45924
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 173.19999980926514,
+          "end": 1342,
+          "bytes": 40780
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 173.5,
+          "end": 1423.7999999523163,
+          "bytes": 48732
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 182.29999995231628,
+          "end": 404,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 182.29999995231628,
+          "end": 1094,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 182.29999995231628,
+          "end": 1318.8999998569489,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 182.39999985694885,
+          "end": 778.5999999046326,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 183,
+          "end": 1325.5999999046326,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 183,
+          "end": 1454.1999998092651,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 183.09999990463257,
+          "end": 2819.399999856949,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 183.19999980926514,
+          "end": 1589.0999999046326,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 183.19999980926514,
+          "end": 1783.8999998569489,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 183.19999980926514,
+          "end": 2420.899999856949,
+          "bytes": 31409
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 183.19999980926514,
+          "end": 2542.0999999046326,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 183.59999990463257,
+          "end": 1933.1999998092651,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 183.59999990463257,
+          "end": 2219.2999999523163,
+          "bytes": 10094
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 183.69999980926514,
+          "end": 183.69999980926514,
+          "bytes": 0
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 188.09999990463257,
+          "end": 188.09999990463257,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 1232,
+          "end": 5557.099999904633,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1416.0999999046326,
+          "end": 2608.2999999523163,
+          "bytes": 21249
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2956.899999856949,
+          "end": 2956.899999856949,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 3081.399999856949,
+          "end": 3247.2999999523163,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 3081.399999856949,
+          "end": 3253.5,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 3103.2999999523163,
+          "end": 3389.5999999046326,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 3253,
+          "end": 4904.099999904633,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 3256.5,
+          "end": 5180.899999856949,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3808.5,
+          "end": 4168.599999904633,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 4172.799999952316,
+          "end": 4468.599999904633,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4912.699999809265,
+          "end": 5211.799999952316,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 5185.599999904633,
+          "end": 5346,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 5185.699999809265,
+          "end": 5444,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-19.0",
+          "networkId": "43310.61",
+          "frameId": "2256EF41A0B1E4DBDD3365CCF02CB447",
+          "resourceType": "Font"
+        },
+        {
+          "requestId": "interception-job-21.0",
+          "networkId": "43310.61",
+          "frameId": "2256EF41A0B1E4DBDD3365CCF02CB447",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "2256EF41A0B1E4DBDD3365CCF02CB447",
+            "loaderId": "5485DB45A2C13C15C04132F86E9A688C",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "control",
+      "round": 3,
+      "bodyReadyMs": 1113.2000000476837,
+      "lcp": [
+        {
+          "time": 1448,
+          "size": 270,
+          "tag": "A",
+          "text": "EN",
+          "url": "",
+          "rect": {
+            "x": 272,
+            "y": 20,
+            "width": 36,
+            "height": 36,
+            "top": 20,
+            "right": 308,
+            "bottom": 56,
+            "left": 272
+          }
+        },
+        {
+          "time": 1508,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.41084671020508,
+            "y": 17.41084861755371,
+            "width": 41.17831039428711,
+            "height": 41.178306579589844,
+            "top": 17.41084861755371,
+            "right": 74.58915710449219,
+            "bottom": 58.589155197143555,
+            "left": 33.41084671020508
+          }
+        },
+        {
+          "time": 1512,
+          "size": 5226,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 220.556884765625,
+            "width": 326,
+            "height": 67.1875,
+            "top": 220.556884765625,
+            "right": 358,
+            "bottom": 287.744384765625,
+            "left": 32
+          }
+        },
+        {
+          "time": 3124,
+          "size": 10335,
+          "tag": "SPAN",
+          "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+          "url": "",
+          "rect": {
+            "x": 36,
+            "y": 736.75,
+            "width": 280,
+            "height": 41.25,
+            "top": 736.75,
+            "right": 316,
+            "bottom": 778,
+            "left": 36
+          }
+        },
+        {
+          "time": 5636,
+          "size": 20672,
+          "tag": "P",
+          "text": "개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 { } 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 775.625,
+            "width": 326,
+            "height": 143.984375,
+            "top": 775.625,
+            "right": 358,
+            "bottom": 919.609375,
+            "left": 32
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 5619.800000190735,
+          "families": [
+            "Inter Fallback",
+            "JetBrains Mono Fallback",
+            "JetBrains Mono",
+            "Inter",
+            "Libertinus Math"
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "start": 3047.2000000476837,
+          "fonts": "loading",
+          "ready": 3101.5,
+          "finished": 3432.7000000476837
+        },
+        {
+          "start": 3447.600000143051,
+          "fonts": "loading",
+          "ready": 3479.300000190735,
+          "finished": 3810.5
+        },
+        {
+          "start": 3871.800000190735,
+          "fonts": "loading",
+          "ready": 3922.100000143051,
+          "finished": 4228.300000190735
+        }
+      ],
+      "fcp": 1448,
+      "mathNodes": 31,
+      "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 172.5,
+          "end": 1227.8000001907349,
+          "bytes": 36860
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 172.80000019073486,
+          "end": 1384.2000000476837,
+          "bytes": 45924
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 172.90000009536743,
+          "end": 1340.4000000953674,
+          "bytes": 40780
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 173,
+          "end": 1422.5,
+          "bytes": 48732
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 183,
+          "end": 409.90000009536743,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 183,
+          "end": 1316.1000001430511,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 183.10000014305115,
+          "end": 1091.4000000953674,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 183.20000004768372,
+          "end": 784,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 183.20000004768372,
+          "end": 1324.1000001430511,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 183.20000004768372,
+          "end": 1451.7000000476837,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 183.90000009536743,
+          "end": 2532.7000000476837,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 183.90000009536743,
+          "end": 2809.9000000953674,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 184,
+          "end": 1587.7000000476837,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 184.30000019073486,
+          "end": 1774.8000001907349,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 184.40000009536743,
+          "end": 1931,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 184.40000009536743,
+          "end": 2216.2000000476837,
+          "bytes": 10094
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 184.40000009536743,
+          "end": 2389,
+          "bytes": 31409
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 184.5,
+          "end": 184.5,
+          "bytes": 0
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 188.60000014305115,
+          "end": 188.60000014305115,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 1228.5,
+          "end": 5554,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1423.4000000953674,
+          "end": 2600.5,
+          "bytes": 21249
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2955,
+          "end": 2955,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 3042.7000000476837,
+          "end": 3207.7000000476837,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 3042.800000190735,
+          "end": 3215,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 3117.5,
+          "end": 3424.7000000476837,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 3216.600000143051,
+          "end": 4894.800000190735,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 3220.9000000953674,
+          "end": 5157.700000047684,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3859.300000190735,
+          "end": 4220.400000095367,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 4224.400000095367,
+          "end": 4519.5,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4904,
+          "end": 5193.800000190735,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 5163.900000095367,
+          "end": 5321.700000047684,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 5164.700000047684,
+          "end": 5426.800000190735,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-19.0",
+          "networkId": "43829.61",
+          "frameId": "E1120DE557DC5CF41DA133261B0BF5A0",
+          "resourceType": "Font"
+        },
+        {
+          "requestId": "interception-job-21.0",
+          "networkId": "43829.61",
+          "frameId": "E1120DE557DC5CF41DA133261B0BF5A0",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "E1120DE557DC5CF41DA133261B0BF5A0",
+            "loaderId": "5449459B58BEC92FAF4503CC1D270229",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "instant-font",
+      "round": 3,
+      "bodyReadyMs": 1112.2000000476837,
+      "lcp": [
+        {
+          "time": 1428,
+          "size": 270,
+          "tag": "A",
+          "text": "EN",
+          "url": "",
+          "rect": {
+            "x": 272,
+            "y": 20,
+            "width": 36,
+            "height": 36,
+            "top": 20,
+            "right": 308,
+            "bottom": 56,
+            "left": 272
+          }
+        },
+        {
+          "time": 1480,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.122440338134766,
+            "y": 17.122440338134766,
+            "width": 41.755123138427734,
+            "height": 41.75511932373047,
+            "top": 17.122440338134766,
+            "right": 74.8775634765625,
+            "bottom": 58.877559661865234,
+            "left": 33.122440338134766
+          }
+        },
+        {
+          "time": 1524,
+          "size": 23400,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 219.30950927734375,
+            "width": 326,
+            "height": 67.1875,
+            "top": 219.30950927734375,
+            "right": 358,
+            "bottom": 286.49700927734375,
+            "left": 32
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 1510.5999999046326,
+          "families": [
+            "Inter Fallback",
+            "JetBrains Mono Fallback",
+            "Libertinus Math",
+            "JetBrains Mono",
+            "Inter"
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "start": 2744.899999856949,
+          "fonts": "loaded",
+          "ready": 2795.399999856949,
+          "finished": 3110
+        },
+        {
+          "start": 3125.0999999046326,
+          "fonts": "loaded",
+          "ready": 3153.5,
+          "finished": 3477.5999999046326
+        },
+        {
+          "start": 3544.5,
+          "fonts": "loaded",
+          "ready": 3587.0999999046326,
+          "finished": 3910.5999999046326
+        }
+      ],
+      "fcp": 1428,
+      "mathNodes": 31,
+      "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 172.29999995231628,
+          "end": 1220.5999999046326,
+          "bytes": 36860
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 172.39999985694885,
+          "end": 1378.7999999523163,
+          "bytes": 45924
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 173.29999995231628,
+          "end": 1332.7000000476837,
+          "bytes": 40780
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 173.29999995231628,
+          "end": 1423.5,
+          "bytes": 48732
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 183.20000004768372,
+          "end": 411.2999999523163,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 183.20000004768372,
+          "end": 785.5999999046326,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 183.20000004768372,
+          "end": 1085.5999999046326,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 183.20000004768372,
+          "end": 1319,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 183.29999995231628,
+          "end": 1325.7999999523163,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 183.29999995231628,
+          "end": 1446.2999999523163,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 183.89999985694885,
+          "end": 2383.0999999046326,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 183.89999985694885,
+          "end": 2503.7999999523163,
+          "bytes": 71661
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 184,
+          "end": 184,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 184,
+          "end": 1581.3999998569489,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 184,
+          "end": 1769.5999999046326,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 184,
+          "end": 1791.0999999046326,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 184,
+          "end": 1971,
+          "bytes": 10094
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 184,
+          "end": 2270.5,
+          "bytes": 31409
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 190,
+          "end": 190,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 1225.2999999523163,
+          "end": 1230,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1409.2999999523163,
+          "end": 2360.2999999523163,
+          "bytes": 21249
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2657.7999999523163,
+          "end": 2657.7999999523163,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 2740.5999999046326,
+          "end": 2901.0999999046326,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 2740.7999999523163,
+          "end": 2908.0999999046326,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 2815.7000000476837,
+          "end": 3035.899999856949,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 2906.7999999523163,
+          "end": 4040.899999856949,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 2914.399999856949,
+          "end": 4199.099999904633,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3533,
+          "end": 3876.2000000476837,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 3881.7999999523163,
+          "end": 4108.099999904633,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4051.5999999046326,
+          "end": 4250.899999856949,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 4203.299999952316,
+          "end": 4362.799999952316,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 4204.299999952316,
+          "end": 4415.5,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-19.0",
+          "networkId": "44482.61",
+          "frameId": "935963CA99E1FDD9793D0007647CF0BC",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "935963CA99E1FDD9793D0007647CF0BC",
+            "loaderId": "064EF8D675B46E083FFCF91CC9ABEBE3",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "delayed-font",
+      "round": 3,
+      "bodyReadyMs": 1122.5,
+      "lcp": [
+        {
+          "time": 1464,
+          "size": 270,
+          "tag": "A",
+          "text": "EN",
+          "url": "",
+          "rect": {
+            "x": 272,
+            "y": 20,
+            "width": 36,
+            "height": 36,
+            "top": 20,
+            "right": 308,
+            "bottom": 56,
+            "left": 272
+          }
+        },
+        {
+          "time": 1532,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.122886657714844,
+            "y": 17.12288475036621,
+            "width": 41.75422668457031,
+            "height": 41.75422668457031,
+            "top": 17.12288475036621,
+            "right": 74.87711334228516,
+            "bottom": 58.87711143493652,
+            "left": 33.122886657714844
+          }
+        },
+        {
+          "time": 1548,
+          "size": 5226,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 219.30816650390625,
+            "width": 326,
+            "height": 67.1875,
+            "top": 219.30816650390625,
+            "right": 358,
+            "bottom": 286.49566650390625,
+            "left": 32
+          }
+        },
+        {
+          "time": 2856,
+          "size": 10335,
+          "tag": "SPAN",
+          "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+          "url": "",
+          "rect": {
+            "x": 36,
+            "y": 736.75,
+            "width": 280,
+            "height": 41.25,
+            "top": 736.75,
+            "right": 316,
+            "bottom": 778,
+            "left": 36
+          }
+        },
+        {
+          "time": 6028,
+          "size": 20672,
+          "tag": "P",
+          "text": "개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 { } 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 775.625,
+            "width": 326,
+            "height": 143.984375,
+            "top": 775.625,
+            "right": 358,
+            "bottom": 919.609375,
+            "left": 32
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 6013.400000095367,
+          "families": [
+            "Inter Fallback",
+            "JetBrains Mono Fallback",
+            "JetBrains Mono",
+            "Inter",
+            "Libertinus Math"
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "start": 2764.5999999046326,
+          "fonts": "loading",
+          "ready": 2831.4000000953674,
+          "finished": 3159.7000000476837
+        },
+        {
+          "start": 3176.2000000476837,
+          "fonts": "loading",
+          "ready": 3218.0999999046326,
+          "finished": 3543.2999999523163
+        },
+        {
+          "start": 3604.5,
+          "fonts": "loading",
+          "ready": 3655.9000000953674,
+          "finished": 3975.2999999523163
+        }
+      ],
+      "fcp": 1464,
+      "mathNodes": 31,
+      "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 171,
+          "end": 1235.0999999046326,
+          "bytes": 36860
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 171.70000004768372,
+          "end": 1338.5,
+          "bytes": 40780
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 171.70000004768372,
+          "end": 1383.4000000953674,
+          "bytes": 45924
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 171.70000004768372,
+          "end": 1422.2999999523163,
+          "bytes": 48732
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 184.5,
+          "end": 1317.0999999046326,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 184.79999995231628,
+          "end": 409.5,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 184.90000009536743,
+          "end": 783.5,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 184.90000009536743,
+          "end": 1092.2999999523163,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 185,
+          "end": 1331.5,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 185.59999990463257,
+          "end": 1452.4000000953674,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 185.59999990463257,
+          "end": 2389.4000000953674,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 185.59999990463257,
+          "end": 2502.0999999046326,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 185.70000004768372,
+          "end": 1595,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 185.70000004768372,
+          "end": 1774.5999999046326,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 185.70000004768372,
+          "end": 1797,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 185.70000004768372,
+          "end": 2261.5,
+          "bytes": 31409
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 186.40000009536743,
+          "end": 1983.5999999046326,
+          "bytes": 10094
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 186.5,
+          "end": 186.5,
+          "bytes": 0
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 193,
+          "end": 193,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 1236.7999999523163,
+          "end": 5944.099999904633,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1442,
+          "end": 2359.7999999523163,
+          "bytes": 21249
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2669.7999999523163,
+          "end": 2669.7999999523163,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 2772.4000000953674,
+          "end": 2936.5999999046326,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 2772.4000000953674,
+          "end": 2944.0999999046326,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 2851.4000000953674,
+          "end": 3161.5999999046326,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 2942.4000000953674,
+          "end": 4617.299999952316,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 2949.7999999523163,
+          "end": 4894.299999952316,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3591.5999999046326,
+          "end": 3950.0999999046326,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 3954.7999999523163,
+          "end": 4249.799999952316,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4626.400000095367,
+          "end": 4924.400000095367,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 4897.900000095367,
+          "end": 5059.400000095367,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 4898.700000047684,
+          "end": 5156.799999952316,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-19.0",
+          "networkId": "44671.61",
+          "frameId": "026B3905F8B192EFF3D9D890556D6C60",
+          "resourceType": "Font"
+        },
+        {
+          "requestId": "interception-job-21.0",
+          "networkId": "44671.61",
+          "frameId": "026B3905F8B192EFF3D9D890556D6C60",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "026B3905F8B192EFF3D9D890556D6C60",
+            "loaderId": "DBF4B6485A90602EA0C43B0EE28638C1",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "no-view-transition",
+      "round": 3,
+      "bodyReadyMs": 1115.2999999523163,
+      "lcp": [
+        {
+          "time": 1456,
+          "size": 270,
+          "tag": "A",
+          "text": "EN",
+          "url": "",
+          "rect": {
+            "x": 272,
+            "y": 20,
+            "width": 36,
+            "height": 36,
+            "top": 20,
+            "right": 308,
+            "bottom": 56,
+            "left": 272
+          }
+        },
+        {
+          "time": 1520,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.26594161987305,
+            "y": 17.265939712524414,
+            "width": 41.46811294555664,
+            "height": 41.468116760253906,
+            "top": 17.265939712524414,
+            "right": 74.73405456542969,
+            "bottom": 58.73405647277832,
+            "left": 33.26594161987305
+          }
+        },
+        {
+          "time": 1528,
+          "size": 5226,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 219.8434600830078,
+            "width": 326,
+            "height": 67.18748474121094,
+            "top": 219.8434600830078,
+            "right": 358,
+            "bottom": 287.03094482421875,
+            "left": 32
+          }
+        },
+        {
+          "time": 3088,
+          "size": 10335,
+          "tag": "SPAN",
+          "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+          "url": "",
+          "rect": {
+            "x": 36,
+            "y": 736.75,
+            "width": 280,
+            "height": 41.25,
+            "top": 736.75,
+            "right": 316,
+            "bottom": 778,
+            "left": 36
+          }
+        },
+        {
+          "time": 5640,
+          "size": 20672,
+          "tag": "P",
+          "text": "개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 { } 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 775.625,
+            "width": 326,
+            "height": 143.984375,
+            "top": 775.625,
+            "right": 358,
+            "bottom": 919.609375,
+            "left": 32
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 5624,
+          "families": [
+            "Inter Fallback",
+            "JetBrains Mono Fallback",
+            "JetBrains Mono",
+            "Inter",
+            "Libertinus Math"
+          ]
+        }
+      ],
+      "transitions": [],
+      "fcp": 1456,
+      "mathNodes": 31,
+      "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 170.89999985694885,
+          "end": 1226.8999998569489,
+          "bytes": 36860
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 171.79999995231628,
+          "end": 1339.8999998569489,
+          "bytes": 40780
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 171.79999995231628,
+          "end": 1384.7000000476837,
+          "bytes": 45924
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 171.89999985694885,
+          "end": 1421.2999999523163,
+          "bytes": 48732
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 182.70000004768372,
+          "end": 1317.5,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 183.39999985694885,
+          "end": 409.7999999523163,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 183.59999990463257,
+          "end": 777.0999999046326,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 183.59999990463257,
+          "end": 1092.2000000476837,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 183.89999985694885,
+          "end": 1324.2000000476837,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 184.09999990463257,
+          "end": 1451.5999999046326,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 184.09999990463257,
+          "end": 2810.399999856949,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 184.20000004768372,
+          "end": 2546.5999999046326,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 184.39999985694885,
+          "end": 1594.5999999046326,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 184.39999985694885,
+          "end": 1774.5,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 184.59999990463257,
+          "end": 1940.0999999046326,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 184.59999990463257,
+          "end": 2367.7000000476837,
+          "bytes": 31409
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 184.70000004768372,
+          "end": 184.70000004768372,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 184.70000004768372,
+          "end": 2209.899999856949,
+          "bytes": 10094
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 190.09999990463257,
+          "end": 190.09999990463257,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 1234.3999998569489,
+          "end": 5554.399999856949,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1436,
+          "end": 2600.0999999046326,
+          "bytes": 21249
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2955.2000000476837,
+          "end": 2955.2000000476837,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 3044.2000000476837,
+          "end": 3208.0999999046326,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 3044.7999999523163,
+          "end": 3214.5,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 3090.399999856949,
+          "end": 3380.399999856949,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3172.2999999523163,
+          "end": 3521.7000000476837,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 3216.399999856949,
+          "end": 4872.599999904633,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 3219.5999999046326,
+          "end": 5134.799999952316,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 3532.2999999523163,
+          "end": 3830.399999856949,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4883.299999952316,
+          "end": 5173.099999904633,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 5140.099999904633,
+          "end": 5300,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 5141.599999904633,
+          "end": 5404.899999856949,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-19.0",
+          "networkId": "45002.61",
+          "frameId": "D5D88FA5BE0AA1946C8D03F67F1692D5",
+          "resourceType": "Font"
+        },
+        {
+          "requestId": "interception-job-21.0",
+          "networkId": "45002.61",
+          "frameId": "D5D88FA5BE0AA1946C8D03F67F1692D5",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "D5D88FA5BE0AA1946C8D03F67F1692D5",
+            "loaderId": "945B4523B360D779BD33AC42298BF4C8",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "system-ui",
+      "round": 3,
+      "bodyReadyMs": 534,
+      "lcp": [
+        {
+          "time": 780,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.850379943847656,
+            "y": 17.850379943847656,
+            "width": 40.29924011230469,
+            "height": 40.29924011230469,
+            "top": 17.850379943847656,
+            "right": 74.14962005615234,
+            "bottom": 58.149620056152344,
+            "left": 33.850379943847656
+          }
+        },
+        {
+          "time": 804,
+          "size": 5092,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 222.7437744140625,
+            "width": 326,
+            "height": 67.1875,
+            "top": 222.7437744140625,
+            "right": 358,
+            "bottom": 289.9312744140625,
+            "left": 32
+          }
+        },
+        {
+          "time": 2368,
+          "size": 10032,
+          "tag": "SPAN",
+          "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+          "url": "",
+          "rect": {
+            "x": 36,
+            "y": 736.75,
+            "width": 280,
+            "height": 41.25,
+            "top": 736.75,
+            "right": 316,
+            "bottom": 778,
+            "left": 36
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 4845.299999952316,
+          "families": ["Libertinus Math"]
+        }
+      ],
+      "transitions": [
+        {
+          "start": 2271.600000143051,
+          "fonts": "loading",
+          "ready": 2333.100000143051,
+          "finished": 2652
+        },
+        {
+          "start": 2665.5,
+          "fonts": "loading",
+          "ready": 2700.2999999523163,
+          "finished": 3035.600000143051
+        },
+        {
+          "start": 3096.7999999523163,
+          "fonts": "loading",
+          "ready": 3145.2999999523163,
+          "finished": 3469.2000000476837
+        }
+      ],
+      "fcp": 780,
+      "mathNodes": 31,
+      "bodyFont": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 163.79999995231628,
+          "end": 163.79999995231628,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 163.79999995231628,
+          "end": 163.79999995231628,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 163.79999995231628,
+          "end": 163.79999995231628,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 163.90000009536743,
+          "end": 163.90000009536743,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 172.60000014305115,
+          "end": 367.7999999523163,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 172.70000004768372,
+          "end": 359.40000009536743,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 172.70000004768372,
+          "end": 510.7000000476837,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 173.40000009536743,
+          "end": 419.90000009536743,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 173.40000009536743,
+          "end": 585.1000001430511,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 173.40000009536743,
+          "end": 803.6000001430511,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 173.40000009536743,
+          "end": 832.2999999523163,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 173.40000009536743,
+          "end": 929.7000000476837,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 173.40000009536743,
+          "end": 1754.7999999523163,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 173.40000009536743,
+          "end": 2032.2999999523163,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 173.5,
+          "end": 1185.2000000476837,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 173.5,
+          "end": 1515.7000000476837,
+          "bytes": 31409
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 174.20000004768372,
+          "end": 174.20000004768372,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 174.20000004768372,
+          "end": 1358.2000000476837,
+          "bytes": 10094
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 179.10000014305115,
+          "end": 179.10000014305115,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/2c55a0e60120577a-s.0-dom-5bn10r2.woff2",
+          "start": 539.5,
+          "end": 539.5,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/9c72aa0f40e4eef8-s.1y4-pdgsjb-pw.woff2",
+          "start": 539.5,
+          "end": 539.5,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/ad66f9afd8947f86-s.3lvt2whj97whp.woff2",
+          "start": 539.6000001430511,
+          "end": 539.6000001430511,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/5476f68d60460930-s.2uwcyprjm3xu3.woff2",
+          "start": 539.7000000476837,
+          "end": 539.7000000476837,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/2bbe8d2671613f1f-s.0k62hbripvv8p.woff2",
+          "start": 540.1000001430511,
+          "end": 540.1000001430511,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/1bffadaabf893a1e-s.3-6t-g6q0vh0a.woff2",
+          "start": 540.1000001430511,
+          "end": 540.1000001430511,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 540.1000001430511,
+          "end": 540.1000001430511,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/13bf9871fe164e7f-s.2f7nqdagzwx2-.woff2",
+          "start": 540.1000001430511,
+          "end": 540.1000001430511,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/cc545e633e20c56d-s.176arc174-8zp.woff2",
+          "start": 540.2999999523163,
+          "end": 540.2999999523163,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/71b036adf157cdcf-s.0bp8oijd_gu96.woff2",
+          "start": 540.2999999523163,
+          "end": 540.2999999523163,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/89b21bb081cb7469-s.1fby2rem9ngyr.woff2",
+          "start": 540.4000000953674,
+          "end": 540.4000000953674,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3fe682a82f50d426-s.0vfdmo25voy_0.woff2",
+          "start": 540.4000000953674,
+          "end": 540.4000000953674,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 540.4000000953674,
+          "end": 540.4000000953674,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/50a3f1070da3c6cc-s.2xm1k7t3a0pcd.woff2",
+          "start": 540.4000000953674,
+          "end": 540.4000000953674,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/b887d91685b8c137-s.330vchwb4izzb.woff2",
+          "start": 540.4000000953674,
+          "end": 540.4000000953674,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 540.7000000476837,
+          "end": 540.7000000476837,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/1e219c03c996efbd-s.2qo5md4hn_gum.woff2",
+          "start": 540.7000000476837,
+          "end": 540.7000000476837,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/b35b0dbffda7f2c4-s.1d9rlgtqyj_-l.woff2",
+          "start": 540.7000000476837,
+          "end": 540.7000000476837,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 540.7000000476837,
+          "end": 540.7000000476837,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 570.7000000476837,
+          "end": 4793.100000143051,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 758,
+          "end": 1815.7000000476837,
+          "bytes": 21249
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 2107.100000143051,
+          "end": 2107.100000143051,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 2107.9000000953674,
+          "end": 2107.9000000953674,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 2108,
+          "end": 2108,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 2108.100000143051,
+          "end": 2108.100000143051,
+          "bytes": 0
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2187.5,
+          "end": 2187.5,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 2277.9000000953674,
+          "end": 2438.4000000953674,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 2277.9000000953674,
+          "end": 2445.7000000476837,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 2358.9000000953674,
+          "end": 2670,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 2444.7000000476837,
+          "end": 4125.900000095367,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 2450.4000000953674,
+          "end": 4388.299999952316,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3083.7999999523163,
+          "end": 3443.5,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 3448.4000000953674,
+          "end": 3742.7999999523163,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4134.200000047684,
+          "end": 4425.400000095367,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 4392,
+          "end": 4552.900000095367,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 4392.799999952316,
+          "end": 4650.600000143051,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [],
+      "interceptions": [
+        {
+          "requestId": "interception-job-15.0",
+          "networkId": "45338.61",
+          "frameId": "E7604A744CEAD3FF271BF45A1F118CB9",
+          "resourceType": "Font"
+        },
+        {
+          "requestId": "interception-job-17.0",
+          "networkId": "45338.61",
+          "frameId": "E7604A744CEAD3FF271BF45A1F118CB9",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "E7604A744CEAD3FF271BF45A1F118CB9",
+            "loaderId": "710544A04AE8D87EEDE73DB41E3CB1EF",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    }
+  ]
+}

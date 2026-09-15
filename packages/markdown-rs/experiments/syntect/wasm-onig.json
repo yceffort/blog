@@ -1,0 +1,25 @@
+{
+  "measuredAt": "2026-09-14T09:02:42.675Z",
+  "node": "v24.20.0",
+  "cpu": "Apple M1",
+  "scope": "syntect ParseState with Oniguruma, wasm32-wasip1. Preloaded corpus, reused instance, one first pass and six warm passes. No HAST or output JSON. Separate process from the earlier fancy-regex and Prism runs.",
+  "corpus": {
+    "blocks": 2587,
+    "sha256": "e10d1b874b829a680b4bb463079871072f66e44ba5589d3c710a70436a1b8aa6"
+  },
+  "checksum": 8842021,
+  "syntaxInitMs": 2.0978749999999984,
+  "firstParseMs": 799.7267909999999,
+  "summary": {
+    "medianMs": 689.6763960000003,
+    "minMs": 687.6086660000001,
+    "maxMs": 701.4549589999997
+  },
+  "trialsMs": [
+    690.654208, 689.2124589999999, 701.4549589999997, 689.4915000000001,
+    689.8612920000005, 687.6086660000001
+  ],
+  "wasmBytes": 1111791,
+  "wasmSha256": "f734511b6013ef5c5ac8d1b630a4932720601587ba610da2c1ae0e76f6e39476",
+  "sourceSha256": "e030a8ffa913f8d3d9526a22a68401cc4aa6a3f3f43178fbf4249edf07011881"
+}

@@ -1,0 +1,234 @@
+/* Code highlighting and generated diagram content. */
+@font-face {
+  font-family: "Libertinus Math";
+  src: url("/fonts/math/LibertinusMath-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer site {
+  math {
+    font-family: "Libertinus Math", math;
+  }
+  math[display="block"] {
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: block;
+    max-width: 100%;
+    margin-block: 1em;
+  }
+  .token.tag,
+  .token.boolean,
+  .token.deleted {
+    color: #dc2626;
+  }
+  .token.attr-name,
+  .token.class-name {
+    color: #ca8a04;
+  }
+  .token.string,
+  .token.attr-value,
+  .token.inserted {
+    color: #16a34a;
+  }
+  .token.punctuation {
+    color: #1f2937;
+  }
+  .token.keyword {
+    color: #9333ea;
+  }
+  .token.function,
+  .token.number {
+    color: #2563eb;
+  }
+  .token.comment {
+    font-style: italic;
+    color: oklch(55.2% 0.016 285.938);
+  }
+  .dark .token.tag,
+  .dark .token.boolean,
+  .dark .token.deleted {
+    color: #f99;
+  }
+  .dark .token.attr-name,
+  .dark .token.class-name {
+    color: #ffeb99;
+  }
+  .dark .token.string,
+  .dark .token.attr-value,
+  .dark .token.inserted {
+    color: #a4f4c0;
+  }
+  .dark .token.punctuation {
+    color: #fff;
+  }
+  .dark .token.keyword {
+    color: #d7a9ff;
+  }
+  .dark .token.function,
+  .dark .token.number {
+    color: #98dcff;
+  }
+  .dark .token.comment {
+    color: oklch(70.5% 0.015 286.067);
+  }
+  .code-line.deleted {
+    background-color: color-mix(
+      in srgb,
+      oklch(63.7% 0.237 25.331) 20%,
+      transparent
+    );
+  }
+  .code-line.inserted {
+    background-color: color-mix(
+      in srgb,
+      oklch(72.3% 0.219 149.579) 20%,
+      transparent
+    );
+  }
+  .code-line {
+    display: block;
+    margin-right: -16px;
+    margin-left: -16px;
+    padding-right: 16px;
+    padding-left: 16px;
+    border-left-width: 4px;
+    border-left-color: transparent;
+  }
+  .highlight-line {
+    margin-right: -16px;
+    margin-left: -16px;
+    border-left-width: 4px;
+    border-left-color: var(--color-amber-500);
+    background-color: color-mix(
+      in srgb,
+      oklch(76.9% 0.188 70.08) 20%,
+      transparent
+    );
+  }
+  .highlight-line:is(.dark *) {
+    border-left-color: var(--color-yellow-400);
+    background-color: color-mix(
+      in srgb,
+      oklch(85.2% 0.199 91.936) 15%,
+      transparent
+    );
+  }
+  pre:has(> code):is(.dark *) {
+    background-color: oklch(21% 0.006 285.885);
+  }
+  pre:has(> code) {
+    background-color: oklch(96.7% 0.001 286.375);
+  }
+  span.icon.icon-link {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    margin-right: 0.2em;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1'/%3E%3Cpath d='M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1'/%3E%3C/svg%3E");
+  }
+  .dark span.icon.icon-link {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 490 490' xml:space='preserve'%3E%3Cpath fill='white' d='M64.333 490h58.401l33.878-137.69h122.259L245.39 490h58.401l33.878-137.69h119.92v-48.162h-108.24l29.2-117.324h79.04v-48.162H390.23L424.108 0H365.31l-33.878 138.661H208.79L242.668 0h-58.415l-33.864 138.661H32.411v48.162h106.298l-28.818 117.324h-77.48v48.162h65.8L64.333 490zM197.11 186.824h122.642l-29.2 117.324h-122.26l28.818-117.324z'/%3E%3C/svg%3E");
+  }
+  pre code {
+    color: oklch(27.4% 0.006 286.033);
+  }
+  pre code:is(.dark *) {
+    color: oklch(96.7% 0.001 286.375);
+  }
+
+  /* 렌더러가 각주 라벨(to_hast.rs)에 붙이는 클래스다. */
+  .sr-only {
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    border-width: 0;
+    border-style: none;
+    border-color: currentColor;
+    white-space: nowrap;
+    clip: rect(0, 0, 0, 0);
+  }
+  .mermaid-zoom-content {
+    display: inline-block;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+  .code-highlight {
+    float: left;
+    min-width: 100%;
+  }
+  code {
+    word-wrap: break-word;
+  }
+  .mermaid-zoom-controls {
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 1;
+  }
+  h4 > a > span.icon.icon-link {
+    width: 12px;
+    height: 12px;
+  }
+  h3 > a > span.icon.icon-link {
+    width: 15px;
+    height: 15px;
+  }
+  h2 > a > span.icon.icon-link {
+    width: 18px;
+    height: 18px;
+  }
+  pre {
+    overflow-x: auto;
+  }
+  .line-number::before {
+    content: attr(line);
+    display: inline-block;
+    width: 1rem;
+    margin-right: 16px;
+    margin-left: -8px;
+    text-align: right;
+    color: oklch(70.5% 0.015 286.067);
+  }
+}
+
+@supports (not (-moz-appearance: none)) {
+  @layer site {
+    math mover[accent="true" i] > mo:nth-child(2) {
+      margin-bottom: 0.15ex;
+    }
+  }
+}
+@supports (color: color-mix(in lab, red, red)) {
+  @layer site {
+    .highlight-line {
+      background-color: color-mix(
+        in oklab,
+        var(--color-amber-500) 20%,
+        transparent
+      );
+    }
+    .code-line.inserted {
+      background-color: color-mix(
+        in oklab,
+        var(--color-green-500) 20%,
+        transparent
+      );
+    }
+    .code-line.deleted {
+      background-color: color-mix(
+        in oklab,
+        var(--color-red-500) 20%,
+        transparent
+      );
+    }
+    .highlight-line:is(.dark *) {
+      background-color: color-mix(
+        in oklab,
+        var(--color-yellow-400) 15%,
+        transparent
+      );
+    }
+  }
+}

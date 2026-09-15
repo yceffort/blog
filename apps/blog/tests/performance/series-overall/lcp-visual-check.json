@@ -1,0 +1,826 @@
+{
+  "metadata": {
+    "commit": "118a94668cfd9d7032ded2c0186138bc72bcd71b",
+    "startedAt": "2026-09-14T13:06:21.998Z",
+    "rounds": 2,
+    "cases": ["control"],
+    "contextOptions": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "isMobile": true,
+      "hasTouch": true,
+      "userAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Mobile Safari/537.36",
+      "colorScheme": "light",
+      "serviceWorkers": "block"
+    },
+    "screenshotsDuringLoad": true,
+    "fontSha256": "28966800a6319cb1ce4bd03ff698e2ebca6acd8e8a07b29c825ee8fa44deb4fd",
+    "fontBytes": 341752,
+    "harnessSha256": "ebf8dbfa24c9478a4b1bf03715f506e1084a74d5f9f459e318a4574ce0b588de",
+    "cpu": 4,
+    "latencyMs": 150,
+    "downloadBytesPerSecond": 200000,
+    "notes": [
+      "All cases intercept only the math font with CDP Fetch. Control continues immediately; instant-font fulfills the identical bytes locally; delayed-font waits 1500ms before continuing the request. Other network conditions, markup and CSS are unchanged."
+    ],
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "HeadlessChrome/153.0.8010.12",
+      "revision": "@971a7443b0c9b0a9b2860529b33331b76077ec62",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+      "jsVersion": "15.3.76.4"
+    }
+  },
+  "results": [
+    {
+      "variant": "control",
+      "round": 1,
+      "bodyReadyMs": 1115.5,
+      "lcp": [
+        {
+          "time": 1448,
+          "size": 270,
+          "tag": "A",
+          "text": "EN",
+          "url": "",
+          "rect": {
+            "x": 272,
+            "y": 20,
+            "width": 36,
+            "height": 36,
+            "top": 20,
+            "right": 308,
+            "bottom": 56,
+            "left": 272
+          }
+        },
+        {
+          "time": 1512,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.4101448059082,
+            "y": 17.41014289855957,
+            "width": 41.17971420288086,
+            "height": 41.179710388183594,
+            "top": 17.41014289855957,
+            "right": 74.58985900878906,
+            "bottom": 58.589853286743164,
+            "left": 33.4101448059082
+          }
+        },
+        {
+          "time": 1520,
+          "size": 5226,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 220.5578155517578,
+            "width": 326,
+            "height": 67.18748474121094,
+            "top": 220.5578155517578,
+            "right": 358,
+            "bottom": 287.74530029296875,
+            "left": 32
+          }
+        },
+        {
+          "time": 3144,
+          "size": 10335,
+          "tag": "SPAN",
+          "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+          "url": "",
+          "rect": {
+            "x": 36,
+            "y": 736.75,
+            "width": 280,
+            "height": 41.25,
+            "top": 736.75,
+            "right": 316,
+            "bottom": 778,
+            "left": 36
+          }
+        },
+        {
+          "time": 5640,
+          "size": 20672,
+          "tag": "P",
+          "text": "개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 { } 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 775.625,
+            "width": 326,
+            "height": 143.984375,
+            "top": 775.625,
+            "right": 358,
+            "bottom": 919.609375,
+            "left": 32
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 5620.799999952316,
+          "families": [
+            "Inter Fallback",
+            "JetBrains Mono Fallback",
+            "JetBrains Mono",
+            "Inter",
+            "Libertinus Math"
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "start": 3040.2999999523163,
+          "fonts": "loading",
+          "ready": 3107,
+          "finished": 3427.5
+        },
+        {
+          "start": 3442.7000000476837,
+          "fonts": "loading",
+          "ready": 3477.7000000476837,
+          "finished": 3794.5
+        },
+        {
+          "start": 3863.2999999523163,
+          "fonts": "loading",
+          "ready": 3910.7999999523163,
+          "finished": 4244.799999952316
+        }
+      ],
+      "fcp": 1448,
+      "mathNodes": 31,
+      "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 171.29999995231628,
+          "end": 1218.2999999523163,
+          "bytes": 36860
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 172.29999995231628,
+          "end": 1376.3999998569489,
+          "bytes": 45924
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 172.39999985694885,
+          "end": 1331.2999999523163,
+          "bytes": 40780
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 172.39999985694885,
+          "end": 1420.7999999523163,
+          "bytes": 48732
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 182.20000004768372,
+          "end": 1317,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 182.29999995231628,
+          "end": 409.59999990463257,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 182.29999995231628,
+          "end": 783.3999998569489,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 182.29999995231628,
+          "end": 1091.8999998569489,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 182.29999995231628,
+          "end": 1323.7000000476837,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 182.39999985694885,
+          "end": 1443.8999998569489,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 183,
+          "end": 1586.2999999523163,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 183,
+          "end": 2553.5999999046326,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 183,
+          "end": 2809.7000000476837,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 183.09999990463257,
+          "end": 1766.2000000476837,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 183.20000004768372,
+          "end": 1923.7000000476837,
+          "bytes": 6238
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 183.20000004768372,
+          "end": 2381.2999999523163,
+          "bytes": 31409
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 183.59999990463257,
+          "end": 2201.5999999046326,
+          "bytes": 10094
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 183.70000004768372,
+          "end": 183.70000004768372,
+          "bytes": 0
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 187.70000004768372,
+          "end": 187.70000004768372,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 1231.2999999523163,
+          "end": 5553.099999904633,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1427.7000000476837,
+          "end": 2599.5,
+          "bytes": 21249
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2953,
+          "end": 2953,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 3099,
+          "end": 3258.5999999046326,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 3099.7999999523163,
+          "end": 3266.5999999046326,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 3135.399999856949,
+          "end": 3416,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 3266.5,
+          "end": 4923.799999952316,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 3269.899999856949,
+          "end": 5185.599999904633,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3845.7000000476837,
+          "end": 4204.799999952316,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 4209.899999856949,
+          "end": 4504.700000047684,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4934.299999952316,
+          "end": 5223.899999856949,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 5190.099999904633,
+          "end": 5351.5,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 5191.099999904633,
+          "end": 5449.700000047684,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [
+        {
+          "time": 2003.0999999046326,
+          "fonts": "loading",
+          "heading": {
+            "x": 32,
+            "y": 217.5,
+            "width": 326,
+            "height": 67.1875,
+            "top": 217.5,
+            "right": 358,
+            "bottom": 284.6875,
+            "left": 32
+          },
+          "paragraph": "<p>개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 <code>{ }</code> 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.</p>"
+        },
+        {
+          "time": 4096.700000047684,
+          "fonts": "loading",
+          "heading": {
+            "x": 32,
+            "y": 217.5,
+            "width": 326,
+            "height": 67.1875,
+            "top": 217.5,
+            "right": 358,
+            "bottom": 284.6875,
+            "left": 32
+          },
+          "paragraph": "<p>개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 <code>{ }</code> 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.</p>"
+        }
+      ],
+      "interceptions": [
+        {
+          "requestId": "interception-job-19.0",
+          "networkId": "32659.61",
+          "frameId": "684B10C9FD5789C0B855C80A56834D16",
+          "resourceType": "Font"
+        },
+        {
+          "requestId": "interception-job-21.0",
+          "networkId": "32659.61",
+          "frameId": "684B10C9FD5789C0B855C80A56834D16",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "684B10C9FD5789C0B855C80A56834D16",
+            "loaderId": "89726E0EE0B58F747215F0A4207AC070",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    },
+    {
+      "variant": "control",
+      "round": 2,
+      "bodyReadyMs": 1100.1000001430511,
+      "lcp": [
+        {
+          "time": 1440,
+          "size": 270,
+          "tag": "A",
+          "text": "EN",
+          "url": "",
+          "rect": {
+            "x": 272,
+            "y": 20,
+            "width": 36,
+            "height": 36,
+            "top": 20,
+            "right": 308,
+            "bottom": 56,
+            "left": 272
+          }
+        },
+        {
+          "time": 1512,
+          "size": 1600,
+          "tag": "IMG",
+          "text": "",
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "rect": {
+            "x": 33.26690673828125,
+            "y": 17.26690673828125,
+            "width": 41.4661865234375,
+            "height": 41.4661865234375,
+            "top": 17.26690673828125,
+            "right": 74.73309326171875,
+            "bottom": 58.73309326171875,
+            "left": 33.26690673828125
+          }
+        },
+        {
+          "time": 1524,
+          "size": 5226,
+          "tag": "H1",
+          "text": "프로그래머 기초 수학 1-2 - 집합",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 219.84390258789062,
+            "width": 326,
+            "height": 67.1875,
+            "top": 219.84390258789062,
+            "right": 358,
+            "bottom": 287.0314025878906,
+            "left": 32
+          }
+        },
+        {
+          "time": 3116,
+          "size": 10335,
+          "tag": "SPAN",
+          "text": "『남은 판단은 누가 배우는가』 초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다",
+          "url": "",
+          "rect": {
+            "x": 36,
+            "y": 736.75,
+            "width": 280,
+            "height": 41.25,
+            "top": 736.75,
+            "right": 316,
+            "bottom": 778,
+            "left": 36
+          }
+        },
+        {
+          "time": 5632,
+          "size": 20672,
+          "tag": "P",
+          "text": "개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 { } 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.",
+          "url": "",
+          "rect": {
+            "x": 32,
+            "y": 775.625,
+            "width": 326,
+            "height": 143.984375,
+            "top": 775.625,
+            "right": 358,
+            "bottom": 919.609375,
+            "left": 32
+          }
+        }
+      ],
+      "fonts": [
+        {
+          "time": 5613.100000143051,
+          "families": [
+            "Inter Fallback",
+            "JetBrains Mono Fallback",
+            "JetBrains Mono",
+            "Inter",
+            "Libertinus Math"
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "start": 3019.100000143051,
+          "fonts": "loading",
+          "ready": 3089.4000000953674,
+          "finished": 3402.2000000476837
+        },
+        {
+          "start": 3419.600000143051,
+          "fonts": "loading",
+          "ready": 3460,
+          "finished": 3786.4000000953674
+        },
+        {
+          "start": 3841.600000143051,
+          "fonts": "loading",
+          "ready": 3894.100000143051,
+          "finished": 4219
+        }
+      ],
+      "fcp": 1440,
+      "mathNodes": 31,
+      "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, \"Apple SD Gothic Neo\", \"Noto Sans KR\", sans-serif",
+      "mathFont": "\"Libertinus Math\", math",
+      "resources": [
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2",
+          "start": 164.5,
+          "end": 1213.9000000953674,
+          "bytes": 36860
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+          "start": 165,
+          "end": 1326.4000000953674,
+          "bytes": 40780
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+          "start": 165,
+          "end": 1370.7000000476837,
+          "bytes": 45924
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+          "start": 165,
+          "end": 1409.3000001907349,
+          "bytes": 48732
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0c2eoo113xnjw.css",
+          "start": 176.20000004768372,
+          "end": 396.40000009536743,
+          "bytes": 1615
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3r4ogh7bfi255.css",
+          "start": 176.20000004768372,
+          "end": 1077.6000001430511,
+          "bytes": 23355
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.3h1dq4kn9hvfo.jpeg&w=96&q=75",
+          "start": 176.20000004768372,
+          "end": 1310.6000001430511,
+          "bytes": 1805
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2lfbjgyop2nqg.css",
+          "start": 176.80000019073486,
+          "end": 771.7000000476837,
+          "bytes": 6514
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3dfio-m6748_e.js",
+          "start": 176.80000019073486,
+          "end": 1303.2000000476837,
+          "bytes": 2637
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3ptkgpnolcmqc.js",
+          "start": 176.80000019073486,
+          "end": 1437.9000000953674,
+          "bytes": 8113
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/turbopack-24b1qtq9_96ne.js",
+          "start": 176.90000009536743,
+          "end": 1581.1000001430511,
+          "bytes": 4585
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1ohpnv6e06g0p.js",
+          "start": 176.90000009536743,
+          "end": 1761.1000001430511,
+          "bytes": 10138
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0eti7nj10lus9.js",
+          "start": 176.90000009536743,
+          "end": 2533.300000190735,
+          "bytes": 45563
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/2q1hf616yo1-d.js",
+          "start": 176.90000009536743,
+          "end": 2796.300000190735,
+          "bytes": 71661
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/3hsanh87axqpm.js",
+          "start": 177,
+          "end": 2376.4000000953674,
+          "bytes": 31409
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1xazbb1qsgize.js",
+          "start": 177.60000014305115,
+          "end": 1926.3000001907349,
+          "bytes": 6238
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 177.70000004768372,
+          "end": 177.70000004768372,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/10j938uty86fj.js",
+          "start": 177.70000004768372,
+          "end": 2196.600000143051,
+          "bytes": 10094
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 181.70000004768372,
+          "end": 181.70000004768372,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/fonts/math/LibertinusMath-Regular.woff2",
+          "start": 1216.8000001907349,
+          "end": 5541.800000190735,
+          "bytes": 342052
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/image?url=%2F2020%2F07%2Fimages%2Fvenn1.png&w=3840&q=75",
+          "start": 1416.9000000953674,
+          "end": 2593.5,
+          "bytes": 21249
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-ND58S24JBX",
+          "start": 2934.600000143051,
+          "end": 2934.600000143051,
+          "bytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=6hNcGUaLfKvjancj",
+          "start": 3082,
+          "end": 3247,
+          "bytes": 659
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=6hNcGUaLfKvjancj",
+          "start": 3082.100000143051,
+          "end": 3253.5,
+          "bytes": 666
+        },
+        {
+          "url": "http://127.0.0.1:3222/2026/09/who-learns-to-judge-beta-reader?_rsc=LyUhzDxtjJm_bNdK",
+          "start": 3108.800000190735,
+          "end": 3388.2000000476837,
+          "bytes": 11950
+        },
+        {
+          "url": "http://127.0.0.1:3222/?_rsc=BacanlJ4kLKCpO0J",
+          "start": 3253.100000143051,
+          "end": 4910.900000095367,
+          "bytes": 97163
+        },
+        {
+          "url": "http://127.0.0.1:3222/en?_rsc=GMMW1808pLOjGvJ9",
+          "start": 3261.2000000476837,
+          "end": 5189.200000047684,
+          "bytes": 118740
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm?_rsc=6hNcGUaLfKvjancj",
+          "start": 3886.7000000476837,
+          "end": 4243.300000190735,
+          "bytes": 711
+        },
+        {
+          "url": "http://127.0.0.1:3222/tags/algorithm/pages/1?_rsc=h8BzRACF3TUrls7g",
+          "start": 4253.200000047684,
+          "end": 4551.200000047684,
+          "bytes": 7295
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1a3twp8vdjd8t.js",
+          "start": 4919.400000095367,
+          "end": 5218.5,
+          "bytes": 9660
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/0woks0rh_9oqe.js",
+          "start": 5195.100000143051,
+          "end": 5361.100000143051,
+          "bytes": 564
+        },
+        {
+          "url": "http://127.0.0.1:3222/_next/static/chunks/1iorscktdaj84.js",
+          "start": 5195.700000047684,
+          "end": 5458,
+          "bytes": 9400
+        }
+      ],
+      "snapshots": [
+        {
+          "time": 2003.9000000953674,
+          "fonts": "loading",
+          "heading": {
+            "x": 32,
+            "y": 217.5,
+            "width": 326,
+            "height": 67.1875,
+            "top": 217.5,
+            "right": 358,
+            "bottom": 284.6875,
+            "left": 32
+          },
+          "paragraph": "<p>개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 <code>{ }</code> 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.</p>"
+        },
+        {
+          "time": 4113.200000047684,
+          "fonts": "loading",
+          "heading": {
+            "x": 32,
+            "y": 217.5,
+            "width": 326,
+            "height": 67.1875,
+            "top": 217.5,
+            "right": 358,
+            "bottom": 284.6875,
+            "left": 32
+          },
+          "paragraph": "<p>개별적인 개체들의 모임을 집합이라고 하며, 집합을 이루는 개체를 원소라고 한다. 집합을 이루는 원소는 <code>{ }</code> 중괄호 로 나타내며, 원소나열법과 조건 제시법으로 표시한다. 순서는 상관없지만, 중복은 하지 않는다.</p>"
+        }
+      ],
+      "interceptions": [
+        {
+          "requestId": "interception-job-19.0",
+          "networkId": "33065.61",
+          "frameId": "E9D5B2BAB9E498A19AAD90228059C986",
+          "resourceType": "Font"
+        },
+        {
+          "requestId": "interception-job-21.0",
+          "networkId": "33065.61",
+          "frameId": "E9D5B2BAB9E498A19AAD90228059C986",
+          "resourceType": "Font"
+        }
+      ],
+      "frames": {
+        "frameTree": {
+          "frame": {
+            "id": "E9D5B2BAB9E498A19AAD90228059C986",
+            "loaderId": "C1FC280C05F70CDF37A5FA8E21459C0E",
+            "url": "http://127.0.0.1:3222/2020/07/math-for-programmer-chapter1-2-set",
+            "domainAndRegistry": "",
+            "securityOrigin": "http://127.0.0.1:3222",
+            "securityOriginDetails": {
+              "isLocalhost": true
+            },
+            "mimeType": "text/html",
+            "adFrameStatus": {
+              "adFrameType": "none"
+            },
+            "secureContextType": "SecureLocalhost",
+            "crossOriginIsolatedContextType": "NotIsolated",
+            "gatedAPIFeatures": []
+          }
+        }
+      },
+      "articleSha256": "6fa0bd10838970c9971171ae3bd4d2e06e81adec8a9942ea18e092185fef71e3"
+    }
+  ],
+  "publishedScreenshot": {
+    "run": "control-1",
+    "snapshot": 1,
+    "path": "apps/blog/public/2026/09/images/blog-performance/lcp-before-font-loaded.png",
+    "sha256": "d10577730b2364b0a17713b1b101e5da1ad8a664a4d7200e9d1605b1d830a9ee",
+    "method": "Direct CDP Page.captureScreenshot without waiting for document.fonts.ready. Capture runs are separate from the 15 comparison visits."
+  }
+}

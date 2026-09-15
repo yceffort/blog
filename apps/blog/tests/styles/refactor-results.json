@@ -1,0 +1,657 @@
+{
+  "checkedAt": "2026-09-13T12:35:22.823589+00:00",
+  "baseline": "Working tree preserved before the refactor, not the Tailwind HEAD commit",
+  "baselineDirectory": "/Users/yceffort/private/.blog-style-refactor-baseline/apps/blog",
+  "sizes": {
+    "before": {
+      "buildId": "Y2QI3Ceozq4GgC28vUE62",
+      "mainCss": {
+        "file": "2fp_7o1dpagis.css",
+        "bytes": 411618,
+        "gzipBytes": 61240,
+        "sha256": "3068c5cd041c86d05660de3eeff1ada81f968f8d432195c523da05c8d8ce2132"
+      },
+      "routes": {
+        "/": {
+          "htmlBytes": 434576,
+          "encodedBytes": 124410,
+          "classAttributeBytes": 60564,
+          "maxClassTokens": 127,
+          "duplicateClassTokens": 0
+        },
+        "/2026/08/k8s-for-frontend-1": {
+          "htmlBytes": 719297,
+          "encodedBytes": 102689,
+          "classAttributeBytes": 251678,
+          "maxClassTokens": 198,
+          "duplicateClassTokens": 2087
+        }
+      }
+    },
+    "after": {
+      "buildId": "WT_Ah9mE-gvYNOwXS_jWW",
+      "mainCss": {
+        "file": "2hp0ehpj8tvr4.css",
+        "bytes": 229057,
+        "gzipBytes": 36578,
+        "sha256": "0182259a6ff76de79d588945717f3fbbbc520b4169038d06f9523427d129189b"
+      },
+      "routes": {
+        "/": {
+          "htmlBytes": 418111,
+          "encodedBytes": 119375,
+          "classAttributeBytes": 51922,
+          "maxClassTokens": 84,
+          "duplicateClassTokens": 0
+        },
+        "/2026/08/k8s-for-frontend-1": {
+          "htmlBytes": 263243,
+          "encodedBytes": 63859,
+          "classAttributeBytes": 34036,
+          "maxClassTokens": 84,
+          "duplicateClassTokens": 24
+        }
+      }
+    }
+  },
+  "styleSourceLines": {
+    "before": 27606,
+    "after": 11513
+  },
+  "validation": {
+    "utilityComparisons": 26880,
+    "blockCodeChecks": 12,
+    "pages": [
+      {
+        "name": "390-light-_",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-_en",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-_pages_1",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-_tags",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-_archive",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-_series",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-_series_k8s-for-frontend",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-_about",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-_resume",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-_offline",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-_not-a-real-route",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-_2026_08_k8s-for-frontend-1",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-_2020_07_math-for-programmer-chapter2-3-rational-irrational-real-number",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-menu",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-search",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-settings",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-accent-rose",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-accent-emerald",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-accent-amber",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-accent-cyan",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-accent-violet",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-film-grain",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-light-minimal-mode",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-_",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-_en",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-_pages_1",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-_tags",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-_archive",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-_series",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-_series_k8s-for-frontend",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-_about",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-_resume",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-_offline",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-_not-a-real-route",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-_2026_08_k8s-for-frontend-1",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-_2020_07_math-for-programmer-chapter2-3-rational-irrational-real-number",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-menu",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-search",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-settings",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-accent-rose",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-accent-emerald",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-accent-amber",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-accent-cyan",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-accent-violet",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-film-grain",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "390-dark-minimal-mode",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-_",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-_en",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-_pages_1",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-_tags",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-_archive",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-_series",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-_series_k8s-for-frontend",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-_about",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-_resume",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-_offline",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-_not-a-real-route",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-_2026_08_k8s-for-frontend-1",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-_2020_07_math-for-programmer-chapter2-3-rational-irrational-real-number",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-search",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-settings",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-accent-rose",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-accent-emerald",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-accent-amber",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-accent-cyan",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-accent-violet",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-film-grain",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-light-minimal-mode",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-_",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-_en",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-_pages_1",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-_tags",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-_archive",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-_series",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-_series_k8s-for-frontend",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-_about",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-_resume",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-_offline",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-_not-a-real-route",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-_2026_08_k8s-for-frontend-1",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-_2020_07_math-for-programmer-chapter2-3-rational-irrational-real-number",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-search",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-settings",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-accent-rose",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-accent-emerald",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-accent-amber",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-accent-cyan",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-accent-violet",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-film-grain",
+        "differences": 0,
+        "changedPixels": 0
+      },
+      {
+        "name": "1440-dark-minimal-mode",
+        "differences": 0,
+        "changedPixels": 0
+      }
+    ],
+    "motion": [
+      {
+        "width": 390,
+        "theme": "light",
+        "route": "/",
+        "minimal": false,
+        "passed": true,
+        "animationCount": 25
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "route": "/about",
+        "minimal": false,
+        "passed": true,
+        "animationCount": 4
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "route": "/2026/08/k8s-for-frontend-1",
+        "minimal": false,
+        "passed": true,
+        "animationCount": 8
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "route": "/",
+        "minimal": true,
+        "passed": true,
+        "animationCount": 22
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "route": "/",
+        "minimal": false,
+        "passed": true,
+        "animationCount": 25
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "route": "/about",
+        "minimal": false,
+        "passed": true,
+        "animationCount": 4
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "route": "/2026/08/k8s-for-frontend-1",
+        "minimal": false,
+        "passed": true,
+        "animationCount": 8
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "route": "/",
+        "minimal": true,
+        "passed": true,
+        "animationCount": 22
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "route": "/",
+        "minimal": false,
+        "passed": true,
+        "animationCount": 25
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "route": "/about",
+        "minimal": false,
+        "passed": true,
+        "animationCount": 4
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "route": "/2026/08/k8s-for-frontend-1",
+        "minimal": false,
+        "passed": true,
+        "animationCount": 8
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "route": "/",
+        "minimal": true,
+        "passed": true,
+        "animationCount": 22
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "route": "/",
+        "minimal": false,
+        "passed": true,
+        "animationCount": 25
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "route": "/about",
+        "minimal": false,
+        "passed": true,
+        "animationCount": 4
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "route": "/2026/08/k8s-for-frontend-1",
+        "minimal": false,
+        "passed": true,
+        "animationCount": 8
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "route": "/",
+        "minimal": true,
+        "passed": true,
+        "animationCount": 22
+      }
+    ],
+    "build": "passed",
+    "typecheck": "passed",
+    "lint": "passed with existing warnings",
+    "stylelint": "passed",
+    "format": "passed"
+  },
+  "limitations": [
+    "Page snapshots freeze CSS motion and mask WebGL canvas pixels.",
+    "Motion checks compare CSS animation timing/keyframes; JavaScript/WebGL animation pixels are not compared.",
+    "Resource sizes are artifact/HTTP measurements; FCP, LCP, and real-user performance were not remeasured."
+  ]
+}

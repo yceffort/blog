@@ -56,9 +56,19 @@ export function buildArtThumbnail(seed: string, art?: ArtSpec): string {
 
 export type {Locale}
 
+// cache()는 요청 단위 중복 제거라 빌드 워커가 페이지를 여러 장 그릴 때 페이지마다 글 전체를
+// 다시 읽는다. 빌드와 요청 시점에는 글이 바뀌지 않으므로 워커 수명 동안 재사용한다.
+// 개발 모드는 초안 수정이 곧바로 반영되어야 하므로 채우지 않는다.
+const allPostsCache = new Map<Locale, Post[]>()
+
 export const getAllPosts = cache(async function getAllPostsImpl(
   locale: Locale = 'ko',
 ): Promise<Post[]> {
+  const cached = allPostsCache.get(locale)
+  if (cached) {
+    return cached
+  }
+
   const files = sync(`${POST_ROOT}/**/*.md*`).toReversed()
 
   const posts = files
@@ -105,6 +115,10 @@ export const getAllPosts = cache(async function getAllPostsImpl(
       }
       return 0
     })
+
+  if (process.env.NODE_ENV === 'production') {
+    allPostsCache.set(locale, posts)
+  }
 
   return posts
 })

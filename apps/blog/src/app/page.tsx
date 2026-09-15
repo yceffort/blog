@@ -1,14 +1,18 @@
+import * as stylex from '@stylexjs/stylex'
 import type {Metadata} from 'next'
 import {cacheLife, cacheTag} from 'next/cache'
 import Link from 'next/link'
 import {connection} from 'next/server'
 import {Suspense} from 'react'
 
-import Hero from '@/components/HeroE'
-import PopularSeriesCard from '@/components/PopularSeriesCard'
-import PostCard from '@/components/PostCard'
-import RecentRow from '@/components/RecentRow'
-import SeriesRow from '@/components/SeriesRow'
+import Hero from '@/components/home/HeroE'
+import * as recentStyles from '@/components/home/recent.styles'
+import RecentRow from '@/components/home/RecentRow'
+import * as ambientStyles from '@/components/layout/ambient.styles'
+import * as sectionStyles from '@/components/layout/section.styles'
+import PostCard from '@/components/post/PostCard'
+import PopularSeriesCard from '@/components/series/PopularSeriesCard'
+import SeriesRow from '@/components/series/SeriesRow'
 import {SiteConfig} from '@/config'
 import {HOME_SERIES_COUNT} from '@/constants'
 import {buildOgImageUrl} from '@/utils/og'
@@ -19,7 +23,19 @@ import {
   getFeaturedPosts,
 } from '@/utils/Post'
 import {getAllSeries, getPopularSeries} from '@/utils/Series'
-
+const sx = stylex.create({
+  section: {
+    '@layer utilities': {
+      display: 'grid',
+      gridTemplateColumns: {
+        default: 'repeat(1, minmax(0, 1fr))',
+        '@media (width >= 48rem)': 'repeat(2, minmax(0, 1fr))',
+        '@media (width >= 64rem)': 'repeat(3, minmax(0, 1fr))',
+      },
+      gap: 'calc(var(--spacing) * 8)',
+    },
+  },
+})
 export const metadata: Metadata = {
   title: SiteConfig.title,
   description: SiteConfig.subtitle,
@@ -41,15 +57,13 @@ export const metadata: Metadata = {
     ],
   },
 }
-
 async function getCachedHomeData() {
   'use cache'
+
   cacheLife('hours')
   cacheTag('home:ko')
-
   return getHomeData()
 }
-
 async function getHomeData() {
   const popularSeries = await getPopularSeries('ko')
   const [{popular: posts, recent: recentPosts}, allPosts, tags, series] =
@@ -59,7 +73,6 @@ async function getHomeData() {
       getAllTagsFromPosts('ko'),
       getAllSeries('ko'),
     ])
-
   const postCount = allPosts.length
   const tagCount = tags.length
   const currentYear = new Date().getFullYear()
@@ -67,7 +80,6 @@ async function getHomeData() {
     .map((p) => new Date(p.frontMatter.date).getFullYear())
     .reduce((a, b) => Math.min(a, b), currentYear)
   const yearsWriting = Math.max(1, currentYear - earliestYear + 1)
-
   return {
     posts,
     recentPosts,
@@ -78,7 +90,6 @@ async function getHomeData() {
     yearsWriting,
   }
 }
-
 export default function Page() {
   return (
     <Suspense>
@@ -86,7 +97,6 @@ export default function Page() {
     </Suspense>
   )
 }
-
 async function HomeContent() {
   if (process.env.NODE_ENV !== 'production') {
     await connection()
@@ -95,7 +105,6 @@ async function HomeContent() {
     process.env.NODE_ENV === 'production'
       ? await getCachedHomeData()
       : await getHomeData()
-
   const {
     posts,
     recentPosts,
@@ -107,29 +116,29 @@ async function HomeContent() {
   } = homeData
   const popularSeriesThumbnail =
     popularSeries && resolveThumbnail(`series/${popularSeries.slug}`)
-
   return (
-    <div className="page-view">
+    <div className={`page-view ${ambientStyles.page_view}`}>
       <Hero
         postCount={postCount}
         tagCount={tagCount}
         yearsWriting={yearsWriting}
       />
 
-      <div className="sec-head">
+      <div className={`sec-head ${sectionStyles.sec_head}`}>
         <div>
-          <span className="sec-count">
+          <span className={`sec-count ${sectionStyles.sec_count}`}>
             {String(posts.length + (popularSeries ? 1 : 0)).padStart(2, '0')}{' '}
             ITEMS
           </span>
-          <h2>
-            Popular <em>this season</em>
+          <h2 className={sectionStyles.element_h2}>
+            {'Popular '}
+            <em className={sectionStyles.element_em}>this season</em>
           </h2>
         </div>
-        <div className="line" />
-        <div className="hint">hover · tilt · open</div>
+        <div className={`line ${sectionStyles.line}`} />
+        <div className={`hint ${sectionStyles.hint}`}>hover · tilt · open</div>
       </div>
-      <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <section className={stylex.props(sx.section).className}>
         {posts.map((post, i) => (
           <PostCard
             key={post.fields.slug}
@@ -148,21 +157,22 @@ async function HomeContent() {
 
       {series.length > 0 && (
         <>
-          <div className="sec-head">
+          <div className={`sec-head ${sectionStyles.sec_head}`}>
             <div>
-              <span className="sec-count">
+              <span className={`sec-count ${sectionStyles.sec_count}`}>
                 {String(series.length).padStart(2, '0')} ITEMS
               </span>
-              <h2>
-                Series <em>one thread</em>
+              <h2 className={sectionStyles.element_h2}>
+                {'Series '}
+                <em className={sectionStyles.element_em}>one thread</em>
               </h2>
             </div>
-            <div className="line" />
-            <div className="hint">
+            <div className={`line ${sectionStyles.line}`} />
+            <div className={`hint ${sectionStyles.hint}`}>
               <Link href="/series">view all →</Link>
             </div>
           </div>
-          <section className="rec-list">
+          <section className={`rec-list ${recentStyles.rec_list}`}>
             {series.slice(0, HOME_SERIES_COUNT).map((s, i) => (
               <SeriesRow key={s.slug} series={s} index={i} />
             ))}
@@ -172,17 +182,17 @@ async function HomeContent() {
 
       {recentPosts.length > 0 && (
         <>
-          <div className="sec-head">
+          <div className={`sec-head ${sectionStyles.sec_head}`}>
             <div>
-              <span className="sec-count">
+              <span className={`sec-count ${sectionStyles.sec_count}`}>
                 {String(recentPosts.length).padStart(2, '0')} ITEMS
               </span>
-              <h2>Recent</h2>
+              <h2 className={sectionStyles.element_h2}>Recent</h2>
             </div>
-            <div className="line" />
-            <div className="hint">latest writing</div>
+            <div className={`line ${sectionStyles.line}`} />
+            <div className={`hint ${sectionStyles.hint}`}>latest writing</div>
           </div>
-          <section className="rec-list">
+          <section className={`rec-list ${recentStyles.rec_list}`}>
             {recentPosts.map((post, i) => (
               <RecentRow key={post.fields.slug} post={post} index={i} />
             ))}

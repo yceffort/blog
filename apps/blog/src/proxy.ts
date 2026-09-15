@@ -14,6 +14,7 @@ const MULTI_SEGMENT_PREFIXES = new Set([
   'LCP',
   'splash',
   'thumbnails',
+  'fonts',
 ])
 const EN_PREFIXES = new Set(['pages', 'feed.xml'])
 
