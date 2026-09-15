@@ -46,7 +46,12 @@ const prepared = buildsOnly
 const report = {
   startedAt: new Date().toISOString(),
   refs: {
-    before: '322601592c28d3094207a071f20d0d4df452d779',
+    // 두 마이그레이션 브랜치의 공통 조상. 다른 기준과 비교하려면 SERIES_BEFORE_REF 로 바꾼다.
+    before: git(
+      'rev-parse',
+      process.env.SERIES_BEFORE_REF ??
+        '322601592c28d3094207a071f20d0d4df452d779',
+    ),
     after: git('rev-parse', 'HEAD'),
   },
   host: {
