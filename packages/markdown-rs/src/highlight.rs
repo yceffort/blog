@@ -9,6 +9,10 @@ use syntect::{
 /// syntect 는 한 줄 안의 개별 토큰 길이에 대해 2차식으로 느려진다. 저장소의 실제
 /// 코드블록 최장 줄은 601자이므로 이 상한은 기존 글을 그대로 토큰화하면서
 /// base64 한 줄 같은 장문에서 빌드가 멈춘 듯 보이는 것만 막는다.
+///
+/// 상한을 넘은 줄만 건너뛰면 `ParseState` 가 그 줄에서 열린 주석이나 문자열을 못 봐서
+/// 뒤따르는 줄의 토큰이 어긋난다. 그래서 그런 줄이 하나라도 있으면 블록 전체를
+/// 토큰화하지 않는다.
 const MAX_TOKENIZED_LINE: usize = 2048;
 
 static SYNTAXES: OnceLock<SyntaxSet> = OnceLock::new();
@@ -119,10 +123,13 @@ fn highlight(pre: &mut Element) -> Result<(), String> {
         .iter()
         .map(Node::text_content)
         .collect::<String>();
+    let tokenize = source
+        .split_inclusive('\n')
+        .all(|line| line.len() <= MAX_TOKENIZED_LINE);
     let mut lines = Vec::new();
     for (index, line) in source.split_inclusive('\n').enumerate() {
         let mut children = Vec::new();
-        if line.len() > MAX_TOKENIZED_LINE {
+        if !tokenize {
             children.push(Node::text(line));
         } else {
             let ops = parser
@@ -187,7 +194,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn leaves_a_very_long_line_untokenized() {
+    fn leaves_a_block_with_a_very_long_line_untokenized() {
         let long = "x".repeat(MAX_TOKENIZED_LINE + 1);
         let node = crate::render(&format!("```js\nconst a = 1\nconst b = '{long}'\n```\n")).unwrap();
         // 원문은 그대로 남는다.
@@ -200,15 +207,30 @@ mod tests {
             .as_array()
             .unwrap()
             .clone();
-        // 짧은 줄은 계속 토큰화한다.
-        assert!(lines[0]["children"]
+        // 파서 상태가 어긋나지 않도록 블록의 모든 줄이 텍스트 하나로 남는다.
+        for line in &lines {
+            let children = line["children"].as_array().unwrap();
+            assert_eq!(children.len(), 1);
+            assert_eq!(children[0]["type"], "text");
+        }
+    }
+
+    #[test]
+    fn a_long_line_does_not_shift_the_tokens_after_it() {
+        let long = "x".repeat(MAX_TOKENIZED_LINE + 1);
+        // 긴 줄이 여러 줄 주석을 열어 둔다. 그 줄만 건너뛰면 뒤의 줄이 주석 밖으로 읽힌다.
+        let source = format!("```js\n/* {long}\nconst a = 1 */\nconst b = 2\n```\n");
+        let value = serde_json::to_value(crate::render(&source).unwrap()).unwrap();
+        let lines = value["children"][0]["children"][0]["children"]
             .as_array()
             .unwrap()
-            .iter()
-            .any(|child| child["tagName"] == "span"));
-        // 상한을 넘은 줄은 토큰 span 없이 텍스트 하나다.
-        assert_eq!(lines[1]["children"].as_array().unwrap().len(), 1);
-        assert_eq!(lines[1]["children"][0]["type"], "text");
+            .clone();
+        assert_eq!(lines.len(), 3);
+        for line in &lines {
+            let children = line["children"].as_array().unwrap();
+            assert_eq!(children.len(), 1);
+            assert_eq!(children[0]["type"], "text");
+        }
     }
 
     #[test]
