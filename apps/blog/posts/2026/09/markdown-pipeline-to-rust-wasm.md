@@ -7,7 +7,7 @@ tags:
   - nextjs
   - performance
   - frontend
-published: false
+published: true
 date: 2026-09-14 15:00:00
 description: '블로그의 remark/rehype 체인을 Rust로 옮기고 WASM으로 빌드해 Next.js 서버에 붙였다. 파싱과 HAST 생성에 이어 Oniguruma 하이라이트, MathML 수식, 이미지 크기와 MDX 속성 처리까지 한 호출로 묶었다. 메모리 전달과 해제, 기존 글의 호환성, WASI와 바이너리 배포를 구성하며 얻은 것과 감수한 비용을 기록했다.'
 thumbnail: /thumbnails/2026/09/markdown-pipeline-to-rust-wasm.png

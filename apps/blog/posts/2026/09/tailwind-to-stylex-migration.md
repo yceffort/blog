@@ -7,7 +7,7 @@ tags:
   - performance
   - nextjs
   - frontend
-published: false
+published: true
 date: 2026-09-14 12:00:00
 description: '블로그의 Tailwind 4를 StyleX로 옮겼다. 유틸리티만 옮긴 중간 상태에서는 CSS와 FCP가 줄었지만 전체 전송량은 늘었다. 전환 범위를 넓히자 홈 FCP가 59% 느려졌고, 작성 방식을 고친 뒤에도 격차가 남았다. 마지막 개선은 KaTeX 조건부 로딩과 본문 CSS 분리에서 나왔다. CSS 크기와 전체 전송량, 페인트 지표를 따로 비교한 기록이다. 블로그 성능 개선하기 시리즈의 첫 편이다.'
 thumbnail: /thumbnails/2026/09/tailwind-to-stylex-migration.png
