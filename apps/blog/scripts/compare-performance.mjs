@@ -103,7 +103,15 @@ for (const [variant, directory] of Object.entries({
   }
 }
 function observe() {
-  const data = {lcp: null, shifts: [], longTasks: [], bodyReadyMs: null}
+  const data = {
+    lcp: null,
+    // 후보 이력 전체. 마지막 항목만 남기면 중간 레이아웃의 큰 페인트가 최종값을 고정한
+    // 실행(제목이 뷰포트 폭 전체로 잡힌 경우)을 나중에 가려낼 수 없다.
+    lcpEntries: [],
+    shifts: [],
+    longTasks: [],
+    bodyReadyMs: null,
+  }
   window.__blogPerformance = data
   const bodyObserver = new MutationObserver(() => {
     const article = document.querySelector(
@@ -116,14 +124,20 @@ function observe() {
   })
   bodyObserver.observe(document, {subtree: true, childList: true})
   new PerformanceObserver((list) => {
-    for (const entry of list.getEntries())
+    for (const entry of list.getEntries()) {
+      const rect = entry.element?.getBoundingClientRect()
       data.lcp = {
         time: entry.startTime,
         size: entry.size,
         tag: entry.element?.tagName,
         text: entry.element?.textContent?.slice(0, 120),
         url: entry.url,
+        // size 가 뷰포트 폭 × 높이로 나오면 중간 레이아웃의 페인트다. 콜백 시점의 실제
+        // 사각형을 같이 남겨 나중에 대조한다.
+        rect: rect ? {width: rect.width, height: rect.height} : null,
       }
+      data.lcpEntries.push(data.lcp)
+    }
   }).observe({type: 'largest-contentful-paint', buffered: true})
   new PerformanceObserver((list) => {
     for (const entry of list.getEntries())
@@ -324,6 +338,7 @@ async function measureVisit(variant, route, round, visit, {page, session}) {
         fcpMs: fcp,
         lcpMs: data.lcp?.time,
         lcpElement: data.lcp,
+        lcpEntries: data.lcpEntries,
         cls,
         domContentLoadedMs: navigation.domContentLoadedEventEnd,
         loadMs: navigation.loadEventEnd,
@@ -497,17 +512,32 @@ function summary() {
             return [
               field,
               {
+                // 짝수 표본은 가운데 두 값의 평균
                 median:
                   (sorted[Math.floor((sorted.length - 1) / 2)] +
                     sorted[Math.ceil((sorted.length - 1) / 2)]) /
                   2,
                 min: sorted[0],
                 max: sorted.at(-1),
+                // runs 는 행 수이고 이 값은 해당 필드의 유한값 개수다
+                n: sorted.length,
               },
             ]
           }),
         )
-        groups.push({route, variant, visit, runs: rows.length, values})
+        // 같은 그룹에서 최종 LCP 후보의 태그나 크기가 갈리면 값을 직접 비교할 수 없다.
+        const lcpTargets = new Set(
+          rows.map((row) => `${row.lcpElement?.tag}:${row.lcpElement?.size}`),
+        )
+        groups.push({
+          route,
+          variant,
+          visit,
+          runs: rows.length,
+          values,
+          lcpTargets: [...lcpTargets],
+          lcpTargetMismatch: lcpTargets.size > 1,
+        })
       }
     }
   }
