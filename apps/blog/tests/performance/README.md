@@ -43,7 +43,7 @@ Optional `PERF_BEFORE_DIR` and `PERF_AFTER_DIR` environment variables point to e
 
 The runner warms server routes and assets once before measurement. It alternates AB/BA order across rounds/routes. Run it while builds, visual tests, and other CPU-intensive work are idle. CPU slowdown is relative to the host machine; this is a controlled local comparison, not a prediction of a physical phone's absolute speed or production server latency.
 
-`PERF_ROUNDS`, `PERF_CPU`, `PERF_LATENCY_MS`, `PERF_DOWNLOAD_KBPS`, `PERF_UPLOAD_KBPS`, and comma-separated `PERF_ROUTES` override the defaults. For a short instrumentation check, use `PERF_ROUNDS=1 PERF_ROUTES=/` and a separate output directory; do not mix those results into the full comparison.
+`PERF_ROUNDS`, `PERF_CPU`, `PERF_LATENCY_MS`, `PERF_DOWNLOAD_KBPS`, `PERF_UPLOAD_KBPS`, and comma-separated `PERF_ROUTES` override the defaults. `PERF_REPEAT_VISIT=1` follows every first visit with a repeat visit in the same browser that keeps the HTTP cache (used by the series-overall comparison). For a short instrumentation check, use `PERF_ROUNDS=1 PERF_ROUTES=/` and a separate output directory; do not mix those results into the full comparison.
 
 ## What is measured
 
@@ -62,7 +62,7 @@ The script verifies that requests actually received the network-throttling rule.
 
 Results are written to `apps/blog/.cache/performance/` by default; the command above uses its `full-stylex/` subdirectory:
 
-- `results.json`: settings, browser/host details, every trial, per-resource transfers, and median/min/max summaries.
+- `results.json`: settings, browser/host details, every trial, per-resource transfers, and median/min/max summaries with the per-field sample count `n`. Each trial also keeps the full LCP candidate history (`lcpEntries`) and the element rectangle read in the callback, and each group reports whether its final LCP targets differ (`lcpTargetMismatch`). The committed `tests/performance/results.json` predates these fields and the `unfinishedRequests` accounting; it has no per-resource list and carries `documentBytes`/`fetchBytes` fields the current script no longer writes.
 - `*.trace.json.gz`: the Chrome performance trace for each trial.
 - `*.png`: the final viewport for each trial, to inspect the loaded page.
 
