@@ -5,6 +5,10 @@
   margin: 0 auto;
 }
 
+.marpSlides[data-transition='glide'] :global(.swiper-slide) {
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .marpSlides.multiple {
   cursor: pointer;
 }

@@ -6,6 +6,8 @@ import {cacheLife, cacheTag} from 'next/cache'
 import {notFound} from 'next/navigation'
 
 import {MarpSlides} from '@/components/MarpSlides'
+import {isTransitionType} from '@/components/MarpSlides.constants'
+import type {TransitionType} from '@/components/MarpSlides.constants'
 import {SiteConfig} from '@/config'
 import {generateRenderedMarp} from '@/lib/marp'
 
@@ -18,6 +20,7 @@ interface SlideData {
   fonts: string[]
   published: boolean
   post?: string
+  transition?: TransitionType
 }
 
 async function getSlideData(slug: string): Promise<SlideData | null> {
@@ -39,9 +42,22 @@ async function getSlideData(slug: string): Promise<SlideData | null> {
   const tags = data.tags as string[] | undefined
   const published = data.published !== false
   const post = data.post ? String(data.post) : undefined
+  const transition = isTransitionType(data.transition)
+    ? data.transition
+    : undefined
   const {html, css, fonts} = await generateRenderedMarp(markdown)
 
-  return {title, description, tags, html, css, fonts, published, post}
+  return {
+    title,
+    description,
+    tags,
+    html,
+    css,
+    fonts,
+    published,
+    post,
+    transition,
+  }
 }
 
 export async function generateStaticParams() {
@@ -112,7 +128,7 @@ export default async function SlidePage(props: {
     return null
   }
 
-  const {html, css, fonts, published, post} = data
+  const {html, css, fonts, published, post, transition} = data
 
   return (
     <div>
@@ -122,6 +138,7 @@ export default async function SlidePage(props: {
         dataFonts={JSON.stringify(fonts)}
         slug={params.slug}
         postUrl={post}
+        defaultTransition={transition}
       />
       {!published && (
         <div className="pointer-events-none fixed bottom-4 left-4 z-50 select-none rounded-lg border border-amber-400 bg-amber-100/95 px-4 py-2 text-sm font-medium text-amber-900 shadow-lg backdrop-blur-sm dark:border-amber-500 dark:bg-amber-900/90 dark:text-amber-100">

@@ -47,6 +47,7 @@ const TRANSITIONS = [
   {key: 'slide', label: 'slide'},
   {key: 'fade', label: 'fade'},
   {key: 'zoom', label: 'zoom'},
+  {key: 'glide', label: 'glide'},
   {key: 'none', label: 'none'},
 ] as const
 

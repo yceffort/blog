@@ -28,6 +28,8 @@ interface MarpSlidesProps {
   dataFonts: string
   slug: string
   postUrl?: string
+  // 덱 frontmatter의 transition. 지정되면 뷰어 설정(cookie)보다 우선한다
+  defaultTransition?: TransitionType
 }
 
 export function MarpSlides({
@@ -36,6 +38,7 @@ export function MarpSlides({
   dataFonts,
   slug,
   postUrl,
+  defaultTransition,
 }: MarpSlidesProps) {
   // JSON 파싱에 에러 처리 추가 (memoized)
   const html = useMemo(() => {
@@ -176,7 +179,7 @@ export function MarpSlides({
       swiperRef.current?.slideTo(initialIndex, 0)
     }
 
-    setTransition(readTransition())
+    setTransition(defaultTransition ?? readTransition())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -642,28 +645,39 @@ export function MarpSlides({
     <div
       ref={containerRef}
       className={`${styles.marpSlides} ${multiple ? styles.multiple : ''} ${isPrinting ? styles.printing : ''} ${isLaserMode ? styles.laserMode : ''}`}
+      data-transition={transition}
       onContextMenu={handleContextMenu}
       onWheel={handleWheel}
     >
       <Swiper
         key={transition}
+        // 전환 효과 변경으로 재생성되어도 해시에서 복원한 현재 위치를 유지한다.
+        initialSlide={activeIndex}
         modules={[Virtual, EffectFade, EffectCreative]}
         virtual={{enabled: multiple, addSlidesBefore: 1, addSlidesAfter: 1}}
         enabled={multiple}
         allowTouchMove={multiple}
-        speed={transition === 'none' ? 0 : 350}
+        speed={transition === 'none' ? 0 : transition === 'glide' ? 600 : 350}
         effect={
           transition === 'fade'
             ? 'fade'
-            : transition === 'zoom'
+            : transition === 'zoom' || transition === 'glide'
               ? 'creative'
               : 'slide'
         }
         fadeEffect={{crossFade: true}}
-        creativeEffect={{
-          prev: {opacity: 0, scale: 0.7, translate: [0, 0, -200]},
-          next: {opacity: 0, scale: 1.3, translate: [0, 0, 200]},
-        }}
+        creativeEffect={
+          transition === 'glide'
+            ? {
+                // 나가는 장은 살짝 물러나며 흐려지고, 들어오는 장이 그 위로 미끄러져 덮는다
+                prev: {opacity: 0.35, scale: 0.97, translate: ['-20%', 0, 0]},
+                next: {translate: ['100%', 0, 0]},
+              }
+            : {
+                prev: {opacity: 0, scale: 0.7, translate: [0, 0, -200]},
+                next: {opacity: 0, scale: 1.3, translate: [0, 0, 200]},
+              }
+        }
         onActiveIndexChange={handleActiveIndexChange}
         onSwiper={handleSwiper}
         // 접근성 개선

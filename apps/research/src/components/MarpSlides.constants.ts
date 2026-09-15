@@ -1,4 +1,16 @@
-export type TransitionType = 'slide' | 'fade' | 'zoom' | 'none'
+export type TransitionType = 'slide' | 'fade' | 'zoom' | 'glide' | 'none'
+
+export const TRANSITION_TYPES: TransitionType[] = [
+  'slide',
+  'fade',
+  'zoom',
+  'glide',
+  'none',
+]
+
+export function isTransitionType(value: unknown): value is TransitionType {
+  return TRANSITION_TYPES.includes(value as TransitionType)
+}
 
 export interface ContextMenuState {
   visible: boolean
@@ -10,17 +22,13 @@ export function readTransition(): TransitionType {
   if (typeof document === 'undefined') {
     return 'slide'
   }
-  const value = document.body.dataset.transition as TransitionType | undefined
-  if (value && ['slide', 'fade', 'zoom', 'none'].includes(value)) {
+  const value = document.body.dataset.transition
+  if (isTransitionType(value)) {
     return value
   }
   const match = document.cookie.match(/(?:^|; )tw-transition=([^;]+)/)
-  const decoded = match
-    ? (decodeURIComponent(match[1]) as TransitionType)
-    : null
-  return decoded && ['slide', 'fade', 'zoom', 'none'].includes(decoded)
-    ? decoded
-    : 'slide'
+  const decoded = match ? decodeURIComponent(match[1]) : null
+  return isTransitionType(decoded) ? decoded : 'slide'
 }
 
 export const SHORTCUT_GROUPS: {
