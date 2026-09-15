@@ -61,7 +61,7 @@ john.bonus = findEmployeeBonus(john.salary, john.sales)
 console.log(john.bonus)
 ```
 
-<script async class="speakerdeck-embed" data-id="e89e2e48a797417eb8692897dcada584" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe src="https://speakerdeck.com/player/e89e2e48a797417eb8692897dcada584" title="V8 memory: stack and heap" width="710" height="399" allow="fullscreen"></iframe>
 
 - `Global Scope`는 스택의 `Global Frame`내에 존재한다.
 - 모든 함수 호출은 스택 메모리에 `frame-block` 형태로 추가된다.
@@ -93,7 +93,7 @@ V8의 가비지 컬렉터는 V8 프로세스에서 재사용하기 위하여, �
 
 앞서 말했듯, `New Space`는 두개의 같은 사이즈인 `semi-space`로 이루어져 있다. 하나는 `to-space`고 다른 하나는 `from-space`다. 대부분의 할당은 `from-space`에서 이루어진다. (`old space`에 할당되는 실행가능한 코드들은 여기에 저장되지 않는다) `from-space`가 가득차게 되면 마이너 GC 가 가동된다.
 
-<script async class="speakerdeck-embed" data-id="5fff2548e55c4bb0a9c837c7eb598bee" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe src="https://speakerdeck.com/player/5fff2548e55c4bb0a9c837c7eb598bee" title="V8 minor GC (Scavenger)" width="710" height="399" allow="fullscreen"></iframe>
 
 1. 코드 시작단계에서 `from-space`에 이미 객체가 있다고 가정해보자. (01~06)
 2. 프로세스가 새로운 객체인 07을 만들어 낸다.

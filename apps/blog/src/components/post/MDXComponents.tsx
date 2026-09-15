@@ -38,6 +38,12 @@ function NextImage(props: HTMLProps<HTMLImageElement>) {
   const height = Number(props.height)
   if (src) {
     const isExternal = src.startsWith('http')
+    // 크기를 못 읽은 이미지(public 이 없는 환경, 원본 <img> 태그)는 next/image 가 NaN 으로
+    // 던지므로 일반 img 로 내려간다. 확대 기능은 없지만 글은 열린다.
+    if (!Number.isFinite(width) || !Number.isFinite(height)) {
+      // oxlint-disable-next-line next/no-img-element -- 크기를 모르는 이미지는 next/image 를 못 쓴다
+      return <img src={src} alt={props.alt || ''} loading="lazy" />
+    }
     return (
       <ImageZoom
         src={src}

@@ -339,6 +339,47 @@ function checkMathGlyphs(tree, report) {
   }
 }
 
+// 렌더러가 JSX 리터럴 태그로 그대로 통과시키는 것 중 프로덕션에서만 문제가 되는 것.
+// script 는 글 안의 스크립트가 그대로 실행되고, 원본 <img> 는 이미지 크기 처리를 거치지 않으며,
+// 문자열 style 은 React 가 렌더 시점에 던진다. 스텁 렌더로는 셋 다 잡히지 않는다.
+function checkJsxNodes(tree, report) {
+  const visit = (node) => {
+    if (
+      node.type === 'mdxJsxFlowElement' ||
+      node.type === 'mdxJsxTextElement'
+    ) {
+      const line = node.position?.start.line
+      if (node.name === 'script') {
+        report(
+          'error',
+          line,
+          '<script>는 렌더 결과에 그대로 실행된다. iframe 등으로 바꿀 것',
+        )
+      }
+      if (node.name === 'img') {
+        report(
+          'error',
+          line,
+          '원본 <img> 태그는 크기 처리를 거치지 않는다. 마크다운 이미지 문법을 쓸 것',
+        )
+      }
+      for (const attr of node.attributes ?? []) {
+        if (attr.name === 'style' && typeof attr.value === 'string') {
+          report(
+            'error',
+            line,
+            'style 속성 문자열은 React 가 거부한다. 클래스나 컴포넌트로 옮길 것',
+          )
+        }
+      }
+    }
+    for (const child of node.children ?? []) {
+      visit(child)
+    }
+  }
+  visit(tree)
+}
+
 function checkFile(file) {
   const raw = readFileSync(file, 'utf8')
   const {attributes, body} = frontMatter(raw)
@@ -357,6 +398,7 @@ function checkFile(file) {
   try {
     const tree = renderMarkdown(body, file)
     checkMathGlyphs(tree, report)
+    checkJsxNodes(tree, report)
     toJsxRuntime(tree, {
       Fragment,
       jsx,
