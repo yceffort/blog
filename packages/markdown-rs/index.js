@@ -15,10 +15,20 @@ let instance
 function getInstance() {
   if (!instance) {
     const wasmModule = new WebAssembly.Module(readFileSync(wasmPath))
+    // 이미지 크기는 작업 디렉터리의 public 에서 읽는다. 이 연결은 프로세스당 한 번 정해지므로
+    // public 이 없으면 조용히 넘기지 않고 남긴다. 그 경우 img 노드에 width/height 가 빠진다.
+    // 경로는 정적 문자열로 둔다. 동적으로 만들면 Next 의 파일 추적이 프로젝트 전체를 끌어간다.
     const publicDir = resolve('public')
+    const hasPublic = existsSync(publicDir)
+    if (!hasPublic) {
+      process.emitWarning(
+        `public 디렉터리가 없어 이미지 크기를 읽지 않는다: ${publicDir}`,
+        {code: 'MARKDOWN_RS_NO_PUBLIC'},
+      )
+    }
     const wasi = new WASI({
       version: 'preview1',
-      preopens: existsSync(publicDir) ? {'/public': publicDir} : {},
+      preopens: hasPublic ? {'/public': publicDir} : {},
     })
     instance = new WebAssembly.Instance(wasmModule, wasi.getImportObject())
     wasi.initialize(instance)
