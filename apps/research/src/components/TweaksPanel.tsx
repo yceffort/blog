@@ -5,6 +5,8 @@ import {getCookie, setCookie} from '@yceffort/shared/utils'
 import {useTheme} from 'next-themes'
 import {useEffect, useState} from 'react'
 
+import * as styles from '@/components/TweaksPanel.styles'
+
 const ACCENTS: {
   name: string
   label: string
@@ -137,23 +139,27 @@ export default function TweaksPanel({open, onClose}: Props) {
   }
 
   return (
-    <dialog open className="tweaks-panel" aria-label="Tweaks">
-      <h3>
+    <dialog open className={styles.panel} aria-label="Tweaks">
+      <h3 className={styles.heading}>
         Tweaks
-        <button type="button" className="x" onClick={onClose} aria-label="닫기">
+        <button
+          type="button"
+          className={styles.close}
+          onClick={onClose}
+          aria-label="닫기"
+        >
           ×
         </button>
       </h3>
 
-      <div className="tweaks-row">
-        <div className="tweaks-label">theme</div>
-        <div className="tweaks-theme">
+      <div className={styles.row}>
+        <div className={styles.label}>theme</div>
+        <div className={styles.grid}>
           {THEMES.map(({key, label, Icon}) => (
             <button
               key={key}
               type="button"
-              className="tweaks-theme-btn"
-              data-on={theme === key}
+              className={theme === key ? styles.grid_btn_on : styles.grid_btn}
               aria-label={label}
               onClick={(e) => handleThemeChange(key, e)}
             >
@@ -164,15 +170,14 @@ export default function TweaksPanel({open, onClose}: Props) {
         </div>
       </div>
 
-      <div className="tweaks-row">
-        <div className="tweaks-label">accent palette</div>
-        <div className="tweaks-swatches">
+      <div className={styles.row_spaced}>
+        <div className={styles.label}>accent palette</div>
+        <div className={styles.swatches}>
           {ACCENTS.map((a) => (
             <button
               key={a.name}
-              className="tweaks-sw"
+              className={accent === a.name ? styles.swatch_on : styles.swatch}
               aria-label={a.label}
-              data-on={accent === a.name}
               style={{
                 background: `conic-gradient(${a.gradient.join(',')},${a.gradient[0]})`,
               }}
@@ -182,17 +187,14 @@ export default function TweaksPanel({open, onClose}: Props) {
         </div>
       </div>
 
-      <div className="tweaks-row tweaks-toggle">
-        <div className="tweaks-label" style={{margin: 0}}>
-          film grain
-        </div>
+      <div className={styles.toggle_row}>
+        <div className={styles.label_inline}>film grain</div>
         <div
-          className="tweaks-switch"
+          className={grain ? styles.switch_on : styles.switch_}
           role="switch"
           aria-label="film grain"
           aria-checked={grain}
           tabIndex={0}
-          data-on={grain}
           onClick={() => setGrain((v) => !v)}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -202,17 +204,14 @@ export default function TweaksPanel({open, onClose}: Props) {
         />
       </div>
 
-      <div className="tweaks-row tweaks-toggle">
-        <div className="tweaks-label" style={{margin: 0}}>
-          minimal mode
-        </div>
+      <div className={styles.toggle_row}>
+        <div className={styles.label_inline}>minimal mode</div>
         <div
-          className="tweaks-switch"
+          className={minimal ? styles.switch_on : styles.switch_}
           role="switch"
           aria-label="minimal mode"
           aria-checked={minimal}
           tabIndex={0}
-          data-on={minimal}
           onClick={() => setMinimal((v) => !v)}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -222,15 +221,16 @@ export default function TweaksPanel({open, onClose}: Props) {
         />
       </div>
 
-      <div className="tweaks-row">
-        <div className="tweaks-label">slide transition</div>
-        <div className="tweaks-theme">
+      <div className={styles.row_spaced}>
+        <div className={styles.label}>slide transition</div>
+        <div className={styles.grid}>
           {TRANSITIONS.map(({key, label}) => (
             <button
               key={key}
               type="button"
-              className="tweaks-theme-btn"
-              data-on={transition === key}
+              className={
+                transition === key ? styles.grid_btn_on : styles.grid_btn
+              }
               aria-label={label}
               onClick={() => setTransition(key)}
             >

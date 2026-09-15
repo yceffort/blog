@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import {useCallback, useMemo, useRef, useSyncExternalStore} from 'react'
 
+import * as styles from '@/components/SlideList.styles'
 import {SiteConfig} from '@/config'
 
 import {SlidePreview} from './SlidePreview'
@@ -93,27 +94,32 @@ function ResearchCard({slide, css}: {slide: Slide; css: string}) {
   }
 
   return (
-    <article ref={cardRef} className="post-card" onPointerMove={onPointerMove}>
-      <Link href={`/slides/${slug}`} aria-label={title} prefetch={false} />
-      {!published && (
-        <span className="absolute right-2 top-2 z-10 rounded-md bg-amber-500 px-2 py-0.5 text-xs font-bold uppercase text-white shadow">
-          Draft
-        </span>
-      )}
-      <div className="thumb">
+    <article
+      ref={cardRef}
+      className={styles.card}
+      onPointerMove={onPointerMove}
+    >
+      <Link
+        href={`/slides/${slug}`}
+        aria-label={title}
+        prefetch={false}
+        className={styles.card_link}
+      />
+      {!published && <span className={styles.draft_badge}>Draft</span>}
+      <div className={styles.thumb}>
         <SlidePreview html={preview.html} css={css} fonts={preview.fonts} />
       </div>
-      <div className="body">
-        <div className="tag-row">
+      <div className={styles.body}>
+        <div className={styles.tag_row}>
           {tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="tag-chip">
+            <span key={tag} className={styles.tag_chip}>
               #{tag}
             </span>
           ))}
         </div>
-        <h3>{title}</h3>
-        {description && <p className="desc">{description}</p>}
-        <div className="meta">
+        <h3 className={styles.card_title}>{title}</h3>
+        {description && <p className={styles.card_desc}>{description}</p>}
+        <div className={styles.meta}>
           {date && (
             <>
               <time dateTime={date}>{date}</time>
@@ -128,7 +134,7 @@ function ResearchCard({slide, css}: {slide: Slide; css: string}) {
                 href={slide.post}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative z-10 underline underline-offset-2"
+                className={styles.meta_link}
               >
                 📖 블로그 글
               </a>
@@ -225,46 +231,52 @@ export function SlideListWithFilter({slides, cssList}: Props) {
 
   return (
     <>
-      <div ref={listTopRef} className="sec-head scroll-mt-20">
+      <div ref={listTopRef} className={styles.sec_head}>
         <div>
-          <span className="sec-count">
+          <span className={styles.sec_count}>
             {selectedTags.length > 0
               ? `${filteredSlides.length}/${slides.length} slides`
               : `${slides.length} slides`}
           </span>
-          <h2>
-            All <em>slides</em>
+          <h2 className={styles.sec_title}>
+            All <em className={styles.sec_title_em}>slides</em>
           </h2>
         </div>
-        <div className="line" />
-        <span className="hint">tap tag · filter</span>
+        <div className={styles.sec_line} />
+        <span className={styles.sec_hint}>tap tag · filter</span>
       </div>
 
       {allTags.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2 pb-2">
+        <div className={styles.filter_row}>
           <button
             type="button"
             onClick={handleClearTags}
-            className="filter-chip"
-            data-on={selectedTags.length === 0 ? 'true' : 'false'}
+            className={
+              selectedTags.length === 0
+                ? styles.filter_chip_on
+                : styles.filter_chip
+            }
           >
-            전체 <span className="count">({slides.length})</span>
+            전체 <span className={styles.filter_count}>({slides.length})</span>
           </button>
           {allTags.map(([tag, count]) => (
             <button
               key={tag}
               type="button"
               onClick={() => handleToggleTag(tag)}
-              className="filter-chip"
-              data-on={selectedTags.includes(tag) ? 'true' : 'false'}
+              className={
+                selectedTags.includes(tag)
+                  ? styles.filter_chip_on
+                  : styles.filter_chip
+              }
             >
-              #{tag} <span className="count">({count})</span>
+              #{tag} <span className={styles.filter_count}>({count})</span>
             </button>
           ))}
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-6 pt-4 md:grid-cols-2">
+      <div className={styles.grid}>
         {pagedSlides.map((slide) => (
           <ResearchCard
             key={slide.slug}
@@ -273,17 +285,17 @@ export function SlideListWithFilter({slides, cssList}: Props) {
           />
         ))}
         {filteredSlides.length === 0 && (
-          <div className="col-span-full py-16 text-center text-sm text-[var(--ink-3)]">
+          <div className={styles.empty}>
             선택한 태그에 해당하는 슬라이드가 없습니다.
           </div>
         )}
       </div>
 
       {lastPage > 1 && (
-        <nav className="pager" aria-label="pagination">
+        <nav className={styles.pager} aria-label="pagination">
           <button
             type="button"
-            className="pager-btn"
+            className={styles.pager_btn}
             disabled={page === 1}
             onClick={() => handlePageChange(page - 1)}
             aria-label="이전 페이지"
@@ -294,8 +306,9 @@ export function SlideListWithFilter({slides, cssList}: Props) {
             <button
               key={n}
               type="button"
-              className="pager-btn"
-              data-active={n === page ? 'true' : 'false'}
+              className={
+                n === page ? styles.pager_btn_active : styles.pager_btn
+              }
               aria-current={n === page ? 'page' : undefined}
               onClick={() => n !== page && handlePageChange(n)}
             >
@@ -304,7 +317,7 @@ export function SlideListWithFilter({slides, cssList}: Props) {
           ))}
           <button
             type="button"
-            className="pager-btn"
+            className={styles.pager_btn}
             disabled={page === lastPage}
             onClick={() => handlePageChange(page + 1)}
             aria-label="다음 페이지"

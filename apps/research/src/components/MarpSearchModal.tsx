@@ -1,6 +1,6 @@
 import type {MouseEvent as ReactMouseEvent, RefObject} from 'react'
 
-import styles from './MarpSlides.module.scss'
+import * as styles from './MarpSlides.styles'
 
 interface SearchResult {
   index: number

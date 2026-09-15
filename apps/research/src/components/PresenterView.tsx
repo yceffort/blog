@@ -6,8 +6,7 @@ import {useBroadcastChannel} from '@/hooks/useBroadcastChannel'
 import {useTimer} from '@/hooks/useTimer'
 
 import {Marp} from './Marp'
-
-import styles from './PresenterView.module.scss'
+import * as styles from './PresenterView.styles'
 
 interface PresenterViewProps {
   dataHtml: string
@@ -122,7 +121,7 @@ export function PresenterView({
       <div className={styles.timerBar}>
         <span className={styles.timer}>{elapsedTime}</span>
         <button
-          className={`${styles.timerButton} ${isRunning ? styles.running : ''}`}
+          className={isRunning ? styles.timerButtonRunning : styles.timerButton}
           onClick={toggle}
         >
           {isRunning ? '일시정지' : '시작'}
@@ -133,27 +132,27 @@ export function PresenterView({
       </div>
 
       <div className={styles.slidesContainer}>
-        <div className={`${styles.slideWrapper} ${styles.currentSlide}`}>
+        <div className={styles.slideWrapper}>
           <div className={styles.slideLabel}>현재 슬라이드</div>
-          <div className={styles.slideContent}>
+          <div className={`marp-presenter-slide ${styles.slideContentCurrent}`}>
             <Marp
               rendered={marpRenderData}
               page={activeIndex + 1}
               border={false}
-              className={styles.marpContainer}
+              className={`marp-presenter-container ${styles.marpContainer}`}
             />
           </div>
         </div>
 
-        <div className={`${styles.slideWrapper} ${styles.nextSlide}`}>
-          <div className={styles.slideLabel}>다음 슬라이드</div>
-          <div className={styles.slideContent}>
+        <div className={styles.slideWrapper}>
+          <div className={styles.slideLabelNext}>다음 슬라이드</div>
+          <div className={`marp-presenter-slide ${styles.slideContentNext}`}>
             {hasNextSlide ? (
               <Marp
                 rendered={marpRenderData}
                 page={activeIndex + 2}
                 border={false}
-                className={styles.marpContainer}
+                className={`marp-presenter-container ${styles.marpContainer}`}
               />
             ) : (
               <div className={styles.noNextSlide}>마지막 슬라이드</div>

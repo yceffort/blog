@@ -1,13 +1,16 @@
 import type {ReactNode} from 'react'
 
+import {
+  sectionContainer,
+  type SectionVariant,
+} from '@/components/SectionContainer.styles'
+
 export default function SectionContainer({
   children,
-  className,
+  variant = 'page',
 }: {
   children: ReactNode
-  className?: string
+  variant?: SectionVariant
 }) {
-  const baseClass = 'mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-5xl lg:px-8'
-
-  return <div className={`${baseClass} ${className ?? ''}`}>{children}</div>
+  return <div className={sectionContainer[variant]}>{children}</div>
 }

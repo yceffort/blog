@@ -1,4 +1,4 @@
-import './tailwind.css'
+import '@/styles/stylex.css'
 import {Providers} from '@yceffort/shared/components'
 import type {Metadata} from 'next'
 import {Fraunces, Inter, JetBrains_Mono} from 'next/font/google'
@@ -114,7 +114,7 @@ export default function Layout({children}: {children: ReactNode}) {
           />
           <link rel="manifest" href="/favicon/site.webmanifest" />
         </head>
-        <body className="antialiased">
+        <body>
           <AmbientEffects />
           <Providers>{children}</Providers>
           {process.env.NODE_ENV === 'production' && (

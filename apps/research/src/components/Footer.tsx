@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import * as footerStyles from '@/components/Footer.styles'
 import SocialIcon from '@/components/icons'
 import {SiteConfig} from '@/config'
 
@@ -8,8 +9,8 @@ const YEAR = new Date().getFullYear()
 export default function Footer() {
   return (
     <footer>
-      <div className="mt-16 flex flex-col items-center">
-        <div className="mb-3 flex space-x-4">
+      <div className={footerStyles.inner}>
+        <div className={footerStyles.icons}>
           <SocialIcon
             kind="mail"
             href={`mailto:${SiteConfig.author.contacts.email}`}
@@ -26,14 +27,14 @@ export default function Footer() {
             size={6}
           />
         </div>
-        <div className="mb-2 flex space-x-2 text-sm text-gray-500 dark:text-gray-400">
+        <div className={footerStyles.line}>
           <div>{SiteConfig.author.name}</div>
           <div>{` • `}</div>
           <div>{`© ${YEAR}`}</div>
           <div>{` • `}</div>
           <Link href="/">{SiteConfig.url}</Link>
         </div>
-        <div className="mb-2 flex space-x-2 text-sm text-gray-500 dark:text-gray-400">
+        <div className={footerStyles.line}>
           <a href="https://yceffort.kr">blog</a>
           <div>{` • `}</div>
           <Link href="/feed.xml" prefetch={false}>

@@ -1,10 +1,11 @@
 'use client'
 
-import classNames from 'classnames'
 import mermaid from 'mermaid'
 import {useEffect, useRef} from 'react'
 
 import {useFontFace} from '@/hooks/useFontFace'
+
+import {slideFrame} from './MarpSlides.styles'
 
 interface RenderedMarp {
   html: string[]
@@ -108,7 +109,11 @@ export function Marp({
   }, [html, css, page])
 
   return (
-    <div className={classNames(border && 'border shadow-lg', className)}>
+    <div
+      className={[border ? slideFrame : '', className ?? '']
+        .filter(Boolean)
+        .join(' ')}
+    >
       {/* Shadow DOM의 호스트가 될 span */}
       <span ref={elementRef} />
     </div>

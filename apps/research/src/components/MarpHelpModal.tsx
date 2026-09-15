@@ -1,8 +1,7 @@
 import type {MouseEvent as ReactMouseEvent} from 'react'
 
 import {SHORTCUT_GROUPS} from './MarpSlides.constants'
-
-import styles from './MarpSlides.module.scss'
+import * as styles from './MarpSlides.styles'
 
 interface MarpHelpModalProps {
   onClose: () => void
@@ -23,7 +22,7 @@ export function MarpHelpModal({onClose, onOverlayClick}: MarpHelpModalProps) {
         aria-modal="true"
       >
         <div className={styles.helpHeader}>
-          <h2>키보드 단축키</h2>
+          <h2 className={styles.helpTitle}>키보드 단축키</h2>
           <button
             className={styles.helpClose}
             onClick={onClose}
@@ -35,14 +34,16 @@ export function MarpHelpModal({onClose, onOverlayClick}: MarpHelpModalProps) {
         <div className={styles.helpContent}>
           {SHORTCUT_GROUPS.map((group) => (
             <section key={group.title} className={styles.helpGroup}>
-              <h3>{group.title}</h3>
-              <ul>
+              <h3 className={styles.helpGroupTitle}>{group.title}</h3>
+              <ul className={styles.helpList}>
                 {group.items.map((item) => (
-                  <li key={item.desc}>
+                  <li key={item.desc} className={styles.helpItem}>
                     <span className={styles.helpDesc}>{item.desc}</span>
                     <span className={styles.helpKeys}>
                       {item.keys.map((k, i) => (
-                        <kbd key={i}>{k}</kbd>
+                        <kbd key={i} className={styles.helpKbd}>
+                          {k}
+                        </kbd>
                       ))}
                     </span>
                   </li>

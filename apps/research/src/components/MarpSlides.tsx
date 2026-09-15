@@ -1,5 +1,6 @@
 'use client'
 
+import * as stylex from '@stylexjs/stylex'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import type {MouseEvent as ReactMouseEvent} from 'react'
 import type {Swiper as SwiperClass} from 'swiper'
@@ -19,8 +20,8 @@ import {MarpQrModal} from './MarpQrModal'
 import {MarpSearchModal} from './MarpSearchModal'
 import {readTransition} from './MarpSlides.constants'
 import type {ContextMenuState, TransitionType} from './MarpSlides.constants'
-
-import styles from './MarpSlides.module.scss'
+import * as styles from './MarpSlides.styles'
+import {styles as sx} from './MarpSlides.styles'
 
 interface MarpSlidesProps {
   dataHtml: string
@@ -644,8 +645,16 @@ export function MarpSlides({
   return (
     <div
       ref={containerRef}
-      className={`${styles.marpSlides} ${multiple ? styles.multiple : ''} ${isPrinting ? styles.printing : ''} ${isLaserMode ? styles.laserMode : ''}`}
+      className={`marp-slides ${
+        stylex.props(
+          sx.marpSlides,
+          multiple && sx.multiple,
+          isLaserMode && sx.laserMode,
+        ).className ?? ''
+      }`}
       data-transition={transition}
+      data-laser={isLaserMode}
+      data-printing={isPrinting}
       onContextMenu={handleContextMenu}
       onWheel={handleWheel}
     >
@@ -709,27 +718,18 @@ export function MarpSlides({
               {multiple && (
                 <>
                   {/* 좌측 영역 */}
-                  <div
-                    className={`${styles.clickArea} ${styles.clickAreaLeft}`}
-                    aria-hidden="true"
-                  />
+                  <div className={styles.clickAreaLeft} aria-hidden="true" />
                   {/* 우측 영역 */}
-                  <div
-                    className={`${styles.clickArea} ${styles.clickAreaRight}`}
-                    aria-hidden="true"
-                  />
+                  <div className={styles.clickAreaRight} aria-hidden="true" />
                 </>
               )}
 
               {/* 상단 영역 - 첫 슬라이드로 */}
-              <div
-                className={`${styles.clickArea} ${styles.clickAreaTop}`}
-                aria-hidden="true"
-              />
+              <div className={styles.clickAreaTop} aria-hidden="true" />
 
               {/* 하단 영역 - 루트 페이지로 */}
               <div
-                className={`${styles.clickArea} ${styles.clickAreaBottom}`}
+                className={styles.clickAreaBottom}
                 aria-hidden="true"
                 onMouseEnter={handleBottomEnter}
                 onMouseLeave={handleBottomLeave}
@@ -752,7 +752,9 @@ export function MarpSlides({
       {/* 페이지 인디케이터 */}
       {multiple && (
         <div
-          className={`${styles.pageIndicator} ${isBottomHovered ? styles.visible : ''}`}
+          className={
+            isBottomHovered ? styles.pageIndicatorVisible : styles.pageIndicator
+          }
         >
           {activeIndex + 1} / {html.length}
         </div>
@@ -773,13 +775,21 @@ export function MarpSlides({
             {html.map((_, i) => (
               <button
                 key={i}
-                className={`${styles.overviewItem} ${i === activeIndex ? styles.active : ''}`}
+                className={
+                  i === activeIndex
+                    ? styles.overviewItemActive
+                    : styles.overviewItem
+                }
                 onClick={() => handleOverviewSlideClick(i)}
                 aria-label={`슬라이드 ${i + 1}로 이동`}
                 aria-current={i === activeIndex ? 'true' : undefined}
               >
                 <div className={styles.overviewThumbnail}>
-                  <Marp rendered={marpRenderData} page={i + 1} />
+                  <Marp
+                    rendered={marpRenderData}
+                    page={i + 1}
+                    className={styles.overviewThumbnailInner}
+                  />
                 </div>
                 <span className={styles.overviewNumber}>{i + 1}</span>
               </button>
@@ -837,8 +847,9 @@ export function MarpSlides({
               {(['pen', 'highlighter', 'eraser', 'text'] as const).map((t) => (
                 <button
                   key={t}
-                  className={styles.drawToolBtn}
-                  data-on={drawTool === t}
+                  className={
+                    drawTool === t ? styles.drawToolBtnOn : styles.drawToolBtn
+                  }
                   onClick={() => setDrawTool(t)}
                   aria-label={t}
                   title={t}
@@ -853,7 +864,7 @@ export function MarpSlides({
                 </button>
               ))}
             </div>
-            <div className={styles.drawToolGroup}>
+            <div className={styles.drawToolGroupLast}>
               {[
                 '#ef4444',
                 '#3b82f6',
@@ -864,8 +875,11 @@ export function MarpSlides({
               ].map((c) => (
                 <button
                   key={c}
-                  className={styles.drawColorBtn}
-                  data-on={drawColor === c}
+                  className={
+                    drawColor === c
+                      ? styles.drawColorBtnOn
+                      : styles.drawColorBtn
+                  }
                   style={{background: c}}
                   onClick={() => {
                     setDrawColor(c)
@@ -898,9 +912,12 @@ export function MarpSlides({
 
       {/* 인쇄(PDF) 전용 컨테이너 - 모든 슬라이드를 페이지 단위로 렌더링 */}
       {isPrinting && (
-        <div className={styles.printContainer} aria-hidden="true">
+        <div
+          className={`marp-print-container ${styles.printContainer}`}
+          aria-hidden="true"
+        >
           {html.map((_, i) => (
-            <div key={i} className={styles.printSlide}>
+            <div key={i} className="marp-print-slide">
               <Marp border={false} rendered={marpRenderData} page={i + 1} />
             </div>
           ))}
@@ -988,6 +1005,7 @@ export function MarpSlides({
               <div className={styles.contextMenuGoTo}>
                 <span>슬라이드 이동:</span>
                 <input
+                  className={styles.contextMenuGoToInput}
                   type="number"
                   min={1}
                   max={html.length}
@@ -1002,6 +1020,7 @@ export function MarpSlides({
                   placeholder={`1-${html.length}`}
                 />
                 <button
+                  className={styles.contextMenuGoToButton}
                   onClick={() => handleGoToSlide(parseInt(goToSlideInput, 10))}
                 >
                   이동

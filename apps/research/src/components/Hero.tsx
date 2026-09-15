@@ -2,6 +2,8 @@
 
 import {memo, useEffect, useRef} from 'react'
 
+import * as heroStyles from '@/components/hero.styles'
+
 const YEAR = new Date().getFullYear()
 
 const Hero = memo(function HeroBase() {
@@ -50,24 +52,24 @@ const Hero = memo(function HeroBase() {
   }, [])
 
   return (
-    <section className="home-hero">
-      <div className="home-hero-inner">
-        <div className="hero-eyebrow">
-          <span className="dot" />
+    <section className={`home-hero ${heroStyles.home_hero}`}>
+      <div className={`home-hero-inner ${heroStyles.home_hero_inner}`}>
+        <div className={`hero-eyebrow ${heroStyles.hero_eyebrow}`}>
+          <span className={`dot ${heroStyles.dot}`} />
           RESEARCH LAB · SEOUL · {YEAR}
         </div>
-        <h1 ref={titleRef} className="hero-title">
-          <span className="ln">SLOW.</span>
-          <span className="ln">
-            <span className="accent">DEEP</span>
-            <span className="stroke">,</span>
+        <h1 ref={titleRef} className={`hero-title ${heroStyles.hero_title}`}>
+          <span className={`ln ${heroStyles.ln}`}>SLOW.</span>
+          <span className={`ln ${heroStyles.ln}`}>
+            <span className={`accent ${heroStyles.accent}`}>DEEP</span>
+            <span className={heroStyles.stroke}>,</span>
           </span>
-          <span className="ln">
-            SHARE<span className="accent">.</span>
+          <span className={`ln ${heroStyles.ln}`}>
+            SHARE<span className={`accent ${heroStyles.accent}`}>.</span>
           </span>
         </h1>
-        <div className="hero-sub">
-          <p>
+        <div className={heroStyles.hero_sub}>
+          <p className={heroStyles.hero_sub_p}>
             Slides and long-form research notes by{' '}
             <b style={{color: 'var(--ink)'}}>yceffort</b> — deep dives into the
             frontend stack, presented one slide at a time.

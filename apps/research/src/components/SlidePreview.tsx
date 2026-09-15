@@ -2,6 +2,7 @@
 
 import {memo, useEffect, useMemo, useRef} from 'react'
 
+import * as styles from '@/components/SlideList.styles'
 import {useFontFace} from '@/hooks/useFontFace'
 
 interface SlidePreviewProps {
@@ -61,8 +62,8 @@ export const SlidePreview = memo(function SlidePreviewBase({
   }, [html, css])
 
   return (
-    <div className="relative aspect-[16/9] w-full cursor-pointer overflow-hidden bg-white dark:bg-gray-900">
-      <span ref={elementRef} className="block h-full w-full" />
+    <div className={styles.preview_frame}>
+      <span ref={elementRef} className={styles.preview_host} />
     </div>
   )
 })

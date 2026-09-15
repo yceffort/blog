@@ -1,0 +1,78 @@
+/* Swiper가 소유한 DOM과 인쇄 레이아웃. 둘 다 StyleX가 표현할 수 없는 자손 선택자를 쓴다. */
+@layer site {
+  /* glide 전환은 Swiper 내부 슬라이드의 타이밍 함수를 바꾼다 */
+  .marp-slides[data-transition='glide'] .swiper-slide {
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* 레이저 포인터는 하위 요소의 커서까지 모두 숨긴다 */
+  .marp-slides[data-laser='true'] * {
+    cursor: none !important;
+  }
+}
+
+@media print {
+  /* 화면용 UI는 모두 숨김 */
+  .marp-slides[data-printing='true'] > :not(.marp-print-container) {
+    display: none !important;
+  }
+
+  .marp-slides[data-printing='true'] {
+    background: white;
+  }
+
+  .marp-print-container {
+    display: block;
+  }
+
+  .marp-print-slide {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .marp-print-slide > div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .marp-print-slide:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  @page {
+    size: 16in 9in;
+    margin: 0;
+  }
+}
+
+/* 발표자 화면: Marp 가 만드는 shadow host 와 그 안의 SVG 는 자기 클래스가 없다. */
+@layer site {
+  .marp-presenter-slide > div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .marp-presenter-slide > div > span {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .marp-presenter-container > span {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}

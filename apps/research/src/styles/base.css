@@ -1,0 +1,30 @@
+/* Browser element defaults. */
+@layer site {
+  /* 네이티브 dialog의 UA 기본 스타일 무력화 (레이아웃은 각 컴포넌트가 담당) */
+  dialog {
+    overflow: visible;
+    position: static;
+    width: auto;
+    max-width: none;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    inset: auto;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  a {
+    word-break: break-all;
+  }
+  pre {
+    overflow-x: auto;
+  }
+  code {
+    word-break: break-word;
+  }
+}
