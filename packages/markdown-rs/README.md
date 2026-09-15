@@ -24,7 +24,7 @@ const tree = renderMarkdown(
 | 로컬 이미지 경로와 크기, alt 보존                      | WASI, imagesize, SVG width/height 또는 viewBox |
 | MDX 리터럴과 지원 범위 검사                            | `mdx.rs`                                       |
 
-코드의 토큰 경계와 색은 Prism과 다르다. two-face 문법으로 TypeScript, TSX와 JSX를 처리하며, 찾을 수 없는 언어는 평문으로 남긴다. 토큰 색은 `apps/blog/src/components/post/markdown.css`에서 정의한다. 수식은 KaTeX의 HTML 대신 MathML을 사용하므로 글꼴과 배치가 달라진다. `apps/blog/public/fonts/math`에 Libertinus Math와 OFL 라이선스를 함께 보관한다.
+코드의 토큰 경계와 색은 Prism과 다르다. two-face 문법으로 TypeScript, TSX와 JSX를 처리하며, 찾을 수 없는 언어는 평문으로 남긴다. 토큰 색은 `apps/blog/src/components/post/markdown.css`에서 정의한다. 수식은 KaTeX의 HTML 대신 MathML을 사용하므로 글꼴과 배치가 달라진다. `apps/blog/public/fonts/math`에 Libertinus Math와 OFL 라이선스를 함께 보관한다. 배포하는 글꼴은 글에서 쓰는 글리프만 남긴 서브셋이며, 원본은 `apps/blog/fonts`에 두고 `apps/blog/scripts/subset-math-font.mjs`로 다시 만든다.
 
 앱의 렌더 경로에서는 rehype-katex, rehype-prism-plus, unified와 이미지 후처리, parseCodeSnippet을 제거했다. 기존 JS 체인과 관련 의존성은 이 패키지의 개발 의존성에 비교 기준으로 남아 있다. 이미지 최적화 등 다른 앱 기능에서 사용하는 sharp는 유지한다.
 
@@ -85,4 +85,4 @@ React 컴포넌트 구현과 이름 연결은 앱의 책임이다. JSX 변환 �
 
 조건과 재실행 방법은 [BENCHMARK.md](BENCHMARK.md), 원시 기록은 [experience-results.json](experience-results.json)에 있다. 예열한 글 453편의 HAST 변환은 JS 4,490.5ms, WASM 4,464.0ms로 거의 같았지만, 이를 빌드나 첫 방문 시간으로 해석할 수는 없다. 초기 혼합 구성의 기록은 [bench-results.json](bench-results.json), 전체 WASM의 예열 기록은 [bench-wasi-results.json](bench-wasi-results.json)으로 구분해 보존한다.
 
-파서의 수정 내역은 `vendor/markdown-rs/PATCHES.md`에 있다. two-face에 포함된 문법의 저작권과 라이선스는 `SYNTAX-LICENSES.txt`에 보관했으며 [고정 버전의 고지](https://codeberg.org/CosmicHarper/two-face/src/tag/v0.5.2+bat-0.26.1/generated/acknowledgements_full.md)를 따른다. MathML 글꼴은 math-core의 `d4a64feff32bf2ff45bf09823192e4a77448a03a` 커밋의 `playground/fonts/LibertinusMath-Regular.woff2`에서 가져왔고, OFL 라이선스는 math-core-fonts의 `d581bb50a8e15c5f08c59f6ba5f213e188753fa1` 버전과 함께 보관한다.
+파서의 수정 내역은 `vendor/markdown-rs/PATCHES.md`에 있다. two-face에 포함된 문법의 저작권과 라이선스는 `SYNTAX-LICENSES.txt`에 보관했으며 [고정 버전의 고지](https://codeberg.org/CosmicHarper/two-face/src/tag/v0.5.2+bat-0.26.1/generated/acknowledgements_full.md)를 따른다. MathML 글꼴은 math-core의 `d4a64feff32bf2ff45bf09823192e4a77448a03a` 커밋의 `playground/fonts/LibertinusMath-Regular.woff2`에서 가져왔고, OFL 라이선스는 math-core-fonts의 `d581bb50a8e15c5f08c59f6ba5f213e188753fa1` 버전과 함께 보관한다. 서브셋 사실과 출처는 같은 디렉터리의 `NOTICE.txt`에 적었다.

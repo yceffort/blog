@@ -1,0 +1,17 @@
+Libertinus Math Regular, Version 7.051 (development build 96f3d9c)
+Copyright (c) 2012-2026 The Libertinus Project Authors
+https://github.com/alerque/libertinus
+Licensed under the SIL Open Font License, Version 1.1. See OFL.txt in this directory.
+The full font was taken from math-core (playground/fonts/LibertinusMath-Regular.woff2,
+commit d4a64feff32bf2ff45bf09823192e4a77448a03a).
+
+LibertinusMath-Regular.woff2 in this directory is a SUBSET of the original font.
+It keeps only the glyphs for the code points listed in unicodes.txt (the characters
+used by formulas on yceffort.kr, including the browser's italic mapping of single-letter
+identifiers) together with the MATH table, the stretchy glyph variants and assemblies
+for those glyphs, and all OpenType layout features.
+
+The subset is generated from the unmodified font kept at apps/blog/fonts/LibertinusMath-Regular.woff2
+by apps/blog/scripts/subset-math-font.mjs (fontTools pyftsubset). The file name is unchanged
+because the OFL Reserved Font Names of this project are "Linux Libertine", "Biolinum" and
+"STIX Fonts" only; "Libertinus" is not reserved.
