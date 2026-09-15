@@ -85,6 +85,7 @@ export async function generateMetadata(props: {
   return {
     title: data.title,
     description: data.description,
+    robots: data.published ? undefined : {index: false, follow: false},
     alternates: {
       canonical: `${SiteConfig.url}/slides/${params.slug}`,
       types: {
@@ -123,10 +124,6 @@ export default async function SlidePage(props: {
   }
 
   const isDev = process.env.NODE_ENV !== 'production'
-  if (!data.published && !isDev) {
-    notFound()
-    return null
-  }
 
   const {html, css, fonts, published, post, transition} = data
 
@@ -140,7 +137,7 @@ export default async function SlidePage(props: {
         postUrl={post}
         defaultTransition={transition}
       />
-      {!published && (
+      {isDev && !published && (
         <div className="pointer-events-none fixed bottom-4 left-4 z-50 select-none rounded-lg border border-amber-400 bg-amber-100/95 px-4 py-2 text-sm font-medium text-amber-900 shadow-lg backdrop-blur-sm dark:border-amber-500 dark:bg-amber-900/90 dark:text-amber-100">
           ⚠️ 배포되지 않은 포스트입니다 (dev only)
         </div>
