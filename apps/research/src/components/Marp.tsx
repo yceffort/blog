@@ -58,6 +58,13 @@ export function Marp({
         section {
           padding: 30px 40px !important;
         }
+        /* 터치 기기의 롱프레스는 컨텍스트 메뉴용이다. 텍스트 선택과 iOS 콜아웃이 겹치지 않게 막는다 */
+        @media (pointer: coarse) {
+          section {
+            -webkit-touch-callout: none;
+            user-select: none;
+          }
+        }
       </style>
     `
 

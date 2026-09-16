@@ -168,6 +168,8 @@ export const styles = stylex.create({
       position: 'fixed',
       zIndex: 1000,
       minWidth: '220px',
+      maxHeight: 'calc(100dvh - 16px)',
+      overflowY: 'auto',
       background: 'rgba(30, 30, 30, 0.95)',
       backdropFilter: 'blur(10px)',
       border: '1px solid rgba(255, 255, 255, 0.1)',

@@ -2,7 +2,10 @@
 
 import * as stylex from '@stylexjs/stylex'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
-import type {MouseEvent as ReactMouseEvent} from 'react'
+import type {
+  MouseEvent as ReactMouseEvent,
+  PointerEvent as ReactPointerEvent,
+} from 'react'
 import type {Swiper as SwiperClass} from 'swiper'
 import 'swiper/css'
 import 'swiper/css/effect-creative'
@@ -22,6 +25,11 @@ import {readTransition} from './MarpSlides.constants'
 import type {ContextMenuState, TransitionType} from './MarpSlides.constants'
 import * as styles from './MarpSlides.styles'
 import {styles as sx} from './MarpSlides.styles'
+
+// 터치 롱프레스로 컨텍스트 메뉴를 여는 기준. 이동 허용치는 스와이프와 구분하기 위한 값이다
+const LONG_PRESS_MS = 500
+const LONG_PRESS_MOVE_TOLERANCE = 10
+const MENU_VIEWPORT_MARGIN = 8
 
 interface MarpSlidesProps {
   dataHtml: string
@@ -101,6 +109,11 @@ export function MarpSlides({
   const searchInputRef = useRef<HTMLInputElement | null>(null)
   const swiperRef = useRef<SwiperClass | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
+  // 터치 롱프레스도 우클릭과 같은 메뉴를 연다
+  const longPressTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const longPressStartRef = useRef<{x: number; y: number} | null>(null)
+  // 롱프레스로 연 직후 따라오는 click은 메뉴를 바로 닫으므로 다음 pointerdown까지 무시한다
+  const longPressFiredRef = useRef(false)
   const activeIndexRef = useRef(activeIndex)
   useEffect(() => {
     activeIndexRef.current = activeIndex
@@ -385,6 +398,11 @@ export function MarpSlides({
   // 클릭 네비게이션 (좌우/상하 10% 영역) (memoized)
   const handleSlideClick = useCallback(
     (e: ReactMouseEvent<HTMLDivElement>) => {
+      // 롱프레스로 메뉴를 연 손가락의 click이다. 이동 동작으로 이어지면 안 된다
+      if (longPressFiredRef.current) {
+        return
+      }
+
       const rect = e.currentTarget.getBoundingClientRect()
       const xPos = e.clientX - rect.left
       const yPos = e.clientY - rect.top
@@ -476,6 +494,57 @@ export function MarpSlides({
     [],
   )
 
+  const cancelLongPress = useCallback(() => {
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current)
+      longPressTimerRef.current = null
+    }
+    longPressStartRef.current = null
+  }, [])
+
+  const handlePointerDown = useCallback(
+    (e: ReactPointerEvent<HTMLDivElement>) => {
+      longPressFiredRef.current = false
+      cancelLongPress()
+
+      // 슬라이드 위에서만 연다. 모달, 드로잉 캔버스, 메뉴 자신은 Swiper 밖에 있다
+      if (
+        e.pointerType === 'mouse' ||
+        !(e.target as HTMLElement).closest('.swiper')
+      ) {
+        return
+      }
+
+      const {clientX, clientY} = e
+      longPressStartRef.current = {x: clientX, y: clientY}
+      longPressTimerRef.current = setTimeout(() => {
+        longPressTimerRef.current = null
+        longPressStartRef.current = null
+        longPressFiredRef.current = true
+        setContextMenu({visible: true, x: clientX, y: clientY})
+      }, LONG_PRESS_MS)
+    },
+    [cancelLongPress],
+  )
+
+  const handlePointerMove = useCallback(
+    (e: ReactPointerEvent<HTMLDivElement>) => {
+      const start = longPressStartRef.current
+      if (!start) {
+        return
+      }
+      if (
+        Math.abs(e.clientX - start.x) > LONG_PRESS_MOVE_TOLERANCE ||
+        Math.abs(e.clientY - start.y) > LONG_PRESS_MOVE_TOLERANCE
+      ) {
+        cancelLongPress()
+      }
+    },
+    [cancelLongPress],
+  )
+
+  useEffect(() => cancelLongPress, [cancelLongPress])
+
   const closeContextMenu = useCallback(() => {
     setContextMenu((prev) => ({...prev, visible: false}))
     setGoToSlideInput('')
@@ -484,7 +553,7 @@ export function MarpSlides({
   // 컨텍스트 메뉴 외부 클릭 시 닫기
   useEffect(() => {
     const handleClickOutside = () => {
-      if (contextMenu.visible) {
+      if (contextMenu.visible && !longPressFiredRef.current) {
         closeContextMenu()
       }
     }
@@ -657,6 +726,10 @@ export function MarpSlides({
       data-printing={isPrinting}
       onContextMenu={handleContextMenu}
       onWheel={handleWheel}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={cancelLongPress}
+      onPointerCancel={cancelLongPress}
     >
       <Swiper
         key={transition}
@@ -957,6 +1030,23 @@ export function MarpSlides({
       {contextMenu.visible && (
         <div
           className={styles.contextMenu}
+          // 좁은 화면에서는 누른 자리에 그대로 두면 메뉴가 화면 밖으로 나간다
+          ref={(el) => {
+            if (!el) {
+              return
+            }
+            const {width, height} = el.getBoundingClientRect()
+            const left = Math.min(
+              contextMenu.x,
+              window.innerWidth - width - MENU_VIEWPORT_MARGIN,
+            )
+            const top = Math.min(
+              contextMenu.y,
+              window.innerHeight - height - MENU_VIEWPORT_MARGIN,
+            )
+            el.style.left = `${Math.max(MENU_VIEWPORT_MARGIN, left)}px`
+            el.style.top = `${Math.max(MENU_VIEWPORT_MARGIN, top)}px`
+          }}
           style={{top: contextMenu.y, left: contextMenu.x}}
           role="presentation"
           onClick={(e) => e.stopPropagation()}
