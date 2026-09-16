@@ -10,6 +10,8 @@ tags:
 date: 2026-07-29
 description: 'throw 하나로 이해하는 선언적 로딩과 에러 처리 — 개념부터 reconciler 내부 동작, 실무 경계 설계, React Query 연계까지'
 published: true
+art:
+  undraw: loading-ui
 ---
 
 # Suspense & ErrorBoundary 딥다이브

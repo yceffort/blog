@@ -11,6 +11,8 @@ tags:
 date: 2026-08-14
 description: '서버 상태라는 문제, useQuery의 상태 모델, staleTime과 gcTime — 캐시 항목의 일생을 따라가는 react-query 강의 1부'
 published: true
+art:
+  undraw: database-tables
 ---
 
 # react-query 딥다이브 1부

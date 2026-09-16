@@ -10,6 +10,8 @@ date: 2026-05-15
 description: "'use client' 한 줄이 만드는 모듈 경계, 빌드 타임 변환, Flight 직렬화"
 published: true
 post: https://yceffort.kr/2026/05/use-client-deep-dive
+art:
+  undraw: responsive
 ---
 
 # `'use client'` 디렉티브 딥다이브 🚪

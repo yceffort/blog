@@ -11,6 +11,8 @@ tags:
 date: 2026-08-05
 description: 'window.onerror 후킹부터 envelope 전송까지 — 실제 SDK 소스로 따라가는 에러 포착과 조립의 여정'
 published: true
+art:
+  undraw: connection-lost
 ---
 
 # Sentry 딥다이브 1부

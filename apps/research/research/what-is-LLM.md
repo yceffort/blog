@@ -9,6 +9,8 @@ tags:
 date: 2025-07-03
 description: '진짜로 알고 싶다'
 published: false
+art:
+  undraw: artificial-intelligence
 ---
 
 # LLM과 RAG 그것이 알고 싶다

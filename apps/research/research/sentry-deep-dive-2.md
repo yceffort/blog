@@ -11,6 +11,8 @@ tags:
 date: 2026-08-06
 description: 'Relay 파이프라인부터 Debug ID, 그루핑 해시, 운영 규칙까지 — 서버에 도착한 이벤트가 이슈가 되는 과정'
 published: true
+art:
+  undraw: server-error
 ---
 
 # Sentry 딥다이브 2부

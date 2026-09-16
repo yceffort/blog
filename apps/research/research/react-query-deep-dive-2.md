@@ -11,6 +11,8 @@ tags:
 date: 2026-08-14
 description: 'QueryObserver 구독 모델, structural sharing, HydrationBoundary — 내부 동작에서 실전 함정, SSR까지 react-query 강의 2부'
 published: true
+art:
+  undraw: real-time-sync
 ---
 
 # react-query 딥다이브 2부

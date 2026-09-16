@@ -9,6 +9,8 @@ tags:
 date: 2025-05-15
 description: '🤔'
 published: true
+art:
+  undraw: web-app
 ---
 
 # `'use client'` & `'use server'` 제대로 이해하기 🚀

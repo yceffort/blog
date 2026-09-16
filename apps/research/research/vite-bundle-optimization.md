@@ -10,6 +10,8 @@ tags:
 date: 2026-08-05
 description: '내 앱의 번들은 무엇으로 결정되는가: 네 가지 질문으로 나눠서 점검하고 고치는 법'
 published: true
+art:
+  undraw: static-assets
 ---
 
 # Vite 번들 최적화 실전 가이드

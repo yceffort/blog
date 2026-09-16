@@ -8,6 +8,8 @@ tags:
 date: 2025-03-28
 description: '🤔'
 published: true
+art:
+  undraw: guidelines
 ---
 
 # 패키지 가이드 3탄) 패키지 제작을 위한 가이드

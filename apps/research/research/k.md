@@ -10,6 +10,8 @@ tags:
 date: 2025-02-04
 description: '채용 한파와 AI 시대, 신입으로 살아남기'
 published: false
+art:
+  undraw: missed-chances
 ---
 
 # 학교 밖의 IT:

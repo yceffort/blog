@@ -9,6 +9,8 @@ tags:
 date: 2025-07-03
 description: '진짜로 알고 싶다'
 published: false
+art:
+  undraw: document-search
 ---
 
 # 실무에서 만드는 RAG

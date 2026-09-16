@@ -11,6 +11,8 @@ tags:
 date: 2025-05-26
 description: 'Naver Pay 개발자를 위한 AI 코드 어시스턴트 Pie Bot 개발에 함께해주세요!'
 published: false
+art:
+  undraw: chat-bot
 ---
 
 ## 🤔 Naver Pay 개발, 이런 점들이 궁금하거나 어렵지 않으셨나요?

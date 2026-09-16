@@ -14,6 +14,8 @@ date: 2026-09-15
 post: https://yceffort.kr/2026/08/rebuilding-a-vendor-sdk
 description: '상수 하나를 import했는데 gzip 91KiB가 따라왔습니다. 원인을 실험으로 가르고, 배포된 소스맵과 타입 선언에서 SDK를 복원해 전송용 번들을 69% 줄였습니다. 조건 분기와 의존성 예측에서 틀린 과정, 원본 대조와 일부러 망가뜨려 보는 검사로 확인한 동작과 남은 차이를 공유합니다.'
 published: false
+art:
+  undraw: app-benchmarks
 ---
 
 <!-- _class: lead invert -->

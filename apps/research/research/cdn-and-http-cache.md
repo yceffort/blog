@@ -13,6 +13,8 @@ tags:
 date: 2026-09-11
 description: 'CDN이 무엇인지, Cache-Control과 재검증이 어떻게 동작하는지, HTML과 JS와 이미지의 캐시 전략을 왜 다르게 가져가는지 실측 헤더와 CloudFront 설정으로 따라가는 주니어용 강의'
 published: true
+art:
+  undraw: connected-world
 ---
 
 # CDN과 HTTP 캐시

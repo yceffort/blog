@@ -8,6 +8,8 @@ tags:
 date: 2025-03-25
 description: '생각보다 잘 모르고 있던 타입스크립트'
 published: true
+art:
+  undraw: markdown-file
 ---
 
 # 패키지 가이드 2탄) 패키지 제작을 위한 타입 제공 가이드
