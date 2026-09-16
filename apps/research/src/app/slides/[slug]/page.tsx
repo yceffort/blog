@@ -23,6 +23,20 @@ interface SlideData {
   published: boolean
   post?: string
   transition?: TransitionType
+  thumbnail?: string
+}
+
+const THUMB_DIR = path.join(process.cwd(), 'public/thumbnails')
+
+// scripts/generate-undraw-thumbnail.mjs 가 만든 webp 가 있으면 그 경로. 없으면 /api/og 폴백
+// 재생성해도 파일명이 같아 캐시가 안 깨지므로 수정 시각을 버전으로 붙인다
+function resolveThumbnail(slug: string): string | undefined {
+  const file = path.join(THUMB_DIR, `${slug}.webp`)
+  if (!fs.existsSync(file)) {
+    return undefined
+  }
+  const version = Math.floor(fs.statSync(file).mtimeMs / 1000).toString(36)
+  return `/thumbnails/${slug}.webp?v=${version}`
 }
 
 async function getSlideData(slug: string): Promise<SlideData | null> {
@@ -59,6 +73,7 @@ async function getSlideData(slug: string): Promise<SlideData | null> {
     published,
     post,
     transition,
+    thumbnail: resolveThumbnail(slug),
   }
 }
 
@@ -82,7 +97,9 @@ export async function generateMetadata(props: {
     return {title: `Not Found - ${params.slug}`}
   }
 
-  const ogImageUrl = `/api/og?title=${encodeURIComponent(data.title)}&description=${encodeURIComponent(data.description || '')}&tags=${encodeURIComponent((data.tags || []).join(','))}&path=${encodeURIComponent('/slides/' + params.slug)}`
+  const ogImageUrl =
+    data.thumbnail ??
+    `/api/og?title=${encodeURIComponent(data.title)}&description=${encodeURIComponent(data.description || '')}&tags=${encodeURIComponent((data.tags || []).join(','))}&path=${encodeURIComponent('/slides/' + params.slug)}`
 
   return {
     title: data.title,
