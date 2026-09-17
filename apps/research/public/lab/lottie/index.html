@@ -392,7 +392,7 @@
         if (!slot) return Promise.resolve()
         const canvas = document.createElement('canvas')
         slot.replaceWith(canvas)
-        const url = `./assets/${cfg.dir}/${node.dataset.kind}.lottie${cfg.bust}`
+        const url = `/lab/lottie/assets/${cfg.dir}/${node.dataset.kind}.lottie${cfg.bust}`
 
         const renderConfig = { autoResize: true }
         if (cfg.dpr !== undefined) renderConfig.devicePixelRatio = cfg.dpr

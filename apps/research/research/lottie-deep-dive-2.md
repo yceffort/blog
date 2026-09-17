@@ -70,7 +70,7 @@ art:
 
 오늘 다루는 네 가지 설정을 **켜고 끄면서 직접 재 보는 페이지**를 같이 띄워 둔다.
 
-### [/lab/lottie/index.html](/lab/lottie/index.html)
+### [/lab/lottie](/lab/lottie)
 
 노드 26개를 재현했고, 체크박스로 축을 하나씩 바꿀 수 있다.
 
@@ -852,6 +852,6 @@ const delta = _lastFrameTime === null ? 0 : now - _lastFrameTime
 - `@lottiefiles/dotlottie-web` 0.79.1 배포 번들 (인용한 코드는 전부 여기서 읽고 가독성을 위해 이름과 줄바꿈만 손봤다)
 - dpr 실측: Chrome 154, `deviceScaleFactor: 3`, CSS 104x104 캔버스
 - 데이터 공유 실측: 26개 노드 재현, 캐시 무시 7회, 중앙값 기준
-- 비교 데모: [/lab/lottie/index.html](/lab/lottie/index.html) (네 축을 따로 켜고 끌 수 있다)
+- 비교 데모: [/lab/lottie](/lab/lottie) (네 축을 따로 켜고 끌 수 있다)
 - [1부: 병목을 찾는 법](/slides/lottie-deep-dive-1)
 - 서비스와 식별자는 익명 처리했다
