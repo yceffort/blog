@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>로티 As-is / To-be 비교</title>
+    <style>
+      :root {
+        --bg: #14101f;
+        --panel: #1c1730;
+        --line: #2f2748;
+        --text: #e8e4f4;
+        --dim: #a79fc4;
+        --accent: #8b5cf6;
+        --warn: #f59e0b;
+        --good: #34d399;
+        --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 24px 16px 48px;
+        background: var(--bg);
+        color: var(--text);
+        font:
+          15px/1.6 -apple-system,
+          BlinkMacSystemFont,
+          'Pretendard',
+          sans-serif;
+      }
+      header {
+        max-width: 1180px;
+        margin: 0 auto 20px;
+      }
+      h1 {
+        margin: 0 0 6px;
+        font-size: 24px;
+      }
+      header p {
+        margin: 0 0 16px;
+        color: var(--dim);
+        font-size: 14px;
+      }
+      .controls {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      button {
+        background: var(--accent);
+        color: #fff;
+        border: 0;
+        border-radius: 7px;
+        padding: 9px 16px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button.ghost {
+        background: transparent;
+        border: 1px solid var(--line);
+        color: var(--dim);
+      }
+      button:disabled {
+        opacity: 0.45;
+        cursor: default;
+      }
+      #status {
+        color: var(--dim);
+        font-size: 13px;
+      }
+      .opt {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--dim);
+        font-size: 13px;
+        cursor: pointer;
+      }
+      .opt input {
+        accent-color: var(--accent);
+      }
+      .panels {
+        max-width: 1180px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      @media (max-width: 860px) {
+        .panels {
+          grid-template-columns: 1fr;
+        }
+      }
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 16px;
+      }
+      .panel h2 {
+        margin: 0 0 4px;
+        font-size: 17px;
+      }
+      .panel[data-side='asis'] h2 {
+        color: var(--warn);
+      }
+      .panel[data-side='tobe'] h2 {
+        color: var(--good);
+      }
+      .cfg {
+        margin: 0 0 14px;
+        padding: 0;
+        list-style: none;
+        font-size: 12.5px;
+        color: var(--dim);
+      }
+      .cfg label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        padding: 2px 0;
+      }
+      .cfg input {
+        accent-color: var(--accent);
+        margin: 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        margin-bottom: 14px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 5px 6px;
+        border-bottom: 1px solid var(--line);
+      }
+      th {
+        color: var(--dim);
+        font-weight: 500;
+        width: 46%;
+      }
+      td {
+        font-family: var(--mono);
+        font-variant-numeric: tabular-nums;
+      }
+      td .delta {
+        font-family: inherit;
+        font-size: 11.5px;
+        margin-left: 6px;
+      }
+      .viewport {
+        height: 320px;
+        overflow-y: auto;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px;
+        background: #100d1a;
+        scrollbar-width: thin;
+      }
+      .node {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 6px 4px;
+        border-bottom: 1px solid #1d1830;
+      }
+      .node:last-child {
+        border-bottom: 0;
+      }
+      .node .idx {
+        width: 26px;
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 11px;
+      }
+      .node canvas,
+      .node .ph {
+        width: 52px;
+        height: 52px;
+        flex: none;
+      }
+      .node .ph {
+        border-radius: 8px;
+        background: #191330;
+        border: 1px dashed #2b2347;
+      }
+      .node .meta {
+        font-size: 11.5px;
+        color: var(--dim);
+        font-family: var(--mono);
+      }
+      footer {
+        max-width: 1180px;
+        margin: 22px auto 0;
+        color: var(--dim);
+        font-size: 12.5px;
+      }
+      footer code {
+        font-family: var(--mono);
+        color: var(--text);
+      }
+      footer h3 {
+        margin: 0 0 8px;
+        font-size: 14px;
+        color: var(--text);
+      }
+      footer p {
+        margin: 0 0 8px;
+      }
+      footer strong {
+        color: var(--text);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>로티 As-is / To-be 비교</h1>
+      <p>
+        주차별 노드 26개가 세로로 늘어선 화면을 재현한다. 양쪽은 같은 그림, 같은 프레임 수를 쓰고 네 가지 설정만 다르다.
+      </p>
+      <div class="controls">
+        <button id="run-asis">As-is 측정</button>
+        <button id="run-tobe">To-be 측정</button>
+        <label class="opt"><input type="checkbox" id="bust" /> 매번 새로 받기 (캐시 무시)</label>
+        <button id="reload" class="ghost">새로고침</button>
+        <span id="status">wasm을 먼저 준비합니다…</span>
+      </div>
+    </header>
+
+    <div class="panels">
+      <section class="panel" data-side="asis">
+        <h2>As-is</h2>
+        <ul class="cfg" data-cfg="asis">
+          <li><label><input type="checkbox" data-opt="dpr" checked /> <code>devicePixelRatio</code> 명시</label></li>
+          <li><label><input type="checkbox" data-opt="png" checked /> PNG 임베드 (끄면 WebP)</label></li>
+          <li><label><input type="checkbox" data-opt="eager" checked /> 26개 즉시 마운트 (끄면 지연)</label></li>
+          <li><label><input type="checkbox" data-opt="nosha" checked /> <code>src</code> 각자 (끄면 <code>data</code> 공유)</label></li>
+        </ul>
+        <table>
+          <tbody id="m-asis"></tbody>
+        </table>
+        <div class="viewport" id="v-asis"></div>
+      </section>
+
+      <section class="panel" data-side="tobe">
+        <h2>To-be</h2>
+        <ul class="cfg" data-cfg="tobe">
+          <li><label><input type="checkbox" data-opt="dpr" /> <code>devicePixelRatio</code> 명시</label></li>
+          <li><label><input type="checkbox" data-opt="png" /> PNG 임베드 (끄면 WebP)</label></li>
+          <li><label><input type="checkbox" data-opt="eager" /> 26개 즉시 마운트 (끄면 지연)</label></li>
+          <li><label><input type="checkbox" data-opt="nosha" /> <code>src</code> 각자 (끄면 <code>data</code> 공유)</label></li>
+        </ul>
+        <table>
+          <tbody id="m-tobe"></tbody>
+        </table>
+        <div class="viewport" id="v-tobe"></div>
+      </section>
+    </div>
+
+    <footer>
+      <h3>읽는 법</h3>
+      <p>
+        <strong>한 번에 한 축만 바꿔서 재라.</strong> 네 개를 동시에 바꾸면 어느 설정이 어떤 결과를 냈는지 가를 수 없다.
+        체크박스를 양쪽 같게 맞추고 하나만 다르게 두면 그 축의 효과가 나온다.
+      </p>
+      <p>
+        <strong>한 번 재고 결론 내지 마라.</strong> 이 페이지에서 <code>data</code> 공유 축만 7회 재 본 결과, 첫 프레임은
+        44 ms 대 77 ms로 확실히 늦어졌지만 마지막 노드까지는 49~83 ms 대 65~79 ms로 범위가 겹쳐 차이를 확정할 수 없었다.
+        1회 측정에서는 정반대로 보였다.
+      </p>
+      <p>
+        "매번 새로 받기"를 켜지 않으면 두 번째 측정부터 HTTP 캐시가 받아 준다. 캐시가 따뜻해지면 차이가 노이즈에 묻힌다.
+      </p>
+      <p>
+        <strong>끊긴 프레임이 양쪽 다 0으로 나오는 것이 정상이다.</strong> 로컬 서버에 파일도 작아서 이 규모로는 렌더
+        부하가 생기지 않는다. 차이를 보려면 DevTools Performance 패널에서 CPU 4x 이상으로 조이고 다시 재야 한다.
+        재 보지 않고 "로티 때문에 버벅인다"고 말할 수 없는 이유가 여기 있다.
+      </p>
+      <p>
+        한 번에 한쪽만 재는 이유는 <code>longtask</code> 항목에 어느 패널의 작업인지 표시가 없기 때문이다. 동시에
+        돌리면 두 패널이 서로 경합해 어느 쪽 비용인지 가를 수 없다.
+      </p>
+      <p>
+        wasm 렌더러는 양쪽이 같은 모듈을 쓴다. 컴파일은 세션당 1회이므로 측정 전에 미리 끝내 두고 비교에서 제외했다.
+      </p>
+      <p>
+        전송량은 <code>PerformanceResourceTiming</code>의 <code>encodedBodySize</code> 합이다. 같은 파일을 여러 번
+        요청하면 HTTP 캐시가 받아 주더라도 그만큼 쌓인다. 실제 네트워크 전송만 보려면 DevTools에서 스로틀을 걸고
+        "캐시 비우고 다시"를 쓴다.
+      </p>
+      <p>
+        로컬 서버라 네트워크 지연이 거의 없다. 전송량 차이를 시간으로 보고 싶다면 DevTools Network 패널에서 Fast 3G를
+        걸고 재면 된다.
+      </p>
+    </footer>
+
+    <script type="module">
+      import { DotLottie } from 'https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web@0.79.1/+esm'
+
+      const NODE_KINDS = [
+        ...Array(20).fill('node-lock'),
+        ...Array(4).fill('node-open'),
+        ...Array(2).fill('node-character'),
+      ]
+      function readCfg(side) {
+        const on = (opt) => document.querySelector(`[data-cfg="${side}"] [data-opt="${opt}"]`).checked
+        return {
+          dir: on('png') ? 'png' : 'webp',
+          lazy: !on('eager'),
+          share: !on('nosha'),
+          dpr: on('dpr') ? window.devicePixelRatio : undefined,
+          bust: document.getElementById('bust').checked ? `?v=${Date.now()}` : '',
+        }
+      }
+      const LABEL = { asis: 'As-is', tobe: 'To-be' }
+
+      const state = { asis: null, tobe: null }
+      const players = { asis: [], tobe: [] }
+      const statusEl = document.getElementById('status')
+
+      // 프레임이 얼마나 고르게 나오는지 본다. 간격이 20ms를 넘으면 끊긴 것으로 센다.
+      const frameWatch = { on: false, frames: 0, dropped: 0, prev: 0 }
+      function watchFrames(now) {
+        if (!frameWatch.on) return
+        if (frameWatch.prev) {
+          frameWatch.frames++
+          if (now - frameWatch.prev > 20) frameWatch.dropped++
+        }
+        frameWatch.prev = now
+        requestAnimationFrame(watchFrames)
+      }
+
+      const fmt = (n) => n.toLocaleString('en-US')
+
+      function cmp(cur, ref) {
+        if (!ref) return ''
+        const pct = Math.round((cur / ref) * 100)
+        const color = pct < 100 ? 'var(--good)' : pct > 100 ? 'var(--warn)' : 'var(--dim)'
+        return `<span class="delta" style="color:${color}">${pct}%</span>`
+      }
+
+      function render(side) {
+        const m = state[side]
+        const base = side === 'tobe' ? state.asis : null
+        const body = document.getElementById(`m-${side}`)
+        if (!m) {
+          body.innerHTML = ['만든 인스턴스', '캔버스 총 픽셀', '로티 요청 수', '전송 바이트', '첫 프레임까지', '마지막 노드까지', '끊긴 프레임']
+            .map((k) => `<tr><th>${k}</th><td>-</td></tr>`)
+            .join('')
+          return
+        }
+        const r = (label, value, delta) => `<tr><th>${label}</th><td>${value}${delta || ''}</td></tr>`
+        const d = (key) => (base ? cmp(m[key], base[key]) : '')
+        body.innerHTML = [
+          r('만든 인스턴스', fmt(m.instances), d('instances')),
+          r('캔버스 총 픽셀', fmt(m.pixels), d('pixels')),
+          r('로티 요청 수', fmt(m.requests), d('requests')),
+          r('전송 바이트', fmt(m.bytes), d('bytes')),
+          r('첫 프레임까지', m.first === null ? '-' : `${m.first} ms`, d('first')),
+          r('마지막 노드까지', m.last === null ? '-' : `${m.last} ms`, d('last')),
+          r('끊긴 프레임', `${m.dropped} / ${m.frames}`, base && base.dropped ? d('dropped') : ''),
+        ].join('')
+      }
+
+      function build(side) {
+        const host = document.getElementById(`v-${side}`)
+        host.innerHTML = ''
+        host.scrollTop = 0
+        NODE_KINDS.forEach((kind, i) => {
+          const node = document.createElement('div')
+          node.className = 'node'
+          node.dataset.kind = kind
+          node.innerHTML =
+            `<span class="idx">${String(i + 1).padStart(2, '0')}</span>` +
+            `<div class="ph"></div>` +
+            `<span class="meta">${kind.replace('node-', '')}</span>`
+          host.appendChild(node)
+        })
+        return host
+      }
+
+      function mount(node, side, cfg, shared, onFrame) {
+        const slot = node.querySelector('.ph')
+        if (!slot) return Promise.resolve()
+        const canvas = document.createElement('canvas')
+        slot.replaceWith(canvas)
+        const url = `./assets/${cfg.dir}/${node.dataset.kind}.lottie${cfg.bust}`
+
+        const renderConfig = { autoResize: true }
+        if (cfg.dpr !== undefined) renderConfig.devicePixelRatio = cfg.dpr
+        const opts = { canvas, autoplay: true, loop: true, renderConfig }
+
+        const start = (data) => {
+          if (data) opts.data = data
+          else opts.src = url
+          const p = new DotLottie(opts)
+          let seen = false
+          p.addEventListener('render', () => {
+            if (seen) return
+            seen = true
+            onFrame()
+          })
+          players[side].push(p)
+        }
+
+        if (!cfg.share) {
+          start(null)
+          return Promise.resolve()
+        }
+        if (!shared.has(url)) shared.set(url, fetch(url).then((r) => r.arrayBuffer()))
+        return shared.get(url).then(start)
+      }
+
+      function collect(side, cfg) {
+        const entries = performance.getEntriesByType('resource').filter((e) => e.name.includes(`/assets/${cfg.dir}/`))
+        const canvases = document.querySelectorAll(`#v-${side} canvas`)
+        let pixels = 0
+        canvases.forEach((c) => (pixels += c.width * c.height))
+        return {
+          instances: canvases.length,
+          pixels,
+          requests: entries.length,
+          bytes: entries.reduce((a, e) => a + (e.encodedBodySize || 0), 0),
+        }
+      }
+
+      async function run(side) {
+        const buttons = [document.getElementById('run-asis'), document.getElementById('run-tobe')]
+        buttons.forEach((b) => (b.disabled = true))
+        statusEl.textContent = `${LABEL[side]} 측정 중…`
+
+        players[side].forEach((p) => p.destroy?.())
+        players[side] = []
+        performance.clearResourceTimings()
+        state[side] = null
+        render(side)
+
+        const cfg = readCfg(side)
+        const host = build(side)
+        const shared = new Map()
+        const nodes = [...host.querySelectorAll('.node')]
+
+        // 이전 프레임의 잔여 긴 작업이 섞이지 않게 한 틱 쉬고 창을 연다
+        await new Promise((r) => setTimeout(r, 120))
+        Object.assign(frameWatch, { on: true, frames: 0, dropped: 0, prev: 0 })
+        requestAnimationFrame(watchFrames)
+        const t0 = performance.now()
+        let first = null
+        let last = null
+        const onFrame = () => {
+          const now = Math.round(performance.now() - t0)
+          if (first === null) first = now
+          last = now
+        }
+
+        if (cfg.lazy) {
+          const io = new IntersectionObserver(
+            (entries, obs) => {
+              for (const e of entries) {
+                if (!e.isIntersecting) continue
+                obs.unobserve(e.target)
+                mount(e.target, side, cfg, shared, onFrame)
+              }
+            },
+            { root: host, rootMargin: '120px' },
+          )
+          nodes.forEach((n) => io.observe(n))
+        } else {
+          await Promise.all(nodes.map((n) => mount(n, side, cfg, shared, onFrame)))
+        }
+
+        await new Promise((r) => setTimeout(r, 3000))
+        frameWatch.on = false
+        state[side] = {
+          ...collect(side, cfg),
+          first,
+          last,
+          frames: frameWatch.frames,
+          dropped: frameWatch.dropped,
+        }
+        render('asis')
+        render('tobe')
+        buttons.forEach((b) => (b.disabled = false))
+        statusEl.textContent = cfg.lazy
+          ? '스크롤하면 인스턴스가 더 만들어진다. 두 패널을 따로 재야 긴 작업이 섞이지 않는다.'
+          : '다른 쪽도 재서 비교하세요.'
+      }
+
+      document.getElementById('run-asis').addEventListener('click', () => run('asis'))
+      document.getElementById('run-tobe').addEventListener('click', () => run('tobe'))
+      document.getElementById('reload').addEventListener('click', () => location.reload(true))
+
+      // wasm 컴파일을 미리 끝내 비교에서 제외한다
+      render('asis')
+      render('tobe')
+      await DotLottie.preload()
+      statusEl.textContent = 'wasm 준비 완료. 한쪽씩 측정하세요.'
+    </script>
+  </body>
+</html>
