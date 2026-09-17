@@ -8,7 +8,7 @@
     "analyze": "node scripts/analyze.mjs"
   },
   "dependencies": {
-    "lodash": "4.17.21",
+    "lodash": "4.18.1",
     "moment": "2.30.1",
     "msw": "2.12.4",
     "winston": "^3.19.0"
