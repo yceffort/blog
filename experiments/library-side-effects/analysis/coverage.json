@@ -1,0 +1,142 @@
+[
+  {
+    "name": "baseline",
+    "sourceBytes": 332,
+    "functionCount": 8,
+    "executedFunctionCount": 2,
+    "executedBytes": 225,
+    "executedRatio": 0.677710843373494,
+    "runtimeErrors": [],
+    "libResult": {
+      "isArray": false,
+      "length": null,
+      "isNull": true
+    }
+  },
+  {
+    "name": "lodash-unused",
+    "sourceBytes": 73799,
+    "functionCount": 624,
+    "executedFunctionCount": 85,
+    "executedBytes": 20485,
+    "executedRatio": 0.2775782869686581,
+    "runtimeErrors": [],
+    "libResult": {
+      "isArray": false,
+      "length": null,
+      "isNull": true
+    }
+  },
+  {
+    "name": "lodash-used",
+    "sourceBytes": 73824,
+    "functionCount": 624,
+    "executedFunctionCount": 90,
+    "executedBytes": 20926,
+    "executedRatio": 0.28345795405288254,
+    "runtimeErrors": [],
+    "libResult": {
+      "isArray": true,
+      "length": 2,
+      "isNull": false
+    }
+  },
+  {
+    "name": "moment-locales",
+    "sourceBytes": 372883,
+    "functionCount": 754,
+    "executedFunctionCount": 44,
+    "executedBytes": 268440,
+    "executedRatio": 0.7199040986046562,
+    "runtimeErrors": [],
+    "libResult": {
+      "isArray": false,
+      "length": null,
+      "isNull": true
+    }
+  },
+  {
+    "name": "moment-unused",
+    "sourceBytes": 62199,
+    "functionCount": 367,
+    "executedFunctionCount": 37,
+    "executedBytes": 15632,
+    "executedRatio": 0.2513223685268252,
+    "runtimeErrors": [],
+    "libResult": {
+      "isArray": false,
+      "length": null,
+      "isNull": true
+    }
+  },
+  {
+    "name": "moment-used",
+    "sourceBytes": 62233,
+    "functionCount": 371,
+    "executedFunctionCount": 68,
+    "executedBytes": 18585,
+    "executedRatio": 0.29863577201806113,
+    "runtimeErrors": [],
+    "libResult": {
+      "isArray": false,
+      "length": null,
+      "isNull": false
+    }
+  },
+  {
+    "name": "msw-build-flag",
+    "sourceBytes": 332,
+    "functionCount": 8,
+    "executedFunctionCount": 2,
+    "executedBytes": 225,
+    "executedRatio": 0.677710843373494,
+    "runtimeErrors": [],
+    "libResult": {
+      "isArray": false,
+      "length": null,
+      "isNull": true
+    }
+  },
+  {
+    "name": "msw-runtime-flag",
+    "sourceBytes": 191818,
+    "functionCount": 323,
+    "executedFunctionCount": 41,
+    "executedBytes": 136177,
+    "executedRatio": 0.709928161069347,
+    "runtimeErrors": [],
+    "libResult": {
+      "isArray": false,
+      "length": null,
+      "isNull": true
+    }
+  },
+  {
+    "name": "msw-used",
+    "sourceBytes": 191753,
+    "functionCount": 324,
+    "executedFunctionCount": 49,
+    "executedBytes": 136929,
+    "executedRatio": 0.7140905227036866,
+    "runtimeErrors": [],
+    "libResult": {
+      "isArray": true,
+      "length": 1,
+      "isNull": false
+    }
+  },
+  {
+    "name": "winston-unused",
+    "sourceBytes": 161969,
+    "functionCount": 741,
+    "executedFunctionCount": 231,
+    "executedBytes": 34072,
+    "executedRatio": 0.21036124196605524,
+    "runtimeErrors": ["Uncaught TypeError: pv.inherits is not a function"],
+    "libResult": {
+      "isArray": false,
+      "length": null,
+      "isNull": false
+    }
+  }
+]

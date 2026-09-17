@@ -1,0 +1,11 @@
+{
+  "displayedKinds": ["comment", "functions", "initialized"],
+  "matplotlib": "3.11.2",
+  "numpy": "2.5.3",
+  "sourceHashes": {
+    "analysis/summary.json": "1562beca5170a698f8e2776e85342bc091ee54b7a053f4e1b252a24ff540c346",
+    "analysis/pulse-summary.json": "b665aeb6676179bca13bffd774bd0f8aceb8ee06f7e762d761caafe13662b5bb",
+    "analysis/linear-descriptive-fit.json": "fd4129436a9129990480c68196d03e1ffca4e81e4a0acea0a35f6eb84f6a5e61",
+    "scripts/plot-article.py": "02b7df73fc454a3d64b9332efaea5c741921bc5a8a9d681f0aee73747e047b79"
+  }
+}

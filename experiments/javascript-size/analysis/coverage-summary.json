@@ -1,0 +1,18 @@
+[
+  {
+    "kind": "initialized",
+    "kib": 5120,
+    "functionCount": 18120,
+    "functionsReported": 18120,
+    "functionsCalled": 18120,
+    "callCounter": 18120
+  },
+  {
+    "kind": "functions",
+    "kib": 5120,
+    "functionCount": 22666,
+    "functionsReported": 22666,
+    "functionsCalled": 0,
+    "callCounter": 0
+  }
+]

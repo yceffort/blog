@@ -1,0 +1,13 @@
+{
+  "name": "javascript-size-experiment",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "measure": "node scripts/measure.mjs",
+    "analyze": "python3 scripts/analyze.py"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}

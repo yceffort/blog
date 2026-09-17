@@ -1,0 +1,73 @@
+{
+  "startedAt": "2026-09-16T10:46:30.373Z",
+  "browser": "153.0.8010.12",
+  "browserExecutable": "/Users/yceffort/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+  "playwright": "1.63.0",
+  "node": "v24.20.0",
+  "platform": "darwin",
+  "release": "27.0.0",
+  "arch": "arm64",
+  "cpus": [
+    {
+      "model": "Apple M5",
+      "speed": 2400
+    },
+    {
+      "model": "Apple M5",
+      "speed": 2400
+    },
+    {
+      "model": "Apple M5",
+      "speed": 2400
+    },
+    {
+      "model": "Apple M5",
+      "speed": 2400
+    },
+    {
+      "model": "Apple M5",
+      "speed": 2400
+    },
+    {
+      "model": "Apple M5",
+      "speed": 2400
+    },
+    {
+      "model": "Apple M5",
+      "speed": 2400
+    },
+    {
+      "model": "Apple M5",
+      "speed": 2400
+    },
+    {
+      "model": "Apple M5",
+      "speed": 2400
+    },
+    {
+      "model": "Apple M5",
+      "speed": 2400
+    }
+  ],
+  "memoryBytes": 25769803776,
+  "availableParallelism": 10,
+  "libraries": {
+    "lodash": "4.17.21",
+    "moment": "2.30.1",
+    "msw": "2.12.4",
+    "esbuild": "0.25.12"
+  },
+  "profiles": [
+    {
+      "name": "local-1x",
+      "cpu": 1
+    }
+  ],
+  "repetitions": 1,
+  "seed": 20260916,
+  "sourceHashes": {
+    "build.mjs": "81323b155ce9368a277b776929b6195f200605d6f591a4220e485d6e3853e6ab",
+    "server.mjs": "a83b3f0ea629e28013caf47a8ed756c0aa2d2e9ed35acd0173179004cffb3c16",
+    "measure.mjs": "94f4ee3fa2165c4f649e1310877b281e58000d978899c4cd4d7e8f27b19db196"
+  }
+}

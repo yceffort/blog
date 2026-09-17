@@ -1,0 +1,10 @@
+fixtures/
+node_modules/
+.venv/
+results/*/traces/*.json
+*.log
+__pycache__/
+
+# Preserve the experiment data despite the repository-wide coverage/ ignore.
+!results/coverage/
+!results/coverage/**

@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-09-16T16:27:53+09:00",
+  "display_name": "js-unused-cost-benchmark",
+  "location": "SouthEastAsia",
+  "machine": {
+    "cpus": 2,
+    "display_name": "2 cores, 8 GB RAM, 32 GB storage",
+    "memory_in_bytes": 8589934592,
+    "name": "basicLinux32gb"
+  },
+  "name": "js-unused-cost-benchmark-j4pgppg7w6gcqxvw",
+  "repository": "yceffort/blog",
+  "state": "Available"
+}

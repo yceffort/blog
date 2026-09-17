@@ -1,0 +1,173 @@
+[
+  {
+    "name": "comment-0",
+    "kind": "comment",
+    "kib": 0,
+    "count": 0,
+    "sourceBytes": 101,
+    "gzipBytes": 105,
+    "sha256": "c06393f67a9cd55be9fb0cd7c50975142f5c50c1322582f74d14677039ed34ce"
+  },
+  {
+    "name": "comment-128",
+    "kind": "comment",
+    "kib": 128,
+    "count": 570,
+    "sourceBytes": 131072,
+    "gzipBytes": 15657,
+    "sha256": "23e62ee59a97732d32f41ac2619fa8bf0932727ea3c301e5f93fb0784c58fc85"
+  },
+  {
+    "name": "functions-128",
+    "kind": "functions",
+    "kib": 128,
+    "count": 570,
+    "sourceBytes": 131072,
+    "gzipBytes": 15648,
+    "sha256": "5b9af386ef5849e48ebbc0a574310d19c18c811b6d45fbdab08488ba4ca9034e"
+  },
+  {
+    "name": "initialized-128",
+    "kind": "initialized",
+    "kib": 128,
+    "count": 455,
+    "sourceBytes": 131072,
+    "gzipBytes": 15235,
+    "sha256": "c0927e21a22344807d3d100e834d072876ff845901e2ae203b717cc67eb79732"
+  },
+  {
+    "name": "comment-512",
+    "kind": "comment",
+    "kib": 512,
+    "count": 2276,
+    "sourceBytes": 524288,
+    "gzipBytes": 61453,
+    "sha256": "3a25b3d4a177c0bc5f6d4b7630c88fc0588f04087291ab1082777ff36599d0a6"
+  },
+  {
+    "name": "functions-512",
+    "kind": "functions",
+    "kib": 512,
+    "count": 2276,
+    "sourceBytes": 524288,
+    "gzipBytes": 61444,
+    "sha256": "0ff33674313a9777e2a5bcec74bb217cf2323b3c736a474f7931e45941686d2c"
+  },
+  {
+    "name": "initialized-512",
+    "kind": "initialized",
+    "kib": 512,
+    "count": 1818,
+    "sourceBytes": 524288,
+    "gzipBytes": 59657,
+    "sha256": "509b1cfa282a384a2d5910e19683609ee39856fd84e112bef72f3979a5c3f724"
+  },
+  {
+    "name": "comment-1024",
+    "kind": "comment",
+    "kib": 1024,
+    "count": 4548,
+    "sourceBytes": 1048576,
+    "gzipBytes": 122444,
+    "sha256": "51d300f9c47320f39a8a59656cf23ad5f2acc7c0940ff60f12a287e4f3c5a689"
+  },
+  {
+    "name": "functions-1024",
+    "kind": "functions",
+    "kib": 1024,
+    "count": 4548,
+    "sourceBytes": 1048576,
+    "gzipBytes": 122437,
+    "sha256": "9d2b79fe4247cfdefc3dad912c009a71ec03df51f2dedf9f490190e29ddd7627"
+  },
+  {
+    "name": "initialized-1024",
+    "kind": "initialized",
+    "kib": 1024,
+    "count": 3632,
+    "sourceBytes": 1048576,
+    "gzipBytes": 118739,
+    "sha256": "8cc11b1a19c363168c0eb28df23dff0dfc91d0f2acf8effcefd4d63e606f9ad3"
+  },
+  {
+    "name": "comment-2048",
+    "kind": "comment",
+    "kib": 2048,
+    "count": 9091,
+    "sourceBytes": 2097152,
+    "gzipBytes": 244328,
+    "sha256": "018a067256af1ba032d5b35bf75167871efb1170dd18788a4272233c62016c7c"
+  },
+  {
+    "name": "functions-2048",
+    "kind": "functions",
+    "kib": 2048,
+    "count": 9091,
+    "sourceBytes": 2097152,
+    "gzipBytes": 244317,
+    "sha256": "11e6c501cfc4f37407eb8483f177922e6008a448256df7d98e12ba022cff1068"
+  },
+  {
+    "name": "initialized-2048",
+    "kind": "initialized",
+    "kib": 2048,
+    "count": 7261,
+    "sourceBytes": 2097152,
+    "gzipBytes": 237021,
+    "sha256": "c2f9d5c1ae770ab395b9e1ca6a3b8dc4a8b816a7836b5219fa4a2b31f33ddd39"
+  },
+  {
+    "name": "comment-5120",
+    "kind": "comment",
+    "kib": 5120,
+    "count": 22666,
+    "sourceBytes": 5242880,
+    "gzipBytes": 608583,
+    "sha256": "94877475ed6d9f095699a05a752fd674e58d47db8f47cc70552202af0e9fa893"
+  },
+  {
+    "name": "functions-5120",
+    "kind": "functions",
+    "kib": 5120,
+    "count": 22666,
+    "sourceBytes": 5242880,
+    "gzipBytes": 608575,
+    "sha256": "1eb06ae529995c7ef5b06b86825c1a3e6bf4862ebbb869c756325d56dd5c6a62"
+  },
+  {
+    "name": "initialized-5120",
+    "kind": "initialized",
+    "kib": 5120,
+    "count": 18120,
+    "sourceBytes": 5242880,
+    "gzipBytes": 590760,
+    "sha256": "3e104a699e916270ad5537b2624815ea7ce1e634220d4e26cd77b7b7d7465a02"
+  },
+  {
+    "name": "comment-10240",
+    "kind": "comment",
+    "kib": 10240,
+    "count": 45286,
+    "sourceBytes": 10485760,
+    "gzipBytes": 1215401,
+    "sha256": "34f6749bbd29e3fb730f05580f762d0a3c9ad2079abbf8c4b9f07dc4ee435d71"
+  },
+  {
+    "name": "functions-10240",
+    "kind": "functions",
+    "kib": 10240,
+    "count": 45286,
+    "sourceBytes": 10485760,
+    "gzipBytes": 1215390,
+    "sha256": "5770c1671a3c9613eb99ed1952e515e54390ad464d6f1d2ab74b4c5d049304f9"
+  },
+  {
+    "name": "initialized-10240",
+    "kind": "initialized",
+    "kib": 10240,
+    "count": 36202,
+    "sourceBytes": 10485760,
+    "gzipBytes": 1179750,
+    "sha256": "8b1d33fb803c9987153321a572235ce590767fa911f2b6630baed49de6596a0b"
+  }
+]

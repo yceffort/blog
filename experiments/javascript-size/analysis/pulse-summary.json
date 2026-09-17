@@ -1,0 +1,812 @@
+[
+  {
+    "profile": "local-4x",
+    "kind": "comment",
+    "kib": 0,
+    "runs": [
+      {
+        "repetition": 0,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 3.1999999997206032,
+        "readyMs": 26.799999999813735
+      },
+      {
+        "repetition": 1,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 3.5,
+        "readyMs": 17.399999999906868
+      },
+      {
+        "repetition": 2,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 5.599999999627471,
+        "readyMs": 16.5
+      },
+      {
+        "repetition": 3,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 3,
+        "readyMs": 38.3000000002794
+      },
+      {
+        "repetition": 4,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 3,
+        "readyMs": 24.399999999906868
+      },
+      {
+        "repetition": 5,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 3,
+        "readyMs": 59.8000000002794
+      },
+      {
+        "repetition": 6,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 3.1999999997206032,
+        "readyMs": 17.100000000093132
+      },
+      {
+        "repetition": 7,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 3.2999999998137355,
+        "readyMs": 22.100000000093132
+      },
+      {
+        "repetition": 8,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 6.099999999627471,
+        "readyMs": 39
+      },
+      {
+        "repetition": 9,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 3.1999999997206032,
+        "readyMs": 23.300000000279397
+      }
+    ],
+    "n": 10,
+    "runsWithLoadingSamples": 0,
+    "medianOfRunMaxInputDelayMs": null,
+    "medianSettledInputDelayMs": 3.1999999997206032
+  },
+  {
+    "profile": "local-4x",
+    "kind": "comment",
+    "kib": 1024,
+    "runs": [
+      {
+        "repetition": 0,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 5.199999999720603,
+        "readyMs": 40
+      },
+      {
+        "repetition": 1,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 2.2999999998137355,
+        "readyMs": 56.3000000002794
+      },
+      {
+        "repetition": 2,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 3.8999999999068677,
+        "readyMs": 36.8000000002794
+      },
+      {
+        "repetition": 3,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 3.3999999999068677,
+        "readyMs": 48.59999999962747
+      },
+      {
+        "repetition": 4,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 4,
+        "readyMs": 36.3000000002794
+      },
+      {
+        "repetition": 5,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 2.5,
+        "readyMs": 57
+      },
+      {
+        "repetition": 6,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 3.3999999999068677,
+        "readyMs": 46.1999999997206
+      },
+      {
+        "repetition": 7,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 3.5,
+        "readyMs": 35.200000000186265
+      },
+      {
+        "repetition": 8,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 2.3999999999068677,
+        "readyMs": 55.10000000009313
+      },
+      {
+        "repetition": 9,
+        "duringCount": 0,
+        "maxInputDelayMs": null,
+        "settledMedianInputDelayMs": 2.7999999998137355,
+        "readyMs": 42.39999999990687
+      }
+    ],
+    "n": 10,
+    "runsWithLoadingSamples": 0,
+    "medianOfRunMaxInputDelayMs": null,
+    "medianSettledInputDelayMs": 3.3999999999068677
+  },
+  {
+    "profile": "local-4x",
+    "kind": "comment",
+    "kib": 5120,
+    "runs": [
+      {
+        "repetition": 0,
+        "duringCount": 7,
+        "maxInputDelayMs": 11.899999999906868,
+        "settledMedianInputDelayMs": 3.2999999998137355,
+        "readyMs": 387.70000000018626
+      },
+      {
+        "repetition": 1,
+        "duringCount": 3,
+        "maxInputDelayMs": 6.199999999720603,
+        "settledMedianInputDelayMs": 2,
+        "readyMs": 186.39999999990687
+      },
+      {
+        "repetition": 2,
+        "duringCount": 5,
+        "maxInputDelayMs": 7.099999999627471,
+        "settledMedianInputDelayMs": 2.1999999997206032,
+        "readyMs": 298.5
+      },
+      {
+        "repetition": 3,
+        "duringCount": 2,
+        "maxInputDelayMs": 5.399999999906868,
+        "settledMedianInputDelayMs": 2.7999999998137355,
+        "readyMs": 125.89999999990687
+      },
+      {
+        "repetition": 4,
+        "duringCount": 3,
+        "maxInputDelayMs": 8.299999999813735,
+        "settledMedianInputDelayMs": 2.6999999997206032,
+        "readyMs": 181
+      },
+      {
+        "repetition": 5,
+        "duringCount": 8,
+        "maxInputDelayMs": 9.299999999813735,
+        "settledMedianInputDelayMs": 4.199999999720603,
+        "readyMs": 439.59999999962747
+      },
+      {
+        "repetition": 6,
+        "duringCount": 2,
+        "maxInputDelayMs": 2.7999999998137355,
+        "settledMedianInputDelayMs": 2.1999999997206032,
+        "readyMs": 130.39999999990687
+      },
+      {
+        "repetition": 7,
+        "duringCount": 2,
+        "maxInputDelayMs": 10.599999999627471,
+        "settledMedianInputDelayMs": 2.599999999627471,
+        "readyMs": 159.20000000018626
+      },
+      {
+        "repetition": 8,
+        "duringCount": 3,
+        "maxInputDelayMs": 7.2999999998137355,
+        "settledMedianInputDelayMs": 2.3000000002793968,
+        "readyMs": 182.1999999997206
+      },
+      {
+        "repetition": 9,
+        "duringCount": 2,
+        "maxInputDelayMs": 9.399999999906868,
+        "settledMedianInputDelayMs": 2.5,
+        "readyMs": 109.1999999997206
+      }
+    ],
+    "n": 10,
+    "runsWithLoadingSamples": 10,
+    "medianOfRunMaxInputDelayMs": 7.7999999998137355,
+    "medianSettledInputDelayMs": 2.5499999998137355
+  },
+  {
+    "profile": "local-4x",
+    "kind": "comment",
+    "kib": 10240,
+    "runs": [
+      {
+        "repetition": 0,
+        "duringCount": 3,
+        "maxInputDelayMs": 15.299999999813735,
+        "settledMedianInputDelayMs": 2.599999999627471,
+        "readyMs": 186.60000000009313
+      },
+      {
+        "repetition": 1,
+        "duringCount": 2,
+        "maxInputDelayMs": 7.2999999998137355,
+        "settledMedianInputDelayMs": 2.7999999998137355,
+        "readyMs": 151.3000000002794
+      },
+      {
+        "repetition": 2,
+        "duringCount": 3,
+        "maxInputDelayMs": 14.899999999906868,
+        "settledMedianInputDelayMs": 3,
+        "readyMs": 180.10000000009313
+      },
+      {
+        "repetition": 3,
+        "duringCount": 2,
+        "maxInputDelayMs": 10.599999999627471,
+        "settledMedianInputDelayMs": 2.6999999997206032,
+        "readyMs": 135.60000000009313
+      },
+      {
+        "repetition": 4,
+        "duringCount": 3,
+        "maxInputDelayMs": 11.699999999720603,
+        "settledMedianInputDelayMs": 2.1999999997206032,
+        "readyMs": 208
+      },
+      {
+        "repetition": 5,
+        "duringCount": 4,
+        "maxInputDelayMs": 4.699999999720603,
+        "settledMedianInputDelayMs": 2.599999999627471,
+        "readyMs": 251.29999999981374
+      },
+      {
+        "repetition": 6,
+        "duringCount": 4,
+        "maxInputDelayMs": 6.099999999627471,
+        "settledMedianInputDelayMs": 2.3999999999068677,
+        "readyMs": 217.90000000037253
+      },
+      {
+        "repetition": 7,
+        "duringCount": 4,
+        "maxInputDelayMs": 8.399999999906868,
+        "settledMedianInputDelayMs": 2.099999999627471,
+        "readyMs": 219.40000000037253
+      },
+      {
+        "repetition": 8,
+        "duringCount": 3,
+        "maxInputDelayMs": 8.199999999720603,
+        "settledMedianInputDelayMs": 2.599999999627471,
+        "readyMs": 180.5
+      },
+      {
+        "repetition": 9,
+        "duringCount": 2,
+        "maxInputDelayMs": 5.7999999998137355,
+        "settledMedianInputDelayMs": 2.599999999627471,
+        "readyMs": 146
+      }
+    ],
+    "n": 10,
+    "runsWithLoadingSamples": 10,
+    "medianOfRunMaxInputDelayMs": 8.299999999813735,
+    "medianSettledInputDelayMs": 2.599999999627471
+  },
+  {
+    "profile": "local-4x",
+    "kind": "functions",
+    "kib": 1024,
+    "runs": [
+      {
+        "repetition": 0,
+        "duringCount": 1,
+        "maxInputDelayMs": 8.899999999906868,
+        "settledMedianInputDelayMs": 2.2999999998137355,
+        "readyMs": 63.09999999962747
+      },
+      {
+        "repetition": 1,
+        "duringCount": 2,
+        "maxInputDelayMs": 5.399999999906868,
+        "settledMedianInputDelayMs": 3.6999999997206032,
+        "readyMs": 149.39999999990687
+      },
+      {
+        "repetition": 2,
+        "duringCount": 3,
+        "maxInputDelayMs": 10.799999999813735,
+        "settledMedianInputDelayMs": 2.599999999627471,
+        "readyMs": 162.79999999981374
+      },
+      {
+        "repetition": 3,
+        "duringCount": 3,
+        "maxInputDelayMs": 6,
+        "settledMedianInputDelayMs": 2.8999999999068677,
+        "readyMs": 182.20000000018626
+      },
+      {
+        "repetition": 4,
+        "duringCount": 1,
+        "maxInputDelayMs": 23.399999999906868,
+        "settledMedianInputDelayMs": 3.5,
+        "readyMs": 65.79999999981374
+      },
+      {
+        "repetition": 5,
+        "duringCount": 1,
+        "maxInputDelayMs": 10,
+        "settledMedianInputDelayMs": 4,
+        "readyMs": 104.5
+      },
+      {
+        "repetition": 6,
+        "duringCount": 1,
+        "maxInputDelayMs": 4.2999999998137355,
+        "settledMedianInputDelayMs": 2.3999999999068677,
+        "readyMs": 76.39999999990687
+      },
+      {
+        "repetition": 7,
+        "duringCount": 2,
+        "maxInputDelayMs": 9.299999999813735,
+        "settledMedianInputDelayMs": 2.2999999998137355,
+        "readyMs": 115.59999999962747
+      },
+      {
+        "repetition": 8,
+        "duringCount": 3,
+        "maxInputDelayMs": 23.899999999906868,
+        "settledMedianInputDelayMs": 2.599999999627471,
+        "readyMs": 179.60000000009313
+      },
+      {
+        "repetition": 9,
+        "duringCount": 1,
+        "maxInputDelayMs": 11.5,
+        "settledMedianInputDelayMs": 2.2999999998137355,
+        "readyMs": 96.70000000018626
+      }
+    ],
+    "n": 10,
+    "runsWithLoadingSamples": 10,
+    "medianOfRunMaxInputDelayMs": 9.649999999906868,
+    "medianSettledInputDelayMs": 2.599999999627471
+  },
+  {
+    "profile": "local-4x",
+    "kind": "functions",
+    "kib": 5120,
+    "runs": [
+      {
+        "repetition": 0,
+        "duringCount": 5,
+        "maxInputDelayMs": 28.59999999962747,
+        "settledMedianInputDelayMs": 2.7999999998137355,
+        "readyMs": 281.89999999990687
+      },
+      {
+        "repetition": 1,
+        "duringCount": 7,
+        "maxInputDelayMs": 34.799999999813735,
+        "settledMedianInputDelayMs": 5.7999999998137355,
+        "readyMs": 389.29999999981374
+      },
+      {
+        "repetition": 2,
+        "duringCount": 5,
+        "maxInputDelayMs": 20.799999999813735,
+        "settledMedianInputDelayMs": 2.2999999998137355,
+        "readyMs": 283.5
+      },
+      {
+        "repetition": 3,
+        "duringCount": 7,
+        "maxInputDelayMs": 11.599999999627471,
+        "settledMedianInputDelayMs": 2.5,
+        "readyMs": 385
+      },
+      {
+        "repetition": 4,
+        "duringCount": 5,
+        "maxInputDelayMs": 15.099999999627471,
+        "settledMedianInputDelayMs": 2.1999999997206032,
+        "readyMs": 270.39999999990687
+      },
+      {
+        "repetition": 5,
+        "duringCount": 5,
+        "maxInputDelayMs": 3.2999999998137355,
+        "settledMedianInputDelayMs": 3.2999999998137355,
+        "readyMs": 261.20000000018626
+      },
+      {
+        "repetition": 6,
+        "duringCount": 5,
+        "maxInputDelayMs": 36.39999999990687,
+        "settledMedianInputDelayMs": 2.599999999627471,
+        "readyMs": 296.10000000009313
+      },
+      {
+        "repetition": 7,
+        "duringCount": 5,
+        "maxInputDelayMs": 20,
+        "settledMedianInputDelayMs": 3.1999999997206032,
+        "readyMs": 275.5
+      },
+      {
+        "repetition": 8,
+        "duringCount": 5,
+        "maxInputDelayMs": 18.399999999906868,
+        "settledMedianInputDelayMs": 2.099999999627471,
+        "readyMs": 282.5
+      },
+      {
+        "repetition": 9,
+        "duringCount": 5,
+        "maxInputDelayMs": 19.899999999906868,
+        "settledMedianInputDelayMs": 2.099999999627471,
+        "readyMs": 275.70000000018626
+      }
+    ],
+    "n": 10,
+    "runsWithLoadingSamples": 10,
+    "medianOfRunMaxInputDelayMs": 19.949999999953434,
+    "medianSettledInputDelayMs": 2.5499999998137355
+  },
+  {
+    "profile": "local-4x",
+    "kind": "functions",
+    "kib": 10240,
+    "runs": [
+      {
+        "repetition": 0,
+        "duringCount": 9,
+        "maxInputDelayMs": 34.5,
+        "settledMedianInputDelayMs": 1.3999999999068677,
+        "readyMs": 496
+      },
+      {
+        "repetition": 1,
+        "duringCount": 8,
+        "maxInputDelayMs": 34.89999999990687,
+        "settledMedianInputDelayMs": 2.6999999997206032,
+        "readyMs": 442.6999999997206
+      },
+      {
+        "repetition": 2,
+        "duringCount": 7,
+        "maxInputDelayMs": 42.1999999997206,
+        "settledMedianInputDelayMs": 2.099999999627471,
+        "readyMs": 396.79999999981374
+      },
+      {
+        "repetition": 3,
+        "duringCount": 16,
+        "maxInputDelayMs": 79.79999999981374,
+        "settledMedianInputDelayMs": 2,
+        "readyMs": 833.2999999998137
+      },
+      {
+        "repetition": 4,
+        "duringCount": 9,
+        "maxInputDelayMs": 51.799999999813735,
+        "settledMedianInputDelayMs": 3.5,
+        "readyMs": 455.60000000009313
+      },
+      {
+        "repetition": 5,
+        "duringCount": 9,
+        "maxInputDelayMs": 65.1999999997206,
+        "settledMedianInputDelayMs": 4.7999999998137355,
+        "readyMs": 472
+      },
+      {
+        "repetition": 6,
+        "duringCount": 8,
+        "maxInputDelayMs": 38.89999999990687,
+        "settledMedianInputDelayMs": 2.2999999998137355,
+        "readyMs": 448.5
+      },
+      {
+        "repetition": 7,
+        "duringCount": 8,
+        "maxInputDelayMs": 37.1999999997206,
+        "settledMedianInputDelayMs": 2.8999999999068677,
+        "readyMs": 447.10000000009313
+      },
+      {
+        "repetition": 8,
+        "duringCount": 8,
+        "maxInputDelayMs": 27.59999999962747,
+        "settledMedianInputDelayMs": 2.5,
+        "readyMs": 434.79999999981374
+      },
+      {
+        "repetition": 9,
+        "duringCount": 10,
+        "maxInputDelayMs": 65.89999999990687,
+        "settledMedianInputDelayMs": 5.199999999720603,
+        "readyMs": 522.7999999998137
+      }
+    ],
+    "n": 10,
+    "runsWithLoadingSamples": 10,
+    "medianOfRunMaxInputDelayMs": 40.549999999813735,
+    "medianSettledInputDelayMs": 2.5999999998603016
+  },
+  {
+    "profile": "local-4x",
+    "kind": "initialized",
+    "kib": 1024,
+    "runs": [
+      {
+        "repetition": 0,
+        "duringCount": 6,
+        "maxInputDelayMs": 170.1999999997206,
+        "settledMedianInputDelayMs": 1.7999999998137355,
+        "readyMs": 326.29999999981374
+      },
+      {
+        "repetition": 1,
+        "duringCount": 5,
+        "maxInputDelayMs": 173,
+        "settledMedianInputDelayMs": 5.5,
+        "readyMs": 277.90000000037253
+      },
+      {
+        "repetition": 2,
+        "duringCount": 6,
+        "maxInputDelayMs": 163.79999999981374,
+        "settledMedianInputDelayMs": 1.7999999998137355,
+        "readyMs": 321.70000000018626
+      },
+      {
+        "repetition": 3,
+        "duringCount": 6,
+        "maxInputDelayMs": 131.6999999997206,
+        "settledMedianInputDelayMs": 2.7999999998137355,
+        "readyMs": 338.70000000018626
+      },
+      {
+        "repetition": 4,
+        "duringCount": 7,
+        "maxInputDelayMs": 164.89999999990687,
+        "settledMedianInputDelayMs": 1.3999999999068677,
+        "readyMs": 364.89999999990687
+      },
+      {
+        "repetition": 5,
+        "duringCount": 5,
+        "maxInputDelayMs": 169.89999999990687,
+        "settledMedianInputDelayMs": 1.5,
+        "readyMs": 279.10000000009313
+      },
+      {
+        "repetition": 6,
+        "duringCount": 5,
+        "maxInputDelayMs": 169.29999999981374,
+        "settledMedianInputDelayMs": 2.5,
+        "readyMs": 270.29999999981374
+      },
+      {
+        "repetition": 7,
+        "duringCount": 6,
+        "maxInputDelayMs": 181.29999999981374,
+        "settledMedianInputDelayMs": 2.099999999627471,
+        "readyMs": 334.70000000018626
+      },
+      {
+        "repetition": 8,
+        "duringCount": 6,
+        "maxInputDelayMs": 149.1999999997206,
+        "settledMedianInputDelayMs": 2.2999999998137355,
+        "readyMs": 351.40000000037253
+      },
+      {
+        "repetition": 9,
+        "duringCount": 6,
+        "maxInputDelayMs": 159.29999999981374,
+        "settledMedianInputDelayMs": 2,
+        "readyMs": 318.39999999990687
+      }
+    ],
+    "n": 10,
+    "runsWithLoadingSamples": 10,
+    "medianOfRunMaxInputDelayMs": 167.0999999998603,
+    "medianSettledInputDelayMs": 2.0499999998137355
+  },
+  {
+    "profile": "local-4x",
+    "kind": "initialized",
+    "kib": 5120,
+    "runs": [
+      {
+        "repetition": 0,
+        "duringCount": 23,
+        "maxInputDelayMs": 840.8999999999069,
+        "settledMedianInputDelayMs": 2.7999999998137355,
+        "readyMs": 1191.7999999998137
+      },
+      {
+        "repetition": 1,
+        "duringCount": 22,
+        "maxInputDelayMs": 836.1999999997206,
+        "settledMedianInputDelayMs": 5,
+        "readyMs": 1144.5999999996275
+      },
+      {
+        "repetition": 2,
+        "duringCount": 22,
+        "maxInputDelayMs": 851.7999999998137,
+        "settledMedianInputDelayMs": 2.6999999997206032,
+        "readyMs": 1153.5
+      },
+      {
+        "repetition": 3,
+        "duringCount": 23,
+        "maxInputDelayMs": 823,
+        "settledMedianInputDelayMs": 2.7999999998137355,
+        "readyMs": 1182.2999999998137
+      },
+      {
+        "repetition": 4,
+        "duringCount": 22,
+        "maxInputDelayMs": 836.1999999997206,
+        "settledMedianInputDelayMs": 5.399999999906868,
+        "readyMs": 1147
+      },
+      {
+        "repetition": 5,
+        "duringCount": 23,
+        "maxInputDelayMs": 835.0999999996275,
+        "settledMedianInputDelayMs": 2.099999999627471,
+        "readyMs": 1189.3999999999069
+      },
+      {
+        "repetition": 6,
+        "duringCount": 24,
+        "maxInputDelayMs": 932.6999999997206,
+        "settledMedianInputDelayMs": 2.599999999627471,
+        "readyMs": 1240.3999999999069
+      },
+      {
+        "repetition": 7,
+        "duringCount": 23,
+        "maxInputDelayMs": 889.1999999997206,
+        "settledMedianInputDelayMs": 3.5,
+        "readyMs": 1193.8000000002794
+      },
+      {
+        "repetition": 8,
+        "duringCount": 23,
+        "maxInputDelayMs": 826.0999999996275,
+        "settledMedianInputDelayMs": 1.7999999998137355,
+        "readyMs": 1184.6999999997206
+      },
+      {
+        "repetition": 9,
+        "duringCount": 22,
+        "maxInputDelayMs": 865,
+        "settledMedianInputDelayMs": 4.399999999906868,
+        "readyMs": 1116.5
+      }
+    ],
+    "n": 10,
+    "runsWithLoadingSamples": 10,
+    "medianOfRunMaxInputDelayMs": 838.5499999998137,
+    "medianSettledInputDelayMs": 2.7999999998137355
+  },
+  {
+    "profile": "local-4x",
+    "kind": "initialized",
+    "kib": 10240,
+    "runs": [
+      {
+        "repetition": 0,
+        "duringCount": 44,
+        "maxInputDelayMs": 1699.5,
+        "settledMedianInputDelayMs": 3.3999999999068677,
+        "readyMs": 2263
+      },
+      {
+        "repetition": 1,
+        "duringCount": 51,
+        "maxInputDelayMs": 1797.7999999998137,
+        "settledMedianInputDelayMs": 3.1999999997206032,
+        "readyMs": 2613.5
+      },
+      {
+        "repetition": 2,
+        "duringCount": 44,
+        "maxInputDelayMs": 1733,
+        "settledMedianInputDelayMs": 3.099999999627471,
+        "readyMs": 2246.1999999997206
+      },
+      {
+        "repetition": 3,
+        "duringCount": 44,
+        "maxInputDelayMs": 1699.5,
+        "settledMedianInputDelayMs": 2.1999999997206032,
+        "readyMs": 2260
+      },
+      {
+        "repetition": 4,
+        "duringCount": 46,
+        "maxInputDelayMs": 1713.2999999998137,
+        "settledMedianInputDelayMs": 2.2999999998137355,
+        "readyMs": 2330
+      },
+      {
+        "repetition": 5,
+        "duringCount": 44,
+        "maxInputDelayMs": 1697.6999999997206,
+        "settledMedianInputDelayMs": 2.599999999627471,
+        "readyMs": 2254.8000000002794
+      },
+      {
+        "repetition": 6,
+        "duringCount": 47,
+        "maxInputDelayMs": 1874.2999999998137,
+        "settledMedianInputDelayMs": 3.099999999627471,
+        "readyMs": 2386.5999999996275
+      },
+      {
+        "repetition": 7,
+        "duringCount": 47,
+        "maxInputDelayMs": 1875.5,
+        "settledMedianInputDelayMs": 2.6999999997206032,
+        "readyMs": 2382.100000000093
+      },
+      {
+        "repetition": 8,
+        "duringCount": 44,
+        "maxInputDelayMs": 1658.2999999998137,
+        "settledMedianInputDelayMs": 3.099999999627471,
+        "readyMs": 2211.2000000001863
+      },
+      {
+        "repetition": 9,
+        "duringCount": 45,
+        "maxInputDelayMs": 1705.6999999997206,
+        "settledMedianInputDelayMs": 2,
+        "readyMs": 2263.899999999907
+      }
+    ],
+    "n": 10,
+    "runsWithLoadingSamples": 10,
+    "medianOfRunMaxInputDelayMs": 1709.4999999997672,
+    "medianSettledInputDelayMs": 2.899999999674037
+  }
+]

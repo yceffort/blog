@@ -1,0 +1,72 @@
+[
+  {
+    "name": "baseline",
+    "entry": "globalThis.__libResult = null\nperformance.mark('payload-evaluated')",
+    "sourceBytes": 332,
+    "gzipBytes": 226,
+    "sha256": "805c9d4b5bad24bcfa3657601a5f0562e13ecc3bb24de29cf65aa821c1530370"
+  },
+  {
+    "name": "lodash-unused",
+    "entry": "import _ from 'lodash'\n\nglobalThis.__libResult = null\nperformance.mark('payload-evaluated')",
+    "sourceBytes": 73799,
+    "gzipBytes": 26960,
+    "sha256": "2705e78db576012b50436bd7f641ca94638b96cce572fa05dd74d2ff3cc88ec4"
+  },
+  {
+    "name": "lodash-used",
+    "entry": "import _ from 'lodash'\n\nglobalThis.__libResult = _.chunk([1, 2, 3, 4], 2)\nperformance.mark('payload-evaluated')",
+    "sourceBytes": 73824,
+    "gzipBytes": 26966,
+    "sha256": "addec37b53c366f1bf2a7e8ee1ad3ea3ddec562b36589e17d14ccff401498bcd"
+  },
+  {
+    "name": "moment-locales",
+    "entry": "import moment from 'moment'\nimport 'moment/min/locales'\n\nglobalThis.__libResult = null\nperformance.mark('payload-evaluated')",
+    "sourceBytes": 372883,
+    "gzipBytes": 81078,
+    "sha256": "08cb2bcdfd73308212cc6016de72886b3027e3a7da81ce78b5225df3dd7d2318"
+  },
+  {
+    "name": "moment-unused",
+    "entry": "import moment from 'moment'\n\nglobalThis.__libResult = null\nperformance.mark('payload-evaluated')",
+    "sourceBytes": 62199,
+    "gzipBytes": 20320,
+    "sha256": "d56659fe7963bedf5b3c4bafefb5a859902d313e1d61c2d0ae294ef21ad38377"
+  },
+  {
+    "name": "moment-used",
+    "entry": "import moment from 'moment'\n\nglobalThis.__libResult = moment(0).format('YYYY-MM-DD')\nperformance.mark('payload-evaluated')",
+    "sourceBytes": 62233,
+    "gzipBytes": 20342,
+    "sha256": "8cfa84fd0fe99c5f97ca62e28b2771d9abcdb990017ed711e97b67cfa5d8c610"
+  },
+  {
+    "name": "msw-build-flag",
+    "entry": "import {http, HttpResponse} from 'msw'\n\n// 빌드 타임에 값이 정해지는 분기. 번들러가 조건을 접으면 msw 전체가 dead code가 된다.\nif (process.env.API_MOCKING === 'enabled') {\n  globalThis.__libResult = [\n    http.get('/api/quote', () => HttpResponse.json({price: 1})),\n  ]\n} else {\n  globalThis.__libResult = null\n}\nperformance.mark('payload-evaluated')",
+    "sourceBytes": 332,
+    "gzipBytes": 226,
+    "sha256": "805c9d4b5bad24bcfa3657601a5f0562e13ecc3bb24de29cf65aa821c1530370"
+  },
+  {
+    "name": "msw-runtime-flag",
+    "entry": "import {http, HttpResponse} from 'msw'\n\n// 런타임에 값이 정해지는 분기. 번들러는 조건을 접을 수 없어 msw를 그대로 남긴다.\nif (globalThis.__API_MOCKING === 'enabled') {\n  globalThis.__libResult = [\n    http.get('/api/quote', () => HttpResponse.json({price: 1})),\n  ]\n} else {\n  globalThis.__libResult = null\n}\nperformance.mark('payload-evaluated')",
+    "sourceBytes": 191818,
+    "gzipBytes": 68045,
+    "sha256": "8b8322f0a7533362fa7bd4eac98a843348fd4d15493f8d90a7e1321daf46dab0"
+  },
+  {
+    "name": "msw-used",
+    "entry": "import {http, HttpResponse} from 'msw'\n\nglobalThis.__libResult = [\n  http.get('/api/quote', () => HttpResponse.json({price: 1})),\n]\nperformance.mark('payload-evaluated')",
+    "sourceBytes": 191753,
+    "gzipBytes": 68018,
+    "sha256": "328d753252e38475dd37ca151637c9dc70f0d53ed067e085f8fbb116a300c943"
+  },
+  {
+    "name": "winston-unused",
+    "entry": "import winston from 'winston'\n\n// 서버에서 쓰던 로거가 클라이언트 번들에 딸려 들어온 상황. 브라우저에서는 호출하지 않는다.\nglobalThis.__libResult = null\nperformance.mark('payload-evaluated')",
+    "sourceBytes": 161969,
+    "gzipBytes": 44419,
+    "sha256": "b9f8f15060658f1441d79df707e4d557391ed6233f5c868fe9abfde4073b7c81"
+  }
+]

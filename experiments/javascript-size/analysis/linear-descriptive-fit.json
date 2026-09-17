@@ -1,0 +1,74 @@
+[
+  {
+    "profile": "local-1x",
+    "kind": "comment",
+    "slopeMsPerMiB": 13.074351457496043,
+    "interceptMs": 13.698600586225332,
+    "rSquared": 0.987458934450102,
+    "maxAbsoluteResidualMs": 10.752696498410053
+  },
+  {
+    "profile": "local-1x",
+    "kind": "functions",
+    "slopeMsPerMiB": 35.15880303113883,
+    "interceptMs": 17.309613363610286,
+    "rSquared": 0.994137702722833,
+    "maxAbsoluteResidualMs": 18.896371480695564
+  },
+  {
+    "profile": "local-1x",
+    "kind": "initialized",
+    "slopeMsPerMiB": 74.17082803254242,
+    "interceptMs": 43.19547541342051,
+    "rSquared": 0.9900324466163148,
+    "maxAbsoluteResidualMs": 39.262868521541236
+  },
+  {
+    "profile": "local-4x",
+    "kind": "comment",
+    "slopeMsPerMiB": 18.368206206097828,
+    "interceptMs": 41.298879915878345,
+    "rSquared": 0.9450535399369797,
+    "maxAbsoluteResidualMs": 28.76008905353939
+  },
+  {
+    "profile": "local-4x",
+    "kind": "functions",
+    "slopeMsPerMiB": 39.74571602412069,
+    "interceptMs": 58.919434150134016,
+    "rSquared": 0.961577509528876,
+    "maxAbsoluteResidualMs": 34.51943415022715
+  },
+  {
+    "profile": "local-4x",
+    "kind": "initialized",
+    "slopeMsPerMiB": 219.11475192209556,
+    "interceptMs": 65.69824935012522,
+    "rSquared": 0.9992185511911992,
+    "maxAbsoluteResidualMs": 41.298249350218356
+  },
+  {
+    "profile": "network-4x",
+    "kind": "comment",
+    "slopeMsPerMiB": 251.32912218596613,
+    "interceptMs": 98.77072846943639,
+    "rSquared": 0.9999931381497995,
+    "maxAbsoluteResidualMs": 4.216339399313483
+  },
+  {
+    "profile": "network-4x",
+    "kind": "functions",
+    "slopeMsPerMiB": 263.31137784169715,
+    "interceptMs": 93.24651252836146,
+    "rSquared": 0.9999638323374821,
+    "maxAbsoluteResidualMs": 9.603401736660999
+  },
+  {
+    "profile": "network-4x",
+    "kind": "initialized",
+    "slopeMsPerMiB": 434.84407323413785,
+    "interceptMs": 89.80416228768708,
+    "rSquared": 0.9999769716324521,
+    "maxAbsoluteResidualMs": 9.924528458516306
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "python": "3.14.4 (main, Apr  7 2026, 13:13:20) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "numpy": "2.5.3",
+  "matplotlib": "3.11.2",
+  "datasets": ["cold", "warm"],
+  "bootstrapSeed": 20260916,
+  "bootstrapResamples": 5000,
+  "scriptSha256": "3be1d39ab4a0d875a908a328eb15028a2fe8a49be74826260b8e2e55fa3bd999"
+}

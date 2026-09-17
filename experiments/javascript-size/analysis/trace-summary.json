@@ -1,0 +1,1826 @@
+[
+  {
+    "file": "local-4x-comment-0-0.json.gz",
+    "events": [
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.callFunction",
+        "count": 42,
+        "inclusiveTotalMs": 10.339,
+        "maxMs": 4.023,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundProcessor::MaybeStartProcessingResponse",
+        "count": 1,
+        "inclusiveTotalMs": 3.456,
+        "maxMs": 3.456,
+        "sampleArgs": {
+          "url": "http://127.0.0.1:43235/comment-0.js?encoding=plain&nonce=0-3"
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundJSStreamManager::TryStartStreamingTask",
+        "count": 1,
+        "inclusiveTotalMs": 3.398,
+        "maxMs": 3.398,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileCode",
+        "count": 24,
+        "inclusiveTotalMs": 2.627,
+        "maxMs": 1.086,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundJSStreamManager::OnFinishStreaming",
+        "count": 1,
+        "inclusiveTotalMs": 1.041,
+        "maxMs": 1.041,
+        "sampleArgs": {
+          "url": "http://127.0.0.1:43235/comment-0.js?encoding=plain&nonce=0-3"
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundJSStreamManager::RunScriptStreamingTask",
+        "count": 1,
+        "inclusiveTotalMs": 0.355,
+        "maxMs": 0.355,
+        "sampleArgs": {
+          "url": "http://127.0.0.1:43235/comment-0.js?encoding=plain&nonce=0-3"
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "v8.parseOnBackground",
+        "count": 1,
+        "inclusiveTotalMs": 0.322,
+        "maxMs": 0.322,
+        "sampleArgs": {
+          "data": {
+            "requestId": "45104.2",
+            "url": "http://127.0.0.1:43235/comment-0.js?encoding=plain&nonce=0-3"
+          }
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "v8.parseOnBackgroundParsing",
+        "count": 1,
+        "inclusiveTotalMs": 0.314,
+        "maxMs": 0.314,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.ParseFunction",
+        "count": 22,
+        "inclusiveTotalMs": 0.309,
+        "maxMs": 0.047,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileEval",
+        "count": 3,
+        "inclusiveTotalMs": 0.295,
+        "maxMs": 0.263,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundCompileTask::Run",
+        "count": 1,
+        "inclusiveTotalMs": 0.278,
+        "maxMs": 0.278,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CollectSourcePositions",
+        "count": 5,
+        "inclusiveTotalMs": 0.248,
+        "maxMs": 0.089,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileIgnition",
+        "count": 29,
+        "inclusiveTotalMs": 0.241,
+        "maxMs": 0.031,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "EvaluateScript",
+        "count": 1,
+        "inclusiveTotalMs": 0.166,
+        "maxMs": 0.166,
+        "sampleArgs": {
+          "data": {
+            "columnNumber": 1,
+            "frame": "1C00E4CABF615C3EF2300698A91D62F0",
+            "lineNumber": 1,
+            "scriptId": 0,
+            "url": "http://127.0.0.1:43235/comment-0.js?encoding=plain&nonce=0-3"
+          }
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileIgnitionFinalization",
+        "count": 29,
+        "inclusiveTotalMs": 0.138,
+        "maxMs": 0.053,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.Compile",
+        "count": 4,
+        "inclusiveTotalMs": 0.103,
+        "maxMs": 0.046,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.ParseProgram",
+        "count": 7,
+        "inclusiveTotalMs": 0.102,
+        "maxMs": 0.037,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "ClassicPendingScript::NotifyFinished",
+        "count": 1,
+        "inclusiveTotalMs": 0.089,
+        "maxMs": 0.089,
+        "sampleArgs": {
+          "data": {
+            "requestId": "45104.2",
+            "url": "http://127.0.0.1:43235/comment-0.js?encoding=plain&nonce=0-3"
+          }
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.CompileCodeBackground",
+        "count": 1,
+        "inclusiveTotalMs": 0.07,
+        "maxMs": 0.07,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.run",
+        "count": 1,
+        "inclusiveTotalMs": 0.068,
+        "maxMs": 0.068,
+        "sampleArgs": {
+          "fileName": "http://127.0.0.1:43235/comment-0.js?encoding=plain&nonce=0-3"
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.newInstance",
+        "count": 9,
+        "inclusiveTotalMs": 0.062,
+        "maxMs": 0.016,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.compile",
+        "count": 1,
+        "inclusiveTotalMs": 0.051,
+        "maxMs": 0.051,
+        "sampleArgs": {
+          "data": {
+            "columnNumber": 1,
+            "lineNumber": 1,
+            "scriptId": 18,
+            "streamed": true,
+            "url": "http://127.0.0.1:43235/comment-0.js?encoding=plain&nonce=0-3"
+          },
+          "fileName": "http://127.0.0.1:43235/comment-0.js?encoding=plain&nonce=0-3"
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "FlushInstructionCache",
+        "count": 4,
+        "inclusiveTotalMs": 0.045,
+        "maxMs": 0.036,
+        "sampleArgs": {
+          "size": 252,
+          "start": "0x569fe0000040"
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileStreamedScript",
+        "count": 1,
+        "inclusiveTotalMs": 0.038,
+        "maxMs": 0.038,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.CompileIgnitionFinalization",
+        "count": 1,
+        "inclusiveTotalMs": 0.036,
+        "maxMs": 0.036,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.PreParse",
+        "count": 1,
+        "inclusiveTotalMs": 0.026,
+        "maxMs": 0.026,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileScript",
+        "count": 3,
+        "inclusiveTotalMs": 0.012,
+        "maxMs": 0.005,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "ClassicPendingScript::GetSource",
+        "count": 1,
+        "inclusiveTotalMs": 0.012,
+        "maxMs": 0.012,
+        "sampleArgs": {
+          "not_streamed_reason": -1
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.CompileIgnition",
+        "count": 1,
+        "inclusiveTotalMs": 0.011,
+        "maxMs": 0.011,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.OffThreadFinalization.Publish",
+        "count": 1,
+        "inclusiveTotalMs": 0.009,
+        "maxMs": 0.009,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.FinalizeBaselineConcurrentCompilation",
+        "count": 1,
+        "inclusiveTotalMs": 0.005,
+        "maxMs": 0.005,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.StreamingFinalization.CheckCache",
+        "count": 1,
+        "inclusiveTotalMs": 0.004,
+        "maxMs": 0.004,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.StreamingFinalization.Release",
+        "count": 1,
+        "inclusiveTotalMs": 0.004,
+        "maxMs": 0.004,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.StreamingFinalization.AddToCache",
+        "count": 1,
+        "inclusiveTotalMs": 0.003,
+        "maxMs": 0.003,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.produceCache",
+        "count": 1,
+        "inclusiveTotalMs": 0.003,
+        "maxMs": 0.003,
+        "sampleArgs": {}
+      }
+    ]
+  },
+  {
+    "file": "local-4x-comment-5120-0.json.gz",
+    "events": [
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "v8.parseOnBackgroundParsing",
+        "count": 5,
+        "inclusiveTotalMs": 127.654,
+        "maxMs": 75.428,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundJSStreamManager::RunScriptStreamingTask",
+        "count": 1,
+        "inclusiveTotalMs": 75.467,
+        "maxMs": 75.467,
+        "sampleArgs": {
+          "url": "http://127.0.0.1:43235/comment-5120.js?encoding=plain&nonce=0-0"
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "v8.parseOnBackground",
+        "count": 1,
+        "inclusiveTotalMs": 75.438,
+        "maxMs": 75.438,
+        "sampleArgs": {
+          "data": {
+            "requestId": "44970.3",
+            "url": "http://127.0.0.1:43235/comment-5120.js?encoding=plain&nonce=0-0"
+          }
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "v8.parseOnBackgroundWaiting",
+        "count": 4,
+        "inclusiveTotalMs": 21.924,
+        "maxMs": 9.238,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.callFunction",
+        "count": 42,
+        "inclusiveTotalMs": 6.059,
+        "maxMs": 2.54,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "EvaluateScript",
+        "count": 1,
+        "inclusiveTotalMs": 6.02,
+        "maxMs": 6.02,
+        "sampleArgs": {
+          "data": {
+            "columnNumber": 1,
+            "frame": "2CE306BE1A34F3626E5E3D982D1BF786",
+            "lineNumber": 1,
+            "scriptId": 0,
+            "url": "http://127.0.0.1:43235/comment-5120.js?encoding=plain&nonce=0-0"
+          }
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.produceCache",
+        "count": 1,
+        "inclusiveTotalMs": 5.787,
+        "maxMs": 5.787,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileCode",
+        "count": 24,
+        "inclusiveTotalMs": 5.723,
+        "maxMs": 2.208,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CollectSourcePositions",
+        "count": 5,
+        "inclusiveTotalMs": 2.61,
+        "maxMs": 2.447,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileIgnition",
+        "count": 29,
+        "inclusiveTotalMs": 2.601,
+        "maxMs": 2.391,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.ParseFunction",
+        "count": 22,
+        "inclusiveTotalMs": 2.461,
+        "maxMs": 2.162,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundCompileTask::Run",
+        "count": 1,
+        "inclusiveTotalMs": 1.14,
+        "maxMs": 1.14,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.ParseProgram",
+        "count": 7,
+        "inclusiveTotalMs": 0.921,
+        "maxMs": 0.865,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "FlushInstructionCache",
+        "count": 4,
+        "inclusiveTotalMs": 0.179,
+        "maxMs": 0.173,
+        "sampleArgs": {
+          "size": 252,
+          "start": "0x569fe0000040"
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundProcessor::MaybeStartProcessingResponse",
+        "count": 1,
+        "inclusiveTotalMs": 0.139,
+        "maxMs": 0.139,
+        "sampleArgs": {
+          "url": "http://127.0.0.1:43235/comment-5120.js?encoding=plain&nonce=0-0"
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileIgnitionFinalization",
+        "count": 29,
+        "inclusiveTotalMs": 0.098,
+        "maxMs": 0.009,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.CompileCodeBackground",
+        "count": 1,
+        "inclusiveTotalMs": 0.093,
+        "maxMs": 0.093,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.compile",
+        "count": 1,
+        "inclusiveTotalMs": 0.092,
+        "maxMs": 0.092,
+        "sampleArgs": {
+          "data": {
+            "columnNumber": 1,
+            "lineNumber": 1,
+            "scriptId": 18,
+            "streamed": true,
+            "url": "http://127.0.0.1:43235/comment-5120.js?encoding=plain&nonce=0-0"
+          },
+          "fileName": "http://127.0.0.1:43235/comment-5120.js?encoding=plain&nonce=0-0"
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.run",
+        "count": 1,
+        "inclusiveTotalMs": 0.087,
+        "maxMs": 0.087,
+        "sampleArgs": {
+          "fileName": "http://127.0.0.1:43235/comment-5120.js?encoding=plain&nonce=0-0"
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.Compile",
+        "count": 4,
+        "inclusiveTotalMs": 0.079,
+        "maxMs": 0.024,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileStreamedScript",
+        "count": 1,
+        "inclusiveTotalMs": 0.075,
+        "maxMs": 0.075,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundJSStreamManager::TryStartStreamingTask",
+        "count": 1,
+        "inclusiveTotalMs": 0.067,
+        "maxMs": 0.067,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.newInstance",
+        "count": 9,
+        "inclusiveTotalMs": 0.065,
+        "maxMs": 0.015,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "ClassicPendingScript::NotifyFinished",
+        "count": 1,
+        "inclusiveTotalMs": 0.061,
+        "maxMs": 0.061,
+        "sampleArgs": {
+          "data": {
+            "requestId": "44970.3",
+            "url": "http://127.0.0.1:43235/comment-5120.js?encoding=plain&nonce=0-0"
+          }
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileEval",
+        "count": 3,
+        "inclusiveTotalMs": 0.046,
+        "maxMs": 0.016,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.CompileIgnitionFinalization",
+        "count": 1,
+        "inclusiveTotalMs": 0.04,
+        "maxMs": 0.04,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.PreParse",
+        "count": 1,
+        "inclusiveTotalMs": 0.028,
+        "maxMs": 0.028,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundJSStreamManager::OnFinishStreaming",
+        "count": 1,
+        "inclusiveTotalMs": 0.024,
+        "maxMs": 0.024,
+        "sampleArgs": {
+          "url": "http://127.0.0.1:43235/comment-5120.js?encoding=plain&nonce=0-0"
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.CompileIgnition",
+        "count": 1,
+        "inclusiveTotalMs": 0.018,
+        "maxMs": 0.018,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "ClassicPendingScript::GetSource",
+        "count": 1,
+        "inclusiveTotalMs": 0.013,
+        "maxMs": 0.013,
+        "sampleArgs": {
+          "not_streamed_reason": -1
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileScript",
+        "count": 3,
+        "inclusiveTotalMs": 0.012,
+        "maxMs": 0.004,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.OffThreadFinalization.Publish",
+        "count": 1,
+        "inclusiveTotalMs": 0.01,
+        "maxMs": 0.01,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.FinalizeBaselineConcurrentCompilation",
+        "count": 1,
+        "inclusiveTotalMs": 0.006,
+        "maxMs": 0.006,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.StreamingFinalization.CheckCache",
+        "count": 1,
+        "inclusiveTotalMs": 0.004,
+        "maxMs": 0.004,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.StreamingFinalization.AddToCache",
+        "count": 1,
+        "inclusiveTotalMs": 0.003,
+        "maxMs": 0.003,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.StreamingFinalization.Release",
+        "count": 1,
+        "inclusiveTotalMs": 0.003,
+        "maxMs": 0.003,
+        "sampleArgs": {}
+      }
+    ]
+  },
+  {
+    "file": "local-4x-functions-5120-0.json.gz",
+    "events": [
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundJSStreamManager::RunScriptStreamingTask",
+        "count": 1,
+        "inclusiveTotalMs": 242.876,
+        "maxMs": 242.876,
+        "sampleArgs": {
+          "url": "http://127.0.0.1:43235/functions-5120.js?encoding=plain&nonce=0-1"
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "v8.parseOnBackground",
+        "count": 1,
+        "inclusiveTotalMs": 242.858,
+        "maxMs": 242.858,
+        "sampleArgs": {
+          "data": {
+            "requestId": "45014.2",
+            "url": "http://127.0.0.1:43235/functions-5120.js?encoding=plain&nonce=0-1"
+          }
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "v8.parseOnBackgroundParsing",
+        "count": 1,
+        "inclusiveTotalMs": 242.849,
+        "maxMs": 242.849,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundCompileTask::Run",
+        "count": 1,
+        "inclusiveTotalMs": 242.094,
+        "maxMs": 242.094,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.PreParse",
+        "count": 22666,
+        "inclusiveTotalMs": 134.996,
+        "maxMs": 4.643,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "EvaluateScript",
+        "count": 1,
+        "inclusiveTotalMs": 31.792,
+        "maxMs": 31.792,
+        "sampleArgs": {
+          "data": {
+            "columnNumber": 1,
+            "frame": "BA0A1B4D22C383F2324603BC552E9B95",
+            "lineNumber": 1,
+            "scriptId": 0,
+            "url": "http://127.0.0.1:43235/functions-5120.js?encoding=plain&nonce=0-1"
+          }
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.run",
+        "count": 1,
+        "inclusiveTotalMs": 25.466,
+        "maxMs": 25.466,
+        "sampleArgs": {
+          "fileName": "http://127.0.0.1:43235/functions-5120.js?encoding=plain&nonce=0-1"
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileCode",
+        "count": 24,
+        "inclusiveTotalMs": 8.148,
+        "maxMs": 4.534,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.GC_MC_BACKGROUND_MARKING",
+        "count": 1,
+        "inclusiveTotalMs": 7.572,
+        "maxMs": 7.572,
+        "sampleArgs": {
+          "epoch": 1
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.callFunction",
+        "count": 54,
+        "inclusiveTotalMs": 6.417,
+        "maxMs": 1.133,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.compile",
+        "count": 1,
+        "inclusiveTotalMs": 6.241,
+        "maxMs": 6.241,
+        "sampleArgs": {
+          "data": {
+            "columnNumber": 1,
+            "lineNumber": 1,
+            "scriptId": 17,
+            "streamed": true,
+            "url": "http://127.0.0.1:43235/functions-5120.js?encoding=plain&nonce=0-1"
+          },
+          "fileName": "http://127.0.0.1:43235/functions-5120.js?encoding=plain&nonce=0-1"
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileStreamedScript",
+        "count": 1,
+        "inclusiveTotalMs": 6.219,
+        "maxMs": 6.219,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.CompileCodeBackground",
+        "count": 1,
+        "inclusiveTotalMs": 5.893,
+        "maxMs": 5.893,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GCIncrementalMarking",
+        "count": 6,
+        "inclusiveTotalMs": 5.435,
+        "maxMs": 3.705,
+        "sampleArgs": {
+          "epoch": 1
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_MC_INCREMENTAL",
+        "count": 6,
+        "inclusiveTotalMs": 5.403,
+        "maxMs": 3.7,
+        "sampleArgs": {
+          "epoch": 1
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.CompileIgnitionFinalization",
+        "count": 1,
+        "inclusiveTotalMs": 4.795,
+        "maxMs": 4.795,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.newInstance",
+        "count": 9,
+        "inclusiveTotalMs": 3.164,
+        "maxMs": 3.104,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.ParseFunction",
+        "count": 22,
+        "inclusiveTotalMs": 2.246,
+        "maxMs": 0.901,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CollectSourcePositions",
+        "count": 5,
+        "inclusiveTotalMs": 1.129,
+        "maxMs": 0.947,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.ParseProgram",
+        "count": 7,
+        "inclusiveTotalMs": 1.003,
+        "maxMs": 0.509,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileIgnitionFinalization",
+        "count": 29,
+        "inclusiveTotalMs": 0.639,
+        "maxMs": 0.542,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.Compile",
+        "count": 4,
+        "inclusiveTotalMs": 0.538,
+        "maxMs": 0.479,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileIgnition",
+        "count": 29,
+        "inclusiveTotalMs": 0.443,
+        "maxMs": 0.124,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_MC_INCREMENTAL_EMBEDDER_TRACING",
+        "count": 7,
+        "inclusiveTotalMs": 0.421,
+        "maxMs": 0.191,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.CompileIgnition",
+        "count": 1,
+        "inclusiveTotalMs": 0.391,
+        "maxMs": 0.391,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GCIncrementalMarkingStart",
+        "count": 1,
+        "inclusiveTotalMs": 0.375,
+        "maxMs": 0.375,
+        "sampleArgs": {
+          "value": {
+            "gc_reason": "task",
+            "global_allocation_limit": 67108864,
+            "global_consumed_bytes": 12775831,
+            "global_space_available": 54333033,
+            "old_gen_allocation_limit": 33554432,
+            "old_gen_consumed_bytes": 6021896,
+            "old_gen_space_available": 27532536,
+            "reason": "fallback for embedder limit"
+          }
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_MC_INCREMENTAL_START",
+        "count": 1,
+        "inclusiveTotalMs": 0.286,
+        "maxMs": 0.286,
+        "sampleArgs": {
+          "epoch": 1
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "ClassicPendingScript::NotifyFinished",
+        "count": 1,
+        "inclusiveTotalMs": 0.259,
+        "maxMs": 0.259,
+        "sampleArgs": {
+          "data": {
+            "requestId": "45014.2",
+            "url": "http://127.0.0.1:43235/functions-5120.js?encoding=plain&nonce=0-1"
+          }
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_MC_MARK_EMBEDDER_PROLOGUE",
+        "count": 2,
+        "inclusiveTotalMs": 0.105,
+        "maxMs": 0.101,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_MC_MARK_ROOTS",
+        "count": 1,
+        "inclusiveTotalMs": 0.064,
+        "maxMs": 0.064,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundJSStreamManager::OnDataPipeReadable",
+        "count": 1,
+        "inclusiveTotalMs": 0.059,
+        "maxMs": 0.059,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundProcessor::MaybeStartProcessingResponse",
+        "count": 1,
+        "inclusiveTotalMs": 0.052,
+        "maxMs": 0.052,
+        "sampleArgs": {
+          "url": "http://127.0.0.1:43235/functions-5120.js?encoding=plain&nonce=0-1"
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundJSStreamManager::TryStartStreamingTask",
+        "count": 1,
+        "inclusiveTotalMs": 0.052,
+        "maxMs": 0.052,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileEval",
+        "count": 3,
+        "inclusiveTotalMs": 0.049,
+        "maxMs": 0.018,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "FlushInstructionCache",
+        "count": 4,
+        "inclusiveTotalMs": 0.039,
+        "maxMs": 0.03,
+        "sampleArgs": {
+          "size": 252,
+          "start": "0x569fe0000040"
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.produceCache",
+        "count": 1,
+        "inclusiveTotalMs": 0.033,
+        "maxMs": 0.033,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.PreParse",
+        "count": 1,
+        "inclusiveTotalMs": 0.021,
+        "maxMs": 0.021,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_HEAP_ENSURE_SWEEPING_COMPLETED",
+        "count": 1,
+        "inclusiveTotalMs": 0.019,
+        "maxMs": 0.019,
+        "sampleArgs": {
+          "epoch": 0,
+          "value": {
+            "epoch": 0,
+            "mode": "unified heap",
+            "sweeping_reason": "start major marking"
+          }
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "Major concurrent marking rescheduled",
+        "count": 6,
+        "inclusiveTotalMs": 0.019,
+        "maxMs": 0.005,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundJSStreamManager::OnFinishStreaming",
+        "count": 1,
+        "inclusiveTotalMs": 0.015,
+        "maxMs": 0.015,
+        "sampleArgs": {
+          "url": "http://127.0.0.1:43235/functions-5120.js?encoding=plain&nonce=0-1"
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "ClassicPendingScript::GetSource",
+        "count": 1,
+        "inclusiveTotalMs": 0.015,
+        "maxMs": 0.015,
+        "sampleArgs": {
+          "not_streamed_reason": -1
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_MC_INCREMENTAL_EXTERNAL_PROLOGUE",
+        "count": 1,
+        "inclusiveTotalMs": 0.015,
+        "maxMs": 0.015,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.OffThreadFinalization.Publish",
+        "count": 1,
+        "inclusiveTotalMs": 0.013,
+        "maxMs": 0.013,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileScript",
+        "count": 3,
+        "inclusiveTotalMs": 0.011,
+        "maxMs": 0.004,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "ConcurrentMarking::RunMajor Preempted",
+        "count": 1,
+        "inclusiveTotalMs": 0.006,
+        "maxMs": 0.006,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.StreamingFinalization.CheckCache",
+        "count": 1,
+        "inclusiveTotalMs": 0.005,
+        "maxMs": 0.005,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.FinalizeBaselineConcurrentCompilation",
+        "count": 1,
+        "inclusiveTotalMs": 0.005,
+        "maxMs": 0.005,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.StreamingFinalization.Release",
+        "count": 1,
+        "inclusiveTotalMs": 0.004,
+        "maxMs": 0.004,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_TIME_TO_SAFEPOINT",
+        "count": 1,
+        "inclusiveTotalMs": 0.004,
+        "maxMs": 0.004,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_MC_INCREMENTAL_EXTERNAL_EPILOGUE",
+        "count": 1,
+        "inclusiveTotalMs": 0.004,
+        "maxMs": 0.004,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.StreamingFinalization.AddToCache",
+        "count": 1,
+        "inclusiveTotalMs": 0.003,
+        "maxMs": 0.003,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "Major concurrent marking started",
+        "count": 1,
+        "inclusiveTotalMs": 0.003,
+        "maxMs": 0.003,
+        "sampleArgs": {}
+      }
+    ]
+  },
+  {
+    "file": "local-4x-initialized-5120-0.json.gz",
+    "events": [
+      {
+        "thread": "CrRendererMain",
+        "name": "EvaluateScript",
+        "count": 1,
+        "inclusiveTotalMs": 2043.286,
+        "maxMs": 2043.286,
+        "sampleArgs": {
+          "data": {
+            "columnNumber": 1,
+            "frame": "4BF2E8624A728DA4D0DFD64D21CD411A",
+            "lineNumber": 1,
+            "scriptId": 0,
+            "url": "http://127.0.0.1:43235/initialized-5120.js?encoding=plain&nonce=0-2"
+          }
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.run",
+        "count": 1,
+        "inclusiveTotalMs": 2037.748,
+        "maxMs": 2037.748,
+        "sampleArgs": {
+          "fileName": "http://127.0.0.1:43235/initialized-5120.js?encoding=plain&nonce=0-2"
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileCode",
+        "count": 18146,
+        "inclusiveTotalMs": 1671.898,
+        "maxMs": 3.222,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundJSStreamManager::RunScriptStreamingTask",
+        "count": 1,
+        "inclusiveTotalMs": 979.005,
+        "maxMs": 979.005,
+        "sampleArgs": {
+          "url": "http://127.0.0.1:43235/initialized-5120.js?encoding=plain&nonce=0-2"
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "v8.parseOnBackground",
+        "count": 1,
+        "inclusiveTotalMs": 978.984,
+        "maxMs": 978.984,
+        "sampleArgs": {
+          "data": {
+            "requestId": "45048.2",
+            "url": "http://127.0.0.1:43235/initialized-5120.js?encoding=plain&nonce=0-2"
+          }
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "v8.parseOnBackgroundParsing",
+        "count": 1,
+        "inclusiveTotalMs": 977.764,
+        "maxMs": 977.764,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundCompileTask::Run",
+        "count": 1,
+        "inclusiveTotalMs": 977.201,
+        "maxMs": 977.201,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.ParseFunction",
+        "count": 18144,
+        "inclusiveTotalMs": 447.153,
+        "maxMs": 3.045,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.PreParse",
+        "count": 18120,
+        "inclusiveTotalMs": 366.601,
+        "maxMs": 13.132,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileIgnition",
+        "count": 18151,
+        "inclusiveTotalMs": 309.968,
+        "maxMs": 3.031,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileIgnitionFinalization",
+        "count": 18151,
+        "inclusiveTotalMs": 151.518,
+        "maxMs": 2.641,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.CompileCodeBackground",
+        "count": 1,
+        "inclusiveTotalMs": 109.539,
+        "maxMs": 109.539,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.CompileIgnition",
+        "count": 1,
+        "inclusiveTotalMs": 95.572,
+        "maxMs": 95.572,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.callFunction",
+        "count": 104,
+        "inclusiveTotalMs": 56.177,
+        "maxMs": 7.978,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.CompileIgnitionFinalization",
+        "count": 1,
+        "inclusiveTotalMs": 10.235,
+        "maxMs": 10.235,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "MinorGC",
+        "count": 2,
+        "inclusiveTotalMs": 7.697,
+        "maxMs": 4.265,
+        "sampleArgs": {
+          "type": "allocation failure",
+          "usedHeapSizeAfter": 9688636,
+          "usedHeapSizeBefore": 10199296
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CollectSourcePositions",
+        "count": 5,
+        "inclusiveTotalMs": 6.981,
+        "maxMs": 6.803,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GCScavenger",
+        "count": 2,
+        "inclusiveTotalMs": 6.973,
+        "maxMs": 3.645,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_SCAVENGER",
+        "count": 2,
+        "inclusiveTotalMs": 6.056,
+        "maxMs": 3.633,
+        "sampleArgs": {
+          "epoch": 1
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_SCAVENGER_SCAVENGE",
+        "count": 2,
+        "inclusiveTotalMs": 5.982,
+        "maxMs": 3.615,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.compile",
+        "count": 1,
+        "inclusiveTotalMs": 5.073,
+        "maxMs": 5.073,
+        "sampleArgs": {
+          "data": {
+            "columnNumber": 1,
+            "lineNumber": 1,
+            "scriptId": 18,
+            "streamed": true,
+            "url": "http://127.0.0.1:43235/initialized-5120.js?encoding=plain&nonce=0-2"
+          },
+          "fileName": "http://127.0.0.1:43235/initialized-5120.js?encoding=plain&nonce=0-2"
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileStreamedScript",
+        "count": 1,
+        "inclusiveTotalMs": 5.05,
+        "maxMs": 5.05,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+        "count": 2,
+        "inclusiveTotalMs": 4.77,
+        "maxMs": 3.025,
+        "sampleArgs": {
+          "UseBackgroundThreads": true
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+        "count": 3,
+        "inclusiveTotalMs": 4.254,
+        "maxMs": 1.858,
+        "sampleArgs": {
+          "epoch": 1
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL",
+        "count": 1,
+        "inclusiveTotalMs": 1.603,
+        "maxMs": 1.603,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.MaglevTask",
+        "count": 2,
+        "inclusiveTotalMs": 0.722,
+        "maxMs": 0.457,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.Compile",
+        "count": 4,
+        "inclusiveTotalMs": 0.648,
+        "maxMs": 0.582,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.newInstance",
+        "count": 11,
+        "inclusiveTotalMs": 0.543,
+        "maxMs": 0.442,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_IDENTIFY",
+        "count": 2,
+        "inclusiveTotalMs": 0.452,
+        "maxMs": 0.417,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.MaglevBackground",
+        "count": 1,
+        "inclusiveTotalMs": 0.447,
+        "maxMs": 0.447,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.Maglev.GraphBuilding",
+        "count": 1,
+        "inclusiveTotalMs": 0.264,
+        "maxMs": 0.264,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.MaglevDestructBackground",
+        "count": 1,
+        "inclusiveTotalMs": 0.255,
+        "maxMs": 0.255,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_SCAVENGER_SCAVENGE_ROOTS",
+        "count": 2,
+        "inclusiveTotalMs": 0.15,
+        "maxMs": 0.106,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundProcessor::MaybeStartProcessingResponse",
+        "count": 1,
+        "inclusiveTotalMs": 0.136,
+        "maxMs": 0.136,
+        "sampleArgs": {
+          "url": "http://127.0.0.1:43235/initialized-5120.js?encoding=plain&nonce=0-2"
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_SCAVENGER_SCAVENGE_FINALIZE",
+        "count": 2,
+        "inclusiveTotalMs": 0.121,
+        "maxMs": 0.081,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.ParseProgram",
+        "count": 7,
+        "inclusiveTotalMs": 0.101,
+        "maxMs": 0.035,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.FinalizeMaglevConcurrentCompilation",
+        "count": 1,
+        "inclusiveTotalMs": 0.08,
+        "maxMs": 0.08,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundJSStreamManager::TryStartStreamingTask",
+        "count": 1,
+        "inclusiveTotalMs": 0.073,
+        "maxMs": 0.073,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.MaglevConcurrentFinalize",
+        "count": 1,
+        "inclusiveTotalMs": 0.073,
+        "maxMs": 0.073,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "FlushInstructionCache",
+        "count": 5,
+        "inclusiveTotalMs": 0.072,
+        "maxMs": 0.06,
+        "sampleArgs": {
+          "size": 252,
+          "start": "0x569fe0000040"
+        }
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.Maglev.CodeAssembly",
+        "count": 1,
+        "inclusiveTotalMs": 0.065,
+        "maxMs": 0.065,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "BackgroundJSStreamManager::OnFinishStreaming",
+        "count": 1,
+        "inclusiveTotalMs": 0.062,
+        "maxMs": 0.062,
+        "sampleArgs": {
+          "url": "http://127.0.0.1:43235/initialized-5120.js?encoding=plain&nonce=0-2"
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "ClassicPendingScript::NotifyFinished",
+        "count": 1,
+        "inclusiveTotalMs": 0.055,
+        "maxMs": 0.055,
+        "sampleArgs": {
+          "data": {
+            "requestId": "45048.2",
+            "url": "http://127.0.0.1:43235/initialized-5120.js?encoding=plain&nonce=0-2"
+          }
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_PROCESS",
+        "count": 2,
+        "inclusiveTotalMs": 0.054,
+        "maxMs": 0.033,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileEval",
+        "count": 3,
+        "inclusiveTotalMs": 0.049,
+        "maxMs": 0.02,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "v8.produceCache",
+        "count": 1,
+        "inclusiveTotalMs": 0.042,
+        "maxMs": 0.042,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_HEAP_EPILOGUE_SAFEPOINT",
+        "count": 2,
+        "inclusiveTotalMs": 0.041,
+        "maxMs": 0.037,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_HEAP_EPILOGUE",
+        "count": 2,
+        "inclusiveTotalMs": 0.029,
+        "maxMs": 0.02,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.Maglev.NodeProcessing",
+        "count": 1,
+        "inclusiveTotalMs": 0.029,
+        "maxMs": 0.029,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_HEAP_EXTERNAL_PROLOGUE",
+        "count": 2,
+        "inclusiveTotalMs": 0.026,
+        "maxMs": 0.022,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.PreParse",
+        "count": 1,
+        "inclusiveTotalMs": 0.024,
+        "maxMs": 0.024,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.Maglev.RegisterAllocation",
+        "count": 1,
+        "inclusiveTotalMs": 0.023,
+        "maxMs": 0.023,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_SCAVENGER_SCAVENGE_COLLECT_OLD_TO_NEW_PAGES",
+        "count": 2,
+        "inclusiveTotalMs": 0.02,
+        "maxMs": 0.01,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_SCAVENGER_FREE_REMEMBERED_SET",
+        "count": 2,
+        "inclusiveTotalMs": 0.018,
+        "maxMs": 0.015,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.Maglev.PhiUntagging",
+        "count": 1,
+        "inclusiveTotalMs": 0.017,
+        "maxMs": 0.017,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "ThreadPoolForegroundWorker",
+        "name": "V8.Maglev.DeadCodeMarking",
+        "count": 1,
+        "inclusiveTotalMs": 0.017,
+        "maxMs": 0.017,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.CompileScript",
+        "count": 3,
+        "inclusiveTotalMs": 0.016,
+        "maxMs": 0.008,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_SCAVENGER_TRACED_HANDLES_COMPUTE_WEAKNESS_PARALLEL",
+        "count": 2,
+        "inclusiveTotalMs": 0.014,
+        "maxMs": 0.009,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "ClassicPendingScript::GetSource",
+        "count": 1,
+        "inclusiveTotalMs": 0.013,
+        "maxMs": 0.013,
+        "sampleArgs": {
+          "not_streamed_reason": -1
+        }
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.OffThreadFinalization.Publish",
+        "count": 1,
+        "inclusiveTotalMs": 0.013,
+        "maxMs": 0.013,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_SCAVENGER_TRACED_HANDLES_RESET_PARALLEL",
+        "count": 2,
+        "inclusiveTotalMs": 0.011,
+        "maxMs": 0.008,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.Maglev.CommittingDependencies",
+        "count": 1,
+        "inclusiveTotalMs": 0.008,
+        "maxMs": 0.008,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.MarkCandidatesForOptimization",
+        "count": 1,
+        "inclusiveTotalMs": 0.007,
+        "maxMs": 0.007,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_HEAP_PROLOGUE",
+        "count": 2,
+        "inclusiveTotalMs": 0.006,
+        "maxMs": 0.003,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_HEAP_EXTERNAL_EPILOGUE",
+        "count": 2,
+        "inclusiveTotalMs": 0.006,
+        "maxMs": 0.003,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.FinalizeBaselineConcurrentCompilation",
+        "count": 1,
+        "inclusiveTotalMs": 0.006,
+        "maxMs": 0.006,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.MaglevConcurrentPrepare",
+        "count": 1,
+        "inclusiveTotalMs": 0.006,
+        "maxMs": 0.006,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.StreamingFinalization.CheckCache",
+        "count": 1,
+        "inclusiveTotalMs": 0.005,
+        "maxMs": 0.005,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_TIME_TO_SAFEPOINT",
+        "count": 2,
+        "inclusiveTotalMs": 0.005,
+        "maxMs": 0.003,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "ComputeWeaknessProcessor start",
+        "count": 2,
+        "inclusiveTotalMs": 0.005,
+        "maxMs": 0.003,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_SCAVENGER_RESIZE_NEW_SPACE",
+        "count": 2,
+        "inclusiveTotalMs": 0.005,
+        "maxMs": 0.003,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.StreamingFinalization.AddToCache",
+        "count": 1,
+        "inclusiveTotalMs": 0.004,
+        "maxMs": 0.004,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.StreamingFinalization.Release",
+        "count": 1,
+        "inclusiveTotalMs": 0.004,
+        "maxMs": 0.004,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_HEAP_PROLOGUE_SAFEPOINT",
+        "count": 2,
+        "inclusiveTotalMs": 0.004,
+        "maxMs": 0.002,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "ClearWeaknessProcessor start",
+        "count": 2,
+        "inclusiveTotalMs": 0.004,
+        "maxMs": 0.003,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.GC_SCAVENGER_SCAVENGE_RESTORE_AND_QUARANTINE_PINNED",
+        "count": 2,
+        "inclusiveTotalMs": 0.004,
+        "maxMs": 0.002,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "Parallel scavenge started",
+        "count": 2,
+        "inclusiveTotalMs": 0.003,
+        "maxMs": 0.002,
+        "sampleArgs": {}
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "V8.Maglev.CodeGeneration",
+        "count": 1,
+        "inclusiveTotalMs": 0.003,
+        "maxMs": 0.003,
+        "sampleArgs": {}
+      }
+    ]
+  }
+]

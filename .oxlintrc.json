@@ -54,6 +54,7 @@
     "**/node_modules/**",
     "**/public/**",
     "!**/public/sw.js",
-    "**/.cache/**"
+    "**/.cache/**",
+    "experiments/**"
   ]
 }

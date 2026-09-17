@@ -1,0 +1,52 @@
+{
+  "startedAt": "2026-09-16T07:33:48.371Z",
+  "codespace": null,
+  "browser": "153.0.8010.12",
+  "browserExecutable": "/home/codespace/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+  "playwright": "1.63.0",
+  "node": "v24.20.0",
+  "platform": "linux",
+  "release": "6.8.0-1064-azure",
+  "arch": "x64",
+  "cpus": [
+    {
+      "model": "AMD EPYC 9V74 80-Core Processor",
+      "speed": 0
+    },
+    {
+      "model": "AMD EPYC 9V74 80-Core Processor",
+      "speed": 0
+    }
+  ],
+  "memoryBytes": 8328077312,
+  "availableParallelism": 2,
+  "osRelease": "PRETTY_NAME=\"Ubuntu 24.04.4 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.4 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo",
+  "cgroupCpuMax": "max 100000",
+  "cgroupMemoryMax": "max",
+  "profiles": [
+    {
+      "name": "local-1x",
+      "cpu": 1,
+      "encoding": "plain",
+      "network": null
+    },
+    {
+      "name": "local-4x",
+      "cpu": 4,
+      "encoding": "plain",
+      "network": null
+    }
+  ],
+  "repetitions": 1,
+  "mode": "cold",
+  "trace": false,
+  "coverage": false,
+  "seed": 20260916,
+  "selectedSizes": [0, 1024, 5120, 10240],
+  "selectedKinds": ["comment", "functions", "initialized"],
+  "sourceHashes": {
+    "generate.mjs": "0dc22a4d16de4e31f1e3c909aa12c41f21efd162f8347411578b9a3e542e7153",
+    "server.mjs": "93e9f00b9ad0409d1b8add336ea04989abc85f144a1eb0a29feed5dac8e3687b",
+    "measure.mjs": "24399a0176f137ebe939f469ee780efc798f740951de194d1451b0b133fc9bcf"
+  }
+}
