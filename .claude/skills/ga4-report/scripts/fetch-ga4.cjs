@@ -66,15 +66,14 @@ async function run(name, req) {
   return {name, rows}
 }
 
-// 최근 2개월(YYYY/MM) 경로 프리픽스 → 신규 글 성과 조회용
+// 최근 2개월(YYYY/MM) 경로 프리픽스 → 신규 글 성과 조회용. 영문판(/en/…)도 함께 센다.
 function recentMonthPrefixes() {
   const now = new Date()
   const prefixes = []
   for (const offset of [0, 1]) {
     const d = new Date(now.getFullYear(), now.getMonth() - offset, 1)
-    prefixes.push(
-      `/${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}`,
-    )
+    const ym = `/${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}`
+    prefixes.push(ym, `/en${ym}`)
   }
   return prefixes
 }
@@ -119,14 +118,19 @@ async function main() {
         {name: 'activeUsers'},
         {name: 'userEngagementDuration'},
       ],
+      // 영문판(/en/20…)도 같이 센다. 빼면 검색 유입 상위가 통째로 누락된다.
       dimensionFilter: {
-        filter: {
-          fieldName: 'pagePath',
-          stringFilter: {matchType: 'BEGINS_WITH', value: '/20'},
+        orGroup: {
+          expressions: ['/20', '/en/20'].map((v) => ({
+            filter: {
+              fieldName: 'pagePath',
+              stringFilter: {matchType: 'BEGINS_WITH', value: v},
+            },
+          })),
         },
       },
       orderBys: [{metric: {metricName: 'screenPageViews'}, desc: true}],
-      limit: 30,
+      limit: 40,
     }),
     run('channels', {
       dateRanges: range,
@@ -228,7 +232,7 @@ async function main() {
         },
       },
       orderBys: [{metric: {metricName: 'screenPageViews'}, desc: true}],
-      limit: 30,
+      limit: 40,
     }),
     // 글 하단 도선의 노출 대비 클릭. InternalNavTracker가 보내는 커스텀 이벤트로,
     // "스크롤이 거기까지 안 간 것"과 "보고도 안 누른 것"을 나눠서 본다.
