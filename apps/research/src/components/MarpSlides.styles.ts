@@ -156,27 +156,6 @@ export const styles = stylex.create({
       opacity: 1,
     },
   },
-  hiddenSlidesIndicator: {
-    '@layer site': {
-      position: 'absolute',
-      bottom: '8px',
-      left: '8px',
-      zIndex: 20,
-      border: '1px solid rgba(128, 128, 128, 0.2)',
-      borderRadius: '4px',
-      background: {
-        default: 'rgba(30, 30, 30, 0.7)',
-        ':hover': 'rgba(30, 30, 30, 0.9)',
-      },
-      color: '#e5e7eb',
-      fontSize: '10px',
-      lineHeight: '16px',
-      padding: '3px 6px',
-      minHeight: '24px',
-      cursor: 'pointer',
-      outlineOffset: '3px',
-    },
-  },
   errorMessage: {
     '@layer site': {
       padding: '20px',
@@ -996,9 +975,6 @@ export const searchHint = stylex.props(styles.searchHint).className!
 export const printContainer = stylex.props(styles.printContainer).className!
 export const slideFrame = stylex.props(styles.slideFrame).className!
 export const pageIndicator = stylex.props(styles.pageIndicator).className!
-export const hiddenSlidesIndicator = stylex.props(
-  styles.hiddenSlidesIndicator,
-).className!
 export const pageIndicatorVisible = stylex.props(
   styles.pageIndicator,
   styles.visible,

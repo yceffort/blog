@@ -927,21 +927,6 @@ export function MarpSlides({
         </div>
       )}
 
-      {slideGroups.hidden.length > 0 && (
-        <button
-          type="button"
-          className={styles.hiddenSlidesIndicator}
-          onClick={handleToggleHiddenSlides}
-          aria-label={
-            showHiddenSlides ? '숨김 슬라이드 감추기' : '숨김 슬라이드 보기'
-          }
-          aria-pressed={showHiddenSlides}
-          title={`숨김 슬라이드 ${slideGroups.hidden.length}장 · 오른쪽 클릭 메뉴에서도 전환할 수 있습니다`}
-        >
-          {showHiddenSlides ? '숨김 포함' : '숨김'} {slideGroups.hidden.length}
-        </button>
-      )}
-
       {/* 슬라이드 오버뷰 */}
       {multiple && isOverviewOpen && (
         <div
