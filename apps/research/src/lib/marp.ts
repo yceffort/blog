@@ -59,6 +59,23 @@ async function renderMarp(markdown: string): Promise<RenderedMarp> {
   // CommonMark flanking 규칙 문제를 구제한다. blog의 remark-cjk-friendly와 같은 프로젝트다.
   marp.use(markdownItCjkFriendly)
 
+  // 본문 링크는 상대 경로와 앵커를 포함해 새 탭에서 연다.
+  marp.use((md) => {
+    md.renderer.rules.link_open = (
+      tokens: {attrSet: (name: string, value: string) => void}[],
+      idx: number,
+      options: unknown,
+      _env: unknown,
+      slf: {
+        renderToken: (tokens: unknown, idx: number, options: unknown) => string
+      },
+    ) => {
+      tokens[idx].attrSet('target', '_blank')
+      tokens[idx].attrSet('rel', 'noopener noreferrer')
+      return slf.renderToken(tokens, idx, options)
+    }
+  })
+
   // mermaid 펜스는 서버에서 파싱하지 않고 placeholder만 남긴다.
   // 실제 렌더는 클라이언트(Marp.tsx)가 textContent를 읽어 수행한다.
   marp.use((md) => {

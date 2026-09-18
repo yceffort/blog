@@ -15,7 +15,13 @@ import profile from '@/public/profile.png'
 
 const HeaderLogo = memo(function HeaderLogoBase() {
   return (
-    <Link href="/" aria-label="yceffort research" className={styles.logo_link}>
+    <Link
+      href="/"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="yceffort research"
+      className={styles.logo_link}
+    >
       <div className={styles.logo_ring} aria-hidden="true">
         <span className={styles.logo_ring_inner}>
           <Image
@@ -80,6 +86,8 @@ const HeaderNav = memo(function HeaderNavBase() {
           <Link
             key={link.label}
             href={link.path}
+            target="_blank"
+            rel="noopener noreferrer"
             className={active ? styles.nav_link_active : styles.nav_link}
           >
             <span className={active ? styles.nav_link_label_active : undefined}>

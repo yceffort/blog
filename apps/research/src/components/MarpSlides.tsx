@@ -16,6 +16,7 @@ import {Swiper, SwiperSlide} from 'swiper/react'
 import {useBroadcastChannel} from '@/hooks/useBroadcastChannel'
 import {useDrawing} from '@/hooks/useDrawing'
 import {useLaserPointer} from '@/hooks/useLaserPointer'
+import {getSlideGroups} from '@/lib/slideNavigation'
 
 import {Marp} from './Marp'
 import {MarpHelpModal} from './MarpHelpModal'
@@ -71,6 +72,7 @@ export function MarpSlides({
   }, [dataFonts])
 
   const css = dataCss
+  const slideGroups = useMemo(() => getSlideGroups(html), [html])
 
   // 초기 해시값에서 activeIndex 설정
   const getInitialIndex = useCallback((length: number) => {
@@ -89,7 +91,12 @@ export function MarpSlides({
   }, [])
 
   // 상태 관리 — SSR과 동일한 초기값(0)으로 시작하여 hydration mismatch 방지
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [{activeIndex, showHiddenSlides}, setNavigation] = useState(() => ({
+    activeIndex: slideGroups.visible[0] ?? 0,
+    showHiddenSlides: slideGroups.visible.length === 0,
+  }))
+  const slideIndices = showHiddenSlides ? slideGroups.all : slideGroups.visible
+  const activePosition = Math.max(0, slideIndices.indexOf(activeIndex))
   const [isBottomHovered, setIsBottomHovered] = useState(false)
   const [isOverviewOpen, setIsOverviewOpen] = useState(false)
   const [contextMenu, setContextMenu] = useState<ContextMenuState>({
@@ -115,9 +122,45 @@ export function MarpSlides({
   // 롱프레스로 연 직후 따라오는 click은 메뉴를 바로 닫으므로 다음 pointerdown까지 무시한다
   const longPressFiredRef = useRef(false)
   const activeIndexRef = useRef(activeIndex)
+  const showHiddenSlidesRef = useRef(showHiddenSlides)
+  const lastVisibleIndexRef = useRef(slideGroups.visible[0] ?? 0)
   useEffect(() => {
     activeIndexRef.current = activeIndex
-  }, [activeIndex])
+    showHiddenSlidesRef.current = showHiddenSlides
+  }, [activeIndex, showHiddenSlides])
+
+  const applyNavigation = useCallback(
+    (index: number, includeHidden = showHiddenSlidesRef.current) => {
+      if (!Number.isInteger(index) || index < 0 || index >= html.length) {
+        return null
+      }
+      const isHidden = slideGroups.hidden.includes(index)
+      const nextShowHidden = includeHidden || isHidden
+      if (
+        index === activeIndexRef.current &&
+        nextShowHidden === showHiddenSlidesRef.current
+      ) {
+        return null
+      }
+      const next = {activeIndex: index, showHiddenSlides: nextShowHidden}
+      activeIndexRef.current = index
+      showHiddenSlidesRef.current = nextShowHidden
+      if (!isHidden) {
+        lastVisibleIndexRef.current = index
+      }
+      setNavigation(next)
+      const newHash = `#${index + 1}`
+      if (window.location.hash !== newHash) {
+        window.location.hash = newHash
+      }
+      window.gtag?.('event', 'slide_view', {
+        slide_number: index + 1,
+        page_path: window.location.pathname,
+      })
+      return next
+    },
+    [html.length, slideGroups.hidden],
+  )
 
   const laserRef = useLaserPointer(isLaserMode)
   const {
@@ -137,16 +180,33 @@ export function MarpSlides({
   } = useDrawing(isDrawingMode, activeIndex)
 
   const {sendSlideChange} = useBroadcastChannel(`marp-slides-${slug}`, {
-    onSlideChange: (index) => {
-      if (index !== activeIndexRef.current) {
-        swiperRef.current?.slideTo(index)
-      }
-    },
-    onSyncRequest: () => activeIndexRef.current,
+    onSlideChange: applyNavigation,
+    onSyncRequest: () => ({
+      index: activeIndexRef.current,
+      showHiddenSlides: showHiddenSlidesRef.current,
+    }),
   })
 
+  const navigateTo = useCallback(
+    (index: number, includeHidden = showHiddenSlidesRef.current) => {
+      const next = applyNavigation(index, includeHidden)
+      if (next) {
+        sendSlideChange(next.activeIndex, 'audience', next.showHiddenSlides)
+      }
+    },
+    [applyNavigation, sendSlideChange],
+  )
+
+  // 원본 슬라이드 번호와 숨김 장을 제외한 Swiper 위치를 구분해 동기화한다.
+  useEffect(() => {
+    const swiper = swiperRef.current
+    if (swiper && !swiper.destroyed && swiper.activeIndex !== activePosition) {
+      swiper.slideTo(activePosition)
+    }
+  }, [activePosition, showHiddenSlides])
+
   // memoized values
-  const multiple = useMemo(() => html.length > 1, [html.length])
+  const multiple = slideIndices.length > 1
 
   // 슬라이드별 본문 텍스트 (검색용)
   const slideTexts = useMemo(() => {
@@ -168,6 +228,9 @@ export function MarpSlides({
     }
     return slideTexts
       .map((text, index) => {
+        if (!showHiddenSlides && slideGroups.hidden.includes(index)) {
+          return null
+        }
         const lower = text.toLowerCase()
         const pos = lower.indexOf(q)
         if (pos === -1) {
@@ -182,15 +245,13 @@ export function MarpSlides({
         return {index, snippet}
       })
       .filter((v): v is {index: number; snippet: string} => v !== null)
-  }, [searchQuery, slideTexts])
+  }, [searchQuery, slideTexts, showHiddenSlides, slideGroups.hidden])
 
   // 클라이언트에서만 실행되는 초기화 - hash에서 초기 슬라이드 동기화
   useEffect(() => {
     const initialIndex = getInitialIndex(html.length)
     if (initialIndex > 0) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setActiveIndex(initialIndex)
-      swiperRef.current?.slideTo(initialIndex, 0)
+      navigateTo(initialIndex)
     }
 
     setTransition(defaultTransition ?? readTransition())
@@ -212,23 +273,12 @@ export function MarpSlides({
   // 슬라이드 변경 핸들러 (memoized)
   const handleActiveIndexChange = useCallback(
     (instance: SwiperClass) => {
-      const newIndex = instance.activeIndex
-      setActiveIndex(newIndex)
-      sendSlideChange(newIndex, 'audience')
-      if (typeof window !== 'undefined') {
-        const newHash = `#${newIndex + 1}`
-        if (window.location.hash !== newHash) {
-          window.location.hash = newHash
-        }
-        if (typeof window.gtag === 'function') {
-          window.gtag('event', 'slide_view', {
-            slide_number: newIndex + 1,
-            page_path: window.location.pathname,
-          })
-        }
+      const newIndex = slideIndices[instance.activeIndex]
+      if (newIndex !== undefined) {
+        navigateTo(newIndex)
       }
     },
-    [sendSlideChange],
+    [slideIndices, navigateTo],
   )
 
   // Swiper 초기화 핸들러 (memoized)
@@ -330,7 +380,14 @@ export function MarpSlides({
       }
 
       // 오버뷰가 열려있으면 슬라이드 네비게이션 비활성화
-      if (isOverviewOpen || !multiple) {
+      if (
+        isOverviewOpen ||
+        isSearchOpen ||
+        isHelpOpen ||
+        qrUrl ||
+        contextMenu.visible ||
+        !multiple
+      ) {
         return
       }
 
@@ -345,7 +402,7 @@ export function MarpSlides({
           swiperRef.current?.slideTo(0)
           break
         case 'End':
-          swiperRef.current?.slideTo(html.length - 1)
+          swiperRef.current?.slideTo(slideIndices.length - 1)
           break
       }
     }
@@ -354,11 +411,12 @@ export function MarpSlides({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [
     multiple,
-    html.length,
+    slideIndices.length,
     isOverviewOpen,
     isHelpOpen,
     qrUrl,
     isSearchOpen,
+    contextMenu.visible,
     slug,
   ])
 
@@ -373,7 +431,14 @@ export function MarpSlides({
   const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const handleWheel = useCallback(
     (e: React.WheelEvent<HTMLDivElement>) => {
-      if (!multiple || contextMenu.visible) {
+      if (
+        !multiple ||
+        contextMenu.visible ||
+        isOverviewOpen ||
+        isSearchOpen ||
+        isHelpOpen ||
+        qrUrl
+      ) {
         return
       }
 
@@ -392,12 +457,28 @@ export function MarpSlides({
         wheelTimeoutRef.current = null
       }, 300)
     },
-    [multiple, contextMenu.visible],
+    [
+      multiple,
+      contextMenu.visible,
+      isOverviewOpen,
+      isSearchOpen,
+      isHelpOpen,
+      qrUrl,
+    ],
   )
 
   // 클릭 네비게이션 (좌우/상하 10% 영역) (memoized)
   const handleSlideClick = useCallback(
     (e: ReactMouseEvent<HTMLDivElement>) => {
+      // Shadow DOM 안의 링크 클릭은 슬라이드 이동 영역 클릭으로 처리하지 않는다.
+      if (
+        e.nativeEvent
+          .composedPath()
+          .some((node) => node instanceof Element && node.matches('a[href]'))
+      ) {
+        return
+      }
+
       // 롱프레스로 메뉴를 연 손가락의 click이다. 이동 동작으로 이어지면 안 된다
       if (longPressFiredRef.current) {
         return
@@ -436,10 +517,6 @@ export function MarpSlides({
 
   // 해시 변경 감지
   useEffect(() => {
-    if (!multiple) {
-      return undefined
-    }
-
     const handleHashChange = () => {
       const hash = window.location.hash
       if (!hash.startsWith('#')) {
@@ -453,23 +530,26 @@ export function MarpSlides({
 
       const newIndex = pageNum - 1
       if (newIndex !== activeIndexRef.current) {
-        swiperRef.current?.slideTo(newIndex)
+        navigateTo(newIndex)
       }
     }
 
     window.addEventListener('hashchange', handleHashChange)
     return () => window.removeEventListener('hashchange', handleHashChange)
-  }, [multiple, html.length])
+  }, [html.length, navigateTo])
 
   // 하단 호버 핸들러 (memoized)
   const handleBottomEnter = useCallback(() => setIsBottomHovered(true), [])
   const handleBottomLeave = useCallback(() => setIsBottomHovered(false), [])
 
   // 오버뷰 썸네일 클릭 핸들러
-  const handleOverviewSlideClick = useCallback((index: number) => {
-    swiperRef.current?.slideTo(index)
-    setIsOverviewOpen(false)
-  }, [])
+  const handleOverviewSlideClick = useCallback(
+    (index: number) => {
+      navigateTo(index)
+      setIsOverviewOpen(false)
+    },
+    [navigateTo],
+  )
 
   // 오버뷰 오버레이 클릭 핸들러 (배경 클릭 시 닫기)
   const handleOverviewOverlayClick = useCallback(
@@ -579,19 +659,28 @@ export function MarpSlides({
   }, [closeContextMenu])
 
   const handleLastSlide = useCallback(() => {
-    swiperRef.current?.slideTo(html.length - 1)
+    swiperRef.current?.slideTo(slideIndices.length - 1)
     closeContextMenu()
-  }, [html.length, closeContextMenu])
+  }, [slideIndices.length, closeContextMenu])
 
   const handleGoToSlide = useCallback(
     (num: number) => {
       if (num >= 1 && num <= html.length) {
-        swiperRef.current?.slideTo(num - 1)
+        navigateTo(num - 1)
       }
       closeContextMenu()
     },
-    [html.length, closeContextMenu],
+    [html.length, closeContextMenu, navigateTo],
   )
+
+  const handleToggleHiddenSlides = useCallback(() => {
+    if (showHiddenSlides) {
+      navigateTo(lastVisibleIndexRef.current, false)
+    } else if (slideGroups.hidden.length > 0) {
+      navigateTo(slideGroups.hidden[0], true)
+    }
+    closeContextMenu()
+  }, [showHiddenSlides, slideGroups.hidden, navigateTo, closeContextMenu])
 
   const handleOpenOverview = useCallback(() => {
     setIsOverviewOpen(true)
@@ -695,11 +784,14 @@ export function MarpSlides({
     [],
   )
 
-  const handleSearchSelect = useCallback((index: number) => {
-    swiperRef.current?.slideTo(index)
-    setIsSearchOpen(false)
-    setSearchQuery('')
-  }, [])
+  const handleSearchSelect = useCallback(
+    (index: number) => {
+      navigateTo(index)
+      setIsSearchOpen(false)
+      setSearchQuery('')
+    },
+    [navigateTo],
+  )
 
   // Marp 렌더링 데이터 (memoized)
   const marpRenderData = useMemo(() => ({html, css, fonts}), [html, css, fonts])
@@ -732,9 +824,9 @@ export function MarpSlides({
       onPointerCancel={cancelLongPress}
     >
       <Swiper
-        key={transition}
+        key={`${transition}-${showHiddenSlides}`}
         // 전환 효과 변경으로 재생성되어도 해시에서 복원한 현재 위치를 유지한다.
-        initialSlide={activeIndex}
+        initialSlide={activePosition}
         modules={[Virtual, EffectFade, EffectCreative]}
         virtual={{enabled: multiple, addSlidesBefore: 1, addSlidesAfter: 1}}
         enabled={multiple}
@@ -772,8 +864,8 @@ export function MarpSlides({
           paginationBulletMessage: '슬라이드 {{index}}로 이동',
         }}
       >
-        {html.map((_, i) => (
-          <SwiperSlide key={i} virtualIndex={i}>
+        {slideIndices.map((i, position) => (
+          <SwiperSlide key={i} virtualIndex={position}>
             <div
               className={styles.marpSlide}
               {...(multiple
@@ -781,7 +873,7 @@ export function MarpSlides({
                     onClick: handleSlideClick,
                     role: 'button',
                     tabIndex: 0,
-                    'aria-label': `슬라이드 ${i + 1}/${html.length}`,
+                    'aria-label': `슬라이드 ${i + 1}${slideGroups.hidden.includes(i) ? ' (숨김)' : ''}`,
                   }
                 : {})}
             >
@@ -817,7 +909,9 @@ export function MarpSlides({
         <div className={styles.progressBar}>
           <div
             className={styles.progressBarFill}
-            style={{width: `${((activeIndex + 1) / html.length) * 100}%`}}
+            style={{
+              width: `${((activePosition + 1) / slideIndices.length) * 100}%`,
+            }}
           />
         </div>
       )}
@@ -829,8 +923,23 @@ export function MarpSlides({
             isBottomHovered ? styles.pageIndicatorVisible : styles.pageIndicator
           }
         >
-          {activeIndex + 1} / {html.length}
+          {activePosition + 1} / {slideIndices.length}
         </div>
+      )}
+
+      {slideGroups.hidden.length > 0 && (
+        <button
+          type="button"
+          className={styles.hiddenSlidesIndicator}
+          onClick={handleToggleHiddenSlides}
+          aria-label={
+            showHiddenSlides ? '숨김 슬라이드 감추기' : '숨김 슬라이드 보기'
+          }
+          aria-pressed={showHiddenSlides}
+          title={`숨김 슬라이드 ${slideGroups.hidden.length}장 · 오른쪽 클릭 메뉴에서도 전환할 수 있습니다`}
+        >
+          {showHiddenSlides ? '숨김 포함' : '숨김'} {slideGroups.hidden.length}
+        </button>
       )}
 
       {/* 슬라이드 오버뷰 */}
@@ -845,7 +954,7 @@ export function MarpSlides({
             className={styles.overviewGrid}
             aria-label="슬라이드 오버뷰"
           >
-            {html.map((_, i) => (
+            {slideIndices.map((i) => (
               <button
                 key={i}
                 className={
@@ -864,7 +973,10 @@ export function MarpSlides({
                     className={styles.overviewThumbnailInner}
                   />
                 </div>
-                <span className={styles.overviewNumber}>{i + 1}</span>
+                <span className={styles.overviewNumber}>
+                  {i + 1}
+                  {slideGroups.hidden.includes(i) ? ' · 숨김' : ''}
+                </span>
               </button>
             ))}
           </dialog>
@@ -1052,7 +1164,7 @@ export function MarpSlides({
           onClick={(e) => e.stopPropagation()}
         >
           <div className={styles.contextMenuHeader}>
-            슬라이드 {activeIndex + 1} / {html.length}
+            슬라이드 {activePosition + 1} / {slideIndices.length}
           </div>
           <div className={styles.contextMenuDivider} />
           {multiple && (
@@ -1060,7 +1172,7 @@ export function MarpSlides({
               <button
                 className={styles.contextMenuItem}
                 onClick={handlePrevSlide}
-                disabled={activeIndex === 0}
+                disabled={activePosition === 0}
               >
                 <span className={styles.contextMenuIcon}>←</span>
                 이전 슬라이드
@@ -1069,7 +1181,7 @@ export function MarpSlides({
               <button
                 className={styles.contextMenuItem}
                 onClick={handleNextSlide}
-                disabled={activeIndex === html.length - 1}
+                disabled={activePosition === slideIndices.length - 1}
               >
                 <span className={styles.contextMenuIcon}>→</span>
                 다음 슬라이드
@@ -1127,6 +1239,20 @@ export function MarpSlides({
               </button>
               <div className={styles.contextMenuDivider} />
             </>
+          )}
+          {slideGroups.hidden.length > 0 && (
+            <button
+              className={styles.contextMenuItem}
+              onClick={handleToggleHiddenSlides}
+            >
+              <span className={styles.contextMenuIcon} aria-hidden="true">
+                ◫
+              </span>
+              {showHiddenSlides ? '숨김 슬라이드 감추기' : '숨김 슬라이드 보기'}
+              <span className={styles.contextMenuShortcut}>
+                {slideGroups.hidden.length}장
+              </span>
+            </button>
           )}
           <button
             className={styles.contextMenuItem}

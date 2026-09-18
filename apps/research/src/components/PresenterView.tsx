@@ -4,6 +4,7 @@ import {useCallback, useEffect, useMemo, useState} from 'react'
 
 import {useBroadcastChannel} from '@/hooks/useBroadcastChannel'
 import {useTimer} from '@/hooks/useTimer'
+import {getSlideGroups} from '@/lib/slideNavigation'
 
 import {Marp} from './Marp'
 import * as styles from './PresenterView.styles'
@@ -48,13 +49,28 @@ export function PresenterView({
   }, [dataNotes])
 
   const css = dataCss
-  const [activeIndex, setActiveIndex] = useState(0)
+  const slideGroups = useMemo(() => getSlideGroups(html), [html])
+  const [{activeIndex, showHiddenSlides}, setNavigation] = useState(() => ({
+    activeIndex: slideGroups.visible[0] ?? 0,
+    showHiddenSlides: slideGroups.visible.length === 0,
+  }))
+  const slideIndices = showHiddenSlides ? slideGroups.all : slideGroups.visible
+  const activePosition = slideIndices.indexOf(activeIndex)
+  const nextIndex = slideIndices[activePosition + 1]
   const {elapsedTime, isRunning, toggle, reset} = useTimer()
 
   const {sendSlideChange, requestSync} = useBroadcastChannel(
     `marp-slides-${slug}`,
     {
-      onSlideChange: (index) => setActiveIndex(index),
+      onSlideChange: (index, includeHidden) => {
+        if (Number.isInteger(index) && index >= 0 && index < html.length) {
+          setNavigation({
+            activeIndex: index,
+            showHiddenSlides:
+              includeHidden || slideGroups.hidden.includes(index),
+          })
+        }
+      },
     },
   )
 
@@ -63,20 +79,19 @@ export function PresenterView({
   }, [requestSync])
 
   const goToPrev = useCallback(() => {
-    if (activeIndex > 0) {
-      const newIndex = activeIndex - 1
-      setActiveIndex(newIndex)
-      sendSlideChange(newIndex, 'presenter')
+    const newIndex = slideIndices[activePosition - 1]
+    if (newIndex !== undefined) {
+      setNavigation({activeIndex: newIndex, showHiddenSlides})
+      sendSlideChange(newIndex, 'presenter', showHiddenSlides)
     }
-  }, [activeIndex, sendSlideChange])
+  }, [activePosition, slideIndices, showHiddenSlides, sendSlideChange])
 
   const goToNext = useCallback(() => {
-    if (activeIndex < html.length - 1) {
-      const newIndex = activeIndex + 1
-      setActiveIndex(newIndex)
-      sendSlideChange(newIndex, 'presenter')
+    if (nextIndex !== undefined) {
+      setNavigation({activeIndex: nextIndex, showHiddenSlides})
+      sendSlideChange(nextIndex, 'presenter', showHiddenSlides)
     }
-  }, [activeIndex, html.length, sendSlideChange])
+  }, [nextIndex, showHiddenSlides, sendSlideChange])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -90,23 +105,28 @@ export function PresenterView({
           goToNext()
           break
         case 'Home':
-          setActiveIndex(0)
-          sendSlideChange(0, 'presenter')
+          if (slideIndices.length > 0) {
+            setNavigation({activeIndex: slideIndices[0], showHiddenSlides})
+            sendSlideChange(slideIndices[0], 'presenter', showHiddenSlides)
+          }
           break
         case 'End':
-          setActiveIndex(html.length - 1)
-          sendSlideChange(html.length - 1, 'presenter')
+          if (slideIndices.length > 0) {
+            const lastIndex = slideIndices[slideIndices.length - 1]
+            setNavigation({activeIndex: lastIndex, showHiddenSlides})
+            sendSlideChange(lastIndex, 'presenter', showHiddenSlides)
+          }
           break
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [goToPrev, goToNext, html.length, sendSlideChange])
+  }, [goToPrev, goToNext, slideIndices, showHiddenSlides, sendSlideChange])
 
   const marpRenderData = useMemo(() => ({html, css, fonts}), [html, css, fonts])
   const currentNote = notes[activeIndex] || ''
-  const hasNextSlide = activeIndex < html.length - 1
+  const hasNextSlide = nextIndex !== undefined
 
   if (html.length === 0) {
     return (
@@ -133,7 +153,10 @@ export function PresenterView({
 
       <div className={styles.slidesContainer}>
         <div className={styles.slideWrapper}>
-          <div className={styles.slideLabel}>현재 슬라이드</div>
+          <div className={styles.slideLabel}>
+            현재 슬라이드
+            {slideGroups.hidden.includes(activeIndex) ? ' · 숨김' : ''}
+          </div>
           <div className={`marp-presenter-slide ${styles.slideContentCurrent}`}>
             <Marp
               rendered={marpRenderData}
@@ -150,7 +173,7 @@ export function PresenterView({
             {hasNextSlide ? (
               <Marp
                 rendered={marpRenderData}
-                page={activeIndex + 2}
+                page={nextIndex + 1}
                 border={false}
                 className={`marp-presenter-container ${styles.marpContainer}`}
               />
@@ -172,12 +195,15 @@ export function PresenterView({
         <button
           className={styles.navButton}
           onClick={goToPrev}
-          disabled={activeIndex === 0}
+          disabled={activePosition === 0}
         >
           ◀ 이전
         </button>
         <span className={styles.pageIndicator}>
-          {activeIndex + 1} / {html.length}
+          {activePosition + 1} / {slideIndices.length}
+          {showHiddenSlides && slideGroups.hidden.length > 0
+            ? ' · 숨김 포함'
+            : ''}
         </span>
         <button
           className={styles.navButton}

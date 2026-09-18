@@ -32,12 +32,25 @@ export default function Footer() {
           <div>{` • `}</div>
           <div>{`© ${YEAR}`}</div>
           <div>{` • `}</div>
-          <Link href="/">{SiteConfig.url}</Link>
+          <Link href="/" target="_blank" rel="noopener noreferrer">
+            {SiteConfig.url}
+          </Link>
         </div>
         <div className={footerStyles.line}>
-          <a href="https://yceffort.kr">blog</a>
+          <a
+            href="https://yceffort.kr"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            blog
+          </a>
           <div>{` • `}</div>
-          <Link href="/feed.xml" prefetch={false}>
+          <Link
+            href="/feed.xml"
+            target="_blank"
+            rel="noopener noreferrer"
+            prefetch={false}
+          >
             rss
           </Link>
         </div>

@@ -101,6 +101,8 @@ function ResearchCard({slide, css}: {slide: Slide; css: string}) {
     >
       <Link
         href={`/slides/${slug}`}
+        target="_blank"
+        rel="noopener noreferrer"
         aria-label={title}
         prefetch={false}
         className={styles.card_link}

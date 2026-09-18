@@ -5,12 +5,13 @@ import {useCallback, useEffect, useRef} from 'react'
 interface SlideMessage {
   type: 'SLIDE_CHANGE' | 'SYNC_REQUEST' | 'SYNC_RESPONSE'
   index: number
+  showHiddenSlides?: boolean
   source: 'audience' | 'presenter'
 }
 
 interface UseBroadcastChannelOptions {
-  onSlideChange?: (index: number) => void
-  onSyncRequest?: () => number
+  onSlideChange?: (index: number, showHiddenSlides: boolean) => void
+  onSyncRequest?: () => {index: number; showHiddenSlides: boolean}
 }
 
 export function useBroadcastChannel(
@@ -34,18 +35,24 @@ export function useBroadcastChannel(
     channel.addEventListener('message', (event: MessageEvent<SlideMessage>) => {
       const data = event.data
       if (data.type === 'SLIDE_CHANGE' && optionsRef.current.onSlideChange) {
-        optionsRef.current.onSlideChange(data.index)
+        optionsRef.current.onSlideChange(
+          data.index,
+          data.showHiddenSlides ?? false,
+        )
       }
       if (data.type === 'SYNC_REQUEST' && optionsRef.current.onSyncRequest) {
-        const currentIndex = optionsRef.current.onSyncRequest()
+        const current = optionsRef.current.onSyncRequest()
         channel.postMessage({
           type: 'SYNC_RESPONSE',
-          index: currentIndex,
+          ...current,
           source: 'audience',
         } satisfies SlideMessage)
       }
       if (data.type === 'SYNC_RESPONSE' && optionsRef.current.onSlideChange) {
-        optionsRef.current.onSlideChange(data.index)
+        optionsRef.current.onSlideChange(
+          data.index,
+          data.showHiddenSlides ?? false,
+        )
       }
     })
 
@@ -53,10 +60,15 @@ export function useBroadcastChannel(
   }, [channelName])
 
   const sendSlideChange = useCallback(
-    (index: number, source: 'audience' | 'presenter') => {
+    (
+      index: number,
+      source: 'audience' | 'presenter',
+      showHiddenSlides = false,
+    ) => {
       channelRef.current?.postMessage({
         type: 'SLIDE_CHANGE',
         index,
+        showHiddenSlides,
         source,
       } satisfies SlideMessage)
     },
