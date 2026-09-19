@@ -1,5 +1,6 @@
 //! MDX 표현식 속성(`height={680}`) 의 리터럴 평가. JS 를 실행하지 않고
 //! 숫자, 불리언, null, 문자열 리터럴만 받아들인다. 그 밖의 표현식은 거부한다.
+//! 렌더 결과가 프로덕션에서만 문제를 일으키는 리터럴 태그도 여기서 막는다.
 
 use crate::hast::{MdxAttribute, MdxAttributeValue, Node};
 use serde_json::Value;
@@ -7,6 +8,19 @@ use serde_json::Value;
 pub fn resolve(node: &mut Node) -> Result<(), String> {
     match node {
         Node::MdxJsxFlowElement(el) | Node::MdxJsxTextElement(el) => {
+            // script 는 글 안의 스크립트가 그대로 실행되고, 원본 <img> 는 images.rs 가
+            // hast 요소만 돌기 때문에 경로 재작성과 크기 부여를 건너뛴다.
+            match el.name.as_deref() {
+                Some("script") => {
+                    return Err("<script> is not supported: use an iframe instead".to_string());
+                }
+                Some("img") => {
+                    return Err(
+                        "raw <img> is not supported: use the markdown image syntax".to_string()
+                    );
+                }
+                _ => {}
+            }
             for attribute in &mut el.attributes {
                 match attribute {
                     MdxAttribute::Expression { value } => {
@@ -18,6 +32,14 @@ pub fn resolve(node: &mut Node) -> Result<(), String> {
                         name,
                         value: Some(value),
                     } => {
+                        // React 는 style 에 객체만 받는다. 문자열은 렌더 시점에 던진다.
+                        if name == "style" {
+                            if let MdxAttributeValue::Literal(literal) = value {
+                                return Err(format!(
+                                    "style must be an object, not a string: style=\"{literal}\""
+                                ));
+                            }
+                        }
                         if let MdxAttributeValue::Expression(expression) = value {
                             let literal = expression.data.get("literal").ok_or_else(|| {
                                 format!(
@@ -121,6 +143,19 @@ mod tests {
         assert!(!is_only_comments("x /* a */"));
         // 닫히지 않은 블록 주석도 제거하지 않는다.
         assert!(!is_only_comments("/* a"));
+    }
+
+    #[test]
+    fn rejects_tags_the_renderer_cannot_handle() {
+        let script = crate::render("<script src=\"https://a.example/b.js\"></script>\n");
+        assert!(script.unwrap_err().contains("<script> is not supported"));
+        let img = crate::render("<img src=\"./a.png\" alt=\"a\" />\n");
+        assert!(img.unwrap_err().contains("raw <img> is not supported"));
+        let style = crate::render("<span style=\"color: red\">a</span>\n");
+        assert!(style.unwrap_err().contains("style must be an object"));
+        // 마크다운 이미지 문법과 다른 태그는 그대로 통과한다.
+        assert!(crate::render("![a](./a.png)\n").is_ok());
+        assert!(crate::render("<Demo height={2} />\n").is_ok());
     }
 
     #[test]
