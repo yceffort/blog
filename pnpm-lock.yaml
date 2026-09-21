@@ -285,8 +285,8 @@ importers:
         specifier: ^5.2.1
         version: 5.2.1
       markdown-it-cjk-friendly:
-        specifier: ^2.0.3
-        version: 2.0.3(markdown-it@14.3.0)
+        specifier: ^3.0.0
+        version: 3.0.0(markdown-it@14.3.0)
       mermaid:
         specifier: ^12.0.0
         version: 12.0.0
@@ -2975,11 +2975,11 @@ packages:
     resolution: {integrity: sha512-o5vL7aDWatOTX8LzaS1WMoaoxIiLRQJuIKKe2wAw6IeULDHaqbiqiggmx+pKvZDb1Sj+pE46Sn1T7lCqfFtg1Q==}
     engines: {node: '>=16'}
 
-  markdown-it-cjk-friendly@2.0.3:
-    resolution: {integrity: sha512-dBAhqp7GZ6he15ug2t5JSfwTw2KvZX9tt0y7Up0reR1cZOBUogSq5V859hcIGwge7hjW1SkUaWkNr++0HszyZg==}
+  markdown-it-cjk-friendly@3.0.0:
+    resolution: {integrity: sha512-y4OkqwenFXmb1i3w7qfh9E60qNX6U4KzECke8N/7io9SARFSvbR/wde0q/l6/Az9doieLOIw7ZsbDSgl27DR4g==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@types/markdown-it': '*'
+      '@types/markdown-it': '>=14.2.0'
       markdown-it: '*'
     peerDependenciesMeta:
       '@types/markdown-it':
@@ -6389,7 +6389,7 @@ snapshots:
 
   markdown-extensions@2.0.0: {}
 
-  markdown-it-cjk-friendly@2.0.3(markdown-it@14.3.0):
+  markdown-it-cjk-friendly@3.0.0(markdown-it@14.3.0):
     dependencies:
       get-east-asian-width: 1.6.0
       markdown-it: 14.3.0
