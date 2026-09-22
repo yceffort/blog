@@ -13,7 +13,6 @@
 - 경로: `apps/blog/posts/{year}/{month}/{slug}.md`
 - 영문 번역: `{slug}.en.md`
 - frontmatter 필수 필드: `title`, `tags`, `published`, `date`, `description`
-- 커밋 컨벤션: `@naverpay/commit-helper` 사용 (lefthook pre-commit)
 
 ## 주요 스크립트
 
