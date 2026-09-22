@@ -43,7 +43,10 @@ try {
       if (last && start <= last[1]) last[1] = Math.max(last[1], end)
       else merged.push([start, end])
     }
-    const coldBytes = merged.reduce((sum, [start, end]) => sum + (end - start), 0)
+    const coldBytes = merged.reduce(
+      (sum, [start, end]) => sum + (end - start),
+      0,
+    )
     const executedBytes = Math.max(item.sourceBytes - coldBytes, 0)
     const state = await page.evaluate(() => ({
       isArray: Array.isArray(globalThis.__libResult),
