@@ -88,6 +88,8 @@ export default function Mermaid({chart}: {chart: string}) {
       }
       mermaid.initialize({
         startOnLoad: false,
+        layout: 'dagre',
+        look: 'classic',
         theme: isDark ? 'dark' : 'base',
         securityLevel: 'loose',
         fontFamily: 'inherit',

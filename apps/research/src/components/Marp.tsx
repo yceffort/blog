@@ -72,6 +72,8 @@ export function Marp({
     const initMermaid = async () => {
       mermaid.initialize({
         startOnLoad: false,
+        layout: 'dagre',
+        look: 'classic',
         theme: 'default',
         securityLevel: 'loose',
       })
