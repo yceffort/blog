@@ -114,7 +114,8 @@ const styles = stylex.create({
       borderTop: '1px solid #333',
       minHeight: 0,
       maxHeight: 'min(200px, 30dvh)',
-      overflowY: 'auto',
+      overflowY: 'scroll',
+      scrollbarGutter: 'stable',
     },
   },
   notesLabel: {

@@ -186,7 +186,7 @@ export function PresenterView({
         </div>
       </div>
 
-      <div className={styles.notesPanel}>
+      <div className={`marp-presenter-notes ${styles.notesPanel}`}>
         <div className={styles.notesLabel}>발표자 노트</div>
         <div className={styles.notesContent}>
           {currentNote || <span className={styles.noNotes}>노트 없음</span>}
