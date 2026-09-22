@@ -235,14 +235,16 @@ section.columns {
   align-content: center;
 }
 section.columns > h2, section.columns > p { grid-column: 1 / -1; }
-section.columns blockquote {
+section.columns > blockquote {
   align-self: stretch;
   padding: 30px;
-  margin: 0 0 26px;
+  margin: 0;
   font-size: 25px;
   line-height: 1.5;
   background: #e9eae1;
 }
+/* Keep spacing outside the cards: Marp resets the last content item's margin. */
+section.columns > blockquote + p { margin-top: 26px; }
 section.columns blockquote h3 { margin: 0 0 18px; font-size: 32px; }
 section.columns blockquote p { margin: 0 0 14px; }
 section.columns blockquote p:last-child { margin-bottom: 0; }
@@ -412,6 +414,84 @@ section.flow > ol > li:last-child { background: #dde0d4; }
 section.flow > ol strong { display: block; margin-bottom: 12px; font-size: 27px; }
 section.flow blockquote { font-size: 24px; margin: 0 0 18px; }
 
+/* Harness: two SDKs fed the same input, with the verdict spanning both columns. */
+section.harness {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 32px;
+  align-content: center;
+}
+section.harness > h2 { grid-column: 1 / -1; margin-bottom: 26px; }
+section.harness > blockquote {
+  margin: 0;
+  padding: 26px 30px;
+  background: #e9eae1;
+  font-size: 24px;
+}
+section.harness > blockquote h3 { margin: 0 0 12px; font-size: 30px; }
+section.harness > blockquote p { margin: 0; }
+section.harness > p {
+  grid-column: 1 / -1;
+  margin: 0;
+  text-align: center;
+  font-size: 25px;
+  padding: 24px 0 20px;
+}
+section.harness > p::before { content: '↓'; display: block; font-size: 30px; line-height: 1; margin-bottom: 14px; color: #63675a; }
+section.harness > blockquote:last-of-type {
+  grid-column: 1 / -1;
+  background: var(--yellow);
+  text-align: center;
+  font-size: 25px;
+}
+
+/* Lanes: two actors on one timeline. Numbering runs across both lanes in event order. */
+section.lanes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 32px;
+  align-content: center;
+  counter-reset: tick;
+}
+section.lanes > h2 { grid-column: 1 / -1; font-size: 41px; margin-bottom: 22px; }
+section.lanes > blockquote {
+  margin: 0;
+  padding: 24px 28px;
+  background: #e9eae1;
+  font-size: 23px;
+  align-self: start;
+}
+section.lanes > blockquote h3 { margin: 0 0 4px; font-size: 28px; }
+section.lanes > blockquote:nth-of-type(-n + 2) > p { margin: 0 0 16px; font-size: 20px; color: #63675a; }
+/* Numbering comes from the list's own start attribute, so the right lane continues the left. */
+section.lanes > blockquote ol { list-style: none; padding: 0; margin: 0; }
+section.lanes > blockquote li { position: relative; padding-left: 38px; margin: 0 0 11px; }
+section.lanes > blockquote li:last-child { margin-bottom: 0; }
+section.lanes > blockquote li::before {
+  content: counter(list-item);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--yellow);
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+section.lanes > blockquote:last-of-type {
+  grid-column: 1 / -1;
+  margin: 26px 0 0;
+  padding: 20px 28px;
+  background: var(--yellow);
+  font-size: 24px;
+}
+section.lanes > blockquote:last-of-type p { margin: 0; font-size: 24px; color: inherit; }
+section.lanes > p { grid-column: 1 / -1; margin: 18px 0 0; font-size: 22px; }
+
 section.limits blockquote { font-size: 25px; }
 section.takeaways > ol { list-style: none; counter-reset: lesson; padding: 0; margin: 0; }
 section.takeaways > ol > li {
@@ -424,6 +504,8 @@ section.takeaways > ol > li {
 }
 section.takeaways > ol > li::before { content: '0' counter(lesson); position: absolute; left: 0; top: 20px; font-size: 38px; font-weight: 500; letter-spacing: -0.05em; }
 section.takeaways > ol strong { display: block; font-size: 29px; margin-bottom: 8px; }
+section.takeaways.four-items > ol > li { padding-top: 12px; padding-bottom: 12px; }
+section.takeaways.four-items > ol > li::before { top: 14px; }
 
 section.closing h1 { font-size: 76px; margin-bottom: 36px; }
 section.closing h2 { color: var(--fgColor-default); font-size: 39px; font-weight: 500; margin: 0 0 30px; }
