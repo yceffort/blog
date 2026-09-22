@@ -12,7 +12,13 @@
  * --force  frontmatter의 undraw 이름을 무시하고 다시 고른다
  * 키: ANTHROPIC_API_KEY, ANTHROPIC_WORKSPACE_ID (apps/research/.env.local, 없으면 apps/blog/.env.local)
  */
-import {existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync} from 'node:fs'
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from 'node:fs'
 import {dirname, resolve} from 'node:path'
 
 import Anthropic from '@anthropic-ai/sdk'

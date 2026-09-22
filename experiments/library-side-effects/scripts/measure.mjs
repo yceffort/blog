@@ -20,7 +20,9 @@ const out = `${root}/results/${runName}`
 const profiles = [
   {name: 'local-1x', cpu: 1},
   {name: 'local-4x', cpu: 4},
-].filter((x) => option('profiles', 'local-1x,local-4x').split(',').includes(x.name))
+].filter((x) =>
+  option('profiles', 'local-1x,local-4x').split(',').includes(x.name),
+)
 const excluded = option('exclude', '').split(',').filter(Boolean)
 const seed = Number(option('seed', '20260916'))
 
@@ -152,7 +154,10 @@ try {
             }),
           ])
         }
-        await page.evaluate((payloadUrl) => window.startBenchmark(payloadUrl), url)
+        await page.evaluate(
+          (payloadUrl) => window.startBenchmark(payloadUrl),
+          url,
+        )
         const loadingClicks = []
         // Pulse until the script is ready; a single fixed instant misses later long tasks.
         const pulseTimer = setInterval(() => {
