@@ -1,0 +1,26 @@
+{
+  "environment": "Temporary directory outside repository; only binary and recorded inputs copied; PATH=/usr/bin:/bin; no Node/Chromium invoked",
+  "command": "bundle-trace --dir input --coverage input/initial.coverage.json --coverage input/interaction.coverage.json --json report.json",
+  "totals": {
+    "bytes": 293,
+    "observedBytes": 208,
+    "unobservedBytes": 85,
+    "unmeasuredBytes": 0
+  },
+  "extendedSmoke": {
+    "command": "./bundle-trace --dir input --coverage input/initial.coverage.json --coverage input/interaction.coverage.json --compression --json report.json --html report.html --markdown report.md",
+    "totals": {
+      "bytes": 293,
+      "observedBytes": 208,
+      "unobservedBytes": 85,
+      "unmeasuredBytes": 0
+    },
+    "compression": {
+      "gzipBytes": 241,
+      "brotliBytes": 209
+    },
+    "schemaVersion": 2,
+    "generated": ["report.json", "report.html", "report.md"],
+    "exitCode": 0
+  }
+}

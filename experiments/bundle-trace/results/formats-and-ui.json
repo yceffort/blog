@@ -1,0 +1,31 @@
+{
+  "checks": [
+    "actual Playwright capture matches hash-bound fixture",
+    "DevTools export-shaped input matches independent range oracle",
+    "offline HTML drilldown, range navigation, source tabs, focus view, system/light/dark themes, search, mobile layout, no network requests",
+    "HTML source text cannot escape embedded JSON or execute markup",
+    "large HTML payload decodes gzip offline and preserves source/interval navigation",
+    "actual NODE_V8_COVERAGE input matches fixture; explicit unverified opt-in required",
+    "recorded whole-file Rust and Node compression sizes; equality is not assumed"
+  ],
+  "totals": {
+    "bytes": 293,
+    "observedBytes": 177,
+    "unobservedBytes": 116,
+    "unmeasuredBytes": 0
+  },
+  "compression": {
+    "settings": "gzip level 6; Brotli quality 5, lgwin 22; entire recorded entry.js",
+    "rust": {
+      "gzipBytes": 241,
+      "brotliBytes": 209
+    },
+    "node": {
+      "version": "v24.20.0",
+      "zlib": "1.3.2.1-motley-42c2f19",
+      "gzipBytes": 239,
+      "brotliBytes": 209
+    },
+    "note": "Encoded size may differ by implementation at the same level; Rust stream round trips are checked by cargo test."
+  }
+}

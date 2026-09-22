@@ -20,6 +20,8 @@
     "**/.lighthouseci/**",
     "pnpm-lock.yaml",
     "packages/markdown-rs/vendor/**",
+    "experiments/bundle-trace/examples/recorded/**",
+    "experiments/bundle-trace/scripts/vendor/**",
     "**/*.css",
     "**/*.scss",
     "**/*.html"

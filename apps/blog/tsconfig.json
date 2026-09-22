@@ -35,6 +35,8 @@
     "**/*.ts*",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    ".next/dev/dev/types/**/*.ts"
+    ".next/dev/dev/types/**/*.ts",
+    ".next/bundle-trace/types/**/*.ts",
+    ".next/bundle-trace/dev/types/**/*.ts"
   ]
 }

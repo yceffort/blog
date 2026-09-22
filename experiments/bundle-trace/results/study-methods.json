@@ -1,0 +1,159 @@
+{
+  "method": "Exact named V8 function ranges in MiniSearch-bearing chunk; method syntax verified in generated JS; not package-wide source attribution",
+  "methods": [
+    {
+      "name": "add",
+      "script": "chunks/2ae9vfcv8165s.js",
+      "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+      "startUtf16": 33214,
+      "endUtf16": 33800,
+      "generatedBytes": 586,
+      "count": 0,
+      "anyObservedSubrange": false,
+      "prefix": "add(e){let{extractField:t,stringifyField:n,tokenize:i,processTerm:a,fields:r,idField:s}=this._option"
+    },
+    {
+      "name": "addAll",
+      "script": "chunks/2ae9vfcv8165s.js",
+      "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+      "startUtf16": 33800,
+      "endUtf16": 33837,
+      "generatedBytes": 37,
+      "count": 0,
+      "anyObservedSubrange": false,
+      "prefix": "addAll(e){for(let t of e)this.add(t)}"
+    },
+    {
+      "name": "addAllAsync",
+      "script": "chunks/2ae9vfcv8165s.js",
+      "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+      "startUtf16": 33837,
+      "endUtf16": 34142,
+      "generatedBytes": 305,
+      "count": 0,
+      "anyObservedSubrange": false,
+      "prefix": "addAllAsync(e,t={}){let{chunkSize:n=10}=t,i={chunk:[],promise:Promise.resolve()},{chunk:a,promise:r}"
+    },
+    {
+      "name": "remove",
+      "script": "chunks/2ae9vfcv8165s.js",
+      "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+      "startUtf16": 34142,
+      "endUtf16": 34873,
+      "generatedBytes": 731,
+      "count": 0,
+      "anyObservedSubrange": false,
+      "prefix": "remove(e){let{tokenize:t,processTerm:n,extractField:i,stringifyField:a,fields:r,idField:s}=this._opt"
+    },
+    {
+      "name": "removeAll",
+      "script": "chunks/2ae9vfcv8165s.js",
+      "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+      "startUtf16": 34873,
+      "endUtf16": 35229,
+      "generatedBytes": 356,
+      "count": 0,
+      "anyObservedSubrange": false,
+      "prefix": "removeAll(e){if(e)for(let t of e)this.remove(t);else if(arguments.length>0)throw Error(\"Expected doc"
+    },
+    {
+      "name": "discard",
+      "script": "chunks/2ae9vfcv8165s.js",
+      "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+      "startUtf16": 35229,
+      "endUtf16": 35647,
+      "generatedBytes": 418,
+      "count": 0,
+      "anyObservedSubrange": false,
+      "prefix": "discard(e){let t=this._idToShortId.get(e);if(null==t)throw Error(`MiniSearch: cannot discard documen"
+    },
+    {
+      "name": "discardAll",
+      "script": "chunks/2ae9vfcv8165s.js",
+      "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+      "startUtf16": 35873,
+      "endUtf16": 36040,
+      "generatedBytes": 167,
+      "count": 0,
+      "anyObservedSubrange": false,
+      "prefix": "discardAll(e){let t=this._options.autoVacuum;try{for(let t of(this._options.autoVacuum=!1,e))this.di"
+    },
+    {
+      "name": "replace",
+      "script": "chunks/2ae9vfcv8165s.js",
+      "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+      "startUtf16": 36040,
+      "endUtf16": 36132,
+      "generatedBytes": 92,
+      "count": 0,
+      "anyObservedSubrange": false,
+      "prefix": "replace(e){let{idField:t,extractField:n}=this._options,i=n(e,t);this.discard(i),this.add(e)}"
+    },
+    {
+      "name": "vacuum",
+      "script": "chunks/2ae9vfcv8165s.js",
+      "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+      "startUtf16": 36132,
+      "endUtf16": 36178,
+      "generatedBytes": 46,
+      "count": 0,
+      "anyObservedSubrange": false,
+      "prefix": "vacuum(e={}){return this.conditionalVacuum(e)}"
+    },
+    {
+      "name": "search",
+      "script": "chunks/2ae9vfcv8165s.js",
+      "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+      "startUtf16": 37556,
+      "endUtf16": 37936,
+      "generatedBytes": 380,
+      "count": 1,
+      "anyObservedSubrange": true,
+      "prefix": "search(e,t={}){let{searchOptions:n}=this._options,i={...n,...t},a=this.executeQuery(e,t),r=[];for(le"
+    },
+    {
+      "name": "autoSuggest",
+      "script": "chunks/2ae9vfcv8165s.js",
+      "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+      "startUtf16": 37936,
+      "endUtf16": 38266,
+      "generatedBytes": 330,
+      "count": 0,
+      "anyObservedSubrange": false,
+      "prefix": "autoSuggest(e,t={}){t={...this._options.autoSuggestOptions,...t};let n=new Map;for(let{score:i,terms"
+    },
+    {
+      "name": "loadJSON",
+      "script": "chunks/2ae9vfcv8165s.js",
+      "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+      "startUtf16": 38360,
+      "endUtf16": 38522,
+      "generatedBytes": 162,
+      "count": 0,
+      "anyObservedSubrange": false,
+      "prefix": "loadJSON(e,t){if(null==t)throw Error(\"MiniSearch: loadJSON should be given the same options used whe"
+    },
+    {
+      "name": "loadJS",
+      "script": "chunks/2ae9vfcv8165s.js",
+      "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+      "startUtf16": 38821,
+      "endUtf16": 39206,
+      "generatedBytes": 385,
+      "count": 1,
+      "anyObservedSubrange": true,
+      "prefix": "loadJS(e,t){let{index:n,documentIds:i,fieldLength:a,storedFields:r,serializationVersion:s}=e,o=this."
+    },
+    {
+      "name": "toJSON",
+      "script": "chunks/2ae9vfcv8165s.js",
+      "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+      "startUtf16": 41734,
+      "endUtf16": 42182,
+      "generatedBytes": 448,
+      "count": 0,
+      "anyObservedSubrange": false,
+      "prefix": "toJSON(){let e=[];for(let[t,n]of this._index){let i={};for(let[e,t]of n)i[e]=Object.fromEntries(t);e"
+    }
+  ]
+}

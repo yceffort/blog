@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-22",
+  "scope": "Current Rust CLI only; competitors checked against official documentation, not run head-to-head",
+  "results": [
+    {
+      "case": "control-custom-envelope",
+      "exitCode": 0,
+      "diagnostic": ""
+    },
+    {
+      "case": "chrome-export",
+      "exitCode": 1,
+      "diagnostic": "Error: read coverage envelope <temp>/chrome-export.json\n\nCaused by:\n    invalid type: map, expected u32 at line 1 column 1"
+    },
+    {
+      "case": "raw-v8",
+      "exitCode": 1,
+      "diagnostic": "Error: read coverage envelope <temp>/raw-v8.json\n\nCaused by:\n    missing field `schemaVersion` at line 1 column 635"
+    },
+    {
+      "case": "inline-source-map",
+      "exitCode": 1,
+      "diagnostic": "Error: locate source map for entry.js\n\nCaused by:\n    only relative local sourceMappingURL is supported: data:application/json;base64,eyJ2ZXJzaW9uIjogMywgInNvdXJjZXMiOiBbIm9yaWdpbmFsLmpzIl0sICJuYW1lcyI6IFtdLCAibWFwcGluZ3MiOiAiQUFBQSIsICJzb3VyY2VzQ29udGVudCI6IFsiY29uc29sZS5sb2coXCJva1wiKTsiXX0="
+    },
+    {
+      "case": "one-broken-map-stops-scan",
+      "exitCode": 1,
+      "diagnostic": "Error: decode source map for broken.js\n\nCaused by:\n    key must be a string at line 1 column 2"
+    }
+  ]
+}

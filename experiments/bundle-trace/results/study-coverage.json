@@ -1,0 +1,2312 @@
+{
+  "schemaVersion": 1,
+  "metric": "UTF-8 generated source bytes, not compressed transfer or execution time",
+  "verification": "Every measured script checked against independent per-UTF-16-code-unit oracle; UTF-8 totals reconciled across sources, packages, and bundles",
+  "buildInputs": {
+    "preparedAt": "2026-09-22T04:53:31.016Z",
+    "node": "v24.20.0",
+    "sourcePath": ".cache/bundle-trace-study/app",
+    "changes": "MiniSearch value import becomes type-only; dynamic import runs concurrently with index fetch",
+    "componentHashes": {
+      "baseline": "ea516295b8b1628bd0d6999d9160560a3607e6e14247a162df33876b9b001d13",
+      "lazy": "86c68e193a8a6516ed8aeec8eb2c26f09e8fbb38b8bfd1287ba9862bba59246f"
+    },
+    "productionSourceUnchanged": true
+  },
+  "runs": [
+    {
+      "name": "baseline-initial",
+      "capturedAt": "2026-09-22T04:54:03.702Z",
+      "environment": {
+        "browser": "153.0.8010.12",
+        "node": "v25.9.0",
+        "platform": "darwin",
+        "playwright": "1.63.0",
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "serviceWorkers": "blocked",
+        "externalRequests": "blocked",
+        "prefetch": "enabled",
+        "scope": "page CDP target only; no worker coverage",
+        "observation": "navigation networkidle + 1000ms; search additionally waits for visible results"
+      },
+      "coverageSha256": "e6309112cd719cc741c7b7ba16fb21df4f5ed14ea6a72eb5b6cd2580bf2e361b",
+      "checkedScripts": 13,
+      "totals": {
+        "bytes": 7246076,
+        "observedBytes": 278485,
+        "unobservedBytes": 393540,
+        "unmeasuredBytes": 6574051
+      },
+      "measuredBytes": 672025,
+      "prefetchRequests": [
+        {
+          "path": "/?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/pages/1?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/series?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/tags?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/about?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/en?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/series?_rsc=sL3ynyY5i-VUEVib",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/series/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/pages/1?_rsc=wwMOuUzeZch95hDk",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/pages/$d$id/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/tags?_rsc=hzvyQEdmHvs_FImb",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/tags/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/about?_rsc=hzcUC6YqarYE9pKE",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/about/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/en?_rsc=RBh_0f1QDb6IxaT6",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/en/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/2026/09/who-learns-to-judge-beta-reader?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/2026/09/who-learns-to-judge-beta-reader?_rsc=tZUd5dOe1WsGa_CJ",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/$d$year/$c$slug/__PAGE__",
+          "blocked": false
+        }
+      ],
+      "bundles": [
+        {
+          "path": "chunks/0-fmj4tly07sb.js",
+          "sha256": "4cc228ef01b23b0823f634ea8a479ff21475e1b694bcf1067828a9799abcc27c",
+          "sourceMapSha256": "4091b69dd7fa85adbda6121bb217aba835ed7cba22ca317d846e40919be281ac",
+          "utf16Units": 27482,
+          "observedUtf16Units": 14200,
+          "mappedBytes": 27301,
+          "bytes": 27482,
+          "observedBytes": 14200,
+          "unobservedBytes": 13282,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/0btdlnlwz7d_d.js",
+          "sha256": "4849c67a3a8b55129d48fbdb378f70ba973a24f24376d331eddf8d3440c1ffb6",
+          "sourceMapSha256": "790c70f84d58c93dc95e591b11364550d0387e9abcea69f50f36be27b6b65712",
+          "utf16Units": 21005,
+          "observedUtf16Units": 10164,
+          "mappedBytes": 20831,
+          "bytes": 21010,
+          "observedBytes": 10167,
+          "unobservedBytes": 10843,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/0nyzn6z501g_j.js",
+          "sha256": "88ce5b21d99d292467f8498b5eb10fbfe6fbc618562166a684cc59582814c307",
+          "sourceMapSha256": "aca75fc6ba84f67bad62ad55e6b9e95c4b4d5353a5bc6b1100aeb9a6d290390d",
+          "utf16Units": 26947,
+          "observedUtf16Units": 170,
+          "mappedBytes": 26806,
+          "bytes": 27003,
+          "observedBytes": 170,
+          "unobservedBytes": 26833,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1-afm-w36f4vy.js",
+          "sha256": "2ca7e1a30c9847d95c7851820ebc5854cf8f47cf1dd6b7f054e159e2fcbe030d",
+          "sourceMapSha256": "15a43ccf35955e19c889befce88ccc02ed0fba44fe0241177775750d045ef632",
+          "utf16Units": 166324,
+          "observedUtf16Units": 77341,
+          "mappedBytes": 166014,
+          "bytes": 166324,
+          "observedBytes": 77341,
+          "unobservedBytes": 88983,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1j1w1nhu6dxrt.js",
+          "sha256": "05394cbae896e3f3bbb14493e4d64a5edbad88dbc09c067e743a210da6f9d625",
+          "sourceMapSha256": "dc4fa6e3fdc1f54bb76d51cb32d44cc9fe9abebb58ab2387c55adb3e31d28cd8",
+          "utf16Units": 6601,
+          "observedUtf16Units": 4342,
+          "mappedBytes": 5374,
+          "bytes": 6603,
+          "observedBytes": 4342,
+          "unobservedBytes": 2261,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1snhfdc4wjc77.js",
+          "sha256": "3a29763a0a8f66e986e7c90d88680f95707190a34801537d8d1114d4f9e06eec",
+          "sourceMapSha256": "d5e1a8929ea238590f737e964376bc83d1550ab266d920c6105bfd433324c637",
+          "utf16Units": 308,
+          "observedUtf16Units": 130,
+          "mappedBytes": 130,
+          "bytes": 308,
+          "observedBytes": 130,
+          "unobservedBytes": 178,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1u6p5---ohxyu.js",
+          "sha256": "4bab6e212d02e6592f00fc4075ee784e9c867d1812ec92dc886d4292f41fb94d",
+          "sourceMapSha256": "12c849480b6bb4097047401515b74e4976a05f073fc36814b5ab7edf8c3328ec",
+          "utf16Units": 29871,
+          "observedUtf16Units": 14827,
+          "mappedBytes": 29687,
+          "bytes": 29871,
+          "observedBytes": 14827,
+          "unobservedBytes": 15044,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2ae9vfcv8165s.js",
+          "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+          "sourceMapSha256": "5e636b0968e258eab50e21d086c2af759d63b218ad415a7e3ed827ec985bcc5f",
+          "utf16Units": 88066,
+          "observedUtf16Units": 41752,
+          "mappedBytes": 88171,
+          "bytes": 88349,
+          "observedBytes": 41902,
+          "unobservedBytes": 46447,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2mwcn4ip6u6vf.js",
+          "sha256": "67ff4e8487518362e3bf2a5e4744083d0f6ac620eea07b8cc7cd7885119d16cd",
+          "sourceMapSha256": "dc2b8dbe996c62408e651ba67dd8f407b0a6544fa8c92cfa2312eaa91b837d0a",
+          "utf16Units": 228034,
+          "observedUtf16Units": 95662,
+          "mappedBytes": 227862,
+          "bytes": 228034,
+          "observedBytes": 95662,
+          "unobservedBytes": 132372,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2om5tnima2b-9.js",
+          "sha256": "a8e43dcca030393f355c8870849589bb56f2c26ed3e506836c37f977a6c6201e",
+          "sourceMapSha256": "b0d49cd477701c39dc230981197ae2e48da5560770436443798907333fdb92a6",
+          "utf16Units": 9301,
+          "observedUtf16Units": 225,
+          "mappedBytes": 9219,
+          "bytes": 9416,
+          "observedBytes": 225,
+          "unobservedBytes": 9191,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/3l9svhnbpuz9w.js",
+          "sha256": "ecf1098ca44b08842518d7248f1256ee66040ad7c6d5719cfc5fef4db009ea2b",
+          "sourceMapSha256": "16fe97e70327c145bf9b2e2a38d4d2b716fa705d9b76b36a1cb1d7ce15faf5e0",
+          "utf16Units": 29174,
+          "observedUtf16Units": 14178,
+          "mappedBytes": 29013,
+          "bytes": 29210,
+          "observedBytes": 14185,
+          "unobservedBytes": 15025,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/3xp0c2d_gg6j1.js",
+          "sha256": "056030644f3d2c1f8d10bfce8218d33eae5677b53bb6c56123901fd8c5399e13",
+          "sourceMapSha256": "0f7d4e2fd92bd55f9823b17c2366b92a39d7b192907562e7e636d91b02b497ea",
+          "utf16Units": 27416,
+          "observedUtf16Units": 184,
+          "mappedBytes": 27228,
+          "bytes": 27425,
+          "observedBytes": 184,
+          "unobservedBytes": 27241,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/turbopack-3s2yg9bj7op7y.js",
+          "sha256": "3c8d0bdc3ed8e692a542a2ecd30f825f66a8dc769127f628088ec8cbb97aa43b",
+          "sourceMapSha256": "7d58faa88684f3805e1b11ec69912eb4a83a0786818d5531458745b6a63a4373",
+          "utf16Units": 10990,
+          "observedUtf16Units": 5150,
+          "mappedBytes": 10649,
+          "bytes": 10990,
+          "observedBytes": 5150,
+          "unobservedBytes": 5840,
+          "unmeasuredBytes": 0
+        }
+      ],
+      "packages": [
+        {
+          "package": "next",
+          "bytes": 512705,
+          "observedBytes": 210579,
+          "unobservedBytes": 265017,
+          "unmeasuredBytes": 37109
+        },
+        {
+          "package": "[unmapped]",
+          "bytes": 212140,
+          "observedBytes": 3075,
+          "unobservedBytes": 665,
+          "unmeasuredBytes": 208400
+        },
+        {
+          "package": "[application]",
+          "bytes": 123244,
+          "observedBytes": 46144,
+          "unobservedBytes": 61217,
+          "unmeasuredBytes": 15883
+        },
+        {
+          "package": "date-fns",
+          "bytes": 37212,
+          "observedBytes": 6730,
+          "unobservedBytes": 30482,
+          "unmeasuredBytes": 0
+        },
+        {
+          "package": "@panzoom/panzoom",
+          "bytes": 18718,
+          "observedBytes": 0,
+          "unobservedBytes": 9359,
+          "unmeasuredBytes": 9359
+        },
+        {
+          "package": "minisearch",
+          "bytes": 17080,
+          "observedBytes": 579,
+          "unobservedBytes": 16501,
+          "unmeasuredBytes": 0
+        }
+      ],
+      "sources": [
+        {
+          "source": "turbopack:///[project]/node_modules/.pnpm/minisearch@7.2.0/node_modules/minisearch/src/MiniSearch.ts",
+          "package": "minisearch",
+          "bytes": 13566,
+          "observedBytes": 523,
+          "unobservedBytes": 13043,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/Mermaid.tsx",
+          "package": "[application]",
+          "bytes": 10801,
+          "observedBytes": 8,
+          "unobservedBytes": 5213,
+          "unmeasuredBytes": 5580
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/TableOfContents.tsx",
+          "package": "[application]",
+          "bytes": 6739,
+          "observedBytes": 8,
+          "unobservedBytes": 6731,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/ImageZoom.tsx",
+          "package": "[application]",
+          "bytes": 4654,
+          "observedBytes": 7,
+          "unobservedBytes": 2320,
+          "unmeasuredBytes": 2327
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/search/SiteSearch.tsx",
+          "package": "[application]",
+          "bytes": 4599,
+          "observedBytes": 839,
+          "unobservedBytes": 3760,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/about/AboutHero.tsx",
+          "package": "[application]",
+          "bytes": 3449,
+          "observedBytes": 23,
+          "unobservedBytes": 3426,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/ImageZoom.styles.ts",
+          "package": "[application]",
+          "bytes": 120,
+          "observedBytes": 0,
+          "unobservedBytes": 60,
+          "unmeasuredBytes": 60
+        }
+      ],
+      "warningCount": 38
+    },
+    {
+      "name": "baseline-no-prefetch",
+      "capturedAt": "2026-09-22T04:54:21.060Z",
+      "environment": {
+        "browser": "153.0.8010.12",
+        "node": "v25.9.0",
+        "platform": "darwin",
+        "playwright": "1.63.0",
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "serviceWorkers": "blocked",
+        "externalRequests": "blocked",
+        "prefetch": "blocked",
+        "scope": "page CDP target only; no worker coverage",
+        "observation": "navigation networkidle + 1000ms; search additionally waits for visible results"
+      },
+      "coverageSha256": "a0b797aacc2482b18f55deee3bbb649f0fdbea5ca7008a83f0aff0e746faa62d",
+      "checkedScripts": 9,
+      "totals": {
+        "bytes": 7246076,
+        "observedBytes": 264314,
+        "unobservedBytes": 343559,
+        "unmeasuredBytes": 6638203
+      },
+      "measuredBytes": 607873,
+      "prefetchRequests": [
+        {
+          "path": "/?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": true
+        },
+        {
+          "path": "/pages/1?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": true
+        },
+        {
+          "path": "/series?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": true
+        },
+        {
+          "path": "/tags?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": true
+        },
+        {
+          "path": "/about?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": true
+        },
+        {
+          "path": "/en?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": true
+        },
+        {
+          "path": "/2026/09/who-learns-to-judge-beta-reader?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": true
+        }
+      ],
+      "bundles": [
+        {
+          "path": "chunks/0-fmj4tly07sb.js",
+          "sha256": "4cc228ef01b23b0823f634ea8a479ff21475e1b694bcf1067828a9799abcc27c",
+          "sourceMapSha256": "4091b69dd7fa85adbda6121bb217aba835ed7cba22ca317d846e40919be281ac",
+          "utf16Units": 27482,
+          "observedUtf16Units": 14200,
+          "mappedBytes": 27301,
+          "bytes": 27482,
+          "observedBytes": 14200,
+          "unobservedBytes": 13282,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/0btdlnlwz7d_d.js",
+          "sha256": "4849c67a3a8b55129d48fbdb378f70ba973a24f24376d331eddf8d3440c1ffb6",
+          "sourceMapSha256": "790c70f84d58c93dc95e591b11364550d0387e9abcea69f50f36be27b6b65712",
+          "utf16Units": 21005,
+          "observedUtf16Units": 10164,
+          "mappedBytes": 20831,
+          "bytes": 21010,
+          "observedBytes": 10167,
+          "unobservedBytes": 10843,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1-afm-w36f4vy.js",
+          "sha256": "2ca7e1a30c9847d95c7851820ebc5854cf8f47cf1dd6b7f054e159e2fcbe030d",
+          "sourceMapSha256": "15a43ccf35955e19c889befce88ccc02ed0fba44fe0241177775750d045ef632",
+          "utf16Units": 166324,
+          "observedUtf16Units": 65146,
+          "mappedBytes": 166014,
+          "bytes": 166324,
+          "observedBytes": 65146,
+          "unobservedBytes": 101178,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1j1w1nhu6dxrt.js",
+          "sha256": "05394cbae896e3f3bbb14493e4d64a5edbad88dbc09c067e743a210da6f9d625",
+          "sourceMapSha256": "dc4fa6e3fdc1f54bb76d51cb32d44cc9fe9abebb58ab2387c55adb3e31d28cd8",
+          "utf16Units": 6601,
+          "observedUtf16Units": 4342,
+          "mappedBytes": 5374,
+          "bytes": 6603,
+          "observedBytes": 4342,
+          "unobservedBytes": 2261,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1u6p5---ohxyu.js",
+          "sha256": "4bab6e212d02e6592f00fc4075ee784e9c867d1812ec92dc886d4292f41fb94d",
+          "sourceMapSha256": "12c849480b6bb4097047401515b74e4976a05f073fc36814b5ab7edf8c3328ec",
+          "utf16Units": 29871,
+          "observedUtf16Units": 14827,
+          "mappedBytes": 29687,
+          "bytes": 29871,
+          "observedBytes": 14827,
+          "unobservedBytes": 15044,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2ae9vfcv8165s.js",
+          "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+          "sourceMapSha256": "5e636b0968e258eab50e21d086c2af759d63b218ad415a7e3ed827ec985bcc5f",
+          "utf16Units": 88066,
+          "observedUtf16Units": 41197,
+          "mappedBytes": 88171,
+          "bytes": 88349,
+          "observedBytes": 41347,
+          "unobservedBytes": 47002,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2mwcn4ip6u6vf.js",
+          "sha256": "67ff4e8487518362e3bf2a5e4744083d0f6ac620eea07b8cc7cd7885119d16cd",
+          "sourceMapSha256": "dc2b8dbe996c62408e651ba67dd8f407b0a6544fa8c92cfa2312eaa91b837d0a",
+          "utf16Units": 228034,
+          "observedUtf16Units": 95072,
+          "mappedBytes": 227862,
+          "bytes": 228034,
+          "observedBytes": 95072,
+          "unobservedBytes": 132962,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/3l9svhnbpuz9w.js",
+          "sha256": "ecf1098ca44b08842518d7248f1256ee66040ad7c6d5719cfc5fef4db009ea2b",
+          "sourceMapSha256": "16fe97e70327c145bf9b2e2a38d4d2b716fa705d9b76b36a1cb1d7ce15faf5e0",
+          "utf16Units": 29174,
+          "observedUtf16Units": 14178,
+          "mappedBytes": 29013,
+          "bytes": 29210,
+          "observedBytes": 14185,
+          "unobservedBytes": 15025,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/turbopack-3s2yg9bj7op7y.js",
+          "sha256": "3c8d0bdc3ed8e692a542a2ecd30f825f66a8dc769127f628088ec8cbb97aa43b",
+          "sourceMapSha256": "7d58faa88684f3805e1b11ec69912eb4a83a0786818d5531458745b6a63a4373",
+          "utf16Units": 10990,
+          "observedUtf16Units": 5028,
+          "mappedBytes": 10649,
+          "bytes": 10990,
+          "observedBytes": 5028,
+          "unobservedBytes": 5962,
+          "unmeasuredBytes": 0
+        }
+      ],
+      "packages": [
+        {
+          "package": "next",
+          "bytes": 512705,
+          "observedBytes": 197736,
+          "unobservedBytes": 273886,
+          "unmeasuredBytes": 41083
+        },
+        {
+          "package": "[unmapped]",
+          "bytes": 212140,
+          "observedBytes": 2564,
+          "unobservedBytes": 407,
+          "unmeasuredBytes": 209169
+        },
+        {
+          "package": "[application]",
+          "bytes": 123244,
+          "observedBytes": 45882,
+          "unobservedBytes": 30035,
+          "unmeasuredBytes": 47327
+        },
+        {
+          "package": "date-fns",
+          "bytes": 37212,
+          "observedBytes": 6730,
+          "unobservedBytes": 11876,
+          "unmeasuredBytes": 18606
+        },
+        {
+          "package": "@panzoom/panzoom",
+          "bytes": 18718,
+          "observedBytes": 0,
+          "unobservedBytes": 0,
+          "unmeasuredBytes": 18718
+        },
+        {
+          "package": "minisearch",
+          "bytes": 17080,
+          "observedBytes": 579,
+          "unobservedBytes": 16501,
+          "unmeasuredBytes": 0
+        }
+      ],
+      "sources": [
+        {
+          "source": "turbopack:///[project]/node_modules/.pnpm/minisearch@7.2.0/node_modules/minisearch/src/MiniSearch.ts",
+          "package": "minisearch",
+          "bytes": 13566,
+          "observedBytes": 523,
+          "unobservedBytes": 13043,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/Mermaid.tsx",
+          "package": "[application]",
+          "bytes": 10801,
+          "observedBytes": 0,
+          "unobservedBytes": 0,
+          "unmeasuredBytes": 10801
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/TableOfContents.tsx",
+          "package": "[application]",
+          "bytes": 6739,
+          "observedBytes": 0,
+          "unobservedBytes": 0,
+          "unmeasuredBytes": 6739
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/ImageZoom.tsx",
+          "package": "[application]",
+          "bytes": 4654,
+          "observedBytes": 0,
+          "unobservedBytes": 0,
+          "unmeasuredBytes": 4654
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/search/SiteSearch.tsx",
+          "package": "[application]",
+          "bytes": 4599,
+          "observedBytes": 839,
+          "unobservedBytes": 3760,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/about/AboutHero.tsx",
+          "package": "[application]",
+          "bytes": 3449,
+          "observedBytes": 0,
+          "unobservedBytes": 0,
+          "unmeasuredBytes": 3449
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/ImageZoom.styles.ts",
+          "package": "[application]",
+          "bytes": 120,
+          "observedBytes": 0,
+          "unobservedBytes": 0,
+          "unmeasuredBytes": 120
+        }
+      ],
+      "warningCount": 38
+    },
+    {
+      "name": "baseline-about",
+      "capturedAt": "2026-09-22T04:55:39.757Z",
+      "environment": {
+        "browser": "153.0.8010.12",
+        "node": "v25.9.0",
+        "platform": "darwin",
+        "playwright": "1.63.0",
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "serviceWorkers": "blocked",
+        "externalRequests": "blocked",
+        "prefetch": "enabled",
+        "scope": "page CDP target only; no worker coverage",
+        "observation": "navigation networkidle + 1000ms; search additionally waits for visible results"
+      },
+      "coverageSha256": "9df7b9e64dce6adb1dc79effd7f39008db128dd13af051bf92e7cfb272c6e47b",
+      "checkedScripts": 15,
+      "totals": {
+        "bytes": 7246076,
+        "observedBytes": 673513,
+        "unobservedBytes": 902123,
+        "unmeasuredBytes": 5670440
+      },
+      "measuredBytes": 1575636,
+      "prefetchRequests": [
+        {
+          "path": "/?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/pages/1?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/series?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/tags?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/about?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/en?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/pages/1?_rsc=wwMOuUzeZch95hDk",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/pages/$d$id/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/series?_rsc=sL3ynyY5i-VUEVib",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/series/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/tags?_rsc=hzvyQEdmHvs_FImb",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/tags/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/about?_rsc=hzcUC6YqarYE9pKE",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/about/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/en?_rsc=RBh_0f1QDb6IxaT6",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/en/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/2026/09/who-learns-to-judge-beta-reader?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/2026/09/who-learns-to-judge-beta-reader?_rsc=tZUd5dOe1WsGa_CJ",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/$d$year/$c$slug/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/resume?_rsc=Sdev7PUlRw12F58X",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/2026/08/turbopack-scope-hoisting-singleton-split?_rsc=1VIZdjXTcdHdxj0J",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/$d$year/$c$slug/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/2026/08/service-worker-caching-3?_rsc=1VIZdjXTcdHdxj0J",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/$d$year/$c$slug/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/resume?_rsc=dtfUWKATIYf9NEjT",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/resume/__PAGE__",
+          "blocked": false
+        }
+      ],
+      "bundles": [
+        {
+          "path": "chunks/0-fmj4tly07sb.js",
+          "sha256": "4cc228ef01b23b0823f634ea8a479ff21475e1b694bcf1067828a9799abcc27c",
+          "sourceMapSha256": "4091b69dd7fa85adbda6121bb217aba835ed7cba22ca317d846e40919be281ac",
+          "utf16Units": 27482,
+          "observedUtf16Units": 15139,
+          "mappedBytes": 27301,
+          "bytes": 27482,
+          "observedBytes": 15139,
+          "unobservedBytes": 12343,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/0btdlnlwz7d_d.js",
+          "sha256": "4849c67a3a8b55129d48fbdb378f70ba973a24f24376d331eddf8d3440c1ffb6",
+          "sourceMapSha256": "790c70f84d58c93dc95e591b11364550d0387e9abcea69f50f36be27b6b65712",
+          "utf16Units": 21005,
+          "observedUtf16Units": 11357,
+          "mappedBytes": 20831,
+          "bytes": 21010,
+          "observedBytes": 11360,
+          "unobservedBytes": 9650,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/0nyzn6z501g_j.js",
+          "sha256": "88ce5b21d99d292467f8498b5eb10fbfe6fbc618562166a684cc59582814c307",
+          "sourceMapSha256": "aca75fc6ba84f67bad62ad55e6b9e95c4b4d5353a5bc6b1100aeb9a6d290390d",
+          "utf16Units": 26947,
+          "observedUtf16Units": 170,
+          "mappedBytes": 26806,
+          "bytes": 27003,
+          "observedBytes": 170,
+          "unobservedBytes": 26833,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1-afm-w36f4vy.js",
+          "sha256": "2ca7e1a30c9847d95c7851820ebc5854cf8f47cf1dd6b7f054e159e2fcbe030d",
+          "sourceMapSha256": "15a43ccf35955e19c889befce88ccc02ed0fba44fe0241177775750d045ef632",
+          "utf16Units": 166324,
+          "observedUtf16Units": 87205,
+          "mappedBytes": 166014,
+          "bytes": 166324,
+          "observedBytes": 87205,
+          "unobservedBytes": 79119,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1j1w1nhu6dxrt.js",
+          "sha256": "05394cbae896e3f3bbb14493e4d64a5edbad88dbc09c067e743a210da6f9d625",
+          "sourceMapSha256": "dc4fa6e3fdc1f54bb76d51cb32d44cc9fe9abebb58ab2387c55adb3e31d28cd8",
+          "utf16Units": 6601,
+          "observedUtf16Units": 4342,
+          "mappedBytes": 5374,
+          "bytes": 6603,
+          "observedBytes": 4342,
+          "unobservedBytes": 2261,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1snhfdc4wjc77.js",
+          "sha256": "3a29763a0a8f66e986e7c90d88680f95707190a34801537d8d1114d4f9e06eec",
+          "sourceMapSha256": "d5e1a8929ea238590f737e964376bc83d1550ab266d920c6105bfd433324c637",
+          "utf16Units": 308,
+          "observedUtf16Units": 130,
+          "mappedBytes": 130,
+          "bytes": 308,
+          "observedBytes": 130,
+          "unobservedBytes": 178,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1u6p5---ohxyu.js",
+          "sha256": "4bab6e212d02e6592f00fc4075ee784e9c867d1812ec92dc886d4292f41fb94d",
+          "sourceMapSha256": "12c849480b6bb4097047401515b74e4976a05f073fc36814b5ab7edf8c3328ec",
+          "utf16Units": 29871,
+          "observedUtf16Units": 15374,
+          "mappedBytes": 29687,
+          "bytes": 29871,
+          "observedBytes": 15374,
+          "unobservedBytes": 14497,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1y0b89gwwixre.js",
+          "sha256": "cbe61dcd8e3057c7303d5b0a4a6d1e2313b48f64727d0e8dc0ca9f49ad91dc84",
+          "sourceMapSha256": "e04518fbdffaf0ab8a3e8fbd9cd3e5ec0fef9fb87b34b5f25ab99715c690b12f",
+          "utf16Units": 901241,
+          "observedUtf16Units": 348333,
+          "mappedBytes": 892307,
+          "bytes": 901241,
+          "observedBytes": 348333,
+          "unobservedBytes": 552908,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2ae9vfcv8165s.js",
+          "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+          "sourceMapSha256": "5e636b0968e258eab50e21d086c2af759d63b218ad415a7e3ed827ec985bcc5f",
+          "utf16Units": 88066,
+          "observedUtf16Units": 44895,
+          "mappedBytes": 88171,
+          "bytes": 88349,
+          "observedBytes": 45045,
+          "unobservedBytes": 43304,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2mwcn4ip6u6vf.js",
+          "sha256": "67ff4e8487518362e3bf2a5e4744083d0f6ac620eea07b8cc7cd7885119d16cd",
+          "sourceMapSha256": "dc2b8dbe996c62408e651ba67dd8f407b0a6544fa8c92cfa2312eaa91b837d0a",
+          "utf16Units": 228034,
+          "observedUtf16Units": 117610,
+          "mappedBytes": 227862,
+          "bytes": 228034,
+          "observedBytes": 117610,
+          "unobservedBytes": 110424,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2om5tnima2b-9.js",
+          "sha256": "a8e43dcca030393f355c8870849589bb56f2c26ed3e506836c37f977a6c6201e",
+          "sourceMapSha256": "b0d49cd477701c39dc230981197ae2e48da5560770436443798907333fdb92a6",
+          "utf16Units": 9301,
+          "observedUtf16Units": 6922,
+          "mappedBytes": 9219,
+          "bytes": 9416,
+          "observedBytes": 7037,
+          "unobservedBytes": 2379,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/365ff7q3g77-y.js",
+          "sha256": "9463673ba9a33e9c23adc70acab53f421d644d988409447f02e1de82064ddfb0",
+          "sourceMapSha256": "0b8dc6b68caf14c8863fe36922fcde742de75801f79810debca5ece185e8aa89",
+          "utf16Units": 2370,
+          "observedUtf16Units": 1838,
+          "mappedBytes": 2173,
+          "bytes": 2370,
+          "observedBytes": 1838,
+          "unobservedBytes": 532,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/3l9svhnbpuz9w.js",
+          "sha256": "ecf1098ca44b08842518d7248f1256ee66040ad7c6d5719cfc5fef4db009ea2b",
+          "sourceMapSha256": "16fe97e70327c145bf9b2e2a38d4d2b716fa705d9b76b36a1cb1d7ce15faf5e0",
+          "utf16Units": 29174,
+          "observedUtf16Units": 14436,
+          "mappedBytes": 29013,
+          "bytes": 29210,
+          "observedBytes": 14443,
+          "unobservedBytes": 14767,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/3xp0c2d_gg6j1.js",
+          "sha256": "056030644f3d2c1f8d10bfce8218d33eae5677b53bb6c56123901fd8c5399e13",
+          "sourceMapSha256": "0f7d4e2fd92bd55f9823b17c2366b92a39d7b192907562e7e636d91b02b497ea",
+          "utf16Units": 27416,
+          "observedUtf16Units": 184,
+          "mappedBytes": 27228,
+          "bytes": 27425,
+          "observedBytes": 184,
+          "unobservedBytes": 27241,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/turbopack-3s2yg9bj7op7y.js",
+          "sha256": "3c8d0bdc3ed8e692a542a2ecd30f825f66a8dc769127f628088ec8cbb97aa43b",
+          "sourceMapSha256": "7d58faa88684f3805e1b11ec69912eb4a83a0786818d5531458745b6a63a4373",
+          "utf16Units": 10990,
+          "observedUtf16Units": 5303,
+          "mappedBytes": 10649,
+          "bytes": 10990,
+          "observedBytes": 5303,
+          "unobservedBytes": 5687,
+          "unmeasuredBytes": 0
+        }
+      ],
+      "packages": [
+        {
+          "package": "next",
+          "bytes": 512705,
+          "observedBytes": 247527,
+          "unobservedBytes": 228069,
+          "unmeasuredBytes": 37109
+        },
+        {
+          "package": "[unmapped]",
+          "bytes": 212140,
+          "observedBytes": 4128,
+          "unobservedBytes": 8743,
+          "unmeasuredBytes": 199269
+        },
+        {
+          "package": "[application]",
+          "bytes": 123244,
+          "observedBytes": 56896,
+          "unobservedBytes": 56489,
+          "unmeasuredBytes": 9859
+        },
+        {
+          "package": "date-fns",
+          "bytes": 37212,
+          "observedBytes": 6730,
+          "unobservedBytes": 30482,
+          "unmeasuredBytes": 0
+        },
+        {
+          "package": "@panzoom/panzoom",
+          "bytes": 18718,
+          "observedBytes": 0,
+          "unobservedBytes": 9359,
+          "unmeasuredBytes": 9359
+        },
+        {
+          "package": "minisearch",
+          "bytes": 17080,
+          "observedBytes": 579,
+          "unobservedBytes": 16501,
+          "unmeasuredBytes": 0
+        }
+      ],
+      "sources": [
+        {
+          "source": "turbopack:///[project]/node_modules/.pnpm/minisearch@7.2.0/node_modules/minisearch/src/MiniSearch.ts",
+          "package": "minisearch",
+          "bytes": 13566,
+          "observedBytes": 523,
+          "unobservedBytes": 13043,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/Mermaid.tsx",
+          "package": "[application]",
+          "bytes": 10801,
+          "observedBytes": 8,
+          "unobservedBytes": 5213,
+          "unmeasuredBytes": 5580
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/TableOfContents.tsx",
+          "package": "[application]",
+          "bytes": 6739,
+          "observedBytes": 8,
+          "unobservedBytes": 6731,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/ImageZoom.tsx",
+          "package": "[application]",
+          "bytes": 4654,
+          "observedBytes": 7,
+          "unobservedBytes": 2320,
+          "unmeasuredBytes": 2327
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/search/SiteSearch.tsx",
+          "package": "[application]",
+          "bytes": 4599,
+          "observedBytes": 839,
+          "unobservedBytes": 3760,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/about/AboutHero.tsx",
+          "package": "[application]",
+          "bytes": 3449,
+          "observedBytes": 3449,
+          "unobservedBytes": 0,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/ImageZoom.styles.ts",
+          "package": "[application]",
+          "bytes": 120,
+          "observedBytes": 0,
+          "unobservedBytes": 60,
+          "unmeasuredBytes": 60
+        }
+      ],
+      "warningCount": 38
+    },
+    {
+      "name": "baseline-search",
+      "capturedAt": "2026-09-22T04:55:58.547Z",
+      "environment": {
+        "browser": "153.0.8010.12",
+        "node": "v25.9.0",
+        "platform": "darwin",
+        "playwright": "1.63.0",
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "serviceWorkers": "blocked",
+        "externalRequests": "blocked",
+        "prefetch": "enabled",
+        "scope": "page CDP target only; no worker coverage",
+        "observation": "navigation networkidle + 1000ms; search additionally waits for visible results"
+      },
+      "coverageSha256": "9c716f837da16d796cdf188465278fb8216c5f62ceaa9c75a0950506f0c79d43",
+      "checkedScripts": 13,
+      "totals": {
+        "bytes": 7246076,
+        "observedBytes": 298347,
+        "unobservedBytes": 373678,
+        "unmeasuredBytes": 6574051
+      },
+      "measuredBytes": 672025,
+      "prefetchRequests": [
+        {
+          "path": "/?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/pages/1?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/series?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/tags?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/about?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/en?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/pages/1?_rsc=wwMOuUzeZch95hDk",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/pages/$d$id/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/series?_rsc=sL3ynyY5i-VUEVib",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/series/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/tags?_rsc=hzvyQEdmHvs_FImb",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/tags/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/about?_rsc=hzcUC6YqarYE9pKE",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/about/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/en?_rsc=RBh_0f1QDb6IxaT6",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/en/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/2026/09/who-learns-to-judge-beta-reader?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/2026/09/who-learns-to-judge-beta-reader?_rsc=tZUd5dOe1WsGa_CJ",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/$d$year/$c$slug/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/archive?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/archive?_rsc=z_hnJOBPSqIaiPow",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/archive/__PAGE__",
+          "blocked": false
+        }
+      ],
+      "bundles": [
+        {
+          "path": "chunks/0-fmj4tly07sb.js",
+          "sha256": "4cc228ef01b23b0823f634ea8a479ff21475e1b694bcf1067828a9799abcc27c",
+          "sourceMapSha256": "4091b69dd7fa85adbda6121bb217aba835ed7cba22ca317d846e40919be281ac",
+          "utf16Units": 27482,
+          "observedUtf16Units": 14200,
+          "mappedBytes": 27301,
+          "bytes": 27482,
+          "observedBytes": 14200,
+          "unobservedBytes": 13282,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/0btdlnlwz7d_d.js",
+          "sha256": "4849c67a3a8b55129d48fbdb378f70ba973a24f24376d331eddf8d3440c1ffb6",
+          "sourceMapSha256": "790c70f84d58c93dc95e591b11364550d0387e9abcea69f50f36be27b6b65712",
+          "utf16Units": 21005,
+          "observedUtf16Units": 10164,
+          "mappedBytes": 20831,
+          "bytes": 21010,
+          "observedBytes": 10167,
+          "unobservedBytes": 10843,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/0nyzn6z501g_j.js",
+          "sha256": "88ce5b21d99d292467f8498b5eb10fbfe6fbc618562166a684cc59582814c307",
+          "sourceMapSha256": "aca75fc6ba84f67bad62ad55e6b9e95c4b4d5353a5bc6b1100aeb9a6d290390d",
+          "utf16Units": 26947,
+          "observedUtf16Units": 170,
+          "mappedBytes": 26806,
+          "bytes": 27003,
+          "observedBytes": 170,
+          "unobservedBytes": 26833,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1-afm-w36f4vy.js",
+          "sha256": "2ca7e1a30c9847d95c7851820ebc5854cf8f47cf1dd6b7f054e159e2fcbe030d",
+          "sourceMapSha256": "15a43ccf35955e19c889befce88ccc02ed0fba44fe0241177775750d045ef632",
+          "utf16Units": 166324,
+          "observedUtf16Units": 77423,
+          "mappedBytes": 166014,
+          "bytes": 166324,
+          "observedBytes": 77423,
+          "unobservedBytes": 88901,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1j1w1nhu6dxrt.js",
+          "sha256": "05394cbae896e3f3bbb14493e4d64a5edbad88dbc09c067e743a210da6f9d625",
+          "sourceMapSha256": "dc4fa6e3fdc1f54bb76d51cb32d44cc9fe9abebb58ab2387c55adb3e31d28cd8",
+          "utf16Units": 6601,
+          "observedUtf16Units": 4342,
+          "mappedBytes": 5374,
+          "bytes": 6603,
+          "observedBytes": 4342,
+          "unobservedBytes": 2261,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1snhfdc4wjc77.js",
+          "sha256": "3a29763a0a8f66e986e7c90d88680f95707190a34801537d8d1114d4f9e06eec",
+          "sourceMapSha256": "d5e1a8929ea238590f737e964376bc83d1550ab266d920c6105bfd433324c637",
+          "utf16Units": 308,
+          "observedUtf16Units": 130,
+          "mappedBytes": 130,
+          "bytes": 308,
+          "observedBytes": 130,
+          "unobservedBytes": 178,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1u6p5---ohxyu.js",
+          "sha256": "4bab6e212d02e6592f00fc4075ee784e9c867d1812ec92dc886d4292f41fb94d",
+          "sourceMapSha256": "12c849480b6bb4097047401515b74e4976a05f073fc36814b5ab7edf8c3328ec",
+          "utf16Units": 29871,
+          "observedUtf16Units": 14827,
+          "mappedBytes": 29687,
+          "bytes": 29871,
+          "observedBytes": 14827,
+          "unobservedBytes": 15044,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2ae9vfcv8165s.js",
+          "sha256": "892ff9a83ebd36a000dc0d90e33fccd643a2c6a990e5b8bf300f01680452ad6d",
+          "sourceMapSha256": "5e636b0968e258eab50e21d086c2af759d63b218ad415a7e3ed827ec985bcc5f",
+          "utf16Units": 88066,
+          "observedUtf16Units": 53900,
+          "mappedBytes": 88171,
+          "bytes": 88349,
+          "observedBytes": 54098,
+          "unobservedBytes": 34251,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2mwcn4ip6u6vf.js",
+          "sha256": "67ff4e8487518362e3bf2a5e4744083d0f6ac620eea07b8cc7cd7885119d16cd",
+          "sourceMapSha256": "dc2b8dbe996c62408e651ba67dd8f407b0a6544fa8c92cfa2312eaa91b837d0a",
+          "utf16Units": 228034,
+          "observedUtf16Units": 103039,
+          "mappedBytes": 227862,
+          "bytes": 228034,
+          "observedBytes": 103039,
+          "unobservedBytes": 124995,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2om5tnima2b-9.js",
+          "sha256": "a8e43dcca030393f355c8870849589bb56f2c26ed3e506836c37f977a6c6201e",
+          "sourceMapSha256": "b0d49cd477701c39dc230981197ae2e48da5560770436443798907333fdb92a6",
+          "utf16Units": 9301,
+          "observedUtf16Units": 225,
+          "mappedBytes": 9219,
+          "bytes": 9416,
+          "observedBytes": 225,
+          "unobservedBytes": 9191,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/3l9svhnbpuz9w.js",
+          "sha256": "ecf1098ca44b08842518d7248f1256ee66040ad7c6d5719cfc5fef4db009ea2b",
+          "sourceMapSha256": "16fe97e70327c145bf9b2e2a38d4d2b716fa705d9b76b36a1cb1d7ce15faf5e0",
+          "utf16Units": 29174,
+          "observedUtf16Units": 14385,
+          "mappedBytes": 29013,
+          "bytes": 29210,
+          "observedBytes": 14392,
+          "unobservedBytes": 14818,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/3xp0c2d_gg6j1.js",
+          "sha256": "056030644f3d2c1f8d10bfce8218d33eae5677b53bb6c56123901fd8c5399e13",
+          "sourceMapSha256": "0f7d4e2fd92bd55f9823b17c2366b92a39d7b192907562e7e636d91b02b497ea",
+          "utf16Units": 27416,
+          "observedUtf16Units": 184,
+          "mappedBytes": 27228,
+          "bytes": 27425,
+          "observedBytes": 184,
+          "unobservedBytes": 27241,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/turbopack-3s2yg9bj7op7y.js",
+          "sha256": "3c8d0bdc3ed8e692a542a2ecd30f825f66a8dc769127f628088ec8cbb97aa43b",
+          "sourceMapSha256": "7d58faa88684f3805e1b11ec69912eb4a83a0786818d5531458745b6a63a4373",
+          "utf16Units": 10990,
+          "observedUtf16Units": 5150,
+          "mappedBytes": 10649,
+          "bytes": 10990,
+          "observedBytes": 5150,
+          "unobservedBytes": 5840,
+          "unmeasuredBytes": 0
+        }
+      ],
+      "packages": [
+        {
+          "package": "next",
+          "bytes": 512705,
+          "observedBytes": 218038,
+          "unobservedBytes": 257558,
+          "unmeasuredBytes": 37109
+        },
+        {
+          "package": "[unmapped]",
+          "bytes": 212140,
+          "observedBytes": 3075,
+          "unobservedBytes": 665,
+          "unmeasuredBytes": 208400
+        },
+        {
+          "package": "[application]",
+          "bytes": 123244,
+          "observedBytes": 50403,
+          "unobservedBytes": 56958,
+          "unmeasuredBytes": 15883
+        },
+        {
+          "package": "date-fns",
+          "bytes": 37212,
+          "observedBytes": 6730,
+          "unobservedBytes": 30482,
+          "unmeasuredBytes": 0
+        },
+        {
+          "package": "@panzoom/panzoom",
+          "bytes": 18718,
+          "observedBytes": 0,
+          "unobservedBytes": 9359,
+          "unmeasuredBytes": 9359
+        },
+        {
+          "package": "minisearch",
+          "bytes": 17080,
+          "observedBytes": 6425,
+          "unobservedBytes": 10655,
+          "unmeasuredBytes": 0
+        }
+      ],
+      "sources": [
+        {
+          "source": "turbopack:///[project]/node_modules/.pnpm/minisearch@7.2.0/node_modules/minisearch/src/MiniSearch.ts",
+          "package": "minisearch",
+          "bytes": 13566,
+          "observedBytes": 4317,
+          "unobservedBytes": 9249,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/Mermaid.tsx",
+          "package": "[application]",
+          "bytes": 10801,
+          "observedBytes": 8,
+          "unobservedBytes": 5213,
+          "unmeasuredBytes": 5580
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/TableOfContents.tsx",
+          "package": "[application]",
+          "bytes": 6739,
+          "observedBytes": 8,
+          "unobservedBytes": 6731,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/ImageZoom.tsx",
+          "package": "[application]",
+          "bytes": 4654,
+          "observedBytes": 7,
+          "unobservedBytes": 2320,
+          "unmeasuredBytes": 2327
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/search/SiteSearch.tsx",
+          "package": "[application]",
+          "bytes": 4599,
+          "observedBytes": 4196,
+          "unobservedBytes": 403,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/about/AboutHero.tsx",
+          "package": "[application]",
+          "bytes": 3449,
+          "observedBytes": 23,
+          "unobservedBytes": 3426,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/ImageZoom.styles.ts",
+          "package": "[application]",
+          "bytes": 120,
+          "observedBytes": 0,
+          "unobservedBytes": 60,
+          "unmeasuredBytes": 60
+        }
+      ],
+      "warningCount": 38
+    },
+    {
+      "name": "lazy-initial",
+      "capturedAt": "2026-09-22T04:56:00.672Z",
+      "environment": {
+        "browser": "153.0.8010.12",
+        "node": "v25.9.0",
+        "platform": "darwin",
+        "playwright": "1.63.0",
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "serviceWorkers": "blocked",
+        "externalRequests": "blocked",
+        "prefetch": "enabled",
+        "scope": "page CDP target only; no worker coverage",
+        "observation": "navigation networkidle + 1000ms; search additionally waits for visible results"
+      },
+      "coverageSha256": "a39a49e9c381a978b474819a2331fddc43444a72b1bd03812cd4e65f351ef272",
+      "checkedScripts": 13,
+      "totals": {
+        "bytes": 7246335,
+        "observedBytes": 277762,
+        "unobservedBytes": 376756,
+        "unmeasuredBytes": 6591817
+      },
+      "measuredBytes": 654518,
+      "prefetchRequests": [
+        {
+          "path": "/?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/pages/1?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/series?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/tags?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/about?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/en?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/pages/1?_rsc=wwMOuUzeZch95hDk",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/pages/$d$id/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/series?_rsc=sL3ynyY5i-VUEVib",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/series/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/tags?_rsc=hzvyQEdmHvs_FImb",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/tags/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/about?_rsc=hzcUC6YqarYE9pKE",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/about/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/en?_rsc=RBh_0f1QDb6IxaT6",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/en/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/2026/09/who-learns-to-judge-beta-reader?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/2026/09/who-learns-to-judge-beta-reader?_rsc=tZUd5dOe1WsGa_CJ",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/$d$year/$c$slug/__PAGE__",
+          "blocked": false
+        }
+      ],
+      "bundles": [
+        {
+          "path": "chunks/0-fmj4tly07sb.js",
+          "sha256": "4cc228ef01b23b0823f634ea8a479ff21475e1b694bcf1067828a9799abcc27c",
+          "sourceMapSha256": "4091b69dd7fa85adbda6121bb217aba835ed7cba22ca317d846e40919be281ac",
+          "utf16Units": 27482,
+          "observedUtf16Units": 14200,
+          "mappedBytes": 27301,
+          "bytes": 27482,
+          "observedBytes": 14200,
+          "unobservedBytes": 13282,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/0ffz3zgqdx4r1.js",
+          "sha256": "b713402bc932a7f8051afc6f1c535403b1278fc5f9bcddc8e94f4f4c3f94d026",
+          "sourceMapSha256": "8c3c52ca77439f275a75662b571a3a330e8f00cfa2295d5b3181fd165038b53e",
+          "utf16Units": 70456,
+          "observedUtf16Units": 41067,
+          "mappedBytes": 70561,
+          "bytes": 70739,
+          "observedBytes": 41217,
+          "unobservedBytes": 29522,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/0nyzn6z501g_j.js",
+          "sha256": "88ce5b21d99d292467f8498b5eb10fbfe6fbc618562166a684cc59582814c307",
+          "sourceMapSha256": "aca75fc6ba84f67bad62ad55e6b9e95c4b4d5353a5bc6b1100aeb9a6d290390d",
+          "utf16Units": 26947,
+          "observedUtf16Units": 170,
+          "mappedBytes": 26806,
+          "bytes": 27003,
+          "observedBytes": 170,
+          "unobservedBytes": 26833,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1-afm-w36f4vy.js",
+          "sha256": "2ca7e1a30c9847d95c7851820ebc5854cf8f47cf1dd6b7f054e159e2fcbe030d",
+          "sourceMapSha256": "15a43ccf35955e19c889befce88ccc02ed0fba44fe0241177775750d045ef632",
+          "utf16Units": 166324,
+          "observedUtf16Units": 77250,
+          "mappedBytes": 166014,
+          "bytes": 166324,
+          "observedBytes": 77250,
+          "unobservedBytes": 89074,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1j1w1nhu6dxrt.js",
+          "sha256": "05394cbae896e3f3bbb14493e4d64a5edbad88dbc09c067e743a210da6f9d625",
+          "sourceMapSha256": "dc4fa6e3fdc1f54bb76d51cb32d44cc9fe9abebb58ab2387c55adb3e31d28cd8",
+          "utf16Units": 6601,
+          "observedUtf16Units": 4342,
+          "mappedBytes": 5374,
+          "bytes": 6603,
+          "observedBytes": 4342,
+          "unobservedBytes": 2261,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1snhfdc4wjc77.js",
+          "sha256": "3a29763a0a8f66e986e7c90d88680f95707190a34801537d8d1114d4f9e06eec",
+          "sourceMapSha256": "d5e1a8929ea238590f737e964376bc83d1550ab266d920c6105bfd433324c637",
+          "utf16Units": 308,
+          "observedUtf16Units": 130,
+          "mappedBytes": 130,
+          "bytes": 308,
+          "observedBytes": 130,
+          "unobservedBytes": 178,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1u6p5---ohxyu.js",
+          "sha256": "4bab6e212d02e6592f00fc4075ee784e9c867d1812ec92dc886d4292f41fb94d",
+          "sourceMapSha256": "12c849480b6bb4097047401515b74e4976a05f073fc36814b5ab7edf8c3328ec",
+          "utf16Units": 29871,
+          "observedUtf16Units": 14827,
+          "mappedBytes": 29687,
+          "bytes": 29871,
+          "observedBytes": 14827,
+          "unobservedBytes": 15044,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2mwcn4ip6u6vf.js",
+          "sha256": "67ff4e8487518362e3bf2a5e4744083d0f6ac620eea07b8cc7cd7885119d16cd",
+          "sourceMapSha256": "dc2b8dbe996c62408e651ba67dd8f407b0a6544fa8c92cfa2312eaa91b837d0a",
+          "utf16Units": 228034,
+          "observedUtf16Units": 95707,
+          "mappedBytes": 227862,
+          "bytes": 228034,
+          "observedBytes": 95707,
+          "unobservedBytes": 132327,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2om5tnima2b-9.js",
+          "sha256": "a8e43dcca030393f355c8870849589bb56f2c26ed3e506836c37f977a6c6201e",
+          "sourceMapSha256": "b0d49cd477701c39dc230981197ae2e48da5560770436443798907333fdb92a6",
+          "utf16Units": 9301,
+          "observedUtf16Units": 225,
+          "mappedBytes": 9219,
+          "bytes": 9416,
+          "observedBytes": 225,
+          "unobservedBytes": 9191,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2ppy4wejm7zqj.js",
+          "sha256": "bd1ac6a830f14425fb7b6aa0caaaf94cfd5fe054d8a11fe045cc9188eda9345a",
+          "sourceMapSha256": "24842d81284841505333b9feaee2338972cb2d0cb2b65b278b172681fb35afea",
+          "utf16Units": 21108,
+          "observedUtf16Units": 10172,
+          "mappedBytes": 20934,
+          "bytes": 21113,
+          "observedBytes": 10175,
+          "unobservedBytes": 10938,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/3l9svhnbpuz9w.js",
+          "sha256": "ecf1098ca44b08842518d7248f1256ee66040ad7c6d5719cfc5fef4db009ea2b",
+          "sourceMapSha256": "16fe97e70327c145bf9b2e2a38d4d2b716fa705d9b76b36a1cb1d7ce15faf5e0",
+          "utf16Units": 29174,
+          "observedUtf16Units": 14178,
+          "mappedBytes": 29013,
+          "bytes": 29210,
+          "observedBytes": 14185,
+          "unobservedBytes": 15025,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/3xp0c2d_gg6j1.js",
+          "sha256": "056030644f3d2c1f8d10bfce8218d33eae5677b53bb6c56123901fd8c5399e13",
+          "sourceMapSha256": "0f7d4e2fd92bd55f9823b17c2366b92a39d7b192907562e7e636d91b02b497ea",
+          "utf16Units": 27416,
+          "observedUtf16Units": 184,
+          "mappedBytes": 27228,
+          "bytes": 27425,
+          "observedBytes": 184,
+          "unobservedBytes": 27241,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/turbopack-3s2yg9bj7op7y.js",
+          "sha256": "3c8d0bdc3ed8e692a542a2ecd30f825f66a8dc769127f628088ec8cbb97aa43b",
+          "sourceMapSha256": "7d58faa88684f3805e1b11ec69912eb4a83a0786818d5531458745b6a63a4373",
+          "utf16Units": 10990,
+          "observedUtf16Units": 5150,
+          "mappedBytes": 10649,
+          "bytes": 10990,
+          "observedBytes": 5150,
+          "unobservedBytes": 5840,
+          "unmeasuredBytes": 0
+        }
+      ],
+      "packages": [
+        {
+          "package": "next",
+          "bytes": 512705,
+          "observedBytes": 210533,
+          "unobservedBytes": 265063,
+          "unmeasuredBytes": 37109
+        },
+        {
+          "package": "[unmapped]",
+          "bytes": 212319,
+          "observedBytes": 3075,
+          "unobservedBytes": 665,
+          "unmeasuredBytes": 208579
+        },
+        {
+          "package": "[application]",
+          "bytes": 122816,
+          "observedBytes": 46059,
+          "unobservedBytes": 60874,
+          "unmeasuredBytes": 15883
+        },
+        {
+          "package": "date-fns",
+          "bytes": 37212,
+          "observedBytes": 6730,
+          "unobservedBytes": 30482,
+          "unmeasuredBytes": 0
+        },
+        {
+          "package": "@panzoom/panzoom",
+          "bytes": 18718,
+          "observedBytes": 0,
+          "unobservedBytes": 9359,
+          "unmeasuredBytes": 9359
+        },
+        {
+          "package": "minisearch",
+          "bytes": 17587,
+          "observedBytes": 0,
+          "unobservedBytes": 0,
+          "unmeasuredBytes": 17587
+        }
+      ],
+      "sources": [
+        {
+          "source": "turbopack:///[project]/node_modules/.pnpm/minisearch@7.2.0/node_modules/minisearch/src/MiniSearch.ts",
+          "package": "minisearch",
+          "bytes": 13590,
+          "observedBytes": 0,
+          "unobservedBytes": 0,
+          "unmeasuredBytes": 13590
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/Mermaid.tsx",
+          "package": "[application]",
+          "bytes": 10801,
+          "observedBytes": 8,
+          "unobservedBytes": 5213,
+          "unmeasuredBytes": 5580
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/TableOfContents.tsx",
+          "package": "[application]",
+          "bytes": 6739,
+          "observedBytes": 8,
+          "unobservedBytes": 6731,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/ImageZoom.tsx",
+          "package": "[application]",
+          "bytes": 4654,
+          "observedBytes": 7,
+          "unobservedBytes": 2320,
+          "unmeasuredBytes": 2327
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/search/SiteSearch.tsx",
+          "package": "[application]",
+          "bytes": 4579,
+          "observedBytes": 837,
+          "unobservedBytes": 3742,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/about/AboutHero.tsx",
+          "package": "[application]",
+          "bytes": 3449,
+          "observedBytes": 23,
+          "unobservedBytes": 3426,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/ImageZoom.styles.ts",
+          "package": "[application]",
+          "bytes": 120,
+          "observedBytes": 0,
+          "unobservedBytes": 60,
+          "unmeasuredBytes": 60
+        }
+      ],
+      "warningCount": 38
+    },
+    {
+      "name": "lazy-search",
+      "capturedAt": "2026-09-22T04:56:03.392Z",
+      "environment": {
+        "browser": "153.0.8010.12",
+        "node": "v25.9.0",
+        "platform": "darwin",
+        "playwright": "1.63.0",
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "serviceWorkers": "blocked",
+        "externalRequests": "blocked",
+        "prefetch": "enabled",
+        "scope": "page CDP target only; no worker coverage",
+        "observation": "navigation networkidle + 1000ms; search additionally waits for visible results"
+      },
+      "coverageSha256": "bb81650a83c9ede194ad735810ef0770f9ba1190b3f7a7af224ab2b186da55df",
+      "checkedScripts": 14,
+      "totals": {
+        "bytes": 7246335,
+        "observedBytes": 298678,
+        "unobservedBytes": 373606,
+        "unmeasuredBytes": 6574051
+      },
+      "measuredBytes": 672284,
+      "prefetchRequests": [
+        {
+          "path": "/?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/pages/1?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/series?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/tags?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/about?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/en?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/series?_rsc=sL3ynyY5i-VUEVib",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/series/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/pages/1?_rsc=wwMOuUzeZch95hDk",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/pages/$d$id/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/tags?_rsc=hzvyQEdmHvs_FImb",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/tags/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/about?_rsc=hzcUC6YqarYE9pKE",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/about/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/en?_rsc=RBh_0f1QDb6IxaT6",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/en/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/2026/09/who-learns-to-judge-beta-reader?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/2026/09/who-learns-to-judge-beta-reader?_rsc=tZUd5dOe1WsGa_CJ",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/$d$year/$c$slug/__PAGE__",
+          "blocked": false
+        },
+        {
+          "path": "/archive?_rsc=5CB68i4pnAekjehf",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/_tree",
+          "blocked": false
+        },
+        {
+          "path": "/archive?_rsc=z_hnJOBPSqIaiPow",
+          "type": "fetch",
+          "prefetch": true,
+          "segment": "/archive/__PAGE__",
+          "blocked": false
+        }
+      ],
+      "bundles": [
+        {
+          "path": "chunks/0-fmj4tly07sb.js",
+          "sha256": "4cc228ef01b23b0823f634ea8a479ff21475e1b694bcf1067828a9799abcc27c",
+          "sourceMapSha256": "4091b69dd7fa85adbda6121bb217aba835ed7cba22ca317d846e40919be281ac",
+          "utf16Units": 27482,
+          "observedUtf16Units": 14200,
+          "mappedBytes": 27301,
+          "bytes": 27482,
+          "observedBytes": 14200,
+          "unobservedBytes": 13282,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/0ffz3zgqdx4r1.js",
+          "sha256": "b713402bc932a7f8051afc6f1c535403b1278fc5f9bcddc8e94f4f4c3f94d026",
+          "sourceMapSha256": "8c3c52ca77439f275a75662b571a3a330e8f00cfa2295d5b3181fd165038b53e",
+          "utf16Units": 70456,
+          "observedUtf16Units": 47075,
+          "mappedBytes": 70561,
+          "bytes": 70739,
+          "observedBytes": 47273,
+          "unobservedBytes": 23466,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/0nyzn6z501g_j.js",
+          "sha256": "88ce5b21d99d292467f8498b5eb10fbfe6fbc618562166a684cc59582814c307",
+          "sourceMapSha256": "aca75fc6ba84f67bad62ad55e6b9e95c4b4d5353a5bc6b1100aeb9a6d290390d",
+          "utf16Units": 26947,
+          "observedUtf16Units": 170,
+          "mappedBytes": 26806,
+          "bytes": 27003,
+          "observedBytes": 170,
+          "unobservedBytes": 26833,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1-afm-w36f4vy.js",
+          "sha256": "2ca7e1a30c9847d95c7851820ebc5854cf8f47cf1dd6b7f054e159e2fcbe030d",
+          "sourceMapSha256": "15a43ccf35955e19c889befce88ccc02ed0fba44fe0241177775750d045ef632",
+          "utf16Units": 166324,
+          "observedUtf16Units": 77423,
+          "mappedBytes": 166014,
+          "bytes": 166324,
+          "observedBytes": 77423,
+          "unobservedBytes": 88901,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1j1w1nhu6dxrt.js",
+          "sha256": "05394cbae896e3f3bbb14493e4d64a5edbad88dbc09c067e743a210da6f9d625",
+          "sourceMapSha256": "dc4fa6e3fdc1f54bb76d51cb32d44cc9fe9abebb58ab2387c55adb3e31d28cd8",
+          "utf16Units": 6601,
+          "observedUtf16Units": 4342,
+          "mappedBytes": 5374,
+          "bytes": 6603,
+          "observedBytes": 4342,
+          "unobservedBytes": 2261,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1snhfdc4wjc77.js",
+          "sha256": "3a29763a0a8f66e986e7c90d88680f95707190a34801537d8d1114d4f9e06eec",
+          "sourceMapSha256": "d5e1a8929ea238590f737e964376bc83d1550ab266d920c6105bfd433324c637",
+          "utf16Units": 308,
+          "observedUtf16Units": 130,
+          "mappedBytes": 130,
+          "bytes": 308,
+          "observedBytes": 130,
+          "unobservedBytes": 178,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/1u6p5---ohxyu.js",
+          "sha256": "4bab6e212d02e6592f00fc4075ee784e9c867d1812ec92dc886d4292f41fb94d",
+          "sourceMapSha256": "12c849480b6bb4097047401515b74e4976a05f073fc36814b5ab7edf8c3328ec",
+          "utf16Units": 29871,
+          "observedUtf16Units": 14827,
+          "mappedBytes": 29687,
+          "bytes": 29871,
+          "observedBytes": 14827,
+          "unobservedBytes": 15044,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2mwcn4ip6u6vf.js",
+          "sha256": "67ff4e8487518362e3bf2a5e4744083d0f6ac620eea07b8cc7cd7885119d16cd",
+          "sourceMapSha256": "dc2b8dbe996c62408e651ba67dd8f407b0a6544fa8c92cfa2312eaa91b837d0a",
+          "utf16Units": 228034,
+          "observedUtf16Units": 103046,
+          "mappedBytes": 227862,
+          "bytes": 228034,
+          "observedBytes": 103046,
+          "unobservedBytes": 124988,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2n-fxe4c7r0ez.js",
+          "sha256": "65ee695c17e111a1ef2b6173a5bde19b02de57f0eda19043ab6a6e6f52c1ddec",
+          "sourceMapSha256": "ee3bc20a764a0f9be0be7ead6dc3b8bc31b0bf1f89eaf23d818c3402040d46a8",
+          "utf16Units": 17766,
+          "observedUtf16Units": 6960,
+          "mappedBytes": 17587,
+          "bytes": 17766,
+          "observedBytes": 6960,
+          "unobservedBytes": 10806,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2om5tnima2b-9.js",
+          "sha256": "a8e43dcca030393f355c8870849589bb56f2c26ed3e506836c37f977a6c6201e",
+          "sourceMapSha256": "b0d49cd477701c39dc230981197ae2e48da5560770436443798907333fdb92a6",
+          "utf16Units": 9301,
+          "observedUtf16Units": 225,
+          "mappedBytes": 9219,
+          "bytes": 9416,
+          "observedBytes": 225,
+          "unobservedBytes": 9191,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/2ppy4wejm7zqj.js",
+          "sha256": "bd1ac6a830f14425fb7b6aa0caaaf94cfd5fe054d8a11fe045cc9188eda9345a",
+          "sourceMapSha256": "24842d81284841505333b9feaee2338972cb2d0cb2b65b278b172681fb35afea",
+          "utf16Units": 21108,
+          "observedUtf16Units": 10267,
+          "mappedBytes": 20934,
+          "bytes": 21113,
+          "observedBytes": 10270,
+          "unobservedBytes": 10843,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/3l9svhnbpuz9w.js",
+          "sha256": "ecf1098ca44b08842518d7248f1256ee66040ad7c6d5719cfc5fef4db009ea2b",
+          "sourceMapSha256": "16fe97e70327c145bf9b2e2a38d4d2b716fa705d9b76b36a1cb1d7ce15faf5e0",
+          "utf16Units": 29174,
+          "observedUtf16Units": 14385,
+          "mappedBytes": 29013,
+          "bytes": 29210,
+          "observedBytes": 14392,
+          "unobservedBytes": 14818,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/3xp0c2d_gg6j1.js",
+          "sha256": "056030644f3d2c1f8d10bfce8218d33eae5677b53bb6c56123901fd8c5399e13",
+          "sourceMapSha256": "0f7d4e2fd92bd55f9823b17c2366b92a39d7b192907562e7e636d91b02b497ea",
+          "utf16Units": 27416,
+          "observedUtf16Units": 184,
+          "mappedBytes": 27228,
+          "bytes": 27425,
+          "observedBytes": 184,
+          "unobservedBytes": 27241,
+          "unmeasuredBytes": 0
+        },
+        {
+          "path": "chunks/turbopack-3s2yg9bj7op7y.js",
+          "sha256": "3c8d0bdc3ed8e692a542a2ecd30f825f66a8dc769127f628088ec8cbb97aa43b",
+          "sourceMapSha256": "7d58faa88684f3805e1b11ec69912eb4a83a0786818d5531458745b6a63a4373",
+          "utf16Units": 10990,
+          "observedUtf16Units": 5236,
+          "mappedBytes": 10649,
+          "bytes": 10990,
+          "observedBytes": 5236,
+          "unobservedBytes": 5754,
+          "unmeasuredBytes": 0
+        }
+      ],
+      "packages": [
+        {
+          "package": "next",
+          "bytes": 512705,
+          "observedBytes": 218045,
+          "unobservedBytes": 257551,
+          "unmeasuredBytes": 37109
+        },
+        {
+          "package": "[unmapped]",
+          "bytes": 212319,
+          "observedBytes": 3220,
+          "unobservedBytes": 699,
+          "unmeasuredBytes": 208400
+        },
+        {
+          "package": "[application]",
+          "bytes": 122816,
+          "observedBytes": 50191,
+          "unobservedBytes": 56742,
+          "unmeasuredBytes": 15883
+        },
+        {
+          "package": "date-fns",
+          "bytes": 37212,
+          "observedBytes": 6730,
+          "unobservedBytes": 30482,
+          "unmeasuredBytes": 0
+        },
+        {
+          "package": "@panzoom/panzoom",
+          "bytes": 18718,
+          "observedBytes": 0,
+          "unobservedBytes": 9359,
+          "unmeasuredBytes": 9359
+        },
+        {
+          "package": "minisearch",
+          "bytes": 17587,
+          "observedBytes": 6815,
+          "unobservedBytes": 10772,
+          "unmeasuredBytes": 0
+        }
+      ],
+      "sources": [
+        {
+          "source": "turbopack:///[project]/node_modules/.pnpm/minisearch@7.2.0/node_modules/minisearch/src/MiniSearch.ts",
+          "package": "minisearch",
+          "bytes": 13590,
+          "observedBytes": 4341,
+          "unobservedBytes": 9249,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/Mermaid.tsx",
+          "package": "[application]",
+          "bytes": 10801,
+          "observedBytes": 8,
+          "unobservedBytes": 5213,
+          "unmeasuredBytes": 5580
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/TableOfContents.tsx",
+          "package": "[application]",
+          "bytes": 6739,
+          "observedBytes": 8,
+          "unobservedBytes": 6731,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/ImageZoom.tsx",
+          "package": "[application]",
+          "bytes": 4654,
+          "observedBytes": 7,
+          "unobservedBytes": 2320,
+          "unmeasuredBytes": 2327
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/search/SiteSearch.tsx",
+          "package": "[application]",
+          "bytes": 4579,
+          "observedBytes": 4181,
+          "unobservedBytes": 398,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/about/AboutHero.tsx",
+          "package": "[application]",
+          "bytes": 3449,
+          "observedBytes": 23,
+          "unobservedBytes": 3426,
+          "unmeasuredBytes": 0
+        },
+        {
+          "source": "turbopack:///[project]/.cache/bundle-trace-study/app/src/components/post/ImageZoom.styles.ts",
+          "package": "[application]",
+          "bytes": 120,
+          "observedBytes": 0,
+          "unobservedBytes": 60,
+          "unmeasuredBytes": 60
+        }
+      ],
+      "warningCount": 38
+    }
+  ]
+}

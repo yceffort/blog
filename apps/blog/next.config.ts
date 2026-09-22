@@ -52,6 +52,10 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const config: NextConfig = {
+  // Local bundle analysis gets its own build and browser source maps.
+  ...(process.env.BUNDLE_TRACE === '1'
+    ? {distDir: '.next/bundle-trace', productionBrowserSourceMaps: true}
+    : {}),
   reactStrictMode: true,
   cacheComponents: true,
   images: {

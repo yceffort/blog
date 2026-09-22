@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+  <title>bundle-trace · Coverage report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fa;
+      --panel: #fff;
+      --border: #dce2e9;
+      --muted: #5f6d7c;
+      --text: #202c3a;
+      --observed: #176849;
+      --unobserved: #99411b;
+      --unmeasured: #536583;
+      --subtle: #f6f8fb;
+      --hover: #edf2f7;
+      --selected: #e8edff;
+      --selection: #3e57bd;
+      --code: #f8fafc;
+      --tile-observed: #c1e2d4;
+      --tile-unobserved: #f0d2bf;
+      --tile-unmeasured: #dce3ef;
+      --mark-observed: #deeee5;
+      --mark-unobserved: #f5e3d8;
+      --mark-unmeasured: #e1e7f1;
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #11161d; --panel: #182029; --border: #2b3542; --muted: #a2afbf; --text: #ecf0f5;
+      --observed: #85d7b9; --unobserved: #edac8f; --unmeasured: #a6b4cf;
+      --subtle: #111820; --hover: #253240; --selected: #273250; --selection: #a3b5ff; --code: #0f161e;
+      --tile-observed: #2c4b42; --tile-unobserved: #593b31; --tile-unmeasured: #343e50;
+      --mark-observed: #19372e; --mark-unobserved: #503127; --mark-unmeasured: #2f3546;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --bg: #11161d; --panel: #182029; --border: #2b3542; --muted: #a2afbf; --text: #ecf0f5;
+        --observed: #85d7b9; --unobserved: #edac8f; --unmeasured: #a6b4cf;
+        --subtle: #111820; --hover: #253240; --selected: #273250; --selection: #a3b5ff; --code: #0f161e;
+        --tile-observed: #2c4b42; --tile-unobserved: #593b31; --tile-unmeasured: #343e50;
+        --mark-observed: #19372e; --mark-unobserved: #503127; --mark-unmeasured: #2f3546;
+      }
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.65 system-ui, sans-serif; }
+    main { max-width: 1720px; margin: auto; padding: 40px; }
+    header, .section-head, .controls, .pager, .inspector-heading, .range-nav { display: flex; align-items: center; gap: 16px; }
+    header, .section-head, .pager, .inspector-heading { justify-content: space-between; }
+    h1 { margin: 8px 0 0; font-size: 32px; font-weight: 650; letter-spacing: -1px; }
+    h2 { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -.3px; }
+    p { margin: 0; }
+    .eyebrow { color: var(--observed); font-size: 11px; letter-spacing: 2px; }
+    .muted, small { color: var(--muted); }
+    .intro { margin-top: 14px; color: var(--muted); }
+    .summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 32px 0 14px; }
+    .stat { padding: 22px 24px; border: 1px solid var(--border); border-radius: 12px; }
+    .stat strong { display: block; margin-top: 8px; font-size: 30px; line-height: 1.3; font-weight: 600; letter-spacing: -.7px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .stat strong span { margin-left: 5px; font-size: 15px; letter-spacing: 0; color: var(--muted); font-weight: 400; }
+    .observed { color: var(--observed); }
+    .unobserved { color: var(--unobserved); }
+    .unmeasured { color: var(--unmeasured); }
+    .metric-note { font-size: 12px; color: var(--muted); }
+    .workspace { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 32px; align-items: start; }
+    .workspace.inspecting { grid-template-columns: 300px minmax(0, 1fr); }
+    .workspace.inspecting.focus { grid-template-columns: minmax(0, 1fr); }
+    .workspace.focus #explorer { display: none; }
+    .workspace.inspecting #explorer { padding: 22px 16px; }
+    .workspace.inspecting #explorer .section-head small { flex-basis: 100%; }
+    .workspace.inspecting #explorer input[type="search"] { flex-basis: 100%; }
+    .workspace.inspecting #explorer .table-wrap { max-height: 55vh; overflow: auto; }
+    .workspace.inspecting #explorer th:first-child { width: 68%; }
+    .workspace.inspecting #explorer th:nth-child(2), .workspace.inspecting #explorer td:nth-child(2),
+    .workspace.inspecting #explorer th:nth-child(4), .workspace.inspecting #explorer td:nth-child(4) { display: none; }
+    .workspace.inspecting #explorer .breadcrumbs { flex-wrap: wrap; }
+    .workspace.inspecting #inspect-bundle { margin-left: 0; }
+    .panel { min-width: 0; padding: 26px; border: 1px solid var(--border); border-radius: 14px; background: var(--panel); }
+    button, input, select { font: inherit; color: inherit; border: 1px solid var(--border); background: var(--subtle); border-radius: 7px; padding: 8px 12px; }
+    button { cursor: pointer; }
+    button:hover:not(:disabled) { background: var(--hover); }
+    button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--selection); outline-offset: 3px; }
+    button:disabled { cursor: default; opacity: .35; }
+    button[aria-pressed="true"] { color: var(--selection); background: var(--selected); border-color: var(--border); }
+    .quiet { background: transparent; border-color: transparent; }
+    .section-head { margin-bottom: 22px; flex-wrap: wrap; }
+    .section-head small { font-size: 12px; }
+    .breadcrumbs { display: flex; align-items: center; gap: 10px; min-width: 0; margin: -4px 0 16px; }
+    #scope { color: var(--muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #back { flex-shrink: 0; padding-left: 0; color: var(--text); }
+    #inspect-bundle { margin-left: auto; font-size: 12px; flex-shrink: 0; }
+    .controls { flex-wrap: wrap; gap: 12px; }
+    input[type="search"] { flex: 1; min-width: 170px; padding: 11px 14px; }
+    select { font-size: 12px; padding: 9px 10px; }
+    .check { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--muted); white-space: nowrap; }
+    .check input { accent-color: var(--selection); }
+    .table-wrap { margin-top: 20px; }
+    table { border-collapse: collapse; width: 100%; table-layout: fixed; font-size: 13px; }
+    th { text-align: right; padding: 0 8px 12px; font-size: 11px; color: var(--muted); font-weight: 500; white-space: nowrap; }
+    th:first-child { text-align: left; width: 49%; padding-left: 10px; }
+    td { border-top: 1px solid var(--border); padding: 13px 8px; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    td:first-child { text-align: left; padding-left: 10px; }
+    td:not(:first-child) { font-size: 12px; }
+    tr.selected { background: var(--selected); }
+    tbody tr:hover { background: var(--hover); }
+    .file-button { display: block; min-width: 0; width: 100%; border: 0; background: none; padding: 0; text-align: left; border-radius: 2px; }
+    .file-button:hover:not(:disabled) { background: none; }
+    .file-name, .file-subtitle { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .file-name { font-size: 13px; font-weight: 500; }
+    .file-subtitle { font-size: 11px; margin-top: 3px; color: var(--muted); }
+    .pager { margin-top: 18px; color: var(--muted); font-size: 12px; }
+    .pager div { display: flex; align-items: center; gap: 8px; }
+    .pager button { padding: 4px 10px; }
+    .empty { text-align: center; padding: 40px 16px; color: var(--muted); }
+    details { overflow-wrap: anywhere; }
+    summary { cursor: pointer; color: var(--muted); font-size: 12px; padding: 12px 0; }
+    .visualization { margin-top: 22px; border-top: 1px solid var(--border); }
+    .legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 11px; }
+    .legend i { display: inline-block; width: 7px; height: 7px; margin-right: 5px; border-radius: 2px; background: currentColor; }
+    .treemap { position: relative; height: 280px; margin: 14px 0; }
+    .tile { position: absolute; min-width: 0; min-height: 0; padding: 0; border: 0; border-radius: 6px; box-shadow: inset 0 0 0 3px var(--panel); overflow: hidden; text-align: left; font-size: 12px; }
+    .tile div { padding: 14px; }
+    .tile span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .tile strong { display: block; font-weight: 500; margin-top: 4px; font-size: 13px; }
+    .tile.rest { color: var(--muted); }
+    #inspector { position: sticky; top: 24px; }
+    .header-tools, .inspector-tools { display: flex; align-items: center; gap: 14px; }
+    .inspector-tools { flex-shrink: 0; gap: 8px; }
+    #toggle-explorer { font-size: 12px; }
+    .inspector-heading { align-items: start; gap: 12px; }
+    .inspector-heading > div { min-width: 0; }
+    #source-title { font-size: 20px; overflow-wrap: anywhere; }
+    #source-meta { margin-top: 5px; font-size: 12px; color: var(--muted); }
+    #close-inspector { flex-shrink: 0; font-size: 18px; line-height: 1; padding: 7px; }
+    #source-info { margin-top: 10px; }
+    #full-path { display: block; padding: 12px; background: var(--subtle); border-radius: 6px; font-size: 11px; }
+    #binding { font-size: 11px; margin-top: 10px; color: var(--muted); }
+    .code-controls { justify-content: space-between; margin-top: 20px; }
+    .code-controls label { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+    .tabs { display: flex; gap: 4px; padding: 4px; border-radius: 9px; background: var(--subtle); }
+    .tabs button { border-color: transparent; font-size: 12px; background: none; padding: 7px 12px; }
+    .tabs button[aria-pressed="true"] { color: var(--text); border-color: var(--border); background: var(--panel); }
+    .range-nav { justify-content: space-between; margin: 18px 0 12px; gap: 8px; font-size: 12px; }
+    .range-nav > div { display: flex; align-items: center; gap: 12px; color: var(--muted); }
+    .range-nav button { padding: 4px 10px; }
+    #active-range { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 11px; }
+    .code { position: relative; background: var(--code); white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; padding: 20px; border: 1px solid var(--border); border-radius: 9px; height: clamp(520px, calc(100vh - 320px), 1000px); overflow: auto; font: 13px/1.85 ui-monospace, monospace; tab-size: 2; }
+    .source-line { display: block; min-height: 1.85em; }
+    .source-line.active { background: var(--selected); box-shadow: -3px 0 var(--selection); }
+    .code mark { color: inherit; cursor: pointer; border-radius: 2px; background: transparent; }
+    .code mark.observed { background: var(--mark-observed); }
+    .code mark.unobserved { background: var(--mark-unobserved); }
+    .code mark.unmeasured { background: var(--mark-unmeasured); }
+    .code mark.dim { background: transparent; color: var(--muted); }
+    .code mark.active { outline: 2px solid var(--selection); }
+    .code-caption { margin-bottom: 10px; font-size: 11px; color: var(--muted); overflow-wrap: anywhere; }
+    .range-picker { margin-top: 14px; border-top: 1px solid var(--border); }
+    .range-picker summary { display: list-item; }
+    #range-count { margin-left: 8px; font-variant-numeric: tabular-nums; }
+    .range-list { max-height: 180px; overflow: auto; display: flex; flex-wrap: wrap; gap: 6px; }
+    .range-list button { font: 11px ui-monospace, monospace; padding: 7px 10px; }
+    .notes { margin-top: 24px; padding: 10px 24px; background: none; }
+    .notes p, .notes li { font-size: 12px; color: var(--muted); }
+    #warnings { max-height: 250px; overflow: auto; }
+    @media (max-width: 1050px) {
+      main { padding: 32px 24px; }
+      .workspace.inspecting { grid-template-columns: minmax(0, 1fr); }
+      #inspector { position: static; scroll-margin-top: 16px; }
+    }
+    @media (max-width: 600px) {
+      main { padding: 28px 16px; }
+      header { align-items: start; gap: 10px; flex-wrap: wrap; }
+      h1 { font-size: 26px; }
+      #meta { font-size: 11px; }
+      .header-tools { gap: 12px; }
+      .inspector-heading { flex-wrap: wrap; }
+      .inspector-tools { margin-left: auto; }
+      .intro { font-size: 12px; max-width: 30em; }
+      .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 24px; }
+      .stat { padding: 16px; }
+      .stat strong { font-size: 25px; }
+      .stat strong span { font-size: 12px; }
+      .stat small { font-size: 11px; }
+      .panel { padding: 18px 14px; }
+      .workspace { margin-top: 24px; gap: 18px; }
+      .section-head { margin-bottom: 16px; gap: 6px; }
+      .controls { gap: 10px; }
+      .controls input[type="search"] { flex-basis: 100%; }
+      .controls select { flex: 1; }
+      th:first-child { width: 44%; }
+      th, td { padding-left: 4px; padding-right: 4px; }
+      th:first-child, td:first-child { padding-left: 2px; }
+      td:not(:first-child) { font-size: 11px; }
+      .file-name { font-size: 12px; }
+      .file-subtitle { font-size: 10px; }
+      .code-controls { gap: 12px; }
+      .code { padding: 14px; height: 65vh; min-height: 420px; }
+      #inspect-bundle { font-size: 11px; padding: 5px 7px; }
+      .breadcrumbs { gap: 6px; }
+      #scope { font-size: 12px; }
+      .notes { padding: 8px 16px; }
+    }
+    @media print {
+      body { color: #111; background: white; }
+      .panel, .stat { background: white; }
+      #inspector { position: static; }
+      .code { height: auto; max-height: none; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div><div class="eyebrow">BUNDLE TRACE</div><h1>Bundle coverage</h1></div>
+    <div class="header-tools"><span class="muted" id="meta"></span><select id="theme" aria-label="Color theme"><option value="system">System theme</option><option value="light">Light</option><option value="dark">Dark</option></select></div>
+  </header>
+  <p class="intro">Follow unobserved code back to its source.</p>
+  <div class="summary" id="summary"></div>
+  <p class="metric-note">Sizes are uncompressed generated code. Unobserved means not executed in these recordings, not safe to delete. Unmeasured means no recording is available.</p>
+
+  <div class="workspace" id="workspace">
+    <section class="panel" id="explorer">
+      <div class="section-head"><h2 id="explorer-title">Explore chunks</h2><small id="selection"></small></div>
+      <div class="breadcrumbs">
+        <button id="back" class="quiet" hidden>← All chunks</button>
+        <span id="scope"></span>
+        <button id="inspect-bundle" hidden>Inspect chunk</button>
+      </div>
+      <div class="controls">
+        <input id="search" type="search" aria-label="Search files or packages" placeholder="Find a file or package">
+        <select id="sort" aria-label="Sort files"><option value="unobservedBytes">Most unobserved</option><option value="bytes">Largest first</option><option value="name">Name</option></select>
+        <label class="check" id="app-filter" hidden><input id="app-only" type="checkbox"> App code only</label>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th id="name-heading">File</th><th>Total</th><th>Unobserved</th><th>Unmeasured</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <p id="files-empty" class="empty" hidden>No files match your search.</p>
+      </div>
+      <div class="pager">
+        <span id="file-page" aria-live="polite"></span>
+        <div><button id="files-prev" aria-label="Previous file page">←</button><button id="files-next" aria-label="Next file page">→</button></div>
+      </div>
+      <details id="map-details" class="visualization">
+        <summary>Show size distribution</summary>
+        <div class="legend"><span class="observed"><i></i>Observed</span><span class="unobserved"><i></i>Unobserved</span><span class="unmeasured"><i></i>Unmeasured</span></div>
+        <div id="treemap" class="treemap" aria-label="Size treemap"></div>
+        <p class="metric-note">Up to 11 large files are shown individually. Smaller files are grouped; every file remains available in the list.</p>
+      </details>
+    </section>
+
+    <section class="panel" id="inspector" hidden>
+      <div class="inspector-heading">
+        <div><h2 id="source-title">Inspect code</h2><p id="source-meta"></p></div>
+        <div class="inspector-tools"><button id="toggle-explorer" aria-pressed="false">Expand code</button><button id="close-inspector" class="quiet" aria-label="Close code inspector">×</button></div>
+      </div>
+      <details id="source-info"><summary>Full path and verification</summary><code id="full-path"></code><p id="binding"></p></details>
+      <div class="controls code-controls">
+        <div class="tabs" role="group" aria-label="Code view">
+          <button id="view-original" aria-pressed="true">Original source</button><button id="view-generated" aria-pressed="false">Generated code</button>
+        </div>
+        <label>Coverage state <select id="status"><option value="all">All</option><option value="unobserved">Unobserved</option><option value="observed">Observed</option><option value="unmeasured">Unmeasured</option></select></label>
+      </div>
+      <div class="range-nav">
+        <span id="active-range"></span>
+        <div><button id="range-prev" aria-label="Previous code range">←</button><span id="range-position" aria-live="polite"></span><button id="range-next" aria-label="Next code range">→</button></div>
+      </div>
+      <div id="original-view">
+        <p class="code-caption">Blue marks the selected source-map location, not execution. Coverage applies to the generated range; it does not describe this entire original line.</p>
+        <p id="original-label" class="code-caption"></p>
+        <pre id="original-code" class="code" tabindex="0">—</pre>
+      </div>
+      <div id="generated-view" hidden>
+        <p class="code-caption">Green: observed execution. Orange: unobserved. Gray: unmeasured. Blue outline: selected range.</p>
+        <pre id="generated" class="code" tabindex="0"></pre>
+      </div>
+      <details id="range-details" class="range-picker">
+        <summary>Choose a range<span id="range-count"></span></summary>
+        <div id="ranges" class="range-list"></div>
+      </details>
+    </section>
+  </div>
+  <section class="panel notes">
+    <details><summary id="warnings-title">Analysis details and warnings</summary><div id="scenarios"></div><ul id="warnings"></ul></details>
+  </section>
+</main>
+__BUNDLE_TRACE_PAYLOADS__
+<script>
+(async () => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  $('meta').textContent = 'Loading report…';
+  async function decodeData(id) {
+    const data = $(id);
+    let payload = data.textContent;
+    if (data.dataset.encoding === 'gzip-base64') {
+      const bytes = Uint8Array.from(atob(payload), c => c.charCodeAt(0));
+      payload = await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
+    }
+    const decoded = JSON.parse(payload);
+    data.dataset.decodeCount = String(Number(data.dataset.decodeCount || 0) + 1);
+    return decoded;
+  }
+  const report = await decodeData('report-data');
+  $('report-data').textContent = '';
+  const number = n => n.toLocaleString('en-US');
+  const labels = {observed: 'Observed', unobserved: 'Unobserved', unmeasured: 'Unmeasured'};
+  const state = {bundle: null, source: null, page: 0, inspector: false, focus: false, view: 'original'};
+  let loaded = null, pending = null, codeRequest = 0;
+  async function loadChunk(index) {
+    if (loaded?.index === index) return loaded.bundle;
+    if (pending?.index === index) return pending.promise;
+    loaded = null;
+    const promise = decodeData('chunk-data-' + index).then(details => {
+      const meta = report.bundles[index];
+      const bundle = {...meta, ...details, sources: meta.sources.map((source, i) => ({...source, content: details.contents[i]}))};
+      if (state.inspector && state.bundle === index) loaded = {index, bundle};
+      return bundle;
+    }).finally(() => { if (pending?.promise === promise) pending = null; });
+    pending = {index, promise};
+    return promise;
+  }
+  const searchText = report.bundles.map(bundle => [bundle.path, ...bundle.sources.flatMap(source => [source.source, source.package])].join(' ').toLowerCase());
+  const pageSize = 10;
+  const basename = path => path.split('/').pop() || path;
+  const sizeParts = bytes => {
+    const unit = bytes >= 1e6 ? 'MB' : bytes >= 1e3 ? 'KB' : 'B';
+    const value = bytes / (unit === 'MB' ? 1e6 : unit === 'KB' ? 1e3 : 1);
+    return [value.toLocaleString('en-US', {maximumFractionDigits: unit === 'B' ? 0 : value >= 100 ? 0 : value >= 10 ? 1 : 2}), unit];
+  };
+  const size = bytes => sizeParts(bytes).join(' ');
+  const spanAt = (bundle, index) => {
+    const s = bundle.spans[index];
+    return {index, start: s[0], end: s[1], startUtf16: s[2], endUtf16: s[3], source: s[4], status: ['observed', 'unobserved', 'unmeasured'][s[5]], original: s[6] === null ? null : {line: s[6], column: s[7]}};
+  };
+  const node = (tag, text, className) => {
+    const el = document.createElement(tag);
+    if (text !== undefined) el.textContent = text;
+    if (className) el.className = className;
+    return el;
+  };
+  $('meta').textContent = report.bundles.length + ' chunks';
+  $('sort').value = report.totals.unobservedBytes ? 'unobservedBytes' : 'bytes';
+  for (const [key, label, cls] of [['bytes', 'Total generated', ''], ['observedBytes', 'Observed', 'observed'], ['unobservedBytes', 'Unobserved', 'unobserved'], ['unmeasuredBytes', 'Unmeasured', 'unmeasured']]) {
+    const card = node('div', undefined, 'stat'), [value, unit] = sizeParts(report.totals[key]), strong = node('strong', value, cls);
+    strong.append(node('span', unit));
+    card.title = number(report.totals[key]) + ' UTF-8 bytes';
+    card.append(node('small', label), strong);
+    $('summary').append(card);
+  }
+  $('scenarios').append(node('p', 'Scenarios: ' + (report.scenarios.join(', ') || 'Static analysis · no recordings')));
+  $('scenarios').append(node('p', report.excludedBundles.length + ' chunks excluded by analysis filters. Totals and budgets cover selected chunks. On-screen search and app-code filtering do not change overall totals.'));
+  if (report.compression) $('scenarios').append(node('p', 'Sum of compressed files: gzip (level 6) ' + size(report.compression.gzipBytes) + ' / Brotli (quality 5) ' + size(report.compression.brotliBytes) + '. This is not actual server transfer size or removable code.'));
+  $('warnings-title').textContent = 'Analysis details and warnings · ' + report.warnings.length + '';
+  for (const warning of report.warnings) $('warnings').append(node('li', warning));
+  for (const failure of report.budgetFailures) $('warnings').append(node('li', 'Budget exceeded: ' + failure, 'unobserved'));
+  if (report.budgetFailures.length) {
+    $('warnings-title').textContent += ' · Budget failures: ' + report.budgetFailures.length + '';
+    $('warnings-title').parentElement.open = true;
+  }
+
+  function rows() {
+    const query = $('search').value.toLowerCase(), app = $('app-only').checked, order = $('sort').value;
+    return (state.bundle === null ? report.bundles : report.bundles[state.bundle].sources)
+      .map((row, index) => ({...row, index, name: row.path || row.source}))
+      .filter(row => (state.bundle === null ? searchText[row.index] : (row.name + ' ' + row.package).toLowerCase()).includes(query) && (!app || state.bundle === null || row.package === '[application]'))
+      .sort((a, b) => (order === 'name' ? 0 : b[order] - a[order]) || a.name.localeCompare(b.name));
+  }
+
+  function subtitle(row) {
+    if (state.bundle !== null) {
+      if (row.package === '[unmapped]') return 'No source mapping';
+      if (row.package !== '[application]') return row.package;
+      const parent = row.name.split('/').slice(-2, -1)[0];
+      return parent ? 'App code · ' + parent : 'App code';
+    }
+    const names = [...new Set(row.sources.map(source => source.package).filter(name => !name.startsWith('[')))];
+    const context = names.slice(0, 2).join(', ') || row.sources.length + ' sources';
+    return row.unmeasuredBytes === row.bytes ? 'Unmeasured · ' + context : context;
+  }
+
+  function updateView() {
+    $('original-view').hidden = state.view !== 'original';
+    $('generated-view').hidden = state.view !== 'generated';
+    $('view-original').setAttribute('aria-pressed', String(state.view === 'original'));
+    $('view-generated').setAttribute('aria-pressed', String(state.view === 'generated'));
+    scrollOriginal();
+  }
+
+  function scrollOriginal() {
+    const code = $('original-code'), anchor = code.querySelector('.source-line.active');
+    if (anchor && state.view === 'original') code.scrollTop = Math.max(0, anchor.offsetTop - code.clientHeight * .3);
+  }
+
+  function select(index) {
+    if (state.bundle === null) {
+      state.bundle = index;
+      state.source = null;
+      state.page = 0;
+      state.inspector = false;
+      state.focus = false;
+      $('search').value = '';
+    } else {
+      state.source = index;
+      state.inspector = true;
+      state.focus = false;
+      const source = report.bundles[state.bundle].sources[index];
+      state.view = source.hasContent ? 'original' : 'generated';
+      $('status').value = source.unobservedBytes ? 'unobserved' : 'all';
+    }
+    $('source-info').open = false;
+    $('range-details').open = false;
+    render();
+    renderCode();
+    if (state.inspector && matchMedia('(max-width:1050px)').matches) $('inspector').scrollIntoView({block: 'start'});
+  }
+
+  function color(row) {
+    const total = row.bytes || 1, u = row.unobservedBytes / total * 100, o = row.observedBytes / total * 100;
+    return 'linear-gradient(90deg,var(--tile-unobserved) 0%,var(--tile-unobserved) ' + u + '%,var(--tile-observed) ' + u + '%,var(--tile-observed) ' + (u + o) + '%,var(--tile-unmeasured) ' + (u + o) + '%)';
+  }
+
+  function treemap(items, x, y, w, h) {
+    if (!items.length) return;
+    if (items.length === 1) {
+      const row = items[0], tile = node(row.rest ? 'div' : 'button', undefined, 'tile' + (row.rest ? ' rest' : ''));
+      tile.style.cssText = 'left:' + x + '%;top:' + y + '%;width:' + w + '%;height:' + h + '%;background:' + color(row);
+      tile.title = row.name + ' · ' + number(row.bytes) + ' B';
+      tile.setAttribute('aria-label', tile.title);
+      const label = node('div');
+      label.hidden = w / 100 * $('treemap').clientWidth < 100 || h / 100 * $('treemap').clientHeight < 65;
+      label.append(node('span', basename(row.name)), node('strong', size(row.bytes)));
+      tile.append(label);
+      if (!row.rest) tile.onclick = () => select(row.index);
+      $('treemap').append(tile);
+      return;
+    }
+    const total = items.reduce((sum, row) => sum + row.bytes, 0);
+    let partial = 0, split = 0;
+    while (split < items.length - 1 && partial < total / 2) partial += items[split++].bytes;
+    const ratio = partial / total;
+    if (w * $('treemap').clientWidth >= h * $('treemap').clientHeight) {
+      treemap(items.slice(0, split), x, y, w * ratio, h);
+      treemap(items.slice(split), x + w * ratio, y, w * (1 - ratio), h);
+    } else {
+      treemap(items.slice(0, split), x, y, w, h * ratio);
+      treemap(items.slice(split), x, y + h * ratio, w, h * (1 - ratio));
+    }
+  }
+
+  function renderMap() {
+    if (!$('map-details').open) return;
+    const list = rows().filter(row => row.bytes > 0).sort((a, b) => b.bytes - a.bytes);
+    const total = list.reduce((sum, row) => sum + row.bytes, 0);
+    const visible = list.filter((row, index) => index < 11 && row.bytes >= total * .025);
+    const other = list.slice(visible.length);
+    if (other.length) {
+      const rest = {name: other.length + ' other files', rest: true, bytes: 0, observedBytes: 0, unobservedBytes: 0, unmeasuredBytes: 0};
+      for (const row of other) for (const key of ['bytes', 'observedBytes', 'unobservedBytes', 'unmeasuredBytes']) rest[key] += row[key];
+      visible.push(rest);
+    }
+    $('treemap').replaceChildren();
+    treemap(visible, 0, 0, 100, 100);
+  }
+
+  function render() {
+    const list = rows(), inside = state.bundle !== null;
+    const pages = Math.max(1, Math.ceil(list.length / pageSize));
+    state.page = Math.min(state.page, pages - 1);
+    $('workspace').classList.toggle('inspecting', state.inspector);
+    $('workspace').classList.toggle('focus', state.inspector && state.focus);
+    $('toggle-explorer').textContent = state.focus ? 'Show file list' : 'Expand code';
+    $('toggle-explorer').setAttribute('aria-pressed', String(state.focus));
+    $('inspector').hidden = !state.inspector;
+    $('back').hidden = !inside;
+    $('scope').hidden = !inside;
+    $('inspect-bundle').hidden = !inside;
+    $('app-filter').hidden = !inside;
+    $('explorer-title').textContent = inside ? 'Source files' : 'Explore chunks';
+    $('scope').textContent = inside ? basename(report.bundles[state.bundle].path) : '';
+    $('scope').title = inside ? report.bundles[state.bundle].path : '';
+    $('selection').textContent = number(list.length) + ' files · ' + size(list.reduce((sum, row) => sum + row.bytes, 0));
+    $('rows').replaceChildren();
+    for (const row of list.slice(state.page * pageSize, (state.page + 1) * pageSize)) {
+      const tr = node('tr'), name = node('td'), button = node('button', undefined, 'file-button');
+      if (inside && state.source === row.index) tr.className = 'selected';
+      button.setAttribute('aria-label', row.name);
+      button.setAttribute('aria-pressed', String(inside && state.source === row.index));
+      button.title = row.name;
+      button.append(node('span', basename(row.name), 'file-name'), node('span', subtitle(row), 'file-subtitle'));
+      button.onclick = () => select(row.index);
+      name.append(button);
+      tr.append(name);
+      for (const [key, cls] of [['bytes', ''], ['unobservedBytes', 'unobserved'], ['unmeasuredBytes', 'unmeasured']]) {
+        const cell = node('td', size(row[key]), row[key] ? cls : 'muted');
+        cell.title = number(row[key]) + ' UTF-8 bytes';
+        tr.append(cell);
+      }
+      $('rows').append(tr);
+    }
+    $('files-empty').hidden = list.length !== 0;
+    $('file-page').textContent = list.length ? (state.page * pageSize + 1) + '–' + Math.min((state.page + 1) * pageSize, list.length) + ' / ' + number(list.length) + ' files' : '0 files';
+    $('files-prev').disabled = state.page === 0;
+    $('files-next').disabled = state.page + 1 >= pages;
+    renderMap();
+  }
+
+  function original(bundle, span) {
+    const source = bundle.sources[span.source], position = span.original;
+    if (!position) {
+      $('original-label').textContent = 'No source mapping is available for this range.';
+      $('original-code').textContent = 'Switch to Generated code to inspect the bundle.';
+      return;
+    }
+    $('original-label').textContent = basename(source.source) + ':' + (position.line + 1) + ':' + (position.column + 1) + ' · source-map anchor (approximate)';
+    $('original-label').title = source.source + ' — this is not an exact original-source coverage range.';
+    if (source.content == null) {
+      $('original-code').textContent = 'This source map has no sourcesContent. Only the original location is available.';
+      return;
+    }
+    const lines = source.content.split(/\r\n|[\n\r\u2028\u2029]/), start = Math.max(0, position.line - 20), end = Math.min(lines.length, position.line + 61);
+    const fragment = document.createDocumentFragment();
+    for (let line = start; line < end; line++) fragment.append(node('span', String(line + 1).padStart(String(end).length, ' ') + '  ' + lines[line], 'source-line' + (line === position.line ? ' active' : '')));
+    $('original-code').replaceChildren(fragment);
+    scrollOriginal();
+  }
+
+  async function renderCode() {
+    const request = ++codeRequest;
+    $('ranges').replaceChildren();
+    $('generated').replaceChildren();
+    $('original-code').textContent = '—';
+    $('range-prev').onclick = null;
+    $('range-next').onclick = null;
+    $('range-prev').disabled = true;
+    $('range-next').disabled = true;
+    if (!state.inspector || state.bundle === null) { loaded = null; return; }
+    $('active-range').textContent = 'Loading code…';
+    $('range-position').textContent = '';
+    $('original-label').textContent = '';
+    $('inspector').setAttribute('aria-busy', 'true');
+    let bundle;
+    try { bundle = await loadChunk(state.bundle); }
+    catch (error) {
+      if (request === codeRequest) { $('active-range').textContent = 'Could not load code: ' + error.message; $('inspector').setAttribute('aria-busy', 'false'); }
+      return;
+    }
+    if (request !== codeRequest) return;
+    $('inspector').setAttribute('aria-busy', 'false');
+    const source = state.source === null ? null : bundle.sources[state.source], status = $('status').value;
+    const path = source ? source.source : bundle.path;
+    $('source-title').textContent = basename(path);
+    $('source-meta').textContent = (source ? (source.package === '[application]' ? 'App code' : source.package) : 'Entire chunk') + ' · ' + size((source || bundle).bytes);
+    $('full-path').textContent = path;
+    $('binding').textContent = bundle.verification.length ? bundle.verification.map(v => v.scenario + ' · source ' + v.source + ' / map ' + v.sourceMap).join(' | ') : 'No recording · all ranges are unmeasured';
+    updateView();
+    const spans = [];
+    let bytes = 0, selected = 0;
+    for (let index = 0; index < bundle.spans.length; index++) {
+      const span = spanAt(bundle, index);
+      if ((state.source === null || span.source === state.source) && (status === 'all' || span.status === status)) {
+        spans.push(index);
+        bytes += span.end - span.start;
+      }
+    }
+    $('range-count').textContent = number(spans.length) + ' ranges · ' + number(bytes) + ' B';
+    const focus = span => {
+      const position = spans.indexOf(span.index);
+      if (position !== -1) selected = position;
+      $('range-position').textContent = spans.length ? (selected + 1) + ' / ' + number(spans.length) : '0 / 0';
+      $('range-prev').disabled = selected === 0;
+      $('range-next').disabled = selected + 1 >= spans.length;
+      $('active-range').textContent = labels[span.status] + ' · ' + size(span.end - span.start);
+      $('active-range').title = 'Generated UTF-8 range [' + span.start + ', ' + span.end + ')';
+      const first = Math.max(0, span.index - 12), last = Math.min(bundle.spans.length, span.index + 13);
+      $('generated').replaceChildren();
+      if (first > 0) $('generated').append(node('span', '… preceding code omitted …\n', 'muted'));
+      for (let i = first; i < last; i++) {
+        const part = spanAt(bundle, i), matches = (state.source === null || part.source === state.source) && (status === 'all' || part.status === status);
+        const length = part.endUtf16 - part.startUtf16, limit = 10000;
+        const text = bundle.generatedSource.slice(part.startUtf16, Math.min(part.endUtf16, part.startUtf16 + limit)) + (length > limit ? '\n… ' + (length - limit) + ' UTF-16 units omitted …\n' : '');
+        const mark = node('mark', text, part.status + (matches ? '' : ' dim') + (i === span.index ? ' active' : ''));
+        mark.title = labels[part.status] + ' · UTF-8 [' + part.start + ', ' + part.end + ') · ' + bundle.sources[part.source].source;
+        if (matches) mark.onclick = () => focus(part);
+        $('generated').append(mark);
+      }
+      if (last < bundle.spans.length) $('generated').append(node('span', '\n… following code omitted …', 'muted'));
+      original(bundle, span);
+    };
+    $('range-prev').onclick = () => { if (selected > 0) focus(spanAt(bundle, spans[selected - 1])); };
+    $('range-next').onclick = () => { if (selected + 1 < spans.length) focus(spanAt(bundle, spans[selected + 1])); };
+    let visible = 0;
+    const more = () => {
+      const fragment = document.createDocumentFragment();
+      for (const index of spans.slice(visible, visible + 100)) {
+        const span = spanAt(bundle, index), button = node('button', '[' + span.start + ', ' + span.end + ')', span.status);
+        button.title = labels[span.status] + ' · generated UTF-8 byte range';
+        button.onclick = () => focus(span);
+        fragment.append(button);
+      }
+      visible += 100;
+      $('ranges').append(fragment);
+      if (visible < spans.length) {
+        const button = node('button', 'Load more ranges');
+        button.onclick = () => { button.remove(); more(); };
+        $('ranges').append(button);
+      }
+    };
+    more();
+    if (spans.length) focus(spanAt(bundle, spans[0]));
+    else {
+      $('range-position').textContent = '0 / 0';
+      $('active-range').textContent = 'No matching ranges';
+      $('range-prev').disabled = true;
+      $('range-next').disabled = true;
+      $('original-label').textContent = '';
+      $('original-code').textContent = 'No code ranges match this coverage state.';
+      $('generated').textContent = 'No code ranges match this coverage state.';
+    }
+  }
+
+  $('back').onclick = () => {
+    state.bundle = null; state.source = null; state.page = 0; state.inspector = false; state.focus = false;
+    $('search').value = ''; $('app-only').checked = false;
+    render(); renderCode();
+  };
+  $('close-inspector').onclick = () => { state.inspector = false; state.source = null; state.focus = false; render(); renderCode(); $('explorer').scrollIntoView({block: 'start'}); };
+  $('toggle-explorer').onclick = () => { state.focus = !state.focus; render(); scrollOriginal(); };
+  $('theme').onchange = () => {
+    if ($('theme').value === 'system') delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = $('theme').value;
+  };
+  $('inspect-bundle').onclick = () => {
+    state.source = null; state.inspector = true; state.view = 'generated';
+    $('source-info').open = false; $('range-details').open = false;
+    render(); renderCode();
+    if (matchMedia('(max-width:1050px)').matches) $('inspector').scrollIntoView({block: 'start'});
+  };
+  for (const id of ['search', 'app-only', 'sort']) $(id)[id === 'search' ? 'oninput' : 'onchange'] = () => { state.page = 0; render(); };
+  $('files-prev').onclick = () => { state.page--; render(); };
+  $('files-next').onclick = () => { state.page++; render(); };
+  $('view-original').onclick = () => { state.view = 'original'; updateView(); };
+  $('view-generated').onclick = () => { state.view = 'generated'; updateView(); };
+  $('status').onchange = renderCode;
+  $('map-details').ontoggle = renderMap;
+  window.addEventListener('resize', () => { renderMap(); scrollOriginal(); });
+  render();
+  performance.mark('bundle-trace:overview');
+})().catch(error => { document.getElementById('meta').textContent = 'Could not open the report: ' + error.message; });
+</script>
+</body>
+</html>

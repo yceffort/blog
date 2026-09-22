@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../fixtures/feature.js", "../../fixtures/startup.js", "../../fixtures/entry.js"],
+  "sourcesContent": ["export function makeFeature() {\n  return function later(flag) {\n    return flag ? '한🔥' : '다른 경로'\n  }\n}\n\nexport function unusedFeature() {\n  throw new Error('This function must remain unobserved')\n}\n", "globalThis.__startupCount = (globalThis.__startupCount ?? 0) + 1\n", "import {makeFeature, unusedFeature} from './feature.js'\nimport './startup.js'\n\nglobalThis.__bundleTrace = {run: makeFeature(), unusedFeature}\n"],
+  "mappings": "MAAO,SAASA,GAAc,CAC5B,OAAO,SAAeC,EAAM,CAC1B,OAAOA,EAAO,MAAQ,OACxB,CACF,CAEO,SAASC,GAAgB,CAC9B,MAAM,IAAI,MAAM,sCAAsC,CACxD,CCRA,WAAW,gBAAkB,WAAW,gBAAkB,GAAK,ECG/D,WAAW,cAAgB,CAAC,IAAKC,EAAY,EAAG,cAAAC,CAAa",
+  "names": ["makeFeature", "flag", "unusedFeature", "makeFeature", "unusedFeature"]
+}

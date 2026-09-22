@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "scenario": "interaction-delta",
+  "scripts": [
+    {
+      "path": "entry.js",
+      "sha256": "d8b21e18de94a75f54d030ac1830de1ad57f1b061702fb99cf58d6af5880f340",
+      "sourceMapSha256": "58149746c55fb1d811c9b830487e1784118f27371f1badb91725fcbf634852a0",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 26,
+              "endOffset": 61,
+              "count": 1
+            },
+            {
+              "startOffset": 52,
+              "endOffset": 60,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    }
+  ]
+}
