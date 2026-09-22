@@ -157,11 +157,12 @@ export function PresenterView({
             현재 슬라이드
             {slideGroups.hidden.includes(activeIndex) ? ' · 숨김' : ''}
           </div>
-          <div className={`marp-presenter-slide ${styles.slideContentCurrent}`}>
+          <div className={`marp-presenter-slide ${styles.slideContent}`}>
             <Marp
               rendered={marpRenderData}
               page={activeIndex + 1}
               border={false}
+              fit="contain"
               className={`marp-presenter-container ${styles.marpContainer}`}
             />
           </div>
@@ -169,12 +170,13 @@ export function PresenterView({
 
         <div className={styles.slideWrapper}>
           <div className={styles.slideLabelNext}>다음 슬라이드</div>
-          <div className={`marp-presenter-slide ${styles.slideContentNext}`}>
+          <div className={`marp-presenter-slide ${styles.slideContent}`}>
             {hasNextSlide ? (
               <Marp
                 rendered={marpRenderData}
                 page={nextIndex + 1}
                 border={false}
+                fit="contain"
                 className={`marp-presenter-container ${styles.marpContainer}`}
               />
             ) : (

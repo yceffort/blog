@@ -16,6 +16,7 @@ interface RenderedMarp {
 interface MarpProps {
   border?: boolean
   className?: string
+  fit?: 'width' | 'contain'
   rendered: RenderedMarp
   page?: number
 }
@@ -23,6 +24,7 @@ interface MarpProps {
 export function Marp({
   border = true,
   className,
+  fit = 'width',
   rendered,
   page = 1,
 }: MarpProps) {
@@ -54,6 +56,17 @@ export function Marp({
         }
         :host > [data-marpit-svg] {
           vertical-align: top;
+        }
+        /* 발표자 화면에서는 가용 높이도 제한한다. SVG의 viewBox가 비율을 유지한다. */
+        :host([data-fit='contain']) {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        :host([data-fit='contain']) > [data-marpit-svg] {
+          display: block;
+          width: 100%;
+          height: 100%;
         }
         section {
           padding: var(--marp-slide-padding, 30px 40px) !important;
@@ -124,7 +137,7 @@ export function Marp({
         .join(' ')}
     >
       {/* Shadow DOM의 호스트가 될 span */}
-      <span ref={elementRef} />
+      <span ref={elementRef} data-fit={fit} />
     </div>
   )
 }

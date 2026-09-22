@@ -4,8 +4,8 @@ const styles = stylex.create({
   presenterView: {
     '@layer site': {
       display: 'grid',
-      gridTemplateRows: 'auto 1fr auto auto',
-      height: '100vh',
+      gridTemplateRows: 'auto minmax(0, 1fr) auto auto',
+      height: '100dvh',
       background: '#1a1a1a',
       color: '#fff',
       fontFamily: 'system-ui, -apple-system, sans-serif',
@@ -52,7 +52,7 @@ const styles = stylex.create({
   slidesContainer: {
     '@layer site': {
       display: 'grid',
-      gridTemplateColumns: '2fr 1fr',
+      gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)',
       gap: '16px',
       padding: '16px',
       minHeight: 0,
@@ -65,10 +65,13 @@ const styles = stylex.create({
       overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column',
+      minWidth: 0,
+      minHeight: 0,
     },
   },
   slideLabel: {
     '@layer site': {
+      flexShrink: 0,
       padding: '8px 12px',
       background: '#333',
       fontSize: '12px',
@@ -95,17 +98,6 @@ const styles = stylex.create({
       overflow: 'hidden',
     },
   },
-  // min-height 는 부모(현재/다음)에 따라 다르다
-  slideContentCurrent: {
-    '@layer site': {
-      minHeight: '300px',
-    },
-  },
-  slideContentNext: {
-    '@layer site': {
-      minHeight: '200px',
-    },
-  },
   noNextSlide: {
     '@layer site': {
       display: 'flex',
@@ -120,7 +112,8 @@ const styles = stylex.create({
       padding: '16px 24px',
       background: '#2a2a2a',
       borderTop: '1px solid #333',
-      maxHeight: '200px',
+      minHeight: 0,
+      maxHeight: 'min(200px, 30dvh)',
       overflowY: 'auto',
     },
   },
@@ -215,14 +208,7 @@ export const slideLabelNext = stylex.props(
   styles.slideLabel,
   styles.slideLabelNext,
 ).className!
-export const slideContentCurrent = stylex.props(
-  styles.slideContent,
-  styles.slideContentCurrent,
-).className!
-export const slideContentNext = stylex.props(
-  styles.slideContent,
-  styles.slideContentNext,
-).className!
+export const slideContent = stylex.props(styles.slideContent).className!
 export const noNextSlide = stylex.props(styles.noNextSlide).className!
 export const notesPanel = stylex.props(styles.notesPanel).className!
 export const notesLabel = stylex.props(styles.notesLabel).className!
