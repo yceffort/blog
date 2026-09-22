@@ -144,13 +144,25 @@ const styles = stylex.create({
   },
   controlBar: {
     '@layer site': {
+      display: 'grid',
+      gridTemplateColumns: {
+        default: 'minmax(0, 1fr) auto minmax(0, 1fr)',
+        '@media (max-width: 640px)': '1fr',
+      },
+      alignItems: 'center',
+      gap: '8px 16px',
+      padding: '16px 24px',
+      background: '#2a2a2a',
+      borderTop: '1px solid #333',
+    },
+  },
+  navigation: {
+    '@layer site': {
+      gridColumn: {default: '2', '@media (max-width: 640px)': '1'},
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       gap: '16px',
-      padding: '16px 24px',
-      background: '#2a2a2a',
-      borderTop: '1px solid #333',
     },
   },
   navButton: {
@@ -177,13 +189,16 @@ const styles = stylex.create({
   },
   keyHints: {
     '@layer site': {
-      position: 'fixed',
-      bottom: '80px',
-      right: '24px',
+      gridColumn: {default: '3', '@media (max-width: 640px)': '1'},
+      justifySelf: {default: 'end', '@media (max-width: 640px)': 'center'},
+      display: 'flex',
+      flexDirection: {default: 'column', '@media (max-width: 640px)': 'row'},
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      columnGap: '16px',
       fontSize: '12px',
-      color: '#666',
-      textAlign: 'right',
-      lineHeight: '1.8',
+      color: '#999',
+      lineHeight: '1.5',
     },
   },
   marpContainer: {
@@ -216,6 +231,7 @@ export const notesLabel = stylex.props(styles.notesLabel).className!
 export const notesContent = stylex.props(styles.notesContent).className!
 export const noNotes = stylex.props(styles.noNotes).className!
 export const controlBar = stylex.props(styles.controlBar).className!
+export const navigation = stylex.props(styles.navigation).className!
 export const navButton = stylex.props(styles.navButton).className!
 export const pageIndicator = stylex.props(styles.pageIndicator).className!
 export const keyHints = stylex.props(styles.keyHints).className!

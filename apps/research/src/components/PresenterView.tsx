@@ -194,34 +194,33 @@ export function PresenterView({
       </div>
 
       <div className={styles.controlBar}>
-        <button
-          className={styles.navButton}
-          onClick={goToPrev}
-          disabled={activePosition === 0}
-        >
-          ◀ 이전
-        </button>
-        <span className={styles.pageIndicator}>
-          {activePosition + 1} / {slideIndices.length}
-          {showHiddenSlides && slideGroups.hidden.length > 0
-            ? ' · 숨김 포함'
-            : ''}
-        </span>
-        <button
-          className={styles.navButton}
-          onClick={goToNext}
-          disabled={!hasNextSlide}
-        >
-          다음 ▶
-        </button>
-      </div>
-
-      <div className={styles.keyHints}>
-        ← → 슬라이드 이동
-        <br />
-        Space 다음 슬라이드
-        <br />
-        Home / End 처음 / 끝
+        <div className={styles.navigation}>
+          <button
+            className={styles.navButton}
+            onClick={goToPrev}
+            disabled={activePosition === 0}
+          >
+            ◀ 이전
+          </button>
+          <span className={styles.pageIndicator}>
+            {activePosition + 1} / {slideIndices.length}
+            {showHiddenSlides && slideGroups.hidden.length > 0
+              ? ' · 숨김 포함'
+              : ''}
+          </span>
+          <button
+            className={styles.navButton}
+            onClick={goToNext}
+            disabled={!hasNextSlide}
+          >
+            다음 ▶
+          </button>
+        </div>
+        <div className={styles.keyHints}>
+          <span>← → 슬라이드 이동</span>
+          <span>Space 다음 슬라이드</span>
+          <span>Home / End 처음 / 끝</span>
+        </div>
       </div>
     </div>
   )
