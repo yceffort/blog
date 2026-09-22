@@ -5,6 +5,7 @@ import type {Result as PostCSSResult, AtRule} from 'postcss'
 import postcssImportUrl from 'postcss-import-url'
 
 import {parsePresenterNotes} from './parsePresenterNotes'
+import {feconfTheme} from './themes/feconf'
 import {kakaoTheme} from './themes/kakao'
 import {midnightTheme} from './themes/midnight'
 import {yceffortTheme} from './themes/yceffort'
@@ -98,6 +99,7 @@ async function renderMarp(markdown: string): Promise<RenderedMarp> {
   marp.themeSet.add(yceffortTheme)
   marp.themeSet.add(midnightTheme)
   marp.themeSet.add(kakaoTheme)
+  marp.themeSet.add(feconfTheme)
 
   const {html, css} = marp.render(markdown, {htmlAsArray: true})
 
