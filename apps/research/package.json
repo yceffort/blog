@@ -5,9 +5,11 @@
   "description": "yceffort research",
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "next build && node scripts/generate-offline-runtime.mjs",
     "dev": "next dev --turbopack --port 3001",
-    "start": "next start"
+    "preview:offline": "pnpm build && next start --port 3002",
+    "start": "next start",
+    "test:offline": "playwright test"
   },
   "dependencies": {
     "@marp-team/marp-core": "^4.4.0",
@@ -28,10 +30,11 @@
     "swiper": "^14.1.0"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.120.0",
     "@babel/core": "^7.29.7",
+    "@playwright/test": "1.63.0",
     "@stylexjs/babel-plugin": "^0.19.0",
     "@stylexjs/postcss-plugin": "^0.19.0",
-    "@anthropic-ai/sdk": "^0.120.0",
     "@types/node": "^26.2.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",

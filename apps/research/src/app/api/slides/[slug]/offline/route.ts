@@ -1,0 +1,38 @@
+import matter from 'gray-matter'
+
+import {isTransitionType} from '@/components/MarpSlides.constants'
+import {generateRenderedMarp} from '@/lib/marp'
+import type {OfflineDeck} from '@/lib/offline/types'
+import {getSlideBySlug} from '@/lib/slidesIndex'
+
+export async function GET(
+  _request: Request,
+  {params}: {params: Promise<{slug: string}>},
+) {
+  const {slug} = await params
+  // The slug is used as a filename. Never allow a path outside research/.
+  if (!/^[a-zA-Z0-9_-]+$/.test(slug)) {
+    return new Response('Not Found', {status: 404})
+  }
+  const entry = getSlideBySlug(slug)
+  // published controls listing, not direct access. Match the viewer/raw route
+  // so an unlisted presentation can also be downloaded from its own page.
+  if (!entry) {
+    return new Response('Not Found', {status: 404})
+  }
+  const {html, css, fonts, notes} = await generateRenderedMarp(entry.markdown)
+  const {data} = matter(entry.markdown)
+  const deck: OfflineDeck = {
+    schemaVersion: 1,
+    slug,
+    title: entry.title,
+    description: entry.description,
+    html,
+    css,
+    fonts,
+    notes,
+    post: typeof data.post === 'string' ? data.post : undefined,
+    transition: isTransitionType(data.transition) ? data.transition : undefined,
+  }
+  return Response.json(deck, {headers: {'Cache-Control': 'no-store'}})
+}

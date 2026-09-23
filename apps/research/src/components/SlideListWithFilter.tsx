@@ -6,6 +6,8 @@ import {useCallback, useMemo, useRef, useSyncExternalStore} from 'react'
 import * as styles from '@/components/SlideList.styles'
 import {SiteConfig} from '@/config'
 
+import {DownloadButton} from './offline/DownloadButton'
+import {OfflineLink} from './offline/OfflineLink'
 import {SlidePreview} from './SlidePreview'
 
 interface Slide {
@@ -144,6 +146,9 @@ function ResearchCard({slide, css}: {slide: Slide; css: string}) {
           )}
         </div>
       </div>
+      <div className="offline-card-download">
+        <DownloadButton slug={slug} />
+      </div>
     </article>
   )
 }
@@ -245,7 +250,9 @@ export function SlideListWithFilter({slides, cssList}: Props) {
           </h2>
         </div>
         <div className={styles.sec_line} />
-        <span className={styles.sec_hint}>tap tag · filter</span>
+        <OfflineLink href="/offline" className="offline-button">
+          저장한 자료 →
+        </OfflineLink>
       </div>
 
       {allTags.length > 0 && (

@@ -1,4 +1,5 @@
 import '@/styles/stylex.css'
+import '@/styles/offline.css'
 import {Providers} from '@yceffort/shared/components'
 import type {Metadata} from 'next'
 import {Fraunces, Inter, JetBrains_Mono} from 'next/font/google'
@@ -8,6 +9,7 @@ import {Suspense, type ReactNode} from 'react'
 import AmbientEffects from '@/components/AmbientEffects'
 import {BotTracker} from '@/components/BotTracker'
 import {GoogleAnalyticsPageViewTracker} from '@/components/GoogleAnalyticsPageViewTracker'
+import {OfflineRegistration} from '@/components/offline/OfflineRegistration'
 import {OutboundLinkTracker} from '@/components/OutboundLinkTracker'
 import {SiteConfig} from '@/config'
 
@@ -115,6 +117,7 @@ export default function Layout({children}: {children: ReactNode}) {
           <link rel="manifest" href="/favicon/site.webmanifest" />
         </head>
         <body>
+          <OfflineRegistration />
           <AmbientEffects />
           <Providers>{children}</Providers>
           {process.env.NODE_ENV === 'production' && (

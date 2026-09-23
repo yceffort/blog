@@ -3,6 +3,21 @@ import type {NextConfig} from 'next'
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   cacheComponents: true,
+  async headers() {
+    return [
+      {
+        source: '/sw.js',
+        headers: [
+          {key: 'Service-Worker-Allowed', value: '/'},
+          {key: 'Cache-Control', value: 'no-cache'},
+        ],
+      },
+      {
+        source: '/offline-:file(runtime.json|shell.html)',
+        headers: [{key: 'Cache-Control', value: 'no-store'}],
+      },
+    ]
+  },
   async rewrites() {
     return [
       {source: '/slides/:slug.md', destination: '/api/slides/:slug/raw'},

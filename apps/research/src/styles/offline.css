@@ -1,0 +1,204 @@
+@layer site {
+  .offline-toast {
+    position: fixed;
+    bottom: max(20px, env(safe-area-inset-bottom));
+    right: 20px;
+    z-index: 10000;
+    width: min(360px, calc(100vw - 40px));
+    padding: 16px 20px;
+    border: 1px solid var(--border-2);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: 0 8px 32px #0002;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .offline-toast output span {
+    display: block;
+  }
+  .offline-toast p, .offline-toast .offline-actions {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+  .offline-toast .offline-actions {
+    justify-content: space-between;
+  }
+  .offline-toast button {
+    cursor: pointer;
+    padding: 4px;
+  }
+  @media print {
+    .offline-toast {
+      display: none;
+    }
+  }
+  .offline-library {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    color: var(--ink);
+  }
+  .offline-library-nav, .offline-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .offline-library-nav {
+    justify-content: space-between;
+    margin-bottom: 64px;
+    font-size: 14px;
+  }
+  .offline-library-nav a:hover, .offline-deck h2 a:hover {
+    color: var(--primary);
+  }
+  .offline-eyebrow {
+    color: var(--ink-3);
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+    letter-spacing: .16em;
+    margin-bottom: 12px;
+  }
+  .offline-library h1 {
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 800;
+    letter-spacing: -.04em;
+    margin-bottom: 16px;
+  }
+  .offline-description {
+    color: var(--ink-2);
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+  .offline-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--ink-2);
+    margin-bottom: 16px;
+  }
+  .offline-summary span {
+    color: var(--ink-3);
+  }
+  .offline-decks {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+  }
+  .offline-deck, .offline-empty {
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .offline-deck h2, .offline-empty h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .offline-deck p, .offline-empty p {
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .offline-deck .offline-deck-meta {
+    color: var(--ink-3);
+    font-size: 12px;
+    margin: 16px 0;
+  }
+  .offline-button {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 8px 12px;
+    border: 1px solid var(--border-2);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-size: 12px;
+    line-height: 1.4;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .offline-button:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .offline-button:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+  }
+  .offline-button:disabled {
+    opacity: .6;
+    cursor: default;
+  }
+  .offline-button-primary {
+    background: var(--ink);
+    color: var(--surface);
+    border-color: var(--ink);
+  }
+  .offline-button-quiet {
+    background: transparent;
+  }
+  .offline-download {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .offline-card-download {
+    position: relative;
+    z-index: 4;
+    padding: 0 22px 20px;
+  }
+  .offline-status {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    flex-basis: 100%;
+  }
+  .offline-status:empty {
+    display: none;
+  }
+  .offline-error {
+    color: #b42318;
+    background: #fef3f2;
+    padding: 14px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .offline-footnote {
+    margin-top: 32px;
+    color: var(--ink-3);
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .offline-viewer-controls {
+    padding: 8px 12px;
+  }
+  .offline-viewer-controls .offline-status {
+    color: inherit;
+  }
+  @media (max-width: 600px) {
+    .offline-library {
+      padding: 24px 16px 48px;
+    }
+    .offline-library-nav {
+      margin-bottom: 40px;
+    }
+    .offline-deck {
+      padding: 20px;
+    }
+  }
+}

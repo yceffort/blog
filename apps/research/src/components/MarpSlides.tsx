@@ -13,9 +13,12 @@ import 'swiper/css/effect-fade'
 import {EffectCreative, EffectFade, Virtual} from 'swiper/modules'
 import {Swiper, SwiperSlide} from 'swiper/react'
 
+import {DownloadButton} from '@/components/offline/DownloadButton'
+import {OfflineLink} from '@/components/offline/OfflineLink'
 import {useBroadcastChannel} from '@/hooks/useBroadcastChannel'
 import {useDrawing} from '@/hooks/useDrawing'
 import {useLaserPointer} from '@/hooks/useLaserPointer'
+import {offlineHref} from '@/lib/offline/client'
 import {getSlideGroups} from '@/lib/slideNavigation'
 
 import {Marp} from './Marp'
@@ -37,6 +40,8 @@ interface MarpSlidesProps {
   dataCss: string
   dataFonts: string
   slug: string
+  offline?: boolean
+  onPageChange?: (page: number) => void
   postUrl?: string
   // 덱 frontmatter의 transition. 지정되면 뷰어 설정(cookie)보다 우선한다
   defaultTransition?: TransitionType
@@ -47,9 +52,15 @@ export function MarpSlides({
   dataCss,
   dataFonts,
   slug,
+  offline = false,
+  onPageChange,
   postUrl,
   defaultTransition,
 }: MarpSlidesProps) {
+  const presenterUrl = offline
+    ? offlineHref(slug, true)
+    : `/slides/${slug}/presenter`
+
   // JSON 파싱에 에러 처리 추가 (memoized)
   const html = useMemo(() => {
     try {
@@ -149,6 +160,7 @@ export function MarpSlides({
         lastVisibleIndexRef.current = index
       }
       setNavigation(next)
+      onPageChange?.(index + 1)
       const newHash = `#${index + 1}`
       if (window.location.hash !== newHash) {
         window.location.hash = newHash
@@ -159,7 +171,7 @@ export function MarpSlides({
       })
       return next
     },
-    [html.length, slideGroups.hidden],
+    [html.length, slideGroups.hidden, onPageChange],
   )
 
   const laserRef = useLaserPointer(isLaserMode)
@@ -335,7 +347,7 @@ export function MarpSlides({
         setQrUrl((prev) =>
           prev
             ? null
-            : `${window.location.origin}${window.location.pathname}#${activeIndexRef.current + 1}`,
+            : `${window.location.origin}/slides/${slug}#${activeIndexRef.current + 1}`,
         )
         return
       }
@@ -350,11 +362,7 @@ export function MarpSlides({
 
       // 발표자 모드 열기 (P 키)
       if (e.code === 'KeyP') {
-        window.open(
-          `/slides/${slug}/presenter`,
-          'presenter',
-          'width=1200,height=800',
-        )
+        window.open(presenterUrl, 'presenter', 'width=1200,height=800')
         return
       }
 
@@ -418,6 +426,7 @@ export function MarpSlides({
     isSearchOpen,
     contextMenu.visible,
     slug,
+    presenterUrl,
   ])
 
   // 검색 모달 열릴 때 input에 포커스
@@ -699,23 +708,19 @@ export function MarpSlides({
   }, [closeContextMenu])
 
   const handleGoHome = useCallback(() => {
-    window.location.href = '/'
-  }, [])
+    window.location.href = offline ? '/offline' : '/'
+  }, [offline])
 
   const handleCopyLink = useCallback(() => {
-    const url = `${window.location.origin}${window.location.pathname}#${activeIndex + 1}`
+    const url = `${window.location.origin}/slides/${slug}#${activeIndex + 1}`
     void navigator.clipboard.writeText(url)
     closeContextMenu()
-  }, [activeIndex, closeContextMenu])
+  }, [activeIndex, closeContextMenu, slug])
 
   const handleOpenPresenter = useCallback(() => {
-    window.open(
-      `/slides/${slug}/presenter`,
-      'presenter',
-      'width=1200,height=800',
-    )
+    window.open(presenterUrl, 'presenter', 'width=1200,height=800')
     closeContextMenu()
-  }, [slug, closeContextMenu])
+  }, [presenterUrl, closeContextMenu])
 
   const handleOpenHelp = useCallback(() => {
     setIsHelpOpen(true)
@@ -723,11 +728,9 @@ export function MarpSlides({
   }, [closeContextMenu])
 
   const handleOpenQr = useCallback(() => {
-    setQrUrl(
-      `${window.location.origin}${window.location.pathname}#${activeIndex + 1}`,
-    )
+    setQrUrl(`${window.location.origin}/slides/${slug}#${activeIndex + 1}`)
     closeContextMenu()
-  }, [activeIndex, closeContextMenu])
+  }, [activeIndex, closeContextMenu, slug])
 
   const handleQrOverlayClick = useCallback(
     (e: ReactMouseEvent<HTMLDivElement>) => {
@@ -1265,6 +1268,15 @@ export function MarpSlides({
             <span className={styles.contextMenuIcon}>📄</span>
             PDF로 다운로드
           </button>
+          <div className="offline-viewer-controls">
+            {offline ? (
+              <OfflineLink className="offline-button" href="/offline">
+                ← 저장한 자료
+              </OfflineLink>
+            ) : (
+              <DownloadButton slug={slug} />
+            )}
+          </div>
           {postUrl && (
             <button
               className={styles.contextMenuItem}
