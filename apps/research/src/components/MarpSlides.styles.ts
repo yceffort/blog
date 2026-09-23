@@ -50,6 +50,7 @@ export const styles = stylex.create({
     '@layer site': {
       position: 'absolute',
       zIndex: 10,
+      pointerEvents: 'none',
       background: {
         default: 'transparent',
         ':hover': 'rgba(128, 128, 128, 0.3)',
@@ -525,13 +526,12 @@ export const styles = stylex.create({
     '@layer site': {
       position: 'fixed',
       inset: 0,
-      background: 'rgba(0, 0, 0, 0.75)',
-      backdropFilter: 'blur(6px)',
+      background: 'white',
       zIndex: 600,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '24px',
+      padding: '16px',
       animationName: overviewFadeIn,
       animationDuration: '0.15s',
       animationTimingFunction: 'ease-out',
@@ -539,15 +539,21 @@ export const styles = stylex.create({
   },
   qrDialog: {
     '@layer site': {
+      position: 'relative',
       background: 'white',
-      borderRadius: '12px',
-      padding: '24px',
+      border: 'none',
+      borderRadius: 0,
+      padding: 0,
+      margin: 0,
+      width: '100%',
+      height: '100%',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      gap: '16px',
-      maxWidth: '320px',
-      boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
+      justifyContent: 'center',
+      gap: '12px',
+      maxWidth: 'none',
+      maxHeight: 'none',
     },
   },
   qrCode: {
@@ -555,11 +561,30 @@ export const styles = stylex.create({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      width: 'min(calc(100dvw - 32px), calc(100dvh - 128px))',
+      aspectRatio: '1',
+      flexShrink: 0,
+    },
+  },
+  qrClose: {
+    '@layer site': {
+      position: 'absolute',
+      top: 'max(12px, env(safe-area-inset-top))',
+      right: 'max(12px, env(safe-area-inset-right))',
+      padding: '10px 14px',
+      minHeight: '44px',
+      background: '#f5f5f5',
+      color: '#222',
+      border: '1px solid #ddd',
+      borderRadius: '8px',
+      fontSize: '14px',
+      cursor: 'pointer',
     },
   },
   qrUrl: {
     '@layer site': {
       width: '100%',
+      maxWidth: '960px',
       background: {default: '#f5f5f5', ':hover': '#ececec'},
       border: '1px solid #e5e5e5',
       borderRadius: '6px',
@@ -935,6 +960,7 @@ export const qrDialog = stylex.props(styles.qrDialog).className!
 export const qrCode = stylex.props(styles.qrCode).className!
 export const qrUrl = stylex.props(styles.qrUrl).className!
 export const qrHint = stylex.props(styles.qrHint).className!
+export const qrClose = stylex.props(styles.qrClose).className!
 export const drawingCanvas = stylex.props(styles.drawingCanvas).className!
 export const drawTextInput = stylex.props(styles.drawTextInput).className!
 export const drawToolbar = stylex.props(styles.drawToolbar).className!

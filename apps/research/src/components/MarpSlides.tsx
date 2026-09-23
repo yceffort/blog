@@ -35,6 +35,15 @@ const LONG_PRESS_MS = 500
 const LONG_PRESS_MOVE_TOLERANCE = 10
 const MENU_VIEWPORT_MARGIN = 8
 
+const INTERACTIVE_TARGET =
+  'a[href], button, input, select, textarea, [contenteditable]'
+
+function isInteractiveEvent(event: Event) {
+  return event
+    .composedPath()
+    .some((node) => node instanceof Element && node.matches(INTERACTIVE_TARGET))
+}
+
 interface MarpSlidesProps {
   dataHtml: string
   dataCss: string
@@ -480,11 +489,7 @@ export function MarpSlides({
   const handleSlideClick = useCallback(
     (e: ReactMouseEvent<HTMLDivElement>) => {
       // Shadow DOM 안의 링크 클릭은 슬라이드 이동 영역 클릭으로 처리하지 않는다.
-      if (
-        e.nativeEvent
-          .composedPath()
-          .some((node) => node instanceof Element && node.matches('a[href]'))
-      ) {
+      if (isInteractiveEvent(e.nativeEvent)) {
         return
       }
 
@@ -508,7 +513,7 @@ export function MarpSlides({
       // 하단 10% 영역 클릭 - 루트 페이지로
       else if (yPercent >= 90) {
         if (typeof window !== 'undefined') {
-          window.location.href = '/'
+          window.location.href = offline ? '/offline' : '/'
         }
       }
       // 좌측 10% 영역 클릭 - 이전 슬라이드
@@ -521,7 +526,7 @@ export function MarpSlides({
       }
       // 중앙 영역은 아무 동작 없음
     },
-    [multiple],
+    [multiple, offline],
   )
 
   // 해시 변경 감지
@@ -547,9 +552,10 @@ export function MarpSlides({
     return () => window.removeEventListener('hashchange', handleHashChange)
   }, [html.length, navigateTo])
 
-  // 하단 호버 핸들러 (memoized)
-  const handleBottomEnter = useCallback(() => setIsBottomHovered(true), [])
-  const handleBottomLeave = useCallback(() => setIsBottomHovered(false), [])
+  const clearNavigationHover = useCallback(() => {
+    if (containerRef.current) delete containerRef.current.dataset.navigationEdge
+    setIsBottomHovered(false)
+  }, [])
 
   // 오버뷰 썸네일 클릭 핸들러
   const handleOverviewSlideClick = useCallback(
@@ -573,6 +579,7 @@ export function MarpSlides({
   // 컨텍스트 메뉴 핸들러
   const handleContextMenu = useCallback(
     (e: ReactMouseEvent<HTMLDivElement>) => {
+      if (isInteractiveEvent(e.nativeEvent)) return
       e.preventDefault()
       setContextMenu({
         visible: true,
@@ -599,6 +606,7 @@ export function MarpSlides({
       // 슬라이드 위에서만 연다. 모달, 드로잉 캔버스, 메뉴 자신은 Swiper 밖에 있다
       if (
         e.pointerType === 'mouse' ||
+        isInteractiveEvent(e.nativeEvent) ||
         !(e.target as HTMLElement).closest('.swiper')
       ) {
         return
@@ -618,6 +626,28 @@ export function MarpSlides({
 
   const handlePointerMove = useCallback(
     (e: ReactPointerEvent<HTMLDivElement>) => {
+      if (e.pointerType === 'mouse') {
+        const slide = (e.target as Element).closest('[data-slide-surface]')
+        if (slide && !isInteractiveEvent(e.nativeEvent)) {
+          const rect = slide.getBoundingClientRect()
+          const x = (e.clientX - rect.left) / rect.width
+          const y = (e.clientY - rect.top) / rect.height
+          const edge =
+            y <= 0.1
+              ? 'top'
+              : y >= 0.9
+                ? 'bottom'
+                : x <= 0.1
+                  ? 'left'
+                  : x >= 0.9
+                    ? 'right'
+                    : ''
+          e.currentTarget.dataset.navigationEdge = edge
+          setIsBottomHovered(edge === 'bottom')
+        } else {
+          clearNavigationHover()
+        }
+      }
       const start = longPressStartRef.current
       if (!start) {
         return
@@ -629,7 +659,7 @@ export function MarpSlides({
         cancelLongPress()
       }
     },
-    [cancelLongPress],
+    [cancelLongPress, clearNavigationHover],
   )
 
   useEffect(() => cancelLongPress, [cancelLongPress])
@@ -823,6 +853,7 @@ export function MarpSlides({
       onWheel={handleWheel}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
+      onPointerLeave={clearNavigationHover}
       onPointerUp={cancelLongPress}
       onPointerCancel={cancelLongPress}
     >
@@ -834,6 +865,7 @@ export function MarpSlides({
         virtual={{enabled: multiple, addSlidesBefore: 1, addSlidesAfter: 1}}
         enabled={multiple}
         allowTouchMove={multiple}
+        noSwipingSelector={`.swiper-no-swiping, ${INTERACTIVE_TARGET}`}
         speed={transition === 'none' ? 0 : transition === 'glide' ? 600 : 350}
         effect={
           transition === 'fade'
@@ -871,6 +903,7 @@ export function MarpSlides({
           <SwiperSlide key={i} virtualIndex={position}>
             <div
               className={styles.marpSlide}
+              data-slide-surface
               {...(multiple
                 ? {
                     onClick: handleSlideClick,
@@ -886,21 +919,32 @@ export function MarpSlides({
               {multiple && (
                 <>
                   {/* 좌측 영역 */}
-                  <div className={styles.clickAreaLeft} aria-hidden="true" />
+                  <div
+                    className={styles.clickAreaLeft}
+                    data-navigation-area="left"
+                    aria-hidden="true"
+                  />
                   {/* 우측 영역 */}
-                  <div className={styles.clickAreaRight} aria-hidden="true" />
+                  <div
+                    className={styles.clickAreaRight}
+                    data-navigation-area="right"
+                    aria-hidden="true"
+                  />
                 </>
               )}
 
               {/* 상단 영역 - 첫 슬라이드로 */}
-              <div className={styles.clickAreaTop} aria-hidden="true" />
+              <div
+                className={styles.clickAreaTop}
+                data-navigation-area="top"
+                aria-hidden="true"
+              />
 
               {/* 하단 영역 - 루트 페이지로 */}
               <div
                 className={styles.clickAreaBottom}
+                data-navigation-area="bottom"
                 aria-hidden="true"
-                onMouseEnter={handleBottomEnter}
-                onMouseLeave={handleBottomLeave}
               />
             </div>
           </SwiperSlide>
@@ -1115,6 +1159,7 @@ export function MarpSlides({
           qrUrl={qrUrl}
           onOverlayClick={handleQrOverlayClick}
           onCopy={handleCopyQrUrl}
+          onClose={() => setQrUrl(null)}
         />
       )}
 

@@ -162,6 +162,19 @@ export function OfflineLibrary() {
         </div>
       ) : (
         <>
+          <output className="offline-update-status">
+            {state.checkingUpdates
+              ? '변경사항을 확인하고 새 버전을 자동 저장하고 있습니다…'
+              : (state.automaticUpdateError ??
+                '온라인에 연결되면 변경사항을 자동으로 저장합니다.')}
+            {state.lastCheckedAt && !state.checkingUpdates && (
+              <span>
+                {' '}
+                마지막 확인{' '}
+                {new Date(state.lastCheckedAt).toLocaleTimeString('ko-KR')}
+              </span>
+            )}
+          </output>
           <p className="offline-summary">
             {state.decks.length}개 자료 ·{' '}
             {formatBytes(

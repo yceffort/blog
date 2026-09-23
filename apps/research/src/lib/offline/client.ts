@@ -26,6 +26,9 @@ interface OfflineState {
   progress: Record<string, DownloadProgress | undefined>
   errors: Record<string, string | undefined>
   notice?: string
+  checkingUpdates: boolean
+  lastCheckedAt?: number
+  automaticUpdateError?: string
 }
 const initialState: OfflineState = {
   ready: false,
@@ -33,6 +36,7 @@ const initialState: OfflineState = {
   decks: [],
   progress: {},
   errors: {},
+  checkingUpdates: false,
 }
 let state = initialState
 let registration: Promise<ServiceWorkerRegistration> | undefined
@@ -137,12 +141,14 @@ async function digest(buffer: ArrayBuffer) {
     .join('')
 }
 
-async function fetchFile(url: string, signal: AbortSignal) {
+async function fetchFile(url: string, signal: AbortSignal, revision?: string) {
   const response = await fetch(url, {
     cache: 'no-store',
     signal: AbortSignal.any([signal, AbortSignal.timeout(30000)]),
     credentials: 'same-origin',
+    headers: revision ? {'If-None-Match': `"${revision}"`} : undefined,
   })
+  if (revision && response.status === 304) return response
   if (!response.ok || response.type === 'opaque') {
     throw new Error(
       `자료를 내려받지 못했습니다 (${response.status}). 다시 시도해 주세요.`,
@@ -166,10 +172,7 @@ async function parallel<T>(items: T[], task: (item: T) => Promise<void>) {
     if (result.status === 'rejected') throw result.reason
 }
 
-async function ensureRuntime(
-  onProgress: (value: DownloadProgress) => void,
-  signal: AbortSignal,
-) {
+async function fetchRuntimeManifest(signal: AbortSignal) {
   const manifestResponse = await fetchFile('/offline-runtime.json', signal)
   const manifest = (await manifestResponse.json()) as RuntimeManifest
   if (
@@ -181,6 +184,15 @@ async function ensureRuntime(
       '오프라인 뷰어를 준비할 수 없습니다. 페이지를 새로고침해 주세요.',
     )
   }
+  return manifest
+}
+
+async function ensureRuntime(
+  onProgress: (value: DownloadProgress) => void,
+  signal: AbortSignal,
+  manifest?: RuntimeManifest,
+) {
+  manifest ??= await fetchRuntimeManifest(signal)
   const cacheName = `research-runtime-v1-${manifest.revision}`
   const cache = await caches.open(cacheName)
   let completed = 0
@@ -213,6 +225,7 @@ async function ensureRuntime(
     RUNTIME_KEY,
     Response.json({cacheName, shell: manifest.shell}),
   )
+  return manifest.revision
 }
 
 function broadcastChange() {
@@ -230,14 +243,23 @@ export function cancelDownload(slug: string) {
   controllers.get(slug)?.abort()
 }
 
-export async function downloadDeck(slug: string) {
-  if (controllers.has(slug)) return
+export async function downloadDeck(
+  slug: string,
+  {
+    automatic = false,
+    manifest,
+  }: {automatic?: boolean; manifest?: RuntimeManifest} = {},
+) {
+  if (controllers.has(slug)) return false
   const controller = new AbortController()
   controllers.set(slug, controller)
   const progress = (value: DownloadProgress) =>
-    publish({progress: {...state.progress, [slug]: value}})
-  publish({errors: {...state.errors, [slug]: undefined}, notice: undefined})
-  progress({label: '다운로드 대기', completed: 0, total: 0})
+    publish({progress: {...state.progress, [slug]: {...value, automatic}}})
+  if (!automatic) {
+    publish({errors: {...state.errors, [slug]: undefined}, notice: undefined})
+    progress({label: '다운로드 대기', completed: 0, total: 0})
+  }
+  let updated = false
   try {
     if (process.env.NODE_ENV !== 'production') {
       throw new Error(
@@ -249,12 +271,31 @@ export async function downloadDeck(slug: string) {
     await withDownloadLock(async () => {
       const {signal} = controller
       signal.throwIfAborted()
-      await ensureController()
-      progress({label: '슬라이드 준비', completed: 0, total: 0})
+      // Re-read under the shared lock: another tab may have updated or deleted it.
+      const saved = automatic ? await getSavedDeck(slug) : undefined
+      if (automatic && !saved) return
+      const currentRuntime =
+        manifest ?? (automatic ? await fetchRuntimeManifest(signal) : undefined)
+      let complete = false
+      if (
+        saved &&
+        currentRuntime?.revision === saved.runtimeRevision &&
+        (await caches.has(saved.assetCache))
+      ) {
+        const cache = await caches.open(saved.assetCache)
+        complete = (
+          await Promise.all(saved.assets.map((url) => cache.match(url)))
+        ).every(Boolean)
+      }
       const response = await fetchFile(
         `/api/slides/${encodeURIComponent(slug)}/offline`,
         signal,
+        complete ? saved?.sourceRevision : undefined,
       )
+      if (response.status === 304) {
+        publish({errors: {...state.errors, [slug]: undefined}})
+        return
+      }
       const deck = (await response.json()) as OfflineDeck
       if (
         deck.schemaVersion !== 1 ||
@@ -266,7 +307,24 @@ export async function downloadDeck(slug: string) {
           '슬라이드 형식을 읽을 수 없습니다. 페이지를 새로고침해 주세요.',
         )
       }
-      await ensureRuntime(progress, signal)
+      const encoded = new TextEncoder().encode(JSON.stringify(deck))
+      const sourceRevision = await digest(encoded.buffer)
+      if (automatic && complete && sourceRevision === saved?.sourceRevision) {
+        publish({errors: {...state.errors, [slug]: undefined}})
+        return
+      }
+      await ensureController()
+      publish({errors: {...state.errors, [slug]: undefined}})
+      progress({
+        label: automatic ? '새 버전 자동 저장' : '슬라이드 준비',
+        completed: 0,
+        total: 0,
+      })
+      const runtimeRevision = await ensureRuntime(
+        progress,
+        signal,
+        currentRuntime,
+      )
       const assets = collectDeckAssets(deck, location.origin)
       const assetId = crypto.randomUUID()
       const assetCache = `research-deck-v1-${assetId}`
@@ -278,7 +336,6 @@ export async function downloadDeck(slug: string) {
       )
       const cache = await caches.open(assetCache)
       const hashes = new Map<string, string>()
-      const encoded = new TextEncoder().encode(JSON.stringify(deck))
       let bytes = encoded.byteLength
       let completed = 0
       const report = () =>
@@ -314,13 +371,16 @@ export async function downloadDeck(slug: string) {
         await putSavedDeck({
           ...rewriteDeckAssets(deck, location.origin, localUrls),
           revision,
+          sourceRevision,
+          runtimeRevision,
           savedAt: Date.now(),
           bytes,
           assetCache,
           assets: [...localUrls.values()],
         })
         committed = true
-        publish({notice: `저장 완료: ${deck.title}`})
+        updated = true
+        if (!automatic) publish({notice: `저장 완료: ${deck.title}`})
         // Superseded caches are collected once no offline presentation is open.
       } finally {
         if (!committed) await caches.delete(assetCache)
@@ -328,8 +388,10 @@ export async function downloadDeck(slug: string) {
       // Denial does not make a successfully completed download fail.
       void navigator.storage?.persist?.().catch(() => {})
     })
-    await cleanUnusedDeckCaches()
-    broadcastChange()
+    if (updated) {
+      await cleanUnusedDeckCaches()
+      broadcastChange()
+    }
   } catch (error) {
     const message = controller.signal.aborted
       ? '다운로드를 취소했습니다.'
@@ -340,11 +402,95 @@ export async function downloadDeck(slug: string) {
           : error instanceof Error
             ? error.message
             : '저장하지 못했습니다. 다시 시도해 주세요.'
-    publish({errors: {...state.errors, [slug]: message}, notice: message})
+    publish({
+      errors: {
+        ...state.errors,
+        [slug]: automatic
+          ? `자동 업데이트 실패: ${message} 기존 저장본은 유지됩니다.`
+          : message,
+      },
+      ...(!automatic && {notice: message}),
+    })
   } finally {
     controllers.delete(slug)
     publish({progress: {...state.progress, [slug]: undefined}})
-    await refreshOfflineState()
+    if (!automatic || updated) await refreshOfflineState()
+  }
+  return updated
+}
+
+let automaticCheck: Promise<void> | undefined
+
+export function checkOfflineUpdates(): Promise<void> {
+  if (automaticCheck) return automaticCheck
+  if (
+    process.env.NODE_ENV !== 'production' ||
+    !supportsOffline() ||
+    !navigator.onLine
+  ) {
+    return Promise.resolve()
+  }
+  const check = async () => {
+    const decks = await getSavedDecks()
+    if (!decks.length) return
+    publish({checkingUpdates: true, automaticUpdateError: undefined})
+    try {
+      const signal = new AbortController().signal
+      const manifest = await fetchRuntimeManifest(signal)
+      // Refresh the shared viewer as well, even if every deck returns 304.
+      await withDownloadLock(() => ensureRuntime(() => {}, signal, manifest))
+      for (const deck of decks) {
+        if (!navigator.onLine) break
+        await downloadDeck(deck.slug, {automatic: true, manifest})
+      }
+      publish({lastCheckedAt: Date.now()})
+    } catch {
+      publish({
+        automaticUpdateError:
+          '업데이트를 확인하지 못했습니다. 기존 저장본을 사용할 수 있으며 연결되면 다시 확인합니다.',
+      })
+    } finally {
+      publish({checkingUpdates: false})
+    }
+  }
+  // Only one tab scans at a time. Per-deck writes also share the manual-download lock.
+  automaticCheck = (
+    navigator.locks
+      ? navigator.locks.request(
+          'research-offline-update-check',
+          {ifAvailable: true},
+          (lock) => (lock ? check() : undefined),
+        )
+      : check()
+  )
+    .catch(() => {})
+    .finally(() => {
+      automaticCheck = undefined
+    })
+  return automaticCheck
+}
+
+export function watchOfflineUpdates() {
+  if (process.env.NODE_ENV !== 'production') return () => {}
+  let lastAttempt = 0
+  const check = (force = false) => {
+    if (!navigator.onLine || document.visibilityState !== 'visible') return
+    if (!force && Date.now() - lastAttempt < 60000) return
+    lastAttempt = Date.now()
+    void checkOfflineUpdates()
+  }
+  const onFocus = () => check()
+  const onOnline = () => check(true)
+  const timer = window.setInterval(() => check(true), 5 * 60 * 1000)
+  window.addEventListener('online', onOnline)
+  window.addEventListener('focus', onFocus)
+  document.addEventListener('visibilitychange', onFocus)
+  check(true)
+  return () => {
+    clearInterval(timer)
+    window.removeEventListener('online', onOnline)
+    window.removeEventListener('focus', onFocus)
+    document.removeEventListener('visibilitychange', onFocus)
   }
 }
 

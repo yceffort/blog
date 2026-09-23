@@ -76,6 +76,16 @@ async function savedAsset(request) {
 async function navigate(request) {
   const url = new URL(request.url)
   if (url.pathname === '/offline') {
+    // Online entries must load the latest update logic, including clients saved
+    // before automatic updates existed. An open presentation is never reloaded.
+    if (self.navigator.onLine) {
+      try {
+        const response = await fetch(request, {cache: 'no-store'})
+        if (response.ok) return response
+      } catch {
+        // Fall through to the complete saved runtime.
+      }
+    }
     const shell = await savedShell()
     if (shell) return shell
   }

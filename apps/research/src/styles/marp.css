@@ -1,5 +1,18 @@
 /* Swiper가 소유한 DOM과 인쇄 레이아웃. 둘 다 StyleX가 표현할 수 없는 자손 선택자를 쓴다. */
 @layer site {
+  /* Navigation hints never intercept links in the slide's shadow DOM. */
+  .marp-slides[data-navigation-edge='left'] [data-navigation-area='left'],
+  .marp-slides[data-navigation-edge='right'] [data-navigation-area='right'],
+  .marp-slides[data-navigation-edge='top'] [data-navigation-area='top'],
+  .marp-slides[data-navigation-edge='bottom'] [data-navigation-area='bottom'] {
+    background: rgba(128, 128, 128, 0.3);
+  }
+  .marp-slides[data-navigation-edge='left'] [data-navigation-area='left']::after,
+  .marp-slides[data-navigation-edge='right'] [data-navigation-area='right']::after,
+  .marp-slides[data-navigation-edge='top'] [data-navigation-area='top']::after,
+  .marp-slides[data-navigation-edge='bottom'] [data-navigation-area='bottom']::after {
+    opacity: 1;
+  }
   /* glide 전환은 Swiper 내부 슬라이드의 타이밍 함수를 바꾼다 */
   .marp-slides[data-transition='glide'] .swiper-slide {
     transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);

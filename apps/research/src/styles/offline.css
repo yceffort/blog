@@ -83,6 +83,16 @@
   .offline-summary span {
     color: var(--ink-3);
   }
+  .offline-update-status {
+    display: block;
+    margin-bottom: 16px;
+    color: var(--ink-2);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .offline-update-status span {
+    color: var(--ink-3);
+  }
   .offline-decks {
     list-style: none;
     padding: 0;

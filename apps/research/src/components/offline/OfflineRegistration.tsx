@@ -7,6 +7,7 @@ import {
   registerOfflineWorker,
   supportsOffline,
   watchOfflineChanges,
+  watchOfflineUpdates,
   dismissOfflineNotice,
   getOfflineState,
   getServerOfflineState,
@@ -30,10 +31,15 @@ export function OfflineRegistration() {
         .then(() => cleanUnusedDeckCaches())
         .catch(() => {})
     }
-    return watchOfflineChanges()
+    const stopChanges = watchOfflineChanges()
+    const stopUpdates = watchOfflineUpdates()
+    return () => {
+      stopChanges()
+      stopUpdates()
+    }
   }, [])
   const active = Object.entries(state.progress).filter(
-    ([, progress]) => !!progress,
+    ([, progress]) => !!progress && !progress.automatic,
   )
   if (!active.length && !state.notice) return null
   return (
