@@ -55,7 +55,7 @@ All of the above in one diagram:
 
 ```mermaid
 flowchart TB
-    KC["kubectl · deploy pipeline"] --> API
+    KC["kubectl, deploy pipeline"] --> API
     subgraph CP["Control plane (decides)"]
         direction LR
         SCH["Scheduler"] --- API["API server"] --- ETCD[("etcd: the ledger")]
@@ -213,7 +213,7 @@ The two routes overlaid: static assets end at the CDN, only dynamic requests rea
 ```mermaid
 flowchart TB
     B["Browser"] --> CDN["CDN (static assets end here)"]
-    CDN -- "only SSR·API requests pass" --> LB["Load balancer"] --> ING["Ingress"] --> SVC["Service"] --> POD(("Pod"))
+    CDN -- "only SSR/API requests pass" --> LB["Load balancer"] --> ING["Ingress"] --> SVC["Service"] --> POD(("Pod"))
     BFF(("BFF pod")) -- "direct via internal DNS,<br/>skipping the Ingress" --> SVC
 ```
 
