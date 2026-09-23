@@ -506,6 +506,7 @@ section.takeaways > ol > li::before { content: '0' counter(lesson); position: ab
 section.takeaways > ol strong { display: block; font-size: 29px; margin-bottom: 8px; }
 section.takeaways.four-items > ol > li { padding-top: 12px; padding-bottom: 12px; }
 section.takeaways.four-items > ol > li::before { top: 14px; }
+section.takeaways > blockquote { margin-top: 36px; font-size: 29px; }
 
 section.closing h1 { font-size: 76px; margin-bottom: 36px; }
 section.closing h2 { color: var(--fgColor-default); font-size: 39px; font-weight: 500; margin: 0 0 30px; }
