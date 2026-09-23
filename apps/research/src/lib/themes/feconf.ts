@@ -65,7 +65,7 @@ section h1, section h2, section h3 {
 }
 section h1 { font-size: 68px; line-height: 1.2; font-weight: 700; }
 section h2 {
-  font-size: 43px;
+  font-size: 40px;
   font-weight: 650;
   line-height: 1.25;
   padding: 0;
@@ -345,8 +345,8 @@ section.assembly pre { font-size: 21px; line-height: 1.5; }
 section.assembly blockquote { font-size: 25px; }
 
 /* Results: full data remains visible, with a proportional gzip bar in each row. */
-section.results { --marp-slide-padding: 88px 72px 70px; }
-section.results h2 { font-size: 38px; margin-bottom: 12px; }
+section.results { --marp-slide-padding: 100px 72px 70px; }
+section.results h2 { margin-bottom: 12px; }
 section.results blockquote {
   background: none;
   padding: 0;
@@ -389,7 +389,7 @@ section.mutation > blockquote code { font-size: inherit; background: none; }
 section.mutation pre { font-size: 21px; line-height: 1.5; }
 
 section.flow { font-size: 24px; }
-section.flow h2 { font-size: 41px; margin-bottom: 24px; }
+section.flow h2 { margin-bottom: 24px; }
 section.flow > ol {
   counter-reset: flow;
   list-style: none;
@@ -453,7 +453,7 @@ section.lanes {
   align-content: center;
   counter-reset: tick;
 }
-section.lanes > h2 { grid-column: 1 / -1; font-size: 41px; margin-bottom: 22px; }
+section.lanes > h2 { grid-column: 1 / -1; margin-bottom: 22px; }
 section.lanes > blockquote {
   margin: 0;
   padding: 24px 28px;
@@ -513,15 +513,15 @@ section.closing > p { font-size: 28px; margin-bottom: 14px; }
 section.closing blockquote { background: none; color: var(--yellow); padding: 22px 0 0; border-top: 1px solid #51564b; margin-top: 24px; font-size: 28px; }
 
 section.resources h1 { font-size: 66px; margin: 0 0 4px; }
-section.resources h2 { font-size: 28px; margin: 0 0 20px; }
+section.resources h2 { margin: 0 0 30px; }
 section.resources > p { font-size: 25px; margin: 0 0 30px; }
 section.resources > ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 24px 40px; }
 section.resources > ul > li { font-size: 21px; padding: 20px 0 0; margin: 0; border-top: 2px solid var(--ink); }
 section.resources > ul > li a { display: block; font-size: 25px; font-weight: 500; margin-bottom: 10px; }
 
 /* Closing outcomes: five reductions above the related work. */
-section.outcomes { --marp-slide-padding: 88px 72px 76px; }
-section.outcomes h1 { font-size: 46px; margin-bottom: 10px; }
+section.outcomes { --marp-slide-padding: 100px 72px 76px; }
+section.outcomes h1 { font-size: 40px; font-weight: 650; line-height: 1.25; margin-bottom: 10px; }
 section.outcomes > p { font-size: 22px; margin-bottom: 24px; }
 section.outcomes table { table-layout: fixed; text-align: left; margin-bottom: 30px; }
 section.outcomes table th { text-align: left; font-size: 19px; padding: 10px 12px; }
@@ -539,4 +539,7 @@ section.hidden-slide pre { font-size: 18px; line-height: 1.5; padding: 16px 22px
 section.hidden-slide table { font-size: 21px; margin-bottom: 18px; }
 section.hidden-slide td { padding: 10px 14px; }
 section.hidden-slide p { margin-bottom: 12px; }
+
+/* 본문 장은 위에서부터 채운다. 가운데 정렬이면 내용 양에 따라 제목이 장마다 오르내린다. */
+section:not(.cover):not(.chapter):not(.closing):not(.profile) { justify-content: flex-start; align-content: start; }
 `
