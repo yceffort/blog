@@ -545,7 +545,7 @@ export function watchOfflineChanges() {
 }
 
 export function offlineHref(slug: string, presenter = false) {
-  return `/offline?deck=${encodeURIComponent(slug)}${presenter ? '&mode=presenter' : ''}`
+  return `/offline/${encodeURIComponent(slug)}${presenter ? '/presenter' : ''}`
 }
 
 export function formatBytes(bytes: number) {

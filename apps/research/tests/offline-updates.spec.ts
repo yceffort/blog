@@ -110,7 +110,7 @@ test('reconnect updates saved content and notes without interrupting an open pre
   expect(state.unchangedRequests).toBeGreaterThan(0)
   expect(state.imageRequests).toBe(1)
   await context.setOffline(true)
-  await page.goto(`/offline?deck=${slug}#1`, {waitUntil: 'domcontentloaded'})
+  await page.goto(`/offline/${slug}#1`, {waitUntil: 'domcontentloaded'})
   await expect(page.locator('.swiper-slide-active .auto-version')).toHaveText(
     'version one',
   )

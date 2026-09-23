@@ -4,6 +4,7 @@ const META_CACHE = 'research-offline-meta-v1'
 const RUNTIME_KEY = '/__research_offline_runtime__'
 const RUNTIME_PREFIX = 'research-runtime-v1-'
 const DECK_PREFIX = 'research-deck-v1-'
+const OFFLINE_DECK_PATH = /^\/offline\/[^/]+(?:\/presenter)?\/?$/
 
 self.addEventListener('message', (event) => {
   if (
@@ -22,7 +23,7 @@ self.addEventListener('message', (event) => {
         if (
           clients.some((client) => {
             const url = new URL(client.url)
-            return url.pathname === '/offline' && url.searchParams.has('deck')
+            return OFFLINE_DECK_PATH.test(url.pathname)
           })
         )
           return
@@ -75,7 +76,7 @@ async function savedAsset(request) {
 
 async function navigate(request) {
   const url = new URL(request.url)
-  if (url.pathname === '/offline') {
+  if (url.pathname === '/offline' || OFFLINE_DECK_PATH.test(url.pathname)) {
     // Online entries must load the latest update logic, including clients saved
     // before automatic updates existed. An open presentation is never reloaded.
     if (self.navigator.onLine) {
@@ -102,11 +103,10 @@ async function navigate(request) {
         {status: 503, headers: {'Content-Type': 'text/plain; charset=utf-8'}},
       )
     const match = url.pathname.match(/^\/slides\/([^/]+)(\/presenter)?\/?$/)
-    const target = new URL('/offline', url)
-    if (match) {
-      target.searchParams.set('deck', decodeURIComponent(match[1]))
-      if (match[2]) target.searchParams.set('mode', 'presenter')
-    }
+    const target = new URL(
+      match ? `/offline/${match[1]}${match[2] ?? ''}` : '/offline',
+      url,
+    )
     return Response.redirect(target.href, 302)
   }
 }

@@ -139,9 +139,9 @@ export default function Layout({children}: {children: ReactNode}) {
               </Script>
               <Suspense fallback={null}>
                 <GoogleAnalyticsPageViewTracker />
+                <BotTracker />
               </Suspense>
               <OutboundLinkTracker />
-              <BotTracker />
             </>
           )}
         </body>

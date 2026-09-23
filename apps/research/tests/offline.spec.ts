@@ -63,6 +63,16 @@ test('selected decks survive a restart offline with animations, notes, timer and
     page = await context.newPage()
     const errors: string[] = []
     page.on('pageerror', (error) => errors.push(error.message))
+    // A direct path must work on the first request after a disconnected restart.
+    await page.goto(`${base}/offline/${slug}#34`, {
+      waitUntil: 'domcontentloaded',
+    })
+    await expect(page).toHaveURL(`${base}/offline/${slug}#34`)
+    await expect(
+      page.locator('.swiper-slide-active .mermaid svg'),
+    ).toBeVisible()
+    await page.reload({waitUntil: 'domcontentloaded'})
+    await expect(page.locator('.marp-slides')).toBeVisible()
     await page.goto(`${base}/`, {waitUntil: 'domcontentloaded'})
     await expect(page).toHaveURL(`${base}/offline`)
     await expect(page.locator('.offline-deck')).toHaveCount(1)
@@ -72,7 +82,7 @@ test('selected decks survive a restart offline with animations, notes, timer and
     await page.goto(`${base}/slides/${slug}#34`, {
       waitUntil: 'domcontentloaded',
     })
-    await expect(page).toHaveURL(`${base}/offline?deck=${slug}#34`)
+    await expect(page).toHaveURL(`${base}/offline/${slug}#34`)
     await expect(
       page.locator('.swiper-slide-active .mermaid svg'),
     ).toBeVisible()
@@ -106,12 +116,15 @@ test('selected decks survive a restart offline with animations, notes, timer and
         /^(transform|opacity)$/,
       )
     }
-    await page.goto(`${base}/offline?deck=${slug}#${noteIndex + 1}`, {
+    await page.goto(`${base}/offline/${slug}#${noteIndex + 1}`, {
       waitUntil: 'domcontentloaded',
     })
     const presenterPromise = context.waitForEvent('page')
     await page.keyboard.press('p')
     const presenter = await presenterPromise
+    await expect(presenter).toHaveURL(
+      `${base}/offline/${slug}/presenter#${noteIndex + 1}`,
+    )
     presenter.on('pageerror', (error) => errors.push(error.message))
     const noteBody = presenter.locator('.marp-presenter-notes > div').last()
     await expect(noteBody).toHaveText(notes[noteIndex])
@@ -130,6 +143,15 @@ test('selected decks survive a restart offline with animations, notes, timer and
     await expect(noteBody).toHaveText(notes[nextNoteIndex - 1] || '노트 없음')
     await presenter.getByRole('button', {name: '리셋', exact: true}).click()
     await expect(presenter.getByText('00:00', {exact: true})).toBeVisible()
+    await presenter.reload({waitUntil: 'domcontentloaded'})
+    await expect(noteBody).toHaveText(notes[nextNoteIndex - 1] || '노트 없음')
+    await presenter.goto(`${base}/slides/${slug}/presenter#${nextNoteIndex}`, {
+      waitUntil: 'domcontentloaded',
+    })
+    await expect(presenter).toHaveURL(
+      `${base}/offline/${slug}/presenter#${nextNoteIndex}`,
+    )
+    await expect(noteBody).toHaveText(notes[nextNoteIndex - 1] || '노트 없음')
     await presenter.close()
     await page.keyboard.press('End')
     await expect(page).toHaveURL(/#76$/)
@@ -153,6 +175,21 @@ test('selected decks survive a restart offline with animations, notes, timer and
     await context.close()
     await rm(profile, {recursive: true, force: true})
   }
+})
+
+test('offline paths resolve on the server before any deck has been saved', async ({
+  page,
+  request,
+}) => {
+  for (const suffix of ['', '/presenter']) {
+    const response = await request.get(`/offline/${slug}${suffix}`)
+    expect(response.status()).toBe(200)
+  }
+  await page.goto(`/offline/${slug}`, {waitUntil: 'domcontentloaded'})
+  await expect(page.locator('.offline-error')).toContainText(
+    '저장되어 있지 않습니다',
+  )
+  await expect(page).toHaveURL(`${base}/offline/${slug}`)
 })
 
 test('failed asset or runtime updates preserve the previous complete download', async ({
@@ -221,7 +258,7 @@ test('failed asset or runtime updates preserve the previous complete download', 
   await expect(page.locator('.offline-deck h2')).toHaveText(title)
   await page.getByRole('link', {name: '슬라이드 열기', exact: true}).click()
   await expect(page.locator('.marp-slides')).toBeVisible()
-  await page.goto(`/offline?deck=${slug}#61`, {waitUntil: 'domcontentloaded'})
+  await page.goto(`/offline/${slug}#61`, {waitUntil: 'domcontentloaded'})
   const image = page.getByAltText('offline fixture')
   await expect(image).toHaveAttribute('src', /\/offline-assets\//)
   await expect
@@ -278,7 +315,7 @@ test('directly accessible unlisted decks can be saved and presented offline', as
     .click()
   await expect(page.locator('.offline-toast')).toContainText('저장 완료:')
   await context.setOffline(true)
-  await page.goto(`/offline?deck=${unlistedSlug}`, {
+  await page.goto(`/offline/${unlistedSlug}`, {
     waitUntil: 'domcontentloaded',
   })
   await expect(page.locator('.marp-slides')).toHaveAttribute(

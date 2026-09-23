@@ -36,16 +36,20 @@ export function OfflineLibrary() {
     getOfflineState,
     getServerOfflineState,
   )
-  const search = useSyncExternalStore(
+  const pathname = useSyncExternalStore(
     subscribeLocation,
-    () => window.location.search,
-    () => '',
+    () => window.location.pathname,
+    () => '/offline',
   )
   const selection = useMemo(() => {
-    const params = new URLSearchParams(search)
-    const slug = params.get('deck')
-    return slug ? {slug, presenter: params.get('mode') === 'presenter'} : null
-  }, [search])
+    const match = pathname.match(/^\/offline\/([^/]+)(\/presenter)?\/?$/)
+    if (!match) return null
+    try {
+      return {slug: decodeURIComponent(match[1]), presenter: !!match[2]}
+    } catch {
+      return null
+    }
+  }, [pathname])
   const [deck, setDeck] = useState<SavedDeck | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
