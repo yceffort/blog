@@ -117,7 +117,7 @@ test('reconnect updates saved content and notes without interrupting an open pre
   const popup = context.waitForEvent('page')
   await page.keyboard.press('p')
   const presenter = await popup
-  const notes = presenter.locator('.marp-presenter-notes > div').last()
+  const notes = presenter.locator('.marp-presenter-notes-content').last()
   await expect(notes).toHaveText('version one notes')
   state.deck.title = 'automatically updated title'
   state.deck.html[0] = state.deck.html[0].replace('version one', 'version two')
@@ -149,7 +149,7 @@ test('reconnect updates saved content and notes without interrupting an open pre
   await page.keyboard.press('p')
   const updatedPresenter = await updatedPopup
   await expect(
-    updatedPresenter.locator('.marp-presenter-notes > div').last(),
+    updatedPresenter.locator('.marp-presenter-notes-content').last(),
   ).toHaveText('version two notes')
   await updatedPresenter.close()
   await page.goto('/offline', {waitUntil: 'domcontentloaded'})

@@ -7,6 +7,7 @@ import {useTimer} from '@/hooks/useTimer'
 import {getSlideGroups} from '@/lib/slideNavigation'
 
 import {Marp} from './Marp'
+import {PresenterNotes} from './PresenterNotes'
 import * as styles from './PresenterView.styles'
 
 interface PresenterViewProps {
@@ -95,6 +96,13 @@ export function PresenterView({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Let focused notes and their scrollbar handle reading keys themselves.
+      if (
+        e.defaultPrevented ||
+        (e.target instanceof Element &&
+          e.target.closest('.marp-presenter-notes'))
+      )
+        return
       switch (e.key) {
         case 'ArrowLeft':
           goToPrev()
@@ -186,12 +194,7 @@ export function PresenterView({
         </div>
       </div>
 
-      <div className={`marp-presenter-notes ${styles.notesPanel}`}>
-        <div className={styles.notesLabel}>발표자 노트</div>
-        <div className={styles.notesContent}>
-          {currentNote || <span className={styles.noNotes}>노트 없음</span>}
-        </div>
-      </div>
+      <PresenterNotes key={activeIndex} note={currentNote} />
 
       <div className={styles.controlBar}>
         <div className={styles.navigation}>

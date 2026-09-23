@@ -109,13 +109,78 @@ const styles = stylex.create({
   },
   notesPanel: {
     '@layer site': {
-      padding: '16px 24px',
+      display: 'grid',
+      gridTemplateRows: 'auto minmax(0, 1fr) auto',
+      padding: '12px 24px',
       background: '#2a2a2a',
       borderTop: '1px solid #333',
       minHeight: 0,
-      maxHeight: 'min(200px, 30dvh)',
-      overflowY: 'scroll',
-      scrollbarGutter: 'stable',
+      maxHeight: 'min(240px, 32dvh)',
+      overflow: 'hidden',
+    },
+  },
+  notesBody: {
+    '@layer site': {
+      display: 'grid',
+      gridTemplateColumns: 'minmax(0, 1fr) 18px',
+      gridTemplateRows: 'minmax(0, 1fr)',
+      gap: '12px',
+      minHeight: 0,
+    },
+  },
+  notesViewport: {
+    '@layer site': {
+      overflowY: 'auto',
+      overscrollBehavior: 'contain',
+      scrollbarWidth: 'none',
+      minHeight: 0,
+      outlineOffset: '-2px',
+    },
+  },
+  notesTrack: {
+    '@layer site': {
+      position: 'relative',
+      background: '#171717',
+      borderRadius: '9px',
+      touchAction: 'none',
+      userSelect: 'none',
+      cursor: 'pointer',
+      outlineOffset: '2px',
+    },
+  },
+  notesThumb: {
+    '@layer site': {
+      position: 'absolute',
+      top: 0,
+      left: '3px',
+      right: '3px',
+      height: '100%',
+      borderRadius: '6px',
+      background: {default: '#b8b8b8', ':hover': '#eee'},
+      cursor: 'grab',
+    },
+  },
+  notesStatus: {
+    '@layer site': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '28px',
+      marginTop: '6px',
+      color: '#aaa',
+      fontSize: '12px',
+    },
+  },
+  notesMore: {
+    '@layer site': {
+      padding: '4px 12px',
+      border: '1px solid #777',
+      borderRadius: '14px',
+      background: {default: '#383838', ':hover': '#484848'},
+      color: '#fff',
+      fontSize: '12px',
+      fontWeight: 600,
+      cursor: 'pointer',
     },
   },
   notesLabel: {
@@ -227,6 +292,12 @@ export const slideLabelNext = stylex.props(
 export const slideContent = stylex.props(styles.slideContent).className!
 export const noNextSlide = stylex.props(styles.noNextSlide).className!
 export const notesPanel = stylex.props(styles.notesPanel).className!
+export const notesBody = stylex.props(styles.notesBody).className!
+export const notesViewport = stylex.props(styles.notesViewport).className!
+export const notesTrack = stylex.props(styles.notesTrack).className!
+export const notesThumb = stylex.props(styles.notesThumb).className!
+export const notesStatus = stylex.props(styles.notesStatus).className!
+export const notesMore = stylex.props(styles.notesMore).className!
 export const notesLabel = stylex.props(styles.notesLabel).className!
 export const notesContent = stylex.props(styles.notesContent).className!
 export const noNotes = stylex.props(styles.noNotes).className!

@@ -23,30 +23,9 @@
     cursor: none !important;
   }
 
-  /* 자동으로 숨는 오버레이 대신 노트의 스크롤 트랙과 손잡이를 항상 표시한다. */
-  .marp-presenter-notes::-webkit-scrollbar {
-    width: 12px;
-  }
-
-  .marp-presenter-notes::-webkit-scrollbar-track {
-    background: #1a1a1a;
-  }
-
-  .marp-presenter-notes::-webkit-scrollbar-thumb {
-    background: #aaa;
-    border: 3px solid #1a1a1a;
-    border-radius: 6px;
-  }
-
-  .marp-presenter-notes::-webkit-scrollbar-thumb:hover {
-    background: #ddd;
-  }
-
-  @supports not selector(::-webkit-scrollbar) {
-    .marp-presenter-notes {
-      scrollbar-color: #aaa #1a1a1a;
-      scrollbar-width: auto;
-    }
+  /* PresenterNotes renders a persistent, draggable scrollbar on every OS. */
+  .marp-presenter-notes-viewport::-webkit-scrollbar {
+    display: none;
   }
 }
 

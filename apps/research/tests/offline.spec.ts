@@ -126,7 +126,7 @@ test('selected decks survive a restart offline with animations, notes, timer and
       `${base}/offline/${slug}/presenter#${noteIndex + 1}`,
     )
     presenter.on('pageerror', (error) => errors.push(error.message))
-    const noteBody = presenter.locator('.marp-presenter-notes > div').last()
+    const noteBody = presenter.locator('.marp-presenter-notes-content').last()
     await expect(noteBody).toHaveText(notes[noteIndex])
     await expect(
       presenter.locator('.marp-presenter-slide section'),
@@ -327,7 +327,7 @@ test('directly accessible unlisted decks can be saved and presented offline', as
   const presenter = await presenterPromise
   await expect(presenter.locator('.marp-presenter-notes')).toBeVisible()
   await expect(
-    presenter.locator('.marp-presenter-notes > div').last(),
+    presenter.locator('.marp-presenter-notes-content').last(),
   ).not.toHaveText('노트 없음')
 })
 
