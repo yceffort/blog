@@ -387,7 +387,7 @@ Node 없이 실행되는 것을 확인하고도 부족한 점이 남았다. 분�
 
 마지막 두 값의 160 차이는 집계 오류가 아니라 문자열 단위 차이다. 앞에서 본 소스맵 귀속 정책 차이까지 더하면, "DevTools 화면의 수치와 다르다"는 사실만으로 무엇이 틀렸는지 알 수 없다. 실행 범위, 문자 단위, 원본 귀속을 나눠 비교해야 한다.
 
-이 검증이 보장하는 범위도 여기까지다. 소스맵 생성기가 원본의 의미를 정확히 보존했는지, 어떤 시나리오에서도 실행되지 않을 코드인지까지 증명한 것은 아니다. [검산 코드와 결과](https://github.com/yceffort/blog/tree/main/experiments/bundle-trace)는 실험 디렉터리에 남겼다.
+이 검증이 보장하는 범위도 여기까지다. 소스맵 생성기가 원본의 의미를 정확히 보존했는지, 어떤 시나리오에서도 실행되지 않을 코드인지까지 증명한 것은 아니다. [검산 코드와 결과](https://github.com/yceffort/blog/tree/7f33d3bccd6ebc71d7c26c07a2527ced07846c3b/experiments/bundle-trace)는 실험 디렉터리에 남겼다.
 
 ## 첫 화면에 소개 페이지 코드가 들어온 경로
 
@@ -554,7 +554,7 @@ bundle-trace --dir path/to/static \
   --json observed.json --html observed.html
 ```
 
-이번 실험의 수집 형식은 CDP의 원본 함수·블록 범위에 빌드 해시를 덧붙인 JSON이다. 분석기는 이 형식 외에 DevTools export·Playwright·원본 V8 입력도 읽는다. 표준 입력의 URL은 `--url-prefix` 또는 명시적인 URL과 로컬 파일 연결로 해석하며, 수집 증거가 없는 부분은 보고서에 남긴다. 원본과 검산 스크립트, 빌드 비교 절차는 [실험 README](https://github.com/yceffort/blog/blob/main/experiments/bundle-trace/README.md)에 정리했다.
+이번 실험의 수집 형식은 CDP의 원본 함수·블록 범위에 빌드 해시를 덧붙인 JSON이다. 분석기는 이 형식 외에 DevTools export·Playwright·원본 V8 입력도 읽는다. 표준 입력의 URL은 `--url-prefix` 또는 명시적인 URL과 로컬 파일 연결로 해석하며, 수집 증거가 없는 부분은 보고서에 남긴다. 원본과 검산 스크립트, 빌드 비교 절차는 [실험 README](https://github.com/yceffort/blog/blob/7f33d3bccd6ebc71d7c26c07a2527ced07846c3b/experiments/bundle-trace/README.md)에 정리했다.
 
 CI에서도 미실행과 미측정을 구분해야 한다. 실행 기록이 없는 정적 분석의 미실행량은 0B이기 때문이다. 미실행 예산만 검사하면 아무것도 측정하지 않은 빌드가 가장 좋아 보인다. 크기 예산과 입력 형식별 사용법은 README에 따로 정리했다.
 
