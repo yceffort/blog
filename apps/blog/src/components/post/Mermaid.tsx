@@ -1,6 +1,6 @@
 'use client'
 
-import Panzoom from '@panzoom/panzoom'
+import type Panzoom from '@panzoom/panzoom'
 import {useTheme} from 'next-themes'
 import {useCallback, useEffect, useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
@@ -188,28 +188,42 @@ export default function Mermaid({chart}: {chart: string}) {
       return undefined
     }
     const contentElement = zoomContentRef.current
-    const panzoomInstance = Panzoom(contentElement, {
-      maxScale: 6,
-      minScale: 0.5,
-      cursor: 'move',
-      startScale: 1,
-    })
-    panzoomRef.current = panzoomInstance
     const parent = zoomContainerRef.current
-    const handleWheel = (event: WheelEvent) => {
-      event.preventDefault()
-      if (!contentElement.isConnected || !parent.isConnected) {
+    let cancelled = false
+    let cleanup: (() => void) | undefined
+    // Panzoom은 확대할 때만 필요하므로 오버레이를 열 때 불러온다.
+    const load = async () => {
+      const {default: createPanzoom} = await import('@panzoom/panzoom')
+      if (cancelled) {
         return
       }
-      panzoomInstance.zoomWithWheel(event)
+      const panzoomInstance = createPanzoom(contentElement, {
+        maxScale: 6,
+        minScale: 0.5,
+        cursor: 'move',
+        startScale: 1,
+      })
+      panzoomRef.current = panzoomInstance
+      const handleWheel = (event: WheelEvent) => {
+        event.preventDefault()
+        if (!contentElement.isConnected || !parent.isConnected) {
+          return
+        }
+        panzoomInstance.zoomWithWheel(event)
+      }
+      parent.addEventListener('wheel', handleWheel, {
+        passive: false,
+      })
+      cleanup = () => {
+        parent.removeEventListener('wheel', handleWheel)
+        panzoomInstance.destroy()
+        panzoomRef.current = null
+      }
     }
-    parent.addEventListener('wheel', handleWheel, {
-      passive: false,
-    })
+    void load()
     return () => {
-      parent.removeEventListener('wheel', handleWheel)
-      panzoomInstance.destroy()
-      panzoomRef.current = null
+      cancelled = true
+      cleanup?.()
     }
   }, [isZoomed, svgMarkup])
   const handleOpen = useCallback(() => {
