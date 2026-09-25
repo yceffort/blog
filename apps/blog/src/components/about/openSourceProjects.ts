@@ -10,6 +10,16 @@ interface OpenSourceProject {
 
 export const openSourceProjects: OpenSourceProject[] = [
   {
+    name: 'coldpath',
+    tags: ['rust', 'source-map', 'v8-coverage'],
+    category: {ko: '개발 도구', en: 'Developer tool'},
+    href: 'https://github.com/yceffort/coldpath',
+    description: {
+      ko: 'JavaScript 번들의 바이트를 소스맵과 V8 커버리지로 원본 파일까지 추적하는 Rust CLI입니다. 처음 실행되는 코드와 상호작용할 때만 실행되는 코드를 나누고, 번들 트리맵과 풀 리퀘스트 사이의 비교 보고서를 만듭니다. 분석은 Node.js나 브라우저 없이 오프라인으로 동작합니다.',
+      en: 'A Rust CLI that traces JavaScript bundle bytes back to their original sources with source maps and V8 coverage. It separates code that runs on load from code that runs only on interaction, and produces bundle treemaps and pull request comparisons. Analysis runs offline, without Node.js or a browser.',
+    },
+  },
+  {
     name: 'number-flow',
     tags: ['typescript', 'javascript', 'react', 'web-component'],
     category: {ko: '포크·확장', en: 'Fork and extension'},
