@@ -7,6 +7,18 @@ import * as aboutStyles from '@/components/about/about.styles'
 import LoadTraceShell from '@/components/about/LoadTraceShell'
 import * as heroStyles from '@/components/home/hero.styles'
 import {SiteConfig} from '@/config'
+import {useLocale} from '@/hooks/useLocale'
+
+const intro = {
+  ko: {
+    eyebrow: 'FRONTEND ENGINEER · SEOUL',
+    sub: '웹이 동작하는 원리를 파고들고, 직접 만들고 측정한 경험을 글과 도구로 나눕니다. 요즘은 AI와 함께 일하는 개발자의 판단과 학습을 고민합니다.',
+  },
+  en: {
+    eyebrow: 'FRONTEND ENGINEER IN SEOUL',
+    sub: 'I dig into how the web works and share what I build and measure through writing and tools. These days I think about how developers who work with AI build judgment and learn.',
+  },
+}
 
 // WebGL과 Performance API는 브라우저에서만 쓸 수 있다. 그 전까지 같은 크기의 셸로 자리를 잡는다.
 const LoadTrace = dynamic(() => import('@/components/about/LoadTrace'), {
@@ -14,18 +26,16 @@ const LoadTrace = dynamic(() => import('@/components/about/LoadTrace'), {
   loading: LoadTraceShell,
 })
 export function AboutHero() {
+  const {eyebrow, sub} = intro[useLocale().locale === 'en' ? 'en' : 'ko']
   return (
     <section className={`about-hero ${aboutStyles.about_hero}`}>
       <div>
         <div className={`hero-eyebrow ${heroStyles.hero_eyebrow}`}>
           <span className={`dot ${heroStyles.dot}`} />
-          FRONTEND ENGINEER · SEOUL
+          {eyebrow}
         </div>
         <h1 className={aboutStyles.about_title}>yceffort.</h1>
-        <p className={`page-sub ${tagsStyles.page_sub}`}>
-          웹이 동작하는 원리를 파고들고, 직접 만들고 측정한 경험을 글과 도구로
-          나눕니다. 요즘은 AI와 함께 일하는 개발자의 판단과 학습을 고민합니다.
-        </p>
+        <p className={`page-sub ${tagsStyles.page_sub}`}>{sub}</p>
         <div className={`about-socials ${aboutStyles.about_socials}`}>
           <a
             href={`mailto:${SiteConfig.author.contacts.email}`}

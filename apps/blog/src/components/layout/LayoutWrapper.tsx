@@ -120,10 +120,11 @@ function HeaderNav() {
   const pathname = usePathname() ?? '/'
   const menu = pathPrefix
     ? SiteConfig.menu.map((link) =>
-        link.path === '/pages/1'
+        // 영문판이 있는 메뉴만 /en으로 보낸다
+        link.path === '/pages/1' || link.path === '/about'
           ? {
               ...link,
-              path: `${pathPrefix}/pages/1`,
+              path: `${pathPrefix}${link.path}`,
             }
           : link,
       )
@@ -334,7 +335,7 @@ const LayoutWrapper = ({
   const wide = false
   if (pathname === '/' || pathname === '/en') {
     containerClass = stylex.props(sx.container).className
-  } else if (pathname === '/about') {
+  } else if (pathname === '/about' || pathname === '/en/about') {
     containerClass = stylex.props(sx.container2).className
   } else if (
     pathname?.startsWith('/pages') ||

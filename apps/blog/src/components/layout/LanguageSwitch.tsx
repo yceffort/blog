@@ -24,6 +24,8 @@ export default function LanguageSwitch({enSlugs}: {enSlugs: string[]}) {
   const hasEnPage =
     locale === 'en' ||
     pathname === '/' ||
+    pathname === '/about' ||
+    pathname === '/resume' ||
     pathname.startsWith('/pages') ||
     enSlugs.includes(pathname.slice(1))
   return (

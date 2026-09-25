@@ -1,8 +1,15 @@
 import * as projectTagsStyles from '@/components/about/ProjectTags.styles'
-export function ProjectTags({tags}: {tags: string[]}) {
+import type {Locale} from '@/utils/postPaths'
+export function ProjectTags({
+  tags,
+  locale = 'ko',
+}: {
+  tags: string[]
+  locale?: Locale
+}) {
   return (
     <ul
-      aria-label="주요 사용 기술"
+      aria-label={locale === 'en' ? 'Main technologies' : '주요 사용 기술'}
       className={`markdown-exempt projecttags-tags ${projectTagsStyles.projecttags_tags}`}
     >
       {tags.map((tag) => (

@@ -18,16 +18,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: 'https://yceffort.kr',
       lastModified: new Date(),
     },
-    {
-      url: 'https://yceffort.kr/about',
-      lastModified: new Date(),
-    },
+    ...['about', 'resume'].flatMap((page) =>
+      ['', '/en'].map((prefix) => ({
+        url: `https://yceffort.kr${prefix}/${page}`,
+        lastModified: new Date(),
+        alternates: {
+          languages: {
+            ko: `https://yceffort.kr/${page}`,
+            en: `https://yceffort.kr/en/${page}`,
+          },
+        },
+      })),
+    ),
     {
       url: 'https://yceffort.kr/archive',
-      lastModified: new Date(),
-    },
-    {
-      url: 'https://yceffort.kr/resume',
       lastModified: new Date(),
     },
     ...posts.map((post) => ({

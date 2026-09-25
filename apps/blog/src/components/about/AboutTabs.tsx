@@ -1,12 +1,23 @@
 import Link from 'next/link'
 
 import * as aboutStyles from '@/components/about/about.styles'
+import type {Locale} from '@/utils/postPaths'
 
-export function AboutTabs({active}: {active: 'about' | 'resume'}) {
+export function AboutTabs({
+  active,
+  locale,
+}: {
+  active: 'about' | 'resume'
+  locale: Locale
+}) {
+  const prefix = locale === 'en' ? '/en' : ''
   return (
-    <nav className={`tabs ${aboutStyles.tabs}`} aria-label="소개 및 이력">
+    <nav
+      className={`tabs ${aboutStyles.tabs}`}
+      aria-label={locale === 'en' ? 'About and resume' : '소개 및 이력'}
+    >
       <Link
-        href="/about"
+        href={`${prefix}/about`}
         data-active={active === 'about'}
         aria-current={active === 'about' ? 'page' : undefined}
         className={aboutStyles.about_tab_link}
@@ -14,7 +25,7 @@ export function AboutTabs({active}: {active: 'about' | 'resume'}) {
         About
       </Link>
       <Link
-        href="/resume"
+        href={`${prefix}/resume`}
         data-active={active === 'resume'}
         aria-current={active === 'resume' ? 'page' : undefined}
         className={aboutStyles.about_tab_link}

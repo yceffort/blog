@@ -1,5 +1,5 @@
 import {AboutPageView} from '@/components/about/AboutPageView'
 
 export default function Page() {
-  return <AboutPageView locale="ko" />
+  return <AboutPageView locale="en" />
 }
