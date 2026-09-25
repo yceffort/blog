@@ -34,3 +34,6 @@ pre-commit:
       glob: '*.md'
       exclude: 'labs/**'
       run: node apps/blog/scripts/check-translation-sync.mjs {staged_files}
+    related-posts:
+      glob: 'apps/blog/posts/**/*.{md,mdx}'
+      run: node apps/blog/scripts/generate-related-posts.mjs && git add apps/blog/data/related-posts.json apps/blog/data/related-scores.json || echo '관련 글 갱신 실패. 태그 방식으로 폴백됩니다.'
