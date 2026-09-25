@@ -1,8 +1,9 @@
 ---
 title: '자바스크립트 함수의 성능 측정하기'
 tags:
-  - javascript
   - web-performance
+  - browser
+  - javascript
 published: true
 date: 2020-12-02 20:44:19
 description: '사실 실전에서 해본적은 거의 없음 😇'

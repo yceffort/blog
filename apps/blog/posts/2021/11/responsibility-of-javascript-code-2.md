@@ -2,7 +2,7 @@
 title: '자바스크립트 코드가 가져야할 책임감 (2)'
 tags:
   - web-performance
-  - javascript
+  - bundler
 published: true
 date: 2021-11-20 20:12:01
 description: '알지만 왠지 선뜻 내키지 않는 최적화, 이유가 무엇일까 🤔'

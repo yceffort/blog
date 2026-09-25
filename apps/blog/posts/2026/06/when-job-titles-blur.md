@@ -4,8 +4,7 @@ tags:
   - ai
   - essay
   - software-engineering
-  - future-of-work
-  - product-development
+  - career
 published: true
 date: 2026-06-12
 description: '직군의 경계가 무너진다는 말은 절반만 맞다. 무너지는 건 생산이고, 판단과 책임은 오히려 남는다.'

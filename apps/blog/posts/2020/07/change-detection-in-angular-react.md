@@ -1,9 +1,10 @@
 ---
 title: 프론트엔드 개발자가 알아야 하는 Angular와 React의 Change Detection
 tags:
-  - frontend
-  - react
   - angular
+  - react
+  - design-patterns
+  - web-performance
 published: true
 date: 2020-07-04 07:06:10
 description: "[What every front-end developer should know about change detection

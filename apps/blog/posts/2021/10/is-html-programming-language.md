@@ -1,8 +1,8 @@
 ---
 title: 'HTML은 프로그래밍 언어인가? 라는 논쟁보다 중요한 것'
 tags:
+  - essay
   - html
-  - frontend
 published: true
 date: 2021-10-03 12:57:23
 description: '더이상 HTML 논란은,, 네이버,,,'

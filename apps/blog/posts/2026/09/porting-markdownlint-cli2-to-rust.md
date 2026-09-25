@@ -3,10 +3,9 @@ title: '<em>드롭인 호환</em>의 진짜 비용: markdownlint-cli2를 Rust로
 tags:
   - rust
   - markdown
-  - ai
-  - code-generation
-  - testing
-  - compatibility
+  - oss
+  - compiler
+  - eslint
 published: true
 date: 2026-09-08 21:00:00
 description: 'markdownlint-cli2를 Rust로 옮겨 블로그 저장소의 진단 264,114건을 바이트 단위로 맞췄다. 규칙 51개를 옮긴 커밋은 하루에 몰렸지만, 교체해 쓸 도구를 완성하는 일은 보름 동안 이어졌다. 37배 빠른 파서를 포기하고, 성능 측정의 오판을 고치고, 적대 리뷰에서 호환 차이 11건을 더 찾은 기록이다.'

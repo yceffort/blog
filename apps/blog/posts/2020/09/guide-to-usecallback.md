@@ -2,6 +2,7 @@
 title: useCallback 사용 가이드
 tags:
   - react
+  - web-performance
 published: true
 date: 2020-09-22 23:15:11
 description: '아직도 useCallback으로 고통 받다니'

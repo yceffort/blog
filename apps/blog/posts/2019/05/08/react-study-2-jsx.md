@@ -4,6 +4,7 @@ date: 2019-05-08 08:58:18
 published: true
 tags:
   - react
+  - career
 description:
   "## Create-react-app 라이브러리로 시작 ``` yarn global add create-react-app
   create-react-app hello-react  cd hello-react yarn start ```  ### app.js의

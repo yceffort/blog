@@ -3,7 +3,9 @@ title: "<em>'use client'</em> 디렉티브 딥다이브: 클라이언트 경계�
 tags:
   - react
   - nextjs
-  - frontend
+  - bundler
+  - compiler
+  - web-performance
 published: true
 date: 2026-05-01 12:00:00
 description: '"use client" 한 줄이 만드는 모듈 경계, 빌드 타임 변환, Flight 직렬화, 그리고 성능까지'

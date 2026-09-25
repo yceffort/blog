@@ -2,6 +2,7 @@
 title: 'Dockerfile 작성 가이드'
 tags:
   - docker
+  - devops
 published: true
 date: 2022-02-07 18:04:31
 description: '갑자기 docker를 파는 이유는 22'

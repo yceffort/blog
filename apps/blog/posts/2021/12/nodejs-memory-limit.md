@@ -1,9 +1,11 @@
 ---
 title: 'Node.js의 메모리 제한과 누수 추적 가이드'
 tags:
+  - memory
   - nodejs
   - v8
-  - memory
+  - debugging
+  - backend
 published: true
 date: 2021-12-13 19:21:45
 description: 'V8 가비지 컬렉션의 세대별 구조, 힙 메모리 제한 조정, 그리고 메모리 누수를 진단하는 실용적인 방법을 정리합니다.'

@@ -1,7 +1,6 @@
 ---
 title: 'eslint, prettier, editorconfig 로 코드 컨벤션을 맞춘 후기'
 tags:
-  - javascript
   - eslint
 published: true
 date: 2020-11-11 22:06:31

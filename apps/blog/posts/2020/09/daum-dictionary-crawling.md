@@ -1,7 +1,6 @@
 ---
 title: 자바스크립트로 다음 사전 크롤링해보기
 tags:
-  - javascript
   - web-scraping
 published: true
 date: 2020-09-29 15:37:38

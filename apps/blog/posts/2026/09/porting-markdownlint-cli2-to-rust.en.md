@@ -3,10 +3,9 @@ title: 'The Real Cost of <em>Drop-in Compatibility</em>: What I Threw Away Porti
 tags:
   - rust
   - markdown
-  - ai
-  - code-generation
-  - testing
-  - compatibility
+  - oss
+  - compiler
+  - eslint
 published: true
 date: 2026-09-08 21:00:00
 description: 'I ported markdownlint-cli2 to Rust and matched 264,114 diagnostics on this blog repository byte for byte. The commits that ported 51 rules landed in a single day, but turning that into a tool you could actually swap in took two weeks. A record of giving up a parser 37 times faster, correcting two performance misreadings, and finding 11 more compatibility differences in an adversarial review.'

@@ -2,6 +2,8 @@
 title: 'Array vs ArrayLike, Promise vs PromiseLike'
 tags:
   - typescript
+  - async
+  - javascript
 published: true
 date: 2021-11-05 00:55:08
 description: '이걸 유사 배열이?'

@@ -2,10 +2,10 @@
 title: '<em>Cloudflare</em>가 Next.js를 다시 만든 이유'
 tags:
   - nextjs
-  - cloudflare
-  - edge-computing
-  - vite
-  - reverse-engineering
+  - serverless
+  - oss
+  - devops
+  - backend
 published: true
 date: 2026-03-17 20:07:31
 description: 'vinext가 던진 질문은?'

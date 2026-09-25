@@ -1,9 +1,11 @@
 ---
 title: 'A Guide to Node.js Memory Limits and Leak Tracking'
 tags:
+  - memory
   - nodejs
   - v8
-  - memory
+  - debugging
+  - backend
 published: true
 date: 2021-12-13 19:21:45
 description: "A look at V8's generational garbage collection, adjusting heap memory limits, and practical ways to diagnose memory leaks."

@@ -1,12 +1,11 @@
 ---
 title: '<em>Bun rewrite</em>가 폭로한 것: OSS는 외부 AI만 막을 수 있었다'
 tags:
-  - bun
-  - rust
   - oss
-  - code-generation
   - ai
-  - governance
+  - essay
+  - software-engineering
+  - rust
 published: true
 date: 2026-05-15 02:00:00
 description: 'Bun이 Claude Code로 6일 만에 Zig에서 Rust로 옮긴 사건. 코드 품질보다 OSS 거버넌스와 자원 비대칭의 의미가 더 크다.'

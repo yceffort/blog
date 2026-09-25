@@ -3,6 +3,8 @@ title: 'K8s 공부 (1)'
 tags:
   - kubernetes
   - devops
+  - career
+  - backend
   - docker
 published: true
 date: 2021-06-09 21:52:35

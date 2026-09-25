@@ -1,8 +1,11 @@
 ---
 title: '거대한 JSON 응답을 효율적으로 처리하는 방법'
 tags:
-  - javascript
   - web-performance
+  - memory
+  - async
+  - backend
+  - javascript
 published: true
 date: 2026-01-11 15:00:00
 description: 'JSON.parse()가 버거워할 때 살아남는 법'

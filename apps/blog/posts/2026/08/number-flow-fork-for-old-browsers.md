@@ -1,11 +1,10 @@
 ---
 title: '<em>number-flow</em>를 구형 브라우저로 이식하기: 다섯 가지 결정과 두 가지 번복'
 tags:
-  - javascript
+  - browser
   - animation
-  - web-animations-api
-  - browser-compatibility
-  - frontend
+  - oss
+  - css
 published: true
 date: 2026-08-11 22:00:00
 description: 'number-flow가 애니메이션을 켜는 최소 버전은 Chrome 125, Safari 17.2다. 이 하한을 Chrome 66과 WebKit 16.4까지 내리는 포크를 만들면서 내린 결정들과, 뒤집게 된 판단 두 가지, 그리고 자동 강등을 포기한 Safari 버그 조사의 기록.'

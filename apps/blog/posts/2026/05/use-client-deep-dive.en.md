@@ -3,7 +3,9 @@ title: "<em>'use client'</em> Directive Deep Dive: To the Edge of Client Boundar
 tags:
   - react
   - nextjs
-  - frontend
+  - bundler
+  - compiler
+  - web-performance
 published: true
 date: 2026-05-01 12:00:00
 description: "Module boundaries created by a single line of 'use client', build-time transformations, Flight serialization, and performance implications"

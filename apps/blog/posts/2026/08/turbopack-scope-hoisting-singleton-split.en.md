@@ -1,12 +1,11 @@
 ---
 title: 'Next.js Turbopack Turned <em>One Singleton into Two</em>: A Scope Hoisting Bug and a Circular Import'
 tags:
-  - turbopack
-  - nextjs
-  - bundler
-  - javascript
-  - singleton
   - debugging
+  - bundler
+  - nextjs
+  - compiler
+  - javascript
 published: true
 date: 2026-08-19 12:00:00
 description: 'In a Next.js 16 Turbopack production build, a module-scope singleton became two live instances at runtime. Inside the same synchronous block, one condition contradicted the other, and responses that arrived in 30ms still timed out. This is the record of tracing the cause through the bundle output: a partial scope hoisting merge, a circular import, an upstream bug that had already been fixed, and the single-variable experiment I ran too late.'

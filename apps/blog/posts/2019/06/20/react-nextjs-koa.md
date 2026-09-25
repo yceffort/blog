@@ -4,8 +4,8 @@ date: 2019-06-21 04:07:40
 published: true
 tags:
   - nextjs
-  - frontend
-  - typescript
+  - react
+  - nodejs
 description: '이 문서는 더 이상 업데이트 하지 않을 생각이다. 대신
   https://github.com/yceffort/koa-nextjs-react-typescript-boilerplate 여기에서 계속 해서
   만들어 가고 있다. ## 사용한 오픈소스  ### React  자세한 설명은 생략 한다  ###

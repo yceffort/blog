@@ -2,7 +2,7 @@
 title: 'React''s New Hook, "use"'
 tags:
   - react
-  - javascript
+  - async
 published: true
 date: 2023-06-13 23:51:18
 description: 'The name may change, or it may disappear entirely, depending on how things go'

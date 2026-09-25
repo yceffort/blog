@@ -1,8 +1,8 @@
 ---
 title: 주요 렌더링 경로 - 브라우저의 원리를 이해하고 최적화 하기
 tags:
-  - web-performance
   - browser
+  - web-performance
 published: true
 date: 2020-07-06 09:38:02
 description: "[Critical Rendering

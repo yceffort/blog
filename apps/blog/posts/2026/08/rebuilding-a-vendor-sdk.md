@@ -2,10 +2,10 @@
 title: '<em>외부 SDK</em>를 뜯어서 내 맘대로 다시 만들기: 단, 로직은 한 줄도 건드리지 않고'
 tags:
   - bundler
-  - tree-shaking
+  - web-performance
+  - debugging
   - testing
-  - sdk
-  - frontend
+  - npm
 published: true
 date: 2026-08-31 14:00:00
 description: '상수 하나를 import 했는데 번들의 97.7%가 따라왔다. 벤더는 고칠 일정이 미정이라기에, 배포된 소스맵을 뜯어 400개가 넘는 TypeScript 파일을 되찾고 빌드와 엔트리와 의존성을 내 맘대로 갈아엎었다. 로직만 빼고. 그래서 /send가 raw -77.5%. 그런데 어려운 건 그다음이었다. 테스트 1932개가 전부 통과했는데, 그중 몇 개는 아무것도 보고 있지 않았다.'

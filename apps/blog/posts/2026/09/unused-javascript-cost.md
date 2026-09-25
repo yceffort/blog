@@ -1,10 +1,10 @@
 ---
 title: '실행하지 않는 JavaScript를 <em>10MiB</em>까지 늘려봤다'
 tags:
+  - web-performance
   - javascript
-  - performance
-  - v8
-  - frontend
+  - browser
+  - bundler
 published: true
 date: 2026-09-16 18:00:00
 description: '호출하지 않는 함수가 10MiB 들어 있으면 얼마나 손해일까. 바이트가 만든 비용과 코드 형태가 만든 비용을 갈라 855회 측정했다. 미호출 선언은 MiB당 약 21ms로 CPU를 4배 늦춰도 늘지 않았고, 파일을 읽자마자 실행되는 초기화 코드는 MiB당 201ms를 메인 스레드에 얹었다. 실제 라이브러리에서는 import만 해도 모듈 평가가 실행됐다.'

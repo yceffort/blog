@@ -2,10 +2,10 @@
 title: 'The Rise and Fall of Next.js <em>Edge Runtime</em>'
 tags:
   - nextjs
-  - edge-computing
   - serverless
+  - backend
+  - essay
   - web-performance
-  - vercel
 published: true
 date: 2026-03-16 16:24:02
 description: 'Hey Edge Middleware, how have you been?'

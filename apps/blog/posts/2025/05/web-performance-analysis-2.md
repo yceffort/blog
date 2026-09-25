@@ -2,8 +2,7 @@
 title: '웹 서비스 성능 분석 (2)'
 tags:
   - web-performance
-  - javascript
-  - nextjs
+  - bundler
 published: true
 date: 2025-05-12 09:44:34
 description: '관심 가져주셔서 감사합니다. 🙇🏻‍♂️'

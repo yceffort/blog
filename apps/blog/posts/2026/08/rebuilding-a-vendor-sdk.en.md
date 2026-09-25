@@ -2,10 +2,10 @@
 title: 'Tearing Apart a <em>Third-Party SDK</em> and Rebuilding It My Way: Without Touching a Single Line of Logic'
 tags:
   - bundler
-  - tree-shaking
+  - web-performance
+  - debugging
   - testing
-  - sdk
-  - frontend
+  - npm
 published: true
 date: 2026-08-31 14:00:00
 description: 'I imported one constant and 97.7% of the bundle came along with it. The vendor had no timeline for a fix, so I pried open the published source maps, recovered over 400 TypeScript files, and rewrote the build, the entry points, and the dependencies however I wanted. Everything except the logic. That got /send to -77.5% raw. The hard part came after. All 1,932 tests passed, and a few of them were watching nothing at all.'

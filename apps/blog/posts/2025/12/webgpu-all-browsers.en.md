@@ -1,9 +1,10 @@
 ---
 title: 'WebGPU Is Finally Available in Every Browser'
 tags:
-  - webgpu
-  - ai
   - browser
+  - web-performance
+  - ai
+  - webassembly
 published: true
 date: 2025-12-30 12:00:00
 description: 'In July 2025, the browser GPU API changed generations for the first time in 14 years'

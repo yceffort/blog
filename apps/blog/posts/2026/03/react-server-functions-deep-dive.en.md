@@ -3,7 +3,9 @@ title: 'React Server Functions Deep Dive: To the End of <em>"use server"</em>'
 tags:
   - react
   - nextjs
-  - frontend
+  - networking
+  - backend
+  - compiler
 published: true
 date: 2026-03-09 22:02:05
 description: 'What happens behind a single line of "use server"?'

@@ -2,7 +2,6 @@
 
 title: 자바스크립트 자료 구조
 tags:
-  - typescript
   - algorithm
 published: true
 date: 2020-06-29 07:42:01

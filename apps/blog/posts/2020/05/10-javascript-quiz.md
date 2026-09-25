@@ -2,6 +2,7 @@
 title: 자바스크립트 스킬을 향상 시킬 10개의 질문
 tags:
   - javascript
+  - career
 published: true
 date: 2020-06-03 04:07:55
 description:

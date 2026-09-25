@@ -1,11 +1,11 @@
 ---
 title: 'Whose <em>React</em> Is It?'
 tags:
+  - oss
   - react
-  - governance
+  - software-engineering
+  - essay
   - nextjs
-  - vercel
-  - meta
 published: true
 date: 2026-03-19 23:30:00
 description: 'The questions React Foundation must answer'

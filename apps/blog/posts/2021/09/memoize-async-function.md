@@ -1,8 +1,11 @@
 ---
 title: '비동기 함수 memoize 하는 방법'
 tags:
+  - async
+  - caching
+  - web-performance
   - javascript
-  - react
+  - design-patterns
 published: true
 date: 2021-09-08 22:06:46
 description: 'memo, useMemo, useCallback, 그리고...'

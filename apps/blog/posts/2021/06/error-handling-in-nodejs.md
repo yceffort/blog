@@ -1,9 +1,11 @@
 ---
 title: 'Nodejs에서 올바르게 에러 처리하기'
 tags:
+  - error-handling
   - nodejs
   - backend
-  - error-handling
+  - async
+  - javascript
 published: true
 date: 2021-06-05 20:56:10
 description: 'SSR을 다루면서 에러처리에 대해 고민했던 나날들😑'

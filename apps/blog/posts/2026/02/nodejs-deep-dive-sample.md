@@ -4,6 +4,7 @@ tags:
   - nodejs
   - security
   - javascript
+  - backend
 published: true
 date: 2026-02-27 10:00:00
 description: '집필 중인 Node.js Deep Dive의 5.2장(vm 모듈의 함정) 일부를 미리 공개합니다.'

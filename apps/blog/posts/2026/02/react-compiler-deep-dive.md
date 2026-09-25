@@ -2,7 +2,9 @@
 title: 'React Compiler 딥다이브: 원리부터 결과물까지'
 tags:
   - react
-  - frontend
+  - compiler
+  - web-performance
+  - caching
 published: true
 date: 2026-02-19 14:00:00
 description: 'React Compiler가 코드를 어떻게 분석하고, 무엇을 만들어내는지 파이프라인부터 결과물까지 깊이 파헤쳐본다.'

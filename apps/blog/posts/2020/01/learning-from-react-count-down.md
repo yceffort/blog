@@ -1,9 +1,11 @@
 ---
 title: React count down에서 배운 event-emitter 와 requestAnimationFrame
 tags:
-  - react
   - javascript
+  - browser
   - web-performance
+  - async
+  - react
 published: true
 date: 2020-01-15 04:32:32
 description:

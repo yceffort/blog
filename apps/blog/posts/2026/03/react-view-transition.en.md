@@ -1,9 +1,9 @@
 ---
 title: "React's <em><ViewTransition></em>: Browser-Native Animation, Done the React Way"
 tags:
+  - animation
   - react
-  - css
-  - nextjs
+  - browser
 published: true
 date: 2026-03-02 10:45:38
 description: 'What happens when React wraps the View Transition API'

@@ -2,6 +2,9 @@
 title: typescript의 enum은 tree shaking이 되지 않는다?
 tags:
   - typescript
+  - bundler
+  - web-performance
+  - compiler
 published: true
 date: 2020-09-16 11:43:15
 description: '오늘 배운 토막(?) 상식'

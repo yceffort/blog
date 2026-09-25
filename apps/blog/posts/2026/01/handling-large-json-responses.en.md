@@ -1,8 +1,11 @@
 ---
 title: 'How to Efficiently Process Massive JSON Responses'
 tags:
-  - javascript
   - web-performance
+  - memory
+  - async
+  - backend
+  - javascript
 published: true
 date: 2026-01-11 15:00:00
 description: 'How to survive when JSON.parse() becomes overwhelming'

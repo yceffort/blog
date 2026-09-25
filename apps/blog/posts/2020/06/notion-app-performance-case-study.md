@@ -2,7 +2,7 @@
 title: Notion 성능 최적화
 tags:
   - web-performance
-  - javascript
+  - bundler
 published: true
 date: 2020-06-29 07:42:01
 description: '[Case Study: Analyzing Notion app

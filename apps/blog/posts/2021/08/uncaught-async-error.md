@@ -1,9 +1,10 @@
 ---
 title: 'uncaught async error를 올바르게 처리하기'
 tags:
-  - javascript
   - error-handling
+  - javascript
   - async
+  - debugging
 published: true
 date: 2021-08-23 13:21:41
 description: 'async가 있으면 함수 실행이 뒤로 넘어간다니까요?'

@@ -1,8 +1,11 @@
 ---
 title: Nodejs 성능 최적화를 위한 방법
 tags:
-  - nodejs
+  - memory
   - web-performance
+  - javascript
+  - nodejs
+  - v8
 published: true
 date: 2020-11-19 23:22:28
 description: '성능은 좋을 수록 좋다 그것이 성능이니까'

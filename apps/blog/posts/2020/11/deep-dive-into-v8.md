@@ -1,8 +1,11 @@
 ---
 title: V8 엔진에 대해 가볍게 살펴보기
 tags:
+  - v8
+  - compiler
   - javascript
-  - browser
+  - memory
+  - web-performance
 published: true
 date: 2020-11-27 10:57:07
 description: '맛만 볼게 아니고 직접 코드 까봐서 공부를 해봐야 되는데 😭'

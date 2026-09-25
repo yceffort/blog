@@ -2,8 +2,7 @@
 title: '웹 서비스 성능 분석 (1)'
 tags:
   - web-performance
-  - react
-  - frontend
+  - bundler
 published: true
 date: 2025-05-06 16:39:31
 description: '관심 가져주셔서 감사합니다. 🎉'

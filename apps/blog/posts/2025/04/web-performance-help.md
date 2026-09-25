@@ -2,8 +2,6 @@
 title: '웹사이트 성능에 고민이 있는 서비스를 찾습니다.'
 tags:
   - web-performance
-  - frontend
-  - react
 published: true
 date: 2025-04-26 21:16:54
 description: '🤔'

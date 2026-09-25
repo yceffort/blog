@@ -1,8 +1,7 @@
 ---
 title: 'Github Code Spaces 베타 당첨 및 후기'
 tags:
-  - devops
-  - github
+  - git
 published: true
 date: 2020-09-18 18:50:05
 description: '이게 당첨이 되네 (사실 아무나 되는 건 아니었겠지)'

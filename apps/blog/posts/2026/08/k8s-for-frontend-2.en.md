@@ -3,9 +3,7 @@ title: 'How My Next.js App Becomes a <em>Pod</em>: A Record of Opening Up Contai
 tags:
   - kubernetes
   - docker
-  - nextjs
-  - nodejs
-  - frontend
+  - devops
 published: true
 date: 2026-08-05 21:00:00
 description: 'The same Next.js app produced one 1.72GB image and one 208MB image. This post traces the missing 1.5GB back through the layers, and verifies with PIDs and cgroup files that a container is an isolated process. The second post of the Kubernetes for frontend developers series.'

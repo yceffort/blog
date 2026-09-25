@@ -1,7 +1,9 @@
 ---
 title: 'HTTP1 vs HTTP2'
 tags:
+  - networking
   - web-performance
+  - backend
 published: true
 date: 2021-05-12 21:04:16
 description: '공부할게 정말 많습니당'

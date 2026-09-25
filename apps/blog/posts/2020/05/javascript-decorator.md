@@ -1,7 +1,6 @@
 ---
 title: 자바스크립트 데코레이터
 tags:
-  - typescript
   - javascript
 published: true
 date: 2020-05-20 07:33:36

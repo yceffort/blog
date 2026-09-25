@@ -3,9 +3,9 @@ title: '코드를 읽거나 설명할 줄 몰라도, 스펙을 만족하고 버�
 tags:
   - ai
   - essay
+  - career
   - code-review
   - software-engineering
-  - testing
 published: true
 date: 2026-06-12
 description: '스펙을 만족하고 버그를 고칠 수 있다면 코드를 읽을 줄 몰라도 될까. 이해는 사라지는 게 아니라 어디로 이동하는지를 따진다.'

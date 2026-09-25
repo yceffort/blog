@@ -2,7 +2,10 @@
 title: Seeking Beta Readers for Node.js Deep Dive (Working Title)
 tags:
   - nodejs
-  - javascript
+  - book
+  - backend
+  - async
+  - v8
 published: true
 featured: true
 date: 2026-02-19 22:00:00

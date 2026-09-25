@@ -1,8 +1,8 @@
 ---
 title: '왜 moment 는 deprecated 되었을까'
 tags:
-  - javascript
   - web-performance
+  - npm
 published: true
 date: 2020-12-01 23:43:45
 description: '👋👋'

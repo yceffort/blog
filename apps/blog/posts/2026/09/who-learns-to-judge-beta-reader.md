@@ -1,8 +1,11 @@
 ---
 title: '『<em>남은 판단은 누가 배우는가</em>』 베타리더를 모십니다'
 tags:
+  - book
   - ai
+  - career
   - essay
+  - software-engineering
 published: true
 featured: true
 date: 2026-09-09 19:00:00

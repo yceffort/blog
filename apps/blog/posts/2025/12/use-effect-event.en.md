@@ -2,7 +2,6 @@
 title: "From useEvent to useEffectEvent: React's Event Handler Stabilization Journey"
 tags:
   - react
-  - typescript
 published: true
 date: 2025-12-15 14:30:00
 description: 'An RFC from 3 years ago finally sees the light of day'

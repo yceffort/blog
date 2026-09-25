@@ -3,7 +3,6 @@ title: typescript debounce
 date: 2019-10-14 06:17:00
 published: true
 tags:
-  - typescript
   - web-performance
 description: '> Creates a debounced function that delays invoking func until
   after wait milliseconds have elapsed since the last time the debounced

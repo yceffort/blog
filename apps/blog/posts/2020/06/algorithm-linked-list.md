@@ -2,7 +2,7 @@
 title: 알고리즘 - 연결 리스트
 tags:
   - algorithm
-  - data-structures
+  - python
 published: true
 date: 2020-06-19 04:34:32
 description:

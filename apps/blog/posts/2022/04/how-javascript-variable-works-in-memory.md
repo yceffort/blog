@@ -2,7 +2,8 @@
 title: 'V8에서 관리되는 자바스크립트 변수'
 tags:
   - javascript
-  - browser
+  - v8
+  - memory
 published: true
 date: 2022-04-21 22:10:10
 description: 'V8 내부 코드를 자유롭게 읽을 수 있는 그날까지'

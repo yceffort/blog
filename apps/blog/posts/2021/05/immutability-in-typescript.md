@@ -2,6 +2,7 @@
 title: 'Typescript의 Immutability'
 tags:
   - typescript
+  - javascript
 published: true
 date: 2021-05-26 19:19:20
 description: '저는 사실 Immutability에 안 좋은 추억이 있습니다'

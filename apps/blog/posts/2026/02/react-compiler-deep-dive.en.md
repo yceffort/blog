@@ -2,7 +2,9 @@
 title: 'React Compiler Deep Dive: From Principles to Output'
 tags:
   - react
-  - frontend
+  - compiler
+  - web-performance
+  - caching
 published: true
 date: 2026-02-19 14:00:00
 description: 'A deep exploration of how React Compiler analyzes code and what it produces, from pipeline to final output.'

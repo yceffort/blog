@@ -2,10 +2,9 @@
 title: '오토스케일링은 자동이지만 <em>즉시가 아니다</em>: HPA의 시간을 구간별로 실측한 기록'
 tags:
   - kubernetes
-  - autoscaling
-  - nextjs
-  - nodejs
-  - frontend
+  - devops
+  - web-performance
+  - backend
 published: true
 date: 2026-08-10 12:00:00
 description: '트래픽을 12배로 올리고 새 파드가 첫 요청을 받기까지 31.5초. 그 31.5초의 내역서를 스톱워치로 뽑았다. 감지 창이 지배하는 구조, 배포 직후 5분 창에서 오토스케일러가 눈을 잃는 조건, 안정화 창의 계단, 메모리 HPA가 Node에서 불발되는 이유, KEDA의 선제 확장까지. 프론트엔드 개발자를 위한 쿠버네티스 시리즈의 다섯 번째 편이다.'

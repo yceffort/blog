@@ -1,11 +1,10 @@
 ---
 title: 'framer-motion 배너에서 <em>프레임드랍</em> 없애기: 두 번의 삽질과 이징 함수'
 tags:
-  - framer-motion
-  - performance
   - animation
-  - css
-  - frontend
+  - web-performance
+  - debugging
+  - browser
 published: true
 date: 2026-08-15 20:00:00
 description: 'framer-motion으로 만든 배너가 열리는 0.6초 동안 홈 전체가 버벅였다. 원인을 코드로 추정하고, 실측으로 두 번 뒤집히고, 결국 이징 함수 하나로 리플로우를 없애기까지의 기록. 그리고 이 작업이 남긴 것들: 선언과 실행의 간극, 속성이 성능을 결정한다는 원칙, 메커니즘 보존, 계측기를 의심하는 순서, 같음을 곡선으로 증명하는 방법.'

@@ -2,10 +2,10 @@
 title: '<em>TanStack</em> npm 공급망 공격 분석: pull_request_target은 왜 위험한가'
 tags:
   - security
-  - github-actions
-  - npm
-  - supply-chain
   - ci-cd
+  - npm
+  - oss
+  - git
 published: true
 date: 2026-05-16 12:00:00
 description: '@tanstack/* 공급망 공격 사건 분석. pull_request_target, GitHub Actions 캐시, OIDC trusted publisher의 위험과 방어책'

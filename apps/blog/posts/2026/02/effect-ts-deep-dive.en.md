@@ -2,7 +2,8 @@
 title: "Deep Dive into Effect Systems: From Monads to Algebraic Effects, and Effect-TS's Choices"
 tags:
   - typescript
-  - backend
+  - error-handling
+  - design-patterns
 published: true
 date: 2026-02-20 10:00:00
 description: 'I dug deep into what Effect-TS is all about and why everyone seems so excited about it.'

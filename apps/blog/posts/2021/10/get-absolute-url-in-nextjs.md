@@ -3,6 +3,9 @@ title: 'nextjs 서버사이드에서 absolute url 가져오기'
 tags:
   - nextjs
   - backend
+  - networking
+  - nodejs
+  - debugging
 published: true
 date: 2021-10-29 17:57:02
 description: '이번 달 포스팅이 더디네요... 반성합니다.'

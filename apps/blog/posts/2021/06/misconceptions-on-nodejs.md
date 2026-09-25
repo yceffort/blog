@@ -2,6 +2,10 @@
 title: 'Nodejs에 대한 잘못된 상식 몇가지'
 tags:
   - nodejs
+  - async
+  - backend
+  - javascript
+  - web-performance
 published: true
 date: 2021-06-04 06:45:32
 description: 'Nodejs도 CPU 집약적인 작업 잘 할 수 있습니다(?)'

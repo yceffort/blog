@@ -1,13 +1,11 @@
 ---
 title: 'Building an <em>OG Scraping Server</em> in Node.js (1): From Runtime Choice to Error Rate and Latency'
 tags:
+  - web-scraping
+  - backend
   - nodejs
-  - web
-  - scraping
-  - architecture
-  - caching
-  - encoding
-  - deep-dive
+  - networking
+  - error-handling
 published: true
 date: 2026-08-22 13:30:00
 description: 'The "10% error rate" of a link preview server is a single number that five different kinds of failure got mashed into. This post works out why this workload is I/O bound at that TPS, where runtime choice actually diverges across four points, and then moves on to lowering the error rate with User-Agent and encoding. Node built-in TextDecoder turns CP949 extension characters into different characters without raising an error, and a scraped og:title is not an API response but user input. It also covers cache stampedes, negative caching, and a two-million-run simulation that verifies "P95 under one second" by working backwards from the cache hit rate. The first post of a two-part design note on OG scraping servers.'

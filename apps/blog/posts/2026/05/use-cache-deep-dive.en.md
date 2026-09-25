@@ -3,7 +3,9 @@ title: "<em>'use cache'</em> Directive Deep Dive: To the End of Cache Boundaries
 tags:
   - react
   - nextjs
-  - frontend
+  - caching
+  - web-performance
+  - backend
 published: true
 date: 2026-05-01 19:47:36
 description: "Build-time transformations, cache key serialization, ResumeDataCache, cacheHandler, and Cache Components - everything created by a single 'use cache' line"

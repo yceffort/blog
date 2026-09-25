@@ -2,10 +2,10 @@
 title: '<em>typescript@7</em>을 설치하면 벌어지는 일들: 블로그 모노레포 마이그레이션 기록'
 tags:
   - typescript
-  - oxc
+  - blogging
+  - npm
   - eslint
-  - tooling
-  - frontend
+  - debugging
 published: true
 date: 2026-08-10 22:00:00
 description: 'pnpm lint가 12분 32초 걸리던 모노레포에 typescript 7.0.2를 넣어봤다. 타입체크는 조용히 지나갔는데 next build가 깨졌고, lint는 크래시했다. eslint와 prettier를 oxlint와 oxfmt로 갈아탄 하루의 연쇄 반응과 전후 실측 기록. 미리 말해두면, 빌드는 빨라지지 않았다.'

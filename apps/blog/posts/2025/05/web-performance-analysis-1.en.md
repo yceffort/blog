@@ -2,8 +2,7 @@
 title: 'Web Service Performance Analysis (1)'
 tags:
   - web-performance
-  - react
-  - frontend
+  - bundler
 published: true
 date: 2025-05-06 16:39:31
 description: 'Thank you for your interest. 🎉'

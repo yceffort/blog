@@ -3,6 +3,7 @@ title: 'K8s 공부 (2)'
 tags:
   - kubernetes
   - devops
+  - career
 published: true
 date: 2021-06-10 22:30:19
 description: '무지성에서 시작하는 K8s 공부해보기 시리즈(2)'

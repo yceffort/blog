@@ -2,7 +2,7 @@
 title: Codility - Distinct
 tags:
   - algorithm
-  - javascript
+  - career
 published: true
 date: 2020-06-23 12:25:19
 description:

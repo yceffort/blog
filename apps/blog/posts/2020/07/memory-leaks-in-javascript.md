@@ -1,7 +1,9 @@
 ---
 title: 자바스크립트 메모리 누수와 해결 방법
 tags:
+  - memory
   - javascript
+  - debugging
   - web-performance
 published: true
 date: 2020-07-14 01:19:17

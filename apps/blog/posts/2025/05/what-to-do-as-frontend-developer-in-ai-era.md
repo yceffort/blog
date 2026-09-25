@@ -1,10 +1,9 @@
 ---
 title: 'AI가 코드를 작성해 주는 시대, 프론트엔드 개발자인 나는 무엇을 해야 할까?'
 tags:
-  - essay
   - ai
   - career
-  - frontend
+  - essay
 published: true
 date: 2025-05-19 17:43:12
 description: '미래는 나도 모르겠지만, 그냥 열심히 개발하면 되지 않을까?'

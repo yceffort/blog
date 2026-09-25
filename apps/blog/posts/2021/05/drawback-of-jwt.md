@@ -2,7 +2,8 @@
 title: 'JWT의 단점과 주의사항'
 tags:
   - security
-  - authentication
+  - backend
+  - design-patterns
 published: true
 date: 2021-05-15 11:41:18
 description: '공부할게 정말 많습니당 222'

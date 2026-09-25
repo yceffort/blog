@@ -1,8 +1,10 @@
 ---
 title: '3부) 왜 esmodule 이어야 하는가?'
 tags:
-  - javascript
+  - npm
   - nodejs
+  - javascript
+  - essay
 published: true
 date: 2023-06-02 14:23:28
 description: '2부는 어디갔냐구요? 내맘입니다.'

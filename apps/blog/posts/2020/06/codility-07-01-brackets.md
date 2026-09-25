@@ -2,6 +2,7 @@
 title: Codility - Brackets
 tags:
   - algorithm
+  - career
 published: true
 date: 2020-06-25 08:58:02
 description:

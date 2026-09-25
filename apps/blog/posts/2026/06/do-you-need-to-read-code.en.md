@@ -3,9 +3,9 @@ title: "If the Code Meets Spec and the Bugs Get Fixed, Does It Matter That You C
 tags:
   - ai
   - essay
+  - career
   - code-review
   - software-engineering
-  - testing
 published: true
 date: 2026-06-12
 description: "If the spec is satisfied and the bugs get fixed, do you still need to be able to read the code? Understanding doesn't disappear — this essay traces where it moves."

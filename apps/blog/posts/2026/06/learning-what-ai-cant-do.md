@@ -1,11 +1,11 @@
 ---
 title: '마지막으로 코드를 진지하게 읽은 게 언제인가'
 tags:
-  - ai
   - essay
+  - ai
+  - career
   - software-engineering
-  - learning
-  - future-of-work
+  - code-review
 published: true
 date: 2026-06-21 11:00:00
 description: '판단을 비싸게 만든 마찰이, 동시에 판단을 못 배우게 만든다. AI 시대에 가장 비싸지는 능력이 가장 덜 길러지는 이유'

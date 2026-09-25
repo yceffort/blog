@@ -2,8 +2,10 @@
 title: 'nodejs의 멀티쓰레딩과 worker threads'
 tags:
   - nodejs
+  - async
   - backend
   - javascript
+  - web-performance
 published: true
 date: 2021-04-15 17:09:10
 description: '그 놈의 싱글스레드'

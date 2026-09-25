@@ -2,8 +2,8 @@
 title: 'Nextjs 10 릴리즈 및 적용 후기'
 tags:
   - nextjs
-  - frontend
   - web-performance
+  - blogging
 published: true
 date: 2020-10-28 19:24:01
 description: 'nextjs 정말 열일하네'

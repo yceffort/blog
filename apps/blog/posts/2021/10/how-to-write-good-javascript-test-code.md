@@ -1,7 +1,6 @@
 ---
 title: '좋은 자바스크립트 테스트 코드를 짜는 방법'
 tags:
-  - javascript
   - testing
 published: true
 date: 2021-10-10 11:21:24

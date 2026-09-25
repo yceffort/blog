@@ -1,8 +1,9 @@
 ---
 title: 리덕스 공부해보기 (2) - 리덕스의 탄생, 핵심 개념 그리고 3가지 원칙.
 tags:
-  - javascript
-  - react
+  - state-management
+  - design-patterns
+  - career
 published: true
 date: 2020-04-28 07:33:32
 description: '## 리덕스의 탄생 배경

@@ -1,8 +1,7 @@
 ---
 title: '『<em>npm Deep Dive</em>』가 2026년 세종도서 학술부문에 선정되었습니다'
 tags:
-  - nodejs
-  - javascript
+  - book
 published: true
 date: 2026-09-11 12:00:00
 description: '『npm Deep Dive』가 2026년 세종도서 학술부문에 선정되었습니다. 함께 써주신 분, 만들어주신 분, 읽어주신 분들께 감사드립니다.'

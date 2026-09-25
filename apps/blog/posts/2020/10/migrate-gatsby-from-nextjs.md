@@ -1,8 +1,8 @@
 ---
 title: 블로그 gatsby에서 nextjs로 옮긴 이야기
 tags:
+  - blogging
   - nextjs
-  - react
 published: true
 date: 2020-10-16 22:23:24
 description: '어영부영했지만 보람은 있었다'

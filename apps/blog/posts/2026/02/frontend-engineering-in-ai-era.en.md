@@ -1,9 +1,11 @@
 ---
 title: 'In the Age of AI-Generated Code, Where is Frontend Engineering Headed?'
 tags:
-  - essay
   - ai
-  - frontend
+  - essay
+  - software-engineering
+  - career
+  - code-review
 published: true
 date: 2026-02-14 12:00:00
 description: "AI coding tools aren't changing developers—they're changing the nature of what developers do."

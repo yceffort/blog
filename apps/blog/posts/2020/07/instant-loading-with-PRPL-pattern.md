@@ -2,6 +2,9 @@
 title: 빠른 로딩을 위한 PRPL 패턴
 tags:
   - web-performance
+  - design-patterns
+  - browser
+  - caching
 published: true
 date: 2020-07-06 09:38:02
 description: '[Apply instant loading with the PRPL

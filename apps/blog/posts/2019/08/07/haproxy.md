@@ -4,6 +4,7 @@ date: 2019-08-07 06:39:20
 published: true
 tags:
   - devops
+  - networking
   - backend
 description:
   '## 로드밸런서 > 로드 밸런싱이란, 부하 분산을 위해서 가상 IP를 통해 여러 서버에 접속하도록 분배하는 기능을

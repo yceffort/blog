@@ -1,12 +1,10 @@
 ---
 title: '블로그를 고친 뒤 <em>첫 화면</em>을 다시 재봤다'
 tags:
-  - performance
-  - web-vitals
-  - nextjs
-  - stylex
-  - wasm
-  - frontend
+  - web-performance
+  - blogging
+  - debugging
+  - css
 published: true
 date: 2026-09-14 19:00:00
 description: '블로그 마이그레이션 뒤 수식 글 LCP가 5.6초로 늘어난 원인을 추적했다. 일반 웹 글꼴을 실제 코드에서 제거하고 다시 빌드하자 수식 글 LCP는 5,650ms에서 2,352ms, FCP는 1,514ms에서 758ms로 줄었다. LCP 대상은 본문 문단에서 배너로 바뀌었다. 수식 전용 글꼴은 쓰는 글리프만 남긴 서브셋으로 바꿔 334KiB에서 26KiB가 됐다. 최초 비교 48회, 원인 대조 15회, 수정 전후 24회, 서브셋 전후 8회의 결과를 기록했다.'

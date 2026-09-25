@@ -1,9 +1,11 @@
 ---
 title: 'Preventing Memory Leaks with IntersectionObserver Singleton Pattern and WeakMap'
 tags:
-  - javascript
-  - frontend
+  - memory
   - web-performance
+  - design-patterns
+  - browser
+  - javascript
 published: true
 date: 2026-01-17 21:30:00
 description: 'How to efficiently observe hundreds of elements while preventing memory leaks'

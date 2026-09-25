@@ -1,8 +1,10 @@
 ---
 title: '『npm Deep Dive』 가 출간되었습니다.'
 tags:
-  - javascript
-  - nodejs
+  - book
+  - npm
+  - essay
+  - career
 published: true
 date: 2025-05-28 23:45:59
 description: '🙇🏻‍♂️'

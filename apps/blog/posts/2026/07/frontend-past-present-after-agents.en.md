@@ -1,11 +1,10 @@
 ---
 title: 'Where Frontend Came From, and Where It Goes After Agents'
 tags:
-  - ai
   - essay
-  - frontend
-  - react
-  - future-of-work
+  - ai
+  - design-patterns
+  - career
 published: true
 date: 2026-07-22 10:00:00
 description: 'Why the layers piled up, why we returned to the server, and why the stack survives even after agents. And why the survival of a stack and the value of the people who know it are two separate things'

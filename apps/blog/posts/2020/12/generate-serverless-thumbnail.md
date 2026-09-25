@@ -1,8 +1,8 @@
 ---
 title: '서버리스로 블로그 포스트 썸네일 생성하기'
 tags:
-  - nextjs
   - serverless
+  - blogging
   - backend
 published: true
 date: 2020-12-08 23:26:40

@@ -1,9 +1,10 @@
 ---
 title: 'Handling Uncaught Async Errors in JavaScript Correctly'
 tags:
-  - javascript
   - error-handling
+  - javascript
   - async
+  - debugging
 published: true
 date: 2021-08-23 13:21:41
 description: 'Why try...catch misses errors thrown in async functions, and how to handle every case: IIFEs, forEach, promise chains, constructors, event listeners, and global safety nets.'

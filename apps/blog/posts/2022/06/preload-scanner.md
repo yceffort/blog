@@ -1,8 +1,9 @@
 ---
 title: '브라우저의 프리로드 스캐너(pre-load scanner)와 파싱 동작의 이해'
 tags:
-  - web-performance
   - browser
+  - web-performance
+  - html
 published: true
 date: 2022-06-12 18:10:40
 description: '브라우저 최적화랑 싸우지마'

@@ -3,7 +3,7 @@ title: 'Web Service Performance Analysis (3)'
 tags:
   - web-performance
   - nextjs
-  - backend
+  - react
 published: true
 date: 2025-07-01 13:11:17
 description: 'Thank you for your interest. 🙇🏻‍♂️'

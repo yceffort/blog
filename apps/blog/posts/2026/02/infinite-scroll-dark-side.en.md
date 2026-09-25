@@ -1,11 +1,10 @@
 ---
 title: 'The Downfall of Infinite Scroll — Why Google Removed Infinite Scrolling'
 tags:
-  - frontend
-  - ux
-  - web-performance
   - accessibility
-  - infinite-scroll
+  - web-performance
+  - design-patterns
+  - essay
 published: true
 date: 2026-02-21 10:00:00
 description: 'How infinite scroll is being reevaluated from UX, performance, accessibility, and legal perspectives'

@@ -2,7 +2,7 @@
 title: 'Nextjs에서 Server Side props를 새로고침하기'
 tags:
   - nextjs
-  - frontend
+  - react
 published: true
 date: 2021-01-28 09:13:31
 description: '항상 감사하십시오 and I also, nextjs 조아'

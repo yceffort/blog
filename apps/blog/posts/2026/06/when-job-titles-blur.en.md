@@ -4,8 +4,7 @@ tags:
   - ai
   - essay
   - software-engineering
-  - future-of-work
-  - product-development
+  - career
 published: true
 date: 2026-06-12
 description: 'The claim that job boundaries are collapsing is only half true. What collapses is production; judgment and responsibility remain.'

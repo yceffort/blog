@@ -1,8 +1,11 @@
 ---
 title: '[블로그] PWA 임시 중지'
 tags:
-  - web-performance
+  - blogging
   - devops
+  - pwa
+  - serverless
+  - backend
 published: true
 date: 2022-04-15 13:59:25
 description: '내 돈'

@@ -2,10 +2,9 @@
 title: "Autoscaling Is Automatic but <em>Not Instant</em>: HPA's Timeline, Measured Segment by Segment"
 tags:
   - kubernetes
-  - autoscaling
-  - nextjs
-  - nodejs
-  - frontend
+  - devops
+  - web-performance
+  - backend
 published: true
 date: 2026-08-10 12:00:00
 description: "Raise traffic 12x and it takes 31.5 seconds for a new pod to receive its first request. I pulled an itemized bill for those 31.5 seconds with a stopwatch: the structure dominated by the detection window, the conditions under which the autoscaler goes blind in the five minutes right after a deploy, the scale-down staircase, why memory-based HPA misfires on Node, and KEDA's preemptive scaling. Part 5 of the Kubernetes for frontend developers series."

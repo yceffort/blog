@@ -2,7 +2,9 @@
 title: 'Nodejs 프로세스를 종료시키는 방법'
 tags:
   - nodejs
+  - error-handling
   - backend
+  - javascript
 published: true
 date: 2021-07-16 17:28:35
 description: '이사하느라 힘들었습니다.'

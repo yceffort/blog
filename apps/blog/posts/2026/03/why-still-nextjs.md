@@ -2,10 +2,9 @@
 title: '왜 여전히 <em>Next.js</em>를 쓰는가'
 tags:
   - nextjs
-  - react
-  - vercel
-  - frontend
-  - web
+  - essay
+  - serverless
+  - oss
 published: true
 date: 2026-03-23 22:00:00
 description: '기술 우위보다 강한 전환 비용'

@@ -2,9 +2,6 @@
 title: '프론트엔드 개발자를 위한 <em>쿠버네티스 개념 지도</em>: 파드에서 오토스케일러까지'
 tags:
   - kubernetes
-  - frontend
-  - nodejs
-  - infrastructure
   - devops
 published: true
 date: 2026-08-05 20:00:00

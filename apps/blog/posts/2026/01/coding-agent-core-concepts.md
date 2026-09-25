@@ -2,8 +2,6 @@
 title: '<em>코딩 에이전트</em> 핵심 개념 완전 가이드'
 tags:
   - ai
-  - devops
-  - backend
 published: true
 date: 2026-01-17 23:00:00
 description: 'Rules, Commands, MCP, Sub-agents, Hooks, Skills, Plugins까지 코딩 에이전트의 핵심 개념 총정리'

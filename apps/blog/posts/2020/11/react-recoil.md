@@ -1,8 +1,8 @@
 ---
 title: React를 위한 상태관리 라이브러리, Recoil
 tags:
-  - react
   - state-management
+  - react
 published: true
 date: 2020-11-16 22:28:12
 description: '상태관리 춘추전국시대'

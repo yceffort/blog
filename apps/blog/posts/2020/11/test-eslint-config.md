@@ -1,8 +1,10 @@
 ---
 title: 'eslint-config 를 위한 테스트 코드를 작성하기 (CI)'
 tags:
+  - eslint
   - testing
-  - javascript
+  - oss
+  - ci-cd
 published: true
 date: 2020-11-03 18:03:54
 description: 'eslint config 테스트 코드 작성'

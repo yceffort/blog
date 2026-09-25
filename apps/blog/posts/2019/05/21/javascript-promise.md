@@ -4,6 +4,7 @@ date: 2019-05-21 11:42:41
 published: true
 tags:
   - javascript
+  - async
 description: '## Promise ```javascript new Promise(executor) ```  `executor`는
   `resolve`및 `reject` 인수를 전달할 실행함수를 의미한다. 실행함수는 `resolve`와 `reject`를 받아 즉시 실행된다.
   실행함수는 보통 비동기 작업을 시작한 후, 모든 작업을 끝내면 `resolve`를 호출해서 `Prom...'

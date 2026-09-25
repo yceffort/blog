@@ -1,9 +1,8 @@
 ---
 title: Webpack Module Federation 직접해보기
 tags:
-  - webpack
-  - react
-  - micro-frontend
+  - bundler
+  - design-patterns
 published: true
 date: 2020-11-05 22:19:14
 description: 'Micro Frontend 🤔'

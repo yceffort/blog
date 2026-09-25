@@ -1,7 +1,6 @@
 ---
 title: 자바스크립트로 구현해보는 다양한 정렬
 tags:
-  - javascript
   - algorithm
 published: true
 date: 2020-07-01 07:42:01

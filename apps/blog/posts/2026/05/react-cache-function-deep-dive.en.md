@@ -2,10 +2,7 @@
 title: 'React <em>cache()</em> Deep Dive: Request-Scoped Memoization, Read from the Source'
 tags:
   - react
-  - react-server-components
-  - memoization
-  - performance
-  - frontend
+  - caching
 published: true
 date: 2026-05-30 14:00:00
 description: "Every odd rule of React's cache() falls straight out of a ~30-line implementation. We trace the dispatcher, getCacheForType, and the WeakMap/Map tree at the source level to see exactly how request-scoped memoization works."

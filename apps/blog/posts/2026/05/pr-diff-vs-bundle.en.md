@@ -1,11 +1,10 @@
 ---
 title: 'The <em>invisible cost</em> in PR diffs: we are not reviewing the code our users receive'
 tags:
-  - frontend
-  - bundle-analysis
-  - performance
-  - tree-shaking
+  - bundler
   - code-review
+  - web-performance
+  - software-engineering
 published: true
 date: 2026-05-03 15:50:00
 description: 'The bundle costs that code review misses, and how to surface them in the PR.'

@@ -3,7 +3,9 @@ title: "<em>'use cache'</em> 디렉티브 딥다이브: 캐시 경계의 끝까�
 tags:
   - react
   - nextjs
-  - frontend
+  - caching
+  - web-performance
+  - backend
 published: true
 date: 2026-05-01 19:47:20
 description: '"use cache" 한 줄이 만드는 빌드 타임 변환, 캐시 키 직렬화, ResumeDataCache, cacheHandler, 그리고 Cache Components까지'

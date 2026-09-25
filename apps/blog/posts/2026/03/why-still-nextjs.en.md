@@ -2,10 +2,9 @@
 title: 'Why We Still Use <em>Next.js</em>'
 tags:
   - nextjs
-  - react
-  - vercel
-  - frontend
-  - web
+  - essay
+  - serverless
+  - oss
 published: true
 date: 2026-03-23 22:00:00
 description: 'Switching costs stronger than technical superiority'

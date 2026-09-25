@@ -1,11 +1,10 @@
 ---
 title: '<em>오래 쓸 수 있는 패키지</em>는 무엇이 다른가'
 tags:
-  - frontend
-  - package-management
-  - semver
-  - nextjs
-  - maintenance
+  - npm
+  - essay
+  - oss
+  - software-engineering
 published: true
 date: 2026-05-09 12:54:08
 description: '좋은 패키지는 기능뿐 아니라 의존성, 버전업, 호환성, 릴리즈 정책까지 사용자 친화적이어야 한다.'

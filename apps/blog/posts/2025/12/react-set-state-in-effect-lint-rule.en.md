@@ -2,8 +2,8 @@
 title: "React's New Lint Rule: set-state-in-effect"
 tags:
   - react
-  - javascript
-  - testing
+  - eslint
+  - web-performance
 published: true
 date: 2025-12-16 15:30:00
 description: "Why you shouldn't call setState in Effects and what alternatives exist"

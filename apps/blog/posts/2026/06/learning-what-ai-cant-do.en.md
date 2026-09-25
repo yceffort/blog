@@ -1,11 +1,11 @@
 ---
 title: 'When Was the Last Time You Read Code Seriously?'
 tags:
-  - ai
   - essay
+  - ai
+  - career
   - software-engineering
-  - learning
-  - future-of-work
+  - code-review
 published: true
 date: 2026-06-21 11:00:00
 description: 'The friction that made judgment expensive is the same friction that taught it. Why the skill growing most valuable in the AI era is the one being cultivated least'

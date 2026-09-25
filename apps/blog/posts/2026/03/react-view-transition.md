@@ -1,9 +1,9 @@
 ---
 title: 'React의 <em><ViewTransition></em>: 브라우저 네이티브 애니메이션을 React답게'
 tags:
+  - animation
   - react
-  - css
-  - nextjs
+  - browser
 published: true
 date: 2026-03-02 10:45:38
 description: 'View Transition API를 React가 감싸면 어떻게 되는가'

@@ -2,6 +2,10 @@
 title: '더 나은 압축 알고리즘, Brotli'
 tags:
   - web-performance
+  - networking
+  - algorithm
+  - devops
+  - backend
 published: true
 date: 2021-01-07 23:57:07
 description: '왜 이걸 이제 알았나 자괴감 들고 괴로워'

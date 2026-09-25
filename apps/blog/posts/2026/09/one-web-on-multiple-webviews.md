@@ -1,10 +1,9 @@
 ---
 title: '<em>여러 웹뷰</em>에서 하나의 웹 운영하기: 환경 분기를 어댑터로 모은 과정'
 tags:
-  - webview
-  - architecture
+  - browser
+  - design-patterns
   - css
-  - frontend
 published: true
 date: 2026-09-09 14:00:00
 description: '자사 앱과 파트너 앱의 iOS, Android 웹뷰를 지원하며 흩어진 환경 분기를 어댑터로 모았다. 인셋과 브릿지, CSS를 정리한 과정과 SSR 시드, hydration에서 겪은 문제를 기록했다.'

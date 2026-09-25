@@ -1,8 +1,9 @@
 ---
 title: Github 액션으로 스케쥴링 작업하기
 tags:
+  - git
+  - ci-cd
   - devops
-  - github
 published: true
 date: 2020-07-16 04:55:31
 description:

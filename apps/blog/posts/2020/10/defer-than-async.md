@@ -2,6 +2,8 @@
 title: '왜 Async 보다는 Defer를 써야할까'
 tags:
   - web-performance
+  - browser
+  - html
   - javascript
 published: true
 date: 2020-10-20 23:32:39

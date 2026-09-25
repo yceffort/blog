@@ -1,8 +1,11 @@
 ---
 title: 'Why GitHub Actions Cron Jobs Run Late, and What to Use Instead'
 tags:
+  - ci-cd
+  - git
   - devops
-  - github
+  - backend
+  - debugging
 published: true
 date: 2021-01-24 21:16:38
 description: 'Why GitHub Actions scheduled workflows get delayed by dozens of minutes: the structural causes, and free alternatives that actually run on time.'

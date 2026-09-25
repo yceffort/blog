@@ -1,11 +1,10 @@
 ---
 title: 'What makes a <em>package you can keep using for years</em> different'
 tags:
-  - frontend
-  - package-management
-  - semver
-  - nextjs
-  - maintenance
+  - npm
+  - essay
+  - oss
+  - software-engineering
 published: true
 date: 2026-05-09 12:54:08
 description: 'A good package has to be user-friendly not just in features, but in dependencies, version bumps, compatibility, and release policy.'

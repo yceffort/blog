@@ -1,9 +1,10 @@
 ---
 title: '크롬에서 자바스크립트 로딩 순서'
 tags:
-  - web-performance
-  - javascript
   - browser
+  - web-performance
+  - html
+  - javascript
 published: true
 date: 2020-10-20 23:14:39
 description: '크롬에서 자바스크립트를 로딩하는 순서'

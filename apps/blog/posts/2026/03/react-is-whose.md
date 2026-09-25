@@ -1,11 +1,11 @@
 ---
 title: '<em>React</em>는 누구의 것인가'
 tags:
+  - oss
   - react
-  - governance
+  - software-engineering
+  - essay
   - nextjs
-  - vercel
-  - meta
 published: true
 date: 2026-03-19 23:30:00
 description: 'React Foundation이 답해야 할 질문'

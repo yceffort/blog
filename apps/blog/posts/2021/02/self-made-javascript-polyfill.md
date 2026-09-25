@@ -2,6 +2,7 @@
 title: '나만의 자바스크립트 polyfill 만들고 공부하기'
 tags:
   - javascript
+  - career
 published: true
 date: 2021-02-15 21:50:50
 description: '어디 재밌는 글 없나'

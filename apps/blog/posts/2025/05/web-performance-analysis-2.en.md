@@ -2,8 +2,7 @@
 title: 'Web Service Performance Analysis (2)'
 tags:
   - web-performance
-  - javascript
-  - nextjs
+  - bundler
 published: true
 date: 2025-05-12 09:44:34
 description: 'Thank you for your interest. 🙇🏻‍♂️'

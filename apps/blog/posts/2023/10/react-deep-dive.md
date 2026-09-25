@@ -1,8 +1,10 @@
 ---
 title: '모던 리액트 Deep dive가 출간되었습니다.'
 tags:
-  - react
+  - book
+  - essay
   - career
+  - react
 published: true
 date: 2023-10-31 22:38:46
 description: '좋은 경험이었습니다.'

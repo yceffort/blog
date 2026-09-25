@@ -1,8 +1,8 @@
 ---
 title: 'https://research.yceffort.kr/ 를 오픈했습니다'
 tags:
-  - nextjs
-  - web-performance
+  - blogging
+  - markdown
 published: true
 date: 2025-03-26 10:12:30
 description: '게을러터져서 이제 만든'

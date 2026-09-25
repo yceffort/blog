@@ -3,8 +3,10 @@ title: github workflow로 lighthouse ci 추가하기
 date: 2021-03-31 23:39:50
 tags:
   - web-performance
+  - ci-cd
   - devops
-  - github
+  - git
+  - testing
 published: true
 description: '점수의 노예가 되버린 나'
 ---

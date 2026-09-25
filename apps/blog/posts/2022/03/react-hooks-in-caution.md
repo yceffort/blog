@@ -2,6 +2,7 @@
 title: '리액트 훅을 사용할 때 조심해야 할 것'
 tags:
   - react
+  - memory
 published: true
 date: 2022-03-24 10:44:01
 description: 'deps에 primitive 값만 사용하기, 훅을 컴포넌트에서 제거하기'

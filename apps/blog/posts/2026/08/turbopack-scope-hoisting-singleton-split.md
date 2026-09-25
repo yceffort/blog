@@ -1,12 +1,11 @@
 ---
 title: 'Next.js turbopack에서 <em>싱글톤이 두 개</em>가 됐다: scope hoisting 버그와 순환 import'
 tags:
-  - turbopack
-  - nextjs
-  - bundler
-  - javascript
-  - singleton
   - debugging
+  - bundler
+  - nextjs
+  - compiler
+  - javascript
 published: true
 date: 2026-08-19 12:00:00
 description: 'Next.js 16 turbopack 프로덕션 빌드에서 모듈 스코프 싱글톤이 런타임에 두 개가 됐다. 같은 동기 구간에서 조건 판정이 뒤집히고, 응답이 도착해도 타임아웃이 나는 증상을 번들 산출물로 추적한 기록. scope hoisting의 부분 병합, 순환 import, 이미 고쳐져 있던 upstream 버그, 그리고 뒤늦게 돌린 단일 변수 실험까지.'

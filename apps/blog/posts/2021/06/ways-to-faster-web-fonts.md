@@ -3,6 +3,7 @@ title: '웹 폰트 로딩을 더 빠르게 하는 방법'
 tags:
   - web-performance
   - css
+  - browser
 published: true
 date: 2021-06-27 17:34:52
 description: '개발할 때 간지나는 이쁜 폰트 추천받습니다'

@@ -1,11 +1,11 @@
 ---
 title: 'Why Is Your Node.js Pod That Size? Sizing Measured Firsthand, from <em>NODE_OPTIONS</em> to Pod Count'
 tags:
+  - memory
   - nodejs
   - kubernetes
+  - devops
   - v8
-  - performance
-  - frontend
 published: true
 date: 2026-08-03 21:00:00
 description: 'I added one GC tuning flag to the same workload and peak RSS jumped from 201MB to 593MB, while the live data stayed the same. This post traces back through V8 New Space with direct measurements to show why that result is exactly what should happen, and lays out the three axes frontend developers can use to size a Node.js pod.'

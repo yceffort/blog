@@ -2,6 +2,7 @@
 title: Docker 공부 (3) - 도커 이미지
 tags:
   - docker
+  - devops
 published: true
 date: 2020-08-09 03:48:47
 description:

@@ -2,6 +2,7 @@
 title: Codility - Frog River One
 tags:
   - algorithm
+  - career
 published: true
 date: 2020-06-24 05:25:19
 description:

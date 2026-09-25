@@ -1,8 +1,10 @@
 ---
 title: Referer와 Referer-Policy를 위한 가이드
 tags:
+  - networking
   - security
-  - web-performance
+  - browser
+  - backend
 published: true
 date: 2020-09-22 23:12:25
 description: '웹 어플리케이션에서 request를 받기 위한 최적의 Referer와 Referrer 정책'

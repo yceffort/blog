@@ -2,7 +2,7 @@
 title: 'Web Service Performance Analysis (4)'
 tags:
   - web-performance
-  - frontend
+  - browser
 published: true
 date: 2025-07-19 19:20:44
 description: 'If you find yourself thinking "maybe I should try this too..." — reach out right now!!'

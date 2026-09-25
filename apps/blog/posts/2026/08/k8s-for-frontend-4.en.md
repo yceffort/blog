@@ -2,10 +2,9 @@
 title: 'How Do Pods <em>Terminate</em>? Measuring the Causes and Fixes of Deploy-Time Errors'
 tags:
   - kubernetes
-  - nextjs
-  - nodejs
-  - frontend
   - devops
+  - debugging
+  - networking
 published: true
 date: 2026-08-08 23:00:00
 description: 'Even a deploy that changes not a single line of code leaks errors. This is a measured record of tagging every failure that leaks during rolling deploys by type and timestamp, performing an autopsy on four causes, and stacking prescriptions one layer at a time until the count reaches zero. Includes the actual Next.js shutdown code, hostage draining, and the real CrashLoopBackOff timetable. Part 4 of the Kubernetes for frontend developers series.'

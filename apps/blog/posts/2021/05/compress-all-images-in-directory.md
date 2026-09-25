@@ -2,6 +2,7 @@
 title: '디렉토리에 있는 모든 이미지 최적화 하기'
 tags:
   - web-performance
+  - blogging
 published: true
 date: 2021-05-02 20:18:24
 description: 'PNG는 좀 느립니다'

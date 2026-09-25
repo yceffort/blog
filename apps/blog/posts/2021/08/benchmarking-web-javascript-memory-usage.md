@@ -1,8 +1,8 @@
 ---
 title: '웹 페이지에서의 자바스크립트 메모리 사용량 벤치마킹'
 tags:
+  - memory
   - web-performance
-  - javascript
   - browser
 published: true
 date: 2021-08-07 23:18:02

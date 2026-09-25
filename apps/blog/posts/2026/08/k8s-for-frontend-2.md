@@ -3,9 +3,7 @@ title: '내 Next.js 앱은 어떻게 <em>파드</em>가 되는가: 컨테이너�
 tags:
   - kubernetes
   - docker
-  - nextjs
-  - nodejs
-  - frontend
+  - devops
 published: true
 date: 2026-08-05 21:00:00
 description: '같은 Next.js 앱인데 이미지 하나는 1.72GB, 하나는 208MB였다. 사라진 1.5GB를 레이어에서 역추적하고, 컨테이너가 격리된 프로세스라는 것을 PID와 cgroup 파일로 직접 확인한다. 프론트엔드 개발자를 위한 쿠버네티스 시리즈의 두 번째 편이다.'

@@ -1,12 +1,9 @@
 ---
 title: '<em>AI</em> Only Amplifies Me to the Level I Can See'
 tags:
-  - essay
   - ai
-  - learning
   - career
-  - productivity
-  - code-quality
+  - essay
 published: true
 date: 2026-04-20 12:00:00
 description: "I'm definitely coding faster, but why are my codebase and skills staying the same? Examining the gap between perceived and proven benefits."

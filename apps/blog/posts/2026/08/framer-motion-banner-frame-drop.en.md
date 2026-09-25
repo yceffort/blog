@@ -1,11 +1,10 @@
 ---
 title: 'Killing <em>Frame Drops</em> in a framer-motion Banner: Two Wrong Turns and One Easing Function'
 tags:
-  - framer-motion
-  - performance
   - animation
-  - css
-  - frontend
+  - web-performance
+  - debugging
+  - browser
 published: true
 date: 2026-08-15 20:00:00
 description: 'A banner built with framer-motion made the entire home screen stutter for the 0.6 seconds it took to open. The record of guessing the cause from the code, having that guess overturned twice by measurement, and finally removing the reflow with a single easing function. Plus what the work left behind: the gap between declaration and execution, the principle that properties decide performance, preserving mechanisms, suspecting your instruments first, and proving sameness with a curve.'

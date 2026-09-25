@@ -2,7 +2,9 @@
 title: 'K8s 공부 (3)'
 tags:
   - kubernetes
-  - docker
+  - devops
+  - backend
+  - career
 published: true
 date: 2021-06-12 22:32:44
 description: '무지성에서 시작하는 K8s 공부해보기 시리즈(3)'

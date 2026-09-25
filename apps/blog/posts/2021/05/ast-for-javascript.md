@@ -1,8 +1,8 @@
 ---
 title: '자바스크립트 개발자를 위한 AST 이해하기 (2026년 업데이트)'
 tags:
-  - javascript
   - compiler
+  - javascript
 published: true
 date: 2021-05-10 09:40:39
 description: 'AST의 개념부터 파싱 과정, 주요 노드 타입, 그리고 Babel·ESLint 같은 도구에서의 활용까지 정리합니다.'

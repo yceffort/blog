@@ -1,7 +1,6 @@
 ---
 title: MobX를 공부하자 (1)
 tags:
-  - react
   - state-management
 published: true
 date: 2020-08-21 15:54:00

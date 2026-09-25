@@ -2,6 +2,8 @@
 title: 'promise.then(f, f) vs promise.then(f).catch(f) 는 무엇이 다를까?'
 tags:
   - javascript
+  - async
+  - error-handling
 published: true
 date: 2021-07-30 20:16:48
 description: '덥다 더워'

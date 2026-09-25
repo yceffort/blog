@@ -2,10 +2,10 @@
 title: 'Why <em>Cloudflare</em> Rebuilt Next.js'
 tags:
   - nextjs
-  - cloudflare
-  - edge-computing
-  - vite
-  - reverse-engineering
+  - serverless
+  - oss
+  - devops
+  - backend
 published: true
 date: 2026-03-17 20:07:31
 description: 'What question does vinext really ask?'

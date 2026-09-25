@@ -2,7 +2,8 @@
 title: 'useEffect와 메모리 누수'
 tags:
   - react
-  - javascript
+  - memory
+  - async
 published: true
 date: 2021-02-25 22:46:17
 description: 'https://overreacted.io/a-complete-guide-to-useeffect/ 도 시간나면 읽어보세용'

@@ -2,7 +2,9 @@
 title: '리액트 서버 컴포넌트의 동작 방식'
 tags:
   - react
-  - frontend
+  - design-patterns
+  - web-performance
+  - nextjs
 published: true
 date: 2022-01-29 18:42:50
 description: '리액트 18 존버 하는 중'

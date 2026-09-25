@@ -1,11 +1,10 @@
 ---
 title: 'Porting <em>number-flow</em> to Old Browsers: Five Decisions and Two Reversals'
 tags:
-  - javascript
+  - browser
   - animation
-  - web-animations-api
-  - browser-compatibility
-  - frontend
+  - oss
+  - css
 published: true
 date: 2026-08-11 22:00:00
 description: 'The minimum versions where number-flow turns animations on are Chrome 125 and Safari 17.2. A record of the decisions made while building a fork that lowers this floor to Chrome 66 and WebKit 16.4, the two judgment calls I ended up reversing, and the Safari bug investigation that made me give up on automatic downgrading.'

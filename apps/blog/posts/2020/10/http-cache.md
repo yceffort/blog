@@ -1,8 +1,11 @@
 ---
 title: 'HTTP Cache로 불필요한 네트워크 요청 줄이기'
 tags:
+  - caching
   - web-performance
+  - networking
   - browser
+  - backend
 published: true
 date: 2020-10-20 23:59:46
 description: 'HTTP Cache에 대한 이해'

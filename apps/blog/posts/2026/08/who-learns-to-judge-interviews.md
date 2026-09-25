@@ -2,8 +2,10 @@
 title: '<em>책을 쓰고 있습니다</em>: 『남은 판단은 누가 배우는가』 인터뷰를 마쳤습니다'
 tags:
   - ai
+  - book
+  - career
+  - software-engineering
   - essay
-  - interview
 published: true
 featured: false
 date: 2026-08-10 13:00:00

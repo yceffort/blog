@@ -2,6 +2,7 @@
 title: 'ES2021 미리보기'
 tags:
   - javascript
+  - memory
 published: true
 date: 2020-12-26 18:57:32
 description: '2021년엔 쓸만한 개발자가 되길 바라며'

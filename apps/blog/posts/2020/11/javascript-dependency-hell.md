@@ -1,9 +1,7 @@
 ---
 title: '자바스크립트 의존성 지옥'
 tags:
-  - javascript
   - npm
-  - dependency-management
 published: true
 date: 2020-11-20 23:14:25
 description: 'package-lock.json은 정말 복잡 😈'

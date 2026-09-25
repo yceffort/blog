@@ -1,8 +1,10 @@
 ---
 title: 자바스크립트의 비용
 tags:
-  - javascript
   - web-performance
+  - javascript
+  - browser
+  - v8
 published: true
 date: 2020-07-06 12:32:23
 description: '자바스크립트의 비용 2019ver'

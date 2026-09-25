@@ -2,9 +2,6 @@
 title: 'A <em>Kubernetes Concept Map</em> for Frontend Developers: From Pods to Autoscalers'
 tags:
   - kubernetes
-  - frontend
-  - nodejs
-  - infrastructure
   - devops
 published: true
 date: 2026-08-05 20:00:00

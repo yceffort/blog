@@ -4,8 +4,7 @@ tags:
   - nextjs
   - web-performance
   - react
-  - ssr
-  - benchmark
+  - backend
 published: true
 date: 2026-03-21 22:00:00
 description: '벤치마크가 말해주는 불편한 진실'

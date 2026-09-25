@@ -2,7 +2,7 @@
 title: '리액트의 신규 훅, "use"'
 tags:
   - react
-  - javascript
+  - async
 published: true
 date: 2023-06-13 23:51:18
 description: '상황에 따라 이름이 변경되거나 사라질 수도 있습니다'

@@ -2,6 +2,7 @@
 title: 'CSS와 웹페이지 성능과의 관계'
 tags:
   - web-performance
+  - browser
   - css
 published: true
 date: 2021-02-01 16:19:06

@@ -2,10 +2,10 @@
 title: 'What Happens When You Install <em>typescript@7</em>: A Blog Monorepo Migration Log'
 tags:
   - typescript
-  - oxc
+  - blogging
+  - npm
   - eslint
-  - tooling
-  - frontend
+  - debugging
 published: true
 date: 2026-08-10 22:00:00
 description: 'I dropped typescript 7.0.2 into a monorepo where pnpm lint took 12 minutes 32 seconds. Type checking passed quietly, but next build broke and lint crashed. A record of the chain reaction from one day of swapping eslint and prettier for oxlint and oxfmt, with before-and-after measurements. To say it up front, the build did not get any faster.'

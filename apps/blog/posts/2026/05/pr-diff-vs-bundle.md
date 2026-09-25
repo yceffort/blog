@@ -1,11 +1,10 @@
 ---
 title: 'PR diff에서는 <em>보이지 않는 비용</em>: 우리는 사용자가 받는 코드를 리뷰하고 있지 않다'
 tags:
-  - frontend
-  - bundle-analysis
-  - performance
-  - tree-shaking
+  - bundler
   - code-review
+  - web-performance
+  - software-engineering
 published: true
 date: 2026-05-03 15:50:00
 description: '코드 리뷰가 놓치는 bundle 비용, PR에 어떻게 띄울 것인가.'

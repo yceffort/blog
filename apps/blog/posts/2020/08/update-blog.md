@@ -2,8 +2,8 @@
 title: 블로그 업데이트에 대한 회고
 tags:
   - blogging
-  - web-performance
   - devops
+  - git
 published: true
 date: 2020-08-31 13:47:56
 description: '백수가 될 때마다 블로그를 갈아엎는 습관'

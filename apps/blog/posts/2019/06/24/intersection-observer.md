@@ -5,7 +5,6 @@ published: true
 tags:
   - browser
   - web-performance
-  - javascript
 description:
   '## Intersection Observer Intersection Observer는 엘리먼트가 viewport에
   노출되고 있는지 여부를 확인해주는 API다. 간단히 말해 브라우저의 어떤 요소가 화면에 노출되고 있는지 안되고 있는지를 확인해주는

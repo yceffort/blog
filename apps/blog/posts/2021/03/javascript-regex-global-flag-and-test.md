@@ -2,6 +2,7 @@
 title: '알쏭 달쏭한 자바스크립트 정규식'
 tags:
   - javascript
+  - debugging
 published: true
 date: 2021-03-21 14:42:10
 description: '정규식을 자유자재로 써야 간지인데'

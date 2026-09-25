@@ -3,7 +3,7 @@ title: '웹 개발자가 본 사파리 15의 변화와 대응'
 tags:
   - browser
   - css
-  - frontend
+  - debugging
 published: true
 date: 2021-09-19 17:46:41
 description: '죽인다 사파리'

@@ -2,6 +2,7 @@
 title: 'ESModule을 동적으로 import 하기'
 tags:
   - javascript
+  - async
 published: true
 date: 2021-06-19 20:38:43
 description: '무지성 import 멈춰!'

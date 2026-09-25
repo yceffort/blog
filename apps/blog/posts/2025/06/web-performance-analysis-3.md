@@ -3,7 +3,7 @@ title: '웹 서비스 성능 분석 (3)'
 tags:
   - web-performance
   - nextjs
-  - backend
+  - react
 published: true
 date: 2025-07-01 13:11:17
 description: '관심 가져주셔서 감사합니다. 🙇🏻‍♂️'

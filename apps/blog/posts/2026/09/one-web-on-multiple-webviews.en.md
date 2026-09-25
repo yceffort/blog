@@ -1,10 +1,9 @@
 ---
 title: 'Running One Web on <em>Multiple WebViews</em>: Folding Environment Branches into Adapters'
 tags:
-  - webview
-  - architecture
+  - browser
+  - design-patterns
   - css
-  - frontend
 published: true
 date: 2026-09-09 14:00:00
 description: 'We supported the iOS and Android WebViews of our own app and of a partner app, and gathered the scattered environment branching into adapters. This is a record of how we organized insets, the bridge, and CSS, along with the problems we hit with the SSR seed and hydration.'

@@ -2,6 +2,7 @@
 title: Codility - Max Product of Three
 tags:
   - algorithm
+  - career
 published: true
 date: 2020-06-23 12:25:19
 description:

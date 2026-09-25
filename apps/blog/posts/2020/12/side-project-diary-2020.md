@@ -1,9 +1,10 @@
 ---
 title: '2020년 사이드 프로젝트 회고'
 tags:
-  - career
   - nextjs
-  - typescript
+  - backend
+  - serverless
+  - react
 published: true
 date: 2020-12-15 23:24:36
 description: '이거 좀 재밌네여'

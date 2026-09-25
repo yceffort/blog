@@ -1,8 +1,8 @@
 ---
 title: 'Understanding AST for JavaScript Developers (2026 Update)'
 tags:
-  - javascript
   - compiler
+  - javascript
 published: true
 date: 2021-05-10 09:40:39
 description: 'A comprehensive guide covering AST concepts, parsing process, key node types, and practical usage in tools like Babel and ESLint.'

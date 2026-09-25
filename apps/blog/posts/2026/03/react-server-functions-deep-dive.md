@@ -3,7 +3,9 @@ title: 'React 서버 함수 딥다이브: <em>"use server"</em>의 끝까지'
 tags:
   - react
   - nextjs
-  - frontend
+  - networking
+  - backend
+  - compiler
 published: true
 date: 2026-03-09 22:02:05
 description: '"use server" 한 줄 뒤에서 무슨 일이 벌어지고 있는가?'

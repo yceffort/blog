@@ -3,6 +3,7 @@
 title: Docker 공부 (1) - 도커 기초부터 볼륨 공유까지
 tags:
   - docker
+  - devops
 published: true
 date: 2020-07-28 08:25:27
 description: "`toc tight: true, from-heading: 2 to-heading: 3 ` ## Docker 는

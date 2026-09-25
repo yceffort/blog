@@ -2,6 +2,7 @@
 title: 리액트 고차 컴포넌트 (React Higher Order Component)
 tags:
   - react
+  - design-patterns
 published: true
 date: 2020-07-04 04:06:10
 description:

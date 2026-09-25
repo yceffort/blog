@@ -1,12 +1,11 @@
 ---
 title: '<em>Bun rewrite</em> Exposed Something: OSS Could Only Stop External AI'
 tags:
-  - bun
-  - rust
   - oss
-  - code-generation
   - ai
-  - governance
+  - essay
+  - software-engineering
+  - rust
 published: true
 date: 2026-05-15 02:00:00
 description: 'Bun moved roughly 960,000 lines from Zig to Rust in six days using Claude Code. The meaning here is not code quality but OSS governance and resource asymmetry.'

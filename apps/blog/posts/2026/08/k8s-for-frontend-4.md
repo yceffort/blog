@@ -2,10 +2,9 @@
 title: '파드는 어떻게 <em>종료</em>되는가: 배포 중 에러의 원인과 해결을 실측한 기록'
 tags:
   - kubernetes
-  - nextjs
-  - nodejs
-  - frontend
   - devops
+  - debugging
+  - networking
 published: true
 date: 2026-08-08 23:00:00
 description: '코드를 한 줄도 바꾸지 않은 배포에서도 에러는 샌다. 롤링 배포 중 새는 실패를 유형과 시각까지 태깅해 원인 네 가지를 부검하고, 해법을 하나씩 더해 0으로 만들기까지의 실측 기록이다. Next.js의 종료 코드 원문과 인질 드레인, CrashLoopBackOff의 실제 시간표까지. 프론트엔드 개발자를 위한 쿠버네티스 시리즈의 네 번째 편이다.'

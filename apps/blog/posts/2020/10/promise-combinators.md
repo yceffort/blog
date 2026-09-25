@@ -1,7 +1,9 @@
 ---
 title: 'Promise 관련 API 살펴보기'
 tags:
+  - async
   - javascript
+  - error-handling
 published: true
 date: 2020-10-31 15:39:11
 description: 'Promise.all에서 멈춰있지 말자'

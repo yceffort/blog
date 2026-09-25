@@ -2,10 +2,10 @@
 title: 'Next.js <em>Edge Runtime</em>의 흥망성쇠'
 tags:
   - nextjs
-  - edge-computing
   - serverless
+  - backend
+  - essay
   - web-performance
-  - vercel
 published: true
 date: 2026-03-16 16:24:02
 description: 'Edge Middleware 야 잘 살고 있니?'

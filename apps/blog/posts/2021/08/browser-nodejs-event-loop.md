@@ -2,8 +2,10 @@
 title: '브라우저와 Nodejs의 이벤트 루프는 무엇이 다를까'
 tags:
   - javascript
+  - async
   - nodejs
   - browser
+  - backend
 published: true
 date: 2021-08-10 22:22:37
 description: '인생은 돌고 도는 이벤트 루프'

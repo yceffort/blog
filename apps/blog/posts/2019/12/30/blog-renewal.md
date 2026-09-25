@@ -1,8 +1,7 @@
 ---
 title: 블로그 개편했습니다. 😎
 tags:
-  - gatsby
-  - frontend
+  - blogging
 published: true
 date: 2019-12-30 09:16:10
 description:

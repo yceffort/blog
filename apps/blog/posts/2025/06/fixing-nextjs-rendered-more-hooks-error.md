@@ -2,8 +2,9 @@
 title: 'Nextjs app router의 Rendered more hooks than during the previous render 버그 패치 후기'
 tags:
   - nextjs
-  - react
   - debugging
+  - react
+  - error-handling
 published: true
 date: 2025-06-23 23:52:14
 description: '어렵다 어려워'

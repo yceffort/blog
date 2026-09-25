@@ -1,8 +1,9 @@
 ---
 title: Webpack을 활용한 성능향상 - 캐싱 활용하기
 tags:
-  - webpack
   - web-performance
+  - bundler
+  - caching
 published: true
 date: 2020-07-21 04:18:21
 description: "[Make use of long-term
