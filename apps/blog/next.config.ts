@@ -1,4 +1,4 @@
-import {existsSync, watch} from 'node:fs'
+import {existsSync, readFileSync, watch} from 'node:fs'
 import {utimes} from 'node:fs/promises'
 import {dirname, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
@@ -8,6 +8,11 @@ import type {NextConfig} from 'next'
 const blogRoot = dirname(fileURLToPath(import.meta.url))
 const postsDir = resolve(blogRoot, 'posts')
 const postsModule = resolve(blogRoot, 'src/utils/Post.ts')
+
+// 태그 정리(scripts/retag-posts.mjs)로 병합된 태그는 새 태그로, 없어진 태그는 목록으로 보낸다
+const tagRedirects: Record<string, string | null> = JSON.parse(
+  readFileSync(resolve(blogRoot, 'data/tag-vocabulary.json'), 'utf8'),
+).redirects
 
 const globalWithPostWatcher = globalThis as typeof globalThis & {
   __blogPostWatcher?: ReturnType<typeof watch>
@@ -137,6 +142,11 @@ const config: NextConfig = {
         destination: '/tags/:tag/pages/:no',
         permanent: true,
       },
+      ...Object.entries(tagRedirects).map(([from, to]) => ({
+        source: `/tags/${from}/:path*`,
+        destination: to ? `/tags/${to}/pages/1` : '/tags',
+        permanent: true,
+      })),
       {
         source: '/tags/:tag/pages/((?!\\d).*)',
         destination: '/tags/:tag/pages/1',
