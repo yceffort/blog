@@ -1,7 +1,7 @@
 ---
 title: GoLang) 구조체와 임베딩
 date: 2018-06-01 07:57:05
-published: true
+published: false
 tags:
   - go
   - backend

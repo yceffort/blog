@@ -1,7 +1,7 @@
 ---
 title: Disciplined entrepreneurship
 date: 2019-05-03 07:45:29
-published: true
+published: false
 tags:
   - career
   - entrepreneurship
