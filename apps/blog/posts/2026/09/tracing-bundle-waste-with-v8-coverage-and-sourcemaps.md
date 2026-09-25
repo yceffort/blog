@@ -1,10 +1,11 @@
 ---
 title: 'V8 커버리지 분석기를 Rust로 만들며 내 번들의 낭비를 추적했다'
 tags:
-  - javascript
-  - performance
-  - v8
+  - web-performance
   - rust
+  - bundler
+  - debugging
+  - browser
 published: false
 date: 2026-09-22 18:00:00
 description: 'V8의 실행 범위를 원본 파일별 바이트로 바꾸는 Rust 분석기를 만들었다. 중첩 범위와 delta를 복원하고 DevTools 계산과 대조한 뒤, prefetch로 들어온 코드와 검색 전에 미리 받은 코드를 분리해봤다.'
