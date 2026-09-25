@@ -2,10 +2,10 @@
  * data/tag-vocabulary.json 의 태그 어휘로 글 태그를 다시 붙인다.
  *
  * Usage:
- *   node scripts/retag-posts.mjs <slug>...   지정한 글만 판정해 기존/새 태그를 출력
- *   node scripts/retag-posts.mjs --all         전체 판정 후 출력만
- *   node scripts/retag-posts.mjs --all --apply 전체 판정 후 한국어/영어 frontmatter에 기록 (published 글만)
+ *   node scripts/retag-posts.mjs <post-file-path|slug>... [--apply]  지정한 글을 다시 판정 (초안 포함)
+ *   node scripts/retag-posts.mjs --all [--apply]                      published 글 전체 (캐시 사용)
  *
+ * --apply 가 없으면 출력만 하고, 있으면 한국어/영어 frontmatter에 기록한다.
  * 글마다 어휘 전체를 Noul 질문으로 한 번에 묻고, 확률 THRESHOLD 이상 태그를
  * 높은 순으로 MAX_TAGS 개까지 붙인다. 넘는 게 없으면 최고 1개. 영어판은 한국어판 태그를 따른다.
  * 판정 결과는 data/tag-scores.json 에 캐시한다. 키: .env.local의 TYPESAFE_API_KEY
@@ -36,7 +36,9 @@ const API_KEY =
 const args = process.argv.slice(2)
 const apply = args.includes('--apply')
 const all = args.includes('--all')
-const only = args.filter((a) => !a.startsWith('--'))
+const only = args
+  .filter((a) => !a.startsWith('--'))
+  .map((a) => a.replace(/^.*posts\//, '').replace(/(\.en)?\.mdx?$/, ''))
 
 const posts = globSync(`${POST_ROOT}/**/*.md*`)
   .filter((f) => !/\.en\.mdx?$/.test(f))
@@ -61,8 +63,7 @@ const posts = globSync(`${POST_ROOT}/**/*.md*`)
       },
     }
   })
-  .filter((p) => p.published)
-  .filter((p) => (all ? true : only.some((s) => p.slug.endsWith(s))))
+  .filter((p) => (all ? p.published : only.some((s) => p.slug.endsWith(s))))
 
 const questions = Object.fromEntries(
   Object.entries(VOCAB).map(([tag, meaning]) => [
@@ -116,6 +117,10 @@ async function judge(post, tags) {
 const cache = existsSync(SCORES_PATH)
   ? JSON.parse(readFileSync(SCORES_PATH, 'utf8'))
   : {}
+// 지정한 글은 본문이 바뀌었을 수 있으니 처음부터 다시 판정한다
+if (!all) {
+  posts.forEach((p) => delete cache[p.slug])
+}
 let inputTokens = 0
 // 어휘에 태그가 추가되면 그 태그만 추가로 묻는다
 const todo = posts
@@ -148,14 +153,15 @@ function pick(scores) {
 
 function writeTags(file, tags) {
   const raw = readFileSync(file, 'utf8')
-  const replaced = raw.replace(
-    /^tags:\n(?:[ \t]+- .*\n)+/m,
-    `tags:\n${tags.map((t) => `  - ${t}\n`).join('')}`,
-  )
-  if (replaced === raw && !raw.includes('tags:')) {
-    throw new Error(`tags 블록을 찾지 못함: ${file}`)
+  // 블록 목록, `tags: []`, 빈 `tags:` 모두 덮어쓴다
+  const block = /^tags:[^\n]*\n(?:[ \t]+- .*\n)*/m
+  if (!block.test(raw)) {
+    throw new Error(`tags 필드를 찾지 못함: ${file}`)
   }
-  writeFileSync(file, replaced)
+  writeFileSync(
+    file,
+    raw.replace(block, `tags:\n${tags.map((t) => `  - ${t}\n`).join('')}`),
+  )
 }
 
 for (const post of posts) {
@@ -169,6 +175,13 @@ for (const post of posts) {
   console.log(
     `${post.slug}\n  기존: ${post.oldTags.join(', ')}\n  새:   ${tags.join(', ')}\n  상위: ${shown}`,
   )
+  if (
+    Object.entries(scores).every(([t, p]) => !(t in VOCAB) || p < THRESHOLD)
+  ) {
+    console.log(
+      '  ⚠ 어휘에 맞는 태그가 없습니다. node scripts/propose-tags.mjs 로 새 태그를 제안받으세요',
+    )
+  }
   if (apply) {
     writeTags(post.file, tags)
     const en = post.file.replace(/\.(mdx?)$/, '.en.$1')

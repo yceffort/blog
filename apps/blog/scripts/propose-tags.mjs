@@ -2,9 +2,10 @@
  * 어휘에 맞는 태그가 없는 글을 모아 Claude에게 새 태그를 제안받는다.
  *
  * Usage:
- *   node scripts/propose-tags.mjs
+ *   node scripts/propose-tags.mjs [<post-file-path|slug>...]
  *
- * data/tag-scores.json 에서 어휘 태그 점수가 모두 THRESHOLD 미만인 글이 대상이다
+ * 지정한 글(없으면 published 글 전체) 중 data/tag-scores.json 의 어휘 태그 점수가
+ * 모두 THRESHOLD 미만인 글이 대상이다
  * (먼저 retag-posts.mjs 로 판정해 둘 것). 제안은 출력만 한다. 받아들일 태그는
  * data/tag-vocabulary.json 에 손으로 넣고 retag-posts.mjs 를 다시 돌리면 새 태그만 판정한다.
  * 키: .env.local의 ANTHROPIC_API_KEY, ANTHROPIC_WORKSPACE_ID
@@ -29,6 +30,10 @@ const scores = JSON.parse(
   readFileSync(path.join(ROOT, 'data/tag-scores.json'), 'utf8'),
 )
 
+const only = process.argv
+  .slice(2)
+  .map((a) => a.replace(/^.*posts\//, '').replace(/(\.en)?\.mdx?$/, ''))
+
 const gaps = Object.entries(scores)
   .filter(([, s]) =>
     Object.entries(s).every(([t, p]) => !(t in vocab) || p < THRESHOLD),
@@ -40,11 +45,15 @@ const gaps = Object.entries(scores)
     const {attributes: fm, body} = frontMatter(readFileSync(file, 'utf8'))
     return {
       slug,
+      published: fm.published,
       title: fm.title,
       description: fm.description ?? '',
       opening: body.replace(/\s+/g, ' ').slice(0, 1500),
     }
   })
+  .filter((p) =>
+    only.length > 0 ? only.some((s) => p.slug.endsWith(s)) : p.published,
+  )
 
 if (gaps.length === 0) {
   console.log('어휘에 맞는 태그가 없는 글이 없습니다')
