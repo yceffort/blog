@@ -4,7 +4,7 @@ title: Docker 공부 (1) - 도커 기초부터 볼륨 공유까지
 tags:
   - docker
   - devops
-published: true
+published: false
 date: 2020-07-28 08:25:27
 description: "`toc tight: true, from-heading: 2 to-heading: 3 ` ## Docker 는
 무엇인가? 리눅스 컨테이너에 여러가지 기능을 추가하여 애플리케이션을 컨테이너로서 좀더 쉽게 사용할 수 있도록 만든 오픈소스. 이에 대해

@@ -4,7 +4,7 @@ tags:
   - kubernetes
   - devops
   - career
-published: true
+published: false
 date: 2021-06-19 21:13:55
 description: '무지성에서 시작하는 K8s 공부해보기 시리즈(4) namespace의 정의를 정확히 알아야지'
 ---

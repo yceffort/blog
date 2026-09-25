@@ -642,22 +642,14 @@
         "score": 0.3
       },
       {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.22
+        "slug": "2026/01/handling-large-json-responses",
+        "score": 0.21
       }
     ],
     "2026/08/k8s-for-frontend-5": [
       {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.13
-      },
-      {
-        "slug": "2021/06/study-k8s-3",
-        "score": 0.11
-      },
-      {
-        "slug": "2021/06/study-k8s-4",
-        "score": 0.11
+        "slug": "2021/03/Lighthouse-CI-with-github-actions",
+        "score": 0.14
       },
       {
         "slug": "2026/05/pr-diff-vs-bundle",
@@ -668,23 +660,27 @@
         "score": 0.1
       },
       {
-        "slug": "2021/06/study-k8s-2",
-        "score": 0.1
-      },
-      {
         "slug": "2021/08/core-web-vital",
         "score": 0.1
       },
       {
         "slug": "2021/01/brotli-better-html-compression",
         "score": 0.09
+      },
+      {
+        "slug": "2021/05/http1-vs-http2",
+        "score": 0.09
+      },
+      {
+        "slug": "2020/10/http-cache",
+        "score": 0.09
+      },
+      {
+        "slug": "2025/11/web-performance-deep-dive-beta-reader",
+        "score": 0.09
       }
     ],
     "2026/08/k8s-for-frontend-4": [
-      {
-        "slug": "2020/07/docker-study-2",
-        "score": 0.2
-      },
       {
         "slug": "2019/08/07/haproxy",
         "score": 0.2
@@ -694,58 +690,62 @@
         "score": 0.14
       },
       {
-        "slug": "2021/06/study-k8s-1",
+        "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
         "score": 0.13
-      },
-      {
-        "slug": "2021/06/study-k8s-3",
-        "score": 0.12
       },
       {
         "slug": "2026/08/og-scraping-server-1",
         "score": 0.12
       },
       {
-        "slug": "2021/06/study-k8s-4",
-        "score": 0.11
+        "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
+        "score": 0.12
       },
       {
-        "slug": "2021/06/study-k8s-2",
+        "slug": "2021/05/review-of-vercel-cs",
+        "score": 0.1
+      },
+      {
+        "slug": "2021/01/brotli-better-html-compression",
+        "score": 0.1
+      },
+      {
+        "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.1
       }
     ],
     "2026/08/k8s-for-frontend-3": [
       {
-        "slug": "2020/07/docker-study-2",
-        "score": 0.23
-      },
-      {
         "slug": "2019/08/07/haproxy",
         "score": 0.2
+      },
+      {
+        "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
+        "score": 0.14
       },
       {
         "slug": "2021/11/journey-from-server-to-client",
         "score": 0.13
       },
       {
-        "slug": "2021/06/study-k8s-4",
-        "score": 0.12
-      },
-      {
-        "slug": "2021/06/study-k8s-2",
-        "score": 0.12
-      },
-      {
         "slug": "2026/08/og-scraping-server-2",
         "score": 0.12
       },
       {
-        "slug": "2021/06/study-k8s-3",
+        "slug": "2021/09/critical-request-and-prioritise-requests",
         "score": 0.11
       },
       {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.11
+        "slug": "2021/01/brotli-better-html-compression",
+        "score": 0.09
+      },
+      {
+        "slug": "2026/08/og-scraping-server-1",
+        "score": 0.09
+      },
+      {
+        "slug": "2020/01/think-about-fetch",
+        "score": 0.08
       }
     ],
     "2026/08/k8s-for-frontend-2": [
@@ -758,46 +758,34 @@
         "score": 0.46
       },
       {
-        "slug": "2020/07/docker-study-2",
-        "score": 0.34
+        "slug": "2026/02/nodejs-deep-dive-beta-reader",
+        "score": 0.19
       },
       {
-        "slug": "2021/06/study-k8s-3",
-        "score": 0.26
+        "slug": "2026/08/rebuilding-a-vendor-sdk",
+        "score": 0.18
       },
       {
-        "slug": "2020/07/docker-study-1",
-        "score": 0.26
+        "slug": "2019/08/07/haproxy",
+        "score": 0.16
       },
       {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.25
+        "slug": "2026/03/nextjs-edge-runtime-rise-and-fall",
+        "score": 0.15
       },
       {
-        "slug": "2020/08/docker-study-3",
-        "score": 0.25
+        "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
+        "score": 0.14
       },
       {
-        "slug": "2021/06/study-k8s-4",
-        "score": 0.24
+        "slug": "2021/09/github-ci-workflow-for-frontend-developer",
+        "score": 0.13
       }
     ],
     "2026/08/k8s-for-frontend-1": [
       {
-        "slug": "2021/06/study-k8s-4",
-        "score": 0.5
-      },
-      {
-        "slug": "2021/06/study-k8s-3",
-        "score": 0.49
-      },
-      {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.32
-      },
-      {
-        "slug": "2021/06/study-k8s-2",
-        "score": 0.31
+        "slug": "2019/08/07/haproxy",
+        "score": 0.44
       },
       {
         "slug": "2022/02/dockerfile-instructions",
@@ -814,6 +802,18 @@
       {
         "slug": "2020/07/github-actions-summary",
         "score": 0.17
+      },
+      {
+        "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
+        "score": 0.16
+      },
+      {
+        "slug": "2021/03/Lighthouse-CI-with-github-actions",
+        "score": 0.13
+      },
+      {
+        "slug": "2020/07/cron-job-with-github-actions",
+        "score": 0.12
       }
     ],
     "2026/08/framer-motion-banner-frame-drop": [
@@ -2348,6 +2348,10 @@
     ],
     "2025/06/naver-pay-fe-summer-internship": [
       {
+        "slug": "2019/08/13/reactjs-interview-questions",
+        "score": 0.15
+      },
+      {
         "slug": "2025/05/frontend-truth-ai-misconceptions",
         "score": 0.13
       },
@@ -2374,10 +2378,6 @@
       {
         "slug": "2020/05/10-javascript-quiz",
         "score": 0.11
-      },
-      {
-        "slug": "2025/05/what-to-do-as-frontend-developer-in-ai-era",
-        "score": 0.1
       }
     ],
     "2025/06/fixing-nextjs-rendered-more-hooks-error": [
@@ -3338,20 +3338,12 @@
         "score": 0.77
       },
       {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.67
-      },
-      {
         "slug": "2020/11/pwa-pros-and-cons",
         "score": 0.67
       },
       {
         "slug": "2026/08/k8s-for-frontend-1",
         "score": 0.65
-      },
-      {
-        "slug": "2021/06/study-k8s-3",
-        "score": 0.61
       },
       {
         "slug": "2020/12/generate-serverless-thumbnail",
@@ -3364,6 +3356,14 @@
       {
         "slug": "2026/08/k8s-for-frontend-5",
         "score": 0.36
+      },
+      {
+        "slug": "2021/01/brotli-better-html-compression",
+        "score": 0.36
+      },
+      {
+        "slug": "2021/05/review-of-vercel-cs",
+        "score": 0.33
       }
     ],
     "2022/04/rust-wasm-project-tutorial-2": [
@@ -4056,28 +4056,28 @@
         "score": 0.79
       },
       {
-        "slug": "2020/08/docker-study-3",
-        "score": 0.56
-      },
-      {
-        "slug": "2020/07/docker-study-1",
-        "score": 0.47
-      },
-      {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.31
-      },
-      {
         "slug": "2026/08/k8s-for-frontend-1",
         "score": 0.28
       },
       {
-        "slug": "2020/07/docker-study-2",
-        "score": 0.23
-      },
-      {
         "slug": "2026/08/nodejs-k8s-pod-sizing",
         "score": 0.15
+      },
+      {
+        "slug": "2021/09/github-ci-workflow-for-frontend-developer",
+        "score": 0.14
+      },
+      {
+        "slug": "2026/08/k8s-for-frontend-5",
+        "score": 0.13
+      },
+      {
+        "slug": "2026/08/k8s-for-frontend-4",
+        "score": 0.12
+      },
+      {
+        "slug": "2021/03/Lighthouse-CI-with-github-actions",
+        "score": 0.1
       }
     ],
     "2022/02/docker-best-practice-2022": [
@@ -4090,28 +4090,28 @@
         "score": 0.77
       },
       {
-        "slug": "2020/08/docker-study-3",
-        "score": 0.57
-      },
-      {
-        "slug": "2020/07/docker-study-1",
-        "score": 0.44
-      },
-      {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.28
-      },
-      {
-        "slug": "2020/07/docker-study-2",
-        "score": 0.24
-      },
-      {
         "slug": "2026/08/k8s-for-frontend-1",
         "score": 0.19
       },
       {
         "slug": "2026/08/nodejs-k8s-pod-sizing",
         "score": 0.16
+      },
+      {
+        "slug": "2021/09/github-ci-workflow-for-frontend-developer",
+        "score": 0.14
+      },
+      {
+        "slug": "2026/08/k8s-for-frontend-4",
+        "score": 0.13
+      },
+      {
+        "slug": "2026/08/k8s-for-frontend-5",
+        "score": 0.12
+      },
+      {
+        "slug": "2021/03/Lighthouse-CI-with-github-actions",
+        "score": 0.1
       }
     ],
     "2022/01/npm-colors-fakerjs": [
@@ -5644,142 +5644,6 @@
         "score": 0.31
       }
     ],
-    "2021/06/study-k8s-4": [
-      {
-        "slug": "2026/08/k8s-for-frontend-1",
-        "score": 0.48
-      },
-      {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.47
-      },
-      {
-        "slug": "2021/06/study-k8s-3",
-        "score": 0.45
-      },
-      {
-        "slug": "2021/06/study-k8s-2",
-        "score": 0.37
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-2",
-        "score": 0.31
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-4",
-        "score": 0.23
-      },
-      {
-        "slug": "2020/07/docker-study-1",
-        "score": 0.21
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-5",
-        "score": 0.2
-      }
-    ],
-    "2021/06/study-k8s-3": [
-      {
-        "slug": "2021/06/study-k8s-4",
-        "score": 0.77
-      },
-      {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.63
-      },
-      {
-        "slug": "2021/06/study-k8s-2",
-        "score": 0.63
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-1",
-        "score": 0.62
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-3",
-        "score": 0.59
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-2",
-        "score": 0.53
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-4",
-        "score": 0.5
-      },
-      {
-        "slug": "2020/07/docker-study-1",
-        "score": 0.45
-      }
-    ],
-    "2021/06/study-k8s-2": [
-      {
-        "slug": "2021/06/study-k8s-3",
-        "score": 0.87
-      },
-      {
-        "slug": "2021/06/study-k8s-4",
-        "score": 0.77
-      },
-      {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.74
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-1",
-        "score": 0.56
-      },
-      {
-        "slug": "2020/07/docker-study-1",
-        "score": 0.55
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-2",
-        "score": 0.53
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-4",
-        "score": 0.41
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-3",
-        "score": 0.36
-      }
-    ],
-    "2021/06/study-k8s-1": [
-      {
-        "slug": "2021/06/study-k8s-2",
-        "score": 0.88
-      },
-      {
-        "slug": "2021/06/study-k8s-3",
-        "score": 0.87
-      },
-      {
-        "slug": "2021/06/study-k8s-4",
-        "score": 0.82
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-2",
-        "score": 0.79
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-1",
-        "score": 0.76
-      },
-      {
-        "slug": "2020/07/docker-study-1",
-        "score": 0.69
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-4",
-        "score": 0.62
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-3",
-        "score": 0.6
-      }
-    ],
     "2021/06/reduce-spread-anti-pattern": [
       {
         "slug": "2025/03/map-vs-object",
@@ -5934,10 +5798,6 @@
         "score": 0.39
       },
       {
-        "slug": "2021/07/deep-dive-to-export",
-        "score": 0.39
-      },
-      {
         "slug": "2020/10/promise-combinators",
         "score": 0.37
       },
@@ -5948,6 +5808,10 @@
       {
         "slug": "2020/12/javascrpt-async-await-in-map-and-reduce",
         "score": 0.33
+      },
+      {
+        "slug": "2021/08/event-loop-deep-dive",
+        "score": 0.2
       }
     ],
     "2021/06/best-solution-for-looping-over-array": [
@@ -6830,8 +6694,8 @@
         "score": 0.14
       },
       {
-        "slug": "2020/06/encryption-decryption-nodejs",
-        "score": 0.14
+        "slug": "2021/07/kill-a-nodejs-process",
+        "score": 0.13
       }
     ],
     "2021/02/javascript-performance-bundle-size": [
@@ -9044,40 +8908,6 @@
         "score": 0.12
       }
     ],
-    "2020/08/docker-study-3": [
-      {
-        "slug": "2022/02/docker-best-practice-2022",
-        "score": 0.78
-      },
-      {
-        "slug": "2022/02/dockerfile-instructions",
-        "score": 0.74
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-2",
-        "score": 0.67
-      },
-      {
-        "slug": "2020/07/docker-study-1",
-        "score": 0.59
-      },
-      {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.36
-      },
-      {
-        "slug": "2020/07/docker-study-2",
-        "score": 0.33
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-1",
-        "score": 0.25
-      },
-      {
-        "slug": "2021/06/study-k8s-3",
-        "score": 0.25
-      }
-    ],
     "2020/08/commonjs-esmodules": [
       {
         "slug": "2023/05/what-is-commonjs",
@@ -9518,74 +9348,6 @@
       {
         "slug": "2020/08/git-cheat-sheat",
         "score": 0.24
-      }
-    ],
-    "2020/07/docker-study-2": [
-      {
-        "slug": "2020/07/docker-study-1",
-        "score": 0.39
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-2",
-        "score": 0.25
-      },
-      {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.25
-      },
-      {
-        "slug": "2019/08/07/haproxy",
-        "score": 0.25
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-3",
-        "score": 0.23
-      },
-      {
-        "slug": "2020/08/docker-study-3",
-        "score": 0.2
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-1",
-        "score": 0.18
-      },
-      {
-        "slug": "2021/06/study-k8s-3",
-        "score": 0.17
-      }
-    ],
-    "2020/07/docker-study-1": [
-      {
-        "slug": "2020/08/docker-study-3",
-        "score": 0.86
-      },
-      {
-        "slug": "2020/07/docker-study-2",
-        "score": 0.85
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-2",
-        "score": 0.77
-      },
-      {
-        "slug": "2022/02/dockerfile-instructions",
-        "score": 0.76
-      },
-      {
-        "slug": "2022/02/docker-best-practice-2022",
-        "score": 0.74
-      },
-      {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.55
-      },
-      {
-        "slug": "2021/06/study-k8s-3",
-        "score": 0.4
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-1",
-        "score": 0.3
       }
     ],
     "2020/07/cron-job-with-github-actions": [
@@ -10818,10 +10580,6 @@
         "score": 0.25
       },
       {
-        "slug": "2020/07/docker-study-2",
-        "score": 0.23
-      },
-      {
         "slug": "2021/05/http1-vs-http2",
         "score": 0.22
       },
@@ -10838,12 +10596,16 @@
         "score": 0.17
       },
       {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.17
+        "slug": "2026/08/og-scraping-server-2",
+        "score": 0.12
       },
       {
-        "slug": "2020/10/http-cache",
-        "score": 0.16
+        "slug": "2026/08/k8s-for-frontend-4",
+        "score": 0.12
+      },
+      {
+        "slug": "2020/09/referer-and-referrer-policy",
+        "score": 0.12
       }
     ],
     "2019/07/22/javascript-reduce": [
