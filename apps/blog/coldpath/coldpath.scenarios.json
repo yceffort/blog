@@ -1,0 +1,11 @@
+{
+  "url": "http://127.0.0.1:3000/2026/08/k8s-for-frontend-1",
+  "dir": "../.next/coldpath/static",
+  "prefix": "/_next/static/",
+  "out": "out/coverage",
+  "scenarios": [
+    {"name": "initial"},
+    {"name": "search", "actions": "scenarios/search.mjs"},
+    {"name": "zoom-diagram", "actions": "scenarios/zoom-diagram.mjs"}
+  ]
+}
