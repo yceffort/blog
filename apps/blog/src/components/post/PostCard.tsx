@@ -2,7 +2,7 @@
 
 import * as stylex from '@stylexjs/stylex'
 import {stripTitleEmphasis} from '@yceffort/shared/utils'
-import {format} from 'date-fns'
+import {lightFormat} from 'date-fns'
 import Image from 'next/image'
 import Link from 'next/link'
 import {useRef, ViewTransition} from 'react'
@@ -59,7 +59,7 @@ export default function PostCard({
   } = post
   const plainTitle = stripTitleEmphasis(rawTitle)
   const d = new Date(date)
-  const isoDate = format(d, 'yyyy-MM-dd')
+  const isoDate = lightFormat(d, 'yyyy-MM-dd')
   const transitionName = `post-${slug.replace(/\//g, '-')}`
   const cardRef = useRef<HTMLElement>(null)
   const onPointerMove = (e: React.PointerEvent<HTMLElement>) => {

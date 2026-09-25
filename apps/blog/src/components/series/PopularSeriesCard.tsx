@@ -1,7 +1,7 @@
 'use client'
 
 import {stripTitleEmphasis} from '@yceffort/shared/utils'
-import {format} from 'date-fns'
+import {lightFormat} from 'date-fns'
 import Image from 'next/image'
 import Link from 'next/link'
 import {useRef} from 'react'
@@ -21,7 +21,7 @@ export default function PopularSeriesCard({
     (acc, p) => (p.frontMatter.date > acc ? p.frontMatter.date : acc),
     posts[0].frontMatter.date,
   )
-  const isoDate = format(new Date(latest), 'yyyy-MM-dd')
+  const isoDate = lightFormat(new Date(latest), 'yyyy-MM-dd')
   const cardRef = useRef<HTMLElement>(null)
   const onPointerMove = (e: React.PointerEvent<HTMLElement>) => {
     const el = cardRef.current
