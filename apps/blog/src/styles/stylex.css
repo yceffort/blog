@@ -5,5 +5,4 @@
 @import './transitions.css';
 @import './spacing.css';
 @import '../components/settings/appearance.css';
-@import '../components/about/hero-fx.css';
 @stylex;

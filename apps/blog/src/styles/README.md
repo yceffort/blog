@@ -52,7 +52,6 @@ Shared accessibility styles belong in `styles/accessibility.styles.ts`. A compon
 - `post/article.css`: article and series-content selectors, including external-link indicators.
 - `post/markdown.css` and `post/markdown-toc.css`: code/diagram output and generated tables of contents.
 - `settings/appearance.css`: user-selected palettes and effects. The `preferences` layer follows component styles so minimal mode can disable their animations.
-- `about/hero-fx.css`: the two rules that target the `<canvas>` React Three Fiber renders, which takes no class of its own.
 
 A rule that only long-form pages need belongs in `reading.css`; anything the header, footer or list routes rely on belongs in the global entry. `typography.css` held two Tailwind `space-*` leftovers that the footer and the 404 page depended on, and moving the file without them broke every list route.
 

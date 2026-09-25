@@ -1,43 +1,17 @@
 'use client'
 
-import * as stylex from '@stylexjs/stylex'
 import dynamic from 'next/dynamic'
 
 import * as tagsStyles from '@/app/tags/tags.styles'
 import * as aboutStyles from '@/components/about/about.styles'
+import LoadTraceShell from '@/components/about/LoadTraceShell'
 import * as heroStyles from '@/components/home/hero.styles'
 import {SiteConfig} from '@/config'
-import {visuallyHidden} from '@/styles/accessibility.styles'
 
-const sx = stylex.create({
-  span: {
-    '@layer utilities': {
-      position: 'absolute',
-      width: '1px',
-      height: '1px',
-      padding: '0',
-      margin: '-1px',
-      overflow: 'hidden',
-      clipPath: 'inset(50%)',
-      whiteSpace: 'nowrap',
-      borderWidth: '0',
-    },
-  },
-  div: {
-    '@layer utilities': {
-      display: 'flex',
-      justifyContent: {
-        default: 'center',
-        '@media (width >= 48rem)': 'flex-end',
-      },
-    },
-  },
-})
-const HeroFxA = dynamic(() => import('@/components/about/HeroFxA'), {
+// WebGL과 Performance API는 브라우저에서만 쓸 수 있다. 그 전까지 같은 크기의 셸로 자리를 잡는다.
+const LoadTrace = dynamic(() => import('@/components/about/LoadTrace'), {
   ssr: false,
-})
-const HeroFxB = dynamic(() => import('@/components/about/HeroFxB'), {
-  ssr: false,
+  loading: LoadTraceShell,
 })
 export function AboutHero() {
   return (
@@ -47,14 +21,7 @@ export function AboutHero() {
           <span className={`dot ${heroStyles.dot}`} />
           FRONTEND ENGINEER · SEOUL
         </div>
-        <div className={`page-title-fx ${aboutStyles.page_title_fx}`}>
-          <HeroFxA />
-          <span
-            className={`visually-hidden ${visuallyHidden} ${stylex.props(sx.span).className}`}
-          >
-            {SiteConfig.author.name}.
-          </span>
-        </div>
+        <h1 className={aboutStyles.about_title}>yceffort.</h1>
         <p className={`page-sub ${tagsStyles.page_sub}`}>
           웹이 동작하는 원리를 파고들고, 직접 만들고 측정한 경험을 글과 도구로
           나눕니다. 요즘은 AI와 함께 일하는 개발자의 판단과 학습을 고민합니다.
@@ -101,9 +68,7 @@ export function AboutHero() {
           </a>
         </div>
       </div>
-      <div className={stylex.props(sx.div).className}>
-        <HeroFxB />
-      </div>
+      <LoadTrace />
     </section>
   )
 }

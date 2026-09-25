@@ -1,15 +1,17 @@
 import * as stylex from '@stylexjs/stylex'
+
+const trace_sweep = stylex.keyframes({
+  from: {
+    transform: 'translateX(-40%)',
+  },
+  to: {
+    transform: 'translateX(140%)',
+  },
+})
 const styles = stylex.create({
   about_hero: {
     '@layer site': {
-      display: 'grid',
-      alignItems: 'center',
       padding: '24px 0 32px',
-      gridTemplateColumns: {
-        default: '1fr',
-        '@media (min-width: 900px)': '1.3fr 1fr',
-      },
-      gap: '24px',
     },
   },
   about_socials: {
@@ -212,66 +214,408 @@ const styles = stylex.create({
       gap: '0',
     },
   },
-  page_title_fx: {
+  about_title: {
+    '@layer site': {
+      margin: '4px 0 28px',
+      fontSize: 'clamp(56px, 11vw, 128px)',
+      fontWeight: '900',
+      lineHeight: '0.9',
+      letterSpacing: '-0.05em',
+      color: 'var(--ink)',
+    },
+  },
+  trace_figure: {
     '@layer site': {
       position: 'relative',
-      width: '100%',
-      height: 'clamp(140px, 22vw, 240px)',
-      margin: '4px 0 8px',
+      margin: '28px 0 0',
     },
   },
-  element_canvas: {
-    '@layer site': {
-      display: {
-        default: 'block',
-        '@media (prefers-reduced-motion: reduce)': 'none',
-      },
-      borderRadius: '50%',
-      cursor: 'crosshair',
-    },
-  },
-  hero_fx_canvas: {
-    '@layer site': {
-      position: 'relative',
-      width: '100%',
-      height: '100%',
-      touchAction: 'pan-y',
-    },
-  },
-  hero_fx_hint: {
+  trace_detail: {
     '@layer site': {
       position: 'absolute',
-      right: '8px',
-      bottom: '4px',
+      top: '14px',
+      left: '14px',
+      display: 'flex',
+      flexDirection: 'column',
+      width: 'min(340px, calc(100% - 28px))',
+      maxHeight: {
+        default: '312px',
+        '@media (min-width: 768px)': '432px',
+      },
+      overflowY: 'auto',
+      padding: '14px 16px',
+      borderRadius: '10px',
+      backgroundColor: 'rgba(22, 22, 31, 0.94)',
+      boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.1) inset',
+      gap: '10px',
       fontFamily: 'var(--font-mono), monospace',
-      fontSize: '10px',
-      letterSpacing: '0.12em',
-      textTransform: 'uppercase',
-      color: 'var(--ink-3)',
-      opacity: '0.65',
+      fontSize: '12px',
+      lineHeight: '1.5',
+      color: '#c9c9d6',
+    },
+  },
+  trace_detail_head: {
+    '@layer site': {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '12px',
+    },
+  },
+  trace_detail_close: {
+    '@layer site': {
+      flexShrink: '0',
+      padding: '3px 10px',
+      borderWidth: '0',
+      borderRadius: '6px',
+      backgroundColor: {
+        default: 'rgba(245, 245, 250, 0.08)',
+        ':hover': 'rgba(245, 245, 250, 0.16)',
+      },
+      cursor: 'pointer',
+      fontSize: '12px',
+      color: '#f5f5fa',
+    },
+  },
+  trace_detail_url: {
+    '@layer site': {
+      margin: '0',
+      overflowWrap: 'anywhere',
+      fontSize: '11px',
+      color: '#8b8ba3',
+    },
+  },
+  // 모든 행이 같은 열 폭을 쓰도록 dl 하나를 두 열 그리드로 두고 행은 풀어 놓는다
+  trace_detail_rows: {
+    '@layer site': {
+      display: 'grid',
+      gridTemplateColumns: 'max-content 1fr',
+      margin: '0',
+      gap: '3px 16px',
+    },
+  },
+  trace_detail_row: {
+    '@layer site': {
+      display: 'contents',
+      color: '#8b8ba3',
+    },
+  },
+  trace_detail_value: {
+    '@layer site': {
+      margin: '0',
+      color: '#f5f5fa',
+    },
+  },
+  trace_phase_bar: {
+    '@layer site': {
+      display: 'flex',
+      overflow: 'hidden',
+      height: '8px',
+      borderRadius: '4px',
+      gap: '1px',
+    },
+  },
+  trace_phase_list: {
+    '@layer site': {
+      display: 'flex',
+      flexWrap: 'wrap',
+      margin: '0',
+      padding: '0',
+      listStyle: 'none',
+      gap: '4px 12px',
+      fontSize: '11px',
+      color: '#8b8ba3',
+    },
+  },
+  trace_detail_note: {
+    '@layer site': {
+      margin: '0',
+      fontSize: '11px',
+      color: '#8b8ba3',
+    },
+  },
+  // 빛 표현을 위해 라이트 모드에서도 어둡게 둔다
+  trace_viewport: {
+    '@layer site': {
+      position: 'relative',
+      overflow: 'hidden',
+      height: {
+        default: '340px',
+        '@media (min-width: 768px)': '460px',
+      },
+      borderRadius: 'var(--radius)',
+      backgroundColor: '#0a0a0f',
+      boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.06) inset',
+      touchAction: 'pan-y',
+      cursor: 'grab',
+    },
+  },
+  trace_grabbing: {
+    '@layer site': {
+      cursor: 'grabbing',
+    },
+  },
+  trace_hint: {
+    '@layer site': {
+      position: 'absolute',
+      bottom: '14px',
+      left: '18px',
+      margin: '0',
+      fontSize: '11px',
+      color: '#8b8ba3',
+    },
+  },
+  trace_overlay: {
+    '@layer site': {
+      position: 'absolute',
+      top: '0',
+      right: '0',
+      bottom: '0',
+      left: '0',
+      overflow: 'hidden',
       pointerEvents: 'none',
+      fontFamily: 'var(--font-mono), monospace',
+      color: '#c9c9d6',
     },
   },
-  hero_fx_hint_touch: {
+  trace_hud: {
     '@layer site': {
-      display: {
-        default: 'none',
-        '@media (hover: none) and (pointer: coarse)': 'block',
+      position: 'absolute',
+      top: '14px',
+      right: '18px',
+      // 자릿수가 늘어도 왼쪽 끝이 움직이지 않게 폭을 고정한다(레이아웃 이동 방지)
+      width: '9ch',
+      textAlign: 'right',
+      fontSize: 'clamp(22px, 3.4vw, 34px)',
+      fontWeight: '600',
+      fontVariantNumeric: 'tabular-nums',
+      letterSpacing: '-0.02em',
+      color: '#f5f5fa',
+    },
+  },
+  trace_label: {
+    '@layer site': {
+      position: 'absolute',
+      top: '0',
+      left: '0',
+      whiteSpace: 'nowrap',
+      transitionProperty: 'opacity',
+      transitionDuration: '300ms',
+      willChange: 'transform',
+    },
+  },
+  trace_label_text: {
+    '@layer site': {
+      display: 'block',
+      transform: 'translate(-50%, -100%)',
+      fontSize: '11px',
+      color: '#8b8ba3',
+    },
+  },
+  trace_label_mark: {
+    '@layer site': {
+      padding: '3px 7px',
+      borderRadius: '6px',
+      backgroundColor: 'rgba(245, 245, 250, 0.08)',
+      fontSize: '12px',
+      color: '#f5f5fa',
+    },
+  },
+  trace_label_self: {
+    '@layer site': {
+      padding: '4px 9px',
+      borderRadius: '6px',
+      backgroundColor: '#2dd4bf',
+      fontSize: '12px',
+      fontWeight: '600',
+      color: '#0a0a0f',
+    },
+  },
+  trace_label_lane: {
+    '@layer site': {
+      transform: 'translate(-100%, -50%)',
+      paddingRight: '10px',
+      color: '#fb7185',
+    },
+  },
+  trace_legend: {
+    '@layer site': {
+      position: 'absolute',
+      right: '16px',
+      bottom: '14px',
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'flex-end',
+      maxWidth: '70%',
+      margin: '0',
+      padding: '0',
+      listStyle: 'none',
+      gap: '6px 14px',
+      fontSize: '11px',
+      color: '#8b8ba3',
+    },
+  },
+  trace_legend_item: {
+    '@layer site': {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '6px',
+    },
+  },
+  trace_swatch: {
+    '@layer site': {
+      display: 'inline-block',
+      width: '8px',
+      height: '8px',
+      borderRadius: '2px',
+    },
+  },
+  trace_tooltip: {
+    '@layer site': {
+      position: 'absolute',
+      top: '0',
+      left: '0',
+      display: 'flex',
+      flexDirection: 'column',
+      maxWidth: '280px',
+      padding: '10px 12px',
+      borderRadius: '8px',
+      backgroundColor: 'rgba(22, 22, 31, 0.92)',
+      boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.1) inset',
+      gap: '2px',
+      fontSize: '11px',
+      lineHeight: '1.5',
+      color: '#8b8ba3',
+    },
+  },
+  trace_tooltip_title: {
+    '@layer site': {
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      fontSize: '12px',
+      fontWeight: '600',
+      color: '#f5f5fa',
+    },
+  },
+  // 측정값에 따라 길이가 바뀌는 요약은 한 줄로 고정해, 로딩 전후 캡션 높이가 같게 한다
+  trace_caption: {
+    '@layer site': {
+      display: 'grid',
+      gridTemplateColumns: '1fr auto',
+      alignItems: 'start',
+      marginTop: '12px',
+      gap: '4px 20px',
+      fontSize: '14px',
+      lineHeight: '1.6',
+      color: 'var(--ink-3)',
+    },
+  },
+  trace_caption_text: {
+    '@layer site': {
+      margin: '0',
+    },
+  },
+  trace_stats: {
+    '@layer site': {
+      gridColumn: '1 / -1',
+      overflow: 'hidden',
+      margin: '0',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      fontFamily: 'var(--font-mono), monospace',
+      fontSize: '13px',
+      color: 'var(--ink-2)',
+    },
+  },
+  trace_loading: {
+    '@layer site': {
+      position: 'absolute',
+      top: '0',
+      right: '0',
+      bottom: '0',
+      left: '0',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      overflow: 'hidden',
+    },
+  },
+  trace_loading_line: {
+    '@layer site': {
+      position: 'absolute',
+      top: '0',
+      bottom: '0',
+      left: '0',
+      width: '40%',
+      backgroundImage:
+        'linear-gradient(90deg, transparent, rgba(45, 212, 191, 0.14) 45%, rgba(45, 212, 191, 0.5) 50%, rgba(45, 212, 191, 0.14) 55%, transparent)',
+      animationName: {
+        default: trace_sweep,
+        '@media (prefers-reduced-motion: reduce)': 'none',
+      },
+      animationDuration: '1.6s',
+      animationTimingFunction: 'ease-in-out',
+      animationIterationCount: 'infinite',
+    },
+  },
+  trace_loading_text: {
+    '@layer site': {
+      position: 'relative',
+      fontFamily: 'var(--font-mono), monospace',
+      fontSize: '12px',
+      color: '#8b8ba3',
+    },
+  },
+  trace_replay: {
+    '@layer site': {
+      padding: '6px 14px',
+      borderTopWidth: '1px',
+      borderTopStyle: 'solid',
+      borderTopColor: {
+        default: 'var(--border)',
+        ':hover': 'var(--primary)',
+      },
+      borderRightWidth: '1px',
+      borderRightStyle: 'solid',
+      borderRightColor: {
+        default: 'var(--border)',
+        ':hover': 'var(--primary)',
+      },
+      borderBottomWidth: '1px',
+      borderBottomStyle: 'solid',
+      borderBottomColor: {
+        default: 'var(--border)',
+        ':hover': 'var(--primary)',
+      },
+      borderLeftWidth: '1px',
+      borderLeftStyle: 'solid',
+      borderLeftColor: {
+        default: 'var(--border)',
+        ':hover': 'var(--primary)',
+      },
+      borderRadius: '8px',
+      backgroundColor: 'transparent',
+      cursor: {
+        default: 'pointer',
+        ':disabled': 'default',
+      },
+      opacity: {
+        default: '1',
+        ':disabled': '0.5',
+      },
+      fontSize: '13px',
+      color: {
+        default: 'var(--ink-2)',
+        ':hover': 'var(--primary)',
       },
     },
   },
-  hero_fx_hint_desktop: {
+  trace_fallback: {
     '@layer site': {
-      display: {
-        default: null,
-        '@media (hover: none) and (pointer: coarse)': 'none',
-      },
-    },
-  },
-  hero_fx_b: {
-    '@layer site': {
-      width: '320px',
-      height: '320px',
+      padding: '24px',
+      fontSize: '14px',
+      color: '#c9c9d6',
     },
   },
 })
@@ -284,19 +628,67 @@ export const about_social_link = stylex.props(
 ).className!
 export const about_tab_link = stylex.props(styles.about_tab_link).className!
 export const tabs = stylex.props(styles.tabs).className!
-export const page_title_fx = stylex.props(styles.page_title_fx).className!
-export const element_canvas = stylex.props(styles.element_canvas).className!
-export const hero_fx_canvas = stylex.props(styles.hero_fx_canvas).className!
-export const hero_fx_hint = stylex.props(styles.hero_fx_hint).className!
-export const hero_fx_hint_touch = stylex.props(
-  styles.hero_fx_hint_touch,
+export const about_title = stylex.props(styles.about_title).className!
+export const trace_figure = stylex.props(styles.trace_figure).className!
+export const trace_detail = stylex.props(styles.trace_detail).className!
+export const trace_detail_head = stylex.props(
+  styles.trace_detail_head,
 ).className!
-export const hero_fx_hint_desktop = stylex.props(
-  styles.hero_fx_hint_desktop,
+export const trace_detail_close = stylex.props(
+  styles.trace_detail_close,
 ).className!
-// hero_fx_canvas(100%)와 hero_fx_b(320px)는 같은 속성을 정의하므로 여기서 합성한다.
-// 클래스 문자열로 이어 붙이면 승자가 CSS 파일 순서에 달린다.
-export const hero_fx_b_canvas = stylex.props(
-  styles.hero_fx_canvas,
-  styles.hero_fx_b,
+export const trace_detail_url = stylex.props(styles.trace_detail_url).className!
+export const trace_detail_rows = stylex.props(
+  styles.trace_detail_rows,
 ).className!
+export const trace_detail_row = stylex.props(styles.trace_detail_row).className!
+export const trace_detail_value = stylex.props(
+  styles.trace_detail_value,
+).className!
+export const trace_phase_bar = stylex.props(styles.trace_phase_bar).className!
+export const trace_phase_list = stylex.props(styles.trace_phase_list).className!
+export const trace_detail_note = stylex.props(
+  styles.trace_detail_note,
+).className!
+export const trace_viewport = stylex.props(styles.trace_viewport).className!
+export const trace_viewport_grabbing = stylex.props(
+  styles.trace_viewport,
+  styles.trace_grabbing,
+).className!
+export const trace_hint = stylex.props(styles.trace_hint).className!
+export const trace_overlay = stylex.props(styles.trace_overlay).className!
+export const trace_hud = stylex.props(styles.trace_hud).className!
+export const trace_label = stylex.props(styles.trace_label).className!
+// 라벨 종류마다 trace_label_text 위에 덮어쓰는 속성이 있어 합성한다
+export const trace_label_text = {
+  tick: stylex.props(styles.trace_label_text).className!,
+  mark: stylex.props(styles.trace_label_text, styles.trace_label_mark)
+    .className!,
+  self: stylex.props(styles.trace_label_text, styles.trace_label_self)
+    .className!,
+  lane: stylex.props(styles.trace_label_text, styles.trace_label_lane)
+    .className!,
+}
+export const trace_legend = stylex.props(styles.trace_legend).className!
+export const trace_legend_item = stylex.props(
+  styles.trace_legend_item,
+).className!
+export const trace_swatch = stylex.props(styles.trace_swatch).className!
+export const trace_tooltip = stylex.props(styles.trace_tooltip).className!
+export const trace_tooltip_title = stylex.props(
+  styles.trace_tooltip_title,
+).className!
+export const trace_caption = stylex.props(styles.trace_caption).className!
+export const trace_caption_text = stylex.props(
+  styles.trace_caption_text,
+).className!
+export const trace_stats = stylex.props(styles.trace_stats).className!
+export const trace_loading = stylex.props(styles.trace_loading).className!
+export const trace_loading_line = stylex.props(
+  styles.trace_loading_line,
+).className!
+export const trace_loading_text = stylex.props(
+  styles.trace_loading_text,
+).className!
+export const trace_replay = stylex.props(styles.trace_replay).className!
+export const trace_fallback = stylex.props(styles.trace_fallback).className!
