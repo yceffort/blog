@@ -6,7 +6,7 @@ tags:
   - compiler
   - javascript
   - browser
-published: true
+published: false
 date: 2020-12-15 20:02:35
 description: '아니 그래서 IE 11 언제 없앨 건데요'
 ---

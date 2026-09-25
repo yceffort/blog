@@ -3,7 +3,7 @@ title: 프론트엔드 사이즈 줄이기
 tags:
   - bundler
   - web-performance
-published: true
+published: false
 date: 2020-07-01 09:45:10
 description: "[이
   글](https://developers.google.com/web/fundamentals/performance/webpack/decreas\

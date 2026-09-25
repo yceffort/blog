@@ -3,7 +3,7 @@ title: Codility - Min Avg Two Slice
 tags:
   - algorithm
   - career
-published: true
+published: false
 date: 2020-06-23 05:25:19
 description:
   '## Min Avg Two Slice ### 문제  길이가 N인 비어있지 않은 배열 A가 주어진다. 한쌍의 숫자 P,

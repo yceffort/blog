@@ -3,7 +3,7 @@ title: Codility - Binary Gap
 tags:
   - algorithm
   - career
-published: true
+published: false
 date: 2020-06-23 05:25:19
 description:
   '## 1-1 Binary Gap ### 문제  숫자 N을 이진수로 바꿨을때, 1과 1사이에 있는 0의 개수가 가장 많이

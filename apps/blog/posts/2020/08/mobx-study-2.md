@@ -3,7 +3,7 @@ title: MobX를 공부하자 (2)
 tags:
   - state-management
   - react
-published: true
+published: false
 date: 2020-08-24 15:54:00
 description: 'MobX를 예제 애플리케이션에 실제로 적용해보기'
 category: MobX

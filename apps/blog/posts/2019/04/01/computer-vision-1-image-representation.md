@@ -1,7 +1,7 @@
 ---
 title: Computer Vision 01) - Image Representation
 date: 2019-04-01 06:35:16
-published: true
+published: false
 tags:
   - ai
 description: '## Image Representation & Classification ### Images as Grids of

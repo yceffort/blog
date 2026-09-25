@@ -1,7 +1,7 @@
 ---
 title: React 공부하기 8 - 함수형 컴포넌트
 date: 2019-05-21 12:17:09
-published: true
+published: false
 tags:
   - react
 description:

@@ -2,7 +2,7 @@
 title: Git commit의 일시를 변경하기
 tags:
   - git
-published: true
+published: false
 date: 2020-09-15 10:56:58
 description: '왜 바꿔야 하는지는 비밀'
 category: git

@@ -4,7 +4,7 @@ tags:
   - state-management
   - design-patterns
   - career
-published: true
+published: false
 date: 2020-04-26 07:38:25
 description: '## 리덕스 공부해보기 1 [리덕스
   공식문서](https://redux.js.org/introduction/getting-started)를 스스로 대충 번역해본

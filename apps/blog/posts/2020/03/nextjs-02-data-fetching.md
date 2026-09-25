@@ -2,7 +2,7 @@
 title: NextJS 2. Data Fetching
 tags:
   - nextjs
-published: true
+published: false
 date: 2020-03-12 02:39:10
 description: '[nextjs의 공식
   문서](https://nextjs.org/docs/basic-features/data-fetching)를 보고 요약한 내용입니다.

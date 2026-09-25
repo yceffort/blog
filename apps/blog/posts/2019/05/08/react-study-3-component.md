@@ -1,7 +1,7 @@
 ---
 title: React 공부하기 3 - Component
 date: 2019-05-08 09:03:03
-published: true
+published: false
 tags:
   - react
   - career

@@ -3,7 +3,7 @@ title: Codility - Tape Equilibrium
 tags:
   - algorithm
   - career
-published: true
+published: false
 date: 2020-06-23 05:25:19
 description:
   '## Tape Equilibrium ### 문제  길이 N의 배열을 임의로 두개로 쪼개고, 이렇게 해서 생긴 두배열의

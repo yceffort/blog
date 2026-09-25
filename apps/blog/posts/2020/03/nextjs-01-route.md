@@ -2,7 +2,7 @@
 title: NextJS 1. Page & Route
 tags:
   - nextjs
-published: true
+published: false
 date: 2020-03-12 02:39:10
 description:
   요즘 리액트를 쓰는 많은 프로젝트에서, SSR을 지원하기 위해 [nextjs](https://nextjs.org/)를

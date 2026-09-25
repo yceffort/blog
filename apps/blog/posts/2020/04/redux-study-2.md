@@ -4,7 +4,7 @@ tags:
   - state-management
   - design-patterns
   - career
-published: true
+published: false
 date: 2020-04-28 07:33:32
 description: '## 리덕스의 탄생 배경
   https://redux.js.org/introduction/motivation  **자바스크립트 싱글 페이지 애플리케이션에 대한 요구

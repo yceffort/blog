@@ -1,7 +1,7 @@
 ---
 title: React 공부하기 1 - background
 date: 2019-05-08 07:46:42
-published: true
+published: false
 tags:
   - react
 description:

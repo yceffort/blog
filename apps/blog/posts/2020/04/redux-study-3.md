@@ -3,7 +3,7 @@ title: 리덕스 공부해보기 (3) - 용어
 tags:
   - state-management
   - career
-published: true
+published: false
 date: 2020-04-29 06:09:18
 description: 'https://redux.js.org/glossary#state ## 용어 모음  ### State
   (상태)  ```typescript type State = any ```  State (State tree라고 도 불리운다)는 Redux

@@ -3,7 +3,7 @@ title: Codility - Brackets
 tags:
   - algorithm
   - career
-published: true
+published: false
 date: 2020-06-25 08:58:02
 description:
   '## Brackets ### 문제  문자열 S가 주어지고, S는 다음 경우 일 때 참을 반환해야 한다.  - S가

@@ -3,7 +3,7 @@ title: Codility - Perm Check
 tags:
   - algorithm
   - career
-published: true
+published: false
 date: 2020-06-23 05:25:19
 description:
   '## Perm Check ### 문제  길이 N인 배열이 주어져 있고, 안에는 서로 다른 숫자가 들어가 있다. 이 서로

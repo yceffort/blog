@@ -3,7 +3,7 @@ title: '[Python] Send ncloud sms message'
 tags:
   - python
   - backend
-published: true
+published: false
 date: 2020-03-17 06:43:12
 description: 네이버 클라우드 플랫폼의 서비스 중 하나인
   https://www.ncloud.com/product/applicationService/sens 로 SMS를 발송하는 예제.

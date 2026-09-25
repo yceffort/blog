@@ -2,7 +2,7 @@
 title: MobX를 공부하자 (1)
 tags:
   - state-management
-published: true
+published: false
 date: 2020-08-21 15:54:00
 description: 'MobX 1페이지 요약에 대한 간단한 번역'
 category: MobX

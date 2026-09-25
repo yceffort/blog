@@ -56,16 +56,16 @@
         "score": 0.47
       },
       {
+        "slug": "2021/08/javascript-tree-shaking",
+        "score": 0.42
+      },
+      {
         "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
         "score": 0.4
       },
       {
         "slug": "2021/11/responsibility-of-javascript-code-2",
         "score": 0.33
-      },
-      {
-        "slug": "2020/10/defer-than-async",
-        "score": 0.31
       }
     ],
     "2026/09/tailwind-to-stylex-migration": [
@@ -132,7 +132,7 @@
         "score": 0.15
       },
       {
-        "slug": "2020/09/eslint-config-yceffort",
+        "slug": "2022/03/rust-wasm-tutorial-1",
         "score": 0.15
       }
     ],
@@ -268,8 +268,8 @@
         "score": 0.29
       },
       {
-        "slug": "2020/07/decrease-front-end-size",
-        "score": 0.24
+        "slug": "2026/08/framer-motion-banner-frame-drop",
+        "score": 0.23
       }
     ],
     "2026/08/who-learns-to-judge-interviews": [
@@ -308,8 +308,8 @@
     ],
     "2026/08/typescript-7-oxc-migration": [
       {
-        "slug": "2020/09/eslint-config-yceffort",
-        "score": 0.37
+        "slug": "2020/11/retrospect-eslint-prettier",
+        "score": 0.44
       },
       {
         "slug": "2020/11/test-eslint-config",
@@ -332,12 +332,12 @@
         "score": 0.19
       },
       {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
-        "score": 0.18
+        "slug": "2022/06/how-to-write-my-own-eslint-rules",
+        "score": 0.19
       },
       {
-        "slug": "2026/09/markdown-pipeline-to-rust-wasm",
-        "score": 0.17
+        "slug": "2026/08/rebuilding-a-vendor-sdk",
+        "score": 0.18
       }
     ],
     "2026/08/turbopack-scope-hoisting-singleton-split": [
@@ -562,6 +562,10 @@
         "score": 0.32
       },
       {
+        "slug": "2021/04/nodejs-multithreading-worker-threads",
+        "score": 0.29
+      },
+      {
         "slug": "2021/12/nodejs-memory-limit",
         "score": 0.24
       },
@@ -572,10 +576,6 @@
       {
         "slug": "2021/08/browser-nodejs-event-loop",
         "score": 0.21
-      },
-      {
-        "slug": "2021/06/error-handling-in-nodejs",
-        "score": 0.19
       }
     ],
     "2026/08/number-flow-fork-for-old-browsers": [
@@ -660,6 +660,10 @@
         "score": 0.11
       },
       {
+        "slug": "2026/05/pr-diff-vs-bundle",
+        "score": 0.11
+      },
+      {
         "slug": "2026/03/nextjs-edge-runtime-rise-and-fall",
         "score": 0.1
       },
@@ -673,10 +677,6 @@
       },
       {
         "slug": "2021/01/brotli-better-html-compression",
-        "score": 0.09
-      },
-      {
-        "slug": "2021/05/http1-vs-http2",
         "score": 0.09
       }
     ],
@@ -698,10 +698,6 @@
         "score": 0.13
       },
       {
-        "slug": "2019/08/06/experience-docker-aws-ecs",
-        "score": 0.13
-      },
-      {
         "slug": "2021/06/study-k8s-3",
         "score": 0.12
       },
@@ -712,6 +708,10 @@
       {
         "slug": "2021/06/study-k8s-4",
         "score": 0.11
+      },
+      {
+        "slug": "2021/06/study-k8s-2",
+        "score": 0.1
       }
     ],
     "2026/08/k8s-for-frontend-3": [
@@ -800,20 +800,20 @@
         "score": 0.31
       },
       {
-        "slug": "2020/11/nodejs-recovery-self-healing",
-        "score": 0.25
-      },
-      {
         "slug": "2022/02/dockerfile-instructions",
-        "score": 0.23
-      },
-      {
-        "slug": "2019/08/06/experience-docker-aws-ecs",
         "score": 0.23
       },
       {
         "slug": "2022/02/docker-best-practice-2022",
         "score": 0.19
+      },
+      {
+        "slug": "2021/09/github-ci-workflow-for-frontend-developer",
+        "score": 0.17
+      },
+      {
+        "slug": "2020/07/github-actions-summary",
+        "score": 0.17
       }
     ],
     "2026/08/framer-motion-banner-frame-drop": [
@@ -834,6 +834,10 @@
         "score": 0.24
       },
       {
+        "slug": "2020/12/measuring-performance-of-javascript-functions",
+        "score": 0.23
+      },
+      {
         "slug": "2026/09/unused-javascript-cost",
         "score": 0.2
       },
@@ -844,10 +848,6 @@
       {
         "slug": "2022/06/optimize-LCP",
         "score": 0.2
-      },
-      {
-        "slug": "2026/01/intersection-observer-singleton-weakmap",
-        "score": 0.19
       }
     ],
     "2026/07/frontend-performance-deep-dive-is-out-now": [
@@ -1186,8 +1186,8 @@
         "score": 0.49
       },
       {
-        "slug": "2020/07/decrease-front-end-size",
-        "score": 0.46
+        "slug": "2021/02/javascript-performance-bundle-size",
+        "score": 0.39
       }
     ],
     "2026/05/good-package-for-long-term-users": [
@@ -1438,6 +1438,10 @@
         "score": 0.29
       },
       {
+        "slug": "2025/12/nextjs-react-security-vulnerability",
+        "score": 0.19
+      },
+      {
         "slug": "2026/05/use-cache-deep-dive",
         "score": 0.18
       },
@@ -1454,12 +1458,8 @@
         "score": 0.15
       },
       {
-        "slug": "2026/05/pr-diff-vs-bundle",
+        "slug": "2025/12/nextjs-caching-deep-dive",
         "score": 0.14
-      },
-      {
-        "slug": "2022/01/npm-colors-fakerjs",
-        "score": 0.1
       }
     ],
     "2026/03/nextjs-edge-runtime-rise-and-fall": [
@@ -1492,8 +1492,8 @@
         "score": 0.17
       },
       {
-        "slug": "2026/08/service-worker-caching-2",
-        "score": 0.14
+        "slug": "2026/08/k8s-for-frontend-2",
+        "score": 0.15
       }
     ],
     "2026/03/is-nextjs-fast-enough": [
@@ -1726,12 +1726,12 @@
         "score": 0.13
       },
       {
-        "slug": "2020/04/redux-study-2",
-        "score": 0.12
-      },
-      {
         "slug": "2021/08/event-loop-deep-dive",
         "score": 0.11
+      },
+      {
+        "slug": "2025/12/typescript-literal-union-autocomplete",
+        "score": 0.1
       }
     ],
     "2026/01/typescript-exhaustive-check": [
@@ -1934,8 +1934,8 @@
         "score": 0.13
       },
       {
-        "slug": "2020/12/modern-javascript-for-fast-applications",
-        "score": 0.13
+        "slug": "2022/04/chrome-memory-profiler",
+        "score": 0.12
       }
     ],
     "2025/12/use-effect-event": [
@@ -2042,15 +2042,15 @@
     ],
     "2025/12/react-19-ref-as-prop": [
       {
-        "slug": "2019/05/09/react-study-5-reference",
-        "score": 0.32
+        "slug": "2020/07/react-higher-component",
+        "score": 0.53
+      },
+      {
+        "slug": "2019/08/09/react-hooks-api-2",
+        "score": 0.19
       },
       {
         "slug": "2022/03/dont-use-react-fc",
-        "score": 0.14
-      },
-      {
-        "slug": "2019/05/20/react-study-8-functional-component",
         "score": 0.14
       },
       {
@@ -2058,19 +2058,19 @@
         "score": 0.13
       },
       {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.12
+        "slug": "2019/08/13/reactjs-interview-questions",
+        "score": 0.13
       },
       {
         "slug": "2020/10/react-prop-drilling-may-slow-down",
         "score": 0.11
       },
       {
-        "slug": "2025/12/react-set-state-in-effect-lint-rule",
-        "score": 0.1
+        "slug": "2022/03/react-hooks-in-caution",
+        "score": 0.11
       },
       {
-        "slug": "2025/12/use-effect-event",
+        "slug": "2025/12/react-set-state-in-effect-lint-rule",
         "score": 0.1
       }
     ],
@@ -2100,11 +2100,11 @@
         "score": 0.2
       },
       {
-        "slug": "2026/03/react-is-whose",
-        "score": 0.15
+        "slug": "2026/05/react-cache-function-deep-dive",
+        "score": 0.16
       },
       {
-        "slug": "2021/03/server-side-rendering-and-react-components",
+        "slug": "2026/03/react-is-whose",
         "score": 0.15
       }
     ],
@@ -2126,6 +2126,10 @@
         "score": 0.47
       },
       {
+        "slug": "2026/03/react-server-functions-deep-dive",
+        "score": 0.47
+      },
+      {
         "slug": "2026/01/react-server-components-history-repeating",
         "score": 0.35
       },
@@ -2136,10 +2140,6 @@
       {
         "slug": "2020/11/react-memoization",
         "score": 0.31
-      },
-      {
-        "slug": "2021/09/memoize-async-function",
-        "score": 0.28
       }
     ],
     "2025/12/blog-is-back": [
@@ -2224,10 +2224,6 @@
         "score": 0.5
       },
       {
-        "slug": "2020/11/javascript-dependency-hell",
-        "score": 0.4
-      },
-      {
         "slug": "2021/07/javascript-dependency-manager-dont-mange-dependencies",
         "score": 0.39
       },
@@ -2242,6 +2238,10 @@
       {
         "slug": "2026/02/nodejs-deep-dive-sample",
         "score": 0.28
+      },
+      {
+        "slug": "2021/07/npm-workspaces-esbuild",
+        "score": 0.27
       }
     ],
     "2025/06/web-performance-analysis-4": [
@@ -2372,12 +2372,12 @@
         "score": 0.11
       },
       {
-        "slug": "2025/05/what-to-do-as-frontend-developer-in-ai-era",
-        "score": 0.1
+        "slug": "2020/05/10-javascript-quiz",
+        "score": 0.11
       },
       {
-        "slug": "2026/06/learning-what-ai-cant-do",
-        "score": 0.09
+        "slug": "2025/05/what-to-do-as-frontend-developer-in-ai-era",
+        "score": 0.1
       }
     ],
     "2025/06/fixing-nextjs-rendered-more-hooks-error": [
@@ -2500,10 +2500,6 @@
         "score": 0.81
       },
       {
-        "slug": "2020/07/decrease-front-end-size",
-        "score": 0.8
-      },
-      {
         "slug": "2020/09/typescript-enum-not-treeshaked",
         "score": 0.77
       },
@@ -2514,6 +2510,10 @@
       {
         "slug": "2021/02/javascript-performance-bundle-size",
         "score": 0.76
+      },
+      {
+        "slug": "2020/07/make-use-of-long-term-caching",
+        "score": 0.75
       }
     ],
     "2025/05/web-performance-analysis-1": [
@@ -2772,10 +2772,6 @@
         "score": 0.41
       },
       {
-        "slug": "2020/10/nextjs-10",
-        "score": 0.4
-      },
-      {
         "slug": "2021/06/nextjs-11",
         "score": 0.39
       },
@@ -2786,6 +2782,10 @@
       {
         "slug": "2026/09/porting-markdownlint-cli2-to-rust",
         "score": 0.29
+      },
+      {
+        "slug": "2026/08/typescript-7-oxc-migration",
+        "score": 0.27
       }
     ],
     "2025/03/react-interview-guide": [
@@ -2802,10 +2802,6 @@
         "score": 0.44
       },
       {
-        "slug": "2019/05/08/react-study-1-background",
-        "score": 0.24
-      },
-      {
         "slug": "2023/10/react-deep-dive",
         "score": 0.2
       },
@@ -2819,6 +2815,10 @@
       },
       {
         "slug": "2025/05/why-i-wrote-a-book-in-the-age-of-ai",
+        "score": 0.18
+      },
+      {
+        "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
         "score": 0.18
       }
     ],
@@ -2882,12 +2882,12 @@
         "score": 0.21
       },
       {
-        "slug": "2019/08/13/reactjs-interview-questions",
-        "score": 0.2
+        "slug": "2022/03/dont-use-react-fc",
+        "score": 0.21
       },
       {
-        "slug": "2025/05/why-i-wrote-a-book-in-the-age-of-ai",
-        "score": 0.19
+        "slug": "2019/08/13/reactjs-interview-questions",
+        "score": 0.2
       }
     ],
     "2023/06/react-use-hook": [
@@ -2916,12 +2916,12 @@
         "score": 0.22
       },
       {
-        "slug": "2022/04/deep-dive-in-react-rendering",
-        "score": 0.2
+        "slug": "2021/08/uncaught-async-error",
+        "score": 0.21
       },
       {
-        "slug": "2026/03/react-is-whose",
-        "score": 0.19
+        "slug": "2022/04/deep-dive-in-react-rendering",
+        "score": 0.2
       }
     ],
     "2023/05/why-esmodule": [
@@ -2968,15 +2968,7 @@
         "score": 0.23
       },
       {
-        "slug": "2019/05/08/react-study-1-background",
-        "score": 0.21
-      },
-      {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
-        "score": 0.18
-      },
-      {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
         "score": 0.18
       },
       {
@@ -2990,6 +2982,14 @@
       {
         "slug": "2026/03/is-nextjs-fast-enough",
         "score": 0.17
+      },
+      {
+        "slug": "2021/03/server-side-rendering-and-react-components",
+        "score": 0.16
+      },
+      {
+        "slug": "2026/05/use-client-deep-dive",
+        "score": 0.16
       }
     ],
     "2023/05/what-is-commonjs": [
@@ -3134,10 +3134,6 @@
         "score": 0.67
       },
       {
-        "slug": "2020/09/eslint-config-yceffort",
-        "score": 0.42
-      },
-      {
         "slug": "2020/11/test-eslint-config",
         "score": 0.4
       },
@@ -3160,6 +3156,10 @@
       {
         "slug": "2025/12/react-set-state-in-effect-lint-rule",
         "score": 0.13
+      },
+      {
+        "slug": "2021/02/self-made-javascript-polyfill",
+        "score": 0.09
       }
     ],
     "2022/06/JSON-stringify": [
@@ -3856,6 +3856,10 @@
         "score": 0.7
       },
       {
+        "slug": "2020/11/react-memoization",
+        "score": 0.61
+      },
+      {
         "slug": "2019/08/08/react-hooks-api-1",
         "score": 0.45
       },
@@ -3870,10 +3874,6 @@
       {
         "slug": "2026/01/intersection-observer-singleton-weakmap",
         "score": 0.22
-      },
-      {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.21
       }
     ],
     "2022/03/polymorphic-function-in-typescript": [
@@ -4000,16 +4000,16 @@
         "score": 0.26
       },
       {
+        "slug": "2022/04/rust-wasm-project-tutorial-2",
+        "score": 0.25
+      },
+      {
         "slug": "2026/05/bun-rust-rewrite-real-story",
         "score": 0.16
       },
       {
         "slug": "2020/05/var-let-const-hoisting",
         "score": 0.1
-      },
-      {
-        "slug": "2026/07/frontend-past-present-after-agents",
-        "score": 0.07
       }
     ],
     "2022/02/new-react-framework-remix": [
@@ -4034,16 +4034,16 @@
         "score": 0.41
       },
       {
+        "slug": "2021/10/get-absolute-url-in-nextjs",
+        "score": 0.41
+      },
+      {
         "slug": "2026/05/use-client-deep-dive",
         "score": 0.38
       },
       {
         "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
         "score": 0.33
-      },
-      {
-        "slug": "2026/03/nextjs-edge-runtime-rise-and-fall",
-        "score": 0.29
       }
     ],
     "2022/02/dockerfile-instructions": [
@@ -4064,10 +4064,6 @@
         "score": 0.47
       },
       {
-        "slug": "2019/08/06/experience-docker-aws-ecs",
-        "score": 0.41
-      },
-      {
         "slug": "2021/06/study-k8s-1",
         "score": 0.31
       },
@@ -4078,6 +4074,10 @@
       {
         "slug": "2020/07/docker-study-2",
         "score": 0.23
+      },
+      {
+        "slug": "2026/08/nodejs-k8s-pod-sizing",
+        "score": 0.15
       }
     ],
     "2022/02/docker-best-practice-2022": [
@@ -4098,10 +4098,6 @@
         "score": 0.44
       },
       {
-        "slug": "2019/08/06/experience-docker-aws-ecs",
-        "score": 0.43
-      },
-      {
         "slug": "2021/06/study-k8s-1",
         "score": 0.28
       },
@@ -4112,6 +4108,10 @@
       {
         "slug": "2026/08/k8s-for-frontend-1",
         "score": 0.19
+      },
+      {
+        "slug": "2026/08/nodejs-k8s-pod-sizing",
+        "score": 0.16
       }
     ],
     "2022/01/npm-colors-fakerjs": [
@@ -4290,16 +4290,16 @@
         "score": 0.77
       },
       {
-        "slug": "2020/03/nextjs-01-route",
-        "score": 0.45
-      },
-      {
         "slug": "2021/03/server-side-rendering-and-react-components",
         "score": 0.34
       },
       {
         "slug": "2023/05/blog-app-dir",
         "score": 0.29
+      },
+      {
+        "slug": "2020/12/side-project-diary-2020",
+        "score": 0.25
       },
       {
         "slug": "2025/12/nextjs-caching-deep-dive",
@@ -4408,16 +4408,16 @@
         "score": 0.84
       },
       {
-        "slug": "2020/07/decrease-front-end-size",
-        "score": 0.82
-      },
-      {
         "slug": "2026/05/pr-diff-vs-bundle",
         "score": 0.8
       },
       {
         "slug": "2021/02/javascript-performance-bundle-size",
         "score": 0.77
+      },
+      {
+        "slug": "2020/07/make-use-of-long-term-caching",
+        "score": 0.68
       }
     ],
     "2021/11/journey-from-server-to-client": [
@@ -4446,12 +4446,12 @@
         "score": 0.55
       },
       {
-        "slug": "2020/03/socket-io",
-        "score": 0.54
-      },
-      {
         "slug": "2019/08/12/how-browser-work",
         "score": 0.49
+      },
+      {
+        "slug": "2020/01/think-about-fetch",
+        "score": 0.44
       }
     ],
     "2021/11/jorney-from-tags-to-dom": [
@@ -4660,10 +4660,6 @@
     ],
     "2021/10/get-absolute-url-in-nextjs": [
       {
-        "slug": "2020/03/nextjs-02-data-fetching",
-        "score": 0.56
-      },
-      {
         "slug": "2026/03/react-server-functions-deep-dive",
         "score": 0.32
       },
@@ -4680,7 +4676,7 @@
         "score": 0.19
       },
       {
-        "slug": "2020/03/nextjs-01-route",
+        "slug": "2021/12/nextjs-lesson-and-learn",
         "score": 0.19
       },
       {
@@ -4689,6 +4685,10 @@
       },
       {
         "slug": "2026/08/og-scraping-server-1",
+        "score": 0.17
+      },
+      {
+        "slug": "2026/02/nodejs-deep-dive-beta-reader",
         "score": 0.17
       }
     ],
@@ -4854,11 +4854,11 @@
         "score": 0.19
       },
       {
-        "slug": "2018/05/31/ReactiveX-Observable",
-        "score": 0.19
+        "slug": "2021/04/nodejs-multithreading-worker-threads",
+        "score": 0.18
       },
       {
-        "slug": "2021/04/nodejs-multithreading-worker-threads",
+        "slug": "2026/08/service-worker-caching-2",
         "score": 0.18
       }
     ],
@@ -5126,12 +5126,12 @@
         "score": 0.68
       },
       {
-        "slug": "2020/07/decrease-front-end-size",
-        "score": 0.65
-      },
-      {
         "slug": "2021/02/javascript-performance-bundle-size",
         "score": 0.6
+      },
+      {
+        "slug": "2025/05/web-performance-analysis-2",
+        "score": 0.45
       }
     ],
     "2021/08/event-loop-deep-dive": [
@@ -5160,12 +5160,12 @@
         "score": 0.57
       },
       {
-        "slug": "2020/11/deep-dive-into-v8",
-        "score": 0.5
-      },
-      {
         "slug": "2021/08/async-resources-async-hooks",
         "score": 0.44
+      },
+      {
+        "slug": "2020/10/implement-event-emitter",
+        "score": 0.33
       }
     ],
     "2021/08/core-web-vital": [
@@ -5266,8 +5266,8 @@
         "score": 0.4
       },
       {
-        "slug": "2026/09/unused-javascript-cost",
-        "score": 0.34
+        "slug": "2020/11/nodejs-best-pratices-for-performance",
+        "score": 0.39
       }
     ],
     "2021/08/async-resources-async-hooks": [
@@ -5368,7 +5368,7 @@
         "score": 0.27
       },
       {
-        "slug": "2020/12/modern-javascript-for-fast-applications",
+        "slug": "2025/08/npm-deep-dive-author-talk",
         "score": 0.25
       }
     ],
@@ -5408,10 +5408,6 @@
     ],
     "2021/07/kill-a-nodejs-process": [
       {
-        "slug": "2020/11/nodejs-recovery-self-healing",
-        "score": 0.54
-      },
-      {
         "slug": "2021/06/error-handling-in-nodejs",
         "score": 0.46
       },
@@ -5438,6 +5434,10 @@
       {
         "slug": "2026/02/nodejs-deep-dive-beta-reader",
         "score": 0.21
+      },
+      {
+        "slug": "2021/06/misconceptions-on-nodejs",
+        "score": 0.2
       }
     ],
     "2021/07/javascript-dependency-manager-dont-mange-dependencies": [
@@ -5810,18 +5810,14 @@
         "score": 0.14
       },
       {
-        "slug": "2020/12/modern-javascript-for-fast-applications",
-        "score": 0.14
+        "slug": "2021/08/requestIdlecallback",
+        "score": 0.12
       }
     ],
     "2021/06/nextjs-11": [
       {
         "slug": "2021/08/core-web-vital",
         "score": 0.7
-      },
-      {
-        "slug": "2020/10/nextjs-10",
-        "score": 0.65
       },
       {
         "slug": "2023/05/blog-app-dir",
@@ -5832,19 +5828,23 @@
         "score": 0.49
       },
       {
+        "slug": "2020/07/critical-rendering-path",
+        "score": 0.49
+      },
+      {
         "slug": "2026/03/is-nextjs-fast-enough",
         "score": 0.45
       },
       {
-        "slug": "2020/03/nextjs-02-data-fetching",
-        "score": 0.4
-      },
-      {
-        "slug": "2020/03/nextjs-01-route",
-        "score": 0.39
-      },
-      {
         "slug": "2026/08/service-worker-caching-2",
+        "score": 0.34
+      },
+      {
+        "slug": "2025/12/nextjs-caching-deep-dive",
+        "score": 0.34
+      },
+      {
+        "slug": "2020/10/migrate-gatsby-from-nextjs",
         "score": 0.34
       }
     ],
@@ -5926,7 +5926,15 @@
         "score": 0.4
       },
       {
+        "slug": "2019/09/06/javascript-event-loop",
+        "score": 0.4
+      },
+      {
         "slug": "2021/02/run-await-return-return-await",
+        "score": 0.39
+      },
+      {
+        "slug": "2021/07/deep-dive-to-export",
         "score": 0.39
       },
       {
@@ -5940,14 +5948,6 @@
       {
         "slug": "2020/12/javascrpt-async-await-in-map-and-reduce",
         "score": 0.33
-      },
-      {
-        "slug": "2021/08/event-loop-deep-dive",
-        "score": 0.2
-      },
-      {
-        "slug": "2021/08/browser-nodejs-event-loop",
-        "score": 0.19
       }
     ],
     "2021/06/best-solution-for-looping-over-array": [
@@ -5964,6 +5964,10 @@
         "score": 0.17
       },
       {
+        "slug": "2020/09/tricky-javascript-interview-questions",
+        "score": 0.15
+      },
+      {
         "slug": "2021/11/human-readable-javascript",
         "score": 0.13
       },
@@ -5977,10 +5981,6 @@
       },
       {
         "slug": "2026/09/unused-javascript-cost",
-        "score": 0.09
-      },
-      {
-        "slug": "2023/05/what-is-commonjs",
         "score": 0.09
       }
     ],
@@ -6036,8 +6036,8 @@
         "score": 0.22
       },
       {
-        "slug": "2020/03/nextjs-01-route",
-        "score": 0.19
+        "slug": "2021/06/nextjs-11",
+        "score": 0.21
       },
       {
         "slug": "2022/04/temporary-suspension-pwa",
@@ -6112,12 +6112,12 @@
         "score": 0.29
       },
       {
-        "slug": "2020/03/socket-io",
-        "score": 0.27
-      },
-      {
         "slug": "2020/07/critical-rendering-path",
         "score": 0.25
+      },
+      {
+        "slug": "2021/08/core-web-vital",
+        "score": 0.23
       }
     ],
     "2021/05/drawback-of-jwt": [
@@ -6160,6 +6160,10 @@
         "score": 0.65
       },
       {
+        "slug": "2021/05/bad-habits-of-typescript",
+        "score": 0.45
+      },
+      {
         "slug": "2022/05/typescript-tips-and-tricks",
         "score": 0.43
       },
@@ -6182,17 +6186,9 @@
       {
         "slug": "2022/03/polymorphic-function-in-typescript",
         "score": 0.25
-      },
-      {
-        "slug": "2021/03/typescript-interface-vs-type",
-        "score": 0.24
       }
     ],
     "2021/05/compress-all-images-in-directory": [
-      {
-        "slug": "2020/10/nextjs-10",
-        "score": 0.65
-      },
       {
         "slug": "2026/05/pr-diff-vs-bundle",
         "score": 0.36
@@ -6220,6 +6216,10 @@
       {
         "slug": "2020/07/critical-rendering-path",
         "score": 0.18
+      },
+      {
+        "slug": "2020/07/make-use-of-long-term-caching",
+        "score": 0.18
       }
     ],
     "2021/05/bad-habits-of-typescript": [
@@ -6230,6 +6230,10 @@
       {
         "slug": "2022/03/understanding-typescript-never",
         "score": 0.6
+      },
+      {
+        "slug": "2019/09/19/typescript-generic",
+        "score": 0.59
       },
       {
         "slug": "2021/06/typescript-type-operation-generic",
@@ -6250,13 +6254,13 @@
       {
         "slug": "2026/01/typescript-exhaustive-check",
         "score": 0.4
-      },
-      {
-        "slug": "2022/05/how-typescript-compiler-works",
-        "score": 0.39
       }
     ],
     "2021/05/ast-for-javascript": [
+      {
+        "slug": "2022/05/how-typescript-compiler-works",
+        "score": 0.43
+      },
       {
         "slug": "2026/02/react-compiler-deep-dive",
         "score": 0.38
@@ -6284,10 +6288,6 @@
       {
         "slug": "2021/08/javascript-tree-shaking",
         "score": 0.18
-      },
-      {
-        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
-        "score": 0.17
       }
     ],
     "2021/04/nodejs-multithreading-worker-threads": [
@@ -6364,10 +6364,6 @@
         "score": 0.82
       },
       {
-        "slug": "2020/03/nextjs-02-data-fetching",
-        "score": 0.76
-      },
-      {
         "slug": "2026/05/use-client-deep-dive",
         "score": 0.72
       },
@@ -6390,6 +6386,10 @@
       {
         "slug": "2023/05/blog-app-dir",
         "score": 0.38
+      },
+      {
+        "slug": "2025/12/react-19-ref-as-prop",
+        "score": 0.36
       }
     ],
     "2021/03/performance-tip-of-typescript": [
@@ -6602,10 +6602,6 @@
         "score": 0.18
       },
       {
-        "slug": "2020/11/nodejs-recovery-self-healing",
-        "score": 0.16
-      },
-      {
         "slug": "2020/07/cron-job-with-github-actions",
         "score": 0.16
       },
@@ -6628,6 +6624,10 @@
       {
         "slug": "2026/02/nodejs-deep-dive-beta-reader",
         "score": 0.12
+      },
+      {
+        "slug": "2026/03/why-still-nextjs",
+        "score": 0.11
       }
     ],
     "2021/03/Lighthouse-CI-with-github-actions": [
@@ -6674,8 +6674,16 @@
         "score": 0.21
       },
       {
+        "slug": "2020/09/javascript-string",
+        "score": 0.21
+      },
+      {
         "slug": "2021/11/human-readable-javascript",
         "score": 0.18
+      },
+      {
+        "slug": "2020/05/javascript-decorator",
+        "score": 0.17
       },
       {
         "slug": "2022/04/how-javascript-variable-works-in-memory",
@@ -6688,14 +6696,6 @@
       {
         "slug": "2020/03/javascript-currying-closure",
         "score": 0.15
-      },
-      {
-        "slug": "2020/09/tricky-javascript-interview-questions",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/05/10-javascript-quiz",
-        "score": 0.14
       }
     ],
     "2021/02/run-await-return-return-await": [
@@ -6814,10 +6814,6 @@
         "score": 0.17
       },
       {
-        "slug": "2020/11/nodejs-recovery-self-healing",
-        "score": 0.16
-      },
-      {
         "slug": "2021/06/misconceptions-on-nodejs",
         "score": 0.16
       },
@@ -6831,6 +6827,10 @@
       },
       {
         "slug": "2026/02/nodejs-deep-dive-beta-reader",
+        "score": 0.14
+      },
+      {
+        "slug": "2020/06/encryption-decryption-nodejs",
         "score": 0.14
       }
     ],
@@ -6856,8 +6856,8 @@
         "score": 0.84
       },
       {
-        "slug": "2020/07/decrease-front-end-size",
-        "score": 0.83
+        "slug": "2021/08/benchmarking-web-javascript-memory-usage",
+        "score": 0.79
       },
       {
         "slug": "2020/09/typescript-enum-not-treeshaked",
@@ -7006,10 +7006,6 @@
     ],
     "2021/01/nextjs-refresh-server-side-props": [
       {
-        "slug": "2020/03/nextjs-02-data-fetching",
-        "score": 0.78
-      },
-      {
         "slug": "2021/12/nextjs-lesson-and-learn",
         "score": 0.57
       },
@@ -7026,16 +7022,20 @@
         "score": 0.41
       },
       {
-        "slug": "2020/03/nextjs-01-route",
-        "score": 0.39
+        "slug": "2022/01/how-react-server-components-work",
+        "score": 0.35
       },
       {
-        "slug": "2022/01/how-react-server-components-work",
+        "slug": "2021/10/get-absolute-url-in-nextjs",
         "score": 0.35
       },
       {
         "slug": "2026/03/react-server-functions-deep-dive",
         "score": 0.33
+      },
+      {
+        "slug": "2021/10/api-error-handling-nextjs",
+        "score": 0.29
       }
     ],
     "2021/01/from-github-workflow-to-firebase-functions": [
@@ -7208,40 +7208,6 @@
         "score": 0.46
       }
     ],
-    "2020/12/preview-ES2021": [
-      {
-        "slug": "2020/12/javascript-garbage-collection",
-        "score": 0.62
-      },
-      {
-        "slug": "2019/05/21/javascript-promise",
-        "score": 0.61
-      },
-      {
-        "slug": "2020/11/v8-memory-management",
-        "score": 0.52
-      },
-      {
-        "slug": "2020/11/nodejs-best-pratices-for-performance",
-        "score": 0.46
-      },
-      {
-        "slug": "2022/04/how-javascript-variable-works-in-memory",
-        "score": 0.41
-      },
-      {
-        "slug": "2022/04/chrome-memory-profiler",
-        "score": 0.37
-      },
-      {
-        "slug": "2020/09/javascript-memory-leaks-by-window-detached",
-        "score": 0.37
-      },
-      {
-        "slug": "2020/11/deep-dive-into-v8",
-        "score": 0.35
-      }
-    ],
     "2020/12/partitioning-cache": [
       {
         "slug": "2020/10/http-cache",
@@ -7274,40 +7240,6 @@
       {
         "slug": "2026/08/service-worker-caching-3",
         "score": 0.27
-      }
-    ],
-    "2020/12/modern-javascript-for-fast-applications": [
-      {
-        "slug": "2020/07/the-cost-of-javascript-2019",
-        "score": 0.71
-      },
-      {
-        "slug": "2026/09/unused-javascript-cost",
-        "score": 0.61
-      },
-      {
-        "slug": "2020/11/deep-dive-into-v8",
-        "score": 0.54
-      },
-      {
-        "slug": "2022/01/javascript-self-profiling",
-        "score": 0.5
-      },
-      {
-        "slug": "2020/10/defer-than-async",
-        "score": 0.49
-      },
-      {
-        "slug": "2021/08/javascript-tree-shaking",
-        "score": 0.49
-      },
-      {
-        "slug": "2021/02/javascript-performance-bundle-size",
-        "score": 0.49
-      },
-      {
-        "slug": "2021/08/requestIdlecallback",
-        "score": 0.45
       }
     ],
     "2020/12/measuring-performance-of-javascript-functions": [
@@ -7446,40 +7378,6 @@
         "score": 0.15
       }
     ],
-    "2020/11/webpack-module-federation-example": [
-      {
-        "slug": "2020/09/webpack-module-federation",
-        "score": 0.82
-      },
-      {
-        "slug": "2026/05/pr-diff-vs-bundle",
-        "score": 0.39
-      },
-      {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
-        "score": 0.3
-      },
-      {
-        "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
-        "score": 0.27
-      },
-      {
-        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
-        "score": 0.22
-      },
-      {
-        "slug": "2020/07/decrease-front-end-size",
-        "score": 0.22
-      },
-      {
-        "slug": "2026/09/unused-javascript-cost",
-        "score": 0.21
-      },
-      {
-        "slug": "2020/07/make-use-of-long-term-caching",
-        "score": 0.19
-      }
-    ],
     "2020/11/v8-memory-management": [
       {
         "slug": "2021/12/nodejs-memory-limit",
@@ -7528,10 +7426,6 @@
         "score": 0.56
       },
       {
-        "slug": "2020/09/eslint-config-yceffort",
-        "score": 0.51
-      },
-      {
         "slug": "2020/07/cron-job-with-github-actions",
         "score": 0.31
       },
@@ -7546,6 +7440,10 @@
       {
         "slug": "2021/10/how-to-write-good-javascript-test-code",
         "score": 0.24
+      },
+      {
+        "slug": "2026/08/typescript-7-oxc-migration",
+        "score": 0.22
       }
     ],
     "2020/11/storage-for-the-web": [
@@ -7618,10 +7516,6 @@
     ],
     "2020/11/retrospect-eslint-prettier": [
       {
-        "slug": "2020/09/eslint-config-yceffort",
-        "score": 0.65
-      },
-      {
         "slug": "2020/11/test-eslint-config",
         "score": 0.6
       },
@@ -7648,40 +7542,10 @@
       {
         "slug": "2021/11/human-readable-javascript",
         "score": 0.1
-      }
-    ],
-    "2020/11/react-recoil": [
-      {
-        "slug": "2019/08/08/react-hooks-api-1",
-        "score": 0.5
       },
       {
-        "slug": "2020/08/mobx-study-4",
-        "score": 0.47
-      },
-      {
-        "slug": "2020/04/redux-study-1",
-        "score": 0.47
-      },
-      {
-        "slug": "2020/08/mobx-study-1",
-        "score": 0.41
-      },
-      {
-        "slug": "2020/08/mobx-study-3",
-        "score": 0.32
-      },
-      {
-        "slug": "2020/04/redux-study-3",
-        "score": 0.31
-      },
-      {
-        "slug": "2020/08/mobx-study-2",
-        "score": 0.3
-      },
-      {
-        "slug": "2025/12/use-effect-event",
-        "score": 0.13
+        "slug": "2020/11/deep-dive-into-v8",
+        "score": 0.07
       }
     ],
     "2020/11/react-memoization": [
@@ -7736,10 +7600,6 @@
         "score": 0.73
       },
       {
-        "slug": "2020/10/nextjs-10",
-        "score": 0.33
-      },
-      {
         "slug": "2021/06/nextjs-11",
         "score": 0.32
       },
@@ -7750,6 +7610,10 @@
       {
         "slug": "2022/04/temporary-suspension-pwa",
         "score": 0.24
+      },
+      {
+        "slug": "2023/05/blog-app-dir",
+        "score": 0.22
       }
     ],
     "2020/11/patch-on-node-modules": [
@@ -7784,40 +7648,6 @@
       {
         "slug": "2026/05/tanstack-npm-supply-chain-attack",
         "score": 0.19
-      }
-    ],
-    "2020/11/nodejs-recovery-self-healing": [
-      {
-        "slug": "2019/08/06/experience-docker-aws-ecs",
-        "score": 0.61
-      },
-      {
-        "slug": "2021/07/kill-a-nodejs-process",
-        "score": 0.52
-      },
-      {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.49
-      },
-      {
-        "slug": "2020/07/docker-study-1",
-        "score": 0.49
-      },
-      {
-        "slug": "2020/08/docker-study-3",
-        "score": 0.47
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-2",
-        "score": 0.46
-      },
-      {
-        "slug": "2022/02/dockerfile-instructions",
-        "score": 0.41
-      },
-      {
-        "slug": "2022/02/docker-best-practice-2022",
-        "score": 0.37
       }
     ],
     "2020/11/nodejs-best-pratices-for-performance": [
@@ -8034,10 +7864,6 @@
         "score": 0.65
       },
       {
-        "slug": "2021/07/deep-dive-to-export",
-        "score": 0.64
-      },
-      {
         "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
         "score": 0.56
       },
@@ -8056,13 +7882,13 @@
       {
         "slug": "2021/02/javascript-performance-bundle-size",
         "score": 0.19
+      },
+      {
+        "slug": "2020/09/webpack-module-federation",
+        "score": 0.19
       }
     ],
     "2020/10/why-use-component-will-mount": [
-      {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.67
-      },
       {
         "slug": "2019/08/08/react-hooks-api-1",
         "score": 0.59
@@ -8070,6 +7896,10 @@
       {
         "slug": "2025/12/react-set-state-in-effect-lint-rule",
         "score": 0.49
+      },
+      {
+        "slug": "2019/08/09/react-hooks-api-2",
+        "score": 0.26
       },
       {
         "slug": "2025/12/use-effect-event",
@@ -8080,8 +7910,8 @@
         "score": 0.24
       },
       {
-        "slug": "2019/05/20/react-study-8-functional-component",
-        "score": 0.21
+        "slug": "2019/08/13/reactjs-interview-questions",
+        "score": 0.18
       },
       {
         "slug": "2026/05/use-client-deep-dive",
@@ -8106,10 +7936,6 @@
         "score": 0.11
       },
       {
-        "slug": "2019/05/08/react-study-1-background",
-        "score": 0.11
-      },
-      {
         "slug": "2022/03/dont-use-react-fc",
         "score": 0.1
       },
@@ -8124,6 +7950,10 @@
       {
         "slug": "2020/11/avoid-default-export",
         "score": 0.09
+      },
+      {
+        "slug": "2021/06/reduce-spread-anti-pattern",
+        "score": 0.08
       }
     ],
     "2020/10/think-about-useEffect": [
@@ -8134,10 +7964,6 @@
       {
         "slug": "2025/12/react-set-state-in-effect-lint-rule",
         "score": 0.71
-      },
-      {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.55
       },
       {
         "slug": "2019/08/08/react-hooks-api-1",
@@ -8156,8 +7982,12 @@
         "score": 0.28
       },
       {
-        "slug": "2019/05/08/react-study-3-component",
-        "score": 0.15
+        "slug": "2026/05/use-client-deep-dive",
+        "score": 0.14
+      },
+      {
+        "slug": "2020/12/javascript-garbage-collection",
+        "score": 0.13
       }
     ],
     "2020/10/style-with-styled-components": [
@@ -8178,20 +8008,20 @@
         "score": 0.17
       },
       {
-        "slug": "2019/05/08/react-study-2-jsx",
-        "score": 0.16
-      },
-      {
         "slug": "2021/09/safari-15-update",
         "score": 0.15
       },
       {
-        "slug": "2019/05/08/react-study-3-component",
-        "score": 0.13
-      },
-      {
         "slug": "2026/08/number-flow-fork-for-old-browsers",
         "score": 0.12
+      },
+      {
+        "slug": "2026/09/one-web-on-multiple-webviews",
+        "score": 0.11
+      },
+      {
+        "slug": "2021/06/ways-to-faster-web-fonts",
+        "score": 0.11
       }
     ],
     "2020/10/service-worker-of-create-react-app": [
@@ -8220,22 +8050,18 @@
         "score": 0.49
       },
       {
-        "slug": "2020/12/partitioning-cache",
-        "score": 0.43
+        "slug": "2020/11/pwa-pros-and-cons",
+        "score": 0.48
       },
       {
-        "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
-        "score": 0.37
+        "slug": "2020/12/partitioning-cache",
+        "score": 0.43
       }
     ],
     "2020/10/react-prop-drilling-may-slow-down": [
       {
         "slug": "2019/08/08/react-hooks-api-1",
         "score": 0.5
-      },
-      {
-        "slug": "2020/08/mobx-study-4",
-        "score": 0.29
       },
       {
         "slug": "2020/10/react-hooks-and-hocs",
@@ -8260,6 +8086,10 @@
       {
         "slug": "2026/05/use-client-deep-dive",
         "score": 0.14
+      },
+      {
+        "slug": "2026/02/react-compiler-deep-dive",
+        "score": 0.13
       }
     ],
     "2020/10/react-hooks-and-hocs": [
@@ -8288,12 +8118,12 @@
         "score": 0.18
       },
       {
-        "slug": "2020/10/IIFE-on-use-state-of-react",
-        "score": 0.15
+        "slug": "2022/05/useEvent",
+        "score": 0.17
       },
       {
-        "slug": "2020/08/mobx-study-4",
-        "score": 0.13
+        "slug": "2020/10/IIFE-on-use-state-of-react",
+        "score": 0.15
       }
     ],
     "2020/10/promise-combinators": [
@@ -8344,6 +8174,10 @@
         "score": 0.14
       },
       {
+        "slug": "2019/07/18/javascript-symbol",
+        "score": 0.13
+      },
+      {
         "slug": "2021/11/jorney-from-tags-to-dom",
         "score": 0.12
       },
@@ -8357,10 +8191,6 @@
       },
       {
         "slug": "2020/07/react-higher-component",
-        "score": 0.1
-      },
-      {
-        "slug": "2020/08/mobx-study-3",
         "score": 0.1
       }
     ],
@@ -8398,60 +8228,14 @@
         "score": 0.11
       }
     ],
-    "2020/10/nextjs-10": [
-      {
-        "slug": "2021/06/nextjs-11",
-        "score": 0.72
-      },
-      {
-        "slug": "2021/05/compress-all-images-in-directory",
-        "score": 0.6
-      },
-      {
-        "slug": "2026/08/service-worker-caching-2",
-        "score": 0.56
-      },
-      {
-        "slug": "2023/05/blog-app-dir",
-        "score": 0.45
-      },
-      {
-        "slug": "2026/09/blog-performance-after-migrations",
-        "score": 0.43
-      },
-      {
-        "slug": "2020/03/nextjs-01-route",
-        "score": 0.42
-      },
-      {
-        "slug": "2026/03/is-nextjs-fast-enough",
-        "score": 0.41
-      },
-      {
-        "slug": "2020/10/migrate-gatsby-from-nextjs",
-        "score": 0.4
-      }
-    ],
     "2020/10/migrate-gatsby-from-nextjs": [
-      {
-        "slug": "2020/10/nextjs-10",
-        "score": 0.73
-      },
       {
         "slug": "2023/05/blog-app-dir",
         "score": 0.67
       },
       {
-        "slug": "2020/03/nextjs-02-data-fetching",
-        "score": 0.66
-      },
-      {
         "slug": "2021/06/nextjs-11",
         "score": 0.65
-      },
-      {
-        "slug": "2020/03/nextjs-01-route",
-        "score": 0.63
       },
       {
         "slug": "2026/09/blog-performance-after-migrations",
@@ -8464,6 +8248,18 @@
       {
         "slug": "2026/03/is-nextjs-fast-enough",
         "score": 0.49
+      },
+      {
+        "slug": "2025/12/nextjs-caching-deep-dive",
+        "score": 0.45
+      },
+      {
+        "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
+        "score": 0.44
+      },
+      {
+        "slug": "2026/03/why-still-nextjs",
+        "score": 0.42
       }
     ],
     "2020/10/javascript-priorities": [
@@ -8502,16 +8298,16 @@
     ],
     "2020/10/implement-event-emitter": [
       {
-        "slug": "2018/05/31/ReactiveX-Observable",
-        "score": 0.62
-      },
-      {
         "slug": "2021/08/event-loop-deep-dive",
         "score": 0.48
       },
       {
         "slug": "2019/07/17/javascript-event-bubbling-capturing",
         "score": 0.21
+      },
+      {
+        "slug": "2021/01/nodejs-4-design-pattern",
+        "score": 0.2
       },
       {
         "slug": "2020/10/prevent-double-click-on-button",
@@ -8654,6 +8450,10 @@
         "score": 0.7
       },
       {
+        "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
+        "score": 0.62
+      },
+      {
         "slug": "2020/07/the-cost-of-javascript-2019",
         "score": 0.44
       },
@@ -8663,10 +8463,6 @@
       },
       {
         "slug": "2026/09/unused-javascript-cost",
-        "score": 0.27
-      },
-      {
-        "slug": "2021/08/requestIdlecallback",
         "score": 0.27
       }
     ],
@@ -8740,10 +8536,6 @@
     ],
     "2020/09/webpack-module-federation": [
       {
-        "slug": "2020/11/webpack-module-federation-example",
-        "score": 0.88
-      },
-      {
         "slug": "2026/05/pr-diff-vs-bundle",
         "score": 0.41
       },
@@ -8752,8 +8544,8 @@
         "score": 0.3
       },
       {
-        "slug": "2020/07/decrease-front-end-size",
-        "score": 0.23
+        "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
+        "score": 0.3
       },
       {
         "slug": "2020/07/make-use-of-long-term-caching",
@@ -8770,6 +8562,10 @@
       {
         "slug": "2026/05/use-client-deep-dive",
         "score": 0.14
+      },
+      {
+        "slug": "2026/07/frontend-past-present-after-agents",
+        "score": 0.12
       }
     ],
     "2020/09/understanding-ecmascript-1": [
@@ -8832,12 +8628,12 @@
         "score": 0.52
       },
       {
-        "slug": "2020/07/decrease-front-end-size",
-        "score": 0.44
-      },
-      {
         "slug": "2025/05/web-performance-analysis-2",
         "score": 0.32
+      },
+      {
+        "slug": "2021/02/javascript-performance-bundle-size",
+        "score": 0.31
       }
     ],
     "2020/09/typescript-4.0": [
@@ -8854,6 +8650,10 @@
         "score": 0.25
       },
       {
+        "slug": "2022/03/understanding-typescript-never",
+        "score": 0.24
+      },
+      {
         "slug": "2021/05/value-of-typescript",
         "score": 0.23
       },
@@ -8868,10 +8668,6 @@
       {
         "slug": "2021/03/typescript-interface-vs-type",
         "score": 0.18
-      },
-      {
-        "slug": "2026/08/typescript-7-oxc-migration",
-        "score": 0.15
       }
     ],
     "2020/09/tricky-javascript-interview-questions": [
@@ -8944,6 +8740,10 @@
     ],
     "2020/09/react-17-release-candidates": [
       {
+        "slug": "2022/04/react-18-changelog",
+        "score": 0.31
+      },
+      {
         "slug": "2023/05/what-is-in-naver",
         "score": 0.3
       },
@@ -8954,10 +8754,6 @@
       {
         "slug": "2021/09/react-18-ssr-architecture",
         "score": 0.15
-      },
-      {
-        "slug": "2019/05/08/react-study-1-background",
-        "score": 0.14
       },
       {
         "slug": "2022/01/how-react-server-components-work",
@@ -9112,40 +8908,6 @@
         "score": 0.12
       }
     ],
-    "2020/09/eslint-config-yceffort": [
-      {
-        "slug": "2020/11/test-eslint-config",
-        "score": 0.81
-      },
-      {
-        "slug": "2020/11/retrospect-eslint-prettier",
-        "score": 0.73
-      },
-      {
-        "slug": "2021/05/ast-for-javascript",
-        "score": 0.43
-      },
-      {
-        "slug": "2026/08/typescript-7-oxc-migration",
-        "score": 0.34
-      },
-      {
-        "slug": "2026/05/good-package-for-long-term-users",
-        "score": 0.34
-      },
-      {
-        "slug": "2026/05/tanstack-npm-supply-chain-attack",
-        "score": 0.21
-      },
-      {
-        "slug": "2022/06/how-to-write-my-own-eslint-rules",
-        "score": 0.2
-      },
-      {
-        "slug": "2020/11/javascript-dependency-hell",
-        "score": 0.2
-      }
-    ],
     "2020/09/daum-dictionary-crawling": [
       {
         "slug": "2018/11/05/web-crwaling-for-naver-movie",
@@ -9178,74 +8940,6 @@
       {
         "slug": "2021/08/core-web-vital",
         "score": 0.06
-      }
-    ],
-    "2020/09/create-chrome-extension": [
-      {
-        "slug": "2019/09/06/javascript-event-loop",
-        "score": 0.21
-      },
-      {
-        "slug": "2022/04/chrome-memory-profiler",
-        "score": 0.17
-      },
-      {
-        "slug": "2026/08/service-worker-caching-1",
-        "score": 0.16
-      },
-      {
-        "slug": "2026/08/service-worker-caching-3",
-        "score": 0.15
-      },
-      {
-        "slug": "2022/03/rust-wasm-tutorial-1",
-        "score": 0.14
-      },
-      {
-        "slug": "2026/09/unused-javascript-cost",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/12/partitioning-cache",
-        "score": 0.13
-      },
-      {
-        "slug": "2021/02/css-and-webpage-performance",
-        "score": 0.13
-      }
-    ],
-    "2020/09/change-datetime-of-git-commit": [
-      {
-        "slug": "2020/08/git-cheat-sheat",
-        "score": 0.17
-      },
-      {
-        "slug": "2019/12/18/lets-beautify-git",
-        "score": 0.17
-      },
-      {
-        "slug": "2026/05/tanstack-npm-supply-chain-attack",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/01/delete-merged-branch",
-        "score": 0.11
-      },
-      {
-        "slug": "2021/12/add-node_modules-in-git",
-        "score": 0.08
-      },
-      {
-        "slug": "2021/09/github-ci-workflow-for-frontend-developer",
-        "score": 0.08
-      },
-      {
-        "slug": "2020/07/github-actions-summary",
-        "score": 0.08
-      },
-      {
-        "slug": "2021/01/from-github-workflow-to-firebase-functions",
-        "score": 0.07
       }
     ],
     "2020/09/book-no-rules-rules": [
@@ -9316,142 +9010,6 @@
         "score": 0.24
       }
     ],
-    "2020/08/mobx-study-4": [
-      {
-        "slug": "2020/08/mobx-study-2",
-        "score": 0.83
-      },
-      {
-        "slug": "2020/08/mobx-study-3",
-        "score": 0.81
-      },
-      {
-        "slug": "2020/08/mobx-study-1",
-        "score": 0.76
-      },
-      {
-        "slug": "2020/04/redux-study-2",
-        "score": 0.58
-      },
-      {
-        "slug": "2020/04/redux-study-1",
-        "score": 0.53
-      },
-      {
-        "slug": "2020/11/react-recoil",
-        "score": 0.49
-      },
-      {
-        "slug": "2020/04/redux-study-3",
-        "score": 0.29
-      },
-      {
-        "slug": "2020/07/change-detection-in-angular-react",
-        "score": 0.25
-      }
-    ],
-    "2020/08/mobx-study-3": [
-      {
-        "slug": "2020/08/mobx-study-2",
-        "score": 0.78
-      },
-      {
-        "slug": "2020/08/mobx-study-4",
-        "score": 0.75
-      },
-      {
-        "slug": "2020/08/mobx-study-1",
-        "score": 0.71
-      },
-      {
-        "slug": "2020/04/redux-study-1",
-        "score": 0.35
-      },
-      {
-        "slug": "2020/04/redux-study-2",
-        "score": 0.33
-      },
-      {
-        "slug": "2018/05/31/ReactiveX-Observable",
-        "score": 0.32
-      },
-      {
-        "slug": "2020/11/react-recoil",
-        "score": 0.26
-      },
-      {
-        "slug": "2020/04/redux-study-3",
-        "score": 0.2
-      }
-    ],
-    "2020/08/mobx-study-2": [
-      {
-        "slug": "2020/08/mobx-study-3",
-        "score": 0.79
-      },
-      {
-        "slug": "2020/08/mobx-study-1",
-        "score": 0.7
-      },
-      {
-        "slug": "2020/08/mobx-study-4",
-        "score": 0.52
-      },
-      {
-        "slug": "2020/11/react-recoil",
-        "score": 0.33
-      },
-      {
-        "slug": "2020/04/redux-study-2",
-        "score": 0.31
-      },
-      {
-        "slug": "2019/08/08/react-hooks-api-1",
-        "score": 0.27
-      },
-      {
-        "slug": "2020/04/redux-study-3",
-        "score": 0.19
-      },
-      {
-        "slug": "2019/08/09/react-hooks-api-2",
-        "score": 0.16
-      }
-    ],
-    "2020/08/mobx-study-1": [
-      {
-        "slug": "2020/08/mobx-study-2",
-        "score": 0.9
-      },
-      {
-        "slug": "2020/08/mobx-study-3",
-        "score": 0.88
-      },
-      {
-        "slug": "2020/08/mobx-study-4",
-        "score": 0.78
-      },
-      {
-        "slug": "2020/04/redux-study-2",
-        "score": 0.42
-      },
-      {
-        "slug": "2020/04/redux-study-1",
-        "score": 0.41
-      },
-      {
-        "slug": "2020/11/react-recoil",
-        "score": 0.38
-      },
-      {
-        "slug": "2020/04/redux-study-3",
-        "score": 0.29
-      },
-      {
-        "slug": "2019/08/08/react-hooks-api-1",
-        "score": 0.22
-      }
-    ],
     "2020/08/git-cheat-sheat": [
       {
         "slug": "2019/12/18/lets-beautify-git",
@@ -9460,10 +9018,6 @@
       {
         "slug": "2020/01/delete-merged-branch",
         "score": 0.37
-      },
-      {
-        "slug": "2020/09/change-datetime-of-git-commit",
-        "score": 0.36
       },
       {
         "slug": "2021/12/add-node_modules-in-git",
@@ -9484,6 +9038,10 @@
       {
         "slug": "2020/07/cron-job-with-github-actions",
         "score": 0.13
+      },
+      {
+        "slug": "2021/03/Lighthouse-CI-with-github-actions",
+        "score": 0.12
       }
     ],
     "2020/08/docker-study-3": [
@@ -9504,10 +9062,6 @@
         "score": 0.59
       },
       {
-        "slug": "2019/08/06/experience-docker-aws-ecs",
-        "score": 0.54
-      },
-      {
         "slug": "2021/06/study-k8s-1",
         "score": 0.36
       },
@@ -9517,6 +9071,10 @@
       },
       {
         "slug": "2026/08/k8s-for-frontend-1",
+        "score": 0.25
+      },
+      {
+        "slug": "2021/06/study-k8s-3",
         "score": 0.25
       }
     ],
@@ -9606,20 +9164,20 @@
         "score": 0.21
       },
       {
-        "slug": "2020/08/mobx-study-4",
-        "score": 0.2
-      },
-      {
         "slug": "2021/10/api-error-handling-nextjs",
         "score": 0.17
       },
       {
-        "slug": "2019/05/08/react-study-3-component",
+        "slug": "2019/08/08/react-hooks-api-1",
         "score": 0.17
       },
       {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.17
+        "slug": "2020/07/change-detection-in-angular-react",
+        "score": 0.14
+      },
+      {
+        "slug": "2019/08/13/reactjs-interview-questions-1",
+        "score": 0.14
       }
     ],
     "2020/07/memory-leaks-in-javascript": [
@@ -9674,10 +9232,6 @@
         "score": 0.15
       },
       {
-        "slug": "2020/06/codility-06-02-max-product-of-three",
-        "score": 0.09
-      },
-      {
         "slug": "2020/06/javascript-data-structure",
         "score": 0.08
       },
@@ -9686,8 +9240,12 @@
         "score": 0.07
       },
       {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.07
+        "slug": "2020/11/javascript-memoize",
+        "score": 0.06
+      },
+      {
+        "slug": "2025/03/map-vs-object",
+        "score": 0.05
       }
     ],
     "2020/07/math-for-programmer-chapter2-2-notation": [
@@ -9712,16 +9270,16 @@
         "score": 0.08
       },
       {
-        "slug": "2020/06/codility-02-02-odd-occurrences-in-array",
-        "score": 0.08
+        "slug": "2020/06/javascript-sort",
+        "score": 0.07
       },
       {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.08
+        "slug": "2020/06/algorithm-linked-list",
+        "score": 0.07
       },
       {
-        "slug": "2020/06/codility-06-02-max-product-of-three",
-        "score": 0.08
+        "slug": "2021/01/brotli-better-html-compression",
+        "score": 0.06
       }
     ],
     "2020/07/math-for-programmer-chapter2-1-integer": [
@@ -9742,20 +9300,20 @@
         "score": 0.22
       },
       {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.19
+        "slug": "2020/06/javascript-data-structure",
+        "score": 0.11
       },
       {
-        "slug": "2020/06/codility-04-03-missing-integer",
-        "score": 0.19
+        "slug": "2020/06/javascript-sort",
+        "score": 0.1
       },
       {
-        "slug": "2020/06/codility-01-01-binary-gap",
-        "score": 0.18
+        "slug": "2020/06/algorithm-linked-list",
+        "score": 0.09
       },
       {
-        "slug": "2020/06/codility-02-02-odd-occurrences-in-array",
-        "score": 0.13
+        "slug": "2019/12/18/goal-2020",
+        "score": 0.07
       }
     ],
     "2020/07/math-for-programmer-chapter1-2-set": [
@@ -9788,8 +9346,8 @@
         "score": 0.09
       },
       {
-        "slug": "2020/06/codility-07-03-nesting",
-        "score": 0.09
+        "slug": "2020/06/algorithm-linked-list",
+        "score": 0.08
       }
     ],
     "2020/07/math-for-programmer-chapter1-1-logical-operation": [
@@ -9814,16 +9372,16 @@
         "score": 0.12
       },
       {
-        "slug": "2020/06/codility-01-01-binary-gap",
-        "score": 0.12
-      },
-      {
         "slug": "2020/06/javascript-sort",
         "score": 0.09
       },
       {
-        "slug": "2020/06/codility-07-02-fish",
-        "score": 0.09
+        "slug": "2020/06/algorithm-linked-list",
+        "score": 0.07
+      },
+      {
+        "slug": "2025/03/map-vs-object",
+        "score": 0.06
       }
     ],
     "2020/07/make-use-of-long-term-caching": [
@@ -9834,10 +9392,6 @@
       {
         "slug": "2020/12/partitioning-cache",
         "score": 0.54
-      },
-      {
-        "slug": "2020/07/decrease-front-end-size",
-        "score": 0.48
       },
       {
         "slug": "2020/07/instant-loading-with-PRPL-pattern",
@@ -9858,6 +9412,10 @@
       {
         "slug": "2026/08/service-worker-caching-2",
         "score": 0.37
+      },
+      {
+        "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
+        "score": 0.34
       }
     ],
     "2020/07/instant-loading-with-PRPL-pattern": [
@@ -9920,12 +9478,12 @@
         "score": 0.55
       },
       {
-        "slug": "2020/07/decrease-front-end-size",
-        "score": 0.53
-      },
-      {
         "slug": "2020/07/the-cost-of-javascript-2019",
         "score": 0.5
+      },
+      {
+        "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
+        "score": 0.43
       }
     ],
     "2020/07/github-actions-summary": [
@@ -9980,16 +9538,16 @@
         "score": 0.25
       },
       {
-        "slug": "2019/08/06/experience-docker-aws-ecs",
-        "score": 0.24
-      },
-      {
         "slug": "2026/08/k8s-for-frontend-3",
         "score": 0.23
       },
       {
         "slug": "2020/08/docker-study-3",
         "score": 0.2
+      },
+      {
+        "slug": "2026/08/k8s-for-frontend-1",
+        "score": 0.18
       },
       {
         "slug": "2021/06/study-k8s-3",
@@ -10018,50 +9576,16 @@
         "score": 0.74
       },
       {
-        "slug": "2019/08/06/experience-docker-aws-ecs",
-        "score": 0.69
-      },
-      {
         "slug": "2021/06/study-k8s-1",
         "score": 0.55
       },
       {
         "slug": "2021/06/study-k8s-3",
         "score": 0.4
-      }
-    ],
-    "2020/07/decrease-front-end-size": [
-      {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
-        "score": 0.76
       },
       {
-        "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
-        "score": 0.76
-      },
-      {
-        "slug": "2026/09/unused-javascript-cost",
-        "score": 0.71
-      },
-      {
-        "slug": "2020/07/make-use-of-long-term-caching",
-        "score": 0.69
-      },
-      {
-        "slug": "2026/05/pr-diff-vs-bundle",
-        "score": 0.67
-      },
-      {
-        "slug": "2021/08/javascript-tree-shaking",
-        "score": 0.66
-      },
-      {
-        "slug": "2021/11/responsibility-of-javascript-code-2",
-        "score": 0.62
-      },
-      {
-        "slug": "2020/09/typescript-enum-not-treeshaked",
-        "score": 0.62
+        "slug": "2026/08/k8s-for-frontend-1",
+        "score": 0.3
       }
     ],
     "2020/07/cron-job-with-github-actions": [
@@ -10100,6 +9624,10 @@
     ],
     "2020/07/critical-rendering-path": [
       {
+        "slug": "2021/02/css-and-webpage-performance",
+        "score": 0.86
+      },
+      {
         "slug": "2022/06/preload-scanner",
         "score": 0.82
       },
@@ -10126,10 +9654,6 @@
       {
         "slug": "2022/06/optimize-LCP",
         "score": 0.69
-      },
-      {
-        "slug": "2026/08/framer-motion-banner-frame-drop",
-        "score": 0.62
       }
     ],
     "2020/07/change-detection-in-angular-react": [
@@ -10150,6 +9674,10 @@
         "score": 0.51
       },
       {
+        "slug": "2020/07/critical-rendering-path",
+        "score": 0.43
+      },
+      {
         "slug": "2025/12/react-set-state-in-effect-lint-rule",
         "score": 0.38
       },
@@ -10159,10 +9687,6 @@
       },
       {
         "slug": "2021/09/react-18-ssr-architecture",
-        "score": 0.2
-      },
-      {
-        "slug": "2026/05/use-client-deep-dive",
         "score": 0.2
       }
     ],
@@ -10196,8 +9720,8 @@
         "score": 0.66
       },
       {
-        "slug": "2020/07/decrease-front-end-size",
-        "score": 0.66
+        "slug": "2020/07/make-use-of-long-term-caching",
+        "score": 0.53
       }
     ],
     "2020/06/javascript-sort": [
@@ -10206,12 +9730,8 @@
         "score": 0.24
       },
       {
-        "slug": "2020/06/codility-06-03-number-of-disc-intersections",
+        "slug": "2020/06/algorithm-linked-list",
         "score": 0.18
-      },
-      {
-        "slug": "2020/06/codility-07-02-fish",
-        "score": 0.14
       },
       {
         "slug": "2020/11/javascript-memoize",
@@ -10222,16 +9742,20 @@
         "score": 0.12
       },
       {
-        "slug": "2020/06/codility-06-04-triangle",
-        "score": 0.12
-      },
-      {
         "slug": "2025/03/map-vs-object",
         "score": 0.11
       },
       {
         "slug": "2020/07/math-for-programmer-chapter1-2-set",
         "score": 0.11
+      },
+      {
+        "slug": "2021/06/reduce-spread-anti-pattern",
+        "score": 0.1
+      },
+      {
+        "slug": "2020/12/javascript-garbage-collection",
+        "score": 0.1
       }
     ],
     "2020/06/javascript-prototype": [
@@ -10304,8 +9828,8 @@
     ],
     "2020/06/javascript-data-structure": [
       {
-        "slug": "2020/06/codility-07-03-nesting",
-        "score": 0.71
+        "slug": "2020/06/algorithm-linked-list",
+        "score": 0.7
       },
       {
         "slug": "2025/03/map-vs-object",
@@ -10314,10 +9838,6 @@
       {
         "slug": "2020/06/javascript-sort",
         "score": 0.34
-      },
-      {
-        "slug": "2020/06/codility-07-02-fish",
-        "score": 0.32
       },
       {
         "slug": "2020/07/math-for-programmer-chapter1-2-set",
@@ -10334,6 +9854,10 @@
       {
         "slug": "2020/05/javascript-generator",
         "score": 0.2
+      },
+      {
+        "slug": "2020/11/javascript-memoize",
+        "score": 0.17
       }
     ],
     "2020/06/encryption-decryption-nodejs": [
@@ -10370,754 +9894,6 @@
         "score": 0.08
       }
     ],
-    "2020/06/codility-07-04-stone-wall": [
-      {
-        "slug": "2020/06/codility-07-03-nesting",
-        "score": 0.29
-      },
-      {
-        "slug": "2020/06/codility-07-01-brackets",
-        "score": 0.23
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.16
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.15
-      },
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/06/codility-05-03-min-avg-two-slice",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-06-02-max-product-of-three",
-        "score": 0.1
-      }
-    ],
-    "2020/06/codility-07-03-nesting": [
-      {
-        "slug": "2020/06/codility-07-01-brackets",
-        "score": 0.86
-      },
-      {
-        "slug": "2020/06/codility-07-04-stone-wall",
-        "score": 0.2
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.15
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.11
-      },
-      {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.1
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.1
-      },
-      {
-        "slug": "2020/06/codility-04-04-permcheck",
-        "score": 0.1
-      }
-    ],
-    "2020/06/codility-07-02-fish": [
-      {
-        "slug": "2020/06/javascript-data-structure",
-        "score": 0.27
-      },
-      {
-        "slug": "2020/06/codility-07-01-brackets",
-        "score": 0.24
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.23
-      },
-      {
-        "slug": "2020/06/codility-07-03-nesting",
-        "score": 0.22
-      },
-      {
-        "slug": "2020/06/codility-07-04-stone-wall",
-        "score": 0.2
-      },
-      {
-        "slug": "2020/06/codility-06-03-number-of-disc-intersections",
-        "score": 0.16
-      },
-      {
-        "slug": "2020/11/javascript-memoize",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.13
-      }
-    ],
-    "2020/06/codility-07-01-brackets": [
-      {
-        "slug": "2020/06/codility-07-03-nesting",
-        "score": 0.67
-      },
-      {
-        "slug": "2020/06/codility-07-04-stone-wall",
-        "score": 0.15
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.1
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.1
-      },
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.09
-      },
-      {
-        "slug": "2020/06/codility-02-02-odd-occurrences-in-array",
-        "score": 0.09
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.09
-      },
-      {
-        "slug": "2020/06/codility-04-04-permcheck",
-        "score": 0.09
-      }
-    ],
-    "2020/06/codility-06-04-triangle": [
-      {
-        "slug": "2020/06/codility-06-03-number-of-disc-intersections",
-        "score": 0.15
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/11/javascript-memoize",
-        "score": 0.11
-      },
-      {
-        "slug": "2020/06/javascript-data-structure",
-        "score": 0.11
-      },
-      {
-        "slug": "2020/06/codility-07-02-fish",
-        "score": 0.11
-      },
-      {
-        "slug": "2020/06/javascript-sort",
-        "score": 0.1
-      }
-    ],
-    "2020/06/codility-06-03-number-of-disc-intersections": [
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.16
-      },
-      {
-        "slug": "2020/06/codility-06-04-triangle",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/06/javascript-data-structure",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-07-04-stone-wall",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-07-02-fish",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-07-03-nesting",
-        "score": 0.11
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.11
-      },
-      {
-        "slug": "2020/06/javascript-sort",
-        "score": 0.1
-      }
-    ],
-    "2020/06/codility-06-02-max-product-of-three": [
-      {
-        "slug": "2020/06/codility-05-03-min-avg-two-slice",
-        "score": 0.17
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-02-02-odd-occurrences-in-array",
-        "score": 0.11
-      },
-      {
-        "slug": "2020/06/codility-06-03-number-of-disc-intersections",
-        "score": 0.11
-      },
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.1
-      },
-      {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.1
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.1
-      }
-    ],
-    "2020/06/codility-06-01-distinct": [
-      {
-        "slug": "2020/06/codility-02-02-odd-occurrences-in-array",
-        "score": 0.23
-      },
-      {
-        "slug": "2020/06/codility-04-04-permcheck",
-        "score": 0.18
-      },
-      {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.15
-      },
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/06/codility-04-03-missing-integer",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-05-03-min-avg-two-slice",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-07-01-brackets",
-        "score": 0.11
-      }
-    ],
-    "2020/06/codility-05-04-passing-cars": [
-      {
-        "slug": "2020/06/codility-07-03-nesting",
-        "score": 0.19
-      },
-      {
-        "slug": "2020/06/codility-07-01-brackets",
-        "score": 0.18
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.18
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.18
-      },
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.16
-      },
-      {
-        "slug": "2020/06/codility-05-03-min-avg-two-slice",
-        "score": 0.16
-      },
-      {
-        "slug": "2020/06/codility-06-02-max-product-of-three",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-04-04-permcheck",
-        "score": 0.13
-      }
-    ],
-    "2020/06/codility-05-03-min-avg-two-slice": [
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.16
-      },
-      {
-        "slug": "2020/06/codility-06-02-max-product-of-three",
-        "score": 0.15
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.11
-      },
-      {
-        "slug": "2020/06/codility-07-01-brackets",
-        "score": 0.1
-      },
-      {
-        "slug": "2020/06/codility-02-02-odd-occurrences-in-array",
-        "score": 0.1
-      },
-      {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.1
-      }
-    ],
-    "2020/06/codility-05-02-genomic-range-query": [
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.21
-      },
-      {
-        "slug": "2020/06/javascript-sort",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/06/codility-06-03-number-of-disc-intersections",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/11/javascript-memoize",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/javascript-data-structure",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-07-01-brackets",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-07-03-nesting",
-        "score": 0.12
-      }
-    ],
-    "2020/06/codility-05-01-count-div": [
-      {
-        "slug": "2020/07/math-for-programmer-chapter2-1-integer",
-        "score": 0.42
-      },
-      {
-        "slug": "2020/06/codility-03-01-frog-jump",
-        "score": 0.17
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-06-04-triangle",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-04-04-permcheck",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.12
-      }
-    ],
-    "2020/06/codility-04-04-permcheck": [
-      {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.64
-      },
-      {
-        "slug": "2020/06/codility-04-03-missing-integer",
-        "score": 0.25
-      },
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.23
-      },
-      {
-        "slug": "2020/06/codility-06-01-distinct",
-        "score": 0.2
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/06/codility-02-02-odd-occurrences-in-array",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.14
-      }
-    ],
-    "2020/06/codility-04-03-missing-integer": [
-      {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.63
-      },
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.29
-      },
-      {
-        "slug": "2020/06/codility-04-04-permcheck",
-        "score": 0.26
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.21
-      },
-      {
-        "slug": "2020/06/codility-02-02-odd-occurrences-in-array",
-        "score": 0.18
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.18
-      },
-      {
-        "slug": "2020/06/codility-06-02-max-product-of-three",
-        "score": 0.17
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.17
-      }
-    ],
-    "2020/06/codility-04-02-max-counters": [
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.19
-      },
-      {
-        "slug": "2020/06/codility-05-03-min-avg-two-slice",
-        "score": 0.18
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.17
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.16
-      },
-      {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/06/codility-02-02-odd-occurrences-in-array",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-07-04-stone-wall",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-06-02-max-product-of-three",
-        "score": 0.12
-      }
-    ],
-    "2020/06/codility-04-01-frog-river-one": [
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.3
-      },
-      {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.29
-      },
-      {
-        "slug": "2020/06/codility-04-04-permcheck",
-        "score": 0.27
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.26
-      },
-      {
-        "slug": "2020/06/codility-04-03-missing-integer",
-        "score": 0.24
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.22
-      },
-      {
-        "slug": "2020/06/codility-05-03-min-avg-two-slice",
-        "score": 0.2
-      },
-      {
-        "slug": "2020/06/codility-02-02-odd-occurrences-in-array",
-        "score": 0.19
-      }
-    ],
-    "2020/06/codility-03-03-tape-equilibrium": [
-      {
-        "slug": "2020/06/codility-05-03-min-avg-two-slice",
-        "score": 0.24
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.2
-      },
-      {
-        "slug": "2020/06/codility-06-02-max-product-of-three",
-        "score": 0.2
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.2
-      },
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.18
-      },
-      {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.15
-      },
-      {
-        "slug": "2020/06/codility-07-04-stone-wall",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-02-02-odd-occurrences-in-array",
-        "score": 0.13
-      }
-    ],
-    "2020/06/codility-03-02-perm-missing-elem": [
-      {
-        "slug": "2020/06/codility-04-04-permcheck",
-        "score": 0.51
-      },
-      {
-        "slug": "2020/06/codility-04-03-missing-integer",
-        "score": 0.33
-      },
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.2
-      },
-      {
-        "slug": "2020/06/codility-02-02-odd-occurrences-in-array",
-        "score": 0.18
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.17
-      },
-      {
-        "slug": "2020/06/codility-06-02-max-product-of-three",
-        "score": 0.15
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.15
-      },
-      {
-        "slug": "2020/06/codility-06-01-distinct",
-        "score": 0.14
-      }
-    ],
-    "2020/06/codility-03-01-frog-jump": [
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.2
-      },
-      {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-05-03-min-avg-two-slice",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-07-04-stone-wall",
-        "score": 0.11
-      },
-      {
-        "slug": "2020/06/codility-07-01-brackets",
-        "score": 0.11
-      }
-    ],
-    "2020/06/codility-02-02-odd-occurrences-in-array": [
-      {
-        "slug": "2020/06/codility-06-01-distinct",
-        "score": 0.31
-      },
-      {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.22
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.19
-      },
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.18
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.17
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.16
-      },
-      {
-        "slug": "2020/06/codility-04-03-missing-integer",
-        "score": 0.15
-      },
-      {
-        "slug": "2020/06/codility-04-04-permcheck",
-        "score": 0.15
-      }
-    ],
-    "2020/06/codility-02-01-cyclic-rotation": [
-      {
-        "slug": "2020/06/javascript-data-structure",
-        "score": 0.15
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.15
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-04-04-permcheck",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-04-03-missing-integer",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-06-03-number-of-disc-intersections",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-03-02-perm-missing-elem",
-        "score": 0.12
-      }
-    ],
-    "2020/06/codility-01-01-binary-gap": [
-      {
-        "slug": "2020/06/codility-07-01-brackets",
-        "score": 0.14
-      },
-      {
-        "slug": "2020/06/codility-05-04-passing-cars",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/06/codility-07-03-nesting",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-04-02-max-counters",
-        "score": 0.12
-      },
-      {
-        "slug": "2020/06/codility-04-01-frog-river-one",
-        "score": 0.11
-      },
-      {
-        "slug": "2020/06/codility-02-02-odd-occurrences-in-array",
-        "score": 0.11
-      },
-      {
-        "slug": "2020/06/codility-03-03-tape-equilibrium",
-        "score": 0.11
-      },
-      {
-        "slug": "2020/06/codility-05-03-min-avg-two-slice",
-        "score": 0.11
-      }
-    ],
     "2020/06/algorithm-linked-list": [
       {
         "slug": "2020/06/javascript-data-structure",
@@ -11140,15 +9916,15 @@
         "score": 0.09
       },
       {
-        "slug": "2020/06/codility-07-02-fish",
-        "score": 0.09
-      },
-      {
         "slug": "2020/11/javascript-memoize",
         "score": 0.08
       },
       {
         "slug": "2020/07/math-for-programmer-chapter1-2-set",
+        "score": 0.08
+      },
+      {
+        "slug": "2020/07/math-for-programmer-chapter1-1-logical-operation",
         "score": 0.08
       }
     ],
@@ -11200,15 +9976,15 @@
         "score": 0.25
       },
       {
-        "slug": "2020/12/modern-javascript-for-fast-applications",
-        "score": 0.22
-      },
-      {
         "slug": "2021/11/array-arraylike-promise-promiselike",
         "score": 0.16
       },
       {
         "slug": "2020/09/javascript-string",
+        "score": 0.15
+      },
+      {
+        "slug": "2020/10/6-different-ways-to-declare-javascript-function",
         "score": 0.15
       },
       {
@@ -11322,142 +10098,6 @@
         "score": 0.11
       }
     ],
-    "2020/04/redux-study-3": [
-      {
-        "slug": "2020/04/redux-study-2",
-        "score": 0.76
-      },
-      {
-        "slug": "2020/04/redux-study-1",
-        "score": 0.72
-      },
-      {
-        "slug": "2020/08/mobx-study-1",
-        "score": 0.37
-      },
-      {
-        "slug": "2020/11/react-recoil",
-        "score": 0.31
-      },
-      {
-        "slug": "2020/08/mobx-study-4",
-        "score": 0.29
-      },
-      {
-        "slug": "2020/08/mobx-study-3",
-        "score": 0.27
-      },
-      {
-        "slug": "2020/08/mobx-study-2",
-        "score": 0.23
-      },
-      {
-        "slug": "2019/08/21/reactjs-interview-questions-2",
-        "score": 0.11
-      }
-    ],
-    "2020/04/redux-study-2": [
-      {
-        "slug": "2020/04/redux-study-3",
-        "score": 0.89
-      },
-      {
-        "slug": "2020/04/redux-study-1",
-        "score": 0.74
-      },
-      {
-        "slug": "2020/08/mobx-study-4",
-        "score": 0.54
-      },
-      {
-        "slug": "2020/08/mobx-study-3",
-        "score": 0.49
-      },
-      {
-        "slug": "2020/08/mobx-study-2",
-        "score": 0.42
-      },
-      {
-        "slug": "2026/02/effect-ts-deep-dive",
-        "score": 0.16
-      },
-      {
-        "slug": "2019/08/21/reactjs-interview-questions-2",
-        "score": 0.15
-      },
-      {
-        "slug": "2021/09/memoize-async-function",
-        "score": 0.13
-      }
-    ],
-    "2020/04/redux-study-1": [
-      {
-        "slug": "2020/04/redux-study-2",
-        "score": 0.91
-      },
-      {
-        "slug": "2020/04/redux-study-3",
-        "score": 0.88
-      },
-      {
-        "slug": "2020/08/mobx-study-1",
-        "score": 0.46
-      },
-      {
-        "slug": "2020/08/mobx-study-4",
-        "score": 0.39
-      },
-      {
-        "slug": "2020/08/mobx-study-3",
-        "score": 0.33
-      },
-      {
-        "slug": "2020/08/mobx-study-2",
-        "score": 0.24
-      },
-      {
-        "slug": "2018/05/31/ReactiveX-Observable",
-        "score": 0.13
-      },
-      {
-        "slug": "2026/02/effect-ts-deep-dive",
-        "score": 0.12
-      }
-    ],
-    "2020/04/koa-middleware-with-typescript": [
-      {
-        "slug": "2021/08/event-loop-deep-dive",
-        "score": 0.26
-      },
-      {
-        "slug": "2021/06/error-handling-in-nodejs",
-        "score": 0.23
-      },
-      {
-        "slug": "2021/07/nodejs-modules-packages-semver",
-        "score": 0.21
-      },
-      {
-        "slug": "2021/06/misconceptions-on-nodejs",
-        "score": 0.19
-      },
-      {
-        "slug": "2019/06/20/react-nextjs-koa",
-        "score": 0.19
-      },
-      {
-        "slug": "2021/01/nodejs-4-design-pattern",
-        "score": 0.19
-      },
-      {
-        "slug": "2021/05/value-of-typescript",
-        "score": 0.19
-      },
-      {
-        "slug": "2021/08/async-resources-async-hooks",
-        "score": 0.18
-      }
-    ],
     "2020/04/javascript-private": [
       {
         "slug": "2019/05/09/javascript-closure",
@@ -11466,6 +10106,10 @@
       {
         "slug": "2019/07/18/javascript-symbol",
         "score": 0.79
+      },
+      {
+        "slug": "2019/07/09/javascript-class",
+        "score": 0.32
       },
       {
         "slug": "2020/06/javascript-prototype",
@@ -11486,180 +10130,6 @@
       {
         "slug": "2025/03/map-vs-object",
         "score": 0.11
-      },
-      {
-        "slug": "2021/11/human-readable-javascript",
-        "score": 0.1
-      }
-    ],
-    "2020/03/socket-io": [
-      {
-        "slug": "2020/11/server-side-events",
-        "score": 0.78
-      },
-      {
-        "slug": "2020/10/how-node-js-works",
-        "score": 0.53
-      },
-      {
-        "slug": "2021/08/event-loop-deep-dive",
-        "score": 0.51
-      },
-      {
-        "slug": "2021/08/browser-nodejs-event-loop",
-        "score": 0.39
-      },
-      {
-        "slug": "2021/06/misconceptions-on-nodejs",
-        "score": 0.33
-      },
-      {
-        "slug": "2026/02/nodejs-deep-dive-beta-reader",
-        "score": 0.18
-      },
-      {
-        "slug": "2021/08/async-resources-async-hooks",
-        "score": 0.17
-      },
-      {
-        "slug": "2021/07/nodejs-modules-packages-semver",
-        "score": 0.17
-      }
-    ],
-    "2020/03/regex-formatting-number": [
-      {
-        "slug": "2021/03/javascript-regex-global-flag-and-test",
-        "score": 0.3
-      },
-      {
-        "slug": "2026/09/unused-javascript-cost",
-        "score": 0.07
-      },
-      {
-        "slug": "2022/06/JSON-stringify",
-        "score": 0.07
-      },
-      {
-        "slug": "2022/04/how-javascript-variable-works-in-memory",
-        "score": 0.07
-      },
-      {
-        "slug": "2021/11/human-readable-javascript",
-        "score": 0.07
-      },
-      {
-        "slug": "2021/11/array-arraylike-promise-promiselike",
-        "score": 0.07
-      },
-      {
-        "slug": "2020/06/javascript-prototype",
-        "score": 0.07
-      },
-      {
-        "slug": "2020/08/commonjs-esmodules",
-        "score": 0.06
-      }
-    ],
-    "2020/03/nextjs-02-data-fetching": [
-      {
-        "slug": "2021/01/nextjs-refresh-server-side-props",
-        "score": 0.82
-      },
-      {
-        "slug": "2021/10/get-absolute-url-in-nextjs",
-        "score": 0.63
-      },
-      {
-        "slug": "2021/03/server-side-rendering-and-react-components",
-        "score": 0.59
-      },
-      {
-        "slug": "2020/03/nextjs-01-route",
-        "score": 0.55
-      },
-      {
-        "slug": "2025/12/nextjs-caching-deep-dive",
-        "score": 0.44
-      },
-      {
-        "slug": "2021/10/api-error-handling-nextjs",
-        "score": 0.4
-      },
-      {
-        "slug": "2023/05/blog-app-dir",
-        "score": 0.39
-      },
-      {
-        "slug": "2026/03/react-server-functions-deep-dive",
-        "score": 0.37
-      }
-    ],
-    "2020/03/nextjs-01-route": [
-      {
-        "slug": "2020/03/nextjs-02-data-fetching",
-        "score": 0.85
-      },
-      {
-        "slug": "2021/12/nextjs-lesson-and-learn",
-        "score": 0.71
-      },
-      {
-        "slug": "2021/01/nextjs-refresh-server-side-props",
-        "score": 0.66
-      },
-      {
-        "slug": "2021/03/server-side-rendering-and-react-components",
-        "score": 0.6
-      },
-      {
-        "slug": "2026/03/is-nextjs-fast-enough",
-        "score": 0.49
-      },
-      {
-        "slug": "2026/05/use-client-deep-dive",
-        "score": 0.42
-      },
-      {
-        "slug": "2020/10/nextjs-10",
-        "score": 0.41
-      },
-      {
-        "slug": "2021/06/nextjs-11",
-        "score": 0.38
-      }
-    ],
-    "2020/03/ncloud-sms": [
-      {
-        "slug": "2020/06/encryption-decryption-nodejs",
-        "score": 0.06
-      },
-      {
-        "slug": "2019/02/14/do-boring-stuff-with-python-1",
-        "score": 0.05
-      },
-      {
-        "slug": "2022/02/new-react-framework-remix",
-        "score": 0.05
-      },
-      {
-        "slug": "2021/03/apple-health-shortcut",
-        "score": 0.05
-      },
-      {
-        "slug": "2021/02/logging-in-nodejs",
-        "score": 0.05
-      },
-      {
-        "slug": "2020/04/koa-middleware-with-typescript",
-        "score": 0.05
-      },
-      {
-        "slug": "2020/03/socket-io",
-        "score": 0.05
-      },
-      {
-        "slug": "2019/08/06/experience-docker-aws-ecs",
-        "score": 0.05
       }
     ],
     "2020/03/javascript-currying-closure": [
@@ -11726,8 +10196,8 @@
         "score": 0.41
       },
       {
-        "slug": "2020/03/socket-io",
-        "score": 0.41
+        "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
+        "score": 0.4
       }
     ],
     "2020/01/learning-from-react-count-down": [
@@ -11764,40 +10234,6 @@
         "score": 0.26
       }
     ],
-    "2020/01/github-daily-contribution": [
-      {
-        "slug": "2020/08/git-cheat-sheat",
-        "score": 0.5
-      },
-      {
-        "slug": "2019/12/18/lets-beautify-git",
-        "score": 0.47
-      },
-      {
-        "slug": "2020/09/change-datetime-of-git-commit",
-        "score": 0.21
-      },
-      {
-        "slug": "2021/12/add-node_modules-in-git",
-        "score": 0.2
-      },
-      {
-        "slug": "2026/06/do-you-need-to-read-code",
-        "score": 0.18
-      },
-      {
-        "slug": "2026/06/learning-what-ai-cant-do",
-        "score": 0.15
-      },
-      {
-        "slug": "2026/04/ai-only-amplifies-what-you-see",
-        "score": 0.12
-      },
-      {
-        "slug": "2026/02/frontend-engineering-in-ai-era",
-        "score": 0.11
-      }
-    ],
     "2020/01/delete-merged-branch": [
       {
         "slug": "2020/08/git-cheat-sheat",
@@ -11806,10 +10242,6 @@
       {
         "slug": "2019/12/18/lets-beautify-git",
         "score": 0.16
-      },
-      {
-        "slug": "2020/09/change-datetime-of-git-commit",
-        "score": 0.13
       },
       {
         "slug": "2021/09/github-ci-workflow-for-frontend-developer",
@@ -11830,6 +10262,10 @@
       {
         "slug": "2020/07/cron-job-with-github-actions",
         "score": 0.08
+      },
+      {
+        "slug": "2021/12/add-node_modules-in-git",
+        "score": 0.07
       }
     ],
     "2020/01/chrome-cookie-same-site-secure": [
@@ -11884,10 +10320,6 @@
         "score": 0.37
       },
       {
-        "slug": "2020/10/nextjs-10",
-        "score": 0.33
-      },
-      {
         "slug": "2021/06/nextjs-11",
         "score": 0.28
       },
@@ -11898,16 +10330,16 @@
       {
         "slug": "2023/05/blog-app-dir",
         "score": 0.23
+      },
+      {
+        "slug": "2025/03/research",
+        "score": 0.21
       }
     ],
     "2019/12/18/lets-beautify-git": [
       {
         "slug": "2020/08/git-cheat-sheat",
         "score": 0.43
-      },
-      {
-        "slug": "2020/09/change-datetime-of-git-commit",
-        "score": 0.27
       },
       {
         "slug": "2026/05/tanstack-npm-supply-chain-attack",
@@ -11930,15 +10362,15 @@
         "score": 0.1
       },
       {
+        "slug": "2022/01/npm-colors-fakerjs",
+        "score": 0.1
+      },
+      {
         "slug": "2026/06/do-you-need-to-read-code",
         "score": 0.09
       }
     ],
     "2019/12/18/goal-2020": [
-      {
-        "slug": "2020/06/codility-07-03-nesting",
-        "score": 0.33
-      },
       {
         "slug": "2026/04/ai-only-amplifies-what-you-see",
         "score": 0.2
@@ -11966,13 +10398,13 @@
       {
         "slug": "2025/05/what-to-do-as-frontend-developer-in-ai-era",
         "score": 0.13
+      },
+      {
+        "slug": "2025/12/blog-is-back",
+        "score": 0.12
       }
     ],
     "2019/10/15/react-text-highlight": [
-      {
-        "slug": "2019/05/08/react-study-1-background",
-        "score": 0.13
-      },
       {
         "slug": "2019/08/13/reactjs-interview-questions-1",
         "score": 0.1
@@ -11986,11 +10418,11 @@
         "score": 0.09
       },
       {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
+        "slug": "2022/03/react-hooks-in-caution",
         "score": 0.09
       },
       {
-        "slug": "2022/03/react-hooks-in-caution",
+        "slug": "2020/10/IIFE-on-use-state-of-react",
         "score": 0.09
       },
       {
@@ -11999,6 +10431,10 @@
       },
       {
         "slug": "2020/09/react-17-release-candidates",
+        "score": 0.08
+      },
+      {
+        "slug": "2022/03/dont-use-react-fc",
         "score": 0.08
       }
     ],
@@ -12042,6 +10478,10 @@
         "score": 0.7
       },
       {
+        "slug": "2019/08/21/reactjs-interview-questions-2",
+        "score": 0.62
+      },
+      {
         "slug": "2020/11/communicate-across-browser-tabs",
         "score": 0.14
       },
@@ -12063,10 +10503,6 @@
       },
       {
         "slug": "2020/07/the-cost-of-javascript-2019",
-        "score": 0.1
-      },
-      {
-        "slug": "2022/06/preload-scanner",
         "score": 0.1
       }
     ],
@@ -12148,28 +10584,28 @@
         "score": 0.32
       },
       {
-        "slug": "2020/08/mobx-study-1",
-        "score": 0.23
-      },
-      {
-        "slug": "2020/04/redux-study-3",
-        "score": 0.19
-      },
-      {
-        "slug": "2020/04/redux-study-2",
-        "score": 0.19
-      },
-      {
-        "slug": "2020/04/redux-study-1",
-        "score": 0.18
-      },
-      {
-        "slug": "2020/11/react-recoil",
+        "slug": "2020/07/react-higher-component",
         "score": 0.17
       },
       {
-        "slug": "2020/08/mobx-study-4",
-        "score": 0.17
+        "slug": "2019/08/09/react-hooks-api-2",
+        "score": 0.16
+      },
+      {
+        "slug": "2022/03/dont-use-react-fc",
+        "score": 0.13
+      },
+      {
+        "slug": "2021/03/server-side-rendering-and-react-components",
+        "score": 0.13
+      },
+      {
+        "slug": "2025/03/react-interview-guide",
+        "score": 0.12
+      },
+      {
+        "slug": "2020/05/10-javascript-quiz",
+        "score": 0.12
       }
     ],
     "2019/08/20/typescript-type-assertion": [
@@ -12216,11 +10652,11 @@
         "score": 0.81
       },
       {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.67
+        "slug": "2020/07/react-higher-component",
+        "score": 0.48
       },
       {
-        "slug": "2020/07/react-higher-component",
+        "slug": "2022/03/react-hooks-in-caution",
         "score": 0.48
       },
       {
@@ -12232,30 +10668,18 @@
         "score": 0.37
       },
       {
-        "slug": "2019/05/08/react-study-3-component",
-        "score": 0.35
-      },
-      {
         "slug": "2022/01/how-react-server-components-work",
         "score": 0.32
+      },
+      {
+        "slug": "2026/05/react-cache-function-deep-dive",
+        "score": 0.3
       }
     ],
     "2019/08/13/reactjs-interview-questions-1": [
       {
         "slug": "2019/08/13/reactjs-interview-questions",
         "score": 0.71
-      },
-      {
-        "slug": "2019/05/08/react-study-2-jsx",
-        "score": 0.69
-      },
-      {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.63
-      },
-      {
-        "slug": "2019/05/08/react-study-3-component",
-        "score": 0.59
       },
       {
         "slug": "2021/03/server-side-rendering-and-react-components",
@@ -12270,42 +10694,20 @@
         "score": 0.54
       },
       {
-        "slug": "2019/05/08/react-study-1-background",
-        "score": 0.53
-      }
-    ],
-    "2019/08/13/koa-nextjs-react-typescript-bolierplate": [
-      {
-        "slug": "2019/06/20/react-nextjs-koa",
-        "score": 0.83
-      },
-      {
-        "slug": "2020/04/koa-middleware-with-typescript",
-        "score": 0.54
-      },
-      {
-        "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
+        "slug": "2019/08/21/reactjs-interview-questions-2",
         "score": 0.51
       },
       {
-        "slug": "2022/02/new-react-framework-remix",
-        "score": 0.51
+        "slug": "2020/07/react-higher-component",
+        "score": 0.42
       },
       {
-        "slug": "2026/03/why-still-nextjs",
+        "slug": "2022/01/how-react-server-components-work",
         "score": 0.4
       },
       {
-        "slug": "2026/03/is-nextjs-fast-enough",
-        "score": 0.37
-      },
-      {
-        "slug": "2021/10/get-absolute-url-in-nextjs",
-        "score": 0.37
-      },
-      {
-        "slug": "2020/12/side-project-diary-2020",
-        "score": 0.37
+        "slug": "2025/03/react-interview-guide",
+        "score": 0.3
       }
     ],
     "2019/08/12/how-browser-work": [
@@ -12360,10 +10762,6 @@
         "score": 0.35
       },
       {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.23
-      },
-      {
         "slug": "2019/08/13/reactjs-interview-questions",
         "score": 0.22
       },
@@ -12374,6 +10772,10 @@
       {
         "slug": "2026/05/react-cache-function-deep-dive",
         "score": 0.2
+      },
+      {
+        "slug": "2019/08/13/reactjs-interview-questions-1",
+        "score": 0.17
       }
     ],
     "2019/08/08/react-hooks-api-1": [
@@ -12386,10 +10788,6 @@
         "score": 0.68
       },
       {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.55
-      },
-      {
         "slug": "2026/02/react-compiler-deep-dive",
         "score": 0.36
       },
@@ -12398,16 +10796,20 @@
         "score": 0.32
       },
       {
-        "slug": "2020/08/mobx-study-1",
-        "score": 0.31
-      },
-      {
-        "slug": "2019/05/08/react-study-3-component",
-        "score": 0.24
-      },
-      {
         "slug": "2019/08/13/reactjs-interview-questions",
         "score": 0.23
+      },
+      {
+        "slug": "2025/06/fixing-nextjs-rendered-more-hooks-error",
+        "score": 0.2
+      },
+      {
+        "slug": "2022/03/dont-use-react-fc",
+        "score": 0.19
+      },
+      {
+        "slug": "2019/08/13/reactjs-interview-questions-1",
+        "score": 0.18
       }
     ],
     "2019/08/07/haproxy": [
@@ -12440,42 +10842,8 @@
         "score": 0.17
       },
       {
-        "slug": "2019/08/06/experience-docker-aws-ecs",
-        "score": 0.15
-      }
-    ],
-    "2019/08/06/experience-docker-aws-ecs": [
-      {
-        "slug": "2020/08/docker-study-3",
-        "score": 0.87
-      },
-      {
-        "slug": "2022/02/docker-best-practice-2022",
-        "score": 0.8
-      },
-      {
-        "slug": "2020/07/docker-study-2",
-        "score": 0.79
-      },
-      {
-        "slug": "2022/02/dockerfile-instructions",
-        "score": 0.78
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-2",
-        "score": 0.77
-      },
-      {
-        "slug": "2020/07/docker-study-1",
-        "score": 0.77
-      },
-      {
-        "slug": "2021/06/study-k8s-1",
-        "score": 0.59
-      },
-      {
-        "slug": "2021/06/study-k8s-3",
-        "score": 0.42
+        "slug": "2020/10/http-cache",
+        "score": 0.16
       }
     ],
     "2019/07/22/javascript-reduce": [
@@ -12485,6 +10853,10 @@
       },
       {
         "slug": "2020/05/difference-between-function-and-arrow",
+        "score": 0.22
+      },
+      {
+        "slug": "2021/02/javascript-array-and-iterable",
         "score": 0.22
       },
       {
@@ -12506,10 +10878,6 @@
       {
         "slug": "2021/11/human-readable-javascript",
         "score": 0.1
-      },
-      {
-        "slug": "2022/04/how-javascript-variable-works-in-memory",
-        "score": 0.09
       }
     ],
     "2019/07/18/javascript-symbol": [
@@ -12688,14 +11056,6 @@
         "score": 0.8
       },
       {
-        "slug": "2020/03/nextjs-01-route",
-        "score": 0.79
-      },
-      {
-        "slug": "2019/08/13/koa-nextjs-react-typescript-bolierplate",
-        "score": 0.78
-      },
-      {
         "slug": "2020/10/style-with-styled-components",
         "score": 0.77
       },
@@ -12704,8 +11064,8 @@
         "score": 0.69
       },
       {
-        "slug": "2020/04/koa-middleware-with-typescript",
-        "score": 0.63
+        "slug": "2021/01/nextjs-refresh-server-side-props",
+        "score": 0.65
       },
       {
         "slug": "2021/10/get-absolute-url-in-nextjs",
@@ -12714,6 +11074,14 @@
       {
         "slug": "2023/05/blog-app-dir",
         "score": 0.58
+      },
+      {
+        "slug": "2026/03/is-nextjs-fast-enough",
+        "score": 0.55
+      },
+      {
+        "slug": "2022/02/new-react-framework-remix",
+        "score": 0.54
       }
     ],
     "2019/06/17/typescript-type-enum-partial-record": [
@@ -12786,6 +11154,10 @@
     ],
     "2019/05/21/javascript-destrucuring-assignment": [
       {
+        "slug": "2021/02/javascript-array-and-iterable",
+        "score": 0.37
+      },
+      {
         "slug": "2022/06/JSON-stringify",
         "score": 0.22
       },
@@ -12802,156 +11174,16 @@
         "score": 0.16
       },
       {
+        "slug": "2020/05/javascript-generator",
+        "score": 0.16
+      },
+      {
         "slug": "2025/03/map-vs-object",
         "score": 0.15
       },
       {
         "slug": "2020/06/javascript-prototype",
         "score": 0.15
-      },
-      {
-        "slug": "2020/06/javascript-execution-context",
-        "score": 0.15
-      },
-      {
-        "slug": "2022/04/how-javascript-variable-works-in-memory",
-        "score": 0.14
-      }
-    ],
-    "2019/05/20/react-study-8-functional-component": [
-      {
-        "slug": "2019/08/08/react-hooks-api-1",
-        "score": 0.79
-      },
-      {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.71
-      },
-      {
-        "slug": "2022/03/react-hooks-in-caution",
-        "score": 0.69
-      },
-      {
-        "slug": "2022/03/dont-use-react-fc",
-        "score": 0.55
-      },
-      {
-        "slug": "2019/05/08/react-study-3-component",
-        "score": 0.46
-      },
-      {
-        "slug": "2026/02/react-compiler-deep-dive",
-        "score": 0.44
-      },
-      {
-        "slug": "2025/12/react-19-ref-as-prop",
-        "score": 0.27
-      },
-      {
-        "slug": "2025/06/web-performance-analysis-3",
-        "score": 0.24
-      }
-    ],
-    "2019/05/20/react-study-7-component-life-cycle": [
-      {
-        "slug": "2020/10/think-about-useEffect",
-        "score": 0.8
-      },
-      {
-        "slug": "2020/10/why-use-component-will-mount",
-        "score": 0.8
-      },
-      {
-        "slug": "2019/05/20/react-study-8-functional-component",
-        "score": 0.61
-      },
-      {
-        "slug": "2019/08/08/react-hooks-api-1",
-        "score": 0.48
-      },
-      {
-        "slug": "2019/08/13/reactjs-interview-questions",
-        "score": 0.33
-      },
-      {
-        "slug": "2019/05/08/react-study-3-component",
-        "score": 0.33
-      },
-      {
-        "slug": "2019/08/13/reactjs-interview-questions-1",
-        "score": 0.22
-      },
-      {
-        "slug": "2019/05/08/react-study-1-background",
-        "score": 0.2
-      }
-    ],
-    "2019/05/20/react-study-6-component-repeat": [
-      {
-        "slug": "2019/05/08/react-study-3-component",
-        "score": 0.25
-      },
-      {
-        "slug": "2019/05/08/react-study-1-background",
-        "score": 0.22
-      },
-      {
-        "slug": "2019/05/20/react-study-8-functional-component",
-        "score": 0.21
-      },
-      {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.21
-      },
-      {
-        "slug": "2019/05/08/react-study-2-jsx",
-        "score": 0.19
-      },
-      {
-        "slug": "2019/08/13/reactjs-interview-questions-1",
-        "score": 0.19
-      },
-      {
-        "slug": "2019/08/08/react-hooks-api-1",
-        "score": 0.14
-      },
-      {
-        "slug": "2019/05/09/react-study-5-reference",
-        "score": 0.12
-      }
-    ],
-    "2019/05/09/react-study-5-reference": [
-      {
-        "slug": "2025/12/react-19-ref-as-prop",
-        "score": 0.78
-      },
-      {
-        "slug": "2019/05/08/react-study-3-component",
-        "score": 0.2
-      },
-      {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.19
-      },
-      {
-        "slug": "2019/08/08/react-hooks-api-1",
-        "score": 0.19
-      },
-      {
-        "slug": "2019/05/08/react-study-4-event",
-        "score": 0.17
-      },
-      {
-        "slug": "2019/05/20/react-study-8-functional-component",
-        "score": 0.13
-      },
-      {
-        "slug": "2019/05/08/react-study-1-background",
-        "score": 0.13
-      },
-      {
-        "slug": "2019/05/08/react-study-2-jsx",
-        "score": 0.12
       }
     ],
     "2019/05/09/javascript-closure": [
@@ -12988,177 +11220,11 @@
         "score": 0.17
       }
     ],
-    "2019/05/08/react-study-4-event": [
-      {
-        "slug": "2019/05/09/react-study-5-reference",
-        "score": 0.29
-      },
-      {
-        "slug": "2019/05/08/react-study-3-component",
-        "score": 0.27
-      },
-      {
-        "slug": "2025/12/use-effect-event",
-        "score": 0.19
-      },
-      {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.19
-      },
-      {
-        "slug": "2019/05/08/react-study-2-jsx",
-        "score": 0.19
-      },
-      {
-        "slug": "2019/05/20/react-study-8-functional-component",
-        "score": 0.15
-      },
-      {
-        "slug": "2019/05/08/react-study-1-background",
-        "score": 0.15
-      },
-      {
-        "slug": "2019/08/08/react-hooks-api-1",
-        "score": 0.15
-      }
-    ],
-    "2019/05/08/react-study-3-component": [
-      {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.77
-      },
-      {
-        "slug": "2019/05/20/react-study-8-functional-component",
-        "score": 0.75
-      },
-      {
-        "slug": "2019/05/20/react-study-6-component-repeat",
-        "score": 0.58
-      },
-      {
-        "slug": "2019/05/08/react-study-4-event",
-        "score": 0.51
-      },
-      {
-        "slug": "2019/05/09/react-study-5-reference",
-        "score": 0.45
-      },
-      {
-        "slug": "2019/05/08/react-study-2-jsx",
-        "score": 0.42
-      },
-      {
-        "slug": "2020/10/why-use-component-will-mount",
-        "score": 0.42
-      },
-      {
-        "slug": "2020/07/react-higher-component",
-        "score": 0.36
-      }
-    ],
-    "2019/05/08/react-study-2-jsx": [
-      {
-        "slug": "2019/05/08/react-study-3-component",
-        "score": 0.78
-      },
-      {
-        "slug": "2019/05/20/react-study-6-component-repeat",
-        "score": 0.59
-      },
-      {
-        "slug": "2019/08/13/reactjs-interview-questions-1",
-        "score": 0.56
-      },
-      {
-        "slug": "2019/05/20/react-study-8-functional-component",
-        "score": 0.5
-      },
-      {
-        "slug": "2019/05/08/react-study-1-background",
-        "score": 0.45
-      },
-      {
-        "slug": "2019/05/08/react-study-4-event",
-        "score": 0.43
-      },
-      {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.35
-      },
-      {
-        "slug": "2020/10/style-with-styled-components",
-        "score": 0.31
-      }
-    ],
-    "2019/05/08/react-study-1-background": [
-      {
-        "slug": "2019/05/20/react-study-7-component-life-cycle",
-        "score": 0.81
-      },
-      {
-        "slug": "2019/05/08/react-study-3-component",
-        "score": 0.8
-      },
-      {
-        "slug": "2019/05/08/react-study-2-jsx",
-        "score": 0.75
-      },
-      {
-        "slug": "2019/05/20/react-study-8-functional-component",
-        "score": 0.66
-      },
-      {
-        "slug": "2019/05/20/react-study-6-component-repeat",
-        "score": 0.61
-      },
-      {
-        "slug": "2019/08/08/react-hooks-api-1",
-        "score": 0.52
-      },
-      {
-        "slug": "2019/08/13/reactjs-interview-questions-1",
-        "score": 0.51
-      },
-      {
-        "slug": "2019/05/08/react-study-4-event",
-        "score": 0.45
-      }
-    ],
-    "2019/04/01/computer-vision-1-image-representation": [
-      {
-        "slug": "2025/12/webgpu-all-browsers",
-        "score": 0.09
-      },
-      {
-        "slug": "2026/06/do-you-need-to-read-code",
-        "score": 0.07
-      },
-      {
-        "slug": "2026/06/learning-what-ai-cant-do",
-        "score": 0.05
-      },
-      {
-        "slug": "2026/04/ai-only-amplifies-what-you-see",
-        "score": 0.05
-      },
-      {
-        "slug": "2026/01/coding-agent-core-concepts",
-        "score": 0.05
-      },
-      {
-        "slug": "2026/09/who-learns-to-judge-beta-reader",
-        "score": 0.04
-      },
-      {
-        "slug": "2026/08/who-learns-to-judge-interviews",
-        "score": 0.04
-      },
-      {
-        "slug": "2026/06/when-job-titles-blur",
-        "score": 0.04
-      }
-    ],
     "2019/02/14/do-boring-stuff-with-python-1": [
+      {
+        "slug": "2020/01/chrome-cookie-same-site-secure",
+        "score": 0.1
+      },
       {
         "slug": "2018/11/05/web-crwaling-for-naver-movie",
         "score": 0.08
@@ -13172,16 +11238,12 @@
         "score": 0.07
       },
       {
-        "slug": "2020/03/socket-io",
-        "score": 0.06
-      },
-      {
         "slug": "2021/08/event-loop-deep-dive",
         "score": 0.06
       },
       {
-        "slug": "2020/03/ncloud-sms",
-        "score": 0.05
+        "slug": "2021/10/get-absolute-url-in-nextjs",
+        "score": 0.06
       },
       {
         "slug": "2026/08/og-scraping-server-1",
@@ -13206,6 +11268,14 @@
         "score": 0.27
       },
       {
+        "slug": "2022/06/preload-scanner",
+        "score": 0.13
+      },
+      {
+        "slug": "2020/09/referer-and-referrer-policy",
+        "score": 0.13
+      },
+      {
         "slug": "2023/05/what-is-in-naver",
         "score": 0.1
       },
@@ -13216,14 +11286,6 @@
       {
         "slug": "2021/08/benchmarking-web-javascript-memory-usage",
         "score": 0.08
-      },
-      {
-        "slug": "2020/07/instant-loading-with-PRPL-pattern",
-        "score": 0.07
-      },
-      {
-        "slug": "2020/01/chrome-cookie-same-site-secure",
-        "score": 0.07
       }
     ],
     "2018/05/31/compare-string-with-voice": [
@@ -13237,10 +11299,6 @@
       },
       {
         "slug": "2020/06/javascript-data-structure",
-        "score": 0.06
-      },
-      {
-        "slug": "2020/06/codility-05-02-genomic-range-query",
         "score": 0.06
       },
       {
@@ -13258,13 +11316,13 @@
       {
         "slug": "2020/07/math-for-programmer-chapter2-1-integer",
         "score": 0.05
+      },
+      {
+        "slug": "2020/07/math-for-programmer-chapter1-1-logical-operation",
+        "score": 0.05
       }
     ],
     "2018/05/31/Reactivex-subject": [
-      {
-        "slug": "2018/05/31/ReactiveX-Observable",
-        "score": 0.64
-      },
       {
         "slug": "2019/09/06/javascript-event-loop",
         "score": 0.32
@@ -13292,40 +11350,10 @@
       {
         "slug": "2020/10/promise-combinators",
         "score": 0.15
-      }
-    ],
-    "2018/05/31/ReactiveX-Observable": [
-      {
-        "slug": "2018/05/31/Reactivex-subject",
-        "score": 0.83
       },
       {
-        "slug": "2020/10/implement-event-emitter",
-        "score": 0.47
-      },
-      {
-        "slug": "2021/08/event-loop-deep-dive",
-        "score": 0.41
-      },
-      {
-        "slug": "2020/10/how-node-js-works",
-        "score": 0.34
-      },
-      {
-        "slug": "2021/08/uncaught-async-error",
-        "score": 0.31
-      },
-      {
-        "slug": "2020/12/javascrpt-async-await-in-map-and-reduce",
-        "score": 0.27
-      },
-      {
-        "slug": "2026/02/effect-ts-deep-dive",
-        "score": 0.21
-      },
-      {
-        "slug": "2026/01/intersection-observer-singleton-weakmap",
-        "score": 0.21
+        "slug": "2021/07/promise-then-f-f-vs-promise-catch",
+        "score": 0.14
       }
     ],
     "2018/05/31/Levenshtein-distance": [
@@ -13358,7 +11386,7 @@
         "score": 0.07
       },
       {
-        "slug": "2020/06/codility-07-02-fish",
+        "slug": "2020/06/algorithm-linked-list",
         "score": 0.07
       }
     ]
