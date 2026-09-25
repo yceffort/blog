@@ -11,6 +11,7 @@ import {
   RECENT_POSTS_COUNT,
 } from '@/constants'
 
+import relatedBySlug from '../../data/related-posts.json'
 import type {ArtSpec, FrontMatter, Post, TagWithCount} from '../type'
 import {getPopularPostSlugs} from './analytics'
 import {POST_ROOT, isLocaleFile, pathToSlug} from './postPaths'
@@ -176,7 +177,18 @@ export async function getRelatedPosts(
   const posts = await getAllPosts(locale)
   const tagSet = new Set(tags)
 
-  return posts
+  // scripts/generate-related-posts.mjs 가 Jev로 고른 목록. 아직 없는 새 글은 태그 겹침으로 채운다.
+  const picked = (
+    (relatedBySlug[locale] as Record<string, {slug: string}[]>)[slug] ?? []
+  )
+    .map((r) => posts.find((p) => p.fields.slug === r.slug))
+    .filter(
+      (p): p is Post =>
+        p != null &&
+        (excludeSeries == null || p.frontMatter.series !== excludeSeries),
+    )
+
+  const byTags = posts
     .filter(
       (p) =>
         p.fields.slug !== slug &&
@@ -197,8 +209,9 @@ export async function getRelatedPosts(
           ? 1
           : -1,
     )
-    .slice(0, limit)
     .map(({post}) => post)
+
+  return [...new Set([...picked, ...byTags])].slice(0, limit)
 }
 
 export const getFeaturedPosts = cache(async function getFeaturedPostsImpl(
