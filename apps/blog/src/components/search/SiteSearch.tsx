@@ -1,6 +1,6 @@
 'use client'
 
-import MiniSearch from 'minisearch'
+import type MiniSearch from 'minisearch'
 import Link from 'next/link'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import type {ReactNode} from 'react'
@@ -50,12 +50,15 @@ export default function SiteSearch() {
     }
     setLoading(true)
     try {
-      const res = await fetch(
-        locale === 'en' ? '/api/search-index/en' : '/api/search-index',
-      )
+      const [res, {default: MiniSearchRuntime}] = await Promise.all([
+        fetch(locale === 'en' ? '/api/search-index/en' : '/api/search-index'),
+        import('minisearch'),
+      ])
       const data = await res.json()
       if (data.index) {
-        setIndex(MiniSearch.loadJS<SearchDoc>(data.index, miniSearchOptions))
+        setIndex(
+          MiniSearchRuntime.loadJS<SearchDoc>(data.index, miniSearchOptions),
+        )
       }
     } catch {
       // 인덱스 로드 실패 시 검색 결과가 비어있는 상태로 유지된다.
