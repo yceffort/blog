@@ -1,0 +1,435 @@
+{
+ "site": "https://www.tossinvest.com/",
+ "collected": "2026-09-26",
+ "coldpath": {
+  "version": "0.3.1",
+  "npm": "@yceffort/coldpath@0.3.1",
+  "analyzerCommit": "665e9a71e8dd3ba1255a0fdf32af7d4012b21529",
+  "fixCommit": "7dca3ee454c1f2630036ec35f041fbd92363b41e"
+ },
+ "playwright": "1.63.0",
+ "labelModel": "claude-haiku-4-5",
+ "coverage": {
+  "initial.json": "39de82d50fa00a1653ebbcba7f0f155709a32ab43205eb5f727d89a836b1c2e7",
+  "search.json": "0c55a08510d70429223fb043e4dea155f46625634b9679d3e6aa65724265a4ae",
+  "stock.json": "b72e1d1178e60a2c9b59b47f92b8596f3b565f987b86f4202803adfd9e463051",
+  "feed.json": "4b5b49b9f40b328099c12412369c1f333eca49f924bfe630a5145b06ffdecc1b"
+ },
+ "union": {
+  "bytes": 14151337,
+  "observedBytes": 4937525,
+  "unobservedBytes": 9213812,
+  "unmeasuredBytes": 0,
+  "bundles": 107
+ },
+ "scenarios": {
+  "initial.json": {
+   "scripts": 61,
+   "measuredBytes": 9139365,
+   "observedBytes": 2715285,
+   "unobservedBytes": 6424080
+  },
+  "search.json": {
+   "scripts": 62,
+   "measuredBytes": 9140518,
+   "observedBytes": 2805558,
+   "unobservedBytes": 6334960
+  },
+  "stock.json": {
+   "scripts": 106,
+   "measuredBytes": 14131558,
+   "observedBytes": 4914116,
+   "unobservedBytes": 9217442
+  },
+  "feed.json": {
+   "scripts": 62,
+   "measuredBytes": 9159144,
+   "observedBytes": 2787671,
+   "unobservedBytes": 6371473
+  }
+ },
+ "initialByLoad": {
+  "inline": {
+   "scripts": 1,
+   "bytes": 353643,
+   "unobservedBytes": 216603
+  },
+  "html": {
+   "scripts": 27,
+   "bytes": 7229707,
+   "unobservedBytes": 4948533
+  },
+  "dynamic": {
+   "scripts": 33,
+   "bytes": 1556015,
+   "unobservedBytes": 1258944
+  }
+ },
+ "initialTopBundles": [
+  {
+   "path": "www.tossinvest.com/assets/v2/_next/static/chunks/pages/_app-1ae142babb43995b.js",
+   "bytes": 3474205,
+   "unobservedBytes": 2168607
+  },
+  {
+   "path": "www.tossinvest.com/assets/v2/_next/static/chunks/8814-e376aadbf781b406.js",
+   "bytes": 1426311,
+   "unobservedBytes": 1242315
+  },
+  {
+   "path": "www.tossinvest.com/assets/v2/_next/static/chunks/2627-7d39385ff827f508.js",
+   "bytes": 618813,
+   "unobservedBytes": 552683
+  },
+  {
+   "path": "www.tossinvest.com/assets/v2/_next/static/chunks/1882-49636a62401c11c0.js",
+   "bytes": 717431,
+   "unobservedBytes": 451956
+  },
+  {
+   "path": "www.googletagmanager.com/gtm.js",
+   "bytes": 353643,
+   "unobservedBytes": 216603
+  },
+  {
+   "path": "www.tossinvest.com/assets/v2/_next/static/chunks/main-5022bc8a498a3f96.js",
+   "bytes": 366255,
+   "unobservedBytes": 186217
+  }
+ ],
+ "appInitial": {
+  "bytes": 3474205,
+  "unobservedBytes": 2168607,
+  "modules": 1417,
+  "neverRunModules": 14,
+  "neverRunBytes": 10885
+ },
+ "chainModules": {
+  "5099": {
+   "initial.json": {
+    "bytes": 4091,
+    "observedBytes": 711
+   },
+   "search.json": {
+    "bytes": 4091,
+    "observedBytes": 711
+   },
+   "stock.json": {
+    "bytes": 4091,
+    "observedBytes": 711
+   },
+   "feed.json": {
+    "bytes": 4091,
+    "observedBytes": 711
+   }
+  },
+  "34486": {
+   "initial.json": {
+    "bytes": 33764,
+    "observedBytes": 27324
+   },
+   "search.json": {
+    "bytes": 33764,
+    "observedBytes": 27324
+   },
+   "stock.json": {
+    "bytes": 33764,
+    "observedBytes": 27390
+   },
+   "feed.json": {
+    "bytes": 33764,
+    "observedBytes": 27390
+   }
+  },
+  "75745": {
+   "initial.json": {
+    "bytes": 295680,
+    "observedBytes": 31697
+   },
+   "search.json": {
+    "bytes": 295680,
+    "observedBytes": 31710
+   },
+   "stock.json": {
+    "bytes": 295680,
+    "observedBytes": 31997
+   },
+   "feed.json": {
+    "bytes": 295680,
+    "observedBytes": 31952
+   }
+  },
+  "57427": {
+   "initial.json": {
+    "bytes": 2041,
+    "observedBytes": 194
+   },
+   "search.json": {
+    "bytes": 2041,
+    "observedBytes": 194
+   },
+   "stock.json": {
+    "bytes": 2041,
+    "observedBytes": 194
+   },
+   "feed.json": {
+    "bytes": 2041,
+    "observedBytes": 194
+   }
+  },
+  "70388": {
+   "initial.json": {
+    "bytes": 10692,
+    "observedBytes": 421
+   },
+   "search.json": {
+    "bytes": 10692,
+    "observedBytes": 421
+   },
+   "stock.json": {
+    "bytes": 10692,
+    "observedBytes": 421
+   },
+   "feed.json": {
+    "bytes": 10692,
+    "observedBytes": 421
+   }
+  },
+  "96245": {
+   "initial.json": {
+    "bytes": 263738,
+    "observedBytes": 11951
+   },
+   "search.json": {
+    "bytes": 263738,
+    "observedBytes": 11951
+   },
+   "stock.json": {
+    "bytes": 263738,
+    "observedBytes": 36310
+   },
+   "feed.json": {
+    "bytes": 263738,
+    "observedBytes": 11951
+   }
+  },
+  "54017": {
+   "initial.json": {
+    "bytes": 41571,
+    "observedBytes": 2635
+   },
+   "search.json": {
+    "bytes": 41571,
+    "observedBytes": 2635
+   },
+   "stock.json": {
+    "bytes": 41571,
+    "observedBytes": 12187
+   },
+   "feed.json": {
+    "bytes": 41571,
+    "observedBytes": 13646
+   }
+  },
+  "42120": {
+   "initial.json": {
+    "bytes": 52344,
+    "observedBytes": 5047
+   },
+   "search.json": {
+    "bytes": 52344,
+    "observedBytes": 5047
+   },
+   "stock.json": {
+    "bytes": 52344,
+    "observedBytes": 5047
+   },
+   "feed.json": {
+    "bytes": 52344,
+    "observedBytes": 5047
+   }
+  },
+  "73681": {
+   "initial.json": {
+    "bytes": 60242,
+    "observedBytes": 5169
+   },
+   "search.json": {
+    "bytes": 60242,
+    "observedBytes": 5169
+   },
+   "stock.json": {
+    "bytes": 60242,
+    "observedBytes": 5169
+   },
+   "feed.json": {
+    "bytes": 60242,
+    "observedBytes": 5169
+   }
+  },
+  "61750": {
+   "initial.json": {
+    "bytes": 95178,
+    "observedBytes": 2437
+   },
+   "search.json": {
+    "bytes": 95178,
+    "observedBytes": 2437
+   },
+   "stock.json": {
+    "bytes": 95178,
+    "observedBytes": 2437
+   },
+   "feed.json": {
+    "bytes": 95178,
+    "observedBytes": 2437
+   }
+  },
+  "33036": {
+   "initial.json": {
+    "bytes": 45283,
+    "observedBytes": 1277
+   },
+   "search.json": {
+    "bytes": 45283,
+    "observedBytes": 1277
+   },
+   "stock.json": {
+    "bytes": 45283,
+    "observedBytes": 1277
+   },
+   "feed.json": {
+    "bytes": 45283,
+    "observedBytes": 1277
+   }
+  }
+ },
+ "editorOnly": {
+  "modules": [
+   "25604",
+   "29193",
+   "33036",
+   "38324",
+   "42120",
+   "46451",
+   "53403",
+   "59067",
+   "61750",
+   "66094",
+   "68943",
+   "69603",
+   "73681"
+  ],
+  "bytes": 311698,
+  "observedBytesInitial": 18407
+ },
+ "moduleRecovery": {
+  "before_8fbe871": {
+   "modules": 2748,
+   "chunks": 64,
+   "wholeChunkSources": 43
+  },
+  "after_0.3.1": {
+   "modules": 6183,
+   "chunks": 102,
+   "wholeChunkSources": 5
+  }
+ },
+ "candidateCuts": {
+  "method": "static edges of the recovered graph; bytes of modules no longer reachable in the initial visit when every static import of the target module is cut",
+  "roots": {
+   "html": [
+    "19642",
+    "3084",
+    "43527",
+    "85547",
+    "88479",
+    "99116"
+   ],
+   "allExecuted": 18
+  },
+  "results": {
+   "html:H hook split": {
+    "modules": 411,
+    "bytes": 1197021,
+    "observed": 137850
+   },
+   "html:O order form lazy": {
+    "modules": 436,
+    "bytes": 1245930,
+    "observed": 144585
+   },
+   "html:M comments lazy": {
+    "modules": 170,
+    "bytes": 546021,
+    "observed": 61744
+   },
+   "html:E editor lazy": {
+    "modules": 13,
+    "bytes": 311698,
+    "observed": 18407
+   },
+   "html:A account-open lazy": {
+    "modules": 13,
+    "bytes": 132202,
+    "observed": 29942
+   },
+   "html:G gsap lazy": {
+    "modules": 1,
+    "bytes": 86396,
+    "observed": 19226
+   },
+   "html:F framer lazy": {
+    "modules": 1,
+    "bytes": 95035,
+    "observed": 13502
+   },
+   "html:H+M": {
+    "modules": 411,
+    "bytes": 1197021,
+    "observed": 137850
+   },
+   "all:H hook split": {
+    "modules": 0,
+    "bytes": 0,
+    "observed": 0
+   },
+   "all:O order form lazy": {
+    "modules": 1,
+    "bytes": 2041,
+    "observed": 194
+   },
+   "all:M comments lazy": {
+    "modules": 32,
+    "bytes": 51869,
+    "observed": 6593
+   },
+   "all:E editor lazy": {
+    "modules": 13,
+    "bytes": 311698,
+    "observed": 18407
+   },
+   "all:A account-open lazy": {
+    "modules": 13,
+    "bytes": 132202,
+    "observed": 29942
+   },
+   "all:G gsap lazy": {
+    "modules": 1,
+    "bytes": 86396,
+    "observed": 19226
+   },
+   "all:F framer lazy": {
+    "modules": 1,
+    "bytes": 95035,
+    "observed": 13502
+   },
+   "all:H+M": {
+    "modules": 32,
+    "bytes": 51869,
+    "observed": 6593
+   }
+  }
+ },
+ "evidenceSha256": "7a7bc774a8bdd65a8bdf67937938b8610a79f5b9ac965c53ce0b4500e90c2220"
+}
