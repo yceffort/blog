@@ -2,7 +2,6 @@ import '@/styles/stylex.css'
 import '@/styles/offline.css'
 import {Providers} from '@yceffort/shared/components'
 import type {Metadata} from 'next'
-import {Fraunces, Inter, JetBrains_Mono} from 'next/font/google'
 import Script from 'next/script'
 import {Suspense, type ReactNode} from 'react'
 
@@ -12,25 +11,6 @@ import {GoogleAnalyticsPageViewTracker} from '@/components/GoogleAnalyticsPageVi
 import {OfflineRegistration} from '@/components/offline/OfflineRegistration'
 import {OutboundLinkTracker} from '@/components/OutboundLinkTracker'
 import {SiteConfig} from '@/config'
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-sans',
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-mono',
-})
-
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-serif',
-  style: ['italic', 'normal'],
-})
 
 export const metadata: Metadata = {
   title: SiteConfig.title,
@@ -90,11 +70,7 @@ export const metadata: Metadata = {
 export default function Layout({children}: {children: ReactNode}) {
   return (
     <>
-      <html
-        lang="ko"
-        suppressHydrationWarning
-        className={`${inter.variable} ${jetbrainsMono.variable} ${fraunces.variable}`}
-      >
+      <html lang="ko" suppressHydrationWarning>
         <head>
           <script
             dangerouslySetInnerHTML={{

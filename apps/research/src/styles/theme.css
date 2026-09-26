@@ -1,6 +1,9 @@
 /* Document colors, fonts, and light/dark theme values. */
 @layer site {
   :root {
+    --font-sans: system-ui;
+    --font-mono: ui-monospace;
+    --font-serif: ui-serif;
     --bg: #fafafa;
     --bg-2: #f2f2f5;
     --surface: #fff;
