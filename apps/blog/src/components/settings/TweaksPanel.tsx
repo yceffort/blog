@@ -80,13 +80,30 @@ export default function TweaksPanel({open, onClose}: Props) {
 
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
-    setAccent(getCookie('tw-accent') || 'default')
-    setGrain(getCookie('tw-grain') !== 'false')
-    setMinimal(getCookie('tw-minimal') === 'true')
-    const t = Number(getCookie('tw-tilt') || '8')
-    setTilt(Number.isFinite(t) ? t : 8)
+    // research.yceffort.kr 와 쿠키를 공유하므로, 다른 탭에서 바꾼 값을 탭이 다시 보일 때 반영한다.
+    const syncFromCookie = () => {
+      if (document.visibilityState === 'hidden') {
+        return
+      }
+      setAccent(getCookie('tw-accent') || 'default')
+      setGrain(getCookie('tw-grain') !== 'false')
+      setMinimal(getCookie('tw-minimal') === 'true')
+      const t = Number(getCookie('tw-tilt') || '8')
+      setTilt(Number.isFinite(t) ? t : 8)
+      const cookieTheme = getCookie('tw-theme')
+      if (cookieTheme) {
+        setTheme(cookieTheme)
+      }
+    }
+    syncFromCookie()
     setMounted(true)
-  }, [])
+    document.addEventListener('visibilitychange', syncFromCookie)
+    window.addEventListener('pageshow', syncFromCookie)
+    return () => {
+      document.removeEventListener('visibilitychange', syncFromCookie)
+      window.removeEventListener('pageshow', syncFromCookie)
+    }
+  }, [setTheme])
   /* eslint-enable react-hooks/set-state-in-effect */
 
   useEffect(() => {
@@ -129,13 +146,6 @@ export default function TweaksPanel({open, onClose}: Props) {
       document.documentElement.classList.remove('theme-transition-circle')
     })
   }
-  useEffect(() => {
-    const cookieTheme = getCookie('tw-theme')
-    if (cookieTheme && cookieTheme !== theme) {
-      setTheme(cookieTheme)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
   const [pushState, setPushState] = useState<PushState>('unsupported')
   useEffect(() => {
     let cancelled = false
