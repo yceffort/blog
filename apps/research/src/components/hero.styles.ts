@@ -16,7 +16,10 @@ const styles = stylex.create({
   home_hero: {
     '@layer site': {
       position: 'relative',
-      padding: '72px 0 56px',
+      padding: {
+        default: '32px 0 28px',
+        '@media (max-width: 640px)': '20px 0 16px',
+      },
       perspective: '1400px',
     },
   },
@@ -55,9 +58,9 @@ const styles = stylex.create({
   hero_title: {
     '@layer site': {
       position: 'relative',
-      fontSize: 'clamp(56px, 12vw, 180px)',
+      fontSize: 'clamp(40px, 6.5vw, 92px)',
       fontWeight: '900',
-      lineHeight: '0.88',
+      lineHeight: '1',
       letterSpacing: '-0.045em',
       color: 'var(--ink)',
       transformStyle: 'preserve-3d',
@@ -66,7 +69,7 @@ const styles = stylex.create({
   ln: {
     '@layer site': {
       position: 'relative',
-      display: 'block',
+      display: 'inline-block',
       transition: 'transform 120ms ease-out',
       willChange: 'transform',
     },
@@ -95,13 +98,12 @@ const styles = stylex.create({
   },
   hero_sub: {
     '@layer site': {
-      maxWidth: '720px',
-      marginTop: '36px',
+      marginTop: '22px',
     },
   },
   hero_sub_p: {
     '@layer site': {
-      maxWidth: '520px',
+      maxWidth: '560px',
       fontSize: '15px',
       lineHeight: '1.6',
       color: 'var(--ink-2)',

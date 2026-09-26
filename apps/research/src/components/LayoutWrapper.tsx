@@ -48,10 +48,9 @@ const HeaderNav = memo(function HeaderNavBase() {
     }
     return pathname === path || pathname.startsWith(`${path}/`)
   }
-  const items = [{label: 'Home', path: '/'}, ...SiteConfig.menu]
   return (
     <nav className={styles.nav_pills} aria-label="main">
-      {items.map((link) => {
+      {SiteConfig.menu.map((link) => {
         const external = link.path.startsWith('http')
         const active = !external && isActive(link.path)
         if (external) {

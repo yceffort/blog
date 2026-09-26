@@ -70,6 +70,10 @@ const styles = stylex.create({
       lineHeight: '1.1',
       letterSpacing: '-0.02em',
       color: 'var(--ink)',
+      display: {
+        default: null,
+        '@media (max-width: 639px)': 'none',
+      },
     },
   },
   header_right: {
