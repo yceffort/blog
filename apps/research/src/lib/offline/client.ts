@@ -421,7 +421,7 @@ export async function downloadDeck(
 
 let automaticCheck: Promise<void> | undefined
 
-export function checkOfflineUpdates(): Promise<void> {
+function checkOfflineUpdates(): Promise<void> {
   if (automaticCheck) return automaticCheck
   if (
     process.env.NODE_ENV !== 'production' ||

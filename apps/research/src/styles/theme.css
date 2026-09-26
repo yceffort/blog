@@ -17,7 +17,6 @@
     --primary: #6366f1;
     --primary-2: #a78bfa;
     --primary-3: #ec4899;
-    --accent: #14b8a6;
     --radius: 12px;
   }
   html.dark {
@@ -34,7 +33,6 @@
     --primary: #818cf8;
     --primary-2: #a78bfa;
     --primary-3: #f472b6;
-    --accent: #2dd4bf;
   }
 }
 
@@ -72,15 +70,6 @@
       'Helvetica Neue', Arial, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-  }
-  .font-mono {
-    font-family:
-      var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas,
-      'Liberation Mono', monospace;
-  }
-  .font-serif {
-    font-family: var(--font-serif), ui-serif, Georgia, 'Times New Roman', serif;
-    font-optical-sizing: auto;
   }
   ::selection {
     background: color-mix(in oklab, var(--primary) 40%, transparent);

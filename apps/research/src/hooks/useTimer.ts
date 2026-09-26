@@ -26,8 +26,6 @@ export function useTimer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning])
 
-  const start = useCallback(() => setIsRunning(true), [])
-  const pause = useCallback(() => setIsRunning(false), [])
   const toggle = useCallback(() => setIsRunning((prev) => !prev), [])
   const reset = useCallback(() => {
     setIsRunning(false)
@@ -38,5 +36,5 @@ export function useTimer() {
   const seconds = Math.floor((elapsedMs % 60000) / 1000)
   const elapsedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
 
-  return {elapsedTime, isRunning, start, pause, toggle, reset}
+  return {elapsedTime, isRunning, toggle, reset}
 }

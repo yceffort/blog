@@ -48,17 +48,6 @@ const styles = stylex.create({
         'linear-gradient(90deg, var(--border-2), color-mix(in oklab, var(--border) 30%, transparent))',
     },
   },
-  sec_hint: {
-    '@layer site': {
-      marginBottom: '18px',
-      fontFamily: 'var(--font-mono), monospace',
-      fontSize: '11px',
-      letterSpacing: '0.08em',
-      textTransform: 'uppercase',
-      whiteSpace: 'nowrap',
-      color: 'var(--ink-4)',
-    },
-  },
   card: {
     '@layer site': {
       overflow: 'hidden',
@@ -340,7 +329,6 @@ export const sec_count = stylex.props(styles.sec_count).className!
 export const sec_title = stylex.props(styles.sec_title).className!
 export const sec_title_em = stylex.props(styles.sec_title_em).className!
 export const sec_line = stylex.props(styles.sec_line).className!
-export const sec_hint = stylex.props(styles.sec_hint).className!
 export const card = stylex.props(styles.card).className!
 export const card_link = stylex.props(styles.card_link).className!
 export const thumb = stylex.props(styles.thumb).className!

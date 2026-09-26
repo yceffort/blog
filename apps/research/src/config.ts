@@ -4,14 +4,10 @@ const isDev = process.env.NODE_ENV === 'development'
 
 export const SiteConfig = {
   url: isDev ? 'http://localhost:3001' : 'https://research.yceffort.kr',
-  pathPrefix: '/',
   title: 'yceffort 🧪',
   subtitle: 'research',
-  copyright: 'yceffort © All rights reserved.',
-  disqusShortname: '',
   postsPerPage: 6,
   googleAnalyticsId: 'G-ND58S24JBX',
-  useKatex: false,
   menu: [
     {label: 'Offline', path: '/offline'},
     {
@@ -21,22 +17,10 @@ export const SiteConfig = {
   ],
   author: {
     name: 'yceffort',
-    photo: '/profile.png',
-    bio: 'frontend engineer',
     contacts: {
       email: 'root@yceffort.kr',
-      facebook: '',
-      telegram: '',
       twitter: getContactHref('twitter', 'yceffort_dev'),
       github: getContactHref('github', 'yceffort'),
-      rss: '',
-      linkedin: '',
-      instagram: '',
-      line: '',
-      gitlab: '',
-      codepen: '',
-      youtube: '',
-      soundcloud: '',
     },
   },
 }
