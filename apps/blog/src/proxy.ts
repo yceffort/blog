@@ -30,7 +30,6 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url, {status: 308})
   }
 
-  // Locale redirect on root path
   if (pathname === '/') {
     const localeCookie = request.cookies.get('locale')?.value
 

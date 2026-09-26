@@ -661,7 +661,6 @@ function Scene({
       const y = (-v.y * 0.5 + 0.5) * size.height
       // 확대해서 볼 때는 표지와 눈금을 숨긴다
       let on = cursor >= l.at && v.z < 1 && (fa < 0.3 || l.tone === 'self')
-      // 눈금 라벨은 화면에서 옆 라벨과 겹치면 숨긴다
       if (l.tone === 'tick' && on) {
         const half = l.text.length * 3.6
         // 옆 라벨과 겹치거나 패널 가장자리를 넘으면 숨긴다

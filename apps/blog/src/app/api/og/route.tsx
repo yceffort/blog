@@ -32,7 +32,6 @@ export async function GET(request: Request) {
       urlParam || (pathParam ? `${SiteConfig.url}${pathParam}` : SiteConfig.url)
     const tags = tagsParam ? tagsParam.split(',') : []
 
-    // 1. Fetch Background Image from Public URL
     const protocol = request.headers.get('x-forwarded-proto') || 'http'
     const host = request.headers.get('host')
     const baseUrl = `${protocol}://${host}`
@@ -48,7 +47,6 @@ export async function GET(request: Request) {
     const imageMime = hasThumbnail ? 'image/png' : 'image/jpeg'
     const imageBase64 = Buffer.from(imageBuffer).toString('base64')
 
-    // 2. Fetch Font directly from CDN (Reliable TTF source)
     // Using NanumGothicBold.ttf for thicker, clearer text
     const fontUrl =
       'https://cdn.jsdelivr.net/gh/fonts-archive/NanumGothic/NanumGothicBold.ttf'
@@ -68,7 +66,6 @@ export async function GET(request: Request) {
           fontFamily: '"NanumGothic"',
         }}
       >
-        {/* Background Image Layer */}
         <img
           alt={title}
           src={`data:${imageMime};base64,${imageBase64}`}
@@ -84,7 +81,6 @@ export async function GET(request: Request) {
           }}
         />
 
-        {/* Content Layer */}
         <div
           style={{
             display: 'flex',
@@ -105,7 +101,6 @@ export async function GET(request: Request) {
                 }),
           }}
         >
-          {/* Title */}
           <div
             style={{
               display: 'flex',
@@ -125,7 +120,6 @@ export async function GET(request: Request) {
             {title}
           </div>
 
-          {/* Description */}
           {description ? (
             <div
               style={{
@@ -150,7 +144,6 @@ export async function GET(request: Request) {
             </div>
           ) : null}
 
-          {/* Tags Container */}
           {tags.length > 0 ? (
             <div
               style={{
@@ -185,7 +178,6 @@ export async function GET(request: Request) {
             </div>
           ) : null}
 
-          {/* Address */}
           <div
             style={{
               display: 'flex',
