@@ -33,12 +33,14 @@ export function PresenterNotes({note}: {note: string}) {
   }, [])
 
   const syncScroll = useCallback(() => {
+    // 언마운트 중에는 ref 가 effect cleanup 보다 먼저 비워져서, 그 사이에 온 콜백은 건너뛴다.
+    if (!viewportRef.current || !trackRef.current || !thumbRef.current) return
     const {viewport, max, thumb, travel} = measure()
     const position = Math.min(max, Math.max(0, viewport.scrollTop))
     const ratio = max > 0 ? position / max : 0
     // Moving the thumb should not rerender the slide previews or timer.
-    thumbRef.current!.style.height = `${thumb}px`
-    thumbRef.current!.style.transform = `translateY(${ratio * travel}px)`
+    thumbRef.current.style.height = `${thumb}px`
+    thumbRef.current.style.transform = `translateY(${ratio * travel}px)`
     const next = {
       overflow: max > 1,
       more: max - position > 1,
