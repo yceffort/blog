@@ -73,7 +73,8 @@ const MdxComponents = {
     if (!href) {
       return null
     }
-    if (href.startsWith('#')) {
+    // Demo artifacts are static files and should load only when opened.
+    if (href.startsWith('#') || href.startsWith('/demos/')) {
       return (
         <a href={href} {...rest}>
           {children}
