@@ -58,15 +58,18 @@ const sx = stylex.create({
     '@layer utilities': {
       '--blog-translate-y': '0px',
       translate: 'var(--blog-translate-x) var(--blog-translate-y)',
-      opacity: '100%',
+      transitionTimingFunction: 'cubic-bezier(0.32, 0.72, 0, 1)',
+      transitionDuration: '400ms',
     },
   },
   sheetHidden: {
     '@layer utilities': {
       pointerEvents: 'none',
-      '--blog-translate-y': '100%',
+      // 그림자가 화면 아래에 걸리지 않도록 그림자 높이만큼 더 내린다
+      '--blog-translate-y': 'calc(100% + 80px)',
       translate: 'var(--blog-translate-x) var(--blog-translate-y)',
-      opacity: '0%',
+      transitionTimingFunction: 'cubic-bezier(0.4, 0, 1, 1)',
+      transitionDuration: '220ms',
     },
   },
   sheet: {
@@ -75,9 +78,7 @@ const sx = stylex.create({
       insetInline: '0px',
       bottom: '0px',
       zIndex: '101',
-      transitionProperty: 'translate,opacity',
-      transitionTimingFunction: 'var(--ease-out)',
-      transitionDuration: '300ms',
+      transitionProperty: 'translate',
       '--blog-duration': '300ms',
       '--blog-ease': 'var(--ease-out)',
     },
@@ -89,7 +90,7 @@ const sx = stylex.create({
       borderTopLeftRadius: '28px',
       borderTopRightRadius: '28px',
       paddingInline: 'calc(var(--spacing) * 5)',
-      paddingTop: 'calc(var(--spacing) * 3)',
+      paddingTop: 'calc(var(--spacing) * 5)',
       paddingBottom: 'calc(var(--spacing) * 7)',
     },
   },

@@ -55,14 +55,17 @@ const sx = stylex.create({
   sheetVisible: {
     '@layer utilities': {
       translate: '0 0',
-      opacity: '100%',
+      transitionTimingFunction: 'cubic-bezier(0.32, 0.72, 0, 1)',
+      transitionDuration: '400ms',
     },
   },
   sheetHidden: {
     '@layer utilities': {
       pointerEvents: 'none',
-      translate: '0 100%',
-      opacity: '0%',
+      // 그림자가 화면 아래에 걸리지 않도록 그림자 높이만큼 더 내린다
+      translate: '0 calc(100% + 80px)',
+      transitionTimingFunction: 'cubic-bezier(0.4, 0, 1, 1)',
+      transitionDuration: '220ms',
     },
   },
   sheet: {
@@ -71,9 +74,7 @@ const sx = stylex.create({
       insetInline: '0px',
       bottom: '0px',
       zIndex: '101',
-      transitionProperty: 'translate, opacity',
-      transitionTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
-      transitionDuration: '300ms',
+      transitionProperty: 'translate',
     },
   },
   dialog: {
@@ -83,7 +84,7 @@ const sx = stylex.create({
       borderTopLeftRadius: '28px',
       borderTopRightRadius: '28px',
       paddingInline: '1.25rem',
-      paddingTop: '0.75rem',
+      paddingTop: '1.25rem',
       paddingBottom: '1.75rem',
     },
   },
