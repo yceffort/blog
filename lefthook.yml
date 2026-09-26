@@ -30,6 +30,10 @@ pre-commit:
     research-markdown:
       glob: 'apps/research/research/*.md'
       run: node apps/research/scripts/check-slides-markdown.mjs {staged_files}
+    research-tags:
+      glob: 'apps/research/research/*.md'
+      run: node apps/research/scripts/retag-slides.mjs --apply {staged_files} || echo '덱 태그 판정 실패. 기존 태그로 커밋합니다.'
+      stage_fixed: true
     translation-sync:
       glob: '*.md'
       exclude: 'labs/**'
