@@ -1,0 +1,266 @@
+{
+  "browser": "153.0.8010.12",
+  "rounds": 3,
+  "results": {
+    "home": {
+      "before": [
+        {
+          "initialEncoded": 211574,
+          "initialDecoded": 672201,
+          "initialFiles": 13,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        },
+        {
+          "initialEncoded": 211574,
+          "initialDecoded": 672201,
+          "initialFiles": 13,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        },
+        {
+          "initialEncoded": 211574,
+          "initialDecoded": 672201,
+          "initialFiles": 13,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        }
+      ],
+      "after": [
+        {
+          "initialEncoded": 202566,
+          "initialDecoded": 645541,
+          "initialFiles": 13,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        },
+        {
+          "initialEncoded": 202566,
+          "initialDecoded": 645541,
+          "initialFiles": 13,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        },
+        {
+          "initialEncoded": 202566,
+          "initialDecoded": 645541,
+          "initialFiles": 13,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        }
+      ]
+    },
+    "post": {
+      "before": [
+        {
+          "initialEncoded": 425101,
+          "initialDecoded": 1495655,
+          "initialFiles": 28,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        },
+        {
+          "initialEncoded": 425101,
+          "initialDecoded": 1495655,
+          "initialFiles": 28,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        },
+        {
+          "initialEncoded": 425101,
+          "initialDecoded": 1495655,
+          "initialFiles": 28,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        }
+      ],
+      "after": [
+        {
+          "initialEncoded": 412739,
+          "initialDecoded": 1459842,
+          "initialFiles": 28,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        },
+        {
+          "initialEncoded": 412739,
+          "initialDecoded": 1459842,
+          "initialFiles": 28,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        },
+        {
+          "initialEncoded": 412739,
+          "initialDecoded": 1459842,
+          "initialFiles": 28,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        }
+      ]
+    },
+    "post+search": {
+      "before": [
+        {
+          "initialEncoded": 425101,
+          "initialDecoded": 1495655,
+          "initialFiles": 28,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        },
+        {
+          "initialEncoded": 425101,
+          "initialDecoded": 1495655,
+          "initialFiles": 28,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        },
+        {
+          "initialEncoded": 425101,
+          "initialDecoded": 1495655,
+          "initialFiles": 28,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        }
+      ],
+      "after": [
+        {
+          "initialEncoded": 412739,
+          "initialDecoded": 1459842,
+          "initialFiles": 28,
+          "addedEncoded": 5766,
+          "addedDecoded": 17723,
+          "addedFiles": [
+            "/_next/static/chunks/0fa155fyb7fy2.js"
+          ],
+          "errors": []
+        },
+        {
+          "initialEncoded": 412739,
+          "initialDecoded": 1459842,
+          "initialFiles": 28,
+          "addedEncoded": 5766,
+          "addedDecoded": 17723,
+          "addedFiles": [
+            "/_next/static/chunks/0fa155fyb7fy2.js"
+          ],
+          "errors": []
+        },
+        {
+          "initialEncoded": 412739,
+          "initialDecoded": 1459842,
+          "initialFiles": 28,
+          "addedEncoded": 5766,
+          "addedDecoded": 17723,
+          "addedFiles": [
+            "/_next/static/chunks/0fa155fyb7fy2.js"
+          ],
+          "errors": []
+        }
+      ]
+    },
+    "post+zoom": {
+      "before": [
+        {
+          "initialEncoded": 425101,
+          "initialDecoded": 1495655,
+          "initialFiles": 28,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        },
+        {
+          "initialEncoded": 425101,
+          "initialDecoded": 1495655,
+          "initialFiles": 28,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        },
+        {
+          "initialEncoded": 425101,
+          "initialDecoded": 1495655,
+          "initialFiles": 28,
+          "addedEncoded": 0,
+          "addedDecoded": 0,
+          "addedFiles": [],
+          "errors": []
+        }
+      ],
+      "after": [
+        {
+          "initialEncoded": 412739,
+          "initialDecoded": 1459842,
+          "initialFiles": 28,
+          "addedEncoded": 3642,
+          "addedDecoded": 9505,
+          "addedFiles": [
+            "/_next/static/chunks/0dcd6f7cd-t1q.js"
+          ],
+          "errors": []
+        },
+        {
+          "initialEncoded": 412739,
+          "initialDecoded": 1459842,
+          "initialFiles": 28,
+          "addedEncoded": 3642,
+          "addedDecoded": 9505,
+          "addedFiles": [
+            "/_next/static/chunks/0dcd6f7cd-t1q.js"
+          ],
+          "errors": []
+        },
+        {
+          "initialEncoded": 412739,
+          "initialDecoded": 1459842,
+          "initialFiles": 28,
+          "addedEncoded": 3642,
+          "addedDecoded": 9505,
+          "addedFiles": [
+            "/_next/static/chunks/0dcd6f7cd-t1q.js"
+          ],
+          "errors": []
+        }
+      ]
+    }
+  },
+  "capturedAt": "2026-09-26",
+  "revisions": {
+    "before": "27fc9749",
+    "after": "cb27fb0a"
+  },
+  "playwright": "1.63.0",
+  "next": "16.3.5",
+  "page": "/2026/08/k8s-for-frontend-1"
+}
