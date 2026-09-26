@@ -1,21 +1,16 @@
-import fs from 'fs'
-import path from 'path'
-
-import {format} from 'date-fns/format'
-import matter from 'gray-matter'
 import {cacheLife, cacheTag} from 'next/cache'
 
 import Hero from '@/components/Hero'
 import LayoutWrapper from '@/components/LayoutWrapper'
 import {SlideListWithFilter} from '@/components/SlideListWithFilter'
 import {generateRenderedMarp} from '@/lib/marp'
+import {getAllSlides} from '@/lib/slidesIndex'
 
 interface Slide {
-  filename: string
   slug: string
   date: string | null
   tags: string[]
-  description: string
+  description?: string
   title: string
   published: boolean
   post?: string
@@ -39,56 +34,35 @@ async function getHomeSlides(): Promise<HomeSlidesData> {
   cacheLife('hours')
   cacheTag('research:home')
 
-  const researchPath = path.join(process.cwd(), 'research')
-  const allFiles = fs.readdirSync(researchPath)
-  const mdFiles = allFiles.filter((file) => file.endsWith('.md'))
-
   const cssList: string[] = []
   const cssIndexMap = new Map<string, number>()
 
-  const slidesPromises = mdFiles.map(async (filename) => {
-    const slug = filename.replace(/\.md$/, '')
-
-    const content = fs.readFileSync(path.join(researchPath, filename), 'utf-8')
-    const {data} = matter(content)
-    const date = data.date ? format(data.date, 'yyyy-MM-dd') : null
-    const tags: string[] = data.tags || []
-    const description = data.description
-    const title = data.title
-    const published = data.published
-    const post = data.post ? String(data.post) : undefined
-
-    const {html, css, fonts} = await generateRenderedMarp(content)
-
-    let cssIndex = cssIndexMap.get(css)
-    if (cssIndex === undefined) {
-      cssIndex = cssList.push(css) - 1
-      cssIndexMap.set(css, cssIndex)
-    }
-
-    return {
-      filename,
-      slug,
-      date,
-      tags,
-      description,
-      title,
-      published,
-      post,
-      slideCount: html.length,
-      preview: {
-        html: html[0] || '',
-        cssIndex,
-        fonts,
-      },
-    }
-  })
-
-  const allSlides = await Promise.all(slidesPromises)
   const isDev = process.env.NODE_ENV !== 'production'
-  const slides = allSlides
-    .filter((slide) => isDev || slide.published)
-    .toSorted((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
+  const slides = await Promise.all(
+    getAllSlides()
+      .filter((slide) => isDev || slide.published)
+      .map(async (slide): Promise<Slide> => {
+        const {html, css, fonts} = await generateRenderedMarp(slide.markdown)
+
+        let cssIndex = cssIndexMap.get(css)
+        if (cssIndex === undefined) {
+          cssIndex = cssList.push(css) - 1
+          cssIndexMap.set(css, cssIndex)
+        }
+
+        return {
+          slug: slide.slug,
+          date: slide.date ?? null,
+          tags: slide.tags ?? [],
+          description: slide.description,
+          title: slide.title,
+          published: slide.published,
+          post: slide.post,
+          slideCount: html.length,
+          preview: {html: html[0] || '', cssIndex, fonts},
+        }
+      }),
+  )
 
   return {slides, cssList}
 }

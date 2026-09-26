@@ -14,7 +14,7 @@ interface Slide {
   slug: string
   date: string | null
   tags: string[]
-  description: string
+  description?: string
   title: string
   published: boolean
   post?: string

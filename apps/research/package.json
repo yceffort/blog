@@ -15,7 +15,6 @@
     "@marp-team/marp-core": "^4.4.0",
     "@stylexjs/stylex": "^0.19.0",
     "@yceffort/shared": "workspace:*",
-    "date-fns": "^4.4.0",
     "gray-matter": "^4.0.3",
     "isbot": "^5.2.1",
     "markdown-it-cjk-friendly": "^3.0.0",

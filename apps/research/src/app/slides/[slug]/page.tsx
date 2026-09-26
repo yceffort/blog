@@ -1,98 +1,18 @@
-import fs from 'fs'
-import path from 'path'
-
-import matter from 'gray-matter'
-import {cacheLife, cacheTag} from 'next/cache'
 import {notFound} from 'next/navigation'
 
 import {MarpSlides} from '@/components/MarpSlides'
-import {isTransitionType} from '@/components/MarpSlides.constants'
-import type {TransitionType} from '@/components/MarpSlides.constants'
 import {SiteConfig} from '@/config'
-import {generateRenderedMarp} from '@/lib/marp'
+import {getRenderedSlide, getSlideStaticParams} from '@/lib/slidesIndex'
 
 import {devBanner} from '../devBanner.styles'
 
-interface SlideData {
-  title: string
-  description?: string
-  tags?: string[]
-  html: string[]
-  css: string
-  fonts: string[]
-  published: boolean
-  post?: string
-  transition?: TransitionType
-  thumbnail?: string
-}
-
-const THUMB_DIR = path.join(process.cwd(), 'public/thumbnails')
-
-// scripts/generate-undraw-thumbnail.mjs 가 만든 webp 가 있으면 그 경로. 없으면 /api/og 폴백
-// 재생성해도 파일명이 같아 캐시가 안 깨지므로 수정 시각을 버전으로 붙인다
-function resolveThumbnail(slug: string): string | undefined {
-  const file = path.join(THUMB_DIR, `${slug}.webp`)
-  if (!fs.existsSync(file)) {
-    return undefined
-  }
-  const version = Math.floor(fs.statSync(file).mtimeMs / 1000).toString(36)
-  return `/thumbnails/${slug}.webp?v=${version}`
-}
-
-async function getSlideData(slug: string): Promise<SlideData | null> {
-  'use cache'
-  cacheLife('max')
-  cacheTag(`slide:${slug}`)
-
-  const filePath = path.join(process.cwd(), 'research', `${slug}.md`)
-
-  if (!fs.existsSync(filePath)) {
-    return null
-  }
-
-  const markdown = fs.readFileSync(filePath, 'utf-8')
-  const {data} = matter(markdown)
-
-  const title = data.title ? String(data.title) : slug
-  const description = data.description ? String(data.description) : undefined
-  const tags = data.tags as string[] | undefined
-  const published = data.published !== false
-  const post = data.post ? String(data.post) : undefined
-  const transition = isTransitionType(data.transition)
-    ? data.transition
-    : undefined
-  const {html, css, fonts} = await generateRenderedMarp(markdown)
-
-  return {
-    title,
-    description,
-    tags,
-    html,
-    css,
-    fonts,
-    published,
-    post,
-    transition,
-    thumbnail: resolveThumbnail(slug),
-  }
-}
-
-export async function generateStaticParams() {
-  const researchPath = path.join(process.cwd(), 'research')
-  const files = fs.readdirSync(researchPath)
-
-  return files
-    .filter((file) => file.endsWith('.md'))
-    .map((file) => ({
-      slug: file.replace(/\.md$/, ''),
-    }))
-}
+export const generateStaticParams = getSlideStaticParams
 
 export async function generateMetadata(props: {
   params: Promise<{slug: string}>
 }) {
   const params = await props.params
-  const data = await getSlideData(params.slug)
+  const data = await getRenderedSlide(params.slug)
   if (!data) {
     return {title: `Not Found - ${params.slug}`}
   }
@@ -136,7 +56,7 @@ export default async function SlidePage(props: {
   params: Promise<{slug: string}>
 }) {
   const params = await props.params
-  const data = await getSlideData(params.slug)
+  const data = await getRenderedSlide(params.slug)
   if (!data) {
     notFound()
     return null

@@ -30,7 +30,6 @@ const postcssStripFontFace = Object.assign(
 )
 
 interface RenderedMarp {
-  markdown: string
   html: string[]
   css: string
   fonts: string[]
@@ -115,7 +114,6 @@ async function renderMarp(markdown: string): Promise<RenderedMarp> {
   const notes = parsePresenterNotes(markdown)
 
   return {
-    markdown,
     html,
     css: result.css,
     fonts,

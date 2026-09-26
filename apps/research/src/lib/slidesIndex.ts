@@ -2,7 +2,13 @@ import fs from 'fs'
 import path from 'path'
 
 import matter from 'gray-matter'
+import {cacheLife, cacheTag} from 'next/cache'
 import {cache} from 'react'
+
+import {isTransitionType} from '@/components/MarpSlides.constants'
+import type {TransitionType} from '@/components/MarpSlides.constants'
+
+import {generateRenderedMarp} from './marp'
 
 export interface SlideIndexEntry {
   slug: string
@@ -11,6 +17,8 @@ export interface SlideIndexEntry {
   tags?: string[]
   date?: string
   published: boolean
+  post?: string
+  transition?: TransitionType
   markdown: string
 }
 
@@ -30,30 +38,33 @@ function normalizeDate(value: unknown): string | undefined {
   return date.toISOString().slice(0, 10)
 }
 
+function toEntry(slug: string, markdown: string): SlideIndexEntry {
+  const {data} = matter(markdown)
+  return {
+    slug,
+    title: data.title ? String(data.title) : slug,
+    description: data.description ? String(data.description) : undefined,
+    tags: Array.isArray(data.tags) ? (data.tags as string[]) : undefined,
+    date: normalizeDate(data.date),
+    published: data.published !== false,
+    post: typeof data.post === 'string' ? data.post : undefined,
+    transition: isTransitionType(data.transition) ? data.transition : undefined,
+    markdown,
+  }
+}
+
 export const getAllSlides = cache(
   function getAllSlidesImpl(): SlideIndexEntry[] {
-    const files = fs.readdirSync(RESEARCH_DIR).filter((f) => f.endsWith('.md'))
-
-    return files
-      .map((file) => {
-        const slug = file.replace(/\.md$/, '')
-        const markdown = fs.readFileSync(path.join(RESEARCH_DIR, file), 'utf-8')
-        const {data} = matter(markdown)
-        return {
-          slug,
-          title: data.title ? String(data.title) : slug,
-          description: data.description ? String(data.description) : undefined,
-          tags: Array.isArray(data.tags) ? (data.tags as string[]) : undefined,
-          date: normalizeDate(data.date),
-          published: data.published !== false,
-          markdown,
-        }
-      })
-      .toSorted((a, b) => {
-        const ad = a.date ?? ''
-        const bd = b.date ?? ''
-        return bd.localeCompare(ad)
-      })
+    return fs
+      .readdirSync(RESEARCH_DIR)
+      .filter((f) => f.endsWith('.md'))
+      .map((file) =>
+        toEntry(
+          file.replace(/\.md$/, ''),
+          fs.readFileSync(path.join(RESEARCH_DIR, file), 'utf-8'),
+        ),
+      )
+      .toSorted((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
   },
 )
 
@@ -64,15 +75,40 @@ export const getSlideBySlug = cache(function getSlideBySlugImpl(
   if (!fs.existsSync(filePath)) {
     return null
   }
-  const markdown = fs.readFileSync(filePath, 'utf-8')
-  const {data} = matter(markdown)
-  return {
-    slug,
-    title: data.title ? String(data.title) : slug,
-    description: data.description ? String(data.description) : undefined,
-    tags: Array.isArray(data.tags) ? (data.tags as string[]) : undefined,
-    date: normalizeDate(data.date),
-    published: data.published !== false,
-    markdown,
-  }
+  return toEntry(slug, fs.readFileSync(filePath, 'utf-8'))
 })
+
+export function getSlideStaticParams() {
+  return getAllSlides().map(({slug}) => ({slug}))
+}
+
+const THUMB_DIR = path.join(process.cwd(), 'public/thumbnails')
+
+// scripts/generate-undraw-thumbnail.mjs 가 만든 webp 가 있으면 그 경로. 없으면 /api/og 폴백
+// 재생성해도 파일명이 같아 캐시가 안 깨지므로 수정 시각을 버전으로 붙인다
+function resolveThumbnail(slug: string): string | undefined {
+  const file = path.join(THUMB_DIR, `${slug}.webp`)
+  if (!fs.existsSync(file)) {
+    return undefined
+  }
+  const version = Math.floor(fs.statSync(file).mtimeMs / 1000).toString(36)
+  return `/thumbnails/${slug}.webp?v=${version}`
+}
+
+// 뷰어와 발표자 화면이 같은 캐시 항목을 공유한다
+export async function getRenderedSlide(slug: string) {
+  'use cache'
+  cacheLife('max')
+  cacheTag(`slide:${slug}`)
+
+  const entry = getSlideBySlug(slug)
+  if (!entry) {
+    return null
+  }
+  const {markdown, ...meta} = entry
+  return {
+    ...meta,
+    ...(await generateRenderedMarp(markdown)),
+    thumbnail: resolveThumbnail(slug),
+  }
+}
