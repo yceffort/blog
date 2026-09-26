@@ -5,12 +5,6 @@ import {useEffect} from 'react'
 
 import {detectBot} from '@/constants/bot-signatures'
 
-declare global {
-  interface Window {
-    gtag?: (...args: unknown[]) => void
-  }
-}
-
 function isLikelyBot(): boolean {
   if (typeof window === 'undefined') {
     return false
