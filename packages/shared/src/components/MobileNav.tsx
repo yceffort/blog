@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 import {memo, useCallback, useEffect, useRef, useState} from 'react'
+import type {PointerEvent as ReactPointerEvent, MouseEvent} from 'react'
 import {createPortal} from 'react-dom'
 
 export interface MobileNavClassNames {
@@ -37,7 +38,22 @@ interface MobileNavProps {
   classNames: MobileNavClassNames
 }
 
-const EXIT_MS = 280
+// 닫힘 전환(220ms)이 끝난 뒤에 언마운트한다
+const EXIT_MS = 260
+// 이 거리를 넘기면 탭이 아니라 드래그로 본다
+const DRAG_SLOP_PX = 6
+const DISMISS_RATIO = 0.3
+const DISMISS_VELOCITY = 0.5 // px/ms
+const DECELERATE = 'cubic-bezier(0.32, 0.72, 0, 1)'
+
+interface DragState {
+  pointerId: number
+  startY: number
+  lastY: number
+  lastTime: number
+  velocity: number
+  offset: number
+}
 
 const MobileNav = memo(function MobileNavBase({
   menu,
@@ -48,6 +64,10 @@ const MobileNav = memo(function MobileNavBase({
   const [open, setOpen] = useState(false)
   const rafRef = useRef<number | null>(null)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const sheetRef = useRef<HTMLDivElement>(null)
+  const backdropRef = useRef<HTMLDivElement>(null)
+  const dragRef = useRef<DragState | null>(null)
+  const draggedRef = useRef(false)
 
   useEffect(() => {
     return () => {
@@ -105,6 +125,84 @@ const MobileNav = memo(function MobileNavBase({
     return () => window.removeEventListener('keydown', onKey)
   }, [open, closeNav])
 
+  const onPointerDown = (e: ReactPointerEvent<HTMLDialogElement>) => {
+    if (!open || !e.isPrimary || e.button !== 0) {
+      return
+    }
+    draggedRef.current = false
+    dragRef.current = {
+      pointerId: e.pointerId,
+      startY: e.clientY,
+      lastY: e.clientY,
+      lastTime: e.timeStamp,
+      velocity: 0,
+      offset: 0,
+    }
+  }
+
+  const onPointerMove = (e: ReactPointerEvent<HTMLDialogElement>) => {
+    const drag = dragRef.current
+    const sheet = sheetRef.current
+    const backdrop = backdropRef.current
+    if (!drag || e.pointerId !== drag.pointerId || !sheet || !backdrop) {
+      return
+    }
+    const offset = Math.max(0, e.clientY - drag.startY)
+    if (!draggedRef.current) {
+      if (offset < DRAG_SLOP_PX) {
+        return
+      }
+      draggedRef.current = true
+      e.currentTarget.setPointerCapture(e.pointerId)
+      sheet.style.transition = 'none'
+      backdrop.style.transition = 'none'
+    }
+    const dt = e.timeStamp - drag.lastTime
+    if (dt > 0) {
+      drag.velocity = (e.clientY - drag.lastY) / dt
+    }
+    drag.lastY = e.clientY
+    drag.lastTime = e.timeStamp
+    drag.offset = offset
+    sheet.style.translate = `0 ${offset}px`
+    backdrop.style.opacity = String(1 - offset / sheet.offsetHeight)
+  }
+
+  const onPointerEnd = (e: ReactPointerEvent<HTMLDialogElement>) => {
+    const drag = dragRef.current
+    const sheet = sheetRef.current
+    const backdrop = backdropRef.current
+    if (!drag || e.pointerId !== drag.pointerId) {
+      return
+    }
+    dragRef.current = null
+    if (!draggedRef.current || !sheet || !backdrop) {
+      return
+    }
+    // 인라인 값을 지우면 클래스의 전환이 현재 위치에서 이어받는다
+    sheet.style.transition = ''
+    sheet.style.translate = ''
+    backdrop.style.transition = ''
+    backdrop.style.opacity = ''
+    const dismiss =
+      e.type === 'pointerup' &&
+      (drag.offset > sheet.offsetHeight * DISMISS_RATIO ||
+        drag.velocity > DISMISS_VELOCITY)
+    if (dismiss) {
+      // 이미 움직이는 중이므로 가속 대신 감속 곡선으로 빠져나간다
+      sheet.style.transitionTimingFunction = DECELERATE
+      closeNav()
+    }
+  }
+
+  const onClickCapture = (e: MouseEvent) => {
+    if (draggedRef.current) {
+      e.preventDefault()
+      e.stopPropagation()
+      draggedRef.current = false
+    }
+  }
+
   const isActive = (path: string) => {
     if (path.startsWith('http')) {
       return false
@@ -145,6 +243,7 @@ const MobileNav = memo(function MobileNavBase({
         createPortal(
           <>
             <div
+              ref={backdropRef}
               className={`${classNames.backdrop} ${
                 open ? classNames.visible : classNames.hidden
               }`}
@@ -158,6 +257,7 @@ const MobileNav = memo(function MobileNavBase({
             />
 
             <div
+              ref={sheetRef}
               className={`${classNames.sheet} ${
                 open ? classNames.sheetVisible : classNames.sheetHidden
               }`}
@@ -169,9 +269,15 @@ const MobileNav = memo(function MobileNavBase({
                   background: 'var(--surface)',
                   borderTop: '1px solid var(--border-2)',
                   boxShadow: '0 -24px 60px -20px rgba(0, 0, 0, 0.45)',
+                  touchAction: 'none',
                 }}
                 aria-modal="true"
                 aria-label="Navigation menu"
+                onPointerDown={onPointerDown}
+                onPointerMove={onPointerMove}
+                onPointerUp={onPointerEnd}
+                onPointerCancel={onPointerEnd}
+                onClickCapture={onClickCapture}
               >
                 <div className={classNames.handleContainer}>
                   <div
