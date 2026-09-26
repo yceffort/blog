@@ -1,0 +1,24 @@
+{
+  "tags": {
+    "javascript": "the JavaScript language and its execution model: syntax, semantics, spec, built-in objects, event loop, execution context",
+    "typescript": "TypeScript: its type system, typing techniques, or the TypeScript compiler and its tooling",
+    "nodejs": "Node.js runtime and its APIs, server-side JavaScript execution",
+    "react": "React: components, hooks, rendering, server components, React internals",
+    "nextjs": "Next.js or similar React meta-frameworks (routing, rendering modes, its caching)",
+    "async": "asynchronous programming: promises, event loop, concurrency, race conditions",
+    "data-fetching": "fetching and caching server data in the client: TanStack Query, SWR, request deduplication, refetching",
+    "browser": "how browsers work or behave: rendering pipeline, browser APIs, compatibility",
+    "animation": "UI animation techniques and animation libraries",
+    "networking": "network protocols and transport: HTTP, headers, requests",
+    "caching": "caching strategies: HTTP cache, CDN, in-memory or framework caches",
+    "web-performance": "measuring or improving performance: load speed, web vitals, rendering cost, runtime speed, benchmarks",
+    "security": "security vulnerabilities, attacks, authentication, supply-chain risks",
+    "bundler": "JavaScript bundlers and build pipelines: webpack, Vite, Rolldown, tree shaking, bundle size",
+    "npm": "npm packages and package management: package.json, dependencies, versioning, publishing, type declarations",
+    "testing": "software testing: unit, integration, end-to-end tests, test tools",
+    "error-handling": "handling errors and exceptions in code: try/catch, rejections, error boundaries",
+    "observability": "error monitoring, logging, tracing, and metrics in production, tools such as Sentry",
+    "ai": "AI, LLMs, retrieval-augmented generation, coding agents, machine learning",
+    "career": "developer career, job hunting, interviews, portfolios, learning and growth"
+  }
+}
