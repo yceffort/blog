@@ -10,7 +10,7 @@ interface OpenSourceProject {
 
 export const openSourceProjects: OpenSourceProject[] = [
   {
-    name: 'coldpath',
+    name: '@yceffort/coldpath',
     tags: ['rust', 'source-map', 'v8-coverage'],
     category: {ko: '개발 도구', en: 'Developer tool'},
     href: 'https://github.com/yceffort/coldpath',
@@ -20,7 +20,7 @@ export const openSourceProjects: OpenSourceProject[] = [
     },
   },
   {
-    name: 'number-flow',
+    name: '@yceffort/number-flow',
     tags: ['typescript', 'javascript', 'react', 'web-component'],
     category: {ko: '포크·확장', en: 'Fork and extension'},
     href: 'https://github.com/yceffort/number-flow',
@@ -30,7 +30,7 @@ export const openSourceProjects: OpenSourceProject[] = [
     },
   },
   {
-    name: 'storage-inspector',
+    name: '@yceffort/storage-inspector',
     tags: ['typescript', 'lit', 'web-component'],
     category: {ko: '웹뷰 디버깅', en: 'Webview debugging'},
     href: 'https://github.com/yceffort/storage-inspector',
@@ -40,7 +40,7 @@ export const openSourceProjects: OpenSourceProject[] = [
     },
   },
   {
-    name: 'rust-markdownlint',
+    name: '@yceffort/rust-markdownlint',
     tags: ['rust', 'rayon'],
     category: {ko: '개발 도구', en: 'Developer tool'},
     href: 'https://github.com/yceffort/rust-markdownlint',
