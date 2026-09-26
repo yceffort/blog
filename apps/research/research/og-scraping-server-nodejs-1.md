@@ -5,9 +5,8 @@ paginate: true
 theme: midnight
 tags:
   - nodejs
-  - web
-  - performance
-  - deep-dive
+  - networking
+  - caching
 date: 2026-08-18
 post: https://yceffort.kr/2026/08/og-scraping-server-1
 description: '링크 미리보기는 왜 태생적으로 실패율이 높은가부터, 런타임 선택이 갈리는 네 지점, User-Agent와 인코딩, 캐시 스탬피드, 히트율 역산까지'

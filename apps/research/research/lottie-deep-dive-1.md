@@ -4,12 +4,8 @@ marp: true
 paginate: true
 theme: midnight
 tags:
-  - lottie
-  - performance
-  - wasm
-  - webp
-  - cdn
-  - measurement
+  - web-performance
+  - animation
 date: 2026-09-17
 description: '로티 애니메이션이 늦게 뜨는 화면에서 배포 번들과 응답 헤더, 에셋 내부를 직접 뜯어 병목을 특정하는 과정. 추측 대신 측정으로 시작하는 성능 조사'
 published: true

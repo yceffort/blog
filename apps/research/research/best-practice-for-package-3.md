@@ -4,7 +4,9 @@ marp: true
 paginate: true
 theme: default
 tags:
-  - javascript
+  - npm
+  - bundler
+  - web-performance
 date: 2025-03-28
 description: '🤔'
 published: true

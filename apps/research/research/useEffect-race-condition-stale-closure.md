@@ -5,7 +5,7 @@ paginate: true
 theme: yceffort
 tags:
   - react
-  - useEffect
+  - async
 date: 2026-04-18
 description: '주니어를 졸업하려는 개발자를 위한 useEffect 딥다이브 — 안티패턴, race condition, stale closure, event vs effect, tearing, Suspense까지'
 published: true

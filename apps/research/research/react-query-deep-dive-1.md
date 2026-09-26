@@ -4,10 +4,10 @@ marp: true
 paginate: true
 theme: midnight
 tags:
+  - data-fetching
+  - caching
   - react
-  - react-query
-  - tanstack-query
-  - deep-dive
+  - async
 date: 2026-08-14
 description: '서버 상태라는 문제, useQuery의 상태 모델, staleTime과 gcTime — 캐시 항목의 일생을 따라가는 react-query 강의 1부'
 published: true

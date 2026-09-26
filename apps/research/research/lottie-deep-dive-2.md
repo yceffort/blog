@@ -4,11 +4,9 @@ marp: true
 paginate: true
 theme: midnight
 tags:
-  - lottie
-  - performance
-  - wasm
-  - rendering
-  - intersection-observer
+  - web-performance
+  - animation
+  - browser
 date: 2026-09-17
 description: 'dotlottie-web의 인스턴스 생애와 프레임 루프, freezeOnOffscreen의 3중 방어를 번들 코드로 읽는다. 우리가 직접 만든 최적화가 왜 중복이었는지, 기본값을 덮어써서 오히려 비용을 올린 곳은 어디인지'
 published: true

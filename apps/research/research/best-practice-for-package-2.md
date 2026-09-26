@@ -4,7 +4,8 @@ marp: true
 paginate: true
 theme: default
 tags:
-  - javascript
+  - typescript
+  - npm
 date: 2025-03-25
 description: '생각보다 잘 모르고 있던 타입스크립트'
 published: true

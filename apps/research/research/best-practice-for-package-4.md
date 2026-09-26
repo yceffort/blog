@@ -4,7 +4,7 @@ marp: true
 paginate: true
 theme: default
 tags:
-  - javascript
+  - npm
 date: 2026-04-04
 description: '세 가지 의존성 필드의 역사, 정의, 그리고 현대적 의미'
 published: true

@@ -5,7 +5,7 @@ paginate: true
 theme: yceffort
 tags:
   - react
-  - performance
+  - web-performance
 date: 2026-04-13
 description: '객체 참조, memo, useMemo, useCallback, 그리고 구조적 최적화까지 — 실무에서 바로 쓰는 렌더링 최적화 판단 기준'
 published: true

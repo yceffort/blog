@@ -4,8 +4,7 @@ marp: true
 paginate: true
 theme: default
 tags:
-  - AI
-  - LLM
+  - ai
 date: 2025-07-03
 description: '진짜로 알고 싶다'
 published: false

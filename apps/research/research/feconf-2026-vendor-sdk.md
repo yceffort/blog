@@ -7,11 +7,8 @@ header: 'FECONF 2026 / FRONTEND ENGINEERING'
 footer: '카카오페이증권  /  김용찬'
 transition: glide
 tags:
-  - feconf
+  - web-performance
   - bundler
-  - tree-shaking
-  - testing
-  - sdk
 date: 2026-09-15
 description: '상수 하나에서 시작한 외부 SDK 재구성. 초기화 경로의 import를 끊고 엔트리와 배포 구조를 바꿔 웹 전송용 번들의 gzip 크기를 69% 줄였습니다. 엔트리 분리로 빠진 자동 이벤트와 페이지 이탈 전송, history 패치가 숨긴 테스트 실패를 통해 지켜야 할 브라우저 동작까지 살펴봅니다.'
 published: false

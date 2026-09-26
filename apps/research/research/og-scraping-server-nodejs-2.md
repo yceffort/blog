@@ -4,10 +4,9 @@ marp: true
 paginate: true
 theme: midnight
 tags:
-  - nodejs
   - security
-  - ssrf
-  - deep-dive
+  - networking
+  - nodejs
 date: 2026-08-18
 post: https://yceffort.kr/2026/08/og-scraping-server-2
 description: '사용자가 준 URL을 서버가 대신 여는 일의 위험, 화이트리스트를 뚫는 우회 여섯 가지와 그것을 막는 방어 원리 다섯 개'

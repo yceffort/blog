@@ -4,8 +4,10 @@ marp: true
 paginate: true
 theme: default
 tags:
-  - react
   - nextjs
+  - caching
+  - react
+  - web-performance
 date: 2026-05-15
 description: '"use cache" 한 줄이 만드는 빌드 타임 변환, 캐시 키, cacheLife, 그리고 Cache Components까지'
 published: true

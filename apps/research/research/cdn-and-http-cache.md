@@ -4,12 +4,9 @@ marp: true
 paginate: true
 theme: midnight
 tags:
-  - cdn
-  - http
-  - cache
-  - performance
-  - aws
-  - cloudfront
+  - caching
+  - networking
+  - web-performance
 date: 2026-09-11
 description: 'CDN의 동작과 HTTP 캐시 규칙을 익히고, 우리 서비스의 응답 헤더로 저장·신선도·재검증을 해석하는 강의'
 published: true

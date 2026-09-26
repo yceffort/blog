@@ -3,10 +3,8 @@ marp: true
 paginate: true
 theme: default
 tags:
-  - 취업
-  - 커리어
-  - 신입
-  - 포트폴리오
+  - career
+  - ai
 date: 2025-02-04
 description: '채용 한파와 AI 시대, 신입으로 살아남기'
 published: false

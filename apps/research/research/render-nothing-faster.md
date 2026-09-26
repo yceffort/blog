@@ -5,7 +5,7 @@ paginate: true
 theme: default
 tags:
   - react
-  - performance
+  - web-performance
 date: 2026-04-07
 description: '아무것도 렌더링하지 않는 두 가지 흔한 패턴을 JSX runtime/reconciler 관점에서 다시 본다'
 published: true

@@ -4,12 +4,9 @@ marp: true
 paginate: true
 theme: midnight
 tags:
-  - cdn
-  - http
-  - cache
-  - performance
-  - aws
-  - cloudfront
+  - caching
+  - networking
+  - web-performance
 date: 2026-09-11
 description: 'HTML·JS·이미지·폰트·API의 캐시 정책을 정하고, 배포 순서와 DevTools로 캐시 문제를 진단하는 실무 강의'
 published: true

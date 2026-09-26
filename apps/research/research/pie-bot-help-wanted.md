@@ -4,10 +4,7 @@ marp: true
 paginate: true
 theme: default
 tags:
-  - AI
-  - Gemini
-  - VSCode
-  - NaverPayDev
+  - ai
 date: 2025-05-26
 description: 'Naver Pay 개발자를 위한 AI 코드 어시스턴트 Pie Bot 개발에 함께해주세요!'
 published: false

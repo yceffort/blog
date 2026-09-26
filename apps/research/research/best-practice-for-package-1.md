@@ -4,7 +4,8 @@ marp: true
 paginate: true
 theme: default
 tags:
-  - javascript
+  - npm
+  - nodejs
 date: 2025-03-22
 description: 'package.json 만 잘만들어도 반은 먹고 간다.'
 published: true

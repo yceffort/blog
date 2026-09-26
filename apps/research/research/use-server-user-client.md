@@ -4,8 +4,8 @@ marp: true
 paginate: true
 theme: default
 tags:
-  - javascript
   - react
+  - nextjs
 date: 2025-05-15
 description: '🤔'
 published: true
