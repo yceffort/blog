@@ -1,9 +1,9 @@
 'use client'
 
-import {memo, useEffect, useMemo, useRef} from 'react'
+import {memo} from 'react'
 
 import * as styles from '@/components/SlideList.styles'
-import {useFontFace} from '@/hooks/useFontFace'
+import {useMarpShadowRoot} from '@/hooks/useMarpShadowRoot'
 
 interface SlidePreviewProps {
   html: string
@@ -11,59 +11,32 @@ interface SlidePreviewProps {
   fonts: string[]
 }
 
+const HOST_CSS = `
+  :host {
+    all: initial;
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  :host > [data-marpit-svg] {
+    vertical-align: top;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+`
+
 export const SlidePreview = memo(function SlidePreviewBase({
   html,
   css,
   fonts,
 }: SlidePreviewProps) {
-  const fontsKey = fonts.join(',')
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const stableFonts = useMemo(() => fonts, [fontsKey])
-  const elementRef = useRef<HTMLSpanElement>(null)
-
-  useFontFace(stableFonts)
-
-  useEffect(() => {
-    const hostEl = elementRef.current
-    if (!hostEl) {
-      return undefined
-    }
-
-    if (!hostEl.shadowRoot) {
-      hostEl.attachShadow({mode: 'open'})
-    }
-    const shadowRoot = hostEl.shadowRoot as ShadowRoot
-
-    shadowRoot.innerHTML = `
-      ${html}
-      <style>${css}</style>
-      <style>
-        :host {
-          all: initial;
-          display: block;
-          width: 100%;
-          height: 100%;
-          cursor: pointer;
-        }
-        :host > [data-marpit-svg] {
-          vertical-align: top;
-          width: 100%;
-          height: 100%;
-          cursor: pointer;
-        }
-      </style>
-    `
-
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const {browser} = require('@marp-team/marp-core/browser')
-    const cleanup = browser(shadowRoot)
-
-    return cleanup
-  }, [html, css])
+  const hostRef = useMarpShadowRoot(html, css, fonts, HOST_CSS)
 
   return (
     <div className={styles.preview_frame}>
-      <span ref={elementRef} className={styles.preview_host} />
+      <span ref={hostRef} className={styles.preview_host} />
     </div>
   )
 })
