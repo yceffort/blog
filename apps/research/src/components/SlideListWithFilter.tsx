@@ -251,7 +251,7 @@ export function SlideListWithFilter({slides, cssList}: Props) {
         </div>
         <div className={styles.sec_line} />
         <OfflineLink href="/offline" className="offline-button">
-          저장한 자료 →
+          Offline →
         </OfflineLink>
       </div>
 

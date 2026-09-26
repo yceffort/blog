@@ -13,9 +13,9 @@ export const SiteConfig = {
   googleAnalyticsId: 'G-ND58S24JBX',
   useKatex: false,
   menu: [
-    {label: '저장한 자료', path: '/offline'},
+    {label: 'Offline', path: '/offline'},
     {
-      label: '📚 blog',
+      label: '📚 Blog',
       path: isDev ? 'http://localhost:3000' : 'https://yceffort.kr',
     },
   ],

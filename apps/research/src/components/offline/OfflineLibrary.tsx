@@ -84,7 +84,7 @@ export function OfflineLibrary() {
           )
       }
       if (!disposed) {
-        document.title = `${saved.title} · 저장한 자료`
+        document.title = `${saved.title} · Offline`
         setDeck(saved)
       }
     })()
@@ -140,12 +140,10 @@ export function OfflineLibrary() {
     <main className="offline-library">
       <nav className="offline-library-nav" aria-label="보관함 탐색">
         <OfflineLink href="/">← 전체 슬라이드</OfflineLink>
-        {selection && (
-          <OfflineLink href="/offline">저장한 자료 목록</OfflineLink>
-        )}
+        {selection && <OfflineLink href="/offline">Offline 목록</OfflineLink>}
       </nav>
       <p className="offline-eyebrow">YOUR OFFLINE LIBRARY</p>
-      <h1>저장한 자료</h1>
+      <h1>Offline</h1>
       <p className="offline-description">
         슬라이드 전환 효과, 발표자 노트, 타이머까지 인터넷 없이 그대로 사용할 수
         있습니다.

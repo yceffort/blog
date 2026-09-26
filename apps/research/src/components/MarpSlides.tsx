@@ -1316,7 +1316,7 @@ export function MarpSlides({
           <div className="offline-viewer-controls">
             {offline ? (
               <OfflineLink className="offline-button" href="/offline">
-                ← 저장한 자료
+                ← Offline
               </OfflineLink>
             ) : (
               <DownloadButton slug={slug} />
