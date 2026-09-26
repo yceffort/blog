@@ -33,6 +33,28 @@ interface Props {
 
 const PER_PAGE = SiteConfig.postsPerPage
 
+// 블로그 /tags 와 같은 팔레트와 해시를 써서 같은 태그는 두 사이트에서 같은 색을 갖는다.
+const TAG_COLORS = [
+  '#a78bfa',
+  '#f472b6',
+  '#fbbf24',
+  '#38bdf8',
+  '#34d399',
+  '#fb923c',
+  '#a3e635',
+  '#f87171',
+  '#c084fc',
+  '#60a5fa',
+]
+
+function tagColor(tag: string) {
+  let hash = 0
+  for (let i = 0; i < tag.length; i++) {
+    hash = tag.charCodeAt(i) + ((hash << 5) - hash)
+  }
+  return TAG_COLORS[Math.abs(hash) % TAG_COLORS.length]
+}
+
 function readTagsFromUrl(): string[] {
   if (typeof window === 'undefined') {
     return []
@@ -266,20 +288,21 @@ export function SlideListWithFilter({slides, cssList}: Props) {
                 : styles.filter_chip
             }
           >
-            전체 <span className={styles.filter_count}>({slides.length})</span>
+            전체 <span className={styles.filter_count}>{slides.length}</span>
           </button>
           {allTags.map(([tag, count]) => (
             <button
               key={tag}
               type="button"
               onClick={() => handleToggleTag(tag)}
+              style={{['--c1' as never]: tagColor(tag)}}
               className={
                 selectedTags.includes(tag)
                   ? styles.filter_chip_on
                   : styles.filter_chip
               }
             >
-              #{tag} <span className={styles.filter_count}>({count})</span>
+              #{tag} <span className={styles.filter_count}>{count}</span>
             </button>
           ))}
         </div>

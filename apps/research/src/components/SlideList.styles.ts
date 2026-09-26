@@ -148,7 +148,6 @@ const styles = stylex.create({
       alignItems: 'center',
       marginTop: 'auto',
       paddingTop: '10px',
-      fontFamily: 'var(--font-mono), monospace',
       fontSize: '12px',
       color: 'var(--ink-4)',
       gap: '6px',
@@ -202,38 +201,54 @@ const styles = stylex.create({
       paddingBottom: '0.5rem',
     },
   },
+  // 블로그 /tags 의 칩(tchip)과 같은 모양. 색은 --c1 로 태그마다 넘긴다.
   filter_chip: {
     '@layer site': {
-      padding: '5px 12px',
-      border: '1px solid var(--border)',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '8px',
+      padding: '6px 12px',
+      border: '1px solid',
       borderColor: {
-        default: 'var(--border)',
-        ':hover': 'color-mix(in oklab, var(--primary) 40%, var(--border))',
+        default:
+          'color-mix(in oklab, var(--c1, var(--primary)) 40%, transparent)',
+        ':hover': 'var(--c1, var(--primary))',
       },
       borderRadius: '999px',
-      background: 'var(--surface)',
-      fontSize: '12px',
-      fontWeight: '500',
+      background:
+        'color-mix(in oklab, var(--c1, var(--primary)) 14%, var(--surface))',
+      fontSize: '13px',
+      fontWeight: '600',
+      letterSpacing: '-0.01em',
       whiteSpace: 'nowrap',
-      color: {
-        default: 'var(--ink-2)',
-        ':hover': 'var(--primary)',
-      },
+      color: 'var(--c1, var(--primary))',
       cursor: 'pointer',
+      boxShadow: {
+        default: null,
+        ':hover':
+          '0 12px 30px -14px color-mix(in oklab, var(--c1, var(--primary)) 70%, transparent)',
+      },
       transition:
-        'border-color 180ms ease, background-color 180ms ease, color 180ms ease',
+        'border-color 240ms, box-shadow 240ms, background-color 240ms',
     },
   },
   filter_chip_on: {
     '@layer site': {
-      borderColor: 'color-mix(in oklab, var(--primary) 50%, transparent)',
-      background: 'color-mix(in oklab, var(--primary) 14%, var(--surface))',
-      color: 'var(--primary)',
+      borderColor: 'var(--c1, var(--primary))',
+      background:
+        'color-mix(in oklab, var(--c1, var(--primary)) 32%, var(--surface))',
     },
   },
   filter_count: {
     '@layer site': {
-      opacity: 0.55,
+      padding: '2px 7px',
+      borderRadius: '999px',
+      background:
+        'color-mix(in oklab, var(--c1, var(--primary)) 10%, transparent)',
+      fontFamily: 'var(--font-mono), monospace',
+      fontSize: '10px',
+      letterSpacing: '0.04em',
+      color: 'color-mix(in oklab, var(--c1, var(--primary)) 70%, var(--ink-2))',
     },
   },
   grid: {
