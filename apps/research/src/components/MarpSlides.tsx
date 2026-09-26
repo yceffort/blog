@@ -1,6 +1,7 @@
 'use client'
 
 import * as stylex from '@stylexjs/stylex'
+import dynamic from 'next/dynamic'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import type {
   MouseEvent as ReactMouseEvent,
@@ -13,8 +14,6 @@ import 'swiper/css/effect-fade'
 import {EffectCreative, EffectFade, Virtual} from 'swiper/modules'
 import {Swiper, SwiperSlide} from 'swiper/react'
 
-import {DownloadButton} from '@/components/offline/DownloadButton'
-import {OfflineLink} from '@/components/offline/OfflineLink'
 import {useBroadcastChannel} from '@/hooks/useBroadcastChannel'
 import {useDrawing} from '@/hooks/useDrawing'
 import {useLaserPointer} from '@/hooks/useLaserPointer'
@@ -22,18 +21,26 @@ import {offlineHref} from '@/lib/offline/client'
 import {getSlideGroups} from '@/lib/slideNavigation'
 
 import {Marp} from './Marp'
+import {MarpContextMenu} from './MarpContextMenu'
+import type {ContextMenuActions} from './MarpContextMenu'
+import {MarpDrawingLayer} from './MarpDrawingLayer'
 import {MarpHelpModal} from './MarpHelpModal'
-import {MarpQrModal} from './MarpQrModal'
+import {MarpOverview} from './MarpOverview'
 import {MarpSearchModal} from './MarpSearchModal'
 import {readTransition} from './MarpSlides.constants'
-import type {ContextMenuState, TransitionType} from './MarpSlides.constants'
+import type {TransitionType} from './MarpSlides.constants'
 import * as styles from './MarpSlides.styles'
 import {styles as sx} from './MarpSlides.styles'
+
+// qrcode.react는 QR을 열 때만 필요하다
+const MarpQrModal = dynamic(
+  () => import('./MarpQrModal').then((mod) => mod.MarpQrModal),
+  {ssr: false},
+)
 
 // 터치 롱프레스로 컨텍스트 메뉴를 여는 기준. 이동 허용치는 스와이프와 구분하기 위한 값이다
 const LONG_PRESS_MS = 500
 const LONG_PRESS_MOVE_TOLERANCE = 10
-const MENU_VIEWPORT_MARGIN = 8
 
 const INTERACTIVE_TARGET =
   'a[href], button, input, select, textarea, [contenteditable]'
@@ -42,6 +49,24 @@ function isInteractiveEvent(event: Event) {
   return event
     .composedPath()
     .some((node) => node instanceof Element && node.matches(INTERACTIVE_TARGET))
+}
+
+const NO_SLIDES: number[] = []
+
+// #3 같은 해시를 0부터 시작하는 슬라이드 번호로 바꾼다. 범위 밖이면 null
+function readHashIndex(length: number): number | null {
+  const pageNum = parseInt(window.location.hash.slice(1), 10)
+  return pageNum >= 1 && pageNum <= length ? pageNum - 1 : null
+}
+
+function parseJsonArray(data: string, label: string): string[] {
+  try {
+    return JSON.parse(data) as string[]
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Failed to parse ${label} data:`, error)
+    return []
+  }
 }
 
 interface MarpSlidesProps {
@@ -70,45 +95,10 @@ export function MarpSlides({
     ? offlineHref(slug, true)
     : `/slides/${slug}/presenter`
 
-  // JSON 파싱에 에러 처리 추가 (memoized)
-  const html = useMemo(() => {
-    try {
-      return JSON.parse(dataHtml) as string[]
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Failed to parse HTML data:', error)
-      return []
-    }
-  }, [dataHtml])
-
-  const fonts = useMemo(() => {
-    try {
-      return JSON.parse(dataFonts) as string[]
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Failed to parse fonts data:', error)
-      return []
-    }
-  }, [dataFonts])
-
+  const html = useMemo(() => parseJsonArray(dataHtml, 'HTML'), [dataHtml])
+  const fonts = useMemo(() => parseJsonArray(dataFonts, 'fonts'), [dataFonts])
   const css = dataCss
   const slideGroups = useMemo(() => getSlideGroups(html), [html])
-
-  // 초기 해시값에서 activeIndex 설정
-  const getInitialIndex = useCallback((length: number) => {
-    if (typeof window === 'undefined') {
-      return 0
-    }
-
-    const hash = window.location.hash
-    if (hash.startsWith('#')) {
-      const pageNum = parseInt(hash.slice(1), 10)
-      if (!isNaN(pageNum) && pageNum > 0 && pageNum <= length) {
-        return pageNum - 1
-      }
-    }
-    return 0
-  }, [])
 
   // 상태 관리 — SSR과 동일한 초기값(0)으로 시작하여 hydration mismatch 방지
   const [{activeIndex, showHiddenSlides}, setNavigation] = useState(() => ({
@@ -117,23 +107,26 @@ export function MarpSlides({
   }))
   const slideIndices = showHiddenSlides ? slideGroups.all : slideGroups.visible
   const activePosition = Math.max(0, slideIndices.indexOf(activeIndex))
+  const multiple = slideIndices.length > 1
   const [isBottomHovered, setIsBottomHovered] = useState(false)
   const [isOverviewOpen, setIsOverviewOpen] = useState(false)
-  const [contextMenu, setContextMenu] = useState<ContextMenuState>({
-    visible: false,
-    x: 0,
-    y: 0,
-  })
-  const [goToSlideInput, setGoToSlideInput] = useState('')
+  const [contextMenu, setContextMenu] = useState<{x: number; y: number} | null>(
+    null,
+  )
   const [isHelpOpen, setIsHelpOpen] = useState(false)
   const [qrUrl, setQrUrl] = useState<string | null>(null)
   const [isPrinting, setIsPrinting] = useState(false)
   const [transition, setTransition] = useState<TransitionType>('slide')
   const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
   const [isLaserMode, setIsLaserMode] = useState(false)
   const [isDrawingMode, setIsDrawingMode] = useState(false)
-  const searchInputRef = useRef<HTMLInputElement | null>(null)
+  // 오버레이가 떠 있으면 키보드와 휠로 슬라이드를 넘기지 않는다
+  const isOverlayOpen =
+    isOverviewOpen ||
+    isSearchOpen ||
+    isHelpOpen ||
+    qrUrl !== null ||
+    contextMenu !== null
   const swiperRef = useRef<SwiperClass | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
   // 터치 롱프레스도 우클릭과 같은 메뉴를 연다
@@ -141,13 +134,10 @@ export function MarpSlides({
   const longPressStartRef = useRef<{x: number; y: number} | null>(null)
   // 롱프레스로 연 직후 따라오는 click은 메뉴를 바로 닫으므로 다음 pointerdown까지 무시한다
   const longPressFiredRef = useRef(false)
+  const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const activeIndexRef = useRef(activeIndex)
   const showHiddenSlidesRef = useRef(showHiddenSlides)
   const lastVisibleIndexRef = useRef(slideGroups.visible[0] ?? 0)
-  useEffect(() => {
-    activeIndexRef.current = activeIndex
-    showHiddenSlidesRef.current = showHiddenSlides
-  }, [activeIndex, showHiddenSlides])
 
   const applyNavigation = useCallback(
     (index: number, includeHidden = showHiddenSlidesRef.current) => {
@@ -184,21 +174,7 @@ export function MarpSlides({
   )
 
   const laserRef = useLaserPointer(isLaserMode)
-  const {
-    canvasRef,
-    textInputRef,
-    drawTool,
-    setDrawTool,
-    drawColor,
-    setDrawColor,
-    handleDrawStart,
-    handleDrawMove,
-    handleDrawEnd,
-    handleClearCanvas,
-    textPos,
-    commitText,
-    cancelText,
-  } = useDrawing(isDrawingMode, activeIndex)
+  const drawing = useDrawing(isDrawingMode, activeIndex)
 
   const {sendSlideChange} = useBroadcastChannel(`marp-slides-${slug}`, {
     onSlideChange: applyNavigation,
@@ -218,6 +194,15 @@ export function MarpSlides({
     [applyNavigation, sendSlideChange],
   )
 
+  const slideUrl = (index: number) =>
+    `${window.location.origin}/slides/${slug}#${index + 1}`
+  const goHome = useCallback(() => {
+    window.location.href = offline ? '/offline' : '/'
+  }, [offline])
+  const openPresenter = useCallback(() => {
+    window.open(presenterUrl, 'presenter', 'width=1200,height=800')
+  }, [presenterUrl])
+
   // 원본 슬라이드 번호와 숨김 장을 제외한 Swiper 위치를 구분해 동기화한다.
   useEffect(() => {
     const swiper = swiperRef.current
@@ -226,52 +211,10 @@ export function MarpSlides({
     }
   }, [activePosition, showHiddenSlides])
 
-  // memoized values
-  const multiple = slideIndices.length > 1
-
-  // 슬라이드별 본문 텍스트 (검색용)
-  const slideTexts = useMemo(() => {
-    if (typeof DOMParser === 'undefined') {
-      return [] as string[]
-    }
-    const parser = new DOMParser()
-    return html.map((h) => {
-      const doc = parser.parseFromString(h, 'text/html')
-      return (doc.body.textContent || '').replace(/\s+/g, ' ').trim()
-    })
-  }, [html])
-
-  // 검색 결과
-  const searchResults = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase()
-    if (!q) {
-      return [] as {index: number; snippet: string}[]
-    }
-    return slideTexts
-      .map((text, index) => {
-        if (!showHiddenSlides && slideGroups.hidden.includes(index)) {
-          return null
-        }
-        const lower = text.toLowerCase()
-        const pos = lower.indexOf(q)
-        if (pos === -1) {
-          return null
-        }
-        const start = Math.max(0, pos - 30)
-        const end = Math.min(text.length, pos + q.length + 60)
-        const snippet =
-          (start > 0 ? '…' : '') +
-          text.slice(start, end) +
-          (end < text.length ? '…' : '')
-        return {index, snippet}
-      })
-      .filter((v): v is {index: number; snippet: string} => v !== null)
-  }, [searchQuery, slideTexts, showHiddenSlides, slideGroups.hidden])
-
   // 클라이언트에서만 실행되는 초기화 - hash에서 초기 슬라이드 동기화
   useEffect(() => {
-    const initialIndex = getInitialIndex(html.length)
-    if (initialIndex > 0) {
+    const initialIndex = readHashIndex(html.length)
+    if (initialIndex) {
       navigateTo(initialIndex)
     }
 
@@ -279,19 +222,6 @@ export function MarpSlides({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // TweaksPanel에서 슬라이드 전환 효과 변경 시 동기화
-  useEffect(() => {
-    const handler = (e: Event) => {
-      const detail = (e as CustomEvent<TransitionType>).detail
-      if (detail) {
-        setTransition(detail)
-      }
-    }
-    window.addEventListener('research:transition', handler)
-    return () => window.removeEventListener('research:transition', handler)
-  }, [])
-
-  // 슬라이드 변경 핸들러 (memoized)
   const handleActiveIndexChange = useCallback(
     (instance: SwiperClass) => {
       const newIndex = slideIndices[instance.activeIndex]
@@ -302,7 +232,6 @@ export function MarpSlides({
     [slideIndices, navigateTo],
   )
 
-  // Swiper 초기화 핸들러 (memoized)
   const handleSwiper = useCallback((instance: SwiperClass) => {
     swiperRef.current = instance
   }, [])
@@ -371,15 +300,14 @@ export function MarpSlides({
 
       // 발표자 모드 열기 (P 키)
       if (e.code === 'KeyP') {
-        window.open(presenterUrl, 'presenter', 'width=1200,height=800')
+        openPresenter()
         return
       }
 
-      // ESC로 도움말/QR/검색/오버뷰 닫기
+      // ESC로 검색/QR/도움말/오버뷰 닫기
       if (e.key === 'Escape') {
         if (isSearchOpen) {
           setIsSearchOpen(false)
-          setSearchQuery('')
           return
         }
         if (qrUrl) {
@@ -396,15 +324,7 @@ export function MarpSlides({
         }
       }
 
-      // 오버뷰가 열려있으면 슬라이드 네비게이션 비활성화
-      if (
-        isOverviewOpen ||
-        isSearchOpen ||
-        isHelpOpen ||
-        qrUrl ||
-        contextMenu.visible ||
-        !multiple
-      ) {
+      if (isOverlayOpen || !multiple) {
         return
       }
 
@@ -433,57 +353,25 @@ export function MarpSlides({
     isHelpOpen,
     qrUrl,
     isSearchOpen,
-    contextMenu.visible,
+    isOverlayOpen,
     slug,
-    presenterUrl,
+    openPresenter,
   ])
 
-  // 검색 모달 열릴 때 input에 포커스
-  useEffect(() => {
-    if (isSearchOpen) {
-      searchInputRef.current?.focus()
+  // 휠 네비게이션 (300ms 디바운스)
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (!multiple || isOverlayOpen || wheelTimeoutRef.current) {
+      return
     }
-  }, [isSearchOpen])
-
-  // 휠 네비게이션
-  const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const handleWheel = useCallback(
-    (e: React.WheelEvent<HTMLDivElement>) => {
-      if (
-        !multiple ||
-        contextMenu.visible ||
-        isOverviewOpen ||
-        isSearchOpen ||
-        isHelpOpen ||
-        qrUrl
-      ) {
-        return
-      }
-
-      // 디바운스 처리
-      if (wheelTimeoutRef.current) {
-        return
-      }
-
-      if (e.deltaY > 0) {
-        swiperRef.current?.slideNext()
-      } else if (e.deltaY < 0) {
-        swiperRef.current?.slidePrev()
-      }
-
-      wheelTimeoutRef.current = setTimeout(() => {
-        wheelTimeoutRef.current = null
-      }, 300)
-    },
-    [
-      multiple,
-      contextMenu.visible,
-      isOverviewOpen,
-      isSearchOpen,
-      isHelpOpen,
-      qrUrl,
-    ],
-  )
+    if (e.deltaY > 0) {
+      swiperRef.current?.slideNext()
+    } else if (e.deltaY < 0) {
+      swiperRef.current?.slidePrev()
+    }
+    wheelTimeoutRef.current = setTimeout(() => {
+      wheelTimeoutRef.current = null
+    }, 300)
+  }
 
   // 클릭 네비게이션 (좌우/상하 10% 영역) (memoized)
   const handleSlideClick = useCallback(
@@ -499,51 +387,37 @@ export function MarpSlides({
       }
 
       const rect = e.currentTarget.getBoundingClientRect()
-      const xPos = e.clientX - rect.left
-      const yPos = e.clientY - rect.top
-      const xPercent = (xPos / rect.width) * 100
-      const yPercent = (yPos / rect.height) * 100
+      const xPercent = ((e.clientX - rect.left) / rect.width) * 100
+      const yPercent = ((e.clientY - rect.top) / rect.height) * 100
 
       // 상단 10% 영역 클릭 - 첫 슬라이드로
       if (yPercent <= 10) {
-        if (multiple && swiperRef.current) {
-          swiperRef.current.slideTo(0)
+        if (multiple) {
+          swiperRef.current?.slideTo(0)
         }
       }
       // 하단 10% 영역 클릭 - 루트 페이지로
       else if (yPercent >= 90) {
-        if (typeof window !== 'undefined') {
-          window.location.href = offline ? '/offline' : '/'
-        }
+        goHome()
       }
       // 좌측 10% 영역 클릭 - 이전 슬라이드
-      else if (xPercent <= 10 && multiple && swiperRef.current) {
-        swiperRef.current.slidePrev()
+      else if (xPercent <= 10 && multiple) {
+        swiperRef.current?.slidePrev()
       }
       // 우측 10% 영역 클릭 - 다음 슬라이드
-      else if (xPercent >= 90 && multiple && swiperRef.current) {
-        swiperRef.current.slideNext()
+      else if (xPercent >= 90 && multiple) {
+        swiperRef.current?.slideNext()
       }
       // 중앙 영역은 아무 동작 없음
     },
-    [multiple, offline],
+    [multiple, goHome],
   )
 
   // 해시 변경 감지
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash
-      if (!hash.startsWith('#')) {
-        return
-      }
-
-      const pageNum = parseInt(hash.slice(1), 10)
-      if (isNaN(pageNum) || pageNum < 1 || pageNum > html.length) {
-        return
-      }
-
-      const newIndex = pageNum - 1
-      if (newIndex !== activeIndexRef.current) {
+      const newIndex = readHashIndex(html.length)
+      if (newIndex !== null && newIndex !== activeIndexRef.current) {
         navigateTo(newIndex)
       }
     }
@@ -557,35 +431,11 @@ export function MarpSlides({
     setIsBottomHovered(false)
   }, [])
 
-  // 오버뷰 썸네일 클릭 핸들러
-  const handleOverviewSlideClick = useCallback(
-    (index: number) => {
-      navigateTo(index)
-      setIsOverviewOpen(false)
-    },
-    [navigateTo],
-  )
-
-  // 오버뷰 오버레이 클릭 핸들러 (배경 클릭 시 닫기)
-  const handleOverviewOverlayClick = useCallback(
-    (e: ReactMouseEvent<HTMLDivElement>) => {
-      if (e.target === e.currentTarget) {
-        setIsOverviewOpen(false)
-      }
-    },
-    [],
-  )
-
-  // 컨텍스트 메뉴 핸들러
   const handleContextMenu = useCallback(
     (e: ReactMouseEvent<HTMLDivElement>) => {
       if (isInteractiveEvent(e.nativeEvent)) return
       e.preventDefault()
-      setContextMenu({
-        visible: true,
-        x: e.clientX,
-        y: e.clientY,
-      })
+      setContextMenu({x: e.clientX, y: e.clientY})
     },
     [],
   )
@@ -618,7 +468,7 @@ export function MarpSlides({
         longPressTimerRef.current = null
         longPressStartRef.current = null
         longPressFiredRef.current = true
-        setContextMenu({visible: true, x: clientX, y: clientY})
+        setContextMenu({x: clientX, y: clientY})
       }, LONG_PRESS_MS)
     },
     [cancelLongPress],
@@ -664,123 +514,20 @@ export function MarpSlides({
 
   useEffect(() => cancelLongPress, [cancelLongPress])
 
-  const closeContextMenu = useCallback(() => {
-    setContextMenu((prev) => ({...prev, visible: false}))
-    setGoToSlideInput('')
-  }, [])
-
   // 컨텍스트 메뉴 외부 클릭 시 닫기
+  const isContextMenuOpen = contextMenu !== null
   useEffect(() => {
+    if (!isContextMenuOpen) {
+      return undefined
+    }
     const handleClickOutside = () => {
-      if (contextMenu.visible && !longPressFiredRef.current) {
-        closeContextMenu()
+      if (!longPressFiredRef.current) {
+        setContextMenu(null)
       }
     }
-
     document.addEventListener('click', handleClickOutside)
     return () => document.removeEventListener('click', handleClickOutside)
-  }, [contextMenu.visible, closeContextMenu])
-
-  // 컨텍스트 메뉴 액션들
-  const handlePrevSlide = useCallback(() => {
-    swiperRef.current?.slidePrev()
-    closeContextMenu()
-  }, [closeContextMenu])
-
-  const handleNextSlide = useCallback(() => {
-    swiperRef.current?.slideNext()
-    closeContextMenu()
-  }, [closeContextMenu])
-
-  const handleFirstSlide = useCallback(() => {
-    swiperRef.current?.slideTo(0)
-    closeContextMenu()
-  }, [closeContextMenu])
-
-  const handleLastSlide = useCallback(() => {
-    swiperRef.current?.slideTo(slideIndices.length - 1)
-    closeContextMenu()
-  }, [slideIndices.length, closeContextMenu])
-
-  const handleGoToSlide = useCallback(
-    (num: number) => {
-      if (num >= 1 && num <= html.length) {
-        navigateTo(num - 1)
-      }
-      closeContextMenu()
-    },
-    [html.length, closeContextMenu, navigateTo],
-  )
-
-  const handleToggleHiddenSlides = useCallback(() => {
-    if (showHiddenSlides) {
-      navigateTo(lastVisibleIndexRef.current, false)
-    } else if (slideGroups.hidden.length > 0) {
-      navigateTo(slideGroups.hidden[0], true)
-    }
-    closeContextMenu()
-  }, [showHiddenSlides, slideGroups.hidden, navigateTo, closeContextMenu])
-
-  const handleOpenOverview = useCallback(() => {
-    setIsOverviewOpen(true)
-    closeContextMenu()
-  }, [closeContextMenu])
-
-  const handleFullscreen = useCallback(() => {
-    if (containerRef.current) {
-      if (document.fullscreenElement) {
-        void document.exitFullscreen()
-      } else {
-        void containerRef.current.requestFullscreen()
-      }
-    }
-    closeContextMenu()
-  }, [closeContextMenu])
-
-  const handleGoHome = useCallback(() => {
-    window.location.href = offline ? '/offline' : '/'
-  }, [offline])
-
-  const handleCopyLink = useCallback(() => {
-    const url = `${window.location.origin}/slides/${slug}#${activeIndex + 1}`
-    void navigator.clipboard.writeText(url)
-    closeContextMenu()
-  }, [activeIndex, closeContextMenu, slug])
-
-  const handleOpenPresenter = useCallback(() => {
-    window.open(presenterUrl, 'presenter', 'width=1200,height=800')
-    closeContextMenu()
-  }, [presenterUrl, closeContextMenu])
-
-  const handleOpenHelp = useCallback(() => {
-    setIsHelpOpen(true)
-    closeContextMenu()
-  }, [closeContextMenu])
-
-  const handleOpenQr = useCallback(() => {
-    setQrUrl(`${window.location.origin}/slides/${slug}#${activeIndex + 1}`)
-    closeContextMenu()
-  }, [activeIndex, closeContextMenu, slug])
-
-  const handleQrOverlayClick = useCallback(
-    (e: ReactMouseEvent<HTMLDivElement>) => {
-      if (e.target === e.currentTarget) {
-        setQrUrl(null)
-      }
-    },
-    [],
-  )
-
-  const handleCopyQrUrl = useCallback(() => {
-    if (qrUrl) {
-      void navigator.clipboard.writeText(qrUrl)
-    }
-  }, [qrUrl])
-
-  const handlePrint = useCallback(() => {
-    setIsPrinting(true)
-    closeContextMenu()
-  }, [closeContextMenu])
+  }, [isContextMenuOpen])
 
   useEffect(() => {
     if (!isPrinting) {
@@ -798,42 +545,43 @@ export function MarpSlides({
     }
   }, [isPrinting])
 
-  const handleHelpOverlayClick = useCallback(
-    (e: ReactMouseEvent<HTMLDivElement>) => {
-      if (e.target === e.currentTarget) {
-        setIsHelpOpen(false)
-      }
-    },
-    [],
-  )
-
-  const handleSearchOverlayClick = useCallback(
-    (e: ReactMouseEvent<HTMLDivElement>) => {
-      if (e.target === e.currentTarget) {
-        setIsSearchOpen(false)
-        setSearchQuery('')
-      }
-    },
-    [],
-  )
-
-  const handleSearchSelect = useCallback(
-    (index: number) => {
-      navigateTo(index)
-      setIsSearchOpen(false)
-      setSearchQuery('')
-    },
-    [navigateTo],
-  )
-
-  // Marp 렌더링 데이터 (memoized)
   const marpRenderData = useMemo(() => ({html, css, fonts}), [html, css, fonts])
 
-  // 에러 상태 처리
   if (html.length === 0) {
     return (
       <div className={styles.errorMessage}>슬라이드를 로드할 수 없습니다.</div>
     )
+  }
+
+  const menuActions: ContextMenuActions = {
+    prev: () => swiperRef.current?.slidePrev(),
+    next: () => swiperRef.current?.slideNext(),
+    first: () => swiperRef.current?.slideTo(0),
+    last: () => swiperRef.current?.slideTo(slideIndices.length - 1),
+    goTo: (index) => navigateTo(index),
+    toggleHidden: () => {
+      if (showHiddenSlides) {
+        navigateTo(lastVisibleIndexRef.current, false)
+      } else if (slideGroups.hidden.length > 0) {
+        navigateTo(slideGroups.hidden[0], true)
+      }
+    },
+    overview: () => setIsOverviewOpen(true),
+    presenter: openPresenter,
+    fullscreen: () => {
+      if (document.fullscreenElement) {
+        void document.exitFullscreen()
+      } else {
+        void containerRef.current?.requestFullscreen()
+      }
+    },
+    copyLink: () => void navigator.clipboard.writeText(slideUrl(activeIndex)),
+    qr: () => setQrUrl(slideUrl(activeIndex)),
+    print: () => setIsPrinting(true),
+    toggleLaser: () => setIsLaserMode((prev) => !prev),
+    toggleDrawing: () => setIsDrawingMode((prev) => !prev),
+    help: () => setIsHelpOpen(true),
+    home: goHome,
   }
 
   return (
@@ -918,13 +666,11 @@ export function MarpSlides({
               {/* 클릭 가능 영역 시각적 표시 (hover 시) */}
               {multiple && (
                 <>
-                  {/* 좌측 영역 */}
                   <div
                     className={styles.clickAreaLeft}
                     data-navigation-area="left"
                     aria-hidden="true"
                   />
-                  {/* 우측 영역 */}
                   <div
                     className={styles.clickAreaRight}
                     data-navigation-area="right"
@@ -951,7 +697,6 @@ export function MarpSlides({
         ))}
       </Swiper>
 
-      {/* 진행률 바 */}
       {multiple && (
         <div className={styles.progressBar}>
           <div
@@ -963,7 +708,6 @@ export function MarpSlides({
         </div>
       )}
 
-      {/* 페이지 인디케이터 */}
       {multiple && (
         <div
           className={
@@ -974,157 +718,29 @@ export function MarpSlides({
         </div>
       )}
 
-      {/* 슬라이드 오버뷰 */}
       {multiple && isOverviewOpen && (
-        <div
-          className={styles.overview}
-          role="presentation"
-          onClick={handleOverviewOverlayClick}
-        >
-          <dialog
-            open
-            className={styles.overviewGrid}
-            aria-label="슬라이드 오버뷰"
-          >
-            {slideIndices.map((i) => (
-              <button
-                key={i}
-                className={
-                  i === activeIndex
-                    ? styles.overviewItemActive
-                    : styles.overviewItem
-                }
-                onClick={() => handleOverviewSlideClick(i)}
-                aria-label={`슬라이드 ${i + 1}로 이동`}
-                aria-current={i === activeIndex ? 'true' : undefined}
-              >
-                <div className={styles.overviewThumbnail}>
-                  <Marp
-                    rendered={marpRenderData}
-                    page={i + 1}
-                    className={styles.overviewThumbnailInner}
-                  />
-                </div>
-                <span className={styles.overviewNumber}>
-                  {i + 1}
-                  {slideGroups.hidden.includes(i) ? ' · 숨김' : ''}
-                </span>
-              </button>
-            ))}
-          </dialog>
-          <div className={styles.overviewHint}>ESC 또는 G 키로 닫기</div>
-        </div>
+        <MarpOverview
+          rendered={marpRenderData}
+          slideIndices={slideIndices}
+          hiddenIndices={slideGroups.hidden}
+          activeIndex={activeIndex}
+          onSelect={(index) => {
+            navigateTo(index)
+            setIsOverviewOpen(false)
+          }}
+          onClose={() => setIsOverviewOpen(false)}
+        />
       )}
 
-      {/* 레이저 포인터 */}
       {isLaserMode && (
         <div ref={laserRef} className={styles.laserDot} aria-hidden="true" />
       )}
 
-      {/* 드로잉 캔버스 + 툴바 */}
       {isDrawingMode && (
-        <>
-          <canvas
-            ref={canvasRef}
-            className={styles.drawingCanvas}
-            onPointerDown={handleDrawStart}
-            onPointerMove={handleDrawMove}
-            onPointerUp={handleDrawEnd}
-            onPointerCancel={handleDrawEnd}
-          />
-          {textPos && (
-            <input
-              className={styles.drawTextInput}
-              style={{left: textPos.x, top: textPos.y, color: drawColor}}
-              ref={(el) => {
-                textInputRef.current = el
-                el?.focus()
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Escape' && !e.nativeEvent.isComposing) {
-                  cancelText()
-                }
-              }}
-              // 한글 IME 조합 중 Enter 는 keydown 시점에 isComposing 이라 무시된다.
-              // keyup 은 조합이 끝난 뒤라 마지막 글자까지 담긴 값을 커밋할 수 있다
-              onKeyUp={(e) => {
-                if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
-                  commitText(e.currentTarget.value)
-                }
-              }}
-              onBlur={(e) => commitText(e.currentTarget.value)}
-            />
-          )}
-          <div
-            className={styles.drawToolbar}
-            role="presentation"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className={styles.drawToolGroup}>
-              {(['pen', 'highlighter', 'eraser', 'text'] as const).map((t) => (
-                <button
-                  key={t}
-                  className={
-                    drawTool === t ? styles.drawToolBtnOn : styles.drawToolBtn
-                  }
-                  onClick={() => setDrawTool(t)}
-                  aria-label={t}
-                  title={t}
-                >
-                  {t === 'pen'
-                    ? '✎'
-                    : t === 'highlighter'
-                      ? '◐'
-                      : t === 'eraser'
-                        ? '⌫'
-                        : 'T'}
-                </button>
-              ))}
-            </div>
-            <div className={styles.drawToolGroupLast}>
-              {[
-                '#ef4444',
-                '#3b82f6',
-                '#facc15',
-                '#22c55e',
-                '#000000',
-                '#ffffff',
-              ].map((c) => (
-                <button
-                  key={c}
-                  className={
-                    drawColor === c
-                      ? styles.drawColorBtnOn
-                      : styles.drawColorBtn
-                  }
-                  style={{background: c}}
-                  onClick={() => {
-                    setDrawColor(c)
-                    if (drawTool === 'eraser') {
-                      setDrawTool('pen')
-                    }
-                  }}
-                  aria-label={`color ${c}`}
-                  title={c}
-                />
-              ))}
-            </div>
-            <button
-              className={styles.drawClearBtn}
-              onClick={handleClearCanvas}
-              title="전체 지우기"
-            >
-              clear
-            </button>
-            <button
-              className={styles.drawCloseBtn}
-              onClick={() => setIsDrawingMode(false)}
-              title="드로잉 종료"
-            >
-              ×
-            </button>
-          </div>
-        </>
+        <MarpDrawingLayer
+          drawing={drawing}
+          onClose={() => setIsDrawingMode(false)}
+        />
       )}
 
       {/* 인쇄(PDF) 전용 컨테이너 - 모든 슬라이드를 페이지 단위로 렌더링 */}
@@ -1141,232 +757,40 @@ export function MarpSlides({
         </div>
       )}
 
-      {/* 슬라이드 검색 모달 */}
       {isSearchOpen && (
         <MarpSearchModal
-          inputRef={searchInputRef}
-          query={searchQuery}
-          onQueryChange={(value) => setSearchQuery(value)}
-          results={searchResults}
-          onSelect={handleSearchSelect}
-          onOverlayClick={handleSearchOverlayClick}
-        />
-      )}
-
-      {/* QR 코드 모달 */}
-      {qrUrl && (
-        <MarpQrModal
-          qrUrl={qrUrl}
-          onOverlayClick={handleQrOverlayClick}
-          onCopy={handleCopyQrUrl}
-          onClose={() => setQrUrl(null)}
-        />
-      )}
-
-      {/* 단축키 도움말 모달 */}
-      {isHelpOpen && (
-        <MarpHelpModal
-          onClose={() => setIsHelpOpen(false)}
-          onOverlayClick={handleHelpOverlayClick}
-        />
-      )}
-
-      {/* 컨텍스트 메뉴 */}
-      {contextMenu.visible && (
-        <div
-          className={styles.contextMenu}
-          // 좁은 화면에서는 누른 자리에 그대로 두면 메뉴가 화면 밖으로 나간다
-          ref={(el) => {
-            if (!el) {
-              return
-            }
-            const {width, height} = el.getBoundingClientRect()
-            const left = Math.min(
-              contextMenu.x,
-              window.innerWidth - width - MENU_VIEWPORT_MARGIN,
-            )
-            const top = Math.min(
-              contextMenu.y,
-              window.innerHeight - height - MENU_VIEWPORT_MARGIN,
-            )
-            el.style.left = `${Math.max(MENU_VIEWPORT_MARGIN, left)}px`
-            el.style.top = `${Math.max(MENU_VIEWPORT_MARGIN, top)}px`
+          html={html}
+          excluded={showHiddenSlides ? NO_SLIDES : slideGroups.hidden}
+          onSelect={(index) => {
+            navigateTo(index)
+            setIsSearchOpen(false)
           }}
-          style={{top: contextMenu.y, left: contextMenu.x}}
-          role="presentation"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className={styles.contextMenuHeader}>
-            슬라이드 {activePosition + 1} / {slideIndices.length}
-          </div>
-          <div className={styles.contextMenuDivider} />
-          {multiple && (
-            <>
-              <button
-                className={styles.contextMenuItem}
-                onClick={handlePrevSlide}
-                disabled={activePosition === 0}
-              >
-                <span className={styles.contextMenuIcon}>←</span>
-                이전 슬라이드
-                <span className={styles.contextMenuShortcut}>←</span>
-              </button>
-              <button
-                className={styles.contextMenuItem}
-                onClick={handleNextSlide}
-                disabled={activePosition === slideIndices.length - 1}
-              >
-                <span className={styles.contextMenuIcon}>→</span>
-                다음 슬라이드
-                <span className={styles.contextMenuShortcut}>→</span>
-              </button>
-              <div className={styles.contextMenuDivider} />
-              <button
-                className={styles.contextMenuItem}
-                onClick={handleFirstSlide}
-              >
-                <span className={styles.contextMenuIcon}>⇤</span>첫 슬라이드
-                <span className={styles.contextMenuShortcut}>Home</span>
-              </button>
-              <button
-                className={styles.contextMenuItem}
-                onClick={handleLastSlide}
-              >
-                <span className={styles.contextMenuIcon}>⇥</span>
-                마지막 슬라이드
-                <span className={styles.contextMenuShortcut}>End</span>
-              </button>
-              <div className={styles.contextMenuDivider} />
-              <div className={styles.contextMenuGoTo}>
-                <span>슬라이드 이동:</span>
-                <input
-                  className={styles.contextMenuGoToInput}
-                  type="number"
-                  min={1}
-                  max={html.length}
-                  value={goToSlideInput}
-                  onChange={(e) => setGoToSlideInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      handleGoToSlide(parseInt(goToSlideInput, 10))
-                    }
-                  }}
-                  onClick={(e) => e.stopPropagation()}
-                  placeholder={`1-${html.length}`}
-                />
-                <button
-                  className={styles.contextMenuGoToButton}
-                  onClick={() => handleGoToSlide(parseInt(goToSlideInput, 10))}
-                >
-                  이동
-                </button>
-              </div>
-              <div className={styles.contextMenuDivider} />
-              <button
-                className={styles.contextMenuItem}
-                onClick={handleOpenOverview}
-              >
-                <span className={styles.contextMenuIcon}>▦</span>
-                슬라이드 오버뷰
-                <span className={styles.contextMenuShortcut}>G</span>
-              </button>
-              <div className={styles.contextMenuDivider} />
-            </>
-          )}
-          {slideGroups.hidden.length > 0 && (
-            <button
-              className={styles.contextMenuItem}
-              onClick={handleToggleHiddenSlides}
-            >
-              <span className={styles.contextMenuIcon} aria-hidden="true">
-                ◫
-              </span>
-              {showHiddenSlides ? '숨김 슬라이드 감추기' : '숨김 슬라이드 보기'}
-              <span className={styles.contextMenuShortcut}>
-                {slideGroups.hidden.length}장
-              </span>
-            </button>
-          )}
-          <button
-            className={styles.contextMenuItem}
-            onClick={handleOpenPresenter}
-          >
-            <span className={styles.contextMenuIcon}>🎤</span>
-            발표자 모드
-            <span className={styles.contextMenuShortcut}>P</span>
-          </button>
-          <button className={styles.contextMenuItem} onClick={handleFullscreen}>
-            <span className={styles.contextMenuIcon}>⛶</span>
-            {document.fullscreenElement ? '전체화면 종료' : '전체화면'}
-            <span className={styles.contextMenuShortcut}>F11</span>
-          </button>
-          <button className={styles.contextMenuItem} onClick={handleCopyLink}>
-            <span className={styles.contextMenuIcon}>🔗</span>
-            현재 슬라이드 링크 복사
-          </button>
-          <button className={styles.contextMenuItem} onClick={handleOpenQr}>
-            <span className={styles.contextMenuIcon}>▦</span>
-            QR 코드 표시
-            <span className={styles.contextMenuShortcut}>Q</span>
-          </button>
-          <button className={styles.contextMenuItem} onClick={handlePrint}>
-            <span className={styles.contextMenuIcon}>📄</span>
-            PDF로 다운로드
-          </button>
-          <div className="offline-viewer-controls">
-            {offline ? (
-              <OfflineLink className="offline-button" href="/offline">
-                ← Offline
-              </OfflineLink>
-            ) : (
-              <DownloadButton slug={slug} />
-            )}
-          </div>
-          {postUrl && (
-            <button
-              className={styles.contextMenuItem}
-              onClick={() => {
-                window.open(postUrl, '_blank', 'noopener,noreferrer')
-                closeContextMenu()
-              }}
-            >
-              <span className={styles.contextMenuIcon}>📖</span>
-              블로그 글로 읽기
-            </button>
-          )}
-          <button
-            className={styles.contextMenuItem}
-            onClick={() => {
-              setIsLaserMode((prev) => !prev)
-              closeContextMenu()
-            }}
-          >
-            <span className={styles.contextMenuIcon}>•</span>
-            레이저 포인터 {isLaserMode ? '끄기' : '켜기'}
-            <span className={styles.contextMenuShortcut}>L</span>
-          </button>
-          <button
-            className={styles.contextMenuItem}
-            onClick={() => {
-              setIsDrawingMode((prev) => !prev)
-              closeContextMenu()
-            }}
-          >
-            <span className={styles.contextMenuIcon}>✎</span>
-            드로잉 모드 {isDrawingMode ? '끄기' : '켜기'}
-            <span className={styles.contextMenuShortcut}>D</span>
-          </button>
-          <button className={styles.contextMenuItem} onClick={handleOpenHelp}>
-            <span className={styles.contextMenuIcon}>?</span>
-            단축키 도움말
-            <span className={styles.contextMenuShortcut}>?</span>
-          </button>
-          <div className={styles.contextMenuDivider} />
-          <button className={styles.contextMenuItem} onClick={handleGoHome}>
-            <span className={styles.contextMenuIcon}>🏠</span>
-            홈으로
-          </button>
-        </div>
+          onClose={() => setIsSearchOpen(false)}
+        />
+      )}
+
+      {qrUrl && <MarpQrModal qrUrl={qrUrl} onClose={() => setQrUrl(null)} />}
+
+      {isHelpOpen && <MarpHelpModal onClose={() => setIsHelpOpen(false)} />}
+
+      {contextMenu && (
+        <MarpContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          position={activePosition}
+          total={slideIndices.length}
+          slideCount={html.length}
+          multiple={multiple}
+          hiddenCount={slideGroups.hidden.length}
+          showHiddenSlides={showHiddenSlides}
+          isLaserMode={isLaserMode}
+          isDrawingMode={isDrawingMode}
+          offline={offline}
+          slug={slug}
+          postUrl={postUrl}
+          actions={menuActions}
+          onClose={() => setContextMenu(null)}
+        />
       )}
     </div>
   )

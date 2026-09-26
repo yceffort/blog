@@ -12,12 +12,6 @@ export function isTransitionType(value: unknown): value is TransitionType {
   return TRANSITION_TYPES.includes(value as TransitionType)
 }
 
-export interface ContextMenuState {
-  visible: boolean
-  x: number
-  y: number
-}
-
 export function readTransition(): TransitionType {
   if (typeof document === 'undefined') {
     return 'slide'

@@ -1,34 +1,66 @@
-import type {MouseEvent as ReactMouseEvent, RefObject} from 'react'
+import {useMemo, useState} from 'react'
 
 import * as styles from './MarpSlides.styles'
 
-interface SearchResult {
-  index: number
-  snippet: string
-}
+const focusOnMount = (el: HTMLInputElement | null) => el?.focus()
 
 interface MarpSearchModalProps {
-  inputRef: RefObject<HTMLInputElement | null>
-  query: string
-  onQueryChange: (value: string) => void
-  results: SearchResult[]
+  html: string[]
+  // 검색 대상에서 뺄 원본 슬라이드 번호(0부터)
+  excluded: number[]
   onSelect: (index: number) => void
-  onOverlayClick: (e: ReactMouseEvent<HTMLDivElement>) => void
+  onClose: () => void
 }
 
 export function MarpSearchModal({
-  inputRef,
-  query,
-  onQueryChange,
-  results,
+  html,
+  excluded,
   onSelect,
-  onOverlayClick,
+  onClose,
 }: MarpSearchModalProps) {
+  const [query, setQuery] = useState('')
+
+  // 검색을 열 때만 슬라이드 본문을 파싱한다
+  const slideTexts = useMemo(() => {
+    const parser = new DOMParser()
+    return html.map((h) => {
+      const doc = parser.parseFromString(h, 'text/html')
+      return (doc.body.textContent || '').replace(/\s+/g, ' ').trim()
+    })
+  }, [html])
+
+  const results = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) {
+      return []
+    }
+    return slideTexts.flatMap((text, index) => {
+      if (excluded.includes(index)) {
+        return []
+      }
+      const pos = text.toLowerCase().indexOf(q)
+      if (pos === -1) {
+        return []
+      }
+      const start = Math.max(0, pos - 30)
+      const end = Math.min(text.length, pos + q.length + 60)
+      const snippet =
+        (start > 0 ? '…' : '') +
+        text.slice(start, end) +
+        (end < text.length ? '…' : '')
+      return [{index, snippet}]
+    })
+  }, [query, slideTexts, excluded])
+
   return (
     <div
       className={styles.searchOverlay}
       role="presentation"
-      onClick={onOverlayClick}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose()
+        }
+      }}
     >
       <dialog
         open
@@ -37,11 +69,11 @@ export function MarpSearchModal({
         aria-modal="true"
       >
         <input
-          ref={inputRef}
+          ref={focusOnMount}
           type="text"
           className={styles.searchInput}
           value={query}
-          onChange={(e) => onQueryChange(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && results.length > 0) {
               onSelect(results[0].index)

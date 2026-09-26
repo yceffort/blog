@@ -15,6 +15,16 @@ const HOME_ICON =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z'/%3E%3C/svg%3E\")"
 
 export const styles = stylex.create({
+  overlayBase: {
+    '@layer site': {
+      position: 'fixed',
+      inset: 0,
+      display: 'flex',
+      justifyContent: 'center',
+      animationName: overviewFadeIn,
+      animationTimingFunction: 'ease-out',
+    },
+  },
   marpSlides: {
     '@layer site': {
       position: 'relative',
@@ -282,23 +292,14 @@ export const styles = stylex.create({
   // 슬라이드 오버뷰
   overview: {
     '@layer site': {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
       background: 'rgba(0, 0, 0, 0.85)',
       backdropFilter: 'blur(8px)',
       zIndex: 500,
-      display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
       padding: '40px',
       overflow: 'auto',
-      animationName: overviewFadeIn,
       animationDuration: '0.2s',
-      animationTimingFunction: 'ease-out',
     },
   },
   overviewGrid: {
@@ -387,21 +388,12 @@ export const styles = stylex.create({
   // 단축키 도움말
   helpOverlay: {
     '@layer site': {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
       background: 'rgba(0, 0, 0, 0.7)',
       backdropFilter: 'blur(6px)',
       zIndex: 600,
-      display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center',
       padding: '24px',
-      animationName: overviewFadeIn,
       animationDuration: '0.15s',
-      animationTimingFunction: 'ease-out',
     },
   },
   helpDialog: {
@@ -524,17 +516,11 @@ export const styles = stylex.create({
   // QR 코드
   qrOverlay: {
     '@layer site': {
-      position: 'fixed',
-      inset: 0,
       background: 'white',
       zIndex: 600,
-      display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center',
       padding: '16px',
-      animationName: overviewFadeIn,
       animationDuration: '0.15s',
-      animationTimingFunction: 'ease-out',
     },
   },
   qrDialog: {
@@ -767,18 +753,12 @@ export const styles = stylex.create({
   // 슬라이드 검색
   searchOverlay: {
     '@layer site': {
-      position: 'fixed',
-      inset: 0,
       background: 'rgba(0, 0, 0, 0.6)',
       backdropFilter: 'blur(4px)',
       zIndex: 600,
-      display: 'flex',
       alignItems: 'flex-start',
-      justifyContent: 'center',
       padding: '80px 20px 20px',
-      animationName: overviewFadeIn,
       animationDuration: '0.12s',
-      animationTimingFunction: 'ease-out',
     },
   },
   searchDialog: {
@@ -926,7 +906,10 @@ export const contextMenuGoToInput = stylex.props(
 export const contextMenuGoToButton = stylex.props(
   styles.contextMenuGoToButton,
 ).className!
-export const overview = stylex.props(styles.overview).className!
+export const overview = stylex.props(
+  styles.overlayBase,
+  styles.overview,
+).className!
 export const overviewGrid = stylex.props(styles.overviewGrid).className!
 export const overviewItem = stylex.props(styles.overviewItem).className!
 export const overviewItemActive = stylex.props(
@@ -941,7 +924,10 @@ export const overviewThumbnailInner = stylex.props(
 ).className!
 export const overviewNumber = stylex.props(styles.overviewNumber).className!
 export const overviewHint = stylex.props(styles.overviewHint).className!
-export const helpOverlay = stylex.props(styles.helpOverlay).className!
+export const helpOverlay = stylex.props(
+  styles.overlayBase,
+  styles.helpOverlay,
+).className!
 export const helpDialog = stylex.props(styles.helpDialog).className!
 export const helpHeader = stylex.props(styles.helpHeader).className!
 export const helpTitle = stylex.props(styles.helpTitle).className!
@@ -955,7 +941,10 @@ export const helpDesc = stylex.props(styles.helpDesc).className!
 export const helpKeys = stylex.props(styles.helpKeys).className!
 export const helpKbd = stylex.props(styles.helpKbd).className!
 export const helpHint = stylex.props(styles.helpHint).className!
-export const qrOverlay = stylex.props(styles.qrOverlay).className!
+export const qrOverlay = stylex.props(
+  styles.overlayBase,
+  styles.qrOverlay,
+).className!
 export const qrDialog = stylex.props(styles.qrDialog).className!
 export const qrCode = stylex.props(styles.qrCode).className!
 export const qrUrl = stylex.props(styles.qrUrl).className!
@@ -985,7 +974,10 @@ export const drawCloseBtn = stylex.props(
   styles.drawCloseBtn,
 ).className!
 export const laserDot = stylex.props(styles.laserDot).className!
-export const searchOverlay = stylex.props(styles.searchOverlay).className!
+export const searchOverlay = stylex.props(
+  styles.overlayBase,
+  styles.searchOverlay,
+).className!
 export const searchDialog = stylex.props(styles.searchDialog).className!
 export const searchInput = stylex.props(styles.searchInput).className!
 export const searchResults = stylex.props(styles.searchResults).className!

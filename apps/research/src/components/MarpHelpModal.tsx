@@ -1,19 +1,16 @@
-import type {MouseEvent as ReactMouseEvent} from 'react'
-
 import {SHORTCUT_GROUPS} from './MarpSlides.constants'
 import * as styles from './MarpSlides.styles'
 
-interface MarpHelpModalProps {
-  onClose: () => void
-  onOverlayClick: (e: ReactMouseEvent<HTMLDivElement>) => void
-}
-
-export function MarpHelpModal({onClose, onOverlayClick}: MarpHelpModalProps) {
+export function MarpHelpModal({onClose}: {onClose: () => void}) {
   return (
     <div
       className={styles.helpOverlay}
       role="presentation"
-      onClick={onOverlayClick}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose()
+        }
+      }}
     >
       <dialog
         open

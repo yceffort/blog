@@ -1,26 +1,22 @@
 import {QRCodeSVG} from 'qrcode.react'
-import type {MouseEvent as ReactMouseEvent} from 'react'
 
 import * as styles from './MarpSlides.styles'
 
 interface MarpQrModalProps {
   qrUrl: string
-  onOverlayClick: (e: ReactMouseEvent<HTMLDivElement>) => void
-  onCopy: () => void
   onClose: () => void
 }
 
-export function MarpQrModal({
-  qrUrl,
-  onOverlayClick,
-  onCopy,
-  onClose,
-}: MarpQrModalProps) {
+export function MarpQrModal({qrUrl, onClose}: MarpQrModalProps) {
   return (
     <div
       className={styles.qrOverlay}
       role="presentation"
-      onClick={onOverlayClick}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose()
+        }
+      }}
     >
       <dialog
         open
@@ -47,7 +43,11 @@ export function MarpQrModal({
             fgColor="#000000"
           />
         </div>
-        <button className={styles.qrUrl} onClick={onCopy} title="클릭하여 복사">
+        <button
+          className={styles.qrUrl}
+          onClick={() => void navigator.clipboard.writeText(qrUrl)}
+          title="클릭하여 복사"
+        >
           {qrUrl}
         </button>
         <div className={styles.qrHint}>
