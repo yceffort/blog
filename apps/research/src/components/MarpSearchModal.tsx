@@ -78,6 +78,10 @@ export function MarpSearchModal({
             if (e.key === 'Enter' && results.length > 0) {
               onSelect(results[0].index)
             }
+            // 전역 단축키 처리기는 입력창 이벤트를 무시하므로 ESC는 여기서 닫는다
+            if (e.key === 'Escape' && !e.nativeEvent.isComposing) {
+              onClose()
+            }
           }}
           placeholder="슬라이드 내용 검색…"
           aria-label="검색어"
