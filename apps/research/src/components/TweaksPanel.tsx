@@ -5,6 +5,11 @@ import {getCookie, setCookie} from '@yceffort/shared/utils'
 import {useTheme} from 'next-themes'
 import {useEffect, useState} from 'react'
 
+import {
+  isTransitionType,
+  TRANSITION_TYPES,
+} from '@/components/MarpSlides.constants'
+import type {TransitionType} from '@/components/MarpSlides.constants'
 import * as styles from '@/components/TweaksPanel.styles'
 
 const ACCENTS: {
@@ -45,16 +50,6 @@ const THEMES = [
   {key: 'system', label: 'System', Icon: Monitor},
 ] as const
 
-const TRANSITIONS = [
-  {key: 'slide', label: 'slide'},
-  {key: 'fade', label: 'fade'},
-  {key: 'zoom', label: 'zoom'},
-  {key: 'glide', label: 'glide'},
-  {key: 'none', label: 'none'},
-] as const
-
-type TransitionKey = (typeof TRANSITIONS)[number]['key']
-
 interface Props {
   open: boolean
   onClose: () => void
@@ -80,14 +75,12 @@ export default function TweaksPanel({open, onClose}: Props) {
     }
     return getCookie('tw-minimal') === 'true'
   })
-  const [transition, setTransition] = useState<TransitionKey>(() => {
+  const [transition, setTransition] = useState<TransitionType>(() => {
     if (typeof window === 'undefined') {
       return 'slide'
     }
-    const stored = getCookie('tw-transition') as TransitionKey | undefined
-    return stored && TRANSITIONS.some((t) => t.key === stored)
-      ? stored
-      : 'slide'
+    const stored = getCookie('tw-transition')
+    return isTransitionType(stored) ? stored : 'slide'
   })
 
   useEffect(() => {
@@ -99,9 +92,6 @@ export default function TweaksPanel({open, onClose}: Props) {
     setCookie('tw-grain', String(grain))
     setCookie('tw-minimal', String(minimal))
     setCookie('tw-transition', transition)
-    window.dispatchEvent(
-      new CustomEvent('research:transition', {detail: transition}),
-    )
   }, [accent, grain, minimal, transition])
 
   const handleThemeChange = (next: string, event: React.MouseEvent) => {
@@ -239,17 +229,17 @@ export default function TweaksPanel({open, onClose}: Props) {
       <div className={styles.row_spaced}>
         <div className={styles.label}>slide transition</div>
         <div className={styles.grid}>
-          {TRANSITIONS.map(({key, label}) => (
+          {TRANSITION_TYPES.map((key) => (
             <button
               key={key}
               type="button"
               className={
                 transition === key ? styles.grid_btn_on : styles.grid_btn
               }
-              aria-label={label}
+              aria-label={key}
               onClick={() => setTransition(key)}
             >
-              <span>{label}</span>
+              <span>{key}</span>
             </button>
           ))}
         </div>
