@@ -21,7 +21,6 @@ import {skipLink} from '@/styles/accessibility.styles'
 import PushAlertTooltip from '../pwa/PushAlertTooltip'
 import SiteSearch from '../search/SiteSearch'
 import TweaksPanel from '../settings/TweaksPanel'
-import AnnouncementBanner from './AnnouncementBanner'
 import Footer from './Footer'
 import LanguageSwitch from './LanguageSwitch'
 import MobileNav from './MobileNav'
@@ -360,7 +359,6 @@ const LayoutWrapper = ({
         <Footer />
       </SectionContainer>
       <ScrollTop />
-      <AnnouncementBanner />
     </>
   )
 }
