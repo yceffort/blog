@@ -88,14 +88,14 @@ const styles = stylex.create({
   card_featured: {
     '@layer site': {
       borderColor: {
-        default: 'color-mix(in oklab, var(--primary) 60%, var(--border))',
+        default: 'color-mix(in oklab, var(--primary) 80%, var(--border))',
         ':hover': 'var(--primary)',
       },
       boxShadow: {
         default:
-          '0 0 18px -4px color-mix(in oklab, var(--primary) 55%, transparent)',
+          '0 0 22px -3px color-mix(in oklab, var(--primary) 75%, transparent)',
         ':hover':
-          '0 0 28px -2px color-mix(in oklab, var(--primary) 70%, transparent)',
+          '0 0 30px -1px color-mix(in oklab, var(--primary) 85%, transparent)',
       },
     },
   },
