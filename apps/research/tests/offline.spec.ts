@@ -177,6 +177,23 @@ test('selected decks survive a restart offline with animations, notes, timer and
   }
 })
 
+test('a saved deck opens from the saved viewer after five seconds on a stalled network', async ({
+  page,
+  context,
+}) => {
+  await saveFromViewer(page)
+  // Venue Wi-Fi without internet: the browser stays online but nothing answers.
+  await context.route(`**/offline/${slug}`, () => {})
+  const viewer = await context.newPage()
+  const start = Date.now()
+  await viewer.goto(`${base}/offline/${slug}`, {
+    waitUntil: 'domcontentloaded',
+    timeout: 10000,
+  })
+  await expect(viewer.locator('.marp-slides')).toBeVisible()
+  expect(Date.now() - start).toBeGreaterThanOrEqual(5000)
+})
+
 test('offline paths resolve on the server before any deck has been saved', async ({
   page,
   request,
