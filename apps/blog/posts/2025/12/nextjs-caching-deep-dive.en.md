@@ -9,6 +9,12 @@ tags:
 published: true
 date: 2025-12-24 10:00:00
 description: 'Exploring the four cache layers of the Next.js App Router'
+art:
+  undraw: file-manager
+  layout: rings
+  hue: cyan
+  tone: light
+  hero: '4가지 캐시 레이어'
 ---
 
 ## Table of Contents

@@ -9,6 +9,12 @@ tags:
 published: true
 date: 2025-12-24 10:00:00
 description: 'Next.js App Router의 4가지 캐시 레이어 알아보긔'
+art:
+  undraw: file-manager
+  layout: rings
+  hue: cyan
+  tone: light
+  hero: '4가지 캐시 레이어'
 ---
 
 ## Table of Contents
