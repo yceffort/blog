@@ -17,6 +17,7 @@ export interface SlideIndexEntry {
   tags?: string[]
   date?: string
   published: boolean
+  featured: boolean
   post?: string
   transition?: TransitionType
   markdown: string
@@ -47,6 +48,7 @@ function toEntry(slug: string, markdown: string): SlideIndexEntry {
     tags: Array.isArray(data.tags) ? (data.tags as string[]) : undefined,
     date: normalizeDate(data.date),
     published: data.published !== false,
+    featured: data.featured === true,
     post: typeof data.post === 'string' ? data.post : undefined,
     transition: isTransitionType(data.transition) ? data.transition : undefined,
     markdown,

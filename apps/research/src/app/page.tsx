@@ -41,6 +41,8 @@ async function getHomeSlides(): Promise<HomeSlidesData> {
   const slides = await Promise.all(
     getAllSlides()
       .filter((slide) => isDev || slide.published)
+      // featured 덱을 맨 앞에 둔다. toSorted는 안정 정렬이라 나머지는 getAllSlides의 날짜순이 유지된다
+      .toSorted((a, b) => Number(b.featured) - Number(a.featured))
       .map(async (slide): Promise<Slide> => {
         const {html, css, fonts} = await generateRenderedMarp(slide.markdown)
 
