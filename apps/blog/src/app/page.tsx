@@ -14,7 +14,7 @@ import PostCard from '@/components/post/PostCard'
 import PopularSeriesCard from '@/components/series/PopularSeriesCard'
 import SeriesRow from '@/components/series/SeriesRow'
 import {SiteConfig} from '@/config'
-import {HOME_SERIES_COUNT} from '@/constants'
+import {HOME_RECENT_CARD_COUNT, HOME_SERIES_COUNT} from '@/constants'
 import {buildOgImageUrl} from '@/utils/og'
 import {
   resolveThumbnail,
@@ -33,6 +33,11 @@ const sx = stylex.create({
         '@media (width >= 64rem)': 'repeat(3, minmax(0, 1fr))',
       },
       gap: 'calc(var(--spacing) * 8)',
+    },
+  },
+  rows: {
+    '@layer utilities': {
+      marginTop: 'calc(var(--spacing) * 8)',
     },
   },
 })
@@ -124,6 +129,37 @@ async function HomeContent() {
         yearsWriting={yearsWriting}
       />
 
+      {recentPosts.length > 0 && (
+        <>
+          <div className={`sec-head ${sectionStyles.sec_head}`}>
+            <div>
+              <span className={`sec-count ${sectionStyles.sec_count}`}>
+                {String(recentPosts.length).padStart(2, '0')} ITEMS
+              </span>
+              <h2 className={sectionStyles.element_h2}>Recent</h2>
+            </div>
+            <div className={`line ${sectionStyles.line}`} />
+            <div className={`hint ${sectionStyles.hint}`}>latest writing</div>
+          </div>
+          <section className={stylex.props(sx.section).className}>
+            {recentPosts.slice(0, HOME_RECENT_CARD_COUNT).map((post) => (
+              <PostCard key={post.fields.slug} post={post} priority />
+            ))}
+          </section>
+          <section
+            className={`rec-list ${recentStyles.rec_list} ${stylex.props(sx.rows).className}`}
+          >
+            {recentPosts.slice(HOME_RECENT_CARD_COUNT).map((post, i) => (
+              <RecentRow
+                key={post.fields.slug}
+                post={post}
+                index={HOME_RECENT_CARD_COUNT + i}
+              />
+            ))}
+          </section>
+        </>
+      )}
+
       <div className={`sec-head ${sectionStyles.sec_head}`}>
         <div>
           <span className={`sec-count ${sectionStyles.sec_count}`}>
@@ -139,13 +175,8 @@ async function HomeContent() {
         <div className={`hint ${sectionStyles.hint}`}>hover · tilt · open</div>
       </div>
       <section className={stylex.props(sx.section).className}>
-        {posts.map((post, i) => (
-          <PostCard
-            key={post.fields.slug}
-            post={post}
-            badge="인기 포스트"
-            priority={i < 3}
-          />
+        {posts.map((post) => (
+          <PostCard key={post.fields.slug} post={post} badge="인기 포스트" />
         ))}
         {popularSeries && popularSeriesThumbnail && (
           <PopularSeriesCard
@@ -175,26 +206,6 @@ async function HomeContent() {
           <section className={`rec-list ${recentStyles.rec_list}`}>
             {series.slice(0, HOME_SERIES_COUNT).map((s, i) => (
               <SeriesRow key={s.slug} series={s} index={i} />
-            ))}
-          </section>
-        </>
-      )}
-
-      {recentPosts.length > 0 && (
-        <>
-          <div className={`sec-head ${sectionStyles.sec_head}`}>
-            <div>
-              <span className={`sec-count ${sectionStyles.sec_count}`}>
-                {String(recentPosts.length).padStart(2, '0')} ITEMS
-              </span>
-              <h2 className={sectionStyles.element_h2}>Recent</h2>
-            </div>
-            <div className={`line ${sectionStyles.line}`} />
-            <div className={`hint ${sectionStyles.hint}`}>latest writing</div>
-          </div>
-          <section className={`rec-list ${recentStyles.rec_list}`}>
-            {recentPosts.map((post, i) => (
-              <RecentRow key={post.fields.slug} post={post} index={i} />
             ))}
           </section>
         </>

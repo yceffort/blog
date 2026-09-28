@@ -219,17 +219,27 @@ export const getFeaturedPosts = cache(async function getFeaturedPostsImpl(
   reservedSlots = 0,
 ): Promise<{popular: Post[]; recent: Post[]}> {
   const allPosts = await getAllPosts(locale)
+  // 최근 글을 먼저 확정해야 새 글이 인기에 올라도 홈 맨 위 Recent에서 빠지지 않는다
+  const recent = allPosts.slice(0, RECENT_POSTS_COUNT)
+  const shown = new Set(recent.map((p) => p.fields.slug))
   const popularCount = POPULAR_POSTS_COUNT - reservedSlots
-  // 번역이 없거나 featured: false인 글이 걸러지므로 후보를 넉넉히 가져온다
-  const popularSlugs = await getPopularPostSlugs(POPULAR_POSTS_COUNT * 3)
+  // 번역이 없거나 featured: false이거나 최근 글과 겹치는 글이 걸러지므로 후보를 넉넉히 가져온다
+  const popularSlugs = await getPopularPostSlugs(
+    POPULAR_POSTS_COUNT * 3 + RECENT_POSTS_COUNT,
+  )
 
   const popular = popularSlugs
     .map((slug) => allPosts.find((p) => p.fields.slug === slug))
-    .filter((p): p is Post => p != null && p.frontMatter.featured !== false)
+    .filter(
+      (p): p is Post =>
+        p != null &&
+        p.frontMatter.featured !== false &&
+        !shown.has(p.fields.slug),
+    )
     .slice(0, popularCount)
 
   if (popular.length < popularCount) {
-    const slugSet = new Set(popular.map((p) => p.fields.slug))
+    const slugSet = new Set([...shown, ...popular.map((p) => p.fields.slug)])
     for (const p of allPosts) {
       if (popular.length >= popularCount) {
         break
@@ -240,11 +250,6 @@ export const getFeaturedPosts = cache(async function getFeaturedPostsImpl(
       }
     }
   }
-
-  const shown = new Set(popular.map((p) => p.fields.slug))
-  const recent = allPosts
-    .filter((p) => !shown.has(p.fields.slug))
-    .slice(0, RECENT_POSTS_COUNT)
 
   return {popular, recent}
 })

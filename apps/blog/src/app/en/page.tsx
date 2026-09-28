@@ -11,6 +11,7 @@ import * as ambientStyles from '@/components/layout/ambient.styles'
 import * as sectionStyles from '@/components/layout/section.styles'
 import PostCard from '@/components/post/PostCard'
 import {SiteConfig} from '@/config'
+import {HOME_RECENT_CARD_COUNT} from '@/constants'
 import {getAllPosts, getAllTagsFromPosts, getFeaturedPosts} from '@/utils/Post'
 const sx = stylex.create({
   section: {
@@ -22,6 +23,11 @@ const sx = stylex.create({
         '@media (width >= 64rem)': 'repeat(3, minmax(0, 1fr))',
       },
       gap: 'calc(var(--spacing) * 8)',
+    },
+  },
+  rows: {
+    '@layer utilities': {
+      marginTop: 'calc(var(--spacing) * 8)',
     },
   },
 })
@@ -85,6 +91,43 @@ async function EnHomeContent() {
         yearsWriting={yearsWriting}
       />
 
+      {recent.length > 0 && (
+        <>
+          <div className={`sec-head ${sectionStyles.sec_head}`}>
+            <div>
+              <span className={`sec-count ${sectionStyles.sec_count}`}>
+                {String(recent.length).padStart(2, '0')} ITEMS
+              </span>
+              <h2 className={sectionStyles.element_h2}>Recent</h2>
+            </div>
+            <div className={`line ${sectionStyles.line}`} />
+            <div className={`hint ${sectionStyles.hint}`}>latest writing</div>
+          </div>
+          <section className={stylex.props(sx.section).className}>
+            {recent.slice(0, HOME_RECENT_CARD_COUNT).map((post) => (
+              <PostCard
+                key={post.fields.slug}
+                post={post}
+                pathPrefix="/en"
+                priority
+              />
+            ))}
+          </section>
+          <section
+            className={`rec-list ${recentStyles.rec_list} ${stylex.props(sx.rows).className}`}
+          >
+            {recent.slice(HOME_RECENT_CARD_COUNT).map((post, i) => (
+              <RecentRow
+                key={post.fields.slug}
+                post={post}
+                index={HOME_RECENT_CARD_COUNT + i}
+                pathPrefix="/en"
+              />
+            ))}
+          </section>
+        </>
+      )}
+
       <div className={`sec-head ${sectionStyles.sec_head}`}>
         <div>
           <span className={`sec-count ${sectionStyles.sec_count}`}>
@@ -99,40 +142,10 @@ async function EnHomeContent() {
         <div className={`hint ${sectionStyles.hint}`}>hover · tilt · open</div>
       </div>
       <section className={stylex.props(sx.section).className}>
-        {popular.map((post, i) => (
-          <PostCard
-            key={post.fields.slug}
-            post={post}
-            pathPrefix="/en"
-            priority={i < 3}
-          />
+        {popular.map((post) => (
+          <PostCard key={post.fields.slug} post={post} pathPrefix="/en" />
         ))}
       </section>
-
-      {recent.length > 0 && (
-        <>
-          <div className={`sec-head ${sectionStyles.sec_head}`}>
-            <div>
-              <span className={`sec-count ${sectionStyles.sec_count}`}>
-                {String(recent.length).padStart(2, '0')} ITEMS
-              </span>
-              <h2 className={sectionStyles.element_h2}>Recent</h2>
-            </div>
-            <div className={`line ${sectionStyles.line}`} />
-            <div className={`hint ${sectionStyles.hint}`}>latest writing</div>
-          </div>
-          <section className={`rec-list ${recentStyles.rec_list}`}>
-            {recent.map((post, i) => (
-              <RecentRow
-                key={post.fields.slug}
-                post={post}
-                index={i}
-                pathPrefix="/en"
-              />
-            ))}
-          </section>
-        </>
-      )}
     </div>
   )
 }
