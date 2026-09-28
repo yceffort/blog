@@ -13,6 +13,7 @@ interface Slide {
   description?: string
   title: string
   published: boolean
+  featured: boolean
   post?: string
   slideCount: number
   preview: {
@@ -59,6 +60,7 @@ async function getHomeSlides(): Promise<HomeSlidesData> {
           description: slide.description,
           title: slide.title,
           published: slide.published,
+          featured: slide.featured,
           post: slide.post,
           slideCount: html.length,
           preview: {html: html[0] || '', cssIndex, fonts},

@@ -17,6 +17,7 @@ interface Slide {
   description?: string
   title: string
   published: boolean
+  featured: boolean
   post?: string
   slideCount: number
   preview: {
@@ -97,8 +98,17 @@ function writeFilterToUrl(tags: string[], page: number) {
 }
 
 function ResearchCard({slide, css}: {slide: Slide; css: string}) {
-  const {slug, date, tags, title, description, preview, published, slideCount} =
-    slide
+  const {
+    slug,
+    date,
+    tags,
+    title,
+    description,
+    preview,
+    published,
+    featured,
+    slideCount,
+  } = slide
   const cardRef = useRef<HTMLElement>(null)
 
   const onPointerMove = (e: React.PointerEvent<HTMLElement>) => {
@@ -120,7 +130,7 @@ function ResearchCard({slide, css}: {slide: Slide; css: string}) {
   return (
     <article
       ref={cardRef}
-      className={styles.card}
+      className={featured ? styles.card_featured : styles.card}
       onPointerMove={onPointerMove}
     >
       <Link

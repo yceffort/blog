@@ -85,6 +85,20 @@ const styles = stylex.create({
       },
     },
   },
+  card_featured: {
+    '@layer site': {
+      borderColor: {
+        default: 'color-mix(in oklab, var(--primary) 60%, var(--border))',
+        ':hover': 'var(--primary)',
+      },
+      boxShadow: {
+        default:
+          '0 0 18px -4px color-mix(in oklab, var(--primary) 55%, transparent)',
+        ':hover':
+          '0 0 28px -2px color-mix(in oklab, var(--primary) 70%, transparent)',
+      },
+    },
+  },
   card_link: {
     '@layer site': {
       position: 'absolute',
@@ -345,6 +359,10 @@ export const sec_title = stylex.props(styles.sec_title).className!
 export const sec_title_em = stylex.props(styles.sec_title_em).className!
 export const sec_line = stylex.props(styles.sec_line).className!
 export const card = stylex.props(styles.card).className!
+export const card_featured = stylex.props(
+  styles.card,
+  styles.card_featured,
+).className!
 export const card_link = stylex.props(styles.card_link).className!
 export const thumb = stylex.props(styles.thumb).className!
 export const body = stylex.props(styles.body).className!
