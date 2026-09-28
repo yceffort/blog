@@ -40,7 +40,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    max-width: 820px;
+    max-width: 920px;
     margin: 20px auto 0;
     padding: 10px 14px;
     border-left: 3px solid var(--primary);
@@ -90,7 +90,7 @@
     background-origin: padding-box;
   }
   .post-series-nav {
-    max-width: 820px;
+    max-width: 920px;
     margin: 24px auto;
     margin-right: auto;
     margin-left: auto;
@@ -124,7 +124,7 @@
   }
   .series-endnav {
     display: grid;
-    max-width: 820px;
+    max-width: 920px;
     margin: 40px auto 0;
     gap: 12px;
     grid-template-columns: 1fr 1fr;
@@ -366,7 +366,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    max-width: 820px;
+    max-width: 920px;
     margin-top: 56px;
     margin-right: auto;
     margin-left: auto;
@@ -430,7 +430,7 @@
     text-align: right;
   }
   .post-article {
-    max-width: 820px;
+    max-width: 920px;
     margin-right: auto;
     margin-left: auto;
     font-size: 16px;
@@ -548,12 +548,12 @@
     border-color: var(--primary) var(--primary) var(--primary) var(--primary);
   }
   .post-masthead {
-    max-width: 820px;
+    max-width: 920px;
     margin-right: auto;
     margin-left: auto;
   }
   .post-back {
-    max-width: 820px;
+    max-width: 920px;
     margin-right: auto;
     margin-left: auto;
   }
