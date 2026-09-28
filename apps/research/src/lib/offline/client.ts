@@ -208,11 +208,18 @@ async function ensureRuntime(
     if (parsed.origin !== location.origin)
       throw new Error('잘못된 뷰어 파일 주소입니다.')
     if (!(await cache.match(url))) {
-      const response = await fetchFile(url, signal)
-      if ((await digest(await response.clone().arrayBuffer())) !== sha256) {
-        throw new Error(
-          '사이트가 업데이트되었습니다. 다운로드를 다시 시도해 주세요.',
-        )
+      // Most files survive a deployment unchanged. Copy those from an earlier viewer.
+      let response = await caches.match(url)
+      if (
+        !response ||
+        (await digest(await response.clone().arrayBuffer())) !== sha256
+      ) {
+        response = await fetchFile(url, signal)
+        if ((await digest(await response.clone().arrayBuffer())) !== sha256) {
+          throw new Error(
+            '사이트가 업데이트되었습니다. 다운로드를 다시 시도해 주세요.',
+          )
+        }
       }
       await cache.put(url, response)
     }

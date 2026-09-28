@@ -289,6 +289,47 @@ test('a new deployment removes the previous shared viewer once no saved deck is 
   await expect.poll(() => runtimeCaches(page)).toEqual([current])
 })
 
+test('a new deployment downloads only the shared viewer files that changed', async ({
+  page,
+  context,
+  request,
+}) => {
+  const state = await fixture(context, request)
+  await save(page)
+  const shell = `${await (await request.get('/offline-shell.html')).text()}<!-- next deployment -->`
+  await context.route('**/offline-shell.html', (route) =>
+    route.fulfill({body: shell, contentType: 'text/html; charset=utf-8'}),
+  )
+  state.manifest.assets = state.manifest.assets.map((asset) =>
+    asset.url === '/offline-shell.html'
+      ? {...asset, sha256: createHash('sha256').update(shell).digest('hex')}
+      : asset,
+  )
+  const urls = new Set(state.manifest.assets.map((asset) => asset.url))
+  const downloads: string[] = []
+  page.on('request', (sent) => {
+    const {pathname} = new URL(sent.url())
+    if (sent.resourceType() === 'fetch' && urls.has(pathname))
+      downloads.push(pathname)
+  })
+  await context.setOffline(true)
+  state.manifest.revision = 'aabbcc001122334455'
+  await context.setOffline(false)
+  await expect
+    .poll(async () => (await savedDeck(page))?.runtimeRevision)
+    .toBe(state.manifest.revision)
+  expect(downloads).toEqual(['/offline-shell.html'])
+  expect(
+    await page.evaluate(async () =>
+      (
+        await caches.match('/offline-shell.html', {
+          cacheName: 'research-runtime-v1-aabbcc001122334455',
+        })
+      )?.text(),
+    ),
+  ).toBe(shell)
+})
+
 test('an open library checks for changes every five minutes', async ({
   page,
   context,
