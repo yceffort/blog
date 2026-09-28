@@ -99,6 +99,33 @@ async function save(page: Page) {
   )
 }
 
+function runtimeCaches(page: Page) {
+  return page.evaluate(async () =>
+    (await caches.keys())
+      .filter((name) => name.startsWith('research-runtime-v1-'))
+      .toSorted(),
+  )
+}
+
+async function cleanUp(page: Page) {
+  const {assetCache} = (await savedDeck(page))!
+  await page.evaluate(
+    (keep) =>
+      new Promise<void>((resolve) => {
+        const channel = new MessageChannel()
+        channel.port1.addEventListener('message', () => resolve(), {
+          once: true,
+        })
+        channel.port1.start()
+        navigator.serviceWorker.controller!.postMessage(
+          {type: 'research-cleanup', keep: [keep]},
+          [channel.port2],
+        )
+      }),
+    assetCache,
+  )
+}
+
 test('reconnect updates saved content and notes without interrupting an open presentation', async ({
   page,
   context,
@@ -234,6 +261,32 @@ test('a new deployment refreshes same-URL assets and older downloads are upgrade
     .poll(async () => (await savedDeck(page))?.sourceRevision)
     .toBe(initial.sourceRevision)
   expect(state.imageRequests).toBe(3)
+})
+
+test('a new deployment removes the previous shared viewer once no saved deck is open', async ({
+  page,
+  context,
+  request,
+}) => {
+  const state = await fixture(context, request)
+  await save(page)
+  const previous = `research-runtime-v1-${state.manifest.revision}`
+  const current = 'research-runtime-v1-aabbcc001122334455'
+  const viewer = await context.newPage()
+  await viewer.goto(`/offline/${slug}`, {waitUntil: 'domcontentloaded'})
+  await expect(viewer.locator('.marp-slides')).toBeVisible()
+  await context.setOffline(true)
+  state.manifest.revision = 'aabbcc001122334455'
+  await context.setOffline(false)
+  await expect
+    .poll(async () => (await savedDeck(page))?.runtimeRevision)
+    .toBe(state.manifest.revision)
+  // The open deck may still lazy-load chunks from the viewer it started with.
+  await cleanUp(page)
+  expect(await runtimeCaches(page)).toEqual([current, previous].toSorted())
+  await viewer.close()
+  await page.goto('/', {waitUntil: 'domcontentloaded'})
+  await expect.poll(() => runtimeCaches(page)).toEqual([current])
 })
 
 test('an open library checks for changes every five minutes', async ({

@@ -28,8 +28,15 @@ self.addEventListener('message', (event) => {
         )
           return
         const keep = new Set(event.data.keep)
+        // Only saved decks lazy-load viewer chunks, and none is open, so keep
+        // just the viewer that the next offline launch will start from.
+        const runtime = await (await caches.open(META_CACHE)).match(RUNTIME_KEY)
+        if (runtime) keep.add((await runtime.json()).cacheName)
         for (const name of await caches.keys()) {
-          if (name.startsWith(DECK_PREFIX) && !keep.has(name))
+          if (
+            (name.startsWith(DECK_PREFIX) || name.startsWith(RUNTIME_PREFIX)) &&
+            !keep.has(name)
+          )
             await caches.delete(name)
         }
       } finally {
