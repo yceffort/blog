@@ -21,7 +21,7 @@ research의 발표 자료는 Marp로 만든다. 마크다운을 슬라이드로 
 
 이를 구현하려면 Marp의 렌더 결과를 어떤 형태로 보관할지, Next.js 서버 없이 뷰어를 어떻게 시작할지, 업데이트 중 연결이 끊기면 기존 자료를 어떻게 지킬지 정해야 했다.
 
-> 이 글은 2026년 9월 29일의 `main` 브랜치 커밋 `89bc6bf4`를 기준으로 한다. Next.js 16.3.5의 App Router를 사용하며, 코드 링크도 이 커밋에 고정했다. 구현을 살펴보고 로컬에서 테스트한 기록으로, FEConf 현장에서 사용한 결과는 아직 포함하지 않았다. 글을 준비하며 발견한 문제 네 가지도 함께 적었다. 세 가지는 고쳤고 그중 두 가지는 수정 전후 측정값을 남겼다. 자동 업데이트의 경쟁 조건 하나는 아직 고치지 않았다.
+> 이 글은 2026년 9월 29일의 `main` 브랜치 커밋 `459d9b2b`를 기준으로 한다. Next.js 16.3.5의 App Router를 사용하며, 코드 링크도 이 커밋에 고정했다. 구현을 살펴보고 로컬에서 테스트한 기록으로, FEConf 현장에서 사용한 결과는 아직 포함하지 않았다. 글을 준비하며 발견해 고친 문제 네 가지도 함께 적었고, 그중 두 가지는 수정 전후 측정값을 남겼다.
 
 ## 저장 버튼 하나가 보관하는 범위
 
@@ -201,7 +201,7 @@ await metadata.put(
 
 다만 다운로드하는 코드의 범위는 넓다. 오프라인 뷰어가 실제로 참조하는 청크만 추적하지 않고, `.next/static`의 해당 확장자 파일을 모두 포함한다. **발표 자료는 선택해서 저장하지만, 공통 실행 파일은 사이트 전체 빌드에서 가져온다.** 오프라인에서 쓰지 않는 화면의 코드도 포함될 수 있다.
 
-이렇게 하면 지연 로딩할 파일을 빠뜨릴 가능성은 줄지만 최초 다운로드 용량이 커진다. `89bc6bf4`를 빌드해 확인한 목록에는 파일 115개가 있었고, 압축 전 크기의 합은 7,149,591바이트(약 6.8MiB)였다. 보관함에 표시하는 자료별 용량에는 이 공통 실행 파일이 포함되지 않는다. 자료를 처음 저장할 때는 화면에 표시된 용량 외에 이 파일들도 받아야 한다.
+이렇게 하면 지연 로딩할 파일을 빠뜨릴 가능성은 줄지만 최초 다운로드 용량이 커진다. `459d9b2b`를 빌드해 확인한 목록에는 파일 115개가 있었고, 압축 전 크기의 합은 7,149,796바이트(약 6.8MiB)였다. 보관함에 표시하는 자료별 용량에는 이 공통 실행 파일이 포함되지 않는다. 자료를 처음 저장할 때는 화면에 표시된 용량 외에 이 파일들도 받아야 한다.
 
 글을 준비하며 코드를 다시 읽다가, 배포할 때마다 이 파일들을 다시 받고 이전 캐시도 남겨 두는 문제를 발견했다. 공통 HTML로 복사하는 `offline.html`에는 Next.js의 빌드 ID가 들어간다. 코드를 바꾸지 않고 두 번 빌드해도 다운로드 목록의 버전이 달라졌고, 새 버전의 뷰어를 준비할 때마다 파일 115개를 다시 받았다. 이전 캐시를 지우는 코드도 없었으므로, 사용자가 배포 후 사이트를 열어 업데이트를 받을 때마다 당시 빌드 기준 약 6.8MiB의 캐시가 더 쌓일 수 있었다.
 
@@ -256,7 +256,7 @@ IndexedDB의 쓰기도 `put()` 요청의 성공 이벤트만 보고 끝내지 �
 
 발표 자료는 행사 직전까지 수정할 수 있다. 사이트에서 고친 내용을 오프라인 저장본에도 반영하고 싶지만, 발표 도중 화면까지 바뀌어서는 안 된다. 저장소에는 새 버전을 받아 두고, 열린 화면은 처음 읽은 자료를 계속 사용하도록 했다.
 
-사이트를 열거나 인터넷 연결이 돌아오면 저장한 자료가 바뀌었는지 확인한다. 화면이 보이는 동안에는 5분 간격으로, 탭으로 돌아왔을 때는 마지막 확인 시도에서 1분이 지났으면 다시 확인한다. 이미 확인이 진행 중일 때 연결이 돌아오면 새 확인을 시작하지 않고 진행 중인 확인의 결과를 기다리며, 다른 탭이 확인 중이면 건너뛴다. 그래서 진행 중이던 확인이 연결이 끊긴 사이에 실패했거나 재연결 전의 정보를 읽었다면, 새 버전은 다음 5분 주기에야 확인한다. 이 작업은 페이지가 열려 있을 때 실행한다. 사이트를 닫아 둔 동안 주기적으로 내려받는 백그라운드 동기화는 구현하지 않았다.
+사이트를 열거나 인터넷 연결이 돌아오면 저장한 자료가 바뀌었는지 확인한다. 화면이 보이는 동안에는 5분 간격으로, 탭으로 돌아왔을 때는 마지막 확인 시도에서 1분이 지났으면 다시 확인한다. 확인은 Web Locks로 한 번에 한 탭만 실행한다. 확인이 진행 중일 때 연결이 돌아오면, 진행 중인 확인은 재연결 전의 서버 상태를 읽었을 수 있으므로 끝난 뒤 한 번 더 확인한다. 잠금을 기다리던 탭은 자기 요청 이후에 다른 탭이 시작한 확인이 있으면 건너뛴다. 처음에는 진행 중인 확인에 새 요청을 합치기만 해서, 재연결 신호가 버려지면 새 버전을 다음 5분 주기에야 확인했다. 이 작업은 페이지가 열려 있을 때 실행한다. 사이트를 닫아 둔 동안 주기적으로 내려받는 백그라운드 동기화는 구현하지 않았다.
 
 저장본에는 두 가지 버전 값을 기록한다.
 
@@ -347,7 +347,7 @@ API는 자료 JSON의 SHA-256을 ETag로 반환한다. 자동 업데이트에서
 
 실패 상황도 검사한다. 자산 다운로드가 실패하거나 취소되어도 기존 저장본이 유지되는지, 서버 응답이 멈추면 저장된 뷰어를 사용하는지 확인한다. `offline-updates.spec.ts`에서는 발표 중인 화면을 유지한 채 저장소를 갱신하는지, 연결 복구 후 다시 시도하는지, 바뀌지 않은 공통 파일을 재사용하는지, 배포만으로는 바뀌지 않은 자료를 다시 받지 않는지, 발표가 닫힌 뒤 이전 캐시를 정리하는지 검사한다.
 
-`89bc6bf4`를 빌드하고 `pnpm --filter research test:offline`을 실행해 오프라인 테스트 15개, 뷰어와 발표자 노트 테스트 9개가 모두 통과하는 것을 확인했다. 총 24개이며, 앞의 측정과 같은 환경의 headless Chromium에서 실행한 결과다. 다만 자동 업데이트 테스트 7개를 8번씩 반복하면 "배포 후 열린 자료가 없을 때 이전 공통 뷰어를 지우는지" 확인하는 테스트가 8번 중 4번 실패한다. 앞에서 적은 경쟁 조건 때문에, 재연결 직후의 확인이 진행 중인 확인에 합쳐져 새 공통 뷰어가 테스트 제한 시간 안에 준비되지 않는 경우다. 한 번 실행해 통과한 결과만으로 자동 업데이트의 재연결 동작까지 안정적이라고 보기는 어렵다. Safari와 Firefox, 실제 발표장 와이파이에서는 확인하지 않았다. 발표 전에는 사용할 기기와 브라우저에서 자료를 저장하고 브라우저를 종료한 뒤, 네트워크 없이 다시 여는 과정까지 확인할 필요가 있다.
+`459d9b2b`를 빌드하고 `pnpm --filter research test:offline`을 실행해 오프라인 테스트 15개, 뷰어와 발표자 노트 테스트 9개가 모두 통과하는 것을 확인했다. 총 24개이며, 앞의 측정과 같은 환경의 headless Chromium에서 실행한 결과다. 자동 업데이트 테스트 7개는 8번씩 반복해 56번 모두 통과했다. 재연결 신호를 버리던 경쟁 조건을 고치기 전에는 이 반복 실행에서 "배포 후 열린 자료가 없을 때 이전 공통 뷰어를 지우는지" 확인하는 테스트가 8번 중 4번 실패했다. 한 번 실행한 결과로는 드러나지 않았던 문제다. Safari와 Firefox, 실제 발표장 와이파이에서는 확인하지 않았다. 발표 전에는 사용할 기기와 브라우저에서 자료를 저장하고 브라우저를 종료한 뒤, 네트워크 없이 다시 여는 과정까지 확인할 필요가 있다.
 
 실제로 사용할 때도 저장 완료 표시를 확인한 뒤 브라우저를 닫고, 네트워크를 끈 상태에서 `/offline/{slug}`로 다시 들어가는 순서가 필요하다. 첫 장뿐 아니라 아직 보지 않은 뒤쪽 장과 Mermaid 다이어그램을 열고, 발표자 창에서 노트와 다음 장이 맞는지도 확인한다. 이미 열려 있던 탭에서 와이파이만 끄는 확인으로는 브라우저를 다시 시작하는 데 필요한 파일이 빠졌는지 알아내기 어렵다.
 
@@ -355,27 +355,27 @@ API는 자료 JSON의 SHA-256을 ETag로 반환한다. 자동 업데이트에서
 
 ---
 
-[^1]: [Marp 렌더링과 폰트 선언 분리](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/lib/marp.ts). `generateRenderedMarp()`와 `renderMarp()`에서 온라인 뷰어와 오프라인 API가 사용하는 데이터를 만든다.
+[^1]: [Marp 렌더링과 폰트 선언 분리](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/marp.ts). `generateRenderedMarp()`와 `renderMarp()`에서 온라인 뷰어와 오프라인 API가 사용하는 데이터를 만든다.
 
-[^2]: [오프라인 API](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/app/api/slides/%5Bslug%5D/offline/route.ts), [자료와 저장본의 타입](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/lib/offline/types.ts). 코드 블록의 `OfflineDeck`은 해당 타입 선언을 옮겼다.
+[^2]: [오프라인 API](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/app/api/slides/%5Bslug%5D/offline/route.ts), [자료와 저장본의 타입](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/offline/types.ts). 코드 블록의 `OfflineDeck`은 해당 타입 선언을 옮겼다.
 
-[^3]: [useMarpShadowRoot](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/hooks/useMarpShadowRoot.ts), [useFontFace](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/hooks/useFontFace.tsx), [Marp 컴포넌트와 Mermaid 지연 로딩](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/components/Marp.tsx).
+[^3]: [useMarpShadowRoot](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/hooks/useMarpShadowRoot.ts), [useFontFace](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/hooks/useFontFace.tsx), [Marp 컴포넌트와 Mermaid 지연 로딩](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/components/Marp.tsx).
 
-[^4]: [IndexedDB 접근 코드](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/lib/offline/database.ts), [장 번호 저장 코드](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/lib/offline/positions.ts).
+[^4]: [IndexedDB 접근 코드](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/offline/database.ts), [장 번호 저장 코드](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/offline/positions.ts).
 
-[^5]: [collectDeckAssets와 rewriteDeckAssets](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/lib/offline/assets.ts). 자산 수집과 저장본별 URL 치환의 실제 범위다.
+[^5]: [collectDeckAssets와 rewriteDeckAssets](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/offline/assets.ts). 자산 수집과 저장본별 URL 치환의 실제 범위다.
 
 [^6]: Next.js 공식 문서의 [Linking and Navigating](https://nextjs.org/docs/app/getting-started/linking-and-navigating)과 [Prefetching의 Client cache](https://nextjs.org/docs/app/guides/prefetching#client-cache). 설치된 Next.js 16.3.5에 포함된 같은 문서와도 대조했다.
 
 [^7]: Next.js 공식 문서의 [Offline support](https://nextjs.org/docs/app/guides/offline-support). 실험적 연결 감지와 요청 재시도, 전체 페이지를 오프라인으로 다시 여는 동작의 범위를 구분한다.
 
-[^8]: [OfflineLibrary](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/components/offline/OfflineLibrary.tsx), [OfflineLink](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/components/offline/OfflineLink.tsx).
+[^8]: [OfflineLibrary](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/components/offline/OfflineLibrary.tsx), [OfflineLink](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/components/offline/OfflineLink.tsx).
 
-[^9]: [공통 실행 파일 다운로드 목록 생성 스크립트](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/scripts/generate-offline-runtime.mjs), [research 빌드 명령](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/package.json).
+[^9]: [공통 실행 파일 다운로드 목록 생성 스크립트](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/scripts/generate-offline-runtime.mjs), [research 빌드 명령](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/package.json).
 
-[^10]: [다운로드와 자동 업데이트 구현](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/lib/offline/client.ts). `ensureRuntime()`, `downloadDeck()`, `withDownloadLock()`, `checkOfflineUpdates()`, `watchOfflineUpdates()`를 기준으로 설명했다.
+[^10]: [다운로드와 자동 업데이트 구현](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/offline/client.ts). `ensureRuntime()`, `downloadDeck()`, `withDownloadLock()`, `checkOfflineUpdates()`, `watchOfflineUpdates()`를 기준으로 설명했다.
 
-[^11]: [서비스 워커의 문서 응답과 캐시 정리](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/public/sw.js), [발표 화면 동기화](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/hooks/useBroadcastChannel.ts).
+[^11]: [서비스 워커의 문서 응답과 캐시 정리](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/public/sw.js), [발표 화면 동기화](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/hooks/useBroadcastChannel.ts).
 
 [^12]: MDN의 [Navigator.onLine](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/onLine). 로컬 네트워크에 연결되어 있어도 인터넷에 접근하지 못할 수 있으며, 브라우저와 운영체제의 판단 방식도 다르다.
 
@@ -383,19 +383,19 @@ API는 자료 JSON의 SHA-256을 ETag로 반환한다. 자동 업데이트에서
 
 [^14]: Next.js 공식 문서의 [Progressive Web Applications](https://nextjs.org/docs/app/guides/progressive-web-apps). 설치를 위한 웹 앱 매니페스트와 오프라인 지원을 별도로 설명한다.
 
-[^15]: [오프라인 저장과 재시작 테스트](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/tests/offline.spec.ts), [자동 업데이트 테스트](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/tests/offline-updates.spec.ts).
+[^15]: [오프라인 저장과 재시작 테스트](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/tests/offline.spec.ts), [자동 업데이트 테스트](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/tests/offline-updates.spec.ts).
 
 [^16]: MDN의 [StorageManager.persist()](https://developer.mozilla.org/en-US/docs/Web/API/StorageManager/persist). 영구 저장 요청의 허용 여부는 브라우저 정책에 따른다.
 
-[^17]: MDN의 [blob: URLs](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/blob). 객체 URL의 수명과 해제, 문서가 종료될 때의 동작을 설명한다. 이 구현이 수집에서 제외하는 주소는 [assets.ts](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/lib/offline/assets.ts)에서 확인할 수 있다.
+[^17]: MDN의 [blob: URLs](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/blob). 객체 URL의 수명과 해제, 문서가 종료될 때의 동작을 설명한다. 이 구현이 수집에서 제외하는 주소는 [assets.ts](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/offline/assets.ts)에서 확인할 수 있다.
 
 [^18]: React 공식 문서의 [useSyncExternalStore에서 서버 렌더링 지원하기](https://react.dev/reference/react/useSyncExternalStore#adding-support-for-server-rendering). `getServerSnapshot`은 서버 렌더링과 브라우저의 하이드레이션에서 같은 초기 값을 제공해야 한다.
 
 [^19]: MDN의 [ServiceWorkerContainer.controller](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/controller)와 [Using Service Workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers). 현재 문서를 제어하는 워커, 등록과 활성화 과정, HTTPS와 로컬 개발 조건을 설명한다.
 
-[^20]: MDN의 [Request.cache](https://developer.mozilla.org/en-US/docs/Web/API/Request/cache). `no-store`의 HTTP 캐시 동작을 설명한다. 서비스 워커가 같은 옵션을 보고 저장된 응답을 사용하지 않는 처리는 [sw.js](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/public/sw.js)에 별도로 구현되어 있다.
+[^20]: MDN의 [Request.cache](https://developer.mozilla.org/en-US/docs/Web/API/Request/cache). `no-store`의 HTTP 캐시 동작을 설명한다. 서비스 워커가 같은 옵션을 보고 저장된 응답을 사용하지 않는 처리는 [sw.js](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/public/sw.js)에 별도로 구현되어 있다.
 
-[^21]: MDN의 [IDBTransaction](https://developer.mozilla.org/en-US/docs/Web/API/IDBTransaction). 트랜잭션의 활성 상태와 자동 커밋, 실패 조건을 설명한다. 저장 완료를 기다리는 코드는 [database.ts](https://github.com/yceffort/blog/blob/89bc6bf42f5b0ef0802619bb44c78e84a49ce666/apps/research/src/lib/offline/database.ts)의 `transaction()`을 기준으로 했다.
+[^21]: MDN의 [IDBTransaction](https://developer.mozilla.org/en-US/docs/Web/API/IDBTransaction). 트랜잭션의 활성 상태와 자동 커밋, 실패 조건을 설명한다. 저장 완료를 기다리는 코드는 [database.ts](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/offline/database.ts)의 `transaction()`을 기준으로 했다.
 
 [^22]: MDN의 [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS)와 [Using the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch). 교차 출처 응답을 JS에서 읽는 조건과 불투명한 응답, 자격 증명 전달 범위를 설명한다.
 
