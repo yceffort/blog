@@ -16,6 +16,7 @@ interface PresenterViewProps {
   dataFonts: string
   dataNotes: string
   slug: string
+  channelName?: string
 }
 
 export function PresenterView({
@@ -24,6 +25,7 @@ export function PresenterView({
   dataFonts,
   dataNotes,
   slug,
+  channelName = `marp-slides-${slug}`,
 }: PresenterViewProps) {
   const html = useMemo(() => {
     try {
@@ -60,20 +62,16 @@ export function PresenterView({
   const nextIndex = slideIndices[activePosition + 1]
   const {elapsedTime, isRunning, toggle, reset} = useTimer()
 
-  const {sendSlideChange, requestSync} = useBroadcastChannel(
-    `marp-slides-${slug}`,
-    {
-      onSlideChange: (index, includeHidden) => {
-        if (Number.isInteger(index) && index >= 0 && index < html.length) {
-          setNavigation({
-            activeIndex: index,
-            showHiddenSlides:
-              includeHidden || slideGroups.hidden.includes(index),
-          })
-        }
-      },
+  const {sendSlideChange, requestSync} = useBroadcastChannel(channelName, {
+    onSlideChange: (index, includeHidden) => {
+      if (Number.isInteger(index) && index >= 0 && index < html.length) {
+        setNavigation({
+          activeIndex: index,
+          showHiddenSlides: includeHidden || slideGroups.hidden.includes(index),
+        })
+      }
     },
-  )
+  })
 
   useEffect(() => {
     requestSync()

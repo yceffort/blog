@@ -18,8 +18,8 @@ import {
   offlineHref,
   subscribeOffline,
 } from '@/lib/offline/client'
-import {getSavedDeck} from '@/lib/offline/database'
 import {getPosition, putPosition} from '@/lib/offline/positions'
+import {getPresentationDeck} from '@/lib/offline/snapshots'
 import type {SavedDeck} from '@/lib/offline/types'
 
 import {DownloadButton} from './DownloadButton'
@@ -59,10 +59,15 @@ export function OfflineLibrary() {
     const {slug} = selection
     let disposed = false
     void (async () => {
-      const saved = await getSavedDeck(slug)
+      const snapshot = new URL(window.location.href).searchParams.get(
+        'snapshot',
+      )
+      const saved = await getPresentationDeck(slug, snapshot)
       if (!saved || !(await caches.has(saved.assetCache))) {
         throw new Error(
-          '이 자료는 저장되어 있지 않습니다. 연결 후 오프라인 저장을 눌러 주세요.',
+          snapshot !== null
+            ? '이 발표의 저장본을 찾을 수 없습니다. 보관함에서 자료를 다시 열어 주세요.'
+            : '이 자료는 저장되어 있지 않습니다. 연결 후 오프라인 저장을 눌러 주세요.',
         )
       }
       const cache = await caches.open(saved.assetCache)
@@ -74,15 +79,16 @@ export function OfflineLibrary() {
           '저장된 파일 일부가 없어 자료를 다시 다운로드해야 합니다.',
         )
       }
-      if (!window.location.hash) {
+      const url = new URL(window.location.href)
+      // Pin the audience too: a reload after an update must stay on the
+      // presenter's snapshot and sync channel.
+      if (snapshot === null) url.searchParams.set('snapshot', saved.assetCache)
+      if (!url.hash) {
         const page = getPosition(slug)
-        if (page && page <= saved.html.length)
-          window.history.replaceState(
-            null,
-            '',
-            `${window.location.href}#${page}`,
-          )
+        if (page && page <= saved.html.length) url.hash = String(page)
       }
+      if (url.href !== window.location.href)
+        window.history.replaceState(null, '', url)
       if (!disposed) {
         document.title = `${saved.title} · Offline`
         setDeck(saved)
@@ -114,6 +120,7 @@ export function OfflineLibrary() {
   )
 
   if (deck) {
+    const channelName = `marp-slides-${deck.slug}-${deck.assetCache}`
     return selection?.presenter ? (
       <PresenterView
         dataHtml={JSON.stringify(deck.html)}
@@ -121,6 +128,7 @@ export function OfflineLibrary() {
         dataFonts={JSON.stringify(deck.fonts)}
         dataNotes={JSON.stringify(deck.notes)}
         slug={deck.slug}
+        channelName={channelName}
       />
     ) : (
       <MarpSlides
@@ -128,6 +136,8 @@ export function OfflineLibrary() {
         dataCss={deck.css}
         dataFonts={JSON.stringify(deck.fonts)}
         slug={deck.slug}
+        channelName={channelName}
+        presenterHref={`${offlineHref(deck.slug, true)}?snapshot=${encodeURIComponent(deck.assetCache)}`}
         postUrl={deck.post}
         defaultTransition={deck.transition}
         onPageChange={savePosition}

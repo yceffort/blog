@@ -8,6 +8,7 @@ import {
   removeSavedDeck,
 } from './database'
 import {removePosition} from './positions'
+import {putDeckSnapshot} from './snapshots'
 import type {
   DownloadProgress,
   OfflineDeck,
@@ -366,7 +367,7 @@ export async function downloadDeck(
             JSON.stringify([deck, assets.map((url) => hashes.get(url))]),
           ).buffer,
         )
-        await putSavedDeck({
+        const savedDeck: SavedDeck = {
           ...rewriteDeckAssets(deck, location.origin, localUrls),
           revision,
           sourceRevision,
@@ -374,7 +375,12 @@ export async function downloadDeck(
           bytes,
           assetCache,
           assets: [...localUrls.values()],
-        })
+        }
+        // A later presenter must be able to read this version even after the
+        // library is updated. Reserve its snapshot before reporting completion.
+        await putDeckSnapshot(cache, savedDeck)
+        signal.throwIfAborted()
+        await putSavedDeck(savedDeck)
         committed = true
         updated = true
         if (!automatic) publish({notice: `저장 완료: ${deck.title}`})

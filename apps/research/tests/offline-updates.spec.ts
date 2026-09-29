@@ -181,7 +181,12 @@ test('reconnect updates saved content and notes without interrupting an open pre
   ).toBe(true)
   await presenter.close()
   await context.setOffline(true)
+  // A reload stays on its snapshot; opening the deck again uses the update.
   await page.reload({waitUntil: 'domcontentloaded'})
+  await expect(page.locator('.swiper-slide-active .auto-version')).toHaveText(
+    'version one',
+  )
+  await page.goto(`/offline/${slug}#1`, {waitUntil: 'domcontentloaded'})
   await expect(page.locator('.swiper-slide-active .auto-version')).toHaveText(
     'version two',
   )
@@ -197,30 +202,78 @@ test('reconnect updates saved content and notes without interrupting an open pre
   await expect(page.locator('.offline-deck h2')).toHaveText(state.deck.title)
 })
 
-test('saving preserves quoted SVG data URLs in theme, inline and embedded CSS', async ({
+test('a presenter opened after an update keeps the audience snapshot and its own sync channel', async ({
   page,
   context,
   request,
 }) => {
   const state = await fixture(context, request)
-  const data =
-    'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect width="10" height="10" fill="red"/></svg>'
-  const declaration = `background-image: url('${data}');`
-  state.deck.css += `.data-url-theme { ${declaration} }`
-  state.deck.html[0] += `<div class="data-url-theme"></div><div class="data-url-inline" style="${declaration.replaceAll('"', '&quot;')}"></div><style>.data-url-embedded { ${declaration} }</style><div class="data-url-embedded"></div>`
   await save(page)
+  const original = (await savedDeck(page))!
+  // Previously saved records have no snapshot; opening one upgrades it locally.
+  await page.evaluate(async (name) => {
+    await (
+      await caches.open(name)
+    ).delete('/__research_offline_deck_snapshot__')
+  }, original.assetCache)
   await context.setOffline(true)
   await page.goto(`/offline/${slug}#1`, {waitUntil: 'domcontentloaded'})
-  for (const selector of [
-    '.data-url-theme',
-    '.data-url-inline',
-    '.data-url-embedded',
-  ]) {
-    await expect(page.locator(selector)).toHaveCSS(
-      'background-image',
-      /^url\("data:image\/svg\+xml,/,
-    )
-  }
+  await expect(page.locator('.swiper-slide-active .auto-version')).toHaveText(
+    'version one',
+  )
+
+  state.deck.title = 'new version for the next presentation'
+  state.deck.html[0] = state.deck.html[0].replace('version one', 'version two')
+  state.deck.notes[0] = 'version two notes'
+  await context.setOffline(false)
+  await expect
+    .poll(async () => (await savedDeck(page))?.title)
+    .toBe(state.deck.title)
+  const popup = context.waitForEvent('page')
+  await page.keyboard.press('p')
+  const presenter = await popup
+  const notes = presenter.locator('.marp-presenter-notes-content').last()
+  await expect(notes).toHaveText('version one notes')
+  await expect(
+    presenter.locator('.marp-presenter-slide .auto-version'),
+  ).toHaveText('version one')
+  await presenter.getByRole('button', {name: '다음 ▶', exact: true}).click()
+  await expect(page).toHaveURL(/#2$/)
+  await page.keyboard.press('ArrowLeft')
+  await expect(notes).toHaveText('version one notes')
+
+  await context.setOffline(true)
+  await presenter.reload({waitUntil: 'domcontentloaded'})
+  await expect(notes).toHaveText('version one notes')
+  // Reloading the audience keeps the presenter's snapshot and sync channel.
+  await page.reload({waitUntil: 'domcontentloaded'})
+  await expect(page).toHaveURL(
+    new RegExp(`\\?snapshot=${original.assetCache}#1$`),
+  )
+  await expect(page.locator('.swiper-slide-active .auto-version')).toHaveText(
+    'version one',
+  )
+  await presenter.getByRole('button', {name: '다음 ▶', exact: true}).click()
+  await expect(page).toHaveURL(/#2$/)
+  await page.keyboard.press('ArrowLeft')
+  await expect(page).toHaveURL(/#1$/)
+  const nextAudience = await context.newPage()
+  await nextAudience.goto(`/offline/${slug}#1`, {waitUntil: 'domcontentloaded'})
+  await expect(
+    nextAudience.locator('.swiper-slide-active .auto-version'),
+  ).toHaveText('version two')
+  await nextAudience.keyboard.press('ArrowRight')
+  await expect(nextAudience).toHaveURL(/#2$/)
+  await expect(page).toHaveURL(/#1$/)
+  await expect(notes).toHaveText('version one notes')
+
+  // An expired snapshot must not silently switch the presenter to the new deck.
+  await page.evaluate((name) => caches.delete(name), original.assetCache)
+  await presenter.reload({waitUntil: 'domcontentloaded'})
+  await expect(presenter.locator('.offline-error')).toContainText(
+    '이 발표의 저장본을 찾을 수 없습니다',
+  )
+  await expect(presenter.locator('.marp-presenter-notes')).toHaveCount(0)
 })
 
 test('cancelling an update after a partial asset download preserves the saved deck', async ({
@@ -283,6 +336,71 @@ test('cancelling an update after a partial asset download preserves the saved de
         ),
     )
     .toBe(true)
+})
+
+test('a snapshot write failure leaves the previous complete download available', async ({
+  page,
+  context,
+  request,
+}) => {
+  const state = await fixture(context, request)
+  await save(page)
+  const original = (await savedDeck(page))!
+  const originalCaches = await page.evaluate(() => caches.keys())
+  state.deck.title = 'update without space for its snapshot'
+  await page.evaluate(() => {
+    // oxlint-disable-next-line typescript/unbound-method -- Restored receiver via call below.
+    const put = Cache.prototype.put
+    Cache.prototype.put = function (resource, response) {
+      const url = resource instanceof Request ? resource.url : String(resource)
+      if (url.endsWith('/__research_offline_deck_snapshot__')) {
+        return Promise.reject(new DOMException('Full', 'QuotaExceededError'))
+      }
+      return put.call(this, resource, response)
+    }
+  })
+  await page
+    .getByRole('button', {
+      name: `${slug} 오프라인 저장본 업데이트`,
+      exact: true,
+    })
+    .click()
+  await expect(page.locator('.offline-toast')).toContainText(
+    '저장 공간이 부족합니다',
+  )
+  expect(await savedDeck(page)).toEqual(original)
+  expect(await page.evaluate(() => caches.keys())).toEqual(originalCaches)
+  await context.setOffline(true)
+  await page.goto(`/offline/${slug}#1`, {waitUntil: 'domcontentloaded'})
+  await expect(page.locator('.swiper-slide-active .auto-version')).toHaveText(
+    'version one',
+  )
+})
+
+test('saving preserves quoted SVG data URLs in theme, inline and embedded CSS', async ({
+  page,
+  context,
+  request,
+}) => {
+  const state = await fixture(context, request)
+  const data =
+    'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect width="10" height="10" fill="red"/></svg>'
+  const declaration = `background-image: url('${data}');`
+  state.deck.css += `.data-url-theme { ${declaration} }`
+  state.deck.html[0] += `<div class="data-url-theme"></div><div class="data-url-inline" style="${declaration.replaceAll('"', '&quot;')}"></div><style>.data-url-embedded { ${declaration} }</style><div class="data-url-embedded"></div>`
+  await save(page)
+  await context.setOffline(true)
+  await page.goto(`/offline/${slug}#1`, {waitUntil: 'domcontentloaded'})
+  for (const selector of [
+    '.data-url-theme',
+    '.data-url-inline',
+    '.data-url-embedded',
+  ]) {
+    await expect(page.locator(selector)).toHaveCSS(
+      'background-image',
+      /^url\("data:image\/svg\+xml,/,
+    )
+  }
 })
 
 test('failed automatic updates retain the saved version and retry after reconnect', async ({

@@ -75,6 +75,8 @@ interface MarpSlidesProps {
   dataFonts: string
   slug: string
   offline?: boolean
+  channelName?: string
+  presenterHref?: string
   onPageChange?: (page: number) => void
   postUrl?: string
   // 덱 frontmatter의 transition. 지정되면 뷰어 설정(cookie)보다 우선한다
@@ -87,13 +89,15 @@ export function MarpSlides({
   dataFonts,
   slug,
   offline = false,
+  channelName = `marp-slides-${slug}`,
+  presenterHref,
   onPageChange,
   postUrl,
   defaultTransition,
 }: MarpSlidesProps) {
-  const presenterUrl = offline
-    ? offlineHref(slug, true)
-    : `/slides/${slug}/presenter`
+  const presenterUrl =
+    presenterHref ??
+    (offline ? offlineHref(slug, true) : `/slides/${slug}/presenter`)
 
   const html = useMemo(() => parseJsonArray(dataHtml, 'HTML'), [dataHtml])
   const fonts = useMemo(() => parseJsonArray(dataFonts, 'fonts'), [dataFonts])
@@ -176,7 +180,7 @@ export function MarpSlides({
   const laserRef = useLaserPointer(isLaserMode)
   const drawing = useDrawing(isDrawingMode, activeIndex)
 
-  const {sendSlideChange} = useBroadcastChannel(`marp-slides-${slug}`, {
+  const {sendSlideChange} = useBroadcastChannel(channelName, {
     onSlideChange: applyNavigation,
     onSyncRequest: () => ({
       index: activeIndexRef.current,

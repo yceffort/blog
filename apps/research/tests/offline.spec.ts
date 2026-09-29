@@ -67,7 +67,9 @@ test('selected decks survive a restart offline with animations, notes, timer and
     await page.goto(`${base}/offline/${slug}#34`, {
       waitUntil: 'domcontentloaded',
     })
-    await expect(page).toHaveURL(`${base}/offline/${slug}#34`)
+    await expect(page).toHaveURL(
+      new RegExp(`/offline/${slug}\\?snapshot=research-deck-v1-[a-f0-9-]+#34$`),
+    )
     await expect(
       page.locator('.swiper-slide-active .mermaid svg'),
     ).toBeVisible()
@@ -82,7 +84,9 @@ test('selected decks survive a restart offline with animations, notes, timer and
     await page.goto(`${base}/slides/${slug}#34`, {
       waitUntil: 'domcontentloaded',
     })
-    await expect(page).toHaveURL(`${base}/offline/${slug}#34`)
+    await expect(page).toHaveURL(
+      new RegExp(`/offline/${slug}\\?snapshot=research-deck-v1-[a-f0-9-]+#34$`),
+    )
     await expect(
       page.locator('.swiper-slide-active .mermaid svg'),
     ).toBeVisible()
@@ -119,11 +123,14 @@ test('selected decks survive a restart offline with animations, notes, timer and
     await page.goto(`${base}/offline/${slug}#${noteIndex + 1}`, {
       waitUntil: 'domcontentloaded',
     })
+    await expect(page.locator('.marp-slides')).toBeVisible()
     const presenterPromise = context.waitForEvent('page')
     await page.keyboard.press('p')
     const presenter = await presenterPromise
     await expect(presenter).toHaveURL(
-      `${base}/offline/${slug}/presenter#${noteIndex + 1}`,
+      new RegExp(
+        `/offline/${slug}/presenter\\?snapshot=research-deck-v1-[a-f0-9-]+#${noteIndex + 1}$`,
+      ),
     )
     presenter.on('pageerror', (error) => errors.push(error.message))
     const noteBody = presenter.locator('.marp-presenter-notes-content').last()
@@ -149,7 +156,9 @@ test('selected decks survive a restart offline with animations, notes, timer and
       waitUntil: 'domcontentloaded',
     })
     await expect(presenter).toHaveURL(
-      `${base}/offline/${slug}/presenter#${nextNoteIndex}`,
+      new RegExp(
+        `/offline/${slug}/presenter\\?snapshot=research-deck-v1-[a-f0-9-]+#${nextNoteIndex}$`,
+      ),
     )
     await expect(noteBody).toHaveText(notes[nextNoteIndex - 1] || '노트 없음')
     await presenter.close()
