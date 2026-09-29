@@ -70,8 +70,12 @@ export function rewriteDeckAssets(
   const css = (value: string) =>
     value.replace(
       /url\(\s*(?:"([^"]*)"|'([^']*)'|([^\s)]*))\s*\)/gi,
-      (_match, double, single, bare) =>
-        `url("${replace(double ?? single ?? bare)}")`,
+      (match, double, single, bare) => {
+        const original = double ?? single ?? bare
+        const local = replace(original)
+        // Preserve quoting and escapes in data URLs and other unchanged values.
+        return local === original ? match : `url("${local}")`
+      },
     )
   return {
     ...deck,

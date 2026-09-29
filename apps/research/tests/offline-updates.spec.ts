@@ -197,6 +197,32 @@ test('reconnect updates saved content and notes without interrupting an open pre
   await expect(page.locator('.offline-deck h2')).toHaveText(state.deck.title)
 })
 
+test('saving preserves quoted SVG data URLs in theme, inline and embedded CSS', async ({
+  page,
+  context,
+  request,
+}) => {
+  const state = await fixture(context, request)
+  const data =
+    'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect width="10" height="10" fill="red"/></svg>'
+  const declaration = `background-image: url('${data}');`
+  state.deck.css += `.data-url-theme { ${declaration} }`
+  state.deck.html[0] += `<div class="data-url-theme"></div><div class="data-url-inline" style="${declaration.replaceAll('"', '&quot;')}"></div><style>.data-url-embedded { ${declaration} }</style><div class="data-url-embedded"></div>`
+  await save(page)
+  await context.setOffline(true)
+  await page.goto(`/offline/${slug}#1`, {waitUntil: 'domcontentloaded'})
+  for (const selector of [
+    '.data-url-theme',
+    '.data-url-inline',
+    '.data-url-embedded',
+  ]) {
+    await expect(page.locator(selector)).toHaveCSS(
+      'background-image',
+      /^url\("data:image\/svg\+xml,/,
+    )
+  }
+})
+
 test('failed automatic updates retain the saved version and retry after reconnect', async ({
   page,
   context,
