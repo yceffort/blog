@@ -417,9 +417,23 @@ export async function downloadDeck(
 }
 
 let automaticCheck: Promise<void> | undefined
+let recheck = false
+const CHECK_STARTED_KEY = 'research-offline-update-started'
+
+function lastCheckStartedAt() {
+  try {
+    return Number(localStorage.getItem(CHECK_STARTED_KEY)) || 0
+  } catch {
+    return 0
+  }
+}
 
 function checkOfflineUpdates(): Promise<void> {
-  if (automaticCheck) return automaticCheck
+  if (automaticCheck) {
+    // The running scan may have read the server before this trigger (e.g. a reconnect).
+    recheck = true
+    return automaticCheck
+  }
   if (
     process.env.NODE_ENV !== 'production' ||
     !supportsOffline() ||
@@ -428,6 +442,11 @@ function checkOfflineUpdates(): Promise<void> {
     return Promise.resolve()
   }
   const check = async () => {
+    try {
+      localStorage.setItem(CHECK_STARTED_KEY, String(Date.now()))
+    } catch {
+      // Without it, tabs only lose the deduplication of queued scans.
+    }
     const decks = await getSavedDecks()
     if (!decks.length) return
     publish({checkingUpdates: true, automaticUpdateError: undefined})
@@ -453,19 +472,23 @@ function checkOfflineUpdates(): Promise<void> {
       publish({checkingUpdates: false})
     }
   }
-  // Only one tab scans at a time. Per-deck writes also share the manual-download lock.
+  const requestedAt = Date.now()
+  // Only one tab scans at a time. Waiting tabs skip if another tab started a scan
+  // after this trigger. Per-deck writes also share the manual-download lock.
   automaticCheck = (
     navigator.locks
-      ? navigator.locks.request(
-          'research-offline-update-check',
-          {ifAvailable: true},
-          (lock) => (lock ? check() : undefined),
+      ? navigator.locks.request('research-offline-update-check', () =>
+          lastCheckStartedAt() >= requestedAt ? undefined : check(),
         )
       : check()
   )
     .catch(() => {})
     .finally(() => {
       automaticCheck = undefined
+      if (recheck) {
+        recheck = false
+        void checkOfflineUpdates()
+      }
     })
   return automaticCheck
 }
