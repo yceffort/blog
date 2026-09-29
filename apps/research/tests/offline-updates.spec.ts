@@ -223,6 +223,68 @@ test('saving preserves quoted SVG data URLs in theme, inline and embedded CSS', 
   }
 })
 
+test('cancelling an update after a partial asset download preserves the saved deck', async ({
+  page,
+  context,
+  request,
+}) => {
+  const state = await fixture(context, request)
+  await save(page)
+  const original = (await savedDeck(page))!
+  const originalCaches = await page.evaluate(() => caches.keys())
+  state.deck.title = 'cancelled update'
+  state.deck.html[0] +=
+    '<img src="/a-completed-update.svg" alt="completed update asset">'
+  await context.route('**/a-completed-update.svg', (route) =>
+    route.fulfill({contentType: 'image/svg+xml', body: state.image}),
+  )
+  // Hold a later asset until cancellation, after another response reached the cache.
+  let held = false
+  await context.route(`**${assetPath}`, () => {
+    held = true
+  })
+  await page
+    .getByRole('button', {
+      name: `${slug} 오프라인 저장본 업데이트`,
+      exact: true,
+    })
+    .click()
+  await expect.poll(() => held).toBe(true)
+  await expect
+    .poll(() =>
+      page.evaluate(async (previous) => {
+        const staging = (await caches.keys()).find(
+          (name) => name.startsWith('research-deck-v1-') && name !== previous,
+        )
+        return staging ? (await (await caches.open(staging)).keys()).length : 0
+      }, original.assetCache),
+    )
+    .toBeGreaterThan(0)
+  await page
+    .getByRole('button', {name: `${slug} 다운로드 취소`, exact: true})
+    .click()
+  await expect(page.locator('.offline-toast')).toContainText(
+    '다운로드를 취소했습니다',
+  )
+  expect(await savedDeck(page)).toEqual(original)
+  expect(await page.evaluate(() => caches.keys())).toEqual(originalCaches)
+  await context.setOffline(true)
+  await page.goto(`/offline/${slug}#1`, {waitUntil: 'domcontentloaded'})
+  await expect(page.locator('.swiper-slide-active .auto-version')).toHaveText(
+    'version one',
+  )
+  await expect
+    .poll(() =>
+      page
+        .getByAltText('automatic update fixture')
+        .evaluate(
+          (element: HTMLImageElement) =>
+            element.complete && element.naturalWidth > 0,
+        ),
+    )
+    .toBe(true)
+})
+
 test('failed automatic updates retain the saved version and retry after reconnect', async ({
   page,
   context,
