@@ -99,6 +99,19 @@ async function save(page: Page) {
   )
 }
 
+function activeRuntime(page: Page) {
+  return page.evaluate(
+    async () =>
+      (
+        await (
+          await caches.match('/__research_offline_runtime__', {
+            cacheName: 'research-offline-meta-v1',
+          })
+        )?.json()
+      )?.cacheName,
+  )
+}
+
 function runtimeCaches(page: Page) {
   return page.evaluate(async () =>
     (await caches.keys())
@@ -208,7 +221,7 @@ test('failed automatic updates retain the saved version and retry after reconnec
   await expect(page.locator('.offline-deck .offline-status')).toHaveText('')
 })
 
-test('a new deployment refreshes same-URL assets and older downloads are upgraded', async ({
+test('a new deployment keeps unchanged decks and older downloads are upgraded', async ({
   page,
   context,
   request,
@@ -216,17 +229,16 @@ test('a new deployment refreshes same-URL assets and older downloads are upgrade
   const state = await fixture(context, request)
   await save(page)
   const initial = (await savedDeck(page))!
+  const unchanged = state.unchangedRequests
   await context.setOffline(true)
   state.manifest.revision = 'aabbcc001122334455'
-  state.image = state.image.replace('red', 'green')
   await context.setOffline(false)
   await expect
-    .poll(async () => (await savedDeck(page))?.runtimeRevision)
-    .toBe(state.manifest.revision)
-  const updated = (await savedDeck(page))!
-  expect(updated.sourceRevision).toBe(initial.sourceRevision)
-  expect(updated.revision).not.toBe(initial.revision)
-  expect(state.imageRequests).toBe(2)
+    .poll(() => activeRuntime(page))
+    .toBe('research-runtime-v1-aabbcc001122334455')
+  await expect.poll(() => state.unchangedRequests).toBeGreaterThan(unchanged)
+  expect(await savedDeck(page)).toEqual(initial)
+  expect(state.imageRequests).toBe(1)
   await context.setOffline(true)
   await page.evaluate(
     (savedSlug) =>
@@ -241,7 +253,6 @@ test('a new deployment refreshes same-URL assets and older downloads are upgrade
           read.addEventListener('success', () => {
             const old = read.result
             delete old.sourceRevision
-            delete old.runtimeRevision
             store.put(old)
           })
           tx.addEventListener('complete', () => {
@@ -260,7 +271,7 @@ test('a new deployment refreshes same-URL assets and older downloads are upgrade
   await expect
     .poll(async () => (await savedDeck(page))?.sourceRevision)
     .toBe(initial.sourceRevision)
-  expect(state.imageRequests).toBe(3)
+  expect(state.imageRequests).toBe(2)
 })
 
 test('a new deployment removes the previous shared viewer once no saved deck is open', async ({
@@ -278,9 +289,7 @@ test('a new deployment removes the previous shared viewer once no saved deck is 
   await context.setOffline(true)
   state.manifest.revision = 'aabbcc001122334455'
   await context.setOffline(false)
-  await expect
-    .poll(async () => (await savedDeck(page))?.runtimeRevision)
-    .toBe(state.manifest.revision)
+  await expect.poll(() => activeRuntime(page)).toBe(current)
   // The open deck may still lazy-load chunks from the viewer it started with.
   await cleanUp(page)
   expect(await runtimeCaches(page)).toEqual([current, previous].toSorted())
@@ -316,8 +325,8 @@ test('a new deployment downloads only the shared viewer files that changed', asy
   state.manifest.revision = 'aabbcc001122334455'
   await context.setOffline(false)
   await expect
-    .poll(async () => (await savedDeck(page))?.runtimeRevision)
-    .toBe(state.manifest.revision)
+    .poll(() => activeRuntime(page))
+    .toBe('research-runtime-v1-aabbcc001122334455')
   expect(downloads).toEqual(['/offline-shell.html'])
   expect(
     await page.evaluate(async () =>

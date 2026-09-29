@@ -232,7 +232,6 @@ async function ensureRuntime(
     RUNTIME_KEY,
     Response.json({cacheName, shell: manifest.shell}),
   )
-  return manifest.revision
 }
 
 function broadcastChange() {
@@ -281,14 +280,10 @@ export async function downloadDeck(
       // Re-read under the shared lock: another tab may have updated or deleted it.
       const saved = automatic ? await getSavedDeck(slug) : undefined
       if (automatic && !saved) return
-      const currentRuntime =
-        manifest ?? (automatic ? await fetchRuntimeManifest(signal) : undefined)
+      // A new deployment alone does not re-download a deck: its assets live in
+      // their own cache, independent of the shared viewer.
       let complete = false
-      if (
-        saved &&
-        currentRuntime?.revision === saved.runtimeRevision &&
-        (await caches.has(saved.assetCache))
-      ) {
+      if (saved && (await caches.has(saved.assetCache))) {
         const cache = await caches.open(saved.assetCache)
         complete = (
           await Promise.all(saved.assets.map((url) => cache.match(url)))
@@ -327,11 +322,7 @@ export async function downloadDeck(
         completed: 0,
         total: 0,
       })
-      const runtimeRevision = await ensureRuntime(
-        progress,
-        signal,
-        currentRuntime,
-      )
+      await ensureRuntime(progress, signal, manifest)
       const assets = collectDeckAssets(deck, location.origin)
       const assetId = crypto.randomUUID()
       const assetCache = `research-deck-v1-${assetId}`
@@ -379,7 +370,6 @@ export async function downloadDeck(
           ...rewriteDeckAssets(deck, location.origin, localUrls),
           revision,
           sourceRevision,
-          runtimeRevision,
           savedAt: Date.now(),
           bytes,
           assetCache,
@@ -450,6 +440,9 @@ function checkOfflineUpdates(): Promise<void> {
         if (!navigator.onLine) break
         await downloadDeck(deck.slug, {automatic: true, manifest})
       }
+      // A deployment may replace only the shared viewer, without any deck update
+      // that would otherwise trigger collection of the superseded one.
+      void cleanUnusedDeckCaches()
       publish({lastCheckedAt: Date.now()})
     } catch {
       publish({

@@ -16,7 +16,6 @@ export interface OfflineDeck {
 export interface SavedDeck extends OfflineDeck {
   revision: string
   sourceRevision?: string
-  runtimeRevision?: string
   savedAt: number
   bytes: number
   assetCache: string
