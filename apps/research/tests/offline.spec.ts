@@ -177,21 +177,63 @@ test('selected decks survive a restart offline with animations, notes, timer and
   }
 })
 
-test('a saved deck opens from the saved viewer after five seconds on a stalled network', async ({
+test('saved routes start without waiting for a stalled network', async ({
   page,
   context,
 }) => {
   await saveFromViewer(page)
   // Venue Wi-Fi without internet: the browser stays online but nothing answers.
-  await context.route(`**/offline/${slug}`, () => {})
+  let networkRequests = 0
+  await context.route(
+    (url) => url.pathname === '/offline' || url.pathname === `/offline/${slug}`,
+    () => {
+      networkRequests++
+    },
+  )
   const viewer = await context.newPage()
   const start = Date.now()
   await viewer.goto(`${base}/offline/${slug}`, {
     waitUntil: 'domcontentloaded',
-    timeout: 10000,
+    timeout: 5000,
   })
+  await expect(viewer.locator('.marp-slides')).toBeVisible({timeout: 5000})
+  expect(Date.now() - start).toBeLessThan(5000)
+  await viewer.goto('/offline', {waitUntil: 'domcontentloaded', timeout: 5000})
+  await expect(viewer.locator('.offline-deck')).toHaveCount(1)
+  expect(networkRequests).toBe(0)
+})
+
+test('saved routes ignore new HTML whose new scripts cannot be downloaded', async ({
+  page,
+  context,
+  request,
+}) => {
+  await saveFromViewer(page)
+  const html = await (await request.get('/offline')).text()
+  let changed = 0
+  const nextHtml = html.replace(
+    /\/_next\/static\/chunks\/[^"\\<>\s]+\.js/g,
+    () => `/_next/static/chunks/unavailable-deployment-${changed++}.js`,
+  )
+  expect(changed).toBeGreaterThan(0)
+  let documents = 0
+  let scripts = 0
+  await context.route(`**/offline/${slug}`, (route) => {
+    documents++
+    return route.fulfill({body: nextHtml, contentType: 'text/html'})
+  })
+  await context.route('**/unavailable-deployment-*.js', (route) => {
+    scripts++
+    return route.abort('internetdisconnected')
+  })
+  const viewer = await context.newPage()
+  await viewer.goto(`/offline/${slug}`, {waitUntil: 'domcontentloaded'})
   await expect(viewer.locator('.marp-slides')).toBeVisible()
-  expect(Date.now() - start).toBeGreaterThanOrEqual(5000)
+  expect(documents).toBe(0)
+  expect(scripts).toBe(0)
+  await context.setOffline(true)
+  await viewer.reload({waitUntil: 'domcontentloaded'})
+  await expect(viewer.locator('.marp-slides')).toBeVisible()
 })
 
 test('offline paths resolve on the server before any deck has been saved', async ({
