@@ -8,7 +8,7 @@ tags:
   - pwa
 published: false
 date: 2026-09-28 23:00:00
-description: '내 마음대로 만들어 보는 오프라인 다운로드'
+description: 'Marp 슬라이드와 Next.js 실행 파일을 브라우저에 저장하고, 연결이 끊기거나 자료가 업데이트되어도 발표를 이어 가도록 구현한 기록'
 ---
 
 FEConf 2026을 앞두고 행사 측에서 인터넷 연결 없이도 발표할 수 있도록 자료를 준비해 달라는 요청을 받았다. 이를 계기로 발표 자료를 올리는 [research](https://research.yceffort.kr)에 오프라인 저장 기능을 붙였다.
@@ -21,7 +21,7 @@ research의 발표 자료는 Marp로 만든다. 마크다운을 슬라이드로 
 
 이를 구현하려면 Marp의 렌더 결과를 어떤 형태로 보관할지, Next.js 서버 없이 뷰어를 어떻게 시작할지, 업데이트 중 연결이 끊기면 기존 자료를 어떻게 지킬지 정해야 했다.
 
-> 이 글은 2026년 9월 29일의 `main` 브랜치 커밋 `459d9b2b`를 기준으로 한다. Next.js 16.3.5의 App Router를 사용하며, 코드 링크도 이 커밋에 고정했다. 구현을 살펴보고 로컬에서 테스트한 기록으로, FEConf 현장에서 사용한 결과는 아직 포함하지 않았다. 글을 준비하며 발견해 고친 문제 네 가지도 함께 적었고, 그중 두 가지는 수정 전후 측정값을 남겼다.
+> 이 글은 2026년 9월 29일의 `main` 브랜치 커밋 `09940768`을 기준으로 한다. Next.js 16.3.5의 App Router를 사용하며, 코드 링크도 이 커밋에 고정했다. 구현을 살펴보고 로컬에서 테스트한 기록으로, FEConf 현장에서 사용한 결과는 아직 포함하지 않았다.
 
 ## 저장 버튼 하나가 보관하는 범위
 
@@ -60,7 +60,7 @@ export interface OfflineDeck {
 
 `html`은 각 장의 렌더 결과이고, `css`는 그 자료의 테마와 슬라이드 스타일이다. `fonts`에는 폰트 파일 자체가 아니라 `@font-face` 선언이 들어간다. 실제 폰트 파일은 선언에 있는 URL을 찾아 따로 내려받는다. `notes`는 발표자 화면에 표시할 장별 노트다.
 
-오프라인 보관함은 이 데이터를 IndexedDB에서 읽어 기존 `MarpSlides`와 `PresenterView`에 전달한다. 뷰어 컴포넌트는 그대로 두고, 데이터를 읽어 오는 경로와 발표자 창의 주소(`/offline/{slug}/presenter`)만 바꿨다.
+오프라인 보관함은 이 데이터를 읽어 기존 `MarpSlides`와 `PresenterView`에 전달한다. 자료를 처음 열 때는 IndexedDB를 읽고, 여기서 여는 발표자 창은 청중 화면과 같은 저장본을 읽도록 한다. 발표자 창의 기본 경로는 `/offline/{slug}/presenter`이며, 뒤에서 설명할 `snapshot` 쿼리로 사용할 저장본을 지정한다.
 
 슬라이드의 스타일과 폰트를 적용하는 방식도 기존 뷰어를 따른다. `useMarpShadowRoot()`는 각 장의 HTML과 CSS를 Shadow DOM에 넣어 사이트 스타일과 섞이지 않게 한다. 폰트 선언은 `useFontFace()`가 `document.head`에 등록하며, 여러 장이 같은 선언을 쓰면 참조 횟수를 세어 공유한다. `@marp-team/marp-core/browser`의 `browser(shadowRoot)`도 실행해 Marp의 브라우저용 처리를 적용한다.[^3]
 
@@ -87,7 +87,7 @@ request.addEventListener('upgradeneeded', () => {
 })
 ```
 
-자료별 레코드는 이 객체 저장소 하나에서 관리한다. `get(slug)`로 특정 자료를 읽고, `getAll()`로 보관함 목록을 만든다. 같은 `slug`로 `put()`하면 그 자료의 저장본을 교체한다.
+보관함의 자료별 레코드는 이 객체 저장소 하나에서 관리한다. `get(slug)`로 특정 자료를 읽고, `getAll()`로 보관함 목록을 만든다. 같은 `slug`로 `put()`하면 그 자료의 저장본을 교체한다. 발표에 필요한 본문은 다운로드를 완료하기 전에 해당 자산 캐시에도 JSON 응답으로 복사한다. 보관함이 새 버전으로 바뀌어도 나중에 여는 발표자 창이 이전 본문을 읽게 하기 위해서다.
 
 `indexedDB.open()`에 넘긴 버전 `1`과 `OfflineDeck.schemaVersion`의 `1`은 별개다. 앞의 값은 객체 저장소나 인덱스 같은 데이터베이스 구조를 바꿀 때 사용하고, 뒤의 값은 저장할 자료의 형식을 나타낸다. 자료 내용이 바뀔 때마다 데이터베이스 버전을 올리는 구조는 아니다. 현재 다운로드 코드는 `schemaVersion === 1`인지 확인하며, 이전 형식을 새 형식으로 변환하는 코드는 없다. 나중에 저장 형식을 바꾼다면 이미 브라우저에 남은 자료를 어떻게 읽을지도 함께 설계해야 한다.
 
@@ -97,13 +97,14 @@ request.addEventListener('upgradeneeded', () => {
 
 이미지를 `Blob`으로 IndexedDB에 넣을 수도 있다. 다만 이 뷰어는 HTML과 CSS에 적힌 URL로 파일을 요청하므로, 파일을 URL과 `Response`의 쌍으로 보관하면 서비스 워커에서 바로 찾을 수 있다. 저장소를 나눈 기준은 텍스트와 바이너리를 저장할 수 있느냐가 아니라, 자료를 조회하는 방식과 파일 요청에 응답하는 방식의 차이다.
 
-| 보관할 것                                  | 저장 위치                  | 사용하는 곳                |
-| ------------------------------------------ | -------------------------- | -------------------------- |
-| 장별 HTML, CSS, 폰트 선언, 노트, 저장 정보 | IndexedDB의 `decks`        | 보관함과 슬라이드 뷰어     |
-| 자료에 딸린 이미지와 폰트 파일             | 저장본별 Cache Storage     | 서비스 워커의 자산 응답    |
-| 뷰어의 HTML, JS, CSS와 공통 폰트           | 버전별 Cache Storage       | 오프라인에서 뷰어 시작     |
-| 준비를 마친 공통 뷰어의 위치               | 메타데이터용 Cache Storage | 서비스 워커의 문서 응답    |
-| 마지막으로 읽은 장 번호                    | localStorage               | 자료를 다시 열 때 이어보기 |
+| 보관할 것                                  | 저장 위치                   | 사용하는 곳                      |
+| ------------------------------------------ | --------------------------- | -------------------------------- |
+| 장별 HTML, CSS, 폰트 선언, 노트, 저장 정보 | IndexedDB의 `decks`         | 보관함과 슬라이드 뷰어           |
+| 자료에 딸린 이미지와 폰트 파일             | 저장본별 Cache Storage      | 서비스 워커의 자산 응답          |
+| 저장본에 고정한 자료 본문과 저장 정보      | 같은 저장본의 Cache Storage | 나중에 여는 발표자 창과 새로고침 |
+| 뷰어의 HTML, JS, CSS와 공통 폰트           | 버전별 Cache Storage        | 오프라인에서 뷰어 시작           |
+| 준비를 마친 공통 뷰어의 위치               | 메타데이터용 Cache Storage  | 서비스 워커의 문서 응답          |
+| 마지막으로 읽은 장 번호                    | localStorage                | 자료를 다시 열 때 이어보기       |
 
 마지막으로 읽은 장 번호는 localStorage에 동기적으로 기록한다. 슬라이드를 넘긴 직후 페이지를 닫더라도 쓰기를 마치기 위해서다. 저장할 값이 숫자 하나뿐이라 동기 API를 써도 부담이 없다. 위치를 기록하지 못하더라도 발표는 계속할 수 있도록, 이 쓰기 작업에서 난 오류는 무시한다.
 
@@ -135,7 +136,7 @@ flowchart TD
 
 방문 중에 발생한 요청을 캐시할 때는 브라우저가 요청한 파일을 저장하면 된다. 자료 전체를 내려받으려면 아직 요청하지 않은 파일도 찾아야 하므로 Marp의 출력 형식을 살펴봐야 했다.
 
-받은 파일을 원래 URL에 그대로 저장하지도 않는다. 저장본마다 UUID를 만들고, 자산 주소를 `/offline-assets/{id}/{index}` 형태로 바꾼다. HTML과 CSS, 폰트 선언에 있는 원래 주소도 이 로컬 주소로 치환한다.
+받은 파일을 원래 URL에 그대로 저장하지도 않는다. 저장본마다 UUID를 만들고, 자산 주소를 `/offline-assets/{id}/{index}` 형태로 바꾼다. HTML과 CSS, 폰트 선언에 있는 원래 주소도 이 로컬 주소로 치환한다. CSS는 실제로 로컬 주소로 바꿀 항목만 다시 작성한다. `data:` URL처럼 그대로 둘 항목은 따옴표와 이스케이프를 포함한 원문을 보존한다. 작은따옴표로 감싼 SVG 데이터 URL 안에는 큰따옴표가 들어갈 수 있으므로, 모든 `url()`을 큰따옴표로 다시 감싸면 정상적인 CSS도 깨질 수 있다.
 
 예를 들어 두 발표 자료가 같은 `/images/architecture.png`를 사용한다고 하자. 한 자료만 업데이트했는데 원래 URL의 캐시를 덮어쓰면 다른 자료도 새 이미지를 보게 된다. 본문은 예전 버전인데 이미지만 바뀌는 셈이다. 저장본마다 주소와 캐시를 분리하면 두 자료가 서로 다른 시점의 이미지를 유지할 수 있고, 업데이트 중인 자료가 이미 열린 발표의 자산을 덮어쓰지도 않는다.
 
@@ -203,13 +204,13 @@ await metadata.put(
 
 다만 다운로드하는 코드의 범위는 넓다. 오프라인 뷰어가 실제로 참조하는 청크만 추적하지 않고, `.next/static`의 해당 확장자 파일을 모두 포함한다. **발표 자료는 선택해서 저장하지만, 공통 실행 파일은 사이트 전체 빌드에서 가져온다.** 오프라인에서 쓰지 않는 화면의 코드도 포함될 수 있다.
 
-이렇게 하면 지연 로딩할 파일을 빠뜨릴 가능성은 줄지만 최초 다운로드 용량이 커진다. `459d9b2b`를 빌드해 확인한 목록에는 파일 115개가 있었고, 압축 전 크기의 합은 7,149,796바이트(약 6.8MiB)였다. 보관함에 표시하는 자료별 용량에는 이 공통 실행 파일이 포함되지 않는다. 자료를 처음 저장할 때는 화면에 표시된 용량 외에 이 파일들도 받아야 한다.
+이렇게 하면 지연 로딩할 파일을 빠뜨릴 가능성은 줄지만 최초 다운로드 용량이 커진다. `09940768`을 빌드해 확인한 목록에는 파일 115개가 있었고, 압축 전 크기의 합은 7,150,785바이트(약 6.8MiB)였다. 보관함에 표시하는 자료별 용량에는 이 공통 실행 파일이 포함되지 않는다. 자료를 처음 저장할 때는 화면에 표시된 용량 외에 이 파일들도 받아야 한다.
 
-글을 준비하며 코드를 다시 읽다가, 배포할 때마다 이 파일들을 다시 받고 이전 캐시도 남겨 두는 문제를 발견했다. 공통 HTML로 복사하는 `offline.html`에는 Next.js의 빌드 ID가 들어간다. 코드를 바꾸지 않고 두 번 빌드해도 다운로드 목록의 버전이 달라졌고, 새 버전의 뷰어를 준비할 때마다 파일 115개를 다시 받았다. 이전 캐시를 지우는 코드도 없었으므로, 사용자가 배포 후 사이트를 열어 업데이트를 받을 때마다 당시 빌드 기준 약 6.8MiB의 캐시가 더 쌓일 수 있었다.
+공통 HTML로 복사하는 `offline.html`에는 Next.js의 빌드 ID가 들어간다. 코드를 바꾸지 않고 두 번 빌드해도 다운로드 목록의 버전이 달라진다. 버전만 보고 모든 파일을 다시 받으면 배포마다 다운로드와 저장 공간 사용량이 늘어나므로, 파일 단위 재사용과 이전 캐시 정리가 필요하다.
 
-지금은 새 공통 뷰어를 준비할 때 이전 캐시를 먼저 확인한다. 같은 URL의 파일이 있고 SHA-256도 일치하면 새 캐시로 복사하고, 없거나 달라진 파일만 네트워크에서 받는다. 공통 HTML 하나만 바뀐 배포를 재현한 테스트에서, 수정 전에는 목록의 113개 파일을 전부 다시 받았지만 수정 후에는 공통 HTML 하나만 받았다. 이 테스트의 파일 수는 앞서 용량을 잰 빌드의 목록과 다르다. 실제 배포에서는 공통 HTML 외에 `_buildManifest.js`처럼 빌드 ID 디렉터리 아래에 생기는 파일 3개도 주소가 바뀌므로, 최소 4개는 새로 받는다.
+새 공통 뷰어를 준비할 때는 이전 캐시를 먼저 확인한다. 같은 URL의 파일이 있고 SHA-256도 일치하면 새 캐시로 복사하고, 없거나 달라진 파일만 네트워크에서 받는다. 공통 HTML 하나만 바뀐 배포를 재현한 테스트에서, 수정 전에는 목록의 113개 파일을 전부 다시 받았지만 수정 후에는 공통 HTML 하나만 받았다. 이 테스트의 파일 수는 앞서 용량을 잰 빌드의 목록과 다르다. 실제 배포에서는 공통 HTML 외에 `_buildManifest.js`처럼 빌드 ID 디렉터리 아래에 생기는 파일 3개도 주소가 바뀌므로, 최소 4개는 새로 받는다.
 
-그래도 공통 뷰어의 버전 자체는 배포할 때마다 바뀐다. 코드가 같아도 빌드 ID가 달라지기 때문이다. 이 사실은 뒤에서 다룰 자료의 자동 업데이트에도 영향을 줬다.
+그래도 공통 뷰어의 버전 자체는 배포할 때마다 바뀐다. 코드가 같아도 빌드 ID가 달라지기 때문이다. 따라서 자료 본문의 변경 여부는 공통 뷰어와 별도로 판단한다.
 
 저장 공간을 회수하기 위해 이전 버전의 캐시를 지우는 처리도 추가했다. 다만 발표 중인 화면이 예전 파일을 필요로 할 수 있으므로, 열린 발표가 없을 때만 정리한다. 그전까지는 여러 버전이 함께 남는다.
 
@@ -225,8 +226,9 @@ await metadata.put(
 
 1. 공통 뷰어를 준비하고 자료의 모든 자산 URL을 수집한다.
 2. 새 자산 캐시에 이미지와 폰트를 내려받고, 각 파일의 로컬 주소를 정한다.
-3. 모든 다운로드가 끝난 뒤 취소 여부를 다시 확인한다.
-4. 자산 주소를 치환한 자료와 새 캐시의 위치를 IndexedDB에 기록한다.
+3. 자산 주소를 치환한 자료와 저장 정보를 새 자산 캐시에 JSON 스냅샷으로 보관한다.
+4. 취소 여부를 다시 확인한다.
+5. 준비한 자료와 새 캐시의 위치를 IndexedDB에 기록한다.
 
 다운로드가 실패하거나 다운로드 후의 검사에서 취소를 확인하면 새 자산 캐시를 지우고 기존 저장본을 유지한다. 다만 이 검사 뒤에 시작한 IndexedDB 쓰기는 취소 신호와 연결하지 않았다. 쓰기가 시작된 뒤에 누른 취소로는 이전 저장본으로 되돌아가지 않는다.
 
@@ -258,7 +260,7 @@ IndexedDB의 쓰기도 `put()` 요청의 성공 이벤트만 보고 끝내지 �
 
 발표 자료는 행사 직전까지 수정할 수 있다. 사이트에서 고친 내용을 오프라인 저장본에도 반영하고 싶지만, 발표 도중 화면까지 바뀌어서는 안 된다. 저장소에는 새 버전을 받아 두고, 열린 화면은 처음 읽은 자료를 계속 사용하도록 했다.
 
-사이트를 열거나 인터넷 연결이 돌아오면 저장한 자료가 바뀌었는지 확인한다. 화면이 보이는 동안에는 5분 간격으로, 탭으로 돌아왔을 때는 마지막 확인 시도에서 1분이 지났으면 다시 확인한다. 확인은 Web Locks로 한 번에 한 탭만 실행한다. 확인이 진행 중일 때 연결이 돌아오면, 진행 중인 확인은 재연결 전의 서버 상태를 읽었을 수 있으므로 끝난 뒤 한 번 더 확인한다. 잠금을 기다리던 탭은 자기 요청 이후에 다른 탭이 시작한 확인이 있으면 건너뛴다. 처음에는 진행 중인 확인에 새 요청을 합치기만 해서, 재연결 신호가 버려지면 새 버전을 다음 5분 주기에야 확인했다. 이 작업은 페이지가 열려 있을 때 실행한다. 사이트를 닫아 둔 동안 주기적으로 내려받는 백그라운드 동기화는 구현하지 않았다.
+사이트를 열거나 인터넷 연결이 돌아오면 저장한 자료가 바뀌었는지 확인한다. 화면이 보이는 동안에는 5분 간격으로, 탭으로 돌아왔을 때는 마지막 확인 시도에서 1분이 지났으면 다시 확인한다. 확인은 Web Locks로 한 번에 한 탭만 실행한다. 확인이 진행 중일 때 연결이 돌아오면, 진행 중인 확인은 재연결 전의 서버 상태를 읽었을 수 있으므로 끝난 뒤 한 번 더 확인한다. 잠금을 기다리던 탭은 자기 요청 이후에 다른 탭이 시작한 확인이 있으면 건너뛴다. 이 작업은 페이지가 열려 있을 때 실행한다. 사이트를 닫아 둔 동안 주기적으로 내려받는 백그라운드 동기화는 구현하지 않았다.
 
 저장본에는 두 가지 버전 값을 기록한다.
 
@@ -269,27 +271,27 @@ IndexedDB의 쓰기도 `put()` 요청의 성공 이벤트만 보고 끝내지 �
 
 API는 자료 JSON의 SHA-256을 ETag로 반환한다. 자동 업데이트에서는 저장된 자산이 모두 남아 있을 때 `If-None-Match`로 기존 버전을 보낸다. 서버가 304로 응답하면 자료 본문과 자산을 다시 받지 않는다. 공통 뷰어는 이와 별개로 갱신하므로, 배포로 공통 뷰어가 바뀌어도 자료 JSON이 같으면 기존 자산 캐시를 그대로 쓴다.
 
-처음에는 저장본에 공통 뷰어의 버전(`runtimeRevision`)도 기록하고, 이 값이 달라지면 자료 JSON이 같아도 자산을 다시 받게 했다. 같은 URL의 이미지가 교체된 경우를 배포 시점에 반영하려는 의도였다. 그런데 앞에서 적었듯 공통 뷰어의 버전은 코드가 같아도 배포마다 바뀐다. 결국 배포가 한 번 일어날 때마다 저장한 모든 자료의 이미지와 폰트를 전부 다시 받아 새 캐시에 쓰는 구조였고, ETag의 304는 같은 배포 안에서 다시 확인할 때만 효과가 있었다. 발표 창이 열려 있으면 이전 캐시의 정리도 미루므로, 발표 당일 배포가 겹치면 자료마다 자산 사본이 쌓이고 그만큼 발표장 네트워크로 다운로드가 일어날 수 있었다. 지금은 공통 뷰어의 버전과 자료의 자산 갱신을 분리했다.
+저장본에 공통 뷰어의 버전도 기록해 두고 이 값이 바뀔 때마다 자산을 다시 받으면, 같은 URL의 이미지가 교체된 경우까지 배포 시점에 반영할 수 있다. 하지만 공통 뷰어의 버전은 배포마다 바뀌므로 내용이 같은 자료까지 배포마다 새 캐시에 복사된다. 발표 중에는 이전 캐시 정리도 미루므로, 발표 당일 배포가 겹치면 네트워크와 저장 공간을 그만큼 더 쓴다. 그래서 자료의 갱신 조건에는 공통 뷰어의 버전을 넣지 않았다. 앞의 보관함 캡처에 보이는 `runtimeRevision`이 이 값을 기록하던 이전 구현의 필드다.
 
 그 대가로 생긴 한계가 있다. 자료 JSON이 그대로인데 같은 URL의 이미지 내용만 바뀌면 자동 업데이트로는 알아내지 못한다. 외부 이미지뿐 아니라 research의 `public`에 있는 이미지를 마크다운 수정 없이 교체한 경우도 마찬가지이고, 배포가 있어도 다시 받지 않는다. 자산의 해시는 파일을 내려받은 뒤에야 계산하기 때문이다. 이런 변경을 자동으로 발견하려면 서버가 자산 버전도 제공하는 등의 추가 설계가 필요하다. 현재는 수동 업데이트를 눌러 다시 받을 수 있다. 이미지 교체를 자동으로 반영하는 것보다 발표장의 네트워크와 저장 공간을 아끼는 쪽을 택했다.
 
-업데이트가 끝나도 열린 `MarpSlides`와 `PresenterView`의 상태는 바꾸지 않는다. 갱신된 IndexedDB 레코드는 자료를 다시 열 때 읽는다. 자동 업데이트의 진행 상황과 오류는 보관함에 표시하고, 발표 화면에는 알림을 띄우지 않는다.
+업데이트가 끝나도 열린 `MarpSlides`와 `PresenterView`의 상태는 바꾸지 않는다. 갱신된 IndexedDB 레코드는 보관함에서 자료를 다시 열 때 읽는다. 자동 업데이트의 진행 상황과 오류는 보관함에 표시하고, 발표 화면에는 알림을 띄우지 않는다.
 
 화면의 상태만 유지해서는 부족하다. 뒤쪽 장으로 넘어가면서 예전 빌드의 Mermaid 청크를 처음 요청할 수도 있으므로 이전 파일도 남겨야 한다. 서비스 워커는 `/offline/{slug}`나 발표자 경로를 연 창이 하나라도 있으면 이전 자산과 공통 실행 파일의 정리를 미룬다. 그런 창이 없을 때 자료 레코드가 가리키는 자산 캐시와 메타데이터가 가리키는 공통 뷰어만 남긴다. 새 워커를 강제로 활성화하는 `skipWaiting()`도 호출하지 않는다.[^11]
 
 현재 정리 조건은 보수적이다. 어느 창이 어느 버전의 자산을 사용하는지 추적하지 않고, 오프라인 발표 창이 하나라도 있으면 이전 캐시의 정리를 전부 미룬다. 오래 열어 둔 탭 하나 때문에 다른 자료의 이전 캐시까지 남을 수 있지만, 지연 로딩할 파일을 너무 일찍 지우는 일을 피하는 쪽으로 구현했다. 이 보호는 업데이트로 생긴 이전 캐시에 대한 것이다. 사용자가 보관함에서 자료를 직접 삭제하면 `deleteDeck()`은 현재 저장본의 자산 캐시를 즉시 지운다. 발표 중인 자료를 다른 탭에서 삭제하는 경우까지 보호하지는 않는다.[^10]
 
-발표자 화면과 청중 화면은 기존 `BroadcastChannel`로 동기화한다. `marp-slides-${slug}`라는 채널에서 장 번호와 동기화 요청을 주고받는다. 같은 브라우저의 창 사이에서 처리하므로 서버 요청은 필요하지 않다. 저장본 하나에는 노트와 현재 장, 다음 장의 데이터가 모두 들어 있다.
+발표자 화면과 청중 화면은 `BroadcastChannel`로 장 번호와 동기화 요청을 주고받는다. 같은 브라우저의 창 사이에서 처리하므로 서버 요청은 필요하지 않다. 다만 같은 장 번호를 표시하더라도 자료 버전이 다르면 본문과 노트가 맞지 않을 수 있다.
 
-다만 장 번호를 동기화하는 것과 자료 버전을 맞추는 것은 별개다. 두 창은 열릴 때 각각 IndexedDB를 읽고, 채널 이름과 메시지에는 저장본의 `revision`이 들어 있지 않다. 코드 구조상 청중 화면을 연 뒤 자료가 업데이트되고, 그다음 발표자 화면을 새로 열면 서로 다른 버전을 읽을 수 있다. 이 조합은 테스트하지 않았다. 현재 방식으로 발표를 준비할 때는 업데이트를 마친 뒤 두 창을 함께 열어 내용을 확인할 필요가 있다. 이 상황까지 자동으로 맞추려면 발표 세션이 사용할 버전을 고정하고 새 창에도 전달하는 처리가 추가로 필요하다.[^8][^11]
+다운로드할 때 `putDeckSnapshot()`이 `SavedDeck`을 해당 자산 캐시의 `/__research_offline_deck_snapshot__`에 JSON 응답으로 보관한다. 이 쓰기까지 성공해야 IndexedDB를 교체하고 저장 완료를 알린다. 자료를 열면 뷰어는 주소에 `?snapshot={assetCache}`를 붙여 방금 읽은 저장본을 고정하고, 여기서 여는 발표자 창에도 같은 값을 넘긴다. 두 창은 IndexedDB 대신 그 캐시의 스냅샷을 읽는다. 캐시 이름에는 다운로드마다 만든 UUID가 있으므로 특정 저장본을 가리킬 수 있다. 스냅샷이 없던 버전에서 저장한 자료는 `getPresentationDeck()`이 처음 열 때 스냅샷을 추가한다. 기존 자료를 다시 다운로드하거나 IndexedDB 버전을 올릴 필요는 없지만, 이 보완 작업에는 추가 저장 공간이 필요하다.[^8]
+
+오프라인 동기화 채널도 `marp-slides-${slug}-${assetCache}`로 저장본마다 나눈다. 업데이트 이후 새 자료를 별도 창에서 열어도 이전 발표의 장 번호를 바꾸지 않는다. 온라인 뷰어는 기존 `marp-slides-${slug}` 채널을 사용한다. 청중 화면이나 발표자 창을 새로고침해도 주소에 고정한 저장본을 다시 읽으므로, 두 창의 버전과 채널이 어긋나지 않는다. 고정한 캐시가 이미 삭제됐다면 다른 버전으로 넘어가지 않고 오류를 표시한다.
 
 ## 와이파이에 연결되어 있어도 응답은 오지 않을 수 있다
 
-`/offline`과 저장한 자료 경로의 문서 요청은 온라인일 때 네트워크를 먼저 시도하고, 실패하면 저장한 공통 HTML을 사용한다. 항상 캐시만 사용하면 뷰어를 갱신하는 코드 자체가 예전 버전으로 남을 수 있기 때문이다.
+`/offline`과 저장한 자료 경로의 문서 요청은 저장된 공통 HTML이 있으면 네트워크를 거치지 않고 그 HTML로 응답한다. 최신 HTML부터 받아 오는 네트워크 우선 방식이 자연스러워 보이지만, 발표장에서는 두 가지 문제가 있다.
 
-여기에 한 가지 함정이 있다. 기기는 와이파이에 연결되어 있는데 인터넷은 되지 않는 상태다. `navigator.onLine`은 이때도 `true`일 수 있다. 이 값은 브라우저가 판단한 네트워크 연결 상태이며, research 서버가 응답할지는 요청을 보내 봐야 알 수 있다.[^12]
-
-처음에는 별도의 대기 시간 제한이 없었다. 브라우저가 온라인이라고 판단하면 서비스 워커는 네트워크 응답을 기다렸고, 요청이 실패해야만 저장한 HTML을 사용했다. 응답이 늦거나 요청이 끝나지 않으면 저장본이 있어도 자료를 열지 못했다. 로컬 프로덕션 서버에서 Playwright로 서버 응답을 지연시켜 이 조건을 재현하고, 저장한 자료가 열리기까지의 시간을 쟀다.
+첫째, 기기가 와이파이에 연결되어 있어도 인터넷은 되지 않을 수 있다. `navigator.onLine`이 `true`라는 것만으로 research 서버가 응답한다고 기대할 수는 없다.[^12] 네트워크 우선이던 구현(`399f7c75`)을 로컬 프로덕션 서버로 띄우고, Playwright로 서버 응답을 지연시켜 저장한 자료가 열리기까지의 시간을 쟀다.
 
 | 조건                         | 자료가 열리기까지    |
 | ---------------------------- | -------------------- |
@@ -297,19 +299,19 @@ API는 자료 JSON의 SHA-256을 ETag로 반환한다. 자동 업데이트에서
 | 온라인, 서버가 8초 뒤 응답   | 8,253ms              |
 | 온라인, 서버가 응답하지 않음 | 20초까지 열리지 않음 |
 
-지연시킨 대상은 서비스 워커가 서버로 보낸 `fetch`였다. 페이지가 서비스 워커에 보낸 문서 요청을 막은 것은 아니다. 저장본이 준비되어 있어도 서비스 워커가 네트워크를 기다리면 열 수 없다는 점을 확인한 것이다. 발표장에서도 자료를 새로 열거나 새로고침할 때 이런 상황이 생길 수 있다.
+지연시킨 대상은 서비스 워커가 서버로 보낸 `fetch`였다. 페이지가 서비스 워커에 보낸 문서 요청을 막은 것은 아니다. 저장본이 준비되어 있어도 서비스 워커가 네트워크를 기다리는 동안에는 열 수 없었다.
 
-그래서 지금은 저장된 공통 HTML이 있으면 문서 응답 헤더를 최대 5초까지만 기다린다. 그 안에 헤더를 받지 못하면 요청을 취소하고 저장한 HTML을 사용한다. 헤더를 받으면 타이머를 해제하므로, 이후 본문 다운로드와 화면 표시에 걸리는 시간까지 제한하지는 않는다.
+둘째, 대기 시간에 제한을 두어도 해결되지 않는 경우가 있다. Workbox의 `pageCache`처럼 네트워크 우선 전략에 시간 제한(기본값 3초)을 두면 응답이 없는 서버는 피할 수 있다.[^13] 하지만 새 배포의 HTML을 받은 다음 그 HTML이 참조하는 새 JS를 받지 못하면 저장된 뷰어로 돌아갈 방법이 없다. HTML 요청이 성공했다고 뷰어까지 시작할 수 있는 것은 아니다.
 
-`fetch()`의 Promise는 응답 본문을 전부 받기 전에, 상태와 헤더를 받으면 이행된다. 현재 코드는 그 시점에 타이머를 해제한다.[^24] 예를 들어 헤더가 1초 만에 왔지만 본문 전송이 그 뒤 멈춘 상황은 이 5초 제한으로 해결하지 못한다. 본문을 전부 버퍼에 받은 뒤 사용할지 결정하는 방법도 있지만, 현재는 응답을 받기 시작한 뒤에는 중간에 끊지 않는 쪽을 택했다. 저장된 공통 HTML이 아직 없다면 대체할 문서도 없으므로 이 타이머 자체를 설정하지 않는다.
+그래서 **저장된 공통 HTML이 있으면 연결 상태와 관계없이 그 HTML로 시작한다.** 이 HTML이 참조하는 실행 파일은 저장을 완료하기 전에 모두 받은 파일이다. 새 공통 뷰어는 페이지의 자동 업데이트가 준비하고, 모든 파일의 검증이 끝나 메타데이터를 교체한 뒤 다음 문서 탐색에서 사용한다. 저장본이 없는 첫 방문에서만 서버의 문서를 요청한다.[^11]
 
-서버가 응답하지 않는 조건은 테스트에도 추가했다. 문서가 `DOMContentLoaded`에 도달하기까지의 제한을 10초로 두고, 슬라이드가 표시되는지와 요청을 시작한 뒤 최소 5초가 지났는지를 확인한다. 이 테스트의 10초와 서비스 워커의 5초는 측정하는 구간이 다르다.
+테스트에서는 서버가 응답하지 않는 상태에서도 `/offline`과 저장한 자료가 네트워크 문서 요청 없이 5초 안에 열리는지 확인한다. 새 JS 청크를 참조하는 HTML을 준비하고 그 청크의 다운로드를 실패시킨 조건에서도 저장된 뷰어로 시작하는지 검사한다.
 
-5초 제한은 오프라인 보관함과 저장한 자료 경로에만 적용한다. 온라인 주소인 `/slides/{slug}`도 네트워크 요청이 실패하면 대응하는 오프라인 경로로 연결하지만, 같은 시간 제한은 없다. 발표를 시작할 때는 보관함에서 `/offline/{slug}`로 여는 편이 이 동작을 확실히 이용할 수 있다.
+이 동작은 `/offline`과 `/offline/{slug}`, 발표자 경로에 적용한다. 온라인 주소인 `/slides/{slug}`는 여전히 네트워크 요청이 실패한 뒤 대응하는 오프라인 경로로 이동하며, 별도의 대기 시간 제한은 없다. 저장한 자료로 발표할 때는 보관함에서 여는 경로가 기준이다.
 
-5초가 최적인지 여러 환경에서 비교한 것은 아니다. 최신 문서를 받을 시간을 주되, 저장본이 있는데도 응답을 계속 기다리는 일을 막으려고 정한 값이다. 참고로 Workbox의 `pageCache` 레시피도 네트워크 우선 전략에 시간 제한을 두며 기본값은 3초다.[^13]
+캐시에서 시작해도 온라인일 때의 자동 업데이트는 실행된다. 대신 저장된 뷰어가 곧 업데이트 코드를 실행하는 주체이므로, 앞으로 업데이트 방식 자체를 바꿀 때는 저장된 이전 뷰어도 새 다운로드 목록을 읽을 수 있어야 한다. 자동 업데이트가 없던 과거 뷰어를 이미 저장한 브라우저라면 온라인 페이지에서 다시 저장해야 새 갱신 코드를 받을 수 있다.
 
-이 시간은 자료를 저장할 때의 제한과도 다르다. 다운로드에 쓰는 `fetchFile()`은 요청마다 30초짜리 `AbortSignal.timeout()`을 만들고 사용자의 취소 신호와 합친다. 자료를 여는 문서 요청은 저장된 화면으로 돌아가기 위해 짧게 기다리고, 파일을 저장하는 요청은 다운로드를 시도할 시간을 별도로 주는 구조다.
+자료를 저장할 때의 요청에는 별도 제한이 있다. `fetchFile()`은 파일마다 30초짜리 `AbortSignal.timeout()`을 만들고 사용자의 취소 신호와 합친다. 이미 받은 뷰어로 자료를 여는 동작과, 새 파일을 받는 동작의 대기 조건을 분리한 것이다.
 
 ## 방문한 페이지 캐싱과 자료 저장의 차이
 
@@ -329,7 +331,7 @@ API는 자료 JSON의 SHA-256을 ETag로 반환한다. 자동 업데이트에서
 
 ## 업데이트할 때는 두 버전을 담을 공간이 필요하다
 
-자료를 업데이트하는 동안에는 기존 자산 캐시를 남긴 채 새 캐시를 만든다. 그래서 저장본 하나 크기의 여유 공간만으로는 업데이트를 마치지 못할 수 있다. 여기에 새 공통 뷰어와 아직 정리하지 않은 이전 버전까지 함께 들어갈 수 있다. 보관함의 자료별 용량은 원본 JSON과 받은 자산의 바이트 수를 더한 값이므로, 브라우저가 실제로 사용하는 저장 공간이나 HTTP 전송량과도 일치하지 않는다.
+자료를 업데이트하는 동안에는 기존 자산 캐시를 남긴 채 새 캐시를 만든다. 그래서 저장본 하나 크기의 여유 공간만으로는 업데이트를 마치지 못할 수 있다. 여기에 새 공통 뷰어와 아직 정리하지 않은 이전 버전까지 함께 들어갈 수 있다. 보관함의 자료별 용량은 원본 JSON과 받은 자산의 바이트 수를 더한 값이다. 자산 캐시에 함께 저장하는 발표용 JSON 스냅샷과 공통 뷰어는 이 수치에 포함하지 않는다. 따라서 브라우저가 실제로 사용하는 저장 공간이나 HTTP 전송량과도 일치하지 않는다.
 
 메모리 사용량도 별도로 생각해야 한다. 현재 코드는 파일을 `ArrayBuffer`로 읽어 SHA-256을 계산하고 Cache Storage에 기록한다. 파일을 처음부터 끝까지 스트리밍하면서 점진적으로 해시를 계산하는 구현은 아니다. 최대 4개 작업이 겹칠 수 있으므로 큰 이미지나 미디어 파일을 넣으면 다운로드 중 메모리 사용량도 커질 수 있다. 동시성 제한만으로 파일 하나의 크기까지 제한되지는 않는다.
 
@@ -345,9 +347,9 @@ API는 자료 JSON의 SHA-256을 ETag로 반환한다. 자동 업데이트에서
 
 `offline.spec.ts`에서는 자료를 저장한 브라우저를 닫고 같은 프로필로 다시 시작한 뒤, 네트워크를 끈 상태에서 자료를 연다. 온라인에서 보지 않았던 Mermaid 장에 직접 진입하고, 새로고침과 발표자 창 열기, 노트와 타이머, 양방향 장 이동을 확인한다. 첫 화면만 확인해서는 찾을 수 없는 누락을 검사하기 위한 시나리오다.[^15]
 
-실패 상황도 검사한다. 자산 다운로드가 실패하거나 취소되어도 기존 저장본이 유지되는지, 서버 응답이 멈추면 저장된 뷰어를 사용하는지 확인한다. `offline-updates.spec.ts`에서는 발표 중인 화면을 유지한 채 저장소를 갱신하는지, 연결 복구 후 다시 시도하는지, 바뀌지 않은 공통 파일을 재사용하는지, 배포만으로는 바뀌지 않은 자료를 다시 받지 않는지, 발표가 닫힌 뒤 이전 캐시를 정리하는지 검사한다.
+실패 상황도 검사한다. 자산 다운로드 실패와 최초 저장 취소를 확인하고, 기존 자료를 업데이트하다 일부 자산을 받은 뒤 취소해도 이전 레코드와 자산이 유지되는지 검사한다. 서버 응답이 멈추거나 새 배포의 청크를 받을 수 없는 상황에서도 저장된 뷰어로 시작하는지 확인한다. `offline-updates.spec.ts`에서는 발표 중인 화면을 유지한 채 저장소를 갱신하는지, 업데이트 뒤 늦게 연 발표자 창과 새로고침한 청중 화면이 같은 저장본과 채널에 머무는지, 연결 복구 후 다시 시도하는지, 바뀌지 않은 공통 파일을 재사용하는지, 배포만으로는 바뀌지 않은 자료를 다시 받지 않는지, 발표가 닫힌 뒤 이전 캐시를 정리하는지 검사한다.
 
-`459d9b2b`를 빌드하고 `pnpm --filter research test:offline`을 실행해 오프라인 테스트 15개, 뷰어와 발표자 노트 테스트 9개가 모두 통과하는 것을 확인했다. 총 24개이며, headless Chromium에서 실행한 결과다. 자동 업데이트 테스트 7개는 8번씩 반복해 56번 모두 통과했다. 재연결 신호를 버리던 경쟁 조건을 고치기 전에는 이 반복 실행에서 "배포 후 열린 자료가 없을 때 이전 공통 뷰어를 지우는지" 확인하는 테스트가 8번 중 4번 실패했다. 한 번 실행한 결과로는 드러나지 않았던 문제다. Safari와 Firefox, 실제 발표장 와이파이에서는 확인하지 않았다. 발표 전에는 사용할 기기와 브라우저에서 자료를 저장하고 브라우저를 종료한 뒤, 네트워크 없이 다시 여는 과정까지 확인할 필요가 있다.
+`09940768`을 빌드하고 `pnpm --filter research test:offline`을 실행해 오프라인 테스트 20개, 뷰어와 발표자 노트 테스트 9개가 모두 통과하는 것을 확인했다. headless Chromium에서 실행한 결과다. 재연결 시점처럼 타이밍에 따라 결과가 달라질 수 있어, 자동 업데이트 테스트 11개는 5번씩 반복해 55번, 저장과 재시작 테스트 9개는 3번씩 반복해 27번 모두 통과하는 것도 확인했다. Safari와 Firefox, 실제 발표장 와이파이에서는 확인하지 않았다. 발표 전에는 사용할 기기와 브라우저에서 자료를 저장하고 브라우저를 종료한 뒤, 네트워크 없이 다시 여는 과정까지 확인할 필요가 있다.
 
 실제로 사용할 때도 저장 완료 표시를 확인한 뒤 브라우저를 닫고, 네트워크를 끈 상태에서 `/offline/{slug}`로 다시 들어가는 순서가 필요하다. 첫 장뿐 아니라 아직 보지 않은 뒤쪽 장과 Mermaid 다이어그램을 열고, 발표자 창에서 노트와 다음 장이 맞는지도 확인한다. 이미 열려 있던 탭에서 와이파이만 끄는 확인으로는 브라우저를 다시 시작하는 데 필요한 파일이 빠졌는지 알아내기 어렵다.
 
@@ -355,27 +357,27 @@ API는 자료 JSON의 SHA-256을 ETag로 반환한다. 자동 업데이트에서
 
 ---
 
-[^1]: [Marp 렌더링과 폰트 선언 분리](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/marp.ts). `generateRenderedMarp()`와 `renderMarp()`에서 온라인 뷰어와 오프라인 API가 사용하는 데이터를 만든다.
+[^1]: [Marp 렌더링과 폰트 선언 분리](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/lib/marp.ts). `generateRenderedMarp()`와 `renderMarp()`에서 온라인 뷰어와 오프라인 API가 사용하는 데이터를 만든다.
 
-[^2]: [오프라인 API](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/app/api/slides/%5Bslug%5D/offline/route.ts), [자료와 저장본의 타입](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/offline/types.ts). 코드 블록의 `OfflineDeck`은 해당 타입 선언을 옮겼다.
+[^2]: [오프라인 API](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/app/api/slides/%5Bslug%5D/offline/route.ts), [자료와 저장본의 타입](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/lib/offline/types.ts). 코드 블록의 `OfflineDeck`은 해당 타입 선언을 옮겼다.
 
-[^3]: [useMarpShadowRoot](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/hooks/useMarpShadowRoot.ts), [useFontFace](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/hooks/useFontFace.tsx), [Marp 컴포넌트와 Mermaid 지연 로딩](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/components/Marp.tsx).
+[^3]: [useMarpShadowRoot](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/hooks/useMarpShadowRoot.ts), [useFontFace](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/hooks/useFontFace.tsx), [Marp 컴포넌트와 Mermaid 지연 로딩](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/components/Marp.tsx).
 
-[^4]: [IndexedDB 접근 코드](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/offline/database.ts), [장 번호 저장 코드](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/offline/positions.ts).
+[^4]: [IndexedDB 접근 코드](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/lib/offline/database.ts), [장 번호 저장 코드](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/lib/offline/positions.ts).
 
-[^5]: [collectDeckAssets와 rewriteDeckAssets](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/offline/assets.ts). 자산 수집과 저장본별 URL 치환의 실제 범위다.
+[^5]: [collectDeckAssets와 rewriteDeckAssets](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/lib/offline/assets.ts). 자산 수집과 저장본별 URL 치환의 실제 범위다.
 
 [^6]: Next.js 공식 문서의 [Linking and Navigating](https://nextjs.org/docs/app/getting-started/linking-and-navigating)과 [Prefetching의 Client cache](https://nextjs.org/docs/app/guides/prefetching#client-cache). 설치된 Next.js 16.3.5에 포함된 같은 문서와도 대조했다.
 
 [^7]: Next.js 공식 문서의 [Offline support](https://nextjs.org/docs/app/guides/offline-support). 실험적 연결 감지와 요청 재시도, 전체 페이지를 오프라인으로 다시 여는 동작의 범위를 구분한다.
 
-[^8]: [OfflineLibrary](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/components/offline/OfflineLibrary.tsx), [OfflineLink](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/components/offline/OfflineLink.tsx).
+[^8]: [OfflineLibrary](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/components/offline/OfflineLibrary.tsx), [OfflineLink](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/components/offline/OfflineLink.tsx), [저장본 스냅샷](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/lib/offline/snapshots.ts).
 
-[^9]: [공통 실행 파일 다운로드 목록 생성 스크립트](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/scripts/generate-offline-runtime.mjs), [research 빌드 명령](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/package.json).
+[^9]: [공통 실행 파일 다운로드 목록 생성 스크립트](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/scripts/generate-offline-runtime.mjs), [research 빌드 명령](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/package.json).
 
-[^10]: [다운로드와 자동 업데이트 구현](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/offline/client.ts). `ensureRuntime()`, `downloadDeck()`, `withDownloadLock()`, `checkOfflineUpdates()`, `watchOfflineUpdates()`를 기준으로 설명했다.
+[^10]: [다운로드와 자동 업데이트 구현](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/lib/offline/client.ts). `ensureRuntime()`, `downloadDeck()`, `withDownloadLock()`, `checkOfflineUpdates()`, `watchOfflineUpdates()`를 기준으로 설명했다.
 
-[^11]: [서비스 워커의 문서 응답과 캐시 정리](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/public/sw.js), [발표 화면 동기화](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/hooks/useBroadcastChannel.ts).
+[^11]: [서비스 워커의 문서 응답과 캐시 정리](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/public/sw.js), [발표 화면 동기화](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/hooks/useBroadcastChannel.ts).
 
 [^12]: MDN의 [Navigator.onLine](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/onLine). 로컬 네트워크에 연결되어 있어도 인터넷에 접근하지 못할 수 있으며, 브라우저와 운영체제의 판단 방식도 다르다.
 
@@ -383,24 +385,22 @@ API는 자료 JSON의 SHA-256을 ETag로 반환한다. 자동 업데이트에서
 
 [^14]: Next.js 공식 문서의 [Progressive Web Applications](https://nextjs.org/docs/app/guides/progressive-web-apps). 설치를 위한 웹 앱 매니페스트와 오프라인 지원을 별도로 설명한다.
 
-[^15]: [오프라인 저장과 재시작 테스트](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/tests/offline.spec.ts), [자동 업데이트 테스트](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/tests/offline-updates.spec.ts).
+[^15]: [오프라인 저장과 재시작 테스트](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/tests/offline.spec.ts), [자동 업데이트 테스트](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/tests/offline-updates.spec.ts).
 
 [^16]: MDN의 [StorageManager.persist()](https://developer.mozilla.org/en-US/docs/Web/API/StorageManager/persist). 영구 저장 요청의 허용 여부는 브라우저 정책에 따른다.
 
-[^17]: MDN의 [blob: URLs](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/blob). 객체 URL의 수명과 해제, 문서가 종료될 때의 동작을 설명한다. 이 구현이 수집에서 제외하는 주소는 [assets.ts](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/offline/assets.ts)에서 확인할 수 있다.
+[^17]: MDN의 [blob: URLs](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/blob). 객체 URL의 수명과 해제, 문서가 종료될 때의 동작을 설명한다. 이 구현이 수집에서 제외하는 주소는 [assets.ts](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/lib/offline/assets.ts)에서 확인할 수 있다.
 
 [^18]: React 공식 문서의 [useSyncExternalStore에서 서버 렌더링 지원하기](https://react.dev/reference/react/useSyncExternalStore#adding-support-for-server-rendering). `getServerSnapshot`은 서버 렌더링과 브라우저의 하이드레이션에서 같은 초기 값을 제공해야 한다.
 
 [^19]: MDN의 [ServiceWorkerContainer.controller](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/controller)와 [Using Service Workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers). 현재 문서를 제어하는 워커, 등록과 활성화 과정, HTTPS와 로컬 개발 조건을 설명한다.
 
-[^20]: MDN의 [Request.cache](https://developer.mozilla.org/en-US/docs/Web/API/Request/cache). `no-store`의 HTTP 캐시 동작을 설명한다. 서비스 워커가 같은 옵션을 보고 저장된 응답을 사용하지 않는 처리는 [sw.js](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/public/sw.js)에 별도로 구현되어 있다.
+[^20]: MDN의 [Request.cache](https://developer.mozilla.org/en-US/docs/Web/API/Request/cache). `no-store`의 HTTP 캐시 동작을 설명한다. 서비스 워커가 같은 옵션을 보고 저장된 응답을 사용하지 않는 처리는 [sw.js](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/public/sw.js)에 별도로 구현되어 있다.
 
-[^21]: MDN의 [IDBTransaction](https://developer.mozilla.org/en-US/docs/Web/API/IDBTransaction). 트랜잭션의 활성 상태와 자동 커밋, 실패 조건을 설명한다. 저장 완료를 기다리는 코드는 [database.ts](https://github.com/yceffort/blog/blob/459d9b2b43c926fa9757dd821d7f514bd33df6b3/apps/research/src/lib/offline/database.ts)의 `transaction()`을 기준으로 했다.
+[^21]: MDN의 [IDBTransaction](https://developer.mozilla.org/en-US/docs/Web/API/IDBTransaction). 트랜잭션의 활성 상태와 자동 커밋, 실패 조건을 설명한다. 저장 완료를 기다리는 코드는 [database.ts](https://github.com/yceffort/blog/blob/09940768be8c2dba4f9397fccfae49d6be1556cd/apps/research/src/lib/offline/database.ts)의 `transaction()`을 기준으로 했다.
 
 [^22]: MDN의 [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS)와 [Using the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch). 교차 출처 응답을 JS에서 읽는 조건과 불투명한 응답, 자격 증명 전달 범위를 설명한다.
 
 [^23]: MDN의 [Storage quotas and eviction criteria](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria). 출처별 저장소, 할당량 초과와 저장소 제거, 영구 저장의 범위를 설명한다.
-
-[^24]: MDN의 [Using the Fetch API: Handling the response](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#handling_the_response). 응답 상태와 헤더를 받은 시점에 Promise가 이행되며 본문 읽기는 별도로 진행된다.
 
 [^25]: MDN의 [IndexedDB API](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)와 [Cache](https://developer.mozilla.org/en-US/docs/Web/API/Cache). Cache 문서는 저장한 항목이 명시적으로 요청하지 않으면 갱신되지 않고, 지우기 전까지 만료되지 않는다고 설명한다.
