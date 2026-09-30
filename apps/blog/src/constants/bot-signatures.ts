@@ -13,11 +13,15 @@ const BOT_CATEGORIES: Record<string, {name: string; category: BotCategory}> = {
   // AI Crawlers
   gptbot: {name: 'openai', category: 'ai'},
   chatgpt: {name: 'openai', category: 'ai'},
+  'oai-searchbot': {name: 'openai', category: 'ai'},
   claudebot: {name: 'anthropic', category: 'ai'},
   'claude-web': {name: 'anthropic', category: 'ai'},
+  'claude-user': {name: 'anthropic', category: 'ai'},
+  'claude-searchbot': {name: 'anthropic', category: 'ai'},
   bytespider: {name: 'bytedance', category: 'ai'},
   amazonbot: {name: 'amazon', category: 'ai'},
   perplexitybot: {name: 'perplexity', category: 'ai'},
+  'perplexity-user': {name: 'perplexity', category: 'ai'},
   'google-extended': {name: 'google-ai', category: 'ai'},
   cohere: {name: 'cohere', category: 'ai'},
 

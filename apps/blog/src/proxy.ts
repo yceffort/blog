@@ -24,6 +24,17 @@ const EN_PREFIXES = new Set([
   'resume',
 ])
 
+// AI 에이전트에게는 HTML 대신 홈은 llms.txt, 글은 원문 마크다운을 준다
+function getMarkdownPath(pathname: string, segments: string[], rest: string[]) {
+  if (rest.length === 0) {
+    return '/api/llms'
+  }
+  if (rest.length >= 2 && YEAR_RE.test(rest[0]) && !pathname.endsWith('.md')) {
+    return `/api/posts-raw/${segments.join('/')}`
+  }
+  return null
+}
+
 export function proxy(request: NextRequest) {
   const userAgent = request.headers.get('user-agent') || ''
   const {isBot, botName, botCategory} = detectBot(userAgent)
@@ -36,7 +47,18 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url, {status: 308})
   }
 
-  if (pathname === '/') {
+  const segments = pathname.split('/').filter(Boolean)
+  const isEnPath = segments[0] === 'en'
+  const rest = isEnPath ? segments.slice(1) : segments
+  // Claude Code의 WebFetch는 Accept에 text/markdown을 싣고, 나머지 AI 봇은 UA로만 식별된다
+  const wantsMarkdown =
+    botCategory === 'ai' ||
+    (request.headers.get('accept') ?? '').includes('text/markdown')
+  const markdownPath = wantsMarkdown
+    ? getMarkdownPath(pathname, segments, rest)
+    : null
+
+  if (pathname === '/' && !markdownPath) {
     const localeCookie = request.cookies.get('locale')?.value
 
     if (localeCookie === 'en') {
@@ -60,9 +82,6 @@ export function proxy(request: NextRequest) {
     }
   }
 
-  const segments = pathname.split('/').filter(Boolean)
-  const isEnPath = segments[0] === 'en'
-  const rest = isEnPath ? segments.slice(1) : segments
   if (rest.length >= (isEnPath ? 1 : 2)) {
     const prefixes = isEnPath ? EN_PREFIXES : MULTI_SEGMENT_PREFIXES
     if (!YEAR_RE.test(rest[0]) && !prefixes.has(rest[0])) {
@@ -71,7 +90,9 @@ export function proxy(request: NextRequest) {
     }
   }
 
-  const response = NextResponse.next()
+  const response = markdownPath
+    ? NextResponse.rewrite(new URL(markdownPath, request.url))
+    : NextResponse.next()
 
   response.headers.set('x-is-bot', isBot ? '1' : '0')
   if (botName) {
