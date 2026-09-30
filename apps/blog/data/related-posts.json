@@ -230,12 +230,46 @@
         "score": 0.13
       },
       {
-        "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
-        "score": 0.13
-      },
-      {
         "slug": "2026/01/intersection-observer-singleton-weakmap",
         "score": 0.12
+      },
+      {
+        "slug": "2026/08/service-worker-caching-1",
+        "score": 0.12
+      }
+    ],
+    "2026/09/offline-marp-slides-in-nextjs": [
+      {
+        "slug": "2026/08/service-worker-caching-1",
+        "score": 0.87
+      },
+      {
+        "slug": "2026/08/service-worker-caching-2",
+        "score": 0.83
+      },
+      {
+        "slug": "2020/11/storage-for-the-web",
+        "score": 0.68
+      },
+      {
+        "slug": "2026/08/service-worker-caching-3",
+        "score": 0.63
+      },
+      {
+        "slug": "2020/10/service-worker-of-create-react-app",
+        "score": 0.49
+      },
+      {
+        "slug": "2020/12/partitioning-cache",
+        "score": 0.42
+      },
+      {
+        "slug": "2020/10/http-cache",
+        "score": 0.38
+      },
+      {
+        "slug": "2020/07/instant-loading-with-PRPL-pattern",
+        "score": 0.38
       }
     ],
     "2026/09/npm-deep-dive-sejong-books": [
@@ -536,12 +570,12 @@
         "score": 0.15
       },
       {
-        "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
-        "score": 0.15
-      },
-      {
         "slug": "2026/09/unused-javascript-cost",
         "score": 0.14
+      },
+      {
+        "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
+        "score": 0.12
       }
     ],
     "2026/08/service-worker-caching-3": [
@@ -552,6 +586,10 @@
       {
         "slug": "2020/12/partitioning-cache",
         "score": 0.34
+      },
+      {
+        "slug": "2026/09/offline-marp-slides-in-nextjs",
+        "score": 0.31
       },
       {
         "slug": "2020/11/back-forward-cache",
@@ -570,15 +608,15 @@
         "score": 0.2
       },
       {
-        "slug": "2026/05/pr-diff-vs-bundle",
-        "score": 0.2
-      },
-      {
         "slug": "2020/07/critical-rendering-path",
         "score": 0.18
       }
     ],
     "2026/08/service-worker-caching-2": [
+      {
+        "slug": "2026/09/offline-marp-slides-in-nextjs",
+        "score": 0.57
+      },
       {
         "slug": "2022/01/how-react-server-components-work",
         "score": 0.52
@@ -606,13 +644,13 @@
       {
         "slug": "2020/11/pwa-pros-and-cons",
         "score": 0.23
-      },
-      {
-        "slug": "2020/11/back-forward-cache",
-        "score": 0.22
       }
     ],
     "2026/08/service-worker-caching-1": [
+      {
+        "slug": "2026/09/offline-marp-slides-in-nextjs",
+        "score": 0.58
+      },
       {
         "slug": "2020/11/storage-for-the-web",
         "score": 0.48
@@ -640,10 +678,6 @@
       {
         "slug": "2020/11/back-forward-cache",
         "score": 0.27
-      },
-      {
-        "slug": "2020/07/make-use-of-long-term-caching",
-        "score": 0.24
       }
     ],
     "2026/08/rebuilding-a-vendor-sdk": [
@@ -932,10 +966,6 @@
         "score": 0.19
       },
       {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
-        "score": 0.18
-      },
-      {
         "slug": "2019/08/07/haproxy",
         "score": 0.16
       },
@@ -949,6 +979,10 @@
       },
       {
         "slug": "2021/09/github-ci-workflow-for-frontend-developer",
+        "score": 0.13
+      },
+      {
+        "slug": "2021/01/brotli-better-html-compression",
         "score": 0.13
       }
     ],
@@ -2926,6 +2960,10 @@
     ],
     "2025/03/research": [
       {
+        "slug": "2026/09/offline-marp-slides-in-nextjs",
+        "score": 0.83
+      },
+      {
         "slug": "2023/05/blog-app-dir",
         "score": 0.56
       },
@@ -2952,10 +2990,6 @@
       {
         "slug": "2026/09/porting-markdownlint-cli2-to-rust",
         "score": 0.29
-      },
-      {
-        "slug": "2026/08/typescript-7-oxc-migration",
-        "score": 0.27
       }
     ],
     "2025/03/react-interview-guide": [
@@ -3158,8 +3192,8 @@
         "score": 0.18
       },
       {
-        "slug": "2026/09/nextjs-cache-components-activity",
-        "score": 0.16
+        "slug": "2026/05/react-cache-function-deep-dive",
+        "score": 0.17
       }
     ],
     "2023/05/what-is-commonjs": [
@@ -3516,6 +3550,10 @@
         "score": 0.65
       },
       {
+        "slug": "2026/09/offline-marp-slides-in-nextjs",
+        "score": 0.49
+      },
+      {
         "slug": "2020/12/generate-serverless-thumbnail",
         "score": 0.38
       },
@@ -3530,10 +3568,6 @@
       {
         "slug": "2021/01/brotli-better-html-compression",
         "score": 0.36
-      },
-      {
-        "slug": "2021/05/review-of-vercel-cs",
-        "score": 0.33
       }
     ],
     "2022/04/rust-wasm-project-tutorial-2": [
@@ -7490,6 +7524,10 @@
         "score": 0.85
       },
       {
+        "slug": "2026/09/offline-marp-slides-in-nextjs",
+        "score": 0.73
+      },
+      {
         "slug": "2020/10/service-worker-of-create-react-app",
         "score": 0.68
       },
@@ -7508,10 +7546,6 @@
       {
         "slug": "2020/07/instant-loading-with-PRPL-pattern",
         "score": 0.39
-      },
-      {
-        "slug": "2020/11/back-forward-cache",
-        "score": 0.35
       }
     ],
     "2020/11/server-side-events": [
@@ -7634,6 +7668,10 @@
         "score": 0.73
       },
       {
+        "slug": "2026/09/offline-marp-slides-in-nextjs",
+        "score": 0.69
+      },
+      {
         "slug": "2021/06/nextjs-11",
         "score": 0.32
       },
@@ -7644,10 +7682,6 @@
       {
         "slug": "2022/04/temporary-suspension-pwa",
         "score": 0.24
-      },
-      {
-        "slug": "2023/05/blog-app-dir",
-        "score": 0.22
       }
     ],
     "2020/11/patch-on-node-modules": [
@@ -7842,15 +7876,15 @@
         "score": 0.11
       },
       {
+        "slug": "2026/09/offline-marp-slides-in-nextjs",
+        "score": 0.1
+      },
+      {
         "slug": "2026/08/service-worker-caching-3",
         "score": 0.1
       },
       {
         "slug": "2026/08/service-worker-caching-1",
-        "score": 0.1
-      },
-      {
-        "slug": "2021/11/jorney-from-tags-to-dom",
         "score": 0.1
       }
     ],
@@ -8076,12 +8110,8 @@
         "score": 0.73
       },
       {
-        "slug": "2020/10/http-cache",
-        "score": 0.53
-      },
-      {
-        "slug": "2020/11/pwa-pros-and-cons",
-        "score": 0.48
+        "slug": "2026/09/offline-marp-slides-in-nextjs",
+        "score": 0.71
       },
       {
         "slug": "2020/12/partitioning-cache",
@@ -8090,6 +8120,10 @@
       {
         "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
         "score": 0.37
+      },
+      {
+        "slug": "2020/11/back-forward-cache",
+        "score": 0.22
       }
     ],
     "2020/10/react-prop-drilling-may-slow-down": [
@@ -8284,16 +8318,16 @@
         "score": 0.49
       },
       {
-        "slug": "2025/12/nextjs-caching-deep-dive",
-        "score": 0.45
-      },
-      {
         "slug": "2026/03/why-still-nextjs",
         "score": 0.42
       },
       {
         "slug": "2019/06/20/react-nextjs-koa",
         "score": 0.42
+      },
+      {
+        "slug": "2026/08/service-worker-caching-2",
+        "score": 0.38
       }
     ],
     "2020/10/javascript-priorities": [
@@ -8378,10 +8412,6 @@
         "score": 0.66
       },
       {
-        "slug": "2026/08/service-worker-caching-2",
-        "score": 0.61
-      },
-      {
         "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
         "score": 0.57
       },
@@ -8396,6 +8426,10 @@
       {
         "slug": "2020/11/back-forward-cache",
         "score": 0.39
+      },
+      {
+        "slug": "2026/08/service-worker-caching-3",
+        "score": 0.38
       }
     ],
     "2020/10/how-node-js-works": [
@@ -11494,6 +11528,40 @@
         "score": 0.08
       }
     ],
+    "2026/09/offline-marp-slides-in-nextjs": [
+      {
+        "slug": "2026/08/service-worker-caching-1",
+        "score": 0.86
+      },
+      {
+        "slug": "2026/08/service-worker-caching-2",
+        "score": 0.82
+      },
+      {
+        "slug": "2026/08/service-worker-caching-3",
+        "score": 0.69
+      },
+      {
+        "slug": "2025/12/nextjs-caching-deep-dive",
+        "score": 0.27
+      },
+      {
+        "slug": "2026/09/unused-javascript-cost",
+        "score": 0.21
+      },
+      {
+        "slug": "2026/09/nextjs-cache-components-activity",
+        "score": 0.2
+      },
+      {
+        "slug": "2026/05/use-cache-deep-dive",
+        "score": 0.2
+      },
+      {
+        "slug": "2026/05/use-client-deep-dive",
+        "score": 0.18
+      }
+    ],
     "2026/09/nextjs-cache-components-activity": [
       {
         "slug": "2026/05/use-cache-deep-dive",
@@ -11520,11 +11588,11 @@
         "score": 0.18
       },
       {
-        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
+        "slug": "2026/09/offline-marp-slides-in-nextjs",
         "score": 0.13
       },
       {
-        "slug": "2026/03/is-nextjs-fast-enough",
+        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
         "score": 0.13
       }
     ],
@@ -11636,6 +11704,10 @@
         "score": 0.28
       },
       {
+        "slug": "2026/09/offline-marp-slides-in-nextjs",
+        "score": 0.27
+      },
+      {
         "slug": "2026/09/unused-javascript-cost",
         "score": 0.23
       },
@@ -11658,13 +11730,13 @@
       {
         "slug": "2026/09/tracing-third-party-javascript-without-sourcemaps",
         "score": 0.1
-      },
-      {
-        "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
-        "score": 0.1
       }
     ],
     "2026/08/service-worker-caching-2": [
+      {
+        "slug": "2026/09/offline-marp-slides-in-nextjs",
+        "score": 0.63
+      },
       {
         "slug": "2025/12/nextjs-caching-deep-dive",
         "score": 0.43
@@ -11692,16 +11764,12 @@
       {
         "slug": "2026/03/is-nextjs-fast-enough",
         "score": 0.15
-      },
-      {
-        "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
-        "score": 0.15
       }
     ],
     "2026/08/service-worker-caching-1": [
       {
-        "slug": "2026/05/pr-diff-vs-bundle",
-        "score": 0.16
+        "slug": "2026/09/offline-marp-slides-in-nextjs",
+        "score": 0.58
       },
       {
         "slug": "2026/09/unused-javascript-cost",
@@ -12706,16 +12774,16 @@
         "score": 0.2
       },
       {
-        "slug": "2026/09/unused-javascript-cost",
-        "score": 0.2
-      },
-      {
         "slug": "2026/08/k8s-for-frontend-5",
         "score": 0.19
       },
       {
         "slug": "2026/05/use-cache-deep-dive",
         "score": 0.18
+      },
+      {
+        "slug": "2026/08/k8s-for-frontend-4",
+        "score": 0.17
       }
     ],
     "2026/03/is-nextjs-fast-enough": [
@@ -13258,15 +13326,11 @@
         "score": 0.25
       },
       {
-        "slug": "2026/08/og-scraping-server-1",
-        "score": 0.22
+        "slug": "2026/03/is-nextjs-fast-enough",
+        "score": 0.2
       }
     ],
     "2025/06/web-performance-analysis-4": [
-      {
-        "slug": "2026/05/pr-diff-vs-bundle",
-        "score": 0.76
-      },
       {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.66
@@ -13294,16 +13358,16 @@
       {
         "slug": "2026/01/intersection-observer-singleton-weakmap",
         "score": 0.4
+      },
+      {
+        "slug": "2026/02/infinite-scroll-dark-side",
+        "score": 0.36
       }
     ],
     "2025/06/web-performance-analysis-3": [
       {
         "slug": "2025/12/nextjs-caching-deep-dive",
         "score": 0.62
-      },
-      {
-        "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
-        "score": 0.54
       },
       {
         "slug": "2026/03/is-nextjs-fast-enough",
@@ -13328,6 +13392,10 @@
       {
         "slug": "2026/03/nextjs-edge-runtime-rise-and-fall",
         "score": 0.35
+      },
+      {
+        "slug": "2026/05/use-client-deep-dive",
+        "score": 0.32
       }
     ],
     "2025/05/what-to-do-as-frontend-developer-in-ai-era": [
