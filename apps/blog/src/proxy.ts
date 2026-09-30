@@ -24,15 +24,16 @@ const EN_PREFIXES = new Set([
   'resume',
 ])
 
-// [year]/[...slug]는 loading.tsx 셸을 먼저 스트리밍해 없는 글도 200이 되므로, 렌더 전에 404로 보낸다.
+// [year]/[...slug]는 loading.tsx 셸을 먼저 스트리밍하므로 페이지의 notFound()와 리다이렉트가 200이 된다.
+// 그래서 없는 글과 번역이 없는 영문 글은 렌더 전에 여기서 가른다.
 // 목록은 next.config.ts가 빌드 때 넣는다. dev는 초안도 보여야 하고, 목록이 비면 멀쩡한 글을 막지 않도록 검사하지 않는다
 const PUBLISHED_POSTS = new Set<string>(
   JSON.parse(process.env.PUBLISHED_POSTS ?? '[]'),
 )
 
-function isMissingPost(rest: string[], isEnPath: boolean) {
+function checkPost(rest: string[], isEnPath: boolean) {
   if (process.env.NODE_ENV !== 'production' || PUBLISHED_POSTS.size === 0) {
-    return false
+    return null
   }
   // 확장자가 붙은 경로는 글의 이미지 같은 정적 파일이나 .md 원문이다
   if (
@@ -40,14 +41,16 @@ function isMissingPost(rest: string[], isEnPath: boolean) {
     !YEAR_RE.test(rest[0]) ||
     /\.[a-z]+$/i.test(rest.at(-1)!)
   ) {
-    return false
+    return null
   }
   const slug = rest.join('/')
-  // 번역이 없는 영문 경로는 페이지가 한국어 원문으로 리다이렉트한다
-  return (
-    !PUBLISHED_POSTS.has(slug) &&
-    !(isEnPath && PUBLISHED_POSTS.has(`${slug}.en`))
-  )
+  if (isEnPath && PUBLISHED_POSTS.has(`${slug}.en`)) {
+    return null
+  }
+  if (PUBLISHED_POSTS.has(slug)) {
+    return isEnPath ? 'untranslated' : null
+  }
+  return 'missing'
 }
 
 // AI 에이전트에게는 HTML 대신 홈은 llms.txt, 글은 원문 마크다운을 준다
@@ -115,8 +118,14 @@ export function proxy(request: NextRequest) {
       return NextResponse.rewrite(new URL('/__not-found', request.url))
     }
   }
-  if (isMissingPost(rest, isEnPath)) {
+  const postStatus = checkPost(rest, isEnPath)
+  if (postStatus === 'missing') {
     return NextResponse.rewrite(new URL('/__not-found', request.url))
+  }
+  if (postStatus === 'untranslated') {
+    const url = request.nextUrl.clone()
+    url.pathname = `/${rest.join('/')}`
+    return NextResponse.redirect(url, {status: 308})
   }
 
   const response = markdownPath
