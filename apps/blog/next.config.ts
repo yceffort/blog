@@ -3,6 +3,8 @@ import {utimes} from 'node:fs/promises'
 import {dirname, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
 
+import frontMatter from 'front-matter'
+import {sync as globSync} from 'glob'
 import type {NextConfig} from 'next'
 
 const blogRoot = dirname(fileURLToPath(import.meta.url))
@@ -56,6 +58,19 @@ if (process.env.NODE_ENV === 'development') {
   watchPostsInDevelopment()
 }
 
+// proxy가 없는 글 URL을 404로 보내는 데 쓰는 공개 글 목록. getAllPosts와 같은 규칙으로 빌드마다 만든다.
+// 번역 글은 `2026/09/slug.en`처럼 `.en`이 붙는다
+function getPublishedPostSlugs(): string[] {
+  return globSync('**/*.md*', {cwd: postsDir})
+    .filter(
+      (file) =>
+        frontMatter<{published?: boolean}>(
+          readFileSync(resolve(postsDir, file), 'utf8'),
+        ).attributes.published,
+    )
+    .map((file) => file.replace(/\.mdx?$/, ''))
+}
+
 const config: NextConfig = {
   // Local bundle analysis gets its own build and browser source maps.
   ...(process.env.COLDPATH === '1'
@@ -63,6 +78,9 @@ const config: NextConfig = {
     : {}),
   reactStrictMode: true,
   cacheComponents: true,
+  env: {
+    PUBLISHED_POSTS: JSON.stringify(getPublishedPostSlugs()),
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     localPatterns: [
