@@ -143,7 +143,7 @@ src/host/
 
 One adapter file implements one environment from the table at the top. Cookie names, CSS variable names, and the list of unsupported bridge methods are managed in that file. `bootstrapHost` picks the adapter matching the environment, creates the store from the seed, and returns the values React and CSS will use.
 
-The server derives the seed from the request headers and cookies and puts it into the HTML along with the detection result. The client entry point reads that seed from `<html data-seed>` and initializes the store with the same value (the implementation is in the per-file example later). Hydration of the current page uses this value. The cookie the server sets on the response exists to restore the seed on later SSR requests, such as moving to another subdomain.
+The server derives the seed from the request headers and cookies and puts it into the HTML along with the detection result. The client entry point reads the detection result and the seed from `data-host`, `data-os`, and `data-seed` on `<html>`, picks the same adapter as the server, and initializes the store with the same value (the implementation is in the per-file example later). Hydration of the current page uses this value. The cookie the server sets on the response exists to restore the seed on later SSR requests, such as moving to another subdomain.
 
 Components do not need to know where a value came from or how the bridge is implemented.
 
@@ -492,10 +492,11 @@ export const partnerAosAdapter: HostAdapter = {
 ```
 
 ```ts
-// host/bootstrap.ts: the only place "which environment?" runs. once on the server and once on the client
+// host/bootstrap.ts: the only place "which environment?" runs. detection happens only on the server, and the client takes the result
 export function bootstrapHost(ctx: RequestContext) {
-  const adapter = selectAdapter(detect(ctx))
-  // the client uses the seed the server put into the HTML as is. it does not re-read the cookie
+  // the client picks the adapter from the detection result the server put into <html data-host data-os>. it does not run detect again
+  const adapter = selectAdapter(ctx.serializedDetection ?? detect(ctx))
+  // the seed, too, is the value the server put into the HTML, used as is. it does not re-read the cookie
   const seed: Partial<Insets> =
     ctx.serializedSeed ?? adapter.seedInsets(ctx) ?? {}
   const store = createInsetStore(seed)
@@ -586,7 +587,9 @@ The code above is pseudocode showing a general SSR flow. In the Next.js App Rout
 
 The Provider receives the detection result and the seed as **serializable props**. [Client Components are also rendered to HTML on the server for the first request](https://nextjs.org/docs/app/getting-started/server-and-client-components#on-the-server), so the initial value must not be read only from `document`. The Provider initializes the store from props, and initialization is kept separate from watching so that measurement watching starts after mounting in the browser. Server rendering and hydration use the same seed snapshot.
 
-The client entry point in the plain SSR example builds the context from `navigator` and the HTML's `data-seed`, then runs `bootstrapHost` once. Passing the result to `HostProvider` lets components use `useInsets()`, `useHost()`, and `useBridge()`. Even for a request that had no seed, `data-seed` encodes an empty object `{}`. The decoded result has to stay `{}` as well, and must not be turned into `undefined`, which would run the cookie fallback again.
+The client entry point in the plain SSR example builds the context from the HTML's `data-host`, `data-os`, and `data-seed`, then runs `bootstrapHost` once. Passing the result to `HostProvider` lets components use `useInsets()`, `useHost()`, and `useBridge()`. Even for a request that had no seed, `data-seed` encodes an empty object `{}`. The decoded result has to stay `{}` as well, and must not be turned into `undefined`, which would run the cookie fallback again.
+
+The client does not run `detect` again because its inputs differ from the server's. JS in the browser cannot read the headers the host attached to the request, and detecting again from `navigator.userAgent` alone can pick a different adapter than the server did. `HostConfig.features` would then differ, hydration would mismatch, and the bridge would be wired to another environment's implementation. Like the seed, the detection result is the value the server put into the HTML, used as is.
 
 ## Reproducing Per-Environment Behavior Locally
 

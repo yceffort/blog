@@ -143,7 +143,7 @@ src/host/
 
 어댑터 파일 하나는 서두 표의 한 환경을 구현한다. 쿠키 이름, CSS 변수명, 미지원 브릿지 목록은 이 파일에서 관리한다. `bootstrapHost`는 환경에 맞는 어댑터를 고르고, 시드로 스토어를 만든 뒤 React와 CSS에서 쓸 값을 반환한다.
 
-서버는 요청 헤더와 쿠키로 시드를 구하고, 판정 결과와 함께 HTML에 넣는다. 클라이언트 진입점은 `<html data-seed>`에서 그 시드를 읽어 같은 값으로 스토어를 초기화한다(구현은 뒤의 파일별 구현 예제에 있다). 현재 페이지의 hydration에는 이 값을 사용한다. 서버가 응답에 설정하는 쿠키는 이후 서브도메인 이동 등 새로운 SSR 요청에서 시드를 복원하기 위한 것이다.
+서버는 요청 헤더와 쿠키로 시드를 구하고, 판정 결과와 함께 HTML에 넣는다. 클라이언트 진입점은 `<html>`의 `data-host`, `data-os`, `data-seed`에서 판정 결과와 시드를 읽어 서버와 같은 어댑터를 고르고, 같은 값으로 스토어를 초기화한다(구현은 뒤의 파일별 구현 예제에 있다). 현재 페이지의 hydration에는 이 값을 사용한다. 서버가 응답에 설정하는 쿠키는 이후 서브도메인 이동 등 새로운 SSR 요청에서 시드를 복원하기 위한 것이다.
 
 컴포넌트에서는 값의 출처나 브릿지 구현을 몰라도 된다.
 
@@ -490,10 +490,11 @@ export const partnerAosAdapter: HostAdapter = {
 ```
 
 ```ts
-// host/bootstrap.ts: "어떤 환경인가?"가 실행되는 유일한 곳. 서버와 클라이언트에서 한 번씩
+// host/bootstrap.ts: "어떤 환경인가?"가 실행되는 유일한 곳. 판별은 서버에서만 하고 클라이언트는 결과를 받아 쓴다
 export function bootstrapHost(ctx: RequestContext) {
-  const adapter = selectAdapter(detect(ctx))
-  // 클라이언트는 서버가 HTML에 실어 둔 시드를 그대로 쓴다. 쿠키를 다시 읽지 않는다
+  // 클라이언트는 서버가 <html data-host data-os>에 실어 둔 판정 결과로 어댑터를 고른다. detect를 다시 실행하지 않는다
+  const adapter = selectAdapter(ctx.serializedDetection ?? detect(ctx))
+  // 시드도 서버가 HTML에 실어 둔 값을 그대로 쓴다. 쿠키를 다시 읽지 않는다
   const seed: Partial<Insets> =
     ctx.serializedSeed ?? adapter.seedInsets(ctx) ?? {}
   const store = createInsetStore(seed)
@@ -584,7 +585,9 @@ function renderDocument(req: Request, res: Response) {
 
 Provider에는 판정 결과와 시드를 **직렬화 가능한 props**로 전달한다. [Client Component도 최초 요청에서는 서버에서 HTML로 렌더링되므로](https://nextjs.org/docs/app/getting-started/server-and-client-components#on-the-server), 초기값을 `document`에서만 읽게 해서는 안 된다. Provider가 props로 스토어를 초기화하고, 브라우저에서 마운트된 뒤 실측 감시를 시작하도록 초기화와 감시를 분리한다. 서버 렌더링과 hydration에서는 같은 시드 스냅샷을 사용한다.
 
-일반 SSR 예제의 클라이언트 진입점은 `navigator`와 HTML의 `data-seed`로 컨텍스트를 만든 뒤 `bootstrapHost`를 한 번 실행한다. 그 결과를 `HostProvider`에 전달하면 컴포넌트는 `useInsets()`, `useHost()`, `useBridge()`를 사용할 수 있다. 시드가 없던 요청에서도 `data-seed`에는 빈 객체 `{}`를 인코딩한다. 디코딩한 결과 역시 `{}`로 유지해야 하며, 이를 `undefined`로 바꿔 쿠키 폴백을 다시 실행하지 않는다.
+일반 SSR 예제의 클라이언트 진입점은 HTML의 `data-host`, `data-os`, `data-seed`로 컨텍스트를 만든 뒤 `bootstrapHost`를 한 번 실행한다. 그 결과를 `HostProvider`에 전달하면 컴포넌트는 `useInsets()`, `useHost()`, `useBridge()`를 사용할 수 있다. 시드가 없던 요청에서도 `data-seed`에는 빈 객체 `{}`를 인코딩한다. 디코딩한 결과 역시 `{}`로 유지해야 하며, 이를 `undefined`로 바꿔 쿠키 폴백을 다시 실행하지 않는다.
+
+클라이언트에서 `detect`를 다시 실행하지 않는 것은 판별에 쓰는 입력이 서버와 다르기 때문이다. 호스트가 요청에 실어 보낸 헤더는 브라우저의 JS에서 읽을 수 없고, `navigator.userAgent`만으로 다시 판별하면 서버와 다른 어댑터를 고를 수 있다. 그러면 `HostConfig.features`가 달라져 hydration이 어긋나고, 브릿지에도 다른 환경의 구현이 연결된다. 시드와 마찬가지로 판정 결과도 서버가 HTML에 실어 둔 값을 그대로 쓴다.
 
 ## 로컬에서 환경별 동작 재현하기
 
