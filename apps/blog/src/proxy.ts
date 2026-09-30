@@ -16,7 +16,13 @@ const MULTI_SEGMENT_PREFIXES = new Set([
   'thumbnails',
   'fonts',
 ])
-const EN_PREFIXES = new Set(['pages', 'feed.xml', 'about', 'resume'])
+const EN_PREFIXES = new Set([
+  'pages',
+  'feed.xml',
+  'llms-full.txt',
+  'about',
+  'resume',
+])
 
 export function proxy(request: NextRequest) {
   const userAgent = request.headers.get('user-agent') || ''
