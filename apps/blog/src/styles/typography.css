@@ -242,18 +242,6 @@
     color: var(--blog-prose-lead);
   }
   .markdown-body
-    :where(code):not(
-      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
-    )::after {
-    content: '`';
-  }
-  .markdown-body
-    :where(code):not(
-      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
-    )::before {
-    content: '`';
-  }
-  .markdown-body
     :where(blockquote p:last-of-type):not(
       :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
     )::after {
@@ -676,18 +664,6 @@
       :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
     ) {
     color: inherit;
-  }
-  .markdown-body
-    :where(pre code):not(
-      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
-    )::before {
-    content: none;
-  }
-  .markdown-body
-    :where(pre code):not(
-      :where([class~='markdown-exempt'], [class~='markdown-exempt'] *)
-    )::after {
-    content: none;
   }
 }
 @layer typographyFinal {
