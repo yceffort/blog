@@ -94,5 +94,5 @@ jobs:
           VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
           FILES: ${{ steps.added.outputs.files }}
         run: |
-          npm install --no-save web-push
+          npm install --no-save --prefix apps/blog/scripts web-push
           echo "$FILES" | xargs node apps/blog/scripts/notify-push.mjs
