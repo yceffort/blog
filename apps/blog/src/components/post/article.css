@@ -247,8 +247,11 @@
     font-family: var(--font-mono), monospace;
     font-size: 0.87em;
     word-break: break-word;
-    color: var(--primary-3);
+    color: var(--ink);
     background-origin: padding-box;
+  }
+  .post-article a > code {
+    color: inherit;
   }
   .series-nav-kicker {
     padding: 3px 8px;
@@ -641,6 +644,10 @@
 
 @supports (color: color-mix(in lab, red, red)) {
   @layer site {
+    .post-article :not(pre) > code {
+      border-color: color-mix(in oklab, var(--primary) 22%, var(--border));
+      background-color: color-mix(in oklab, var(--primary) 10%, var(--surface));
+    }
     .series-endnav-card.empty {
       border-color: currentColor;
       background-attachment: scroll;
