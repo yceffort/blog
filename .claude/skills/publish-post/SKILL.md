@@ -61,11 +61,10 @@ frontmatter `art.undraw`를 고르고 `apps/blog/public/thumbnails/{slug}.webp`�
 
 - 태그(기존 → 새), 썸네일 이름과 이미지(Read로 보여 줌)
 - 영문 title, description
-- `date`를 발행 시각으로 바꿀지(기본은 그대로 둔다)
 - 점검 결과(스캔, 린트)와 확인하지 못한 것
 
 ## 7. 발행
 
-승인받으면 한국어본과 영문본 모두 `published: true`로 바꾸고, 글, 영문본, 썸네일을 한 커밋으로 묶는다(메시지 예: `📝 Publish <slug>`). **푸시는 사용자가 따로 요청할 때만 한다.**
+승인받으면 한국어본과 영문본 모두 `published: true`로 바꾸고 `date`를 발행 시각(`date "+%Y-%m-%d %H:%M:00"`)으로 바꾼다. 두 파일의 `date`는 같아야 한다. 글, 영문본, 썸네일, `apps/blog/data/tag-scores.json`을 한 커밋으로 묶는다(메시지 예: `📝 Publish <slug>`). **푸시는 사용자가 따로 요청할 때만 한다.**
 
 푸시하면 `.github/workflows/notify-push.yaml`이 `published: false → true` 전환을 감지해 구독자에게 웹 푸시를 보낸다. 한 번 나가면 되돌릴 수 없으니 푸시 전에 이 점을 사용자에게 알린다. 발송이 실패하면 `gh workflow run notify-push.yaml -f files=<경로>`로 수동 발송한다.
