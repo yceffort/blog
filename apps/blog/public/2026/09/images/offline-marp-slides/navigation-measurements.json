@@ -1,0 +1,209 @@
+{
+  "measuredAt": "2026-09-30T01:14:52.972Z",
+  "commit": "a16ccab26f0d62ff71e11c95119cfce3ddfc79ef",
+  "oldWorkerCommit": "399f7c758030b59f6c344df9cd1a6f76f127a0f8",
+  "node": "v24.20.0",
+  "playwright": "1.63.0",
+  "chromium": "153.0.8010.12",
+  "platform": "darwin",
+  "release": "27.0.0",
+  "arch": "arm64",
+  "cpu": "Apple M5",
+  "memoryGiB": 24,
+  "runtime": {
+    "revision": "10e7eb67551be1925806b08a",
+    "files": 115,
+    "uncompressedBytes": 7150785
+  },
+  "workerSha256": {
+    "network-first": "3003a719654bfeb11c9b85e15bcd02421b1781f21eb34055ec642df98948b337",
+    "saved-shell-first": "b213442c0cd4c36f02fb0f7f7a1793fee8ca8eb0518b1a3787c4d2fd8fad1321"
+  },
+  "method": "Same production build and deck; worker script only varies. Each sample starts with a fresh browser context, saves via the UI, closes that page, then opens a new tab without restarting Chromium. Timer: immediately before page.goto until .marp-slides is visible. 20-second observation limit. Local proxy delays or holds document requests reaching the network; cached responses never reach the proxy. No CPU throttling. Save time excluded.",
+  "screenshot": {
+    "slug": "feconf-2026-vendor-sdk",
+    "slides": 48,
+    "bytes": 3422349,
+    "fields": [
+      "assetCache",
+      "assets",
+      "bytes",
+      "css",
+      "description",
+      "fonts",
+      "html",
+      "notes",
+      "revision",
+      "savedAt",
+      "schemaVersion",
+      "slug",
+      "sourceRevision",
+      "title",
+      "transition"
+    ]
+  },
+  "results": [
+    {
+      "run": 1,
+      "strategy": "network-first",
+      "condition": "offline",
+      "status": "visible",
+      "elapsedMs": 123,
+      "documentNetworkRequests": 0,
+      "fromServiceWorker": true
+    },
+    {
+      "run": 1,
+      "strategy": "saved-shell-first",
+      "condition": "offline",
+      "status": "visible",
+      "elapsedMs": 122,
+      "documentNetworkRequests": 0,
+      "fromServiceWorker": true
+    },
+    {
+      "run": 1,
+      "strategy": "network-first",
+      "condition": "delay-8000ms",
+      "status": "visible",
+      "elapsedMs": 8162,
+      "documentNetworkRequests": 1,
+      "fromServiceWorker": true
+    },
+    {
+      "run": 1,
+      "strategy": "saved-shell-first",
+      "condition": "delay-8000ms",
+      "status": "visible",
+      "elapsedMs": 126,
+      "documentNetworkRequests": 0,
+      "fromServiceWorker": true
+    },
+    {
+      "run": 1,
+      "strategy": "network-first",
+      "condition": "stalled",
+      "status": "timeout",
+      "elapsedMs": 20002,
+      "documentNetworkRequests": 1,
+      "fromServiceWorker": null
+    },
+    {
+      "run": 1,
+      "strategy": "saved-shell-first",
+      "condition": "stalled",
+      "status": "visible",
+      "elapsedMs": 125,
+      "documentNetworkRequests": 0,
+      "fromServiceWorker": true
+    },
+    {
+      "run": 2,
+      "strategy": "saved-shell-first",
+      "condition": "offline",
+      "status": "visible",
+      "elapsedMs": 129,
+      "documentNetworkRequests": 0,
+      "fromServiceWorker": true
+    },
+    {
+      "run": 2,
+      "strategy": "network-first",
+      "condition": "offline",
+      "status": "visible",
+      "elapsedMs": 122,
+      "documentNetworkRequests": 0,
+      "fromServiceWorker": true
+    },
+    {
+      "run": 2,
+      "strategy": "saved-shell-first",
+      "condition": "delay-8000ms",
+      "status": "visible",
+      "elapsedMs": 124,
+      "documentNetworkRequests": 0,
+      "fromServiceWorker": true
+    },
+    {
+      "run": 2,
+      "strategy": "network-first",
+      "condition": "delay-8000ms",
+      "status": "visible",
+      "elapsedMs": 8143,
+      "documentNetworkRequests": 1,
+      "fromServiceWorker": true
+    },
+    {
+      "run": 2,
+      "strategy": "saved-shell-first",
+      "condition": "stalled",
+      "status": "visible",
+      "elapsedMs": 122,
+      "documentNetworkRequests": 0,
+      "fromServiceWorker": true
+    },
+    {
+      "run": 2,
+      "strategy": "network-first",
+      "condition": "stalled",
+      "status": "timeout",
+      "elapsedMs": 20003,
+      "documentNetworkRequests": 1,
+      "fromServiceWorker": null
+    },
+    {
+      "run": 3,
+      "strategy": "network-first",
+      "condition": "offline",
+      "status": "visible",
+      "elapsedMs": 128,
+      "documentNetworkRequests": 0,
+      "fromServiceWorker": true
+    },
+    {
+      "run": 3,
+      "strategy": "saved-shell-first",
+      "condition": "offline",
+      "status": "visible",
+      "elapsedMs": 123,
+      "documentNetworkRequests": 0,
+      "fromServiceWorker": true
+    },
+    {
+      "run": 3,
+      "strategy": "network-first",
+      "condition": "delay-8000ms",
+      "status": "visible",
+      "elapsedMs": 8119,
+      "documentNetworkRequests": 1,
+      "fromServiceWorker": true
+    },
+    {
+      "run": 3,
+      "strategy": "saved-shell-first",
+      "condition": "delay-8000ms",
+      "status": "visible",
+      "elapsedMs": 125,
+      "documentNetworkRequests": 0,
+      "fromServiceWorker": true
+    },
+    {
+      "run": 3,
+      "strategy": "network-first",
+      "condition": "stalled",
+      "status": "timeout",
+      "elapsedMs": 20001,
+      "documentNetworkRequests": 1,
+      "fromServiceWorker": null
+    },
+    {
+      "run": 3,
+      "strategy": "saved-shell-first",
+      "condition": "stalled",
+      "status": "visible",
+      "elapsedMs": 124,
+      "documentNetworkRequests": 0,
+      "fromServiceWorker": true
+    }
+  ]
+}
