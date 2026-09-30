@@ -560,6 +560,29 @@
   .post-article blockquote p + p {
     margin-top: 12px;
   }
+  .post-article hr:has(+ .footnotes) {
+    display: none;
+  }
+  .post-article .footnotes {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-3);
+  }
+  .post-article .footnotes ol {
+    margin: 0 0 0 18px;
+  }
+  .post-article .footnotes li {
+    margin: 4px 0;
+  }
+  .post-article .footnotes p {
+    margin: 0;
+  }
+  .post-article .footnotes [data-footnote-backref] {
+    text-decoration: none;
+  }
   .post-related {
     margin-top: 56px;
   }
