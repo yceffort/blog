@@ -156,6 +156,7 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
       title: plainTitle,
       description,
       date,
+      updated,
       tags,
       imageUrl: `${SiteConfig.url}${ogImageUrl}`,
       url: postUrl,
