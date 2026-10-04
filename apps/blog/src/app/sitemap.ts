@@ -1,6 +1,7 @@
 import type {MetadataRoute} from 'next'
 
 import {getAllPosts, getAllTagsFromPosts} from '@/utils/Post'
+import {toInstant} from '@/utils/postDate'
 import {getAllSeries} from '@/utils/Series'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -36,7 +37,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     ...posts.map((post) => ({
       url: `https://yceffort.kr/${post.fields.slug}`,
-      lastModified: new Date(post.frontMatter.updated ?? post.frontMatter.date),
+      lastModified: toInstant(
+        post.frontMatter.updated ?? post.frontMatter.date,
+      ),
       ...(enSlugs.has(post.fields.slug) && {
         alternates: {
           languages: {
@@ -48,7 +51,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     ...enPosts.map((post) => ({
       url: `https://yceffort.kr/en/${post.fields.slug}`,
-      lastModified: new Date(post.frontMatter.updated ?? post.frontMatter.date),
+      lastModified: toInstant(
+        post.frontMatter.updated ?? post.frontMatter.date,
+      ),
       alternates: {
         languages: {
           ko: `https://yceffort.kr/${post.fields.slug}`,

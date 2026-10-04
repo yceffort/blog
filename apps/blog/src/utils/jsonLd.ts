@@ -1,4 +1,5 @@
 import {SiteConfig} from '@/config'
+import {toInstant} from '@/utils/postDate'
 
 export function buildBlogPostingJsonLd({
   title,
@@ -23,8 +24,8 @@ export function buildBlogPostingJsonLd({
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: title,
-    datePublished: new Date(date).toISOString(),
-    dateModified: new Date(updated ?? date).toISOString(),
+    datePublished: toInstant(date).toISOString(),
+    dateModified: toInstant(updated ?? date).toISOString(),
     description,
     image: imageUrl,
     url,
