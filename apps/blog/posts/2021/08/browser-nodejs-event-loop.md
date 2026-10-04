@@ -405,6 +405,10 @@ Queued using process.nextTick
    ...
    ```
 
+여기에 `Promise`와 `setTimeout`까지 더해 네 API의 실행 순서를 60초 영상으로 정리했다. 영상 속 실행 결과는 Node.js 25.9.0에서 측정했다.
+
+<video src="/2021/08/images/browser-nodejs-event-loop/queue-priority.mp4" poster="/2021/08/images/browser-nodejs-event-loop/poster.jpg" controls muted playsInline preload="metadata" width={400} />
+
 그럼 각각 언제 써야할까? 문서에 따르면 왠만하면 `setImmediate()`를 사용하라고 되어 있다.
 
 > We recommend developers use setImmediate() in all cases because it's easier to reason about.
