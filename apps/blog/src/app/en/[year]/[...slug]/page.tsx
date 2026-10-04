@@ -129,7 +129,7 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
     return null
   }
   const {
-    frontMatter: {title, tags, date, description, series},
+    frontMatter: {title, tags, date, updated, description, series},
     body,
     path,
     fields: {slug: postSlug},
@@ -137,7 +137,8 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
   } = post
   const relatedPosts = await getRelatedPosts(postSlug, tags, 'en')
   const seriesPosts = series ? await getSeriesPosts(series, 'en') : []
-  const updatedAt = format(new Date(date), 'yyyy-MM-dd')
+  const createdAt = format(new Date(date), 'yyyy-MM-dd')
+  const updatedAt = updated && format(new Date(updated), 'yyyy-MM-dd')
   const transitionName = `post-${postSlug.replace(/\//g, '-')}`
   const plainTitle = stripTitleEmphasis(title)
   const thumbnail = post.frontMatter.thumbnail
@@ -223,7 +224,14 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
                   {SiteConfig.author.name}
                 </div>
                 <div className={`sub ${readingProgressStyles.sub}`}>
-                  {updatedAt} · {readingTime} min read
+                  <time dateTime={createdAt}>{createdAt}</time>
+                  {updatedAt && (
+                    <>
+                      {' '}
+                      · Updated <time dateTime={updatedAt}>{updatedAt}</time>
+                    </>
+                  )}{' '}
+                  · {readingTime} min read
                 </div>
               </div>
             </div>

@@ -154,6 +154,15 @@ const styles = stylex.create({
       color: 'var(--archive-item-title-color, var(--ink-2))',
     },
   },
+  archive_updated: {
+    '@layer site': {
+      flexShrink: '0',
+      marginLeft: 'auto',
+      fontFamily: 'var(--font-mono), monospace',
+      fontSize: '12px',
+      color: 'var(--ink-4)',
+    },
+  },
 })
 
 // Resolve locally so the compiler can erase style composition.
@@ -170,3 +179,4 @@ export const archive_list = stylex.props(styles.archive_list).className!
 export const archive_item = stylex.props(styles.archive_item).className!
 export const archive_date = stylex.props(styles.archive_date).className!
 export const archive_title = stylex.props(styles.archive_title).className!
+export const archive_updated = stylex.props(styles.archive_updated).className!

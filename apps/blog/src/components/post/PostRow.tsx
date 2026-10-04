@@ -47,6 +47,7 @@ export default function PostRow({
     fields: {slug},
     frontMatter: {
       date,
+      updated,
       title: rawTitle,
       description,
       tags,
@@ -60,6 +61,7 @@ export default function PostRow({
   const plainTitle = stripTitleEmphasis(rawTitle)
   const d = new Date(date)
   const isoDate = format(d, 'yyyy-MM-dd')
+  const updatedDate = updated && format(new Date(updated), 'yyyy-MM-dd')
   const transitionName = `post-${slug.replace(/\//g, '-')}`
   return (
     <article
@@ -142,6 +144,15 @@ export default function PostRow({
 
         <div className={`post-row-meta ${listStyles.post_row_meta}`}>
           <time dateTime={isoDate}>{isoDate}</time>
+          {updatedDate && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>
+                {pathPrefix ? 'Updated' : '수정'}{' '}
+                <time dateTime={updatedDate}>{updatedDate}</time>
+              </span>
+            </>
+          )}
           <span aria-hidden="true">·</span>
           <span>
             {pathPrefix ? `${readingTime} min read` : `${readingTime}분`}

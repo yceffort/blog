@@ -48,6 +48,7 @@ export default function PostCard({
     fields: {slug},
     frontMatter: {
       date,
+      updated,
       title: rawTitle,
       description,
       tags,
@@ -60,6 +61,7 @@ export default function PostCard({
   const plainTitle = stripTitleEmphasis(rawTitle)
   const d = new Date(date)
   const isoDate = lightFormat(d, 'yyyy-MM-dd')
+  const updatedDate = updated && lightFormat(new Date(updated), 'yyyy-MM-dd')
   const transitionName = `post-${slug.replace(/\//g, '-')}`
   const cardRef = useRef<HTMLElement>(null)
   const onPointerMove = (e: React.PointerEvent<HTMLElement>) => {
@@ -158,6 +160,15 @@ export default function PostCard({
 
           <div className={`meta ${listStyles.meta}`}>
             <time dateTime={isoDate}>{isoDate}</time>
+            {updatedDate && (
+              <>
+                <span aria-hidden="true">·</span>
+                <span>
+                  {pathPrefix ? 'Updated' : '수정'}{' '}
+                  <time dateTime={updatedDate}>{updatedDate}</time>
+                </span>
+              </>
+            )}
             <span aria-hidden="true">·</span>
             <span>
               {pathPrefix ? `${readingTime} min read` : `${readingTime}분`}

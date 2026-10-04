@@ -71,6 +71,13 @@ export default async function ArchivePage() {
                     >
                       {stripTitleEmphasis(post.frontMatter.title)}
                     </span>
+                    {post.frontMatter.updated && (
+                      <span
+                        className={`archive-updated ${archiveStyles.archive_updated}`}
+                      >
+                        수정 {post.frontMatter.updated.slice(0, 10)}
+                      </span>
+                    )}
                   </Link>
                 </li>
               ))}

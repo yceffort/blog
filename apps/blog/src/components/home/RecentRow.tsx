@@ -18,11 +18,12 @@ export default function RecentRow({
 }) {
   const {
     fields: {slug},
-    frontMatter: {date, title: rawTitle, description, tags},
+    frontMatter: {date, updated, title: rawTitle, description, tags},
     readingTime,
   } = post
   const plainTitle = stripTitleEmphasis(rawTitle)
   const isoDate = format(new Date(date), 'yyyy-MM-dd')
+  const updatedDate = updated && format(new Date(updated), 'yyyy-MM-dd')
   return (
     <div
       className={`rec-row ${variant === 'series' ? recentStyles.series_row : recentStyles.rec_row}`}
@@ -49,6 +50,12 @@ export default function RecentRow({
       <div className={`rd ${recentStyles.rd}`}>{description}</div>
       <div className={`rmeta ${recentStyles.rmeta}`}>
         <b className={recentStyles.element_b}>{isoDate}</b>
+        {updatedDate && (
+          <>
+            {pathPrefix ? 'Updated' : '수정'} {updatedDate}
+            <br />
+          </>
+        )}
         {pathPrefix ? `${readingTime} min · read` : `${readingTime}분 · read`}
       </div>
       <div className={`rarrow ${recentStyles.rarrow}`} aria-hidden="true">

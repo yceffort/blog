@@ -79,7 +79,7 @@ export const getAllPosts = cache(async function getAllPostsImpl(
       const file = fs.readFileSync(path, {encoding: 'utf8'})
       const {attributes, body} = frontMatter<FrontMatter>(file)
       const fm: FrontMatter = attributes
-      const {tags: fmTags, published, date} = fm
+      const {tags: fmTags, published, date, updated} = fm
 
       const slug = pathToSlug(path)
 
@@ -89,12 +89,20 @@ export const getAllPosts = cache(async function getAllPostsImpl(
         const stats = readingTime(body, {wordsPerMinute: 250})
 
         const thumbnail = resolveThumbnail(slug, fm.art)
+        const createdAt = new Date(date).toISOString().substring(0, 19)
+        const updatedAt =
+          updated && new Date(updated).toISOString().substring(0, 19)
 
         const result: Post = {
           frontMatter: {
             ...fm,
             tags,
-            date: new Date(date).toISOString().substring(0, 19),
+            date: createdAt,
+            // 발행한 날 고친 것은 수정으로 보여주지 않는다
+            updated:
+              updatedAt && updatedAt.slice(0, 10) > createdAt.slice(0, 10)
+                ? updatedAt
+                : undefined,
             thumbnail,
           },
           body,
