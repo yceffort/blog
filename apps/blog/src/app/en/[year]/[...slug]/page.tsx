@@ -1,6 +1,5 @@
 import * as stylex from '@stylexjs/stylex'
 import {parseTitleEmphasis, stripTitleEmphasis} from '@yceffort/shared/utils'
-import {format} from 'date-fns'
 import {cacheLife, cacheTag} from 'next/cache'
 import Link from 'next/link'
 import {notFound, permanentRedirect} from 'next/navigation'
@@ -9,6 +8,7 @@ import {ViewTransition} from 'react'
 
 import * as ambientStyles from '@/components/layout/ambient.styles'
 import {PostArticle} from '@/components/post/PostArticle'
+import PostDate from '@/components/post/PostDate'
 import ProfileImage from '@/components/post/ProfileImage'
 import * as readingProgressStyles from '@/components/post/reading-progress.styles'
 import RelatedPosts from '@/components/post/RelatedPosts'
@@ -137,8 +137,6 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
   } = post
   const relatedPosts = await getRelatedPosts(postSlug, tags, 'en')
   const seriesPosts = series ? await getSeriesPosts(series, 'en') : []
-  const createdAt = format(new Date(date), 'yyyy-MM-dd')
-  const updatedAt = updated && format(new Date(updated), 'yyyy-MM-dd')
   const transitionName = `post-${postSlug.replace(/\//g, '-')}`
   const plainTitle = stripTitleEmphasis(title)
   const thumbnail = post.frontMatter.thumbnail
@@ -225,11 +223,11 @@ async function EnPostBody({year, slug}: {year: string; slug: string[]}) {
                   {SiteConfig.author.name}
                 </div>
                 <div className={`sub ${readingProgressStyles.sub}`}>
-                  <time dateTime={createdAt}>{createdAt}</time>
-                  {updatedAt && (
+                  <PostDate value={date} />
+                  {updated && (
                     <>
                       {' '}
-                      · Updated <time dateTime={updatedAt}>{updatedAt}</time>
+                      · Updated <PostDate value={updated} />
                     </>
                   )}{' '}
                   · {readingTime} min read

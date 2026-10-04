@@ -1,13 +1,13 @@
 'use client'
 
 import {stripTitleEmphasis} from '@yceffort/shared/utils'
-import {lightFormat} from 'date-fns'
 import Image from 'next/image'
 import Link from 'next/link'
 import {useRef} from 'react'
 
 import {EmphasizedTitle} from '@/components/post/EmphasizedTitle'
 import * as listStyles from '@/components/post/list.styles'
+import PostDate from '@/components/post/PostDate'
 import type {Series} from '@/type'
 export default function PopularSeriesCard({
   series,
@@ -21,7 +21,6 @@ export default function PopularSeriesCard({
     (acc, p) => (p.frontMatter.date > acc ? p.frontMatter.date : acc),
     posts[0].frontMatter.date,
   )
-  const isoDate = lightFormat(new Date(latest), 'yyyy-MM-dd')
   const cardRef = useRef<HTMLElement>(null)
   const onPointerMove = (e: React.PointerEvent<HTMLElement>) => {
     const el = cardRef.current
@@ -83,7 +82,9 @@ export default function PopularSeriesCard({
         <div className={`meta ${listStyles.meta}`}>
           <span>{posts.length}편의 글</span>
           <span aria-hidden="true">·</span>
-          <time dateTime={isoDate}>{isoDate} 업데이트</time>
+          <span>
+            <PostDate value={latest} /> 업데이트
+          </span>
         </div>
       </div>
     </article>

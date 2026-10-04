@@ -1,9 +1,9 @@
 import {stripTitleEmphasis} from '@yceffort/shared/utils'
-import {format} from 'date-fns'
 import Link from 'next/link'
 
 import * as recentStyles from '@/components/home/recent.styles'
 import {EmphasizedTitle} from '@/components/post/EmphasizedTitle'
+import PostDate from '@/components/post/PostDate'
 import type {Post} from '@/type'
 export default function RecentRow({
   post,
@@ -22,8 +22,6 @@ export default function RecentRow({
     readingTime,
   } = post
   const plainTitle = stripTitleEmphasis(rawTitle)
-  const isoDate = format(new Date(date), 'yyyy-MM-dd')
-  const updatedDate = updated && format(new Date(updated), 'yyyy-MM-dd')
   return (
     <div
       className={`rec-row ${variant === 'series' ? recentStyles.series_row : recentStyles.rec_row}`}
@@ -49,10 +47,12 @@ export default function RecentRow({
       </div>
       <div className={`rd ${recentStyles.rd}`}>{description}</div>
       <div className={`rmeta ${recentStyles.rmeta}`}>
-        <b className={recentStyles.element_b}>{isoDate}</b>
-        {updatedDate && (
+        <b className={recentStyles.element_b}>
+          <PostDate value={date} />
+        </b>
+        {updated && (
           <>
-            {pathPrefix ? 'Updated' : '수정'} {updatedDate}
+            {pathPrefix ? 'Updated' : '수정'} <PostDate value={updated} />
             <br />
           </>
         )}

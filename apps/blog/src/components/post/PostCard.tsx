@@ -2,13 +2,13 @@
 
 import * as stylex from '@stylexjs/stylex'
 import {stripTitleEmphasis} from '@yceffort/shared/utils'
-import {lightFormat} from 'date-fns'
 import Image from 'next/image'
 import Link from 'next/link'
 import {useRef, ViewTransition} from 'react'
 
 import {EmphasizedTitle} from '@/components/post/EmphasizedTitle'
 import * as listStyles from '@/components/post/list.styles'
+import PostDate from '@/components/post/PostDate'
 import type {Post} from '@/type'
 const sx = stylex.create({
   span: {
@@ -59,9 +59,6 @@ export default function PostCard({
     readingTime,
   } = post
   const plainTitle = stripTitleEmphasis(rawTitle)
-  const d = new Date(date)
-  const isoDate = lightFormat(d, 'yyyy-MM-dd')
-  const updatedDate = updated && lightFormat(new Date(updated), 'yyyy-MM-dd')
   const transitionName = `post-${slug.replace(/\//g, '-')}`
   const cardRef = useRef<HTMLElement>(null)
   const onPointerMove = (e: React.PointerEvent<HTMLElement>) => {
@@ -159,13 +156,12 @@ export default function PostCard({
           )}
 
           <div className={`meta ${listStyles.meta}`}>
-            <time dateTime={isoDate}>{isoDate}</time>
-            {updatedDate && (
+            <PostDate value={date} />
+            {updated && (
               <>
                 <span aria-hidden="true">·</span>
                 <span>
-                  {pathPrefix ? 'Updated' : '수정'}{' '}
-                  <time dateTime={updatedDate}>{updatedDate}</time>
+                  {pathPrefix ? 'Updated' : '수정'} <PostDate value={updated} />
                 </span>
               </>
             )}

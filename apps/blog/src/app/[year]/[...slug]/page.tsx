@@ -1,6 +1,5 @@
 import * as stylex from '@stylexjs/stylex'
 import {parseTitleEmphasis, stripTitleEmphasis} from '@yceffort/shared/utils'
-import {format} from 'date-fns'
 import {cacheLife, cacheTag} from 'next/cache'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
@@ -10,6 +9,7 @@ import {ViewTransition} from 'react'
 
 import * as ambientStyles from '@/components/layout/ambient.styles'
 import {PostArticle} from '@/components/post/PostArticle'
+import PostDate from '@/components/post/PostDate'
 import ProfileImage from '@/components/post/ProfileImage'
 import * as readingProgressStyles from '@/components/post/reading-progress.styles'
 import RelatedPosts from '@/components/post/RelatedPosts'
@@ -166,8 +166,6 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
   const seriesPosts = series ? await getSeriesPosts(series) : []
   const seriesSlug = series ? await findSeriesSlugByName(series) : undefined
   const relatedPosts = await getRelatedPosts(postSlug, tags, 'ko', series)
-  const createdAt = format(new Date(date), 'yyyy-MM-dd')
-  const updatedAt = updated && format(new Date(updated), 'yyyy-MM-dd')
   const transitionName = `post-${postSlug.replace(/\//g, '-')}`
   const plainTitle = stripTitleEmphasis(title)
   const link = `https://github.com/yceffort/yceffort-blog-v2/issues/new?labels=%F0%9F%92%AC%20Discussion&title=[Discussion] issue on ${plainTitle}&assignees=yceffort&body=${SiteConfig.url}/${postSlug}`
@@ -284,11 +282,11 @@ async function PostBody({year, slug}: {year: string; slug: string[]}) {
                   {SiteConfig.author.name}
                 </div>
                 <div className={`sub ${readingProgressStyles.sub}`}>
-                  <time dateTime={createdAt}>{createdAt}</time>
-                  {updatedAt && (
+                  <PostDate value={date} />
+                  {updated && (
                     <>
                       {' '}
-                      · 수정 <time dateTime={updatedAt}>{updatedAt}</time>
+                      · 수정 <PostDate value={updated} />
                     </>
                   )}{' '}
                   · {readingTime}분
