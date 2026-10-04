@@ -4,6 +4,7 @@ tags:
   - javascript
 published: true
 date: 2021-07-22 21:12:37
+updated: 2021-08-02 10:57:29
 description: '자바스크립트는 멋져 짜릿해 늘 새로워'
 ---
 

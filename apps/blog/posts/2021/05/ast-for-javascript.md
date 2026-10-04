@@ -5,6 +5,7 @@ tags:
   - javascript
 published: true
 date: 2021-05-10 09:40:39
+updated: 2026-02-21 21:23:32
 description: 'AST의 개념부터 파싱 과정, 주요 노드 타입, 그리고 Babel·ESLint 같은 도구에서의 활용까지 정리합니다.'
 ---
 

@@ -4,6 +4,7 @@ tags:
   - git
 published: true
 date: 2020-09-18 18:50:05
+updated: 2020-09-24 21:45:07
 description: '이게 당첨이 되네 (사실 아무나 되는 건 아니었겠지)'
 category: github
 template: post

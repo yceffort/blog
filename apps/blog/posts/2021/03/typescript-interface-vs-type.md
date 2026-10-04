@@ -4,6 +4,7 @@ tags:
   - typescript
 published: true
 date: 2021-03-21 17:43:42
+updated: 2021-03-22 21:15:52
 description: 'typescript is coming again........'
 ---
 

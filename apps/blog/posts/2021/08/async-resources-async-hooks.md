@@ -8,6 +8,7 @@ tags:
   - debugging
 published: true
 date: 2021-08-14 00:20:56
+updated: 2023-05-03 20:12:18
 description: '비동기로 불타는 금요일'
 ---
 

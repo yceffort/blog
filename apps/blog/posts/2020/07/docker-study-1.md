@@ -6,6 +6,7 @@ tags:
   - devops
 published: false
 date: 2020-07-28 08:25:27
+updated: 2021-04-17 10:57:29
 description: "`toc tight: true, from-heading: 2 to-heading: 3 ` ## Docker 는
 무엇인가? 리눅스 컨테이너에 여러가지 기능을 추가하여 애플리케이션을 컨테이너로서 좀더 쉽게 사용할 수 있도록 만든 오픈소스. 이에 대해
 정리 해 놓은 [좋은 글](https://subicura.com/2017/01/19/docker-g..."

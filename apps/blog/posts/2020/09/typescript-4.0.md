@@ -5,6 +5,7 @@ tags:
   - compiler
 published: true
 date: 2020-09-21 13:33:17
+updated: 2020-10-07 14:03:45
 description: '한 발 늦었지만 타입스크립트 4.0에서 추가된 기능을 알아보자'
 category: typescript
 template: post

@@ -8,6 +8,7 @@ tags:
   - design-patterns
 published: true
 date: 2021-09-08 22:06:46
+updated: 2022-07-26 22:45:03
 description: 'memo, useMemo, useCallback, 그리고...'
 ---
 

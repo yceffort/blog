@@ -5,6 +5,7 @@ tags:
   - browser
 published: true
 date: 2021-11-23 23:12:01
+updated: 2021-11-25 10:57:29
 description: '네트워크도 공부해야하는데'
 ---
 

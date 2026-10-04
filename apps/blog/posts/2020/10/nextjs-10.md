@@ -6,6 +6,7 @@ tags:
   - blogging
 published: false
 date: 2020-10-28 19:24:01
+updated: 2021-04-11 10:57:29
 description: 'nextjs 정말 열일하네'
 ---
 

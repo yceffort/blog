@@ -5,6 +5,7 @@ tags:
 published: true
 mathjax: true
 date: 2020-07-29 09:36:41
+updated: 2020-09-22 14:27:20
 description: '유리수, 무리수, 실수'
 category: programming
 slug: /2020/07/math-for-programmer-chapter2-3-rational-irrational-real-number/

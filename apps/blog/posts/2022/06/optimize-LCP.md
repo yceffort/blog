@@ -5,6 +5,7 @@ tags:
   - browser
 published: true
 date: 2022-06-09 00:21:56
+updated: 2022-11-21 19:39:43
 description: '브라우저 동작 방식을 이해하기'
 ---
 

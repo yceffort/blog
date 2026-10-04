@@ -5,6 +5,7 @@ tags:
   - webassembly
 published: true
 date: 2022-03-18 23:56:56
+updated: 2022-04-08 15:24:39
 description: '코로나 휴가를 틈탄 러스트 뻘짓'
 ---
 

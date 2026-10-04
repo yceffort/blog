@@ -4,6 +4,7 @@ tags:
   - typescript
 published: true
 date: 2022-03-16 22:08:36
+updated: 2022-03-20 10:57:29
 description: '헬퍼 타입도 잘 알고 써야 도움이 된다'
 ---
 

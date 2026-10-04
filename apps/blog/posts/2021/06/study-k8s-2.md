@@ -6,6 +6,7 @@ tags:
   - career
 published: false
 date: 2021-06-10 22:30:19
+updated: 2021-06-12 00:14:01
 description: '무지성에서 시작하는 K8s 공부해보기 시리즈(2)'
 ---
 

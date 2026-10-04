@@ -8,6 +8,7 @@ tags:
   - design-patterns
 published: true
 date: 2021-08-31 21:38:06
+updated: 2021-09-01 17:17:06
 description: '이벤트 루프는 4개의 큐, 그리고 2개의 중간 큐가 있습니다.'
 ---
 

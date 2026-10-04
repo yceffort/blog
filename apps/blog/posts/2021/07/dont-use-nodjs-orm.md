@@ -6,6 +6,7 @@ tags:
   - essay
 published: true
 date: 2021-07-02 19:29:54
+updated: 2021-07-04 10:57:29
 description: 'SQL 오랫만에 보니까 반갑당'
 ---
 

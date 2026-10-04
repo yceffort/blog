@@ -6,6 +6,7 @@ tags:
   - debugging
 published: true
 date: 2021-01-14 22:40:55
+updated: 2021-01-15 23:20:35
 description: '맨날 맥만 봐서 이런 줄도 몰랐다 반성합니다'
 ---
 

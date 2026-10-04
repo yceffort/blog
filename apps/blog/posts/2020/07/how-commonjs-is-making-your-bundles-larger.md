@@ -6,6 +6,7 @@ tags:
   - javascript
 published: true
 date: 2020-07-05 09:23:12
+updated: 2023-05-30 23:05:21
 description: '[How CommonJS is making your bundles
   larger](https://web.dev/commonjs-larger-bundles/) 를 번역 & 요약한 글입니다. ```toc
   tight: true, from-heading: 2 to-heading: 3 ```  **요약: 웹 애플리케이션을 확실하게 최적화해서

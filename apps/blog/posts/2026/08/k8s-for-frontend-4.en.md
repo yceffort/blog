@@ -7,6 +7,7 @@ tags:
   - networking
 published: true
 date: 2026-08-08 23:00:00
+updated: 2026-08-09 21:55:30
 description: 'Even a deploy that changes not a single line of code leaks errors. This is a measured record of tagging every failure that leaks during rolling deploys by type and timestamp, performing an autopsy on four causes, and stacking prescriptions one layer at a time until the count reaches zero. Includes the actual Next.js shutdown code, hostage draining, and the real CrashLoopBackOff timetable. Part 4 of the Kubernetes for frontend developers series.'
 thumbnail: /thumbnails/2026/08/k8s-for-frontend-4.png
 series: 'Kubernetes for Frontend Developers'

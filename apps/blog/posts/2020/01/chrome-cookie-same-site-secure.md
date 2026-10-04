@@ -7,6 +7,7 @@ tags:
   - networking
 published: true
 date: 2020-01-09 09:09:03
+updated: 2021-07-24 00:12:12
 description:
   '# 문제의 시작 지난 주말, 엄청나게 급하게 빠른 속도로 프로젝트를 heroku에 올릴 일이 있었다. DB도
   새로만들어야하고, 로그인도 필요한 사이트라 DB는 Heroku의 Clean DB를, 로그인은 [google sign-in for

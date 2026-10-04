@@ -8,6 +8,7 @@ tags:
   - backend
 published: true
 date: 2021-01-07 23:57:07
+updated: 2021-01-17 10:57:29
 description: '왜 이걸 이제 알았나 자괴감 들고 괴로워'
 ---
 

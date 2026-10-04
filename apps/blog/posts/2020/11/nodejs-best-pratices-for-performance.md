@@ -8,6 +8,7 @@ tags:
   - v8
 published: true
 date: 2020-11-19 23:22:28
+updated: 2020-11-26 15:55:21
 description: '성능은 좋을 수록 좋다 그것이 성능이니까'
 ---
 

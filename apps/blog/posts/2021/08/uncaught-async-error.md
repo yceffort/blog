@@ -7,6 +7,7 @@ tags:
   - debugging
 published: true
 date: 2021-08-23 13:21:41
+updated: 2026-08-10 13:11:51
 description: 'async가 있으면 함수 실행이 뒤로 넘어간다니까요?'
 ---
 

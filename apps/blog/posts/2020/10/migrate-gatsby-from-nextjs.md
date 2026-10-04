@@ -5,6 +5,7 @@ tags:
   - nextjs
 published: true
 date: 2020-10-16 22:23:24
+updated: 2021-01-15 23:20:35
 description: '어영부영했지만 보람은 있었다'
 ---
 

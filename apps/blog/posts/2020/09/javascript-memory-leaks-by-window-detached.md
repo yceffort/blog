@@ -7,6 +7,7 @@ tags:
   - debugging
 published: true
 date: 2020-09-29 23:43:18
+updated: 2022-06-27 23:03:06
 description: '면접에서 들었던 거지같은 질문에 대한 해답'
 category: javascript
 template: post

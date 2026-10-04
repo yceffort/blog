@@ -5,6 +5,7 @@ tags:
   - design-patterns
 published: true
 date: 2020-09-16 17:42:06
+updated: 2020-10-28 17:28:55
 description: '자바스크립트 아키텍쳐의 게임체인저라고 하는데, 과연 그렇게 될 수 있을까?'
 category: javascript
 template: post

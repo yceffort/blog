@@ -5,6 +5,7 @@ tags:
   - react
 published: true
 date: 2020-10-02 22:40:20
+updated: 2020-10-03 16:21:25
 description: '생각없이 useEffect를 쓰지 말자'
 template: post
 ---

@@ -6,6 +6,7 @@ tags:
   - design-patterns
 published: false
 date: 2020-08-30 19:27:22
+updated: 2020-09-16 18:41:41
 description: 'React와 MobX에 대한 10분 설명'
 category: MobX
 template: post

@@ -5,6 +5,7 @@ tags:
   - algorithm
 published: true
 date: 2022-06-17 12:19:04
+updated: 2022-06-18 13:44:37
 description: 'V8로는 아니더라도 내부 동작 직접 구현해보기'
 ---
 

@@ -5,6 +5,7 @@ tags:
   - career
 published: false
 date: 2020-06-23 05:25:19
+updated: 2022-01-13 10:57:29
 description:
   '## 3-2 Perm Missing Elem ### 문제  길이 N으로 이루어진 배열 A은, 1부터 N+1 의 숫자로
   이루어져 있다. 여기에서 빠진 숫자를 찾아라.  ``` A[0] = 2 A[1] = 3 A[2] = 1 A[3] = 5  4 가 누락되어

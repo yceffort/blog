@@ -6,6 +6,7 @@ tags:
   - browser
 published: true
 date: 2021-06-27 17:34:52
+updated: 2025-12-18 10:58:08
 description: '개발할 때 간지나는 이쁜 폰트 추천받습니다'
 ---
 

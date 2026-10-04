@@ -5,6 +5,7 @@ tags:
   - devops
 published: false
 date: 2020-08-09 03:48:47
+updated: 2021-04-01 00:54:13
 description:
   '## 도커 이미지 npm에서 다양한 도커 관련 패키지를 관리하듯, 도커는 기본적으로 [Docker
   Hub](https://hub.docker.com/)라는 중앙 이미지 저장소에서 다양한 이미지를 내려받을 수 있다. Docker Hub는

@@ -5,6 +5,7 @@ tags:
   - html
 published: true
 date: 2021-10-03 12:57:23
+updated: 2021-12-02 15:23:48
 description: '더이상 HTML 논란은,, 네이버,,,'
 ---
 

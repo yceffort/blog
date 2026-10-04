@@ -5,6 +5,7 @@ tags:
   - devops
 published: true
 date: 2022-02-07 18:04:31
+updated: 2022-06-04 10:57:29
 description: '갑자기 docker를 파는 이유는 22'
 ---
 

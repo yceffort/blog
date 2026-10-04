@@ -5,6 +5,7 @@ tags:
   - design-patterns
 published: true
 date: 2020-10-19 21:19:43
+updated: 2020-10-20 19:08:15
 description: 'HOC는 좋지만, hooks을 사용하는 습관을 기르자.'
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: '초보를 위한 웹크롤링: 네이버 영화 댓글 크롤링하기'
 date: 2018-11-06 04:44:01
+updated: 2020-10-20 09:34:57
 published: true
 tags:
   - web-scraping

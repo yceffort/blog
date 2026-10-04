@@ -9,6 +9,7 @@ tags:
 published: true
 featured: true
 date: 2026-09-09 19:00:00
+updated: 2026-09-22 10:33:44
 description: 'AI가 코드를 쓰는 시대의 개발자와 판단에 대한 에세이입니다. 초고를 읽고 의견을 주실 베타리더를 9월 30일까지 모집합니다. 인터뷰는 종료되었습니다.'
 art:
   undraw: document-ready

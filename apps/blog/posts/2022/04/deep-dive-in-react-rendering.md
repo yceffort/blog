@@ -5,6 +5,7 @@ tags:
   - web-performance
 published: true
 date: 2022-04-09 23:12:56
+updated: 2023-07-24 09:56:13
 description: '리액트에서 메모이제이션을 언제 해야하는가 고민 하다가 여기까지 왔다'
 ---
 

@@ -5,6 +5,7 @@ tags:
   - devops
 published: true
 date: 2026-08-05 20:00:00
+updated: 2026-09-23 17:21:33
 description: 'SSR을 운영하는 프론트엔드 개발자가 마주치는 쿠버네티스 용어와 구조를 실무 흐름 순서로 정리했다. 클러스터의 전체 구조부터 배포, 파드의 상태와 자원, 트래픽 경로, 오토스케일링까지. 시리즈의 첫 편이자 이후 편들의 참조 지도다.'
 thumbnail: /thumbnails/2026/08/k8s-for-frontend-1.png
 series: '프론트엔드 개발자가 알아야 할 쿠버네티스'

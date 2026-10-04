@@ -7,6 +7,7 @@ tags:
   - web-performance
 published: true
 date: 2020-07-04 07:06:10
+updated: 2021-08-14 22:28:52
 description: "[What every front-end developer should know about change detection
   in Angular and
   React](https://indepth.dev/what-every-front-end-developer-should-know-about-c\

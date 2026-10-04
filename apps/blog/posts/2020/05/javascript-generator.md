@@ -4,6 +4,7 @@ tags:
   - javascript
 published: true
 date: 2020-05-21 07:33:36
+updated: 2021-03-09 20:46:19
 description:
   '## Generator 제네레이터의 개념에 대해 이해하기 전에, 먼저 반복자 (Iterator)에 대해
   알아보자.  ### 0. Iterator  반복자는, 두개의 속성 (`value`와 `done`)을 반환하는 `next()`메소드를 사용하여

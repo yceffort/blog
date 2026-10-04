@@ -5,6 +5,7 @@ tags:
   - javascript
 published: true
 date: 2023-05-26 13:52:26
+updated: 2025-12-05 22:01:49
 description: 'const module = require("./module.js")'
 ---
 

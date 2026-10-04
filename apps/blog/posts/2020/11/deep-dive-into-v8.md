@@ -8,6 +8,7 @@ tags:
   - web-performance
 published: true
 date: 2020-11-27 10:57:07
+updated: 2020-12-17 16:12:42
 description: '맛만 볼게 아니고 직접 코드 까봐서 공부를 해봐야 되는데 😭'
 ---
 

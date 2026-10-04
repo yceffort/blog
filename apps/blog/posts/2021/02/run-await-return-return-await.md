@@ -6,6 +6,7 @@ tags:
   - error-handling
 published: true
 date: 2021-02-03 17:27:03
+updated: 2021-03-01 10:57:29
 description: 'try catch 블록에서는 동작이 다르네'
 ---
 

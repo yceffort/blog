@@ -5,6 +5,7 @@ tags:
   - web-performance
 published: true
 date: 2021-11-16 19:21:28
+updated: 2021-12-17 10:57:29
 description: '책임감 있는 코드를 작성하고 있는지 항상 뒤돌아보기'
 ---
 

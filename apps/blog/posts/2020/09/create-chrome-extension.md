@@ -4,6 +4,7 @@ tags:
   - browser
 published: false
 date: 2020-09-25 21:56:02
+updated: 2020-09-29 10:27:46
 description: '필요한 기능 하나 쯤 만들어서 사용해보자.'
 category: chrome
 template: post

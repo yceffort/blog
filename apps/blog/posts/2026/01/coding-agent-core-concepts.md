@@ -4,6 +4,7 @@ tags:
   - ai
 published: true
 date: 2026-01-17 23:00:00
+updated: 2026-01-27 20:59:49
 description: 'Rules, Commands, MCP, Sub-agents, Hooks, Skills, Plugins까지 코딩 에이전트의 핵심 개념 총정리'
 art:
   layout: columns

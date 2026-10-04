@@ -1,6 +1,7 @@
 ---
 title: React 공부하기 7 - 컴포넌트 라이프 사이클
 date: 2019-05-21 12:17:09
+updated: 2021-04-17 10:57:29
 published: false
 tags:
   - react

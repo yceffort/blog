@@ -6,6 +6,7 @@ tags:
   - npm
 published: true
 date: 2020-08-11 08:48:47
+updated: 2022-06-16 10:57:29
 description: "[이
   글](https://redfin.engineering/node-modules-at-war-why-commonjs-and-es-modules\
   -cant-get-along-9617135eeca1)을 번역 요약한 글입니다. ## CommonJS와 ES Modules은 왜 함께 할 수

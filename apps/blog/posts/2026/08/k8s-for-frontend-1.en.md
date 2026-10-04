@@ -5,6 +5,7 @@ tags:
   - devops
 published: true
 date: 2026-08-05 20:00:00
+updated: 2026-08-09 22:00:31
 description: 'The Kubernetes vocabulary and structure that frontend developers running SSR actually encounter, organized in the order of real work: the overall cluster structure, what makes up a deploy, pod state and resources, the traffic path, and autoscaling. The first post of the series and the reference map for the rest.'
 thumbnail: /thumbnails/2026/08/k8s-for-frontend-1.png
 series: 'Kubernetes for Frontend Developers'

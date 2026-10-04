@@ -8,6 +8,7 @@ tags:
   - javascript
 published: true
 date: 2021-06-05 20:56:10
+updated: 2021-07-05 22:59:09
 description: 'SSR을 다루면서 에러처리에 대해 고민했던 나날들😑'
 ---
 

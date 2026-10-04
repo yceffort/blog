@@ -7,6 +7,7 @@ tags:
   - software-engineering
 published: true
 date: 2022-01-01 19:32:36
+updated: 2022-01-10 20:54:53
 description: '2022년은 더 좋은 개발자가 되길 바라며'
 ---
 

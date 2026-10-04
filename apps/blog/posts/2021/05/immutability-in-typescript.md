@@ -5,6 +5,7 @@ tags:
   - javascript
 published: true
 date: 2021-05-26 19:19:20
+updated: 2022-08-09 22:41:38
 description: '저는 사실 Immutability에 안 좋은 추억이 있습니다'
 ---
 

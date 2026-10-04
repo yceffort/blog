@@ -8,6 +8,7 @@ tags:
   - debugging
 published: true
 date: 2021-01-24 21:16:38
+updated: 2026-05-25 18:47:48
 description: 'GitHub Actions schedule은 왜 수십 분씩 밀리는가. 구조적 원인과 정시 실행이 가능한 대안 정리.'
 ---
 

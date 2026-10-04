@@ -4,6 +4,7 @@ tags:
   - typescript
 published: true
 date: 2021-08-27 23:27:41
+updated: 2021-09-05 16:55:08
 description: '무지성 T, U, K 멈춰!'
 ---
 

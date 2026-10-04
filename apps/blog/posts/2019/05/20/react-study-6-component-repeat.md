@@ -1,6 +1,7 @@
 ---
 title: React 공부하기 6 - 컴포넌트 반복
 date: 2019-05-21 12:16:08
+updated: 2022-06-27 23:03:06
 published: false
 tags:
   - react

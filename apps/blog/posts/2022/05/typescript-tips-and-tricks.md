@@ -4,6 +4,7 @@ tags:
   - typescript
 published: true
 date: 2022-05-08 04:12:01
+updated: 2022-05-30 10:57:29
 description: '"타입"스크립트니까 타입을 잘 할줄 알아야 합니다.'
 ---
 

@@ -5,6 +5,7 @@ tags:
   - bundler
 published: true
 date: 2025-05-06 16:39:31
+updated: 2025-12-18 10:58:08
 description: '관심 가져주셔서 감사합니다. 🎉'
 series: '웹 서비스 성능 분석'
 seriesOrder: 1

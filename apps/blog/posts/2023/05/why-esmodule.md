@@ -7,6 +7,7 @@ tags:
   - essay
 published: true
 date: 2023-06-02 14:23:28
+updated: 2023-06-14 18:34:38
 description: '2부는 어디갔냐구요? 내맘입니다.'
 ---
 

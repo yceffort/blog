@@ -4,6 +4,7 @@ tags:
   - nodejs
 published: true
 date: 2021-10-15 23:48:00
+updated: 2021-10-19 23:48:38
 description: 'nodejs로 백엔드하는 회사 찾습니다'
 ---
 

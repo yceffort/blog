@@ -5,6 +5,7 @@ tags:
   - career
 published: false
 date: 2020-04-29 06:09:18
+updated: 2020-10-21 11:18:07
 description: 'https://redux.js.org/glossary#state ## 용어 모음  ### State
   (상태)  ```typescript type State = any ```  State (State tree라고 도 불리운다)는 Redux
   API에서는 보통 스토어에서 관리하고, `getState()`에 의해 반환되는 단일 값을 가리킨다.  관례적으로, 가장...'

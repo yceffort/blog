@@ -6,6 +6,7 @@ tags:
   - essay
 published: true
 date: 2025-05-19 17:43:12
+updated: 2026-02-21 21:12:45
 description: '미래는 나도 모르겠지만, 그냥 열심히 개발하면 되지 않을까?'
 ---
 

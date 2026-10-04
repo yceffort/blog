@@ -6,6 +6,7 @@ tags:
   - essay
 published: true
 date: 2020-10-30 23:51:20
+updated: 2022-04-02 10:57:29
 description: '사실 그냥 (몇 가지 합리적인 이유가 있는) 개인적인 취향임'
 ---
 

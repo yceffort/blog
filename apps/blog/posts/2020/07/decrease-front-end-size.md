@@ -5,6 +5,7 @@ tags:
   - web-performance
 published: false
 date: 2020-07-01 09:45:10
+updated: 2020-10-08 22:31:33
 description: "[이
   글](https://developers.google.com/web/fundamentals/performance/webpack/decreas\
   e-frontend-size)을 대충 번역했습니다.  ```toc tight: true, from-heading: 2 to-heading:

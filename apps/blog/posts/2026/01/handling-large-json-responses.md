@@ -8,6 +8,7 @@ tags:
   - javascript
 published: true
 date: 2026-01-11 15:00:00
+updated: 2026-01-13 23:05:24
 description: 'JSON.parse()가 버거워할 때 살아남는 법'
 art:
   layout: contours

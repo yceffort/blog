@@ -7,6 +7,7 @@ tags:
   - networking
 published: true
 date: 2026-08-22 14:00:00
+updated: 2026-08-23 22:39:35
 description: '사용자가 준 URL을 서버가 대신 여는 기능은 SSRF의 교과서적 조건을 명세로 갖고 있다. 화이트리스트를 뚫는 우회 여섯 가지를 먼저 보고, 그것을 막는 방어 원리 다섯 개를 Node에서 실제로 돌려본 기록. 손으로 IPv4-mapped를 벗기면 16진 표기에서 뚫리고, undici의 lookup 훅은 호스트가 IP 리터럴이면 아예 호출되지 않으며, URL.hostname은 IPv6 리터럴의 대괄호를 남긴다. OG 스크래핑 서버 설계 노트 2부작의 마지막 편이다.'
 thumbnail: /thumbnails/2026/08/og-scraping-server-2.png
 slide: og-scraping-server-nodejs-2

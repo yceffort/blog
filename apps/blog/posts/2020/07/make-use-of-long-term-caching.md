@@ -6,6 +6,7 @@ tags:
   - caching
 published: true
 date: 2020-07-21 04:18:21
+updated: 2020-09-29 14:18:46
 description: "[Make use of long-term
   caching](https://developers.google.com/web/fundamentals/performance/webpack/u\
   se-long-term-caching)을 번역한 글입니다.  앱

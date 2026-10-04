@@ -8,6 +8,7 @@ tags:
   - design-patterns
 published: true
 date: 2020-10-06 21:35:47
+updated: 2020-10-07 14:03:45
 description: 'nodejs에 대해서도 공부하자'
 template: post
 ---

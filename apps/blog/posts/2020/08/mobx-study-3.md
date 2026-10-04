@@ -5,6 +5,7 @@ tags:
   - design-patterns
 published: false
 date: 2020-08-25 20:07:31
+updated: 2020-08-29 19:37:24
 description: 'MobX 1페이지 요약에 대한 간단한 번역'
 category: MobX
 template: post

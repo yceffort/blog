@@ -8,6 +8,7 @@ tags:
   - rust
 published: true
 date: 2026-09-22 18:00:00
+updated: 2026-09-26 22:03:16
 description: '추석맞이 뻘짓 대작전 1탄: 내 블로그 부터 살펴보기'
 series: 'coldpath 제작기'
 seriesOrder: 1

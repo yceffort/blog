@@ -6,6 +6,7 @@ tags:
   - react
 published: true
 date: 2020-10-07 21:29:18
+updated: 2020-10-14 19:39:56
 description: 'styled components가 쓰고 싶습니다'
 template: post
 ---

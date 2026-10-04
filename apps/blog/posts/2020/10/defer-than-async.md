@@ -7,6 +7,7 @@ tags:
   - javascript
 published: true
 date: 2020-10-20 23:32:39
+updated: 2023-09-05 13:45:23
 description: '스크립트 실행 최적화를 위해 잘 고민해봐야 한다.'
 ---
 

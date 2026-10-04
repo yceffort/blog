@@ -8,6 +8,7 @@ tags:
   - compiler
 published: true
 date: 2026-03-09 22:02:05
+updated: 2026-05-01 16:19:58
 description: '"use server" 한 줄 뒤에서 무슨 일이 벌어지고 있는가?'
 thumbnail: /thumbnails/2026/03/react-server-functions-deep-dive.png
 series: 디렉티브 딥다이브

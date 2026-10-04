@@ -4,6 +4,7 @@ tags:
   - typescript
 published: true
 date: 2022-03-12 15:31:40
+updated: 2023-05-29 18:50:12
 description: '알쏭달쏭 신기한 타입스크립트와 타입의 세계'
 ---
 

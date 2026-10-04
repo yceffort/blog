@@ -8,6 +8,7 @@ tags:
   - v8
 published: true
 date: 2026-08-03 21:00:00
+updated: 2026-08-09 18:15:27
 description: 'I added one GC tuning flag to the same workload and peak RSS jumped from 201MB to 593MB, while the live data stayed the same. This post traces back through V8 New Space with direct measurements to show why that result is exactly what should happen, and lays out the three axes frontend developers can use to size a Node.js pod.'
 thumbnail: /thumbnails/2026/08/nodejs-k8s-pod-sizing.png
 series: 'Kubernetes for Frontend Developers'

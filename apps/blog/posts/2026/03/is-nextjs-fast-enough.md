@@ -7,6 +7,7 @@ tags:
   - backend
 published: true
 date: 2026-03-21 22:00:00
+updated: 2026-03-22 21:23:54
 description: '벤치마크가 말해주는 불편한 진실'
 thumbnail: '/thumbnails/2026/03/is-nextjs-fast-enough.png'
 series: 'Next.js의 현주소'

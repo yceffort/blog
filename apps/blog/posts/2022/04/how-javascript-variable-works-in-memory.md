@@ -6,6 +6,7 @@ tags:
   - memory
 published: true
 date: 2022-04-21 22:10:10
+updated: 2022-04-26 10:57:29
 description: 'V8 내부 코드를 자유롭게 읽을 수 있는 그날까지'
 ---
 

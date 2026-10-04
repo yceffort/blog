@@ -7,6 +7,7 @@ tags:
   - web-performance
 published: true
 date: 2020-07-14 01:19:17
+updated: 2020-10-08 22:31:33
 description: "```toc tight: true, from-heading: 2 to-heading: 3 ``` [4 Types of
   Memory Leaks in JavaScript and How to Get Rid Of
   Them](https://auth0.com/blog/four-types-of-leaks-in-your-javascript-code-and-\

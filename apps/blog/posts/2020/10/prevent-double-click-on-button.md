@@ -5,6 +5,7 @@ tags:
   - design-patterns
 published: true
 date: 2020-10-22 23:04:23
+updated: 2020-11-29 18:11:43
 description: '어렸을 때 내가 어떻게 했더라?'
 ---
 

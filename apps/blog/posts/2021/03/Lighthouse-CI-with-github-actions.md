@@ -1,6 +1,7 @@
 ---
 title: github workflow로 lighthouse ci 추가하기
 date: 2021-03-31 23:39:50
+updated: 2021-04-01 00:36:29
 tags:
   - web-performance
   - ci-cd

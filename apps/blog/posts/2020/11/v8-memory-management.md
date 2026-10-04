@@ -6,6 +6,7 @@ tags:
   - javascript
 published: true
 date: 2020-11-18 23:01:36
+updated: 2026-09-15 13:18:30
 description: 'V8의 깊고 더 어두운 곳으로...'
 ---
 

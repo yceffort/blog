@@ -4,6 +4,7 @@ tags:
   - react
 published: true
 date: 2020-09-21 18:24:44
+updated: 2022-08-09 22:41:38
 description: '리액트 17.0 새로운 기능은 추가되지 않을 예정. 점진적 업그레이드 추가, 이벤트 위임 방식 변경이 주요 변경 내용인 것 같네용.'
 category: github
 template: post

@@ -7,6 +7,7 @@ tags:
   - software-engineering
 published: true
 date: 2020-07-23 10:13:11
+updated: 2020-09-29 14:18:46
 description:
   '# Github action ## Github action 은 무엇인가?  github actions은 사용자 정의
   소프트웨어 개발 라이프 사이클 워크 플로우를 github 레파지토리에 직접 만들수 있도록 도와주는 도구다.  > GitHub Actions

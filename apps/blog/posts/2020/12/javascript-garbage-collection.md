@@ -8,6 +8,7 @@ tags:
   - nodejs
 published: true
 date: 2020-12-01 20:44:19
+updated: 2022-04-30 20:23:56
 description: '원래 이런건 이해가 될 때 까지 하는거임'
 ---
 

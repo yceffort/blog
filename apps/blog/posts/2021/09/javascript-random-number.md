@@ -5,6 +5,7 @@ tags:
   - security
 published: true
 date: 2021-09-01 21:19:35
+updated: 2021-09-27 23:46:54
 description: 'Math.random()도 잘못 사용하는 경우가 더러 있음'
 ---
 

@@ -5,6 +5,7 @@ tags:
   - career
 published: true
 date: 2020-09-23 23:43:15
+updated: 2020-11-14 16:09:31
 description: '뭔가 이상한 자바스크립트 면접 문제는 재밌다. 단 내가 구직 중이 아닐 때만.'
 category: javascript
 template: post
