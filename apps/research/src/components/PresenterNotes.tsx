@@ -5,7 +5,13 @@ import type {KeyboardEvent, PointerEvent} from 'react'
 
 import * as styles from './PresenterView.styles'
 
-export function PresenterNotes({note}: {note: string}) {
+export function PresenterNotes({
+  note,
+  height,
+}: {
+  note: string
+  height?: number
+}) {
   const viewportId = useId()
   const viewportRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -126,6 +132,7 @@ export function PresenterNotes({note}: {note: string}) {
     <section
       className={`marp-presenter-notes ${styles.notesPanel}`}
       aria-label="발표자 노트"
+      style={height === undefined ? undefined : {height, maxHeight: 'none'}}
     >
       <div className={styles.notesLabel}>발표자 노트</div>
       <div className={styles.notesBody}>
