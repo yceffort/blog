@@ -1,8 +1,7 @@
 import {expect, test} from '@playwright/test'
 
 const slug = 'feconf-2026-vendor-sdk'
-const href =
-  'https://rollupjs.org/configuration-options/#output-preservemodules'
+const href = 'https://yceffort.kr'
 
 for (const viewport of [
   {name: 'desktop', width: 1440, height: 900, touch: false},
@@ -57,7 +56,7 @@ for (const viewport of [
       page,
       context,
     }) => {
-      await context.route('https://rollupjs.org/**', (route) =>
+      await context.route('https://yceffort.kr/**', (route) =>
         route.fulfill({
           contentType: 'text/html',
           body: '<h1>Link destination</h1>',
@@ -72,9 +71,7 @@ for (const viewport of [
       )
       await page.keyboard.press('/')
       const search = page.getByRole('dialog', {name: '슬라이드 검색'})
-      await search
-        .getByRole('textbox', {name: '검색어'})
-        .fill('Rollup 공식 문서')
+      await search.getByRole('textbox', {name: '검색어'}).fill('DAN 24 연사')
       await search.getByRole('button').first().click()
       await expect(search).toHaveCount(0)
       const link = page
@@ -83,17 +80,24 @@ for (const viewport of [
       await expect(link).toBeVisible()
       const slideNumber = Number(new URL(page.url()).hash.slice(1))
       expect(slideNumber).toBeGreaterThan(0)
-      const target = (await link.boundingBox())!
       const surface = page.locator('.swiper-slide-active [data-slide-surface]')
-      const bounds = (await surface.boundingBox())!
+      const edgeRatio = async () => {
+        const start = (await link.boundingBox())!.x + 2
+        const area = (await surface.boundingBox())!
+        return (start - area.x) / area.width
+      }
       // The start of this real link is underneath the old left-edge overlay.
-      expect((target.x + 2 - bounds.x) / bounds.width).toBeLessThan(0.1)
+      // Poll because the slide content is still gliding in right after the search.
+      await expect.poll(edgeRatio).toBeLessThan(0.1)
+      const target = (await link.boundingBox())!
+      const bounds = (await surface.boundingBox())!
       const popup = context.waitForEvent('page')
       if (viewport.touch)
         await link.tap({position: {x: 2, y: target.height / 2}})
       else await link.click({position: {x: 2, y: target.height / 2}})
       const destination = await popup
-      await expect(destination).toHaveURL(href)
+      // The browser adds a trailing slash to a link without a path.
+      await expect(destination).toHaveURL(`${href}/`)
       await expect(page).toHaveURL(new RegExp(`#${slideNumber}$`))
       await destination.close()
       await surface.click({

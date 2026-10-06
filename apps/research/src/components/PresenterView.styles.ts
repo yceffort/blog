@@ -4,7 +4,7 @@ const styles = stylex.create({
   presenterView: {
     '@layer site': {
       display: 'grid',
-      gridTemplateRows: 'auto minmax(0, 1fr) auto auto',
+      gridTemplateRows: 'auto minmax(0, 1fr) auto auto auto',
       height: '100dvh',
       background: '#1a1a1a',
       color: '#fff',
@@ -105,6 +105,21 @@ const styles = stylex.create({
       justifyContent: 'center',
       color: '#666',
       fontSize: '14px',
+    },
+  },
+  notesResizer: {
+    '@layer site': {
+      height: '12px',
+      margin: 0,
+      border: 'none',
+      backgroundColor: {default: '#1a1a1a', ':hover': '#333'},
+      // hr 은 자식을 가질 수 없어서 가운데 손잡이 막대를 배경으로 그린다.
+      backgroundImage: 'linear-gradient(#666, #666)',
+      backgroundSize: '40px 4px',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      cursor: 'row-resize',
+      touchAction: 'none',
     },
   },
   notesPanel: {
@@ -291,6 +306,7 @@ export const slideLabelNext = stylex.props(
 ).className!
 export const slideContent = stylex.props(styles.slideContent).className!
 export const noNextSlide = stylex.props(styles.noNextSlide).className!
+export const notesResizer = stylex.props(styles.notesResizer).className!
 export const notesPanel = stylex.props(styles.notesPanel).className!
 export const notesBody = stylex.props(styles.notesBody).className!
 export const notesViewport = stylex.props(styles.notesViewport).className!

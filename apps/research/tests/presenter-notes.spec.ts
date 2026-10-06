@@ -145,5 +145,59 @@ for (const viewport of [
       const panelBounds = (await panel.boundingBox())!
       expect(panelBounds.y + panelBounds.height).toBeLessThan(500)
     })
+
+    test('dragging the top edge of the notes resizes them across slide changes', async ({
+      page,
+      request,
+    }) => {
+      await openNotes(page, request)
+      const panel = page.getByRole('region', {name: '발표자 노트', exact: true})
+      const content = page.getByRole('region', {name: '발표자 노트 본문'})
+      const handle = page.getByRole('separator', {
+        name: '발표자 노트 높이 조절',
+      })
+      const preview = page.locator('.marp-presenter-slide').first()
+      const next = page.getByRole('button', {name: '다음 ▶', exact: true})
+      const height = async () => (await panel.boundingBox())!.height
+      const drag = async (toY: number) => {
+        const grip = (await handle.boundingBox())!
+        const x = grip.x + grip.width / 2
+        await page.mouse.move(x, grip.y + grip.height / 2)
+        await page.mouse.down()
+        await page.mouse.move(x, toY, {steps: 4})
+        await page.mouse.up()
+      }
+
+      const before = (await panel.boundingBox())!
+      const previewBefore = (await preview.boundingBox())!.height
+      const grip = (await handle.boundingBox())!
+      await drag(grip.y + grip.height / 2 - 30)
+      const taller = (await panel.boundingBox())!
+      expect(taller.height).toBeGreaterThan(before.height)
+      if (viewport.name === 'desktop')
+        expect(Math.abs(taller.height - before.height - 30)).toBeLessThan(2)
+      // The notes grow upward, the controls below stay put.
+      expect(
+        Math.abs(taller.y + taller.height - before.y - before.height),
+      ).toBeLessThan(2)
+      expect((await preview.boundingBox())!.height).toBeLessThan(previewBefore)
+
+      // Dragging past the top still leaves a slide preview and the controls on screen.
+      await drag(1)
+      const largest = await height()
+      expect((await preview.boundingBox())!.height).toBeGreaterThan(20)
+      const nextBounds = (await next.boundingBox())!
+      expect(nextBounds.y + nextBounds.height).toBeLessThanOrEqual(
+        viewport.height,
+      )
+
+      await next.click()
+      await expect(content).toHaveText('짧은 노트입니다.')
+      expect(Math.abs((await height()) - largest)).toBeLessThan(2)
+
+      await drag(viewport.height - 1)
+      expect(await height()).toBeLessThan(before.height)
+      await expect(content).toBeVisible()
+    })
   })
 }

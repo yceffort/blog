@@ -1,6 +1,7 @@
 'use client'
 
-import {useCallback, useEffect, useMemo, useState} from 'react'
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import type {PointerEvent} from 'react'
 
 import {useBroadcastChannel} from '@/hooks/useBroadcastChannel'
 import {useTimer} from '@/hooks/useTimer'
@@ -9,6 +10,10 @@ import {getSlideGroups} from '@/lib/slideNavigation'
 import {Marp} from './Marp'
 import {PresenterNotes} from './PresenterNotes'
 import * as styles from './PresenterView.styles'
+
+// Resizing the notes always leaves this much room for them and the slide previews.
+const MIN_NOTES_HEIGHT = 120
+const MIN_SLIDES_HEIGHT = 96
 
 interface PresenterViewProps {
   dataHtml: string
@@ -61,6 +66,11 @@ export function PresenterView({
   const activePosition = slideIndices.indexOf(activeIndex)
   const nextIndex = slideIndices[activePosition + 1]
   const {elapsedTime, isRunning, toggle, reset} = useTimer()
+  const slidesRef = useRef<HTMLDivElement>(null)
+  const notesResize = useRef<{y: number; height: number; max: number} | null>(
+    null,
+  )
+  const [notesHeight, setNotesHeight] = useState<number>()
 
   const {sendSlideChange, requestSync} = useBroadcastChannel(channelName, {
     onSlideChange: (index, includeHidden) => {
@@ -130,6 +140,33 @@ export function PresenterView({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [goToPrev, goToNext, slideIndices, showHiddenSlides, sendSlideChange])
 
+  const startNotesResize = (event: PointerEvent<HTMLHRElement>) => {
+    if (event.button !== 0) return
+    event.preventDefault()
+    event.currentTarget.setPointerCapture(event.pointerId)
+    const height =
+      event.currentTarget.nextElementSibling!.getBoundingClientRect().height
+    const slides = slidesRef.current!.getBoundingClientRect().height
+    notesResize.current = {
+      y: event.clientY,
+      height,
+      max: Math.max(height, height + slides - MIN_SLIDES_HEIGHT),
+    }
+  }
+
+  const moveNotesResize = (event: PointerEvent<HTMLHRElement>) => {
+    const start = notesResize.current
+    if (!start) return
+    const height = start.height + start.y - event.clientY
+    setNotesHeight(
+      Math.round(Math.min(start.max, Math.max(MIN_NOTES_HEIGHT, height))),
+    )
+  }
+
+  const endNotesResize = () => {
+    notesResize.current = null
+  }
+
   const marpRenderData = useMemo(() => ({html, css, fonts}), [html, css, fonts])
   const currentNote = notes[activeIndex] || ''
   const hasNextSlide = nextIndex !== undefined
@@ -157,7 +194,7 @@ export function PresenterView({
         </button>
       </div>
 
-      <div className={styles.slidesContainer}>
+      <div ref={slidesRef} className={styles.slidesContainer}>
         <div className={styles.slideWrapper}>
           <div className={styles.slideLabel}>
             현재 슬라이드
@@ -192,7 +229,20 @@ export function PresenterView({
         </div>
       </div>
 
-      <PresenterNotes key={activeIndex} note={currentNote} />
+      <hr
+        className={styles.notesResizer}
+        aria-label="발표자 노트 높이 조절"
+        onPointerDown={startNotesResize}
+        onPointerMove={moveNotesResize}
+        onPointerUp={endNotesResize}
+        onLostPointerCapture={endNotesResize}
+      />
+
+      <PresenterNotes
+        key={activeIndex}
+        note={currentNote}
+        height={notesHeight}
+      />
 
       <div className={styles.controlBar}>
         <div className={styles.navigation}>
