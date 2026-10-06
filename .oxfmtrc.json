@@ -23,5 +23,11 @@
     "**/*.css",
     "**/*.scss",
     "**/*.html"
+  ],
+  "overrides": [
+    {
+      "files": ["apps/blog/posts/2026/10/how-bundlers-remember-imports*.md"],
+      "options": {"embeddedLanguageFormatting": "off"}
+    }
   ]
 }
