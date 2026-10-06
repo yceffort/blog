@@ -101,7 +101,7 @@ globalThis.__unusedData.push(feature_000000({value: 0}))
 4. 스크립트의 `load` 이벤트가 발생하면 준비 시각과 브라우저 지표를 기록했다. 로딩 중 보낸 입력의 처리를 확인하고 150ms를 기다린 뒤, 버튼을 세 번 더 눌렀다.
 5. 호출 수와 수신 바이트 수를 검사하고, 입력 시각과 긴 작업, 리소스 타이밍을 원본 데이터에 저장했다.
 
-페이지에서 스크립트를 넣는 코드의 핵심은 다음과 같다. `state`는 페이지의 측정 기록 객체다. 아래는 상태 표시와 오류 처리를 생략한 부분이며, 전체 코드는 [실험 서버 소스](https://github.com/yceffort/blog/blob/main/experiments/javascript-size/scripts/server.mjs)에 있다.
+페이지에서 스크립트를 넣는 코드의 핵심은 다음과 같다. `state`는 페이지의 측정 기록 객체다. 아래는 상태 표시와 오류 처리를 생략한 부분이며, 전체 코드는 [실험 서버 소스](https://github.com/yceffort/blog-experiments/blob/main/javascript-size/scripts/server.mjs)에 있다.
 
 ```js
 window.startBenchmark = (url) => {
@@ -500,18 +500,18 @@ esbuild로 브라우저용 번들을 만들면 `util`, `os`, `events` 같은 Nod
 
 ## 실험 코드와 원본 데이터
 
-[실험 코드와 원본 데이터](https://github.com/yceffort/blog/tree/main/experiments/javascript-size)는 이 블로그의 GitHub 저장소에서 확인할 수 있다. 생성기, 서버, 측정 스크립트, 실행 환경, 본 측정 855회, 반복 입력 100회, 재방문 60회와 준비 방문 기록, 별도 트레이스와 커버리지를 함께 관리한다. 예비 측정은 본 통계와 분리돼 있다. 수치만 확인하려면 [집계 CSV](https://github.com/yceffort/blog/blob/main/experiments/javascript-size/analysis/summary.csv)를, 이 글에 싣지 않은 조건까지 보려면 [전체 집계표](https://github.com/yceffort/blog/blob/main/experiments/javascript-size/analysis/tables.md)를 보면 된다.
+[실험 코드와 원본 데이터](https://github.com/yceffort/blog-experiments/tree/main/javascript-size)는 별도 GitHub 저장소에서 확인할 수 있다. 생성기, 서버, 측정 스크립트, 실행 환경, 본 측정 855회, 반복 입력 100회, 재방문 60회와 준비 방문 기록, 별도 트레이스와 커버리지를 함께 관리한다. 예비 측정은 본 통계와 분리돼 있다. 수치만 확인하려면 [집계 CSV](https://github.com/yceffort/blog-experiments/blob/main/javascript-size/analysis/summary.csv)를, 이 글에 싣지 않은 조건까지 보려면 [전체 집계표](https://github.com/yceffort/blog-experiments/blob/main/javascript-size/analysis/tables.md)를 보면 된다.
 
 저장소를 복제하거나 GitHub Codespaces로 연 뒤, 저장소 루트에서 다음과 같이 실행할 수 있다. 원래 환경을 따라가려면 Codespaces 안에서 실행한다. 이미 저장된 결과를 덮어쓰지 않도록 새 실행 이름을 사용한다.
 
 ```sh
-cd experiments/javascript-size
+cd javascript-size
 npm ci --ignore-scripts --no-audit --no-fund
 npx playwright install --with-deps chromium
 node scripts/generate.mjs
 node scripts/measure.mjs --run=my-run --repetitions=15
 ```
 
-실제 라이브러리를 잰 [두 번째 실험](https://github.com/yceffort/blog/tree/main/experiments/library-side-effects)은 따로 두었다. 엔트리와 번들 생성, 측정과 커버리지 수집이 들어 있고, 조건별 바이트와 해시는 `fixtures/manifest.json`에, 270회 실행은 `results/main/raw.jsonl`에 있다.
+실제 라이브러리를 잰 [두 번째 실험](https://github.com/yceffort/blog-experiments/tree/main/library-side-effects)은 따로 두었다. 엔트리와 번들 생성, 측정과 커버리지 수집이 들어 있고, 조건별 바이트와 해시는 `fixtures/manifest.json`에, 270회 실행은 `results/main/raw.jsonl`에 있다.
 
-캐시와 반복 입력 실험, 집계 명령은 [실험 README](https://github.com/yceffort/blog/blob/main/experiments/javascript-size/README.md)에 있다. 극단값을 임의로 제거하지 않았고, 실행별 값과 입력 시각을 원본에 남겼다. 중앙값의 95% bootstrap 구간도 집계에 함께 들어 있다. 반복 입력 실험에서 로딩 중 표본이 없었던 조건은 0ms로 채우지 않고 `null`로 남겼다. 브라우저 버전과 실행 스크립트의 SHA-256도 함께 기록했다.
+캐시와 반복 입력 실험, 집계 명령은 [실험 README](https://github.com/yceffort/blog-experiments/blob/main/javascript-size/README.md)에 있다. 극단값을 임의로 제거하지 않았고, 실행별 값과 입력 시각을 원본에 남겼다. 중앙값의 95% bootstrap 구간도 집계에 함께 들어 있다. 반복 입력 실험에서 로딩 중 표본이 없었던 조건은 0ms로 채우지 않고 `null`로 남겼다. 브라우저 버전과 실행 스크립트의 SHA-256도 함께 기록했다.

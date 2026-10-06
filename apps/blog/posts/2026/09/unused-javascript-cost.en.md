@@ -101,7 +101,7 @@ A single measurement ran in this order.
 4. When the script's `load` event fires, record the ready timestamp and the browser metrics. Confirm that the input sent during loading was handled, wait 150ms, and press the button three more times.
 5. Check the call count and the number of bytes received, and store input timestamps, long tasks, and resource timing in the raw data.
 
-The core of the page-side code that injects the script looks like this. `state` is the page's measurement record. Status display and error handling are omitted below; the full code is in the [experiment server source](https://github.com/yceffort/blog/blob/main/experiments/javascript-size/scripts/server.mjs).
+The core of the page-side code that injects the script looks like this. `state` is the page's measurement record. Status display and error handling are omitted below; the full code is in the [experiment server source](https://github.com/yceffort/blog-experiments/blob/main/javascript-size/scripts/server.mjs).
 
 ```js
 window.startBenchmark = (url) => {
@@ -500,18 +500,18 @@ Input delay is measured against a dispatch time from outside the browser, so hos
 
 ## Experiment code and raw data
 
-The [experiment code and raw data](https://github.com/yceffort/blog/tree/main/experiments/javascript-size) are in this blog's GitHub repository. It holds the generator, the server, the measurement scripts, the runtime environment, the 855 main runs, the 100 repeated-input runs, the 60 repeat visits along with priming records, and the separate trace and coverage runs. Pilot measurements are kept apart from the main statistics. For the numbers alone, see the [summary CSV](https://github.com/yceffort/blog/blob/main/experiments/javascript-size/analysis/summary.csv); for conditions not included in this post, see the [full tables](https://github.com/yceffort/blog/blob/main/experiments/javascript-size/analysis/tables.md).
+The [experiment code and raw data](https://github.com/yceffort/blog-experiments/tree/main/javascript-size) are in a separate GitHub repository. It holds the generator, the server, the measurement scripts, the runtime environment, the 855 main runs, the 100 repeated-input runs, the 60 repeat visits along with priming records, and the separate trace and coverage runs. Pilot measurements are kept apart from the main statistics. For the numbers alone, see the [summary CSV](https://github.com/yceffort/blog-experiments/blob/main/javascript-size/analysis/summary.csv); for conditions not included in this post, see the [full tables](https://github.com/yceffort/blog-experiments/blob/main/javascript-size/analysis/tables.md).
 
 After cloning the repository or opening it in GitHub Codespaces, you can run it from the repository root like this. To follow the original environment, run it inside Codespaces. Use a new run name so you do not overwrite the stored results.
 
 ```sh
-cd experiments/javascript-size
+cd javascript-size
 npm ci --ignore-scripts --no-audit --no-fund
 npx playwright install --with-deps chromium
 node scripts/generate.mjs
 node scripts/measure.mjs --run=my-run --repetitions=15
 ```
 
-The [second experiment](https://github.com/yceffort/blog/tree/main/experiments/library-side-effects) that measured real libraries is kept separately. It contains entry points and bundle generation, measurement and coverage collection, with per-condition bytes and hashes in `fixtures/manifest.json` and the 270 runs in `results/main/raw.jsonl`.
+The [second experiment](https://github.com/yceffort/blog-experiments/tree/main/library-side-effects) that measured real libraries is kept separately. It contains entry points and bundle generation, measurement and coverage collection, with per-condition bytes and hashes in `fixtures/manifest.json` and the 270 runs in `results/main/raw.jsonl`.
 
-The cache and repeated-input experiments, along with the aggregation commands, are documented in the [experiment README](https://github.com/yceffort/blog/blob/main/experiments/javascript-size/README.md). No outliers were removed by hand, and per-run values and input timestamps were kept in the raw data. The 95% bootstrap intervals around the medians are included in the aggregates as well. In the repeated-input experiment, conditions with no sample during loading were left as `null` rather than filled with 0ms. Browser versions and the SHA-256 of the running scripts were recorded too.
+The cache and repeated-input experiments, along with the aggregation commands, are documented in the [experiment README](https://github.com/yceffort/blog-experiments/blob/main/javascript-size/README.md). No outliers were removed by hand, and per-run values and input timestamps were kept in the raw data. The 95% bootstrap intervals around the medians are included in the aggregates as well. In the repeated-input experiment, conditions with no sample during loading were left as `null` rather than filled with 0ms. Browser versions and the SHA-256 of the running scripts were recorded too.

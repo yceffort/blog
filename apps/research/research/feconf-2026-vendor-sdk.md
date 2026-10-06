@@ -1379,7 +1379,7 @@ _모바일 에뮬레이션 / CPU 4배 감속 / 콜드 로드 / 개선 전 4회�
 
 CPU 감속은 특정 휴대전화에 맞춰 보정한 값이 아니며 SDK의 절감 ms로 환산하지 않았습니다
 
-[실험 설명](https://yceffort.kr/2026/09/unused-javascript-cost) / [집계 데이터](https://github.com/yceffort/blog/blob/main/experiments/javascript-size/analysis/summary.json)
+[실험 설명](https://yceffort.kr/2026/09/unused-javascript-cost) / [집계 데이터](https://github.com/yceffort/blog-experiments/blob/main/javascript-size/analysis/summary.json)
 
 <!--
 질의응답용 / 본 발표 30분에 포함하지 않음
