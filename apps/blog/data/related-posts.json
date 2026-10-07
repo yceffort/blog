@@ -1,5 +1,39 @@
 {
   "ko": {
+    "2026/10/number-flow-compositor-performance": [
+      {
+        "slug": "2026/08/framer-motion-banner-frame-drop",
+        "score": 0.55
+      },
+      {
+        "slug": "2020/07/critical-rendering-path",
+        "score": 0.48
+      },
+      {
+        "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
+        "score": 0.32
+      },
+      {
+        "slug": "2021/02/css-and-webpage-performance",
+        "score": 0.25
+      },
+      {
+        "slug": "2026/03/react-view-transition",
+        "score": 0.25
+      },
+      {
+        "slug": "2022/01/javascript-self-profiling",
+        "score": 0.22
+      },
+      {
+        "slug": "2021/03/improve-css-performance",
+        "score": 0.2
+      },
+      {
+        "slug": "2026/09/unused-javascript-cost",
+        "score": 0.2
+      }
+    ],
     "2026/09/who-learns-to-judge-beta-reader": [
       {
         "slug": "2026/06/learning-what-ai-cant-do",
@@ -162,12 +196,12 @@
         "score": 0.3
       },
       {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
+        "slug": "2026/10/number-flow-compositor-performance",
         "score": 0.29
       },
       {
-        "slug": "2021/08/core-web-vital",
-        "score": 0.28
+        "slug": "2026/08/rebuilding-a-vendor-sdk",
+        "score": 0.29
       }
     ],
     "2026/09/porting-markdownlint-cli2-to-rust": [
@@ -214,6 +248,10 @@
         "score": 0.15
       },
       {
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.14
+      },
+      {
         "slug": "2021/03/improve-css-performance",
         "score": 0.14
       },
@@ -231,10 +269,6 @@
       },
       {
         "slug": "2026/01/intersection-observer-singleton-weakmap",
-        "score": 0.12
-      },
-      {
-        "slug": "2026/08/service-worker-caching-1",
         "score": 0.12
       }
     ],
@@ -366,12 +400,12 @@
         "score": 0.2
       },
       {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
-        "score": 0.2
-      },
-      {
         "slug": "2022/03/rust-wasm-tutorial-3",
         "score": 0.18
+      },
+      {
+        "slug": "2020/07/critical-rendering-path",
+        "score": 0.17
       }
     ],
     "2026/09/dhh-rails-world-2026-keynote": [
@@ -1022,6 +1056,10 @@
     ],
     "2026/08/framer-motion-banner-frame-drop": [
       {
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.63
+      },
+      {
         "slug": "2020/07/critical-rendering-path",
         "score": 0.51
       },
@@ -1036,10 +1074,6 @@
       {
         "slug": "2022/04/chrome-memory-profiler",
         "score": 0.24
-      },
-      {
-        "slug": "2020/12/measuring-performance-of-javascript-functions",
-        "score": 0.23
       },
       {
         "slug": "2026/09/unused-javascript-cost",
@@ -1566,6 +1600,10 @@
     ],
     "2026/03/react-view-transition": [
       {
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.27
+      },
+      {
         "slug": "2026/08/framer-motion-banner-frame-drop",
         "score": 0.24
       },
@@ -1592,10 +1630,6 @@
       {
         "slug": "2020/07/change-detection-in-angular-react",
         "score": 0.11
-      },
-      {
-        "slug": "2026/09/nextjs-cache-components-activity",
-        "score": 0.1
       }
     ],
     "2026/03/react-server-functions-deep-dive": [
@@ -2458,6 +2492,10 @@
         "score": 0.79
       },
       {
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.75
+      },
+      {
         "slug": "2020/07/critical-rendering-path",
         "score": 0.75
       },
@@ -2476,10 +2514,6 @@
       {
         "slug": "2020/07/instant-loading-with-PRPL-pattern",
         "score": 0.69
-      },
-      {
-        "slug": "2022/01/javascript-self-profiling",
-        "score": 0.67
       }
     ],
     "2025/06/web-performance-analysis-3": [
@@ -2946,16 +2980,16 @@
         "score": 0.77
       },
       {
-        "slug": "2026/05/pr-diff-vs-bundle",
-        "score": 0.77
-      },
-      {
         "slug": "2020/07/critical-rendering-path",
         "score": 0.76
       },
       {
         "slug": "2021/09/critical-request-and-prioritise-requests",
         "score": 0.75
+      },
+      {
+        "slug": "2026/08/framer-motion-banner-frame-drop",
+        "score": 0.74
       }
     ],
     "2025/03/research": [
@@ -4382,8 +4416,8 @@
         "score": 0.33
       },
       {
-        "slug": "2020/10/javascript-priorities",
-        "score": 0.26
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.29
       }
     ],
     "2022/01/how-react-server-components-work": [
@@ -4990,11 +5024,11 @@
         "score": 0.14
       },
       {
-        "slug": "2022/04/chrome-memory-profiler",
-        "score": 0.11
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.13
       },
       {
-        "slug": "2020/09/javascript-memory-leaks-by-window-detached",
+        "slug": "2022/04/chrome-memory-profiler",
         "score": 0.11
       }
     ],
@@ -5764,10 +5798,6 @@
         "score": 0.49
       },
       {
-        "slug": "2022/06/preload-scanner",
-        "score": 0.48
-      },
-      {
         "slug": "2021/03/improve-css-performance",
         "score": 0.37
       },
@@ -5778,6 +5808,10 @@
       {
         "slug": "2020/07/instant-loading-with-PRPL-pattern",
         "score": 0.36
+      },
+      {
+        "slug": "2019/08/12/how-browser-work",
+        "score": 0.3
       }
     ],
     "2021/06/typescript-type-operation-generic": [
@@ -6610,8 +6644,8 @@
         "score": 0.77
       },
       {
-        "slug": "2022/06/preload-scanner",
-        "score": 0.74
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.75
       },
       {
         "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
@@ -6644,6 +6678,10 @@
         "score": 0.17
       },
       {
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.16
+      },
+      {
         "slug": "2026/02/infinite-scroll-dark-side",
         "score": 0.14
       },
@@ -6658,10 +6696,6 @@
       {
         "slug": "2021/03/improve-css-performance",
         "score": 0.13
-      },
-      {
-        "slug": "2026/08/number-flow-fork-for-old-browsers",
-        "score": 0.12
       }
     ],
     "2021/03/apple-health-shortcut": [
@@ -6716,10 +6750,6 @@
         "score": 0.38
       },
       {
-        "slug": "2026/09/blog-performance-after-migrations",
-        "score": 0.34
-      },
-      {
         "slug": "2020/07/critical-rendering-path",
         "score": 0.33
       },
@@ -6730,6 +6760,10 @@
       {
         "slug": "2026/05/tanstack-npm-supply-chain-attack",
         "score": 0.32
+      },
+      {
+        "slug": "2021/01/brotli-better-html-compression",
+        "score": 0.31
       }
     ],
     "2021/02/self-made-javascript-polyfill": [
@@ -6980,10 +7014,6 @@
         "score": 0.82
       },
       {
-        "slug": "2022/06/preload-scanner",
-        "score": 0.79
-      },
-      {
         "slug": "2026/09/tailwind-to-stylex-migration",
         "score": 0.72
       },
@@ -6992,8 +7022,8 @@
         "score": 0.67
       },
       {
-        "slug": "2022/06/optimize-LCP",
-        "score": 0.65
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.64
       },
       {
         "slug": "2020/07/instant-loading-with-PRPL-pattern",
@@ -7002,6 +7032,10 @@
       {
         "slug": "2026/09/blog-performance-after-migrations",
         "score": 0.58
+      },
+      {
+        "slug": "2020/10/javascript-priorities",
+        "score": 0.56
       }
     ],
     "2021/01/overflow-auto-scroll": [
@@ -7022,6 +7056,10 @@
         "score": 0.11
       },
       {
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.1
+      },
+      {
         "slug": "2021/03/improve-css-performance",
         "score": 0.1
       },
@@ -7031,10 +7069,6 @@
       },
       {
         "slug": "2026/08/number-flow-fork-for-old-browsers",
-        "score": 0.08
-      },
-      {
-        "slug": "2022/04/chrome-memory-profiler",
         "score": 0.08
       }
     ],
@@ -7332,16 +7366,16 @@
         "score": 0.32
       },
       {
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.32
+      },
+      {
         "slug": "2020/07/critical-rendering-path",
         "score": 0.32
       },
       {
         "slug": "2020/07/the-cost-of-javascript-2019",
         "score": 0.3
-      },
-      {
-        "slug": "2021/08/benchmarking-web-javascript-memory-usage",
-        "score": 0.29
       }
     ],
     "2020/12/javascrpt-async-await-in-map-and-reduce": [
@@ -8084,11 +8118,11 @@
         "score": 0.12
       },
       {
-        "slug": "2026/09/one-web-on-multiple-webviews",
+        "slug": "2026/10/number-flow-compositor-performance",
         "score": 0.11
       },
       {
-        "slug": "2021/06/ways-to-faster-web-fonts",
+        "slug": "2026/09/one-web-on-multiple-webviews",
         "score": 0.11
       }
     ],
@@ -8458,12 +8492,12 @@
         "score": 0.6
       },
       {
-        "slug": "2021/08/uncaught-async-error",
-        "score": 0.57
-      },
-      {
         "slug": "2026/08/og-scraping-server-1",
         "score": 0.53
+      },
+      {
+        "slug": "2021/06/error-handling-in-nodejs",
+        "score": 0.48
       }
     ],
     "2020/10/higher-order-function": [
@@ -9590,10 +9624,6 @@
     ],
     "2020/07/critical-rendering-path": [
       {
-        "slug": "2021/02/css-and-webpage-performance",
-        "score": 0.86
-      },
-      {
         "slug": "2022/06/preload-scanner",
         "score": 0.82
       },
@@ -9620,6 +9650,10 @@
       {
         "slug": "2022/06/optimize-LCP",
         "score": 0.69
+      },
+      {
+        "slug": "2026/08/framer-motion-banner-frame-drop",
+        "score": 0.62
       }
     ],
     "2020/07/change-detection-in-angular-react": [
@@ -9686,8 +9720,8 @@
         "score": 0.68
       },
       {
-        "slug": "2026/09/tracing-third-party-javascript-without-sourcemaps",
-        "score": 0.67
+        "slug": "2021/02/javascript-performance-bundle-size",
+        "score": 0.66
       }
     ],
     "2020/06/javascript-sort": [
@@ -10418,10 +10452,6 @@
         "score": 0.18
       },
       {
-        "slug": "2026/05/pr-diff-vs-bundle",
-        "score": 0.18
-      },
-      {
         "slug": "2021/08/core-web-vital",
         "score": 0.18
       },
@@ -10435,6 +10465,10 @@
       },
       {
         "slug": "2026/09/tracing-third-party-javascript-without-sourcemaps",
+        "score": 0.16
+      },
+      {
+        "slug": "2026/09/unused-javascript-cost",
         "score": 0.16
       }
     ],
@@ -11004,15 +11038,15 @@
         "score": 0.21
       },
       {
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.19
+      },
+      {
         "slug": "2022/06/optimize-LCP",
         "score": 0.17
       },
       {
         "slug": "2022/04/chrome-memory-profiler",
-        "score": 0.17
-      },
-      {
-        "slug": "2020/12/measuring-performance-of-javascript-functions",
         "score": 0.17
       }
     ],
@@ -11234,7 +11268,7 @@
         "score": 0.27
       },
       {
-        "slug": "2022/06/preload-scanner",
+        "slug": "2020/09/referer-and-referrer-policy",
         "score": 0.13
       },
       {
@@ -11358,6 +11392,40 @@
     ]
   },
   "en": {
+    "2026/10/number-flow-compositor-performance": [
+      {
+        "slug": "2026/08/framer-motion-banner-frame-drop",
+        "score": 0.54
+      },
+      {
+        "slug": "2026/09/unused-javascript-cost",
+        "score": 0.19
+      },
+      {
+        "slug": "2026/03/react-view-transition",
+        "score": 0.19
+      },
+      {
+        "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
+        "score": 0.15
+      },
+      {
+        "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
+        "score": 0.13
+      },
+      {
+        "slug": "2026/08/rebuilding-a-vendor-sdk",
+        "score": 0.13
+      },
+      {
+        "slug": "2026/09/one-web-on-multiple-webviews",
+        "score": 0.11
+      },
+      {
+        "slug": "2026/01/intersection-observer-singleton-weakmap",
+        "score": 0.11
+      }
+    ],
     "2026/09/unused-javascript-cost": [
       {
         "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
@@ -11406,10 +11474,6 @@
         "score": 0.68
       },
       {
-        "slug": "2026/05/use-client-deep-dive",
-        "score": 0.62
-      },
-      {
         "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
         "score": 0.28
       },
@@ -11424,6 +11488,10 @@
       {
         "slug": "2025/06/web-performance-analysis-3",
         "score": 0.24
+      },
+      {
+        "slug": "2026/08/framer-motion-banner-frame-drop",
+        "score": 0.22
       }
     ],
     "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps": [
@@ -11462,10 +11530,6 @@
     ],
     "2026/09/porting-markdownlint-cli2-to-rust": [
       {
-        "slug": "2021/05/ast-for-javascript",
-        "score": 0.32
-      },
-      {
         "slug": "2026/05/good-package-for-long-term-users",
         "score": 0.23
       },
@@ -11492,9 +11556,17 @@
       {
         "slug": "2026/08/number-flow-fork-for-old-browsers",
         "score": 0.1
+      },
+      {
+        "slug": "2026/03/why-still-nextjs",
+        "score": 0.09
       }
     ],
     "2026/09/one-web-on-multiple-webviews": [
+      {
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.13
+      },
       {
         "slug": "2026/09/unused-javascript-cost",
         "score": 0.11
@@ -11521,10 +11593,6 @@
       },
       {
         "slug": "2026/08/service-worker-caching-1",
-        "score": 0.08
-      },
-      {
-        "slug": "2026/02/infinite-scroll-dark-side",
         "score": 0.08
       }
     ],
@@ -12142,6 +12210,10 @@
     ],
     "2026/08/framer-motion-banner-frame-drop": [
       {
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.61
+      },
+      {
         "slug": "2026/09/unused-javascript-cost",
         "score": 0.29
       },
@@ -12167,10 +12239,6 @@
       },
       {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
-        "score": 0.13
-      },
-      {
-        "slug": "2026/01/intersection-observer-singleton-weakmap",
         "score": 0.13
       }
     ],
@@ -12656,6 +12724,10 @@
         "score": 0.28
       },
       {
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.27
+      },
+      {
         "slug": "2026/08/framer-motion-banner-frame-drop",
         "score": 0.25
       },
@@ -12677,10 +12749,6 @@
       },
       {
         "slug": "2026/05/use-cache-deep-dive",
-        "score": 0.09
-      },
-      {
-        "slug": "2026/03/react-server-functions-deep-dive",
         "score": 0.09
       }
     ],
@@ -12812,12 +12880,12 @@
         "score": 0.3
       },
       {
-        "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
-        "score": 0.25
-      },
-      {
         "slug": "2026/08/k8s-for-frontend-5",
         "score": 0.24
+      },
+      {
+        "slug": "2026/09/tracing-third-party-javascript-without-sourcemaps",
+        "score": 0.22
       }
     ],
     "2026/02/react-compiler-deep-dive": [
@@ -13084,12 +13152,12 @@
         "score": 0.11
       },
       {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
-        "score": 0.11
-      },
-      {
         "slug": "2026/08/framer-motion-banner-frame-drop",
         "score": 0.1
+      },
+      {
+        "slug": "2026/01/handling-large-json-responses",
+        "score": 0.09
       }
     ],
     "2026/01/handling-large-json-responses": [
@@ -13106,10 +13174,6 @@
         "score": 0.15
       },
       {
-        "slug": "2026/05/pr-diff-vs-bundle",
-        "score": 0.15
-      },
-      {
         "slug": "2021/05/ast-for-javascript",
         "score": 0.14
       },
@@ -13123,6 +13187,10 @@
       },
       {
         "slug": "2026/08/k8s-for-frontend-5",
+        "score": 0.12
+      },
+      {
+        "slug": "2025/05/web-performance-analysis-2",
         "score": 0.12
       }
     ],
@@ -13162,6 +13230,10 @@
     ],
     "2025/12/webgpu-all-browsers": [
       {
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.12
+      },
+      {
         "slug": "2026/09/nextjs-cache-components-activity",
         "score": 0.11
       },
@@ -13188,10 +13260,6 @@
       {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.08
-      },
-      {
-        "slug": "2026/01/intersection-observer-singleton-weakmap",
-        "score": 0.07
       }
     ],
     "2025/12/use-effect-event": [
@@ -13356,12 +13424,12 @@
         "score": 0.57
       },
       {
-        "slug": "2026/01/intersection-observer-singleton-weakmap",
-        "score": 0.4
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.47
       },
       {
-        "slug": "2026/02/infinite-scroll-dark-side",
-        "score": 0.36
+        "slug": "2026/01/intersection-observer-singleton-weakmap",
+        "score": 0.4
       }
     ],
     "2025/06/web-performance-analysis-3": [
@@ -13375,10 +13443,6 @@
       },
       {
         "slug": "2026/05/use-cache-deep-dive",
-        "score": 0.45
-      },
-      {
-        "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
         "score": 0.45
       },
       {
@@ -13396,6 +13460,10 @@
       {
         "slug": "2026/05/use-client-deep-dive",
         "score": 0.32
+      },
+      {
+        "slug": "2026/08/service-worker-caching-2",
+        "score": 0.31
       }
     ],
     "2025/05/what-to-do-as-frontend-developer-in-ai-era": [
@@ -13458,11 +13526,11 @@
         "score": 0.62
       },
       {
-        "slug": "2026/03/is-nextjs-fast-enough",
-        "score": 0.46
+        "slug": "2026/08/service-worker-caching-2",
+        "score": 0.4
       },
       {
-        "slug": "2026/08/service-worker-caching-2",
+        "slug": "2026/08/framer-motion-banner-frame-drop",
         "score": 0.4
       }
     ],

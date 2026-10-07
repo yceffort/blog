@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>number-flow 애니메이션 원리</title>
+  <style>
+    :root { color-scheme: light dark; --bg:#fbfaf7; --panel:#fff; --ink:#252338; --muted:#706d7d; --line:#e5e1ec; --violet:#6550d8; --teal:#137b6b; --amber:#b76216; --soft:#f0edf9; }
+    @media (prefers-color-scheme:dark) { :root { --bg:#181820; --panel:#23232f; --ink:#f0eef8; --muted:#b5b0c5; --line:#3d394d; --violet:#ad9aff; --teal:#66d9bf; --amber:#ffbd7a; --soft:#302b45; } }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:22px; background:var(--bg); color:var(--ink); font:14px/1.65 system-ui,-apple-system,'Apple SD Gothic Neo',sans-serif; }
+    main { max-width:820px; margin:auto; }
+    [hidden] { display:none !important; }
+    h1 { margin:3px 0 8px; font-size:clamp(20px,4vw,26px); line-height:1.35; letter-spacing:-.04em; }
+    p { margin:0; }
+    .eyebrow { font-size:11px; font-weight:800; letter-spacing:.1em; color:var(--violet); }
+    .intro,.note { color:var(--muted); font-size:13px; }
+    .intro { margin-bottom:18px; }
+    .note { margin-top:12px; font-size:12px; }
+    .cards { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .card { min-width:0; padding:16px; border:1px solid var(--line); background:var(--panel); border-radius:16px; }
+    .card h2 { font-size:13px; font-weight:650; margin:0 0 8px; }
+    .violet { color:var(--violet); }
+    .amber { color:var(--amber); }
+    .teal { color:var(--teal); }
+    .digit { position:relative; height:88px; width:76px; overflow:hidden; margin:8px auto; mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent); }
+    .numeral { position:absolute; inset:0; display:grid; place-items:center; font-size:72px; font-weight:650; line-height:1; font-variant-numeric:tabular-nums; }
+    .value { text-align:center; font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+    .equation { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:10px; padding:16px 8px; margin-top:12px; background:var(--soft); border-radius:12px; font-variant-numeric:tabular-nums; }
+    .term { text-align:center; }
+    .term strong { display:block; font-size:23px; line-height:1.3; }
+    .term small { font-size:11px; color:var(--muted); }
+    .operator { color:var(--muted); }
+    .number-map { display:grid; grid-template-columns:repeat(10,1fr); gap:4px; margin:14px 0 8px; }
+    .number-map span { text-align:center; padding:8px 0; border-radius:7px; color:var(--muted); border:1px solid var(--line); font-variant-numeric:tabular-nums; }
+    .number-map .visible { background:var(--violet); border-color:var(--violet); color:var(--bg); font-weight:750; }
+    .map-label { color:var(--muted); font-size:12px; text-align:center; }
+    .delta-stage { display:grid; grid-template-columns:130px 1fr; align-items:center; gap:16px; }
+    .delta-copy { border-left:2px solid var(--line); padding-left:18px; }
+    .delta-copy strong { display:block; margin-bottom:5px; font-size:15px; }
+    .delta-copy p { font-size:13px; color:var(--muted); }
+    .chart { margin-top:14px; padding:12px; border:1px solid var(--line); border-radius:12px; background:var(--panel); }
+    .chart svg { width:100%; height:auto; display:block; overflow:visible; }
+    .chart text { font:11px system-ui,sans-serif; fill:var(--muted); }
+    .legend { display:flex; gap:15px; flex-wrap:wrap; font-size:11px; margin-bottom:3px; }
+    .legend span::before { content:''; display:inline-block; width:16px; border-top:3px solid currentColor; vertical-align:middle; margin-right:5px; }
+    .legend .amber::before { border-top-style:dashed; }
+    .controls { margin-top:18px; padding-top:15px; border-top:1px solid var(--line); }
+    .buttons { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:12px; }
+    button { border:1px solid var(--line); border-radius:9px; padding:8px 14px; color:var(--ink); background:var(--panel); font:inherit; font-size:13px; cursor:pointer; min-height:38px; }
+    button.primary { color:var(--bg); background:var(--violet); border-color:var(--violet); font-weight:650; }
+    button:hover { filter:brightness(.94); }
+    button:focus-visible,input:focus-visible { outline:3px solid var(--teal); outline-offset:3px; }
+    .scrub-label { display:flex; justify-content:space-between; gap:10px; font-size:12px; margin-bottom:4px; color:var(--muted); }
+    input[type=range] { width:100%; margin:0; accent-color:var(--violet); min-height:28px; cursor:pointer; }
+    output { font-variant-numeric:tabular-nums; }
+    .mask-stage { height:106px; display:flex; align-items:center; justify-content:center; overflow:hidden; background:repeating-linear-gradient(90deg,transparent 0,transparent 19px,var(--line) 20px); border-radius:8px; }
+    .mask-box { width:60%; height:65px; transform-origin:center; display:flex; align-items:center; justify-content:center; background:var(--violet); color:var(--bg); }
+    .mask-inner { flex-shrink:0; width:100%; transform-origin:center; text-align:center; font-size:38px; letter-spacing:-.05em; font-weight:750; line-height:1; }
+    .gauge { height:6px; background:var(--amber); border-radius:4px; margin:12px auto 6px; }
+    .mask-stat { font-variant-numeric:tabular-nums; text-align:center; font-size:13px; }
+    .scale-info { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0; }
+    .scale-info div { background:var(--soft); padding:10px; border-radius:9px; text-align:center; font-size:12px; }
+    .scale-info strong { font-size:19px; display:block; font-variant-numeric:tabular-nums; }
+    .status { font-size:12px; color:var(--muted); margin:10px 0 0; min-height:20px; }
+    @media (max-width:430px) { body { padding:16px; } .card { padding:12px; } .cards { gap:8px; } .delta-stage { grid-template-columns:88px 1fr; gap:8px; } .delta-copy { padding-left:12px; } .term strong { font-size:19px; } .equation { gap:7px; } .digit { height:72px; width:60px; } .numeral { font-size:58px; } .mask-inner { font-size:29px; } .mask-box { width:65%; } .chart { padding:10px; } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow" id="eyebrow"></p>
+    <h1 id="title"></h1>
+    <p class="intro" id="intro"></p>
+  </header>
+
+  <section id="delta" hidden>
+    <div class="card delta-stage">
+      <div><div class="digit" data-digit="delta" aria-hidden="true"></div><p class="value">현재 보이는 숫자</p></div>
+      <div class="delta-copy"><strong>목표 7은 처음부터 정해 둡니다</strong><p>이동량을 -4에서 0으로 줄이면 숫자는 3에서 7로 움직입니다. 아래 막대를 움직여 보세요.</p></div>
+    </div>
+    <div class="equation" aria-label="목표값과 남은 델타의 합">
+      <div class="term"><strong>7</strong><small>목표값</small></div><span class="operator">+</span>
+      <div class="term violet"><strong id="delta-rest">-4.00</strong><small>남은 델타</small></div><span class="operator">=</span>
+      <div class="term"><strong id="delta-result">3.00</strong><small>스핀 위치</small></div>
+    </div>
+    <div class="number-map" id="number-map" aria-hidden="true"></div>
+    <p class="map-label">색이 채워진 숫자만 지금 마스크 안에 보입니다.</p>
+  </section>
+
+  <section id="interrupt" hidden>
+    <div class="cards">
+      <div class="card"><h2 class="violet">남은 기여를 합산</h2><div class="digit" data-digit="sum" aria-hidden="true"></div><p class="value" id="sum-value"></p></div>
+      <div class="card"><h2 class="amber">현재 위치에서 단순 교체</h2><div class="digit" data-digit="reset" aria-hidden="true"></div><p class="value" id="reset-value"></p></div>
+    </div>
+    <p class="status" id="interrupt-status"></p>
+    <div class="chart">
+      <div class="legend"><span class="violet">남은 기여 합산</span><span class="amber">단순 교체</span></div>
+      <svg viewBox="0 0 600 145" role="img" aria-labelledby="chart-title">
+        <title id="chart-title">600ms에 새 목표 5가 들어오면 두 방식의 이후 경로가 달라진다</title>
+        <path d="M30 20H580 M30 65H580 M30 110H580" fill="none" stroke="var(--line)" />
+        <text x="8" y="24">7</text><text x="8" y="69">5</text><text x="8" y="114">3</text>
+        <path d="M167.5 15V114" stroke="var(--muted)" stroke-dasharray="3 4" />
+        <text x="175" y="24">목표 7 → 5</text>
+        <polyline id="sum-curve" fill="none" stroke="var(--violet)" stroke-width="3" />
+        <polyline id="reset-curve" fill="none" stroke="var(--amber)" stroke-width="2.5" stroke-dasharray="6 4" />
+        <path id="needle" stroke="var(--ink)" stroke-width="1" />
+        <circle id="sum-dot" r="5" fill="var(--violet)" stroke="var(--panel)" stroke-width="2" />
+        <text x="30" y="137">0ms</text><text x="145" y="137">600ms</text><text x="535" y="137">2400ms</text>
+      </svg>
+    </div>
+    <div class="equation" id="interrupt-equation" aria-label="합산 경로의 현재 위치"></div>
+    <p class="map-label">목표값 + 이전 애니메이션의 남은 델타 + 새 델타</p>
+  </section>
+
+  <section id="mask" hidden>
+    <div class="scale-info"><div>바깥 요소의 배율<strong id="outer-scale">1.60</strong></div><div>안쪽 숫자의 역배율<strong id="inner-scale">0.625</strong></div></div>
+    <div class="cards">
+      <div class="card"><h2 class="amber">마스크 보정 없음</h2><div class="mask-stage"><div class="mask-box" id="mask-fixed"><div class="mask-inner">128</div></div></div><div class="gauge" id="gauge-fixed"></div><p class="mask-stat">페이드 <strong id="fade-fixed">38.4</strong>px</p></div>
+      <div class="card"><h2 class="teal">페이드 폭을 배율로 나눔</h2><div class="mask-stage"><div class="mask-box" id="mask-corrected"><div class="mask-inner">128</div></div></div><div class="gauge" id="gauge-corrected"></div><p class="mask-stat">페이드 <strong id="fade-corrected">24.0</strong>px</p></div>
+    </div>
+    <div class="equation"><div class="term"><strong id="fade-formula">24 ÷ 1.60 × 1.60 = 24</strong><small>기준 페이드 폭 ÷ 배율 × 화면 배율</small></div></div>
+    <p class="status">두 예제 모두 숫자에는 역배율을 적용합니다. 다른 것은 가장자리의 흐려지는 폭입니다.</p>
+  </section>
+
+  <div class="controls">
+    <div class="buttons"><button type="button" class="primary" id="play">재생</button><button type="button" id="restart">처음으로</button><button type="button" id="at-interrupt" hidden>새 값이 들어오는 순간</button></div>
+    <label class="scrub-label" for="time"><span>시간을 직접 움직여 보기</span><output id="time-output" for="time">0ms</output></label>
+    <input type="range" id="time" min="0" max="3000" value="0" step="1" aria-label="애니메이션 시간">
+  </div>
+  <p class="note" id="note"></p>
+</main>
+<script>
+  // Educational models, not a benchmark or a recording of the shipped engine.
+  // digitYPercent follows @yceffort/number-flow v0.2.0's compositor.ts.
+  const scenes = {
+    delta: {title:'목표값은 두고, 델타를 줄입니다', eyebrow:'01 / 숫자 스핀', duration:3000, intro:'3 → 7로 움직이는 한 자릿수를 천천히 살펴봅니다.', note:'설명용 모델입니다. 스핀 위치 수식은 0.2.0을 따르며, 진행은 이해를 돕기 위해 선형으로 단순화했습니다. 성능 비교가 아닙니다.'},
+    interrupt: {title:'같은 위치에서 시작해도 경로는 다릅니다', eyebrow:'02 / 진행 중 새 값', duration:2400, intro:'3 → 7로 이동하다 600ms에 목표를 5로 바꿉니다. 시작 위치가 같아도 남은 움직임의 처리에 따라 차이가 납니다.', note:'설명용 모델입니다. 두 경로 모두 1800ms의 ease-out 곡선 1-(1-t)³을 사용합니다. 합산은 0.2.0이 보존하려는 원리이며 실제 라이브러리나 성능 측정 결과를 재생한 것이 아닙니다.'},
+    mask: {title:'숫자의 폭과 페이드 폭은 따로 보정합니다', eyebrow:'03 / 마스크와 폭', duration:3000, intro:'바깥 요소의 배율을 1.6에서 1로 줄입니다. 숫자 모양은 유지하면서 가장자리의 페이드 폭을 비교합니다.', note:'설명용으로 페이드 폭을 24px로 크게 잡았습니다. 실제 number-flow의 마스크는 여러 그래디언트를 겹칩니다. 이 예제는 가로 페이드 하나만 보여줍니다.'},
+  }
+  const requested = new URLSearchParams(location.search).get('scene')
+  const scene = Object.hasOwn(scenes, requested) ? requested : 'delta'
+  const config = scenes[scene]
+  const $ = (id) => document.getElementById(id)
+  document.title = config.title + ' | number-flow'
+  $('title').textContent = config.title
+  $('eyebrow').textContent = config.eyebrow
+  $('intro').textContent = config.intro
+  $('note').textContent = config.note
+  $(scene).hidden = false
+  $('time').max = String(config.duration)
+  $('at-interrupt').hidden = scene !== 'interrupt'
+  const clamp = (a, value, b) => Math.max(a, Math.min(value, b))
+  const mod = (a, n) => ((a % n) + n) % n
+  const digitYPercent = (c, length, n) => {
+    const raw = mod(length + n - mod(c, length), length)
+    const offset = raw - length * Math.floor(raw / (length / 2))
+    return clamp(-1, offset, 1) * 100
+  }
+  const digits = {}
+  document.querySelectorAll('[data-digit]').forEach((el) => {
+    digits[el.dataset.digit] = Array.from({length:10}, (_, n) => {
+      const span = document.createElement('span')
+      span.className = 'numeral'
+      span.textContent = String(n)
+      el.append(span)
+      return span
+    })
+  })
+  const map = Array.from({length:10}, (_, n) => {
+    const el = document.createElement('span')
+    el.textContent = String(n)
+    $('number-map').append(el)
+    return el
+  })
+  function showDigit(key, value) {
+    digits[key].forEach((el, n) => { el.style.transform = `translateY(${digitYPercent(value, 10, n)}%)` })
+  }
+  // Remaining contribution for a cubic ease-out. Before activation and after
+  // completion it contributes zero, matching the active-phase model in the post.
+  function remaining(from, elapsed) {
+    return elapsed < 0 || elapsed >= 1800 ? 0 : from * (1 - elapsed / 1800) ** 3
+  }
+  const interruption = 600
+  const positionAtInterruption = 7 + remaining(-4, interruption)
+  function valuesAt(t) {
+    const old = remaining(-4, t)
+    const base = t < interruption ? 7 : 5
+    const added = remaining(2, t - interruption)
+    const sum = base + old + added
+    const reset = t < interruption ? sum : 5 + remaining(positionAtInterruption - 5, t - interruption)
+    return {base, old, added, sum, reset}
+  }
+  const graphX = (t) => 30 + t / 2400 * 550
+  const graphY = (v) => 110 - (v - 3) / 4 * 90
+  if (scene === 'interrupt') {
+    const points = Array.from({length:241}, (_, n) => { const t = n * 10; return {t, ...valuesAt(t)} })
+    $('sum-curve').setAttribute('points', points.map((p) => `${graphX(p.t)},${graphY(p.sum)}`).join(' '))
+    $('reset-curve').setAttribute('points', points.map((p) => `${graphX(p.t)},${graphY(p.reset)}`).join(' '))
+  }
+  let time = 0
+  let raf = 0
+  let start = 0
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)')
+  function render(t) {
+    time = clamp(0, t, config.duration)
+    $('time').value = String(time)
+    $('time-output').textContent = `${Math.round(time)}ms / ${config.duration}ms`
+    if (scene === 'delta') {
+      const delta = -4 * (1 - time / config.duration)
+      const value = 7 + delta
+      showDigit('delta', value)
+      $('delta-rest').textContent = delta.toFixed(2)
+      $('delta-result').textContent = value.toFixed(2)
+      map.forEach((el, n) => el.classList.toggle('visible', Math.abs(digitYPercent(value, 10, n)) < 100 - 1e-7))
+    } else if (scene === 'interrupt') {
+      const v = valuesAt(time)
+      showDigit('sum', v.sum)
+      showDigit('reset', v.reset)
+      $('sum-value').textContent = `스핀 위치 ${v.sum.toFixed(3)}`
+      $('reset-value').textContent = `스핀 위치 ${v.reset.toFixed(3)}`
+      $('interrupt-status').textContent = time < interruption ? '현재 목표: 7. 두 경로가 같은 움직임으로 출발합니다.' : '새 목표: 5. 보라색은 이전 기여와 새 기여를 함께 계산합니다.'
+      $('interrupt-equation').textContent = `${v.base} + (${v.old.toFixed(3)}) + (${v.added.toFixed(3)}) = ${v.sum.toFixed(3)}`
+      $('needle').setAttribute('d', `M${graphX(time)} 15V114`)
+      $('sum-dot').setAttribute('cx', graphX(time))
+      $('sum-dot').setAttribute('cy', graphY(v.sum))
+    } else {
+      const scale = 1.6 - .6 * time / config.duration
+      const fade = 24
+      $('outer-scale').textContent = scale.toFixed(2)
+      $('inner-scale').textContent = (1 / scale).toFixed(3)
+      for (const [id, corrected] of [['fixed',false],['corrected',true]]) {
+        const el = $(`mask-${id}`)
+        const inside = corrected ? fade / scale : fade
+        el.style.transform = `scaleX(${scale})`
+        el.firstElementChild.style.transform = `scaleX(${1 / scale})`
+        el.style.maskImage = `linear-gradient(to right, transparent, #000 ${inside}px, #000 calc(100% - ${inside}px), transparent)`
+        const screenFade = inside * scale
+        $(`fade-${id}`).textContent = screenFade.toFixed(1)
+        $(`gauge-${id}`).style.width = `${screenFade}px`
+      }
+      $('fade-formula').textContent = `24 ÷ ${scale.toFixed(2)} × ${scale.toFixed(2)} = 24`
+    }
+    if (!raf) $('play').textContent = time >= config.duration ? '다시 재생' : '재생'
+  }
+  function pause() { cancelAnimationFrame(raf); raf = 0; $('play').textContent = time >= config.duration ? '다시 재생' : '재생' }
+  function tick(now) { render(now - start); if (time < config.duration) raf = requestAnimationFrame(tick); else pause() }
+  $('play').addEventListener('click', () => {
+    if (raf) { pause(); return }
+    if (reducedMotion.matches) { render(config.duration); pause(); return }
+    if (time >= config.duration) render(0)
+    start = performance.now() - time
+    $('play').textContent = '일시 정지'
+    raf = requestAnimationFrame(tick)
+  })
+  $('restart').addEventListener('click', () => { pause(); render(0); $('play').textContent = '재생' })
+  $('time').addEventListener('input', (event) => { pause(); render(Number(event.target.value)) })
+  $('at-interrupt').addEventListener('click', () => { pause(); render(interruption) })
+  document.addEventListener('visibilitychange', () => { if (document.hidden) pause() })
+  window.addEventListener('pagehide', pause)
+  reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) pause() })
+  if (reducedMotion.matches) $('note').textContent += ' 동작 줄이기 설정에서는 재생 버튼으로 마지막 상태를 표시하며, 시간 막대로 중간 상태를 확인할 수 있습니다.'
+  render(0)
+</script>
+</body>
+</html>

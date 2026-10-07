@@ -1,0 +1,198 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "0.2.0의 네이티브 애니메이션 경로",
+    "quality_profile": "showcase",
+    "animation": "trace",
+    "legend": {
+      "mode": "hidden"
+    },
+    "output": "apps/blog/public/demos/number-flow/engine-path.html",
+    "repository": {
+      "url": "https://github.com/yceffort/number-flow.git",
+      "revision": "3438c3eed55c65a07d99b634ca2c0fe75becf470",
+      "provider": "github"
+    }
+  },
+  "lanes": [
+    {
+      "id": "prepare",
+      "label": "메인 스레드: 업데이트 시점"
+    },
+    {
+      "id": "remaining",
+      "label": "메인 스레드에 남는 재생",
+      "variant": "exception"
+    },
+    {
+      "id": "compositor",
+      "label": "합성 스레드: 프레임 재생"
+    }
+  ],
+  "mainPath": [
+    "requests",
+    "commit",
+    "bake",
+    "play"
+  ],
+  "nodes": [
+    {
+      "id": "requests",
+      "lane": "prepare",
+      "col": 0,
+      "type": "backend",
+      "label": "요청 모으기",
+      "sublabel": "queue()",
+      "width": 160,
+      "sources": [
+        {
+          "path": "packages/number-flow/src/engine/compositor.ts",
+          "line": 97,
+          "end_line": 106
+        }
+      ]
+    },
+    {
+      "id": "commit",
+      "lane": "prepare",
+      "col": 1,
+      "type": "backend",
+      "label": "기여 합치기",
+      "sublabel": "flush()",
+      "width": 160,
+      "sources": [
+        {
+          "path": "packages/number-flow/src/engine/compositor.ts",
+          "line": 224,
+          "end_line": 270
+        }
+      ]
+    },
+    {
+      "id": "bake",
+      "lane": "prepare",
+      "col": 2,
+      "type": "backend",
+      "label": "키프레임 계산",
+      "sublabel": "bake()",
+      "width": 160,
+      "sources": [
+        {
+          "path": "packages/number-flow/src/engine/compositor.ts",
+          "line": 393,
+          "end_line": 435
+        }
+      ]
+    },
+    {
+      "id": "play",
+      "lane": "compositor",
+      "col": 3,
+      "type": "frontend",
+      "label": "이동과 페이드",
+      "sublabel": "transform / opacity",
+      "width": 192,
+      "sources": [
+        {
+          "path": "packages/number-flow/src/engine/compositor.ts",
+          "line": 301,
+          "end_line": 312
+        },
+        {
+          "path": "README.md",
+          "line": 38,
+          "end_line": 42
+        }
+      ]
+    },
+    {
+      "id": "legacy",
+      "lane": "remaining",
+      "col": 1,
+      "type": "backend",
+      "label": "기존 WAAPI",
+      "sublabel": "accumulate",
+      "width": 160,
+      "sources": [
+        {
+          "path": "packages/number-flow/src/engine/compositor.ts",
+          "line": 277,
+          "end_line": 299
+        }
+      ]
+    },
+    {
+      "id": "mask",
+      "lane": "remaining",
+      "col": 2,
+      "type": "backend",
+      "label": "마스크 보정",
+      "sublabel": "폭 델타 갱신",
+      "width": 160,
+      "sources": [
+        {
+          "path": "packages/number-flow/src/engine/compositor.ts",
+          "line": 440,
+          "end_line": 487
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "update-complete",
+      "from": "requests",
+      "to": "commit",
+      "label": "갱신 완료",
+      "role": "main"
+    },
+    {
+      "id": "supported",
+      "from": "commit",
+      "to": "bake",
+      "label": "재현 가능",
+      "role": "main"
+    },
+    {
+      "id": "submit-keyframes",
+      "from": "bake",
+      "to": "play",
+      "label": "replace로 재생",
+      "role": "main",
+      "variant": "emphasis"
+    },
+    {
+      "id": "unsupported",
+      "from": "commit",
+      "to": "legacy",
+      "label": "호환성 예외",
+      "role": "branch",
+      "variant": "dashed"
+    },
+    {
+      "id": "width-changes",
+      "from": "bake",
+      "to": "mask",
+      "label": "폭 변화 구간",
+      "role": "branch",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "새 값이 들어올 때 계산한다",
+      "items": [
+        "진행 중인 기여의 남은 시간을 새 키프레임에 반영한다."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "일부 작업은 메인 스레드에 남는다",
+      "items": [
+        "마스크와 지원하지 않는 타이밍은 별도 경로를 유지한다."
+      ]
+    }
+  ]
+}
