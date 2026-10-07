@@ -8,7 +8,7 @@ tags:
   - web-performance
 published: true
 date: 2026-09-14 15:00:00
-updated: 2026-09-15 13:18:53
+updated: 2026-10-07 16:20:52
 description: '블로그의 remark/rehype 체인을 Rust로 옮기고 WASM으로 빌드해 Next.js 서버에 붙였다. 파싱과 HAST 생성에 이어 Oniguruma 하이라이트, MathML 수식, 이미지 크기와 MDX 속성 처리까지 한 호출로 묶었다. 메모리 전달과 해제, 기존 글의 호환성, WASI와 바이너리 배포를 구성하며 얻은 것과 감수한 비용을 기록했다.'
 thumbnail: /thumbnails/2026/09/markdown-pipeline-to-rust-wasm.png
 series: '블로그 성능 개선하기'
@@ -61,7 +61,7 @@ syntect가 느린 이유를 WASM이라는 실행 형식 하나로 설명할 수�
 
 Oniguruma는 C 라이브러리다. Rust 코드의 기능 플래그만 바꾸면 끝나는 것이 아니라, C 코드가 요구하는 헤더와 표준 라이브러리도 WASM 타깃에 맞춰야 했다. 여기서는 [wasi-sdk 27](https://github.com/WebAssembly/wasi-sdk/releases/tag/wasi-sdk-27)의 Clang과 libc를 쓰고 Rust 타깃을 `wasm32-wasip1`로 바꿨다. Node의 [WASI API](https://nodejs.org/docs/v24.20.0/api/wasi.html)가 모듈의 시스템 호출을 연결한다. 정규식 매칭 자체를 JS로 넘기는 구조는 아니다.
 
-별도 Oniguruma WASM 실험도 같은 2,587개 입력을 처리했고, 예열 후 6회 중앙값은 689.7ms였다. 엔진을 바꿔 3.4배를 벌었지만 Prism의 125.3ms에 견주면 여전히 5.5배 느리다. 교체 전보다 빠른 하이라이터가 아니라는 사실은 이 작업의 비용으로 남는다. 블록 수와 파싱 위치 체크섬이 초기 실험과 일치했다. 이 측정은 초기 fancy-regex/Prism 비교와 별도 프로세스에서 실행했으며 원시 기록은 `experiments/syntect/wasm-onig.json`에 남겼다. 두 실행의 Node 메이저는 다르다. 2,341.5ms는 Node v26.0.0, 689.7ms는 v24.20.0에서 쟀다. WASM을 실행하는 것이 곧 V8이므로 이 차이를 엔진 교체 효과에서 분리하지는 못했다. 다만 이 입력은 전체 코드 블록 4,629개 중 2,042개(44%)를 뺀 것이다. syntect 기본 문법에 없는 TypeScript와 TSX, JSX 1,413개에 평문과 mermaid, 수식 블록 등 629개가 더 빠졌으므로 블로그 전체의 교체 성능을 대신할 수 없다. 실제 렌더러에는 [two-face](https://github.com/CosmicHorrorDev/two-face)의 bat 기반 문법을 넣어 이 언어들을 처리하고, 전체 글의 HAST 변환은 뒤에서 별도로 쟀다.
+별도 Oniguruma WASM 실험도 같은 2,587개 입력을 처리했고, 예열 후 6회 중앙값은 689.7ms였다. 엔진을 바꿔 3.4배를 벌었지만 Prism의 125.3ms에 견주면 여전히 5.5배 느리다. 교체 전보다 빠른 하이라이터가 아니라는 사실은 이 작업의 비용으로 남는다. 블록 수와 파싱 위치 체크섬이 초기 실험과 일치했다. 이 측정은 초기 fancy-regex/Prism 비교와 별도 프로세스에서 실행했으며 측정값은 `packages/markdown-rs/experiments/syntect/wasm-onig.json`에 남겼다. 두 실행의 Node 메이저는 다르다. 2,341.5ms는 Node v26.0.0, 689.7ms는 v24.20.0에서 쟀다. WASM을 실행하는 것이 곧 V8이므로 이 차이를 엔진 교체 효과에서 분리하지는 못했다. 다만 이 입력은 전체 코드 블록 4,629개 중 2,042개(44%)를 뺀 것이다. syntect 기본 문법에 없는 TypeScript와 TSX, JSX 1,413개에 평문과 mermaid, 수식 블록 등 629개가 더 빠졌으므로 블로그 전체의 교체 성능을 대신할 수 없다. 실제 렌더러에는 [two-face](https://github.com/CosmicHorrorDev/two-face)의 bat 기반 문법을 넣어 이 언어들을 처리하고, 전체 글의 HAST 변환은 뒤에서 별도로 쟀다.
 
 하이라이트 출력은 syntect의 scope를 블로그의 `token keyword`, `token string`, `token comment` 같은 클래스로 매핑해 만든다. 여러 줄에 걸친 주석과 문자열은 코드 블록 안에서 파싱 상태를 이어 간다. 줄 번호와 강조 범위, diff 줄과 파일명은 별도로 유지한다. 기존 CSS 팔레트를 가져왔지만 어떤 문자를 어느 토큰으로 판정하는지가 달라지므로 이전 색상과 같지는 않다. 등록되지 않은 언어는 평문으로 남겨 코드 자체를 읽을 수 있게 했다. 2,048바이트를 넘는 줄은 토큰화를 건너뛴다. syntect는 한 줄의 토큰 수에 따라 2차식으로 느려지기 때문인데, 현재 글에서 가장 긴 코드 줄은 601자라 실제로 걸린 줄은 없다.
 
@@ -146,6 +146,8 @@ JSON은 전달 비용이 없는 형식은 아니다. 마크다운을 넣을 때 
 ## 메모리 뷰와 인스턴스를 재사용하는 범위
 
 WASM 인스턴스는 모듈 스코프에 보관하고 첫 `renderMarkdown` 호출 때 만든다. 같은 Node 모듈 인스턴스를 쓰는 다음 호출부터는 파일 읽기와 컴파일을 반복하지 않는다. 호출은 동기식이다. 이 구현은 Web Worker나 별도 스레드로 파싱을 넘기지 않으므로, WASM으로 바꿨다는 사실만으로 Node 이벤트 루프에서 계산이 사라지는 것은 아니다.
+
+재사용으로 아끼는 것은 파일 읽기와 컴파일만이 아니다. 앞의 syntect 실험에서 fancy-regex 빌드로 입력의 앞쪽 코드 블록 32개를 처리할 때, 예열한 인스턴스 하나를 재사용하면 17.8ms였고 블록마다 인스턴스를 새로 만들면 587.9ms였다. 약 33배 차이다. 새로 만드는 쪽도 모듈 컴파일은 재사용하고, 인스턴스 생성과 문법 초기화, 입력 전달만 블록마다 반복한다. 같은 실행에서 인스턴스 생성은 0.2ms, 문법 초기화는 2.0ms였으므로 이것만으로는 블록당 약 18ms가 나오지 않는다. syntect 5.3.0은 정규식을 처음 쓸 때 컴파일하고([`regex.rs`](https://github.com/trishume/syntect/blob/v5.3.0/src/parsing/regex.rs)), 문법 정의의 상세 부분도 처음 필요할 때 역직렬화한다([`syntax_set.rs`](https://github.com/trishume/syntect/blob/v5.3.0/src/parsing/syntax_set.rs)). 이 결과는 인스턴스의 선형 메모리에 쌓이므로 새 인스턴스는 빈 상태에서 다시 시작한다. 다만 두 값은 한 번씩만 쟀고 블록당 시간을 항목별로 나누어 계측하지 않았으므로, 차이 전체를 정규식 컴파일 시간으로 보지는 않는다. 이 측정값은 `packages/markdown-rs/experiments/syntect/results.json`의 `instanceReuse` 항목에 있다.
 
 인스턴스를 재사용하더라도 `memory.buffer`로 만든 뷰까지 계속 재사용할 수는 없다. 이 모듈의 공유되지 않는 메모리가 커지면 이전 `ArrayBuffer`는 분리된다. 메모리 증가 뒤에는 `buffer`를 다시 읽어 새 뷰를 만들어야 한다는 것이 [WebAssembly 메모리 API의 동작](https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/JavaScript_interface/Memory/grow#detachment_upon_growing)이다. 파싱하는 동안 Rust 할당자가 메모리를 늘릴 수 있으므로 결과를 읽는 쪽은 호출이 끝난 뒤 뷰를 만든다.
 
