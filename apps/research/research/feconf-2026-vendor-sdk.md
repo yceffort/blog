@@ -1420,11 +1420,12 @@ Rollup의 모듈 보존 옵션, esbuild의 트리셰이킹과 PURE 주석, 뮤�
 
 <!-- _header: APPENDIX / 15 -->
 
-## 백업: 홈 개선을 위해 살펴본 네 가지
+## 백업: 홈 개선을 위해 살펴본 다섯 가지
 
 - [외부 SDK를 뜯어서 다시 만들기](https://yceffort.kr/2026/08/rebuilding-a-vendor-sdk)<br>이번 발표의 상세 기록: 소스 복원, 번들 재구성, 검증
 - [framer-motion 프레임드랍 없애기](https://yceffort.kr/2026/08/framer-motion-banner-frame-drop)<br>원본 모션을 대조하며 레이아웃 비용 줄이기
 - [number-flow를 구형 브라우저로 이식하기](https://yceffort.kr/2026/08/number-flow-fork-for-old-browsers)<br>API와 시각 결과를 보존하며 애니메이션 구동부 교체
+- [number-flow 성능 개선기: 애니메이션을 합성 스레드로 옮기기](https://yceffort.kr/2026/10/number-flow-compositor-performance)<br>인터럽트 동작을 유지하며 애니메이션을 합성 스레드로 이동
 - [실행하지 않는 JavaScript를 10MiB까지 늘려봤다](https://yceffort.kr/2026/09/unused-javascript-cost)<br>크기와 파싱, 컴파일, 초기화 비용을 분리한 측정 기록
 
 <!--
@@ -1432,5 +1433,5 @@ Rollup의 모듈 보존 옵션, esbuild의 트리셰이킹과 PURE 주석, 뮤�
 
 예상 질문: 홈의 다른 최적화나 상세 기록도 볼 수 있는가?
 
-첫 번째 링크에 이번 발표의 소스 복원과 재구성, 검증 과정을 정리했습니다. 나머지는 별도로 진행한 배너 프레임드랍 개선, 구형 브라우저의 숫자 애니메이션 이식, JavaScript 비용 실험입니다. 질문의 주제와 관련 있는 링크만 짚고, 이 작업들의 결과를 SDK 단독 효과로 합치지 않습니다.
+첫 번째 링크에 이번 발표의 소스 복원과 재구성, 검증 과정을 정리했습니다. 나머지는 별도로 진행한 배너 프레임드랍 개선, 구형 브라우저의 숫자 애니메이션 이식과 합성 스레드 이전, JavaScript 비용 실험입니다. 질문의 주제와 관련 있는 링크만 짚고, 이 작업들의 결과를 SDK 단독 효과로 합치지 않습니다.
 -->
