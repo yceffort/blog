@@ -8,7 +8,7 @@ tags:
   - web-performance
 published: true
 date: 2026-09-14 15:00:00
-updated: 2026-10-07 16:20:52
+updated: 2026-10-07 18:20:51
 description: '블로그의 remark/rehype 체인을 Rust로 옮기고 WASM으로 빌드해 Next.js 서버에 붙였다. 파싱과 HAST 생성에 이어 Oniguruma 하이라이트, MathML 수식, 이미지 크기와 MDX 속성 처리까지 한 호출로 묶었다. 메모리 전달과 해제, 기존 글의 호환성, WASI와 바이너리 배포를 구성하며 얻은 것과 감수한 비용을 기록했다.'
 thumbnail: /thumbnails/2026/09/markdown-pipeline-to-rust-wasm.png
 series: '블로그 성능 개선하기'
@@ -31,7 +31,7 @@ art:
 
 이식의 상당 부분은 Rust 문법보다 블로그가 기대하는 동작을 구체화하는 데 들어갔다. 한글 강조와 제목 링크를 어떻게 맞출지, 코드 색이 바뀌어도 지켜야 하는 것은 무엇인지, 수식과 이미지가 깨지지 않았다는 것을 어디까지 확인할지 정해야 했다. 아래는 처음 파서를 옮긴 과정과, 남은 후처리를 같은 WASM으로 합치기까지의 기록이다.
 
-> 초기 이식과 빌드 수치는 `feat/markdown-rs`의 `b536d191` 기준 기록이다. 빌드는 GitHub Codespaces `standardLinux32gb`(4 vCPU AMD EPYC 7763, 16GB, Ubuntu 24.04.4 LTS)와 로컬 iMac(Apple M1 8코어, 16GB, macOS 26.6.2)에서 쟀다. 양쪽 모두 Node 24.20.0, pnpm 12.1.0, Next.js 16.3.1이다. `.next`를 지우고 첫 빌드를 한 뒤 두 번째 빌드를 이어서 실행했으며, 인기글 데이터가 바뀌지 않도록 GA4 자격증명 없이 빌드했다. 당시 작업 계획과 Rust 코드 리뷰는 내가 하고 구현은 Claude Code가 했다. 이 초기 기록 중 hast JSON 크기, 릴리즈 프로파일 비교, 정적 페이지 334장 대조, Codespaces와 M1의 빌드 표는 당시 터미널 출력에서 옮긴 값이고 원시 기록은 저장소에 남기지 않았다. 입력 해시와 함께 보존한 것은 `bench-results.json`, `bench-wasi-results.json`, `experience-results.json`이다.
+> 초기 이식과 빌드 수치는 `feat/markdown-rs`의 `b536d191` 기준 기록이다. 빌드는 GitHub Codespaces `standardLinux32gb`(4 vCPU AMD EPYC 7763, 16GB, Ubuntu 24.04.4 LTS)와 로컬 iMac(Apple M1 8코어, 16GB, macOS 26.6.2)에서 쟀다. 양쪽 모두 Node 24.20.0, pnpm 12.1.0, Next.js 16.3.1이다. `.next`를 지우고 첫 빌드를 한 뒤 두 번째 빌드를 이어서 실행했으며, 인기글 데이터가 바뀌지 않도록 GA4 자격증명 없이 빌드했다. 당시 작업 계획과 Rust 코드 리뷰는 내가 하고 구현은 Claude Code가 했다. 이 초기 기록 중 hast JSON 크기, 릴리즈 프로파일 비교, 정적 페이지 334장 대조, Codespaces와 M1의 빌드 표는 당시 터미널 출력에서 옮긴 값이고 따로 파일로 남기지 않았다. 입력 해시와 함께 보존한 것은 `bench-results.json`, `bench-wasi-results.json`, `experience-results.json`이다.
 
 > 후처리 통합과 새 벤치는 2026년 9월 14일, `feat/blog-performance`의 `f27162bd`에 변경을 적용한 작업 트리 기준이다. Node 24.20.0, Rust 1.88.0, Apple M1, macOS arm64(Darwin 25.6.0)에서 확인했다. 초기 출력 일치와 빌드 기록은 현재의 하이라이터와 수식 렌더러를 검증한 결과가 아니므로 구분해서 적었다.
 
@@ -372,9 +372,9 @@ JS에서 전체 WASM으로 바꾸자 코드 글의 본문 도착 중앙값은 �
 
 코드 글에서는 혼합 구성과 전체 WASM의 함수 호출 시간이 비슷하지만, 브라우저가 본문을 받는 시간에는 약 202ms 차이가 있었다. 함수 호출만 재면 놓치는 비용이 있다는 뜻이다. 요청 시간에는 글 목록을 읽는 작업, Next.js의 경로 로딩과 렌더링도 포함되며, 이번에는 각각의 비용까지 분해하지 않았다. 수식 글의 방문 시간에는 KaTeX 자원을 MathML과 로컬 글꼴로 바꾼 차이도 들어간다.
 
-여기서 콜드는 서버 프로세스와 해당 경로, 브라우저의 캐시를 새로 시작한다는 뜻이다. 운영체제 파일 캐시와 외부 CDN 캐시는 비우지 않았다. 서버 프로세스가 준비되기까지 걸린 시간은 탐색 시간에서 제외해 원시 기록에 별도로 남겼다.
+여기서 콜드는 서버 프로세스와 해당 경로, 브라우저의 캐시를 새로 시작한다는 뜻이다. 운영체제 파일 캐시와 외부 CDN 캐시는 비우지 않았다. 서버 프로세스가 준비되기까지 걸린 시간은 탐색 시간에서 제외하고 결과 파일에 따로 남겼다.
 
-측정 스크립트는 `packages/markdown-rs/scripts/experience/`에, 18회 빌드와 36회 방문의 원시 시간과 입력 해시는 `packages/markdown-rs/experience-results.json`에 남겼다. `packages/markdown-rs/BENCHMARK.md`에는 비교 구성을 복원하는 기준 커밋과 재실행 방법도 적었다. 이후 본문을 고쳤으므로 지금 다시 실행하면 입력 해시가 달라진다.
+측정 스크립트는 `packages/markdown-rs/scripts/experience/`에, 18회 빌드와 36회 방문의 회차별 시간과 입력 해시는 `packages/markdown-rs/experience-results.json`에 남겼다. `packages/markdown-rs/BENCHMARK.md`에는 비교 구성을 복원하는 기준 커밋과 재실행 방법도 적었다. 이후 본문을 고쳤으므로 지금 다시 실행하면 입력 해시가 달라진다.
 
 ### 예열한 HAST 벤치는 다른 질문에 답했다
 
