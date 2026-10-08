@@ -1,15 +1,17 @@
 import '@/styles/stylex.css'
 import '@/styles/offline.css'
-import {Providers} from '@yceffort/shared/components'
+import {
+  AmbientEffects,
+  BotTracker,
+  GoogleAnalyticsPageViewTracker,
+  OutboundLinkTracker,
+  Providers,
+} from '@yceffort/shared/components'
 import type {Metadata} from 'next'
 import Script from 'next/script'
 import {Suspense, type ReactNode} from 'react'
 
-import AmbientEffects from '@/components/AmbientEffects'
-import {BotTracker} from '@/components/BotTracker'
-import {GoogleAnalyticsPageViewTracker} from '@/components/GoogleAnalyticsPageViewTracker'
 import {OfflineRegistration} from '@/components/offline/OfflineRegistration'
-import {OutboundLinkTracker} from '@/components/OutboundLinkTracker'
 import {SiteConfig} from '@/config'
 
 export const metadata: Metadata = {

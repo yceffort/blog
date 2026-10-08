@@ -247,9 +247,6 @@ importers:
       hast-util-to-jsx-runtime:
         specifier: ^2.3.6
         version: 2.3.6(supports-color@10.2.2)
-      isbot:
-        specifier: 'catalog:'
-        version: 5.2.1
       mermaid:
         specifier: 'catalog:'
         version: 12.0.0
@@ -359,9 +356,6 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
-      isbot:
-        specifier: 'catalog:'
-        version: 5.2.1
       markdown-it-cjk-friendly:
         specifier: ^3.0.0
         version: 3.0.0(markdown-it@14.3.0)
@@ -495,6 +489,9 @@ importers:
       date-fns:
         specifier: 'catalog:'
         version: 4.4.0
+      isbot:
+        specifier: 'catalog:'
+        version: 5.2.1
       next-themes:
         specifier: 'catalog:'
         version: 0.4.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8)

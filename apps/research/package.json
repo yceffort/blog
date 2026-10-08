@@ -16,7 +16,6 @@
     "@stylexjs/stylex": "catalog:",
     "@yceffort/shared": "workspace:*",
     "gray-matter": "^4.0.3",
-    "isbot": "catalog:",
     "markdown-it-cjk-friendly": "^3.0.0",
     "mermaid": "catalog:",
     "next": "catalog:",

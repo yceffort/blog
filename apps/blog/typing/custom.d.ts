@@ -35,3 +35,7 @@ declare module '@panzoom/panzoom' {
 
   export default Panzoom
 }
+
+interface Window {
+  gtag?: (...args: unknown[]) => void
+}

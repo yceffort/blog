@@ -2,9 +2,11 @@
 
 import {useEffect} from 'react'
 
-import * as ambientStyles from '@/components/layout/ambient.styles'
-
-export default function AmbientEffects() {
+export default function AmbientEffects({
+  classNames,
+}: {
+  classNames?: {animBg?: string; grain?: string; cursorGlow?: string}
+}) {
   useEffect(() => {
     if (typeof window === 'undefined') {
       return undefined
@@ -43,20 +45,12 @@ export default function AmbientEffects() {
   }, [])
   return (
     <>
-      <div
-        id="anim-bg"
-        aria-hidden="true"
-        className={ambientStyles.effect_anim_bg}
-      />
-      <div
-        id="grain"
-        aria-hidden="true"
-        className={ambientStyles.effect_grain}
-      />
+      <div id="anim-bg" aria-hidden="true" className={classNames?.animBg} />
+      <div id="grain" aria-hidden="true" className={classNames?.grain} />
       <div
         id="cursor-glow"
         aria-hidden="true"
-        className={ambientStyles.effect_cursor_glow}
+        className={classNames?.cursorGlow}
       />
     </>
   )

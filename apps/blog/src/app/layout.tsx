@@ -1,5 +1,11 @@
 import * as stylex from '@stylexjs/stylex'
-import {Providers} from '@yceffort/shared/components'
+import {
+  AmbientEffects,
+  BotTracker,
+  GoogleAnalyticsPageViewTracker,
+  OutboundLinkTracker,
+  Providers,
+} from '@yceffort/shared/components'
 import type {Metadata} from 'next'
 import Script from 'next/script'
 
@@ -8,12 +14,9 @@ import '@/styles/tokens.stylex'
 
 import {Suspense, type ReactNode} from 'react'
 
-import {BotTracker} from '@/components/analytics/BotTracker'
-import {GoogleAnalyticsPageViewTracker} from '@/components/analytics/GoogleAnalyticsPageViewTracker'
 import {GoogleAnalyticsWebVitalsTracker} from '@/components/analytics/GoogleAnalyticsWebVitalsTracker'
 import {InternalNavTracker} from '@/components/analytics/InternalNavTracker'
-import {OutboundLinkTracker} from '@/components/analytics/OutboundLinkTracker'
-import AmbientEffects from '@/components/layout/AmbientEffects'
+import * as ambientStyles from '@/components/layout/ambient.styles'
 import LayoutWrapper from '@/components/layout/LayoutWrapper'
 import NavigationDirection from '@/components/layout/NavigationDirection'
 import PullToRefresh from '@/components/pwa/PullToRefresh'
@@ -139,7 +142,13 @@ export default async function Layout({children}: {children: ReactNode}) {
           <Suspense fallback={null}>
             <NavigationDirection />
           </Suspense>
-          <AmbientEffects />
+          <AmbientEffects
+            classNames={{
+              animBg: ambientStyles.effect_anim_bg,
+              grain: ambientStyles.effect_grain,
+              cursorGlow: ambientStyles.effect_cursor_glow,
+            }}
+          />
           <PullToRefresh />
           <Providers>
             <Suspense fallback={null}>

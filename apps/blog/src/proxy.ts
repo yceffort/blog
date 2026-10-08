@@ -1,7 +1,6 @@
+import {detectBot} from '@yceffort/shared/utils'
 import {NextResponse} from 'next/server'
 import type {NextRequest} from 'next/server'
-
-import {detectBot} from './constants/bot-signatures'
 
 const YEAR_RE = /^(19|20)\d{2}$/
 // [year]/[...slug] 라우트가 아무 문자열이나 연도로 받아 PPR 셸을 200으로 반환하므로,

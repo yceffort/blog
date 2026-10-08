@@ -3,13 +3,7 @@
 import {usePathname} from 'next/navigation'
 import {useEffect} from 'react'
 
-import {detectBot} from '@/constants/bot-signatures'
-
-declare global {
-  interface Window {
-    gtag?: (...args: unknown[]) => void
-  }
-}
+import {detectBot} from '../utils/bot-signatures'
 
 function isLikelyBot(): boolean {
   if (typeof window === 'undefined') {

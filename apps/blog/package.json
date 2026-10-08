@@ -27,7 +27,6 @@
     "front-matter": "catalog:",
     "glob": "^13.0.6",
     "hast-util-to-jsx-runtime": "^2.3.6",
-    "isbot": "catalog:",
     "mermaid": "catalog:",
     "minisearch": "^7.2.0",
     "next": "catalog:",
