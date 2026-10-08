@@ -118,7 +118,7 @@ const slideSlugs = new Set(
     : [],
 )
 
-function checkFrontMatter(file, attributes, report) {
+function checkFrontMatter(file, attributes, rawFrontMatter, report) {
   const isSeries = file.startsWith(SERIES_DIR)
 
   if (isSeries) {
@@ -134,6 +134,15 @@ function checkFrontMatter(file, attributes, report) {
     if (attributes[field] === undefined) {
       report('error', 0, `frontmatter에 ${field}가 없다`)
     }
+  }
+
+  // 앱은 YAML로 파싱해 참거짓을 보고 알림과 수정일 스크립트는 글자를 비교한다.
+  // 'false'나 True처럼 쓰면 둘의 판정이 갈리므로 따옴표 없는 소문자만 받는다.
+  if (
+    attributes.published !== undefined &&
+    !/^published: (true|false)$/m.test(rawFrontMatter)
+  ) {
+    report('error', 0, 'published는 따옴표 없이 true 또는 false로 써야 한다')
   }
 
   // Post.ts가 new Date(date).toISOString()을 무조건 호출하므로 파싱에 실패하면 빌드가 죽는다.
@@ -382,7 +391,7 @@ function checkJsxNodes(tree, report) {
 
 function checkFile(file) {
   const raw = readFileSync(file, 'utf8')
-  const {attributes, body} = frontMatter(raw)
+  const {attributes, body, frontmatter: rawFrontMatter} = frontMatter(raw)
   const lineOffset = raw.split('\n').length - body.split('\n').length
 
   const found = []
@@ -390,7 +399,7 @@ function checkFile(file) {
     found.push({severity, line: line ? line + lineOffset : 1, message})
   }
 
-  checkFrontMatter(file, attributes, report)
+  checkFrontMatter(file, attributes, rawFrontMatter, report)
 
   // 본문을 MDX로 읽으므로 { 나 < 하나가 빌드를 통째로 깨뜨린다. hast를 만드는 데서
   // 멈추지 않고 renderPost.tsx와 같은 JSX 변환까지 돌린다. 실제 컴포넌트 구현은 없어도

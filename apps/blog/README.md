@@ -38,11 +38,13 @@ posts/
 title: Docker 공부 (3) - 도커 이미지 # required
 tags:
   - docker # required, 여러개 가능
-published: true # required
+published: true
 date: 2020-08-09 03:48:47 # required
 description: '여기에 Description을 적어둡니다.' # required
 ---
 ```
+
+`published`도 필수이며 따옴표나 주석 없이 `true` 또는 `false`로만 씁니다. 앱과 알림, 수정일 스크립트가 이 값을 서로 다른 방식으로 읽기 때문에 `check-markdown.mjs`가 다른 형태를 오류로 막습니다.
 
 ### Table of Contents
 

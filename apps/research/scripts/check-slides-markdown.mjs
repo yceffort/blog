@@ -11,6 +11,8 @@
  * 슬라이드에 그대로 노출된다는 뜻이다. 한글 조사 인접 케이스는 cjk-friendly가
  * 구제하므로 여기까지 걸리는 것은 진짜 오타다.
  * 파서 구성이 바뀌면 src/lib/marp.ts와 맞출 것.
+ *
+ * frontmatter의 published도 블로그 글과 같은 규칙(따옴표 없는 true 또는 false)으로 검사한다.
  */
 
 import {readdirSync, readFileSync} from 'node:fs'
@@ -18,6 +20,7 @@ import {dirname, join, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
 
 import {Marp} from '@marp-team/marp-core'
+import matter from 'gray-matter'
 import markdownItCjkFriendly from 'markdown-it-cjk-friendly'
 
 const RESEARCH_DIR = resolve(
@@ -76,6 +79,17 @@ const files = process.argv.slice(2).length
 let errorCount = 0
 
 for (const file of files) {
+  // slidesIndex.ts는 published가 없으면 공개로 보므로 필드가 빠진 것도 잡는다
+  if (
+    !/^published: (true|false)$/m.test(
+      matter(readFileSync(file, 'utf8')).matter,
+    )
+  ) {
+    errorCount += 1
+    console.error(
+      `${file}:1 published는 따옴표 없이 true 또는 false로 써야 한다`,
+    )
+  }
   for (const {line, text} of checkFile(file)) {
     errorCount += 1
     console.error(
