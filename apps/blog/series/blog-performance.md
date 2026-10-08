@@ -3,7 +3,7 @@ name: '블로그 성능 개선하기'
 title: '블로그 <em>성능 개선</em>하기'
 description: '다른 사이트가 아니라 이 블로그를 직접 고쳐가며 남긴 실측 기록. 스타일 전송량, 빌드 시간, 렌더를 막는 자원을 하나씩 붙잡고 전후를 같은 조건에서 재봤다'
 art:
-  undraw: fast-loading
+  undraw: pie-chart
   hue: warm
   tone: light
 ---

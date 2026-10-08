@@ -209,8 +209,10 @@ export async function generateUndrawThumbnails({
   }
 
   const catalog = loadCatalog()
+  // 앱은 webp를 png보다 먼저 쓰므로, 실사 png를 직접 넣은 대상은 webp를 만들지 않는다
   const targets = files
     .map((path) => readTarget(path, slugOf))
+    .filter((t) => !existsSync(resolve(thumbDir, `${t.slug}.png`)))
     .toSorted((a, b) => b.slug.localeCompare(a.slug))
   const used = new Set(
     targets.filter((t) => !force && t.undraw).map((t) => t.undraw),
