@@ -34,6 +34,40 @@
         "score": 0.2
       }
     ],
+    "2026/10/how-bundlers-remember-imports": [
+      {
+        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
+        "score": 0.55
+      },
+      {
+        "slug": "2026/08/rebuilding-a-vendor-sdk",
+        "score": 0.45
+      },
+      {
+        "slug": "2026/05/pr-diff-vs-bundle",
+        "score": 0.27
+      },
+      {
+        "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
+        "score": 0.24
+      },
+      {
+        "slug": "2026/09/unused-javascript-cost",
+        "score": 0.23
+      },
+      {
+        "slug": "2026/05/use-client-deep-dive",
+        "score": 0.19
+      },
+      {
+        "slug": "2020/09/typescript-enum-not-treeshaked",
+        "score": 0.18
+      },
+      {
+        "slug": "2021/07/npm-workspaces-esbuild",
+        "score": 0.13
+      }
+    ],
     "2026/09/who-learns-to-judge-beta-reader": [
       {
         "slug": "2026/06/learning-what-ai-cant-do",
@@ -98,8 +132,8 @@
         "score": 0.47
       },
       {
-        "slug": "2021/08/javascript-tree-shaking",
-        "score": 0.42
+        "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
+        "score": 0.4
       }
     ],
     "2026/09/tracing-third-party-javascript-without-sourcemaps": [
@@ -558,6 +592,10 @@
         "score": 0.19
       },
       {
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.19
+      },
+      {
         "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
         "score": 0.18
       },
@@ -572,13 +610,13 @@
       {
         "slug": "2026/09/markdown-pipeline-to-rust-wasm",
         "score": 0.17
-      },
-      {
-        "slug": "2023/05/blog-app-dir",
-        "score": 0.17
       }
     ],
     "2026/08/turbopack-scope-hoisting-singleton-split": [
+      {
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.54
+      },
       {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.3
@@ -606,10 +644,6 @@
       {
         "slug": "2026/09/unused-javascript-cost",
         "score": 0.14
-      },
-      {
-        "slug": "2026/03/why-still-nextjs",
-        "score": 0.13
       }
     ],
     "2026/08/service-worker-caching-3": [
@@ -720,6 +754,10 @@
         "score": 0.73
       },
       {
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.66
+      },
+      {
         "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
         "score": 0.63
       },
@@ -742,10 +780,6 @@
       {
         "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
         "score": 0.38
-      },
-      {
-        "slug": "2021/02/javascript-performance-bundle-size",
-        "score": 0.28
       }
     ],
     "2026/08/og-scraping-server-2": [
@@ -932,10 +966,6 @@
         "score": 0.13
       },
       {
-        "slug": "2021/06/error-handling-in-nodejs",
-        "score": 0.13
-      },
-      {
         "slug": "2026/08/og-scraping-server-1",
         "score": 0.12
       },
@@ -949,6 +979,10 @@
       },
       {
         "slug": "2021/01/brotli-better-html-compression",
+        "score": 0.1
+      },
+      {
+        "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.1
       }
     ],
@@ -982,7 +1016,7 @@
         "score": 0.07
       },
       {
-        "slug": "2026/09/blog-performance-after-migrations",
+        "slug": "2026/10/how-bundlers-remember-imports",
         "score": 0.07
       }
     ],
@@ -1264,6 +1298,10 @@
         "score": 0.42
       },
       {
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.38
+      },
+      {
         "slug": "2026/05/pr-diff-vs-bundle",
         "score": 0.38
       },
@@ -1286,10 +1324,6 @@
       {
         "slug": "2025/12/nextjs-caching-deep-dive",
         "score": 0.26
-      },
-      {
-        "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
-        "score": 0.24
       }
     ],
     "2026/05/use-cache-deep-dive": [
@@ -3550,6 +3584,10 @@
         "score": 0.26
       },
       {
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.24
+      },
+      {
         "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
         "score": 0.21
       },
@@ -3564,10 +3602,6 @@
       {
         "slug": "2019/08/20/typescript-type-assertion",
         "score": 0.2
-      },
-      {
-        "slug": "2025/12/typescript-literal-union-autocomplete",
-        "score": 0.19
       }
     ],
     "2022/04/temporary-suspension-pwa": [
@@ -5424,6 +5458,10 @@
         "score": 0.48
       },
       {
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.35
+      },
+      {
         "slug": "2021/02/javascript-performance-bundle-size",
         "score": 0.33
       },
@@ -5433,10 +5471,6 @@
       },
       {
         "slug": "2025/08/npm-deep-dive-author-talk",
-        "score": 0.25
-      },
-      {
-        "slug": "2020/11/javascript-dependency-hell",
         "score": 0.25
       }
     ],
@@ -5986,8 +6020,8 @@
     ],
     "2021/05/ast-for-javascript": [
       {
-        "slug": "2022/05/how-typescript-compiler-works",
-        "score": 0.43
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.44
       },
       {
         "slug": "2026/02/react-compiler-deep-dive",
@@ -7294,11 +7328,11 @@
         "score": 0.35
       },
       {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
+        "slug": "2026/10/how-bundlers-remember-imports",
         "score": 0.34
       },
       {
-        "slug": "2023/05/why-esmodule",
+        "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.34
       },
       {
@@ -7460,10 +7494,6 @@
         "score": 0.12
       },
       {
-        "slug": "2020/06/javascript-execution-context",
-        "score": 0.12
-      },
-      {
         "slug": "2021/08/event-loop-deep-dive",
         "score": 0.11
       },
@@ -7477,6 +7507,10 @@
       },
       {
         "slug": "2026/09/unused-javascript-cost",
+        "score": 0.09
+      },
+      {
+        "slug": "2021/01/nodejs-4-design-pattern",
         "score": 0.09
       }
     ],
@@ -7728,8 +7762,8 @@
         "score": 0.3
       },
       {
-        "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
-        "score": 0.3
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.29
       },
       {
         "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
@@ -7778,12 +7812,12 @@
         "score": 0.45
       },
       {
-        "slug": "2025/05/web-performance-analysis-2",
-        "score": 0.32
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.42
       },
       {
-        "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
-        "score": 0.31
+        "slug": "2025/05/web-performance-analysis-2",
+        "score": 0.32
       }
     ],
     "2020/09/typescript-4.0": [
@@ -9352,6 +9386,40 @@
         "score": 0.11
       }
     ],
+    "2026/10/how-bundlers-remember-imports": [
+      {
+        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
+        "score": 0.41
+      },
+      {
+        "slug": "2026/09/unused-javascript-cost",
+        "score": 0.27
+      },
+      {
+        "slug": "2026/08/rebuilding-a-vendor-sdk",
+        "score": 0.26
+      },
+      {
+        "slug": "2026/05/use-client-deep-dive",
+        "score": 0.2
+      },
+      {
+        "slug": "2026/05/pr-diff-vs-bundle",
+        "score": 0.2
+      },
+      {
+        "slug": "2026/02/react-compiler-deep-dive",
+        "score": 0.11
+      },
+      {
+        "slug": "2026/03/react-server-functions-deep-dive",
+        "score": 0.1
+      },
+      {
+        "slug": "2026/09/porting-markdownlint-cli2-to-rust",
+        "score": 0.09
+      }
+    ],
     "2026/09/unused-javascript-cost": [
       {
         "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
@@ -9484,7 +9552,7 @@
         "score": 0.12
       },
       {
-        "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
+        "slug": "2026/10/how-bundlers-remember-imports",
         "score": 0.11
       }
     ],
@@ -9646,19 +9714,23 @@
         "score": 0.17
       },
       {
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.17
+      },
+      {
         "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
         "score": 0.14
       },
       {
         "slug": "2026/09/nextjs-cache-components-activity",
         "score": 0.13
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-4",
-        "score": 0.13
       }
     ],
     "2026/08/turbopack-scope-hoisting-singleton-split": [
+      {
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.68
+      },
       {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.29
@@ -9686,10 +9758,6 @@
       {
         "slug": "2026/03/react-server-functions-deep-dive",
         "score": 0.15
-      },
-      {
-        "slug": "2026/09/nextjs-cache-components-activity",
-        "score": 0.12
       }
     ],
     "2026/08/service-worker-caching-3": [
@@ -9804,6 +9872,10 @@
         "score": 0.77
       },
       {
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.61
+      },
+      {
         "slug": "2026/09/unused-javascript-cost",
         "score": 0.59
       },
@@ -9821,10 +9893,6 @@
       },
       {
         "slug": "2026/08/typescript-7-oxc-migration",
-        "score": 0.18
-      },
-      {
-        "slug": "2025/05/web-performance-analysis-2",
         "score": 0.18
       }
     ],
@@ -10004,10 +10072,6 @@
         "score": 0.14
       },
       {
-        "slug": "2021/12/nodejs-memory-limit",
-        "score": 0.12
-      },
-      {
         "slug": "2021/08/uncaught-async-error",
         "score": 0.12
       },
@@ -10030,6 +10094,10 @@
       {
         "slug": "2026/03/nextjs-edge-runtime-rise-and-fall",
         "score": 0.09
+      },
+      {
+        "slug": "2026/08/rebuilding-a-vendor-sdk",
+        "score": 0.08
       }
     ],
     "2026/08/k8s-for-frontend-3": [
@@ -10310,6 +10378,10 @@
         "score": 0.39
       },
       {
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.37
+      },
+      {
         "slug": "2026/05/react-cache-function-deep-dive",
         "score": 0.36
       },
@@ -10332,10 +10404,6 @@
       {
         "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
         "score": 0.25
-      },
-      {
-        "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
-        "score": 0.24
       }
     ],
     "2026/05/use-cache-deep-dive": [
@@ -10462,8 +10530,8 @@
         "score": 0.63
       },
       {
-        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
-        "score": 0.53
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.62
       },
       {
         "slug": "2026/05/use-client-deep-dive",
@@ -10704,12 +10772,12 @@
         "score": 0.19
       },
       {
-        "slug": "2026/03/is-nextjs-fast-enough",
-        "score": 0.16
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.17
       },
       {
-        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
-        "score": 0.13
+        "slug": "2026/03/is-nextjs-fast-enough",
+        "score": 0.16
       }
     ],
     "2026/03/react-is-whose": [
@@ -10776,8 +10844,8 @@
         "score": 0.18
       },
       {
-        "slug": "2026/08/service-worker-caching-2",
-        "score": 0.14
+        "slug": "2025/05/web-performance-analysis-2",
+        "score": 0.15
       }
     ],
     "2026/03/is-nextjs-fast-enough": [
@@ -10840,11 +10908,11 @@
         "score": 0.2
       },
       {
-        "slug": "2026/09/nextjs-cache-components-activity",
-        "score": 0.19
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.2
       },
       {
-        "slug": "2026/09/tracing-third-party-javascript-without-sourcemaps",
+        "slug": "2026/09/nextjs-cache-components-activity",
         "score": 0.19
       }
     ],
@@ -11040,16 +11108,16 @@
         "score": 0.05
       },
       {
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.05
+      },
+      {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.05
       },
       {
         "slug": "2026/01/handling-large-json-responses",
         "score": 0.04
-      },
-      {
-        "slug": "2026/08/og-scraping-server-2",
-        "score": 0.03
       }
     ],
     "2026/01/intersection-observer-singleton-weakmap": [
@@ -11452,11 +11520,11 @@
         "score": 0.62
       },
       {
-        "slug": "2026/08/service-worker-caching-2",
-        "score": 0.4
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.46
       },
       {
-        "slug": "2026/08/framer-motion-banner-frame-drop",
+        "slug": "2026/08/service-worker-caching-2",
         "score": 0.4
       }
     ],
@@ -11602,6 +11670,10 @@
         "score": 0.45
       },
       {
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.31
+      },
+      {
         "slug": "2026/05/use-client-deep-dive",
         "score": 0.22
       },
@@ -11624,10 +11696,6 @@
       {
         "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
         "score": 0.12
-      },
-      {
-        "slug": "2026/02/nodejs-deep-dive-sample",
-        "score": 0.11
       }
     ],
     "2021/01/from-github-workflow-to-firebase-functions": [
