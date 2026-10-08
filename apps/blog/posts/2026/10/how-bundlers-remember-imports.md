@@ -434,17 +434,7 @@ impl ImportStep {
 
 블로그 그래프의 `require` 678개 중 661개가 최상위 호출이었다. 나머지 17개 중 8개는 UMD 래퍼 안의 호출이다. 최상위가 아닌 `require()`나 `unknown` 간선이 낀 경로에는 동기 체인을 전제로 하는 제안이 붙지 않는다.
 
-0.8.1에서 제안은 다시 `split-review`가 됐고, 설명의 앞부분도 "A synchronous import chain (static imports or top-level require() calls)"로 바뀌었다. 하지만 뒷부분의 "part of it executes initially"는 그대로였다. 첫 진입에서 `heavy-cjs.js`의 함수 일부가 실행됐다는 판정이다.
-
-첫 진입의 V8 커버리지를 보면 이 모듈에서 실행된 것은 Turbopack 모듈 팩토리가 `t.exports`에 객체를 대입하는 부분뿐이었다. 팩토리 함수 `(e,t,r)=>{...}`의 실행 횟수는 1이고, 그 안의 `compute`는 0이다. 그런데도 함수 일부가 실행됐다고 판정된 이유는 팩토리의 끝에 있었다.
-
-```js
-...return e+"IMPACT_CJS-12"}()].join("")}},9848,e=>{"use strict";var t=e.i(1398),r=e.i(1788);let n=e.r(9057);...
-```
-
-coldpath는 소스맵 매핑 하나가 다음 매핑 직전까지의 바이트를 차지한다고 본다. Turbopack 산출물에는 팩토리 사이에 매핑이 없어서, `heavy-cjs.js`의 마지막 매핑(`}},`)이 다음 매핑인 `index.jsx`의 `r=e.i(1788)` 직전까지 이어졌다. 그 사이에는 `index.jsx` 팩토리의 시작 부분(`e=>{"use strict";var t=e.i(1398),`)이 들어 있다. 이 팩토리는 첫 진입에서 실행됐기 때문에, `index.jsx`의 함수 실행이 `heavy-cjs.js`의 함수 실행으로 집계됐다.
-
-0.8.2에서는 시작 부분에 자기 매핑이 없어 앞 모듈의 매핑에 걸쳐 있고 본문은 다른 소스로 매핑되는 함수를 번들러 래퍼로 보고, 매핑이 차지하는 범위를 래퍼의 경계에서 자른다([`9c89cbc`](https://github.com/yceffort/coldpath/commit/9c89cbc9239a04e29d14e35e591895a0a74733df)). 또 `module.exports`나 `exports.x`에 대입하는 코드는 최상위 부수 효과로 세지 않는다([`34f908b`](https://github.com/yceffort/coldpath/commit/34f908bbc186503a31f58352f353e84bdc825a30)). 앞의 수정이 없으면 "함수 일부가 실행됐다"는 판정이 남고, 뒤의 수정이 없으면 `t.exports = {...}`가 속성 쓰기로 잡혀 여전히 `split-review`가 된다. 두 수정이 들어간 0.8.2에서 `heavy-cjs.js`에는 다음 제안이 붙었다.
+0.8.1에서 제안은 다시 `split-review`가 됐고, 설명의 앞부분도 "A synchronous import chain (static imports or top-level require() calls)"로 바뀌었다. 다만 "part of it executes initially"라는 뒷부분은 남았다. 첫 진입에서 이 모듈이 실행한 것은 팩토리가 `t.exports`에 객체를 대입하는 코드뿐이었는데, Turbopack 산출물에서 `heavy-cjs.js`의 마지막 소스맵 매핑이 바로 뒤 `index.jsx` 팩토리의 시작 부분까지 이어져 그 실행이 이 모듈의 함수 실행으로 집계됐기 때문이다.[^19] 매핑 범위를 모듈 래퍼의 경계에서 자르는 수정([`9c89cbc`](https://github.com/yceffort/coldpath/commit/9c89cbc9239a04e29d14e35e591895a0a74733df))과 CommonJS 내보내기 대입을 최상위 부수 효과에서 빼는 수정([`34f908b`](https://github.com/yceffort/coldpath/commit/34f908bbc186503a31f58352f353e84bdc825a30))이 들어간 0.8.2에서 `heavy-cjs.js`에는 다음 제안이 붙었다.
 
 ```json
 {
@@ -453,7 +443,7 @@ coldpath는 소스맵 매핑 하나가 다음 매핑 직전까지의 바이트�
 }
 ```
 
-처음 본 0.6.0의 제안에는 어긋난 판정이 두 가지 있었던 셈이다. 하나는 이 글에서 따라간 간선 종류이고, 다른 하나는 다음 모듈의 팩토리 실행을 이 모듈의 함수 실행으로 센 판정이다. 간선 종류만 고친 0.6.1에서는 제안이 일반적인 문장으로 물러났고, 최상위 `require()`를 동기 간선으로 다루고 실행 판정까지 고친 뒤에야 버튼을 누를 때만 쓰이는 모듈이라는 재현 페이지의 의도에 맞는 제안이 나왔다.
+간선 종류만 고친 0.6.1에서는 제안이 일반적인 문장으로 물러났고, 최상위 `require()`를 동기 간선으로 다루고 실행 판정까지 고친 뒤에야 버튼을 누를 때만 쓰이는 모듈이라는 재현 페이지의 의도에 맞는 제안이 나왔다.
 
 이 제안은 `require()`를 버튼 클릭 뒤로 옮기는 것을 검토해 보라는 뜻이다. 이번에는 제안이 바뀌는 과정까지 확인했고, 실제로 코드를 옮겼을 때 동작이나 전송량이 어떻게 달라지는지는 측정하지 않았다.
 
@@ -481,7 +471,7 @@ Vite 8은 빌드에 Rolldown을 쓴다. 플러그인에서는 Rollup과 같은 A
 }
 ```
 
-`importedIds` 7개에는 import 4개, `require()` 2개, 그리고 Vite가 동적 import를 처리하면서 주입한 `\0vite/preload-helper.js`가 함께 들어 있다. Rolldown이 이 목록을 채우는 코드를 보면, 의존성 기록의 종류 중 `Import`, `Require`, `NewUrl`(`new URL(..., import.meta.url)`)을 같은 집합에 넣는다.[^19]
+`importedIds` 7개에는 import 4개, `require()` 2개, 그리고 Vite가 동적 import를 처리하면서 주입한 `\0vite/preload-helper.js`가 함께 들어 있다. Rolldown이 이 목록을 채우는 코드를 보면, 의존성 기록의 종류 중 `Import`, `Require`, `NewUrl`(`new URL(..., import.meta.url)`)을 같은 집합에 넣는다.[^20]
 
 ```rust
 for (record, info) in raw_import_records.iter().zip(&resolved_deps) {
@@ -503,7 +493,7 @@ for (record, info) in raw_import_records.iter().zip(&resolved_deps) {
 
 Rolldown 내부에서는 의존성의 종류를 기록하지만, 플러그인에 공개하는 목록에서는 Turbopack처럼 import와 `require()`를 합친다. 소스의 위치도 기록하지 않는다. 다만 쓰지 않은 `unused-dep.js`는 Turbopack과 달리 목록에 남아 있다. `inputFormat`의 `es`와 `cjs`는 조회한 모듈 자체의 형식이다. 형식을 판단할 구문이 없는 `side-effect.js`는 `unknown`으로 나온다. 이 값으로 해당 모듈을 어떤 구문으로 가져왔는지는 알 수 없다.
 
-coldpath의 Vite 분석에서는 처음에 본 분류 오류가 없었다. Vite와 Rollup용 플러그인은 `transform` 훅에서 각 모듈의 소스를 미리 파싱한다. 이후 `getModuleInfo`에서 읽은 간선과 소스 구문을 맞춰 종류와 위치를 붙인다.[^20] 0.6.0으로 같은 입력의 그래프를 만들어 보면 `cjs-dep.js`와 `esm-required.js`가 각각 5행 18열과 6행 23열의 `require`로 나온다. `entry.js`에서 나가는 간선 중 위치가 없는 것은 소스에 없는 `preload-helper.js` 하나뿐이었다.
+coldpath의 Vite 분석에서는 처음에 본 분류 오류가 없었다. Vite와 Rollup용 플러그인은 `transform` 훅에서 각 모듈의 소스를 미리 파싱한다. 이후 `getModuleInfo`에서 읽은 간선과 소스 구문을 맞춰 종류와 위치를 붙인다.[^21] 0.6.0으로 같은 입력의 그래프를 만들어 보면 `cjs-dep.js`와 `esm-required.js`가 각각 5행 18열과 6행 23열의 `require`로 나온다. `entry.js`에서 나가는 간선 중 위치가 없는 것은 소스에 없는 `preload-helper.js` 하나뿐이었다.
 
 ### 산출물의 도우미 함수가 알려 주는 범위
 
@@ -543,7 +533,7 @@ var { esmRequired } = __toCommonJS(esm_required_exports);
 
 이 예제에서는 도우미 함수에서 원래 구문의 흔적을 찾을 수 있다. CommonJS 모듈을 import한 2번 줄은 `__toESM(...)`로 감싸 `default`를 만든다. `require()`한 5번 줄은 `require_cjs_dep()`를 그 자리에서 호출한다. ESM 모듈을 `require()`한 6번 줄에는 네임스페이스를 CommonJS 객체 모양으로 바꾸는 `__toCommonJS(...)`가 붙는다.
 
-ESM끼리의 import인 1번 줄은 별도 모듈 호출 없이 함수 선언만 최상위로 올라왔다. CommonJS 모듈을 감싼 `__commonJSMin`은 처음 호출될 때 모듈 본문을 한 번 실행하는 래퍼다.[^21]
+ESM끼리의 import인 1번 줄은 별도 모듈 호출 없이 함수 선언만 최상위로 올라왔다. CommonJS 모듈을 감싼 `__commonJSMin`은 처음 호출될 때 모듈 본문을 한 번 실행하는 래퍼다.[^22]
 
 ```js
 export var __commonJSMin = (cb, mod) => () => (
@@ -574,7 +564,7 @@ require('./dep.cjs')
 globalThis.finished = true
 ```
 
-Vite 8.3.2(Rolldown 1.2.12)의 프로덕션 빌드에서 두 입력의 축소 산출물은 완전히 같았다.[^22] 두 산출물 모두 `dep.cjs`의 부수 효과와 CommonJS 래퍼 호출을 포함했고, 네임스페이스 변환 함수는 없었다. 이 경우에는 산출물만 보고 원래 구문을 구분할 수 없다.
+Vite 8.3.2(Rolldown 1.2.12)의 프로덕션 빌드에서 두 입력의 축소 산출물은 완전히 같았다.[^23] 두 산출물 모두 `dep.cjs`의 부수 효과와 CommonJS 래퍼 호출을 포함했고, 네임스페이스 변환 함수는 없었다. 이 경우에는 산출물만 보고 원래 구문을 구분할 수 없다.
 
 `//#region` 주석도 모듈 경계와 정확히 일치하지는 않는다. 앞의 산출물에서는 원본 2번 줄에서 나온 `import_cjs_default` 선언이 `side-effect.js` 구간에 들어가 있다. 코드를 축소하면 도우미 이름도 한 글자로 바뀌므로 `v=o(...)`, `u(y)` 같은 호출 형태를 보고 역할을 추적해야 한다. 모듈별 함수 등록부도 없어서 coldpath의 `modules`로는 이 산출물의 모듈 경계를 복원하지 못했다.
 
@@ -589,7 +579,7 @@ Vite 8.3.2(Rolldown 1.2.12)의 프로덕션 빌드에서 두 입력의 축소 �
 | 6   | ESM을 `require()`         | `__toCommonJS(esm_required_exports)`   | `(init_esm_required(), __toCommonJS(esm_required_exports))` |
 | 9   | 동적 `import()`           | `__vitePreload(() => import(...), [])` | `import(...)`                                               |
 
-esbuild는 `require()`로 가져온 ESM 모듈을 `__esm` 래퍼로 감싸 `require()` 시점에 초기화한다. 그래프 정보에서도 원래 구문을 구분할 수 있다. metafile의 `imports`에는 `import-statement`, `require-call`, `dynamic-import`가 구분돼 있고 원래 지정자(`original`)도 있다. 다만 metafile에 기록하는 값은 `path`, `kind`, `original`과 import 속성뿐이고, 외부 모듈이면 `original` 대신 `external: true`가 붙는다. 소스의 위치는 알 수 없다.[^23]
+esbuild는 `require()`로 가져온 ESM 모듈을 `__esm` 래퍼로 감싸 `require()` 시점에 초기화한다. 그래프 정보에서도 원래 구문을 구분할 수 있다. metafile의 `imports`에는 `import-statement`, `require-call`, `dynamic-import`가 구분돼 있고 원래 지정자(`original`)도 있다. 다만 metafile에 기록하는 값은 `path`, `kind`, `original`과 import 속성뿐이고, 외부 모듈이면 `original` 대신 `external: true`가 붙는다. 소스의 위치는 알 수 없다.[^24]
 
 ## import와 `require()`의 차이가 남는 곳
 
@@ -604,7 +594,7 @@ esbuild는 `require()`로 가져온 ESM 모듈을 `__esm` 래퍼로 감싸 `requ
 
 산출물에서 import와 `require()`를 구분하는 데에는 호환 처리가 단서가 됐다. Turbopack은 이를 `i` 안에서 처리했고, webpack은 모듈을 가져온 뒤 `n.n(...)` 같은 함수를 붙였다. 다만 Vite에서 부수 효과 import와 `require()`가 같은 산출물이 된 것처럼, 실행에 필요한 동작이 같으면 원래 구문의 차이는 남지 않을 수 있다.
 
-그래프를 읽을 때도 API가 무엇을 기록하는지 확인해야 했다. webpack stats의 `reasons`에서는 구문의 종류와 위치, 활성 여부를 알 수 있었지만, Next.js의 `modules.data`에서는 동기와 비동기, 추적 대상인지만 구분할 수 있었다. Rolldown의 `getModuleInfo`는 Rollup 플러그인 API를 따라 의존 대상을 `importedIds`와 `dynamicallyImportedIds`로 나눈다.[^24] Rollup은 CommonJS를 플러그인으로 처리하고,[^25] Rolldown은 직접 처리하는 `require()`도 `importedIds`에 넣는다. 같은 목록에 들어 있다는 이유로 소스의 구문까지 같다고 가정하면, coldpath에서 겪은 것과 같은 분류 오류가 생긴다.
+그래프를 읽을 때도 API가 무엇을 기록하는지 확인해야 했다. webpack stats의 `reasons`에서는 구문의 종류와 위치, 활성 여부를 알 수 있었지만, Next.js의 `modules.data`에서는 동기와 비동기, 추적 대상인지만 구분할 수 있었다. Rolldown의 `getModuleInfo`는 Rollup 플러그인 API를 따라 의존 대상을 `importedIds`와 `dynamicallyImportedIds`로 나눈다.[^25] Rollup은 CommonJS를 플러그인으로 처리하고,[^26] Rolldown은 직접 처리하는 `require()`도 `importedIds`에 넣는다. 같은 목록에 들어 있다는 이유로 소스의 구문까지 같다고 가정하면, coldpath에서 겪은 것과 같은 분류 오류가 생긴다.
 
 coldpath에서는 그래프에 연결된 모듈을 소스의 어느 구문에서 가져오는지 확인해 분류를 고쳤다. 다만 구문의 종류를 바로잡는 것만으로는 제안이 나아지지 않았다. 최상위 `require()`가 import와 같은 시점에 실행된다는 점을 반영하고, 첫 진입에서 실행된 코드를 모듈 경계에 맞게 나눈 뒤에야 `heavy-cjs.js`에 `defer-review`가 붙었다. 이제 제안에서 해당 모듈을 가져오는 3행 18열의 `require()`까지 찾아갈 수 있다.
 
@@ -646,16 +636,18 @@ coldpath에서는 그래프에 연결된 모듈을 소스의 어느 구문에서
 
 [^18]: [`src/graph.rs#L38-L45`](https://github.com/yceffort/coldpath/blob/v0.8.2/src/graph.rs#L38-L45). 이 판정을 쓰는 분기는 [`src/recommendations.rs#L49-L98`](https://github.com/yceffort/coldpath/blob/v0.8.2/src/recommendations.rs#L49-L98)에 있다.
 
-[^19]: [`crates/rolldown/src/module_loader/module_task.rs#L157-L171`](https://github.com/rolldown/rolldown/blob/v1.2.12/crates/rolldown/src/module_loader/module_task.rs#L157-L171)
+[^19]: 청크 `0mlnz1g9-icsv.js`에서 `heavy-cjs.js`의 마지막 매핑(1376열 `}},`)은 다음 매핑인 `index.jsx`의 1417열 직전까지 이어지고, 그 사이에 첫 진입에서 실행된 `index.jsx` 팩토리의 시작(1384열 `e=>{`)이 들어 있다. `heavy-cjs.js` 팩토리의 실행 횟수는 1이고 안쪽 `compute`는 0이다. 확인 과정은 [`FINDINGS.md`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/FINDINGS.md)의 8-1절에 있다.
 
-[^20]: [`lib/rollup.ts#L30-L38`](https://github.com/yceffort/coldpath/blob/v0.6.0/lib/rollup.ts#L30-L38), [`#L65-L78`](https://github.com/yceffort/coldpath/blob/v0.6.0/lib/rollup.ts#L65-L78)
+[^20]: [`crates/rolldown/src/module_loader/module_task.rs#L157-L171`](https://github.com/rolldown/rolldown/blob/v1.2.12/crates/rolldown/src/module_loader/module_task.rs#L157-L171)
 
-[^21]: [`crates/rolldown/src/runtime/runtime-base.js#L31-L33`](https://github.com/rolldown/rolldown/blob/v1.2.12/crates/rolldown/src/runtime/runtime-base.js#L31-L33). `__toESM`은 [`#L61-L70`](https://github.com/rolldown/rolldown/blob/v1.2.12/crates/rolldown/src/runtime/runtime-base.js#L61-L70), `__toCommonJS`는 [`#L71-L74`](https://github.com/rolldown/rolldown/blob/v1.2.12/crates/rolldown/src/runtime/runtime-base.js#L71-L74)에 있다.
+[^21]: [`lib/rollup.ts#L30-L38`](https://github.com/yceffort/coldpath/blob/v0.6.0/lib/rollup.ts#L30-L38), [`#L65-L78`](https://github.com/yceffort/coldpath/blob/v0.6.0/lib/rollup.ts#L65-L78)
 
-[^22]: 2026년 10월 5일에 Node.js 24.20.0, Vite 8.3.2, Rolldown 1.2.12로 추가 실험을 진행했다. 재현 스크립트는 [`scripts/interop-counterexample.mjs`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/scripts/interop-counterexample.mjs), 입력과 산출물 원문은 [`results/interop-counterexample.json`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/results/interop-counterexample.json)에 있다. 실험 디렉터리에서 `node scripts/interop-counterexample.mjs`로 실행한다.
+[^22]: [`crates/rolldown/src/runtime/runtime-base.js#L31-L33`](https://github.com/rolldown/rolldown/blob/v1.2.12/crates/rolldown/src/runtime/runtime-base.js#L31-L33). `__toESM`은 [`#L61-L70`](https://github.com/rolldown/rolldown/blob/v1.2.12/crates/rolldown/src/runtime/runtime-base.js#L61-L70), `__toCommonJS`는 [`#L71-L74`](https://github.com/rolldown/rolldown/blob/v1.2.12/crates/rolldown/src/runtime/runtime-base.js#L71-L74)에 있다.
 
-[^23]: 종류 문자열은 [`internal/ast/ast.go#L43-L64`](https://github.com/evanw/esbuild/blob/v0.28.2/internal/ast/ast.go#L43-L64), metafile을 쓰는 코드는 [`internal/bundler/bundler.go#L2516-L2521`](https://github.com/evanw/esbuild/blob/v0.28.2/internal/bundler/bundler.go#L2516-L2521)에, 외부 모듈을 쓰는 코드는 [`#L2478-L2482`](https://github.com/evanw/esbuild/blob/v0.28.2/internal/bundler/bundler.go#L2478-L2482)에 있다.
+[^23]: 2026년 10월 5일에 Node.js 24.20.0, Vite 8.3.2, Rolldown 1.2.12로 추가 실험을 진행했다. 재현 스크립트는 [`scripts/interop-counterexample.mjs`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/scripts/interop-counterexample.mjs), 입력과 산출물 원문은 [`results/interop-counterexample.json`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/results/interop-counterexample.json)에 있다. 실험 디렉터리에서 `node scripts/interop-counterexample.mjs`로 실행한다.
 
-[^24]: [`src/rollup/types.d.ts#L193-L212`](https://github.com/rollup/rollup/blob/v4.64.0/src/rollup/types.d.ts#L193-L212)(Rollup v4.64.0)
+[^24]: 종류 문자열은 [`internal/ast/ast.go#L43-L64`](https://github.com/evanw/esbuild/blob/v0.28.2/internal/ast/ast.go#L43-L64), metafile을 쓰는 코드는 [`internal/bundler/bundler.go#L2516-L2521`](https://github.com/evanw/esbuild/blob/v0.28.2/internal/bundler/bundler.go#L2516-L2521)에, 외부 모듈을 쓰는 코드는 [`#L2478-L2482`](https://github.com/evanw/esbuild/blob/v0.28.2/internal/bundler/bundler.go#L2478-L2482)에 있다.
 
-[^25]: Rollup 문서의 [Importing CommonJS](https://rollupjs.org/introduction/#importing-commonjs): "Rollup can import existing CommonJS modules through a plugin."
+[^25]: [`src/rollup/types.d.ts#L193-L212`](https://github.com/rollup/rollup/blob/v4.64.0/src/rollup/types.d.ts#L193-L212)(Rollup v4.64.0)
+
+[^26]: Rollup 문서의 [Importing CommonJS](https://rollupjs.org/introduction/#importing-commonjs): "Rollup can import existing CommonJS modules through a plugin."
