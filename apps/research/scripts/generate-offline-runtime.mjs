@@ -3,8 +3,22 @@ import {readdir, readFile, writeFile} from 'node:fs/promises'
 import path from 'node:path'
 import {fileURLToPath} from 'node:url'
 
+import * as cacheNames from '../src/lib/offline/cacheNames.ts'
+
 const root = fileURLToPath(new URL('..', import.meta.url))
 const sha256 = (content) => createHash('sha256').update(content).digest('hex')
+
+// The service worker repeats the app's cache names. If they drift, it cannot
+// find the decks the app saved, and offline playback breaks without an error.
+const serviceWorker = await readFile(path.join(root, 'public/sw.js'), 'utf8')
+for (const [name, value] of Object.entries(cacheNames)) {
+  if (!serviceWorker.includes(`const ${name} = '${value}'`)) {
+    throw new Error(
+      `public/sw.js ${name} does not match src/lib/offline/cacheNames.ts ('${value}')`,
+    )
+  }
+}
+
 const staticDir = path.join(root, '.next/static')
 const files = (await readdir(staticDir, {recursive: true}))
   .filter((file) => /\.(?:js|css|woff2?|ttf|otf)$/.test(file))

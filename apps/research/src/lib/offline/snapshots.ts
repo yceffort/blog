@@ -1,8 +1,9 @@
+import {DECK_PREFIX} from './cacheNames'
 import {getSavedDeck} from './database'
 import type {SavedDeck} from './types'
 
 const SNAPSHOT_KEY = '/__research_offline_deck_snapshot__'
-const CACHE_NAME = /^research-deck-v1-[a-f0-9-]{36}$/
+const CACHE_NAME = new RegExp(`^${DECK_PREFIX}[a-f0-9-]{36}$`)
 
 export function putDeckSnapshot(cache: Cache, deck: SavedDeck) {
   return cache.put(SNAPSHOT_KEY, Response.json(deck))

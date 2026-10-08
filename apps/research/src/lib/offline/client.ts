@@ -2,6 +2,12 @@
 
 import {collectDeckAssets, rewriteDeckAssets} from './assets'
 import {
+  DECK_PREFIX,
+  META_CACHE,
+  RUNTIME_KEY,
+  RUNTIME_PREFIX,
+} from './cacheNames'
+import {
   getSavedDeck,
   getSavedDecks,
   putSavedDeck,
@@ -16,8 +22,6 @@ import type {
   SavedDeck,
 } from './types'
 
-const META_CACHE = 'research-offline-meta-v1'
-const RUNTIME_KEY = '/__research_offline_runtime__'
 const CHANGE_EVENT = 'research:offline-change'
 const listeners = new Set<() => void>()
 interface OfflineState {
@@ -194,7 +198,7 @@ async function ensureRuntime(
   manifest?: RuntimeManifest,
 ) {
   manifest ??= await fetchRuntimeManifest(signal)
-  const cacheName = `research-runtime-v1-${manifest.revision}`
+  const cacheName = `${RUNTIME_PREFIX}${manifest.revision}`
   const cache = await caches.open(cacheName)
   let completed = 0
   const report = () =>
@@ -326,7 +330,7 @@ export async function downloadDeck(
       await ensureRuntime(progress, signal, manifest)
       const assets = collectDeckAssets(deck, location.origin)
       const assetId = crypto.randomUUID()
-      const assetCache = `research-deck-v1-${assetId}`
+      const assetCache = `${DECK_PREFIX}${assetId}`
       const localUrls = new Map(
         assets.map((url, index) => [
           url,
