@@ -12,9 +12,11 @@ import type {Series} from '@/type'
 export default function PopularSeriesCard({
   series,
   thumbnail,
+  pathPrefix = '',
 }: {
   series: Series
   thumbnail: string
+  pathPrefix?: string
 }) {
   const {slug, title, posts} = series
   const latest = posts.reduce(
@@ -60,7 +62,7 @@ export default function PopularSeriesCard({
       onPointerLeave={onPointerLeave}
     >
       <Link
-        href={`/series/${slug}`}
+        href={`${pathPrefix}/series/${slug}`}
         aria-label={stripTitleEmphasis(title)}
         prefetch={false}
         className={listStyles.element_a}
@@ -75,15 +77,21 @@ export default function PopularSeriesCard({
         />
       </div>
       <div className={`body ${listStyles.body}`}>
-        <span className={`series ${listStyles.series}`}>◆ 인기 시리즈</span>
+        <span className={`series ${listStyles.series}`}>
+          ◆ {pathPrefix ? 'Popular series' : '인기 시리즈'}
+        </span>
         <h3 className={listStyles.element_h3}>
           <EmphasizedTitle title={title} />
         </h3>
         <div className={`meta ${listStyles.meta}`}>
-          <span>{posts.length}편의 글</span>
+          <span>
+            {pathPrefix ? `${posts.length} posts` : `${posts.length}편의 글`}
+          </span>
           <span aria-hidden="true">·</span>
           <span>
-            <PostDate value={latest} /> 업데이트
+            {pathPrefix ? 'Updated ' : ''}
+            <PostDate value={latest} />
+            {pathPrefix ? '' : ' 업데이트'}
           </span>
         </div>
       </div>
