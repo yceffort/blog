@@ -58,6 +58,20 @@ export default function Page() {
 >
 > coldpath는 npm 배포본을 썼다. 10월 8일에, 10월 4일 수집한 실행 기록과 분석 파일을 0.6.0, 0.6.1, 0.8.0, 0.8.1, 0.8.2로 각각 다시 분석해 버전별 결과를 비교했다. Vite의 부수 효과 import 반례는 10월 5일에 확인했다. 실험 코드와 측정값은 `yceffort/blog-experiments` 저장소의 [`bundler-import-memory`](https://github.com/yceffort/blog-experiments/tree/main/bundler-import-memory)에 있다.
 
+이 글에서 자주 쓰는 용어는 다음 뜻으로 쓴다.
+
+- **간선**: 의존성 그래프에서 한 모듈이 다른 모듈을 가져오는 연결 하나다. `entry.js`가 `esm-dep.js`를 가져오면 `entry.js -> esm-dep.js`가 간선 하나이고, 그 연결을 만든 구문(정적 import, `require()`, 동적 `import()`)을 간선의 종류라고 부른다.
+- **정적 import 체인**: 진입점에서 어떤 모듈까지 정적 import 간선만으로 이어진 경로다.
+- **복원 그래프**: 번들러의 그래프 정보 없이 산출물의 모듈 호출만 읽어 다시 만든 의존성 그래프다. coldpath의 `modules --graph`가 만든다.
+- **어댑터**: 번들러마다 다른 그래프 정보를 coldpath의 그래프 형식으로 옮기는 coldpath의 코드다.
+- **지정자**: `'./cjs-dep.js'`처럼 import나 `require()`에 넘기는 경로 문자열(specifier)이다.
+- **최상위**: 함수 안이 아니라 모듈 본문에서 바로 실행되는 자리다. 최상위 `require()`는 그 모듈이 실행될 때 함께 실행된다.
+- **모듈 함수**: 번들러가 모듈 하나의 코드를 감싸 만든 함수다. webpack과 Turbopack 산출물은 이 함수를 id로 찾아 실행한다.
+- **네임스페이스 객체**: `import * as ns`로 받는, 모듈의 export를 모은 객체다.
+- **orphan**: webpack stats에서 어느 청크에도 들어가지 않은 모듈이다.
+- **추적(traced) 대상**: Turbopack이 번들에 넣지 않지만 실행할 때 필요해서 배포 파일 목록에 남기는 파일이다. 정적 자산이나 번들 밖 외부 패키지가 여기에 해당한다.
+- **조건부 해석**: `package.json` `exports`의 조건(`import`, `require`, `browser` 등)에 따라 다른 파일을 고르는 해석이다.
+
 ## 일곱 가지 경우를 담은 입력
 
 비교에 쓴 입력은 아래 `entry.js` 하나다. import와 `require()`로 ESM과 CommonJS를 가져오는 경우를 넣고, 부수 효과 import와 쓰지 않는 import, 동적 import도 추가했다. 각 의존 모듈에는 `'M_ESM_DEP'` 같은 고유한 문자열을 넣어 산출물에서도 찾을 수 있게 했다.
@@ -418,7 +432,7 @@ for (const [field, kind] of [
 | 0.8.1        | 최상위 `require`, 3행 18열       | `split-review`      |
 | 0.8.2        | 최상위 `require`, 3행 18열       | `defer-review`      |
 
-0.6.1의 `inspect-imports`는 경로가 정적 체인도 아니고 `import()`를 지나지도 않을 때 내는 마지막 분기다. 0.6.1은 경로의 간선이 모두 `static`일 때만 정적 체인으로 봤기 때문에, `require` 간선이 하나라도 끼면 이 분기로 넘어갔다.[^17] 설명도 "import 그래프와 부수 효과를 살펴본 뒤 지연 로딩 경계를 정하라"는 일반적인 문장이다. 간선 종류는 바로잡았지만 제안은 오히려 근거를 잃은 셈이다.
+0.6.1의 `inspect-imports`는 경로가 정적 import 체인도 아니고 `import()`를 지나지도 않을 때 내는 마지막 분기다. 0.6.1은 경로의 간선이 모두 `static`일 때만 정적 import 체인으로 봤기 때문에, `require` 간선이 하나라도 끼면 이 분기로 넘어갔다.[^17] 설명도 "import 그래프와 부수 효과를 살펴본 뒤 지연 로딩 경계를 정하라"는 일반적인 문장이다. 간선 종류는 바로잡았지만 제안은 오히려 근거를 잃은 셈이다.
 
 최상위에서 호출한 `require()`는 import처럼, 가져오는 모듈이 실행될 때 대상 모듈을 바로 실행한다. 지연 로딩을 검토할 때 정적 import 체인과 다르게 볼 이유가 없다. 그래서 0.8.1([`0e83423`](https://github.com/yceffort/coldpath/commit/0e834233526653d643f26b23d0acfab1dcfa4607))부터는 어댑터가 `require` 간선이 최상위 호출인지를 `topLevel`로 기록하고, 분석기는 정적 import와 최상위 `require()`로만 이어진 경로를 동기 체인으로 본다.[^18]
 
@@ -434,7 +448,7 @@ impl ImportStep {
 
 블로그 그래프의 `require` 678개 중 661개가 최상위 호출이었다. 나머지 17개 중 8개는 UMD 래퍼 안의 호출이다. 최상위가 아닌 `require()`나 `unknown` 간선이 낀 경로에는 동기 체인을 전제로 하는 제안이 붙지 않는다.
 
-0.8.1에서 제안은 다시 `split-review`가 됐고, 설명의 앞부분도 "A synchronous import chain (static imports or top-level require() calls)"로 바뀌었다. 다만 "part of it executes initially"라는 뒷부분은 남았다. 첫 진입에서 이 모듈이 실행한 것은 팩토리가 `t.exports`에 객체를 대입하는 코드뿐이었는데, Turbopack 산출물에서 `heavy-cjs.js`의 마지막 소스맵 매핑이 바로 뒤 `index.jsx` 팩토리의 시작 부분까지 이어져 그 실행이 이 모듈의 함수 실행으로 집계됐기 때문이다.[^19] 매핑 범위를 모듈 래퍼의 경계에서 자르는 수정([`9c89cbc`](https://github.com/yceffort/coldpath/commit/9c89cbc9239a04e29d14e35e591895a0a74733df))과 CommonJS 내보내기 대입을 최상위 부수 효과에서 빼는 수정([`34f908b`](https://github.com/yceffort/coldpath/commit/34f908bbc186503a31f58352f353e84bdc825a30))이 들어간 0.8.2에서 `heavy-cjs.js`에는 다음 제안이 붙었다.
+0.8.1에서 제안은 다시 `split-review`가 됐고, 설명의 앞부분도 "A synchronous import chain (static imports or top-level require() calls)"로 바뀌었다. 다만 "part of it executes initially"라는 뒷부분은 남았다. 첫 진입에서 이 모듈이 실행한 것은 모듈 함수가 `t.exports`에 객체를 대입하는 코드뿐이었는데, Turbopack 산출물에서 `heavy-cjs.js`의 마지막 소스맵 매핑이 바로 뒤 `index.jsx` 모듈 함수의 시작 부분까지 이어져 그 실행이 이 모듈의 함수 실행으로 집계됐기 때문이다.[^19] 매핑 범위를 모듈 함수의 경계에서 자르는 수정([`9c89cbc`](https://github.com/yceffort/coldpath/commit/9c89cbc9239a04e29d14e35e591895a0a74733df))과 CommonJS 내보내기 대입을 최상위 부수 효과에서 빼는 수정([`34f908b`](https://github.com/yceffort/coldpath/commit/34f908bbc186503a31f58352f353e84bdc825a30))이 들어간 0.8.2에서 `heavy-cjs.js`에는 다음 제안이 붙었다.
 
 ```json
 {
@@ -632,11 +646,11 @@ coldpath에서는 그래프에 연결된 모듈을 소스의 어느 구문에서
 
 [^16]: 버전별 그래프와 분석 결과는 [`results/coldpath-versions`](https://github.com/yceffort/blog-experiments/tree/main/bundler-import-memory/results/coldpath-versions)에 있고, [`scripts/coldpath-versions.sh`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/scripts/coldpath-versions.sh)로 다시 만들 수 있다. 실행 기록과 같은 10월 4일 빌드의 `.next`가 있어야 한다.
 
-[^17]: [`src/recommendations.rs#L45-L47`](https://github.com/yceffort/coldpath/blob/v0.6.1/src/recommendations.rs#L45-L47)에서 모든 간선이 `static`인 경로만 정적 체인으로 보고, [`#L89-L94`](https://github.com/yceffort/coldpath/blob/v0.6.1/src/recommendations.rs#L89-L94)의 마지막 분기에서 `inspect-imports`를 낸다.
+[^17]: [`src/recommendations.rs#L45-L47`](https://github.com/yceffort/coldpath/blob/v0.6.1/src/recommendations.rs#L45-L47)에서 모든 간선이 `static`인 경로만 정적 import 체인으로 보고, [`#L89-L94`](https://github.com/yceffort/coldpath/blob/v0.6.1/src/recommendations.rs#L89-L94)의 마지막 분기에서 `inspect-imports`를 낸다.
 
 [^18]: [`src/graph.rs#L38-L45`](https://github.com/yceffort/coldpath/blob/v0.8.2/src/graph.rs#L38-L45). 이 판정을 쓰는 분기는 [`src/recommendations.rs#L49-L98`](https://github.com/yceffort/coldpath/blob/v0.8.2/src/recommendations.rs#L49-L98)에 있다.
 
-[^19]: 청크 `0mlnz1g9-icsv.js`에서 `heavy-cjs.js`의 마지막 매핑(1376열 `}},`)은 다음 매핑인 `index.jsx`의 1417열 직전까지 이어지고, 그 사이에 첫 진입에서 실행된 `index.jsx` 팩토리의 시작(1384열 `e=>{`)이 들어 있다. `heavy-cjs.js` 팩토리의 실행 횟수는 1이고 안쪽 `compute`는 0이다. 확인 과정은 [`FINDINGS.md`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/FINDINGS.md)의 8-1절에 있다.
+[^19]: 청크 `0mlnz1g9-icsv.js`에서 `heavy-cjs.js`의 마지막 매핑(1376열 `}},`)은 다음 매핑인 `index.jsx`의 1417열 직전까지 이어지고, 그 사이에 첫 진입에서 실행된 `index.jsx` 모듈 함수의 시작(1384열 `e=>{`)이 들어 있다. `heavy-cjs.js` 모듈 함수의 실행 횟수는 1이고 안쪽 `compute`는 0이다. 확인 과정은 [`FINDINGS.md`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/FINDINGS.md)의 8-1절에 있다.
 
 [^20]: [`crates/rolldown/src/module_loader/module_task.rs#L157-L171`](https://github.com/rolldown/rolldown/blob/v1.2.12/crates/rolldown/src/module_loader/module_task.rs#L157-L171)
 
