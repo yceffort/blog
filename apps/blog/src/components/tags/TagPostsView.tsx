@@ -1,8 +1,8 @@
+import {pageCount} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 import {permanentRedirect} from 'next/navigation'
 
-import ListLayout from '@/components/post/ListLayout'
-import PageNumber from '@/components/post/PageNumber'
+import PaginatedList from '@/components/post/PaginatedList'
 import {SiteConfig} from '@/config'
 import {DEFAULT_NUMBER_OF_POSTS} from '@/constants'
 import {getAllPosts, getAllTagsFromPosts, type Locale} from '@/utils/Post'
@@ -36,7 +36,7 @@ export async function tagPostsStaticParams(locale: Locale) {
     ).length
 
     Array.from({
-      length: Math.ceil(tagsCount / DEFAULT_NUMBER_OF_POSTS),
+      length: pageCount(tagsCount, DEFAULT_NUMBER_OF_POSTS),
     }).forEach((_, i) => {
       paths.push({tag, id: `${i + 1}`})
     })
@@ -61,38 +61,20 @@ export default async function TagPostsView({
   const postsWithTag = allPosts.filter((post) =>
     post.frontMatter.tags.find((t) => t === tag),
   )
-  const lastPage = Math.ceil(postsWithTag.length / DEFAULT_NUMBER_OF_POSTS)
-  const tagPath = `${pathPrefix}/tags/${encodeURIComponent(tag)}`
 
   if (postsWithTag.length === 0) {
     permanentRedirect(`${pathPrefix}/tags`)
   }
 
-  if (!Number.isInteger(pageNo) || pageNo < 1) {
-    permanentRedirect(`${tagPath}/pages/1`)
-  }
-
-  if (pageNo > lastPage) {
-    permanentRedirect(`${tagPath}/pages/${lastPage}`)
-  }
-  const startIndex = (pageNo - 1) * DEFAULT_NUMBER_OF_POSTS
-  const endIndex = startIndex + DEFAULT_NUMBER_OF_POSTS
-
-  const posts = postsWithTag.slice(startIndex, endIndex)
-
-  const hasNextPage = lastPage > pageNo
-
   const title = `${tag[0].toUpperCase() + tag.split(' ').join('-').slice(1)} ${pageNo}`
 
   return (
-    <>
-      <ListLayout posts={posts} title={title} pathPrefix={pathPrefix} />
-      <PageNumber
-        pageNo={pageNo}
-        next={`${pathPrefix}/tags/${tag}/pages/${pageNo + 1}`}
-        prev={`${pathPrefix}/tags/${tag}/pages/${pageNo - 1}`}
-        hasNextPage={hasNextPage}
-      />
-    </>
+    <PaginatedList
+      posts={postsWithTag}
+      pageNo={pageNo}
+      basePath={`${pathPrefix}/tags/${encodeURIComponent(tag)}/pages`}
+      title={title}
+      pathPrefix={pathPrefix}
+    />
   )
 }

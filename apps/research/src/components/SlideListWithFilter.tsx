@@ -1,5 +1,6 @@
 'use client'
 
+import {pageCount, pageItems} from '@yceffort/shared/utils'
 import Link from 'next/link'
 import {useCallback, useMemo, useRef, useSyncExternalStore} from 'react'
 
@@ -245,12 +246,9 @@ export function SlideListWithFilter({slides, cssList}: Props) {
     )
   }, [slides, selectedTags])
 
-  const lastPage = Math.max(1, Math.ceil(filteredSlides.length / PER_PAGE))
+  const lastPage = pageCount(filteredSlides.length, PER_PAGE)
   const page = Math.min(rawPage, lastPage)
-  const pagedSlides = filteredSlides.slice(
-    (page - 1) * PER_PAGE,
-    page * PER_PAGE,
-  )
+  const pagedSlides = pageItems(filteredSlides, page, PER_PAGE)
 
   const handleToggleTag = (tag: string) => {
     const next = selectedTags.includes(tag)
