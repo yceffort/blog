@@ -8,7 +8,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./components": "./src/components/index.ts",
-    "./utils": "./src/utils/index.ts"
+    "./utils": "./src/utils/index.ts",
+    "./scripts/*": "./scripts/*.mjs"
   },
   "scripts": {},
   "dependencies": {
@@ -21,10 +22,13 @@
     "next": ">=14.0.0"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "next": "catalog:",
-    "typescript": "catalog:"
+    "sharp": "catalog:",
+    "typescript": "catalog:",
+    "undraw-svg": "catalog:"
   }
 }
