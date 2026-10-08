@@ -16,6 +16,7 @@
  */
 
 import {existsSync, readdirSync, readFileSync, statSync} from 'node:fs'
+import {createRequire} from 'node:module'
 import {basename, dirname, join, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
 
@@ -41,6 +42,25 @@ const SERIES_DIR = join(BLOG_DIR, 'series')
 const PUBLIC_DIR = join(BLOG_DIR, 'public')
 // research 슬라이드는 marp로 렌더되어 파이프라인이 다르다. slide 필드 대조용으로만 읽는다.
 const SLIDES_DIR = resolve(BLOG_DIR, '../research/research')
+
+// 사이트의 앵커는 Rust 렌더러가 slug_table.rs로 만들고, 이 검사는 JS github-slugger로 앵커를 맞춰 본다.
+// 두 버전이 다르면 링크 검사가 실제 앵커와 어긋나므로 시작할 때 막는다.
+const SLUG_TABLE = resolve(
+  BLOG_DIR,
+  '../../packages/markdown-rs/src/slug_table.rs',
+)
+const sluggerVersion = createRequire(import.meta.url)(
+  'github-slugger/package.json',
+).version
+const tableVersion = readFileSync(SLUG_TABLE, 'utf8').match(
+  /github-slugger (\S+) 의/,
+)?.[1]
+if (tableVersion !== sluggerVersion) {
+  console.error(
+    `slug_table.rs는 github-slugger ${tableVersion} 기준인데 설치된 버전은 ${sluggerVersion}이다. node packages/markdown-rs/scripts/gen-slug-table.mjs로 다시 만들 것`,
+  )
+  process.exit(1)
+}
 
 const REQUIRED_POST_FIELDS = [
   'title',
