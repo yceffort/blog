@@ -1,10 +1,10 @@
 import type {MetadataRoute} from 'next'
 
 import {SiteConfig} from '@/config'
-import {getAllSlides} from '@/lib/slidesIndex'
+import {getPublishedSlides} from '@/lib/slidesIndex'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const slides = getAllSlides().filter((s) => s.published)
+  const slides = getPublishedSlides()
 
   return [
     {

@@ -1,8 +1,8 @@
 import {SiteConfig} from '@/config'
-import {getAllSlides} from '@/lib/slidesIndex'
+import {getPublishedSlides} from '@/lib/slidesIndex'
 
 export function GET() {
-  const slides = getAllSlides().filter((s) => s.published)
+  const slides = getPublishedSlides()
 
   const lines: string[] = []
   lines.push(`# ${SiteConfig.title} — ${SiteConfig.subtitle}`)

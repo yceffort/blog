@@ -1,10 +1,10 @@
 import {NextResponse} from 'next/server'
 
 import {SiteConfig} from '@/config'
-import {getAllSlides} from '@/lib/slidesIndex'
+import {getPublishedSlides} from '@/lib/slidesIndex'
 
 export async function GET() {
-  const slides = getAllSlides().filter((slide) => slide.published)
+  const slides = getPublishedSlides()
   // 인자 없는 new Date()는 요청 시점 IO로 간주돼 라우트가 동적이 되므로,
   // 최신 슬라이드 날짜(빌드 타임 고정값)를 쓴다.
   const lastBuildDate = new Date(slides[0]?.date ?? 0).toUTCString()

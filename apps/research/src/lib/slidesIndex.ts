@@ -70,6 +70,11 @@ export const getAllSlides = cache(
   },
 )
 
+// 목록, 피드, 사이트맵, llms에 싣는 덱. published는 목록 노출만 정하고 직접 접근은 막지 않는다
+export function getPublishedSlides() {
+  return getAllSlides().filter((slide) => slide.published)
+}
+
 export const getSlideBySlug = cache(function getSlideBySlugImpl(
   slug: string,
 ): SlideIndexEntry | null {
