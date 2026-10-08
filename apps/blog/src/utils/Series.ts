@@ -107,11 +107,14 @@ export const getPopularSeries = cache(async function getPopularSeriesImpl(
   return best
 })
 
-export const findSeriesSlugByName = cache(
-  async function findSeriesSlugByNameImpl(
-    name: string,
-  ): Promise<string | undefined> {
-    const series = await getAllSeries()
-    return series.find((s) => s.name === name)?.slug
+export const findSeriesByPostSlug = cache(
+  async function findSeriesByPostSlugImpl(
+    postSlug: string,
+    locale: Locale = 'ko',
+  ): Promise<Series | undefined> {
+    const series = await getAllSeries(locale)
+    return series.find((s) =>
+      s.posts.some((post) => post.fields.slug === postSlug),
+    )
   },
 )

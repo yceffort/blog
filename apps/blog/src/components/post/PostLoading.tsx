@@ -1,0 +1,236 @@
+import * as stylex from '@stylexjs/stylex'
+
+import * as ambientStyles from '@/components/layout/ambient.styles'
+import * as readingProgressStyles from '@/components/post/reading-progress.styles'
+import type {Locale} from '@/utils/Post'
+
+import '@/styles/reading.css'
+
+const pulseAnimation = stylex.keyframes({
+  '50%': {
+    opacity: '0.5',
+  },
+})
+const sx = stylex.create({
+  span: {
+    '@layer utilities': {
+      display: 'block',
+      animationName: pulseAnimation,
+      animationDuration: '2s',
+      animationTimingFunction: 'cubic-bezier(0.4, 0, 0.6, 1)',
+      animationIterationCount: 'infinite',
+      borderRadius: '0.25rem',
+    },
+  },
+  div: {
+    '@layer utilities': {
+      position: 'relative',
+    },
+  },
+  span2: {
+    '@layer utilities': {
+      marginTop: 'calc(var(--spacing) * 3)',
+      display: 'block',
+    },
+  },
+  span3: {
+    '@layer utilities': {
+      display: 'block',
+      animationName: pulseAnimation,
+      animationDuration: '2s',
+      animationTimingFunction: 'cubic-bezier(0.4, 0, 0.6, 1)',
+      animationIterationCount: 'infinite',
+      borderRadius: 'calc(infinity * 1px)',
+    },
+  },
+  span4: {
+    '@layer utilities': {
+      marginTop: 'var(--spacing)',
+      display: 'block',
+    },
+  },
+  span5: {
+    '@layer utilities': {
+      animationName: pulseAnimation,
+      animationDuration: '2s',
+      animationTimingFunction: 'cubic-bezier(0.4, 0, 0.6, 1)',
+      animationIterationCount: 'infinite',
+      borderRadius: 'calc(infinity * 1px)',
+    },
+  },
+  article: {
+    '@layer utilities': {
+      maxWidth: 'none',
+    },
+  },
+  span6: {
+    '@layer utilities': {
+      marginTop: {
+        default: 'calc(var(--spacing) * 2)',
+        ':first-child': '0px',
+      },
+      display: 'block',
+      animationName: pulseAnimation,
+      animationDuration: '2s',
+      animationTimingFunction: 'cubic-bezier(0.4, 0, 0.6, 1)',
+      animationIterationCount: 'infinite',
+      borderRadius: '0.25rem',
+    },
+  },
+})
+const block = {
+  background: 'var(--surface-2)',
+} as const
+function Line({width, height = '1em'}: {width: string; height?: string}) {
+  return (
+    <span
+      className={stylex.props(sx.span).className}
+      style={{
+        ...block,
+        width,
+        height,
+      }}
+    />
+  )
+}
+const LABELS = {
+  ko: {
+    statsMin: 'min',
+    langCode: 'KO',
+    langNote: 'original',
+    subWidth: '120px',
+  },
+  en: {
+    statsMin: 'min read',
+    langCode: 'EN',
+    langNote: 'translated',
+    subWidth: '140px',
+  },
+} as const
+
+export default function PostLoading({locale}: {locale: Locale}) {
+  const labels = LABELS[locale]
+  return (
+    <div
+      className={`page-view ${ambientStyles.page_view} ${stylex.props(sx.div).className}`}
+      aria-busy="true"
+    >
+      <div
+        className={`post-back ${readingProgressStyles.post_back}`}
+        aria-hidden="true"
+      >
+        <span className={`dot ${readingProgressStyles.dot}`} />
+        <span
+          style={{
+            visibility: 'hidden',
+          }}
+        >
+          BACK TO INDEX
+        </span>
+      </div>
+
+      <section
+        className={`post-masthead ${readingProgressStyles.post_masthead}`}
+      >
+        <div className={`post-eyebrow ${readingProgressStyles.post_eyebrow}`}>
+          ◆ ESSAY
+        </div>
+
+        <div
+          className={`post-title ${readingProgressStyles.post_title}`}
+          aria-hidden="true"
+        >
+          <Line width="88%" height="1.05em" />
+          <span className={stylex.props(sx.span2).className}>
+            <Line width="52%" height="1.05em" />
+          </span>
+        </div>
+
+        <div className={`post-meta-row ${readingProgressStyles.post_meta_row}`}>
+          <div className={`post-author ${readingProgressStyles.post_author}`}>
+            <span
+              className={stylex.props(sx.span3).className}
+              style={{
+                ...block,
+                width: 36,
+                height: 36,
+              }}
+              aria-hidden="true"
+            />
+            <div>
+              <Line width="80px" height="14px" />
+              <span className={stylex.props(sx.span4).className}>
+                <Line width={labels.subWidth} height="11.5px" />
+              </span>
+            </div>
+          </div>
+          <div
+            className={`post-stats ${readingProgressStyles.post_stats}`}
+            aria-hidden="true"
+          >
+            <div>
+              <b className={readingProgressStyles.element_b}>--</b>
+              {labels.statsMin}
+            </div>
+            <div>
+              <b className={readingProgressStyles.element_b}>--</b>
+              year
+            </div>
+            <div>
+              <b className={readingProgressStyles.element_b}>
+                {labels.langCode}
+              </b>
+              {labels.langNote}
+            </div>
+          </div>
+        </div>
+
+        <div
+          className={`post-tags-row ${readingProgressStyles.post_tags_row}`}
+          aria-hidden="true"
+        >
+          {[64, 84, 52, 72].map((w, i) => (
+            <span
+              key={i}
+              className={stylex.props(sx.span5).className}
+              style={{
+                ...block,
+                width: w,
+                height: 22,
+              }}
+            />
+          ))}
+        </div>
+      </section>
+
+      <div className="post-layout">
+        <article
+          className={`post-article markdown-body markdown-dark ${stylex.props(sx.article).className}`}
+          aria-hidden="true"
+        >
+          {[
+            ['100%', '95%', '60%'],
+            ['100%', '88%'],
+            ['92%', '96%', '78%', '40%'],
+            ['100%', '82%'],
+            ['90%', '70%'],
+          ].map((widths, i) => (
+            <p key={i}>
+              {widths.map((w, j) => (
+                <span
+                  key={j}
+                  className={stylex.props(sx.span6).className}
+                  style={{
+                    ...block,
+                    width: w,
+                    height: '1em',
+                  }}
+                />
+              ))}
+            </p>
+          ))}
+        </article>
+      </div>
+    </div>
+  )
+}

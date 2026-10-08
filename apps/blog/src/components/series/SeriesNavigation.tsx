@@ -41,7 +41,9 @@ export default function SeriesNavigation({
         <span className="series-nav-kicker">{labels.kicker}</span>
         <h3 className="series-nav-title">
           {seriesSlug ? (
-            <Link href={`/series/${seriesSlug}`}>{seriesName}</Link>
+            <Link href={`${pathPrefix}/series/${seriesSlug}`}>
+              {seriesName}
+            </Link>
           ) : (
             seriesName
           )}

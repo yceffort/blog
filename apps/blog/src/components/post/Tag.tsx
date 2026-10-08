@@ -40,13 +40,10 @@ const sx = stylex.create({
   },
 })
 const tagClassName = stylex.props(sx.tagClassName).className
-const Tag = ({text, linked = true}: {text: string; linked?: boolean}) => {
+const Tag = ({text, pathPrefix = ''}: {text: string; pathPrefix?: string}) => {
   const label = text.split(' ').join('-')
-  if (!linked) {
-    return <span className={tagClassName}>{label}</span>
-  }
   return (
-    <Link href={`/tags/${text}`} className={tagClassName}>
+    <Link href={`${pathPrefix}/tags/${text}`} className={tagClassName}>
       {label}
     </Link>
   )
