@@ -85,7 +85,7 @@ export function run() {
 | 6   | `require()`             | ESM                                   |
 | 9   | 동적 `import()`         | ESM                                   |
 
-`package.json`에는 `type` 필드를 두지 않았고, `"sideEffects": ["./src/side-effect.js"]`로 부수 효과가 있는 파일을 하나만 선언했다. Next.js 빌드에서는 `pages/index.jsx`에서 `run()`을 호출해 그 결과를 화면에 표시한다.
+`package.json`에는 `type` 필드를 두지 않았고, `"sideEffects": ["./src/side-effect.js"]`로 부수 효과가 있는 파일을 하나만 선언했다. 번들러에 넘긴 진입점 `src/index.js`는 `run()`을 호출해 결과를 전역 변수에 담기만 한다. Next.js 빌드에서는 `pages/index.jsx`에서 `run()`을 호출해 그 결과를 화면에 표시한다.
 
 그래프 정보는 아래 방법으로 읽었다. 프로덕션 산출물은 코드를 축소한 버전과 축소하지 않은 버전으로 만들었고, Next.js 내장 webpack만 축소본으로 비교했다.
 
@@ -100,7 +100,7 @@ export function run() {
 
 ### stats의 reason에 남는 것
 
-webpack stats의 `reasons`에는 해당 모듈을 가져오는 모듈과 의존성의 종류가 기록된다. 위 입력에서 `entry.js`와 연결된 reason만 모으면 다음과 같다.
+webpack stats의 `reasons`에는 해당 모듈을 가져오는 모듈과 의존성의 종류가 기록된다. 아래는 모듈 연결(module concatenation, 여러 모듈을 한 함수 범위로 합치는 최적화)을 끈 빌드(`optimization.concatenateModules: false`)에서 `entry.js`와 연결된 reason만 모은 것이다. 모듈 연결을 켠 기본 빌드와의 차이는 뒤에서 다룬다.
 
 ```text
 ./src/esm-dep.js       harmony side effect evaluation  1:0-35    inactive
@@ -130,7 +130,7 @@ get type() {
 
 1번 줄의 import 문에는 reason이 두 개 붙어 있다. `harmony side effect evaluation`은 import 선언의 위치(`1:0-35`), `harmony import specifier`는 가져온 이름을 실제로 쓰는 위치(`9:10-16`)를 가리킨다. `sideEffects`로 부수 효과가 없다고 선언된 모듈은 선언 위치의 reason이 `inactive`가 되고 사용 위치만 활성으로 남는다.
 
-쓰지 않아서 번들에서 빠진 `unused-dep.js`도 orphan 모듈로 stats에 남아 있다. stats에서는 산출물에 포함되지 않은 import까지 확인할 수 있다.
+쓰지 않아서 번들에서 빠진 `unused-dep.js`도 orphan 모듈로 stats에 남아 있다. stats에서는 산출물에 포함되지 않은 import까지 확인할 수 있다. 다만 orphan 표시만으로 번들에서 빠졌다고 판단할 수는 없다. 모듈 연결을 켠 기본 빌드에서는 진입점에 합쳐진 `entry.js`, `esm-dep.js`, `esm-required.js`도 orphan으로 표시됐다.
 
 ### 산출물의 모듈 호출은 같아질 수 있다
 
@@ -175,7 +175,7 @@ source.replace(dep.range[0], dep.range[1] - 1, RuntimeGlobals.require);
 
 ### 모듈 연결이 CommonJS로 확장된 뒤
 
-모듈 연결이 적용되면 비교할 호출 자체가 사라질 수도 있다. 5.109.0(2026년 7월 23일)부터 정적으로 분석할 수 있는 CommonJS 모듈도 모듈 연결(module concatenation, 여러 모듈을 한 함수 범위로 합치는 최적화) 대상이 됐고, 5.110.0(2026년 8월 27일)부터는 합친 모듈을 `__webpack_require__.cw`라는 지연 접근자로 감싸고 `require()`를 그 자리에 인라인한다.[^5] 같은 입력을 5.111.1 기본 설정으로 빌드한 결과는 이렇다.
+모듈 연결이 적용되면 비교할 호출 자체가 사라질 수도 있다. 5.109.0(2026년 7월 23일)부터 정적으로 분석할 수 있는 CommonJS 모듈도 모듈 연결 대상이 됐고, 5.110.0(2026년 8월 27일)부터는 합친 모듈을 `__webpack_require__.cw`라는 지연 접근자로 감싸고 `require()`를 그 자리에 인라인한다.[^5] 같은 입력을 5.111.1 기본 설정으로 빌드한 결과는 이렇다.
 
 ```js
 var t=r.cw(function(t,e){function o(){return"M_ESM_REQUIRED"}r.d(e,{esmRequired:()=>o})}),e=r(678),o=r.n(e);r(19);const{cjsDep:n}=r(234),{esmRequired:s}=t();
@@ -275,7 +275,7 @@ fn chunking_type(&self) -> Option<ChunkingType> {
 }
 ```
 
-`ChunkingType`의 주석을 보면 `inherit_async`는 의존하는 모듈이 비동기일 때 이를 가져오는 모듈도 비동기가 되는지를 나타낸다. 최상위 `await`를 쓰는 모듈이 이런 경우에 해당한다. 주석에는 "ESM import에서는 그래야 하지만 CommonJS require에서는 아니다"라고 적혀 있다. `hoisted`는 가져온 모듈을 항상 먼저 실행하는지, 즉 ESM import의 실행 순서를 따르는지를 나타낸다. 이 값들이 간선에 기록돼 있으므로 Turbopack 내부에서는 두 구문을 구분할 수 있다.
+`ChunkingType`의 주석을 보면 `inherit_async`는 의존하는 모듈이 비동기일 때 이를 가져오는 모듈도 비동기가 되는지를 나타낸다. 최상위 `await`를 쓰는 모듈이 이런 경우에 해당한다. 주석에는 "ESM import에서는 그래야 하지만 CommonJS require에서는 아니다"라고 적혀 있다. `hoisted`는 가져온 모듈을 항상 먼저 실행하는지, 즉 ESM import의 실행 순서를 따르는지를 나타낸다. 같은 파일의 다른 CommonJS 참조(`CjsAssetReference`, `require.resolve()`의 `CjsRequireResolveAssetReference`)도 `require()`와 같은 값을 쓴다. 따라서 이 값으로는 ESM import와 CommonJS 참조를 구분할 수 있고, CommonJS 참조끼리는 구분할 수 없다.
 
 이 차이는 분석기에서 `modules.data`를 만들 때 사라진다. `analyze_module_graphs`는 그래프를 순회하면서 추적(traced) 대상인지를 먼저 확인한다. 나머지 간선은 `chunking_type`에 따라 목록에 넣는다.[^10]
 
@@ -364,6 +364,8 @@ contextPrototype.r = commonJsRequire
 소스의 `require()` 호출과 연결 대상을 모두 확인한 간선은 588개로, 전체 경로 쌍의 16.3%였다. 모두 `node_modules` 안에 있었고, 주로 `next/dist`의 CommonJS 산출물에서 나왔다.
 
 판정하지 못한 961개 중 201개는 가져오는 파일에 문자열 지정자의 `require()`가 있었지만, 어느 호출에서 나온 간선인지는 찾지 못했다. 나머지에는 `process` 폴리필, SWC가 주입한 `@swc/helpers`, JSX 변환이 주입한 `jsx-runtime`, `react`를 `next/dist/compiled/react`로 바꾸는 별칭처럼 소스와 맞추기 어려운 간선도 있다. 따라서 이 집계로 확인한 것은 588개이고, 전체 `require()` 간선이 최대 몇 개인지까지는 알 수 없다.
+
+블로그 코드(`apps/blog`와 `packages/shared`)에서 나가는 경로 쌍 193개는 판정하기가 더 어려웠다. import로 확인한 것은 16개뿐이고 177개는 판정하지 못했다. 대상이 블로그 파일인 91개 중 74개는 `@/` 경로 별칭(46개)이나 확장자를 생략한 상대 경로(28개)라서 Node.js 규칙으로 풀리지 않았다. 패키지를 가리키는 46개에는 앞의 `react` 별칭이나, pnpm이 피어 의존성 조합마다 따로 설치한 `next`처럼 번들러가 고른 파일과 Node.js 규칙으로 푼 파일이 다른 경우가 섞여 있었다. 나머지 40개는 JSX 변환이 주입한 `jsx-runtime`(38개)과 폴리필(2개)이다. 이 블로그 코드에는 `require()`가 없으므로 종류를 잘못 고를 일은 없지만, 소스와 맞춰 확인할 수 있는 간선은 그만큼 적었다.
 
 산출물에서 복원한 간선 중에는 `e.r`이 절반을 넘었다. scope hoisting으로 ESM 모듈끼리 한 모듈 함수로 합쳐지면 그 사이의 import 간선은 사라진다. 반면 별도 모듈 함수로 남은 CommonJS 모듈을 부르는 `e.r`은 복원 대상에 남는다.
 
@@ -538,7 +540,7 @@ Vite 8.3.2(Rolldown 1.2.12)의 프로덕션 빌드에서 두 입력의 축소 �
 | 6   | ESM을 `require()`         | `__toCommonJS(esm_required_exports)`   | `(init_esm_required(), __toCommonJS(esm_required_exports))` |
 | 9   | 동적 `import()`           | `__vitePreload(() => import(...), [])` | `import(...)`                                               |
 
-esbuild는 `require()`로 가져온 ESM 모듈을 `__esm` 래퍼로 감싸 `require()` 시점에 초기화한다. 그래프 정보에서도 원래 구문을 구분할 수 있다. metafile의 `imports`에는 `import-statement`, `require-call`, `dynamic-import`가 구분돼 있고 원래 지정자(`original`)도 있다. 다만 metafile에 기록하는 값은 `path`, `kind`, `original`과 import 속성뿐이어서 소스의 위치는 알 수 없다.[^20]
+esbuild는 `require()`로 가져온 ESM 모듈을 `__esm` 래퍼로 감싸 `require()` 시점에 초기화한다. 그래프 정보에서도 원래 구문을 구분할 수 있다. metafile의 `imports`에는 `import-statement`, `require-call`, `dynamic-import`가 구분돼 있고 원래 지정자(`original`)도 있다. 다만 metafile에 기록하는 값은 `path`, `kind`, `original`과 import 속성뿐이고, 외부 모듈이면 `original` 대신 `external: true`가 붙는다. 소스의 위치는 알 수 없다.[^20]
 
 ## import와 `require()`의 차이가 남는 곳
 
@@ -575,7 +577,7 @@ coldpath에서는 그래프에 연결된 모듈을 소스의 어느 구문에서
 
 [^8]: [`crates/next-api/src/analyze.rs#L368-L375`](https://github.com/vercel/next.js/blob/v16.3.8/crates/next-api/src/analyze.rs#L368-L375). 헤더 구조체는 [`#L110-L125`](https://github.com/vercel/next.js/blob/v16.3.8/crates/next-api/src/analyze.rs#L110-L125), 모듈 항목은 [`#L70-L74`](https://github.com/vercel/next.js/blob/v16.3.8/crates/next-api/src/analyze.rs#L70-L74)에 있다.
 
-[^9]: [`references/esm/base.rs#L672-L686`](https://github.com/vercel/next.js/blob/v16.3.8/turbopack/crates/turbopack-ecmascript/src/references/esm/base.rs#L672-L686), [`references/cjs.rs#L152-L162`](https://github.com/vercel/next.js/blob/v16.3.8/turbopack/crates/turbopack-ecmascript/src/references/cjs.rs#L152-L162). 필드의 주석은 [`turbopack-core/src/chunk/mod.rs#L347-L356`](https://github.com/vercel/next.js/blob/v16.3.8/turbopack/crates/turbopack-core/src/chunk/mod.rs#L347-L356)에 있다.
+[^9]: [`references/esm/base.rs#L672-L686`](https://github.com/vercel/next.js/blob/v16.3.8/turbopack/crates/turbopack-ecmascript/src/references/esm/base.rs#L672-L686), [`references/cjs.rs#L152-L162`](https://github.com/vercel/next.js/blob/v16.3.8/turbopack/crates/turbopack-ecmascript/src/references/cjs.rs#L152-L162). 같은 파일의 `CjsAssetReference`는 [`#L85-L90`](https://github.com/vercel/next.js/blob/v16.3.8/turbopack/crates/turbopack-ecmascript/src/references/cjs.rs#L85-L90), `CjsRequireResolveAssetReference`는 [`#L301-L311`](https://github.com/vercel/next.js/blob/v16.3.8/turbopack/crates/turbopack-ecmascript/src/references/cjs.rs#L301-L311)에서 같은 값을 쓴다. 필드의 주석은 [`turbopack-core/src/chunk/mod.rs#L347-L356`](https://github.com/vercel/next.js/blob/v16.3.8/turbopack/crates/turbopack-core/src/chunk/mod.rs#L347-L356)에 있다.
 
 [^10]: [`crates/next-api/src/analyze.rs#L534-L541`](https://github.com/vercel/next.js/blob/v16.3.8/crates/next-api/src/analyze.rs#L534-L541). 추적 대상을 거르는 조건은 바로 위 [`#L519-L532`](https://github.com/vercel/next.js/blob/v16.3.8/crates/next-api/src/analyze.rs#L519-L532)에 있다.
 
@@ -597,7 +599,7 @@ coldpath에서는 그래프에 연결된 모듈을 소스의 어느 구문에서
 
 [^19]: 2026년 10월 5일에 Node.js 24.20.0, Vite 8.3.2, Rolldown 1.2.12로 추가 실험을 진행했다. 재현 스크립트는 [`scripts/interop-counterexample.mjs`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/scripts/interop-counterexample.mjs), 입력과 산출물 원문은 [`results/interop-counterexample.json`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/results/interop-counterexample.json)에 있다. 실험 디렉터리에서 `node scripts/interop-counterexample.mjs`로 실행한다.
 
-[^20]: 종류 문자열은 [`internal/ast/ast.go#L43-L64`](https://github.com/evanw/esbuild/blob/v0.28.2/internal/ast/ast.go#L43-L64), metafile을 쓰는 코드는 [`internal/bundler/bundler.go#L2516-L2521`](https://github.com/evanw/esbuild/blob/v0.28.2/internal/bundler/bundler.go#L2516-L2521)에 있다.
+[^20]: 종류 문자열은 [`internal/ast/ast.go#L43-L64`](https://github.com/evanw/esbuild/blob/v0.28.2/internal/ast/ast.go#L43-L64), metafile을 쓰는 코드는 [`internal/bundler/bundler.go#L2516-L2521`](https://github.com/evanw/esbuild/blob/v0.28.2/internal/bundler/bundler.go#L2516-L2521)에, 외부 모듈을 쓰는 코드는 [`#L2478-L2482`](https://github.com/evanw/esbuild/blob/v0.28.2/internal/bundler/bundler.go#L2478-L2482)에 있다.
 
 [^21]: [`src/rollup/types.d.ts#L193-L212`](https://github.com/rollup/rollup/blob/v4.64.0/src/rollup/types.d.ts#L193-L212)(Rollup v4.64.0)
 
