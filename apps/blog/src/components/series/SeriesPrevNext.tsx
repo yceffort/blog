@@ -2,6 +2,8 @@ import {stripTitleEmphasis} from '@yceffort/shared/utils'
 import Link from 'next/link'
 
 import type {Post} from '@/type'
+
+import {seriesNeighbors} from './neighbors'
 interface SeriesPrevNextProps {
   seriesPosts: Post[]
   currentSlug: string
@@ -27,12 +29,7 @@ export default function SeriesPrevNext({
   locale = 'ko',
 }: SeriesPrevNextProps) {
   const labels = LABELS[locale]
-  const currentIndex = seriesPosts.findIndex(
-    (post) => post.fields.slug === currentSlug,
-  )
-  const prevPost = currentIndex > 0 ? seriesPosts[currentIndex - 1] : null
-  const nextPost =
-    currentIndex < seriesPosts.length - 1 ? seriesPosts[currentIndex + 1] : null
+  const {prevPost, nextPost} = seriesNeighbors(seriesPosts, currentSlug)
   if (!prevPost && !nextPost) {
     return null
   }
