@@ -9,7 +9,7 @@ tags:
 published: true
 date: 2026-10-07 16:05:00
 description: 'In the number-flow fork I built to support old browsers, animations in modern browsers were still recalculating styles on every frame. This post records how 0.2.0 moved additive compositing into transform and opacity keyframes, how the change was measured, and the costs that remain in the mask and in interruptions.'
-series: 'number-flow 개선기'
+series: 'Improving number-flow'
 seriesOrder: 2
 art:
   undraw: charts

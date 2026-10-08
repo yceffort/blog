@@ -6,7 +6,7 @@ tags:
   - oss
   - css
 published: true
-series: 'number-flow 개선기'
+series: 'Improving number-flow'
 seriesOrder: 1
 date: 2026-08-11 22:00:00
 updated: 2026-10-07 16:06:37
