@@ -153,16 +153,17 @@ function checkFrontMatter(file, attributes, rawFrontMatter, report) {
     } else {
       // Post.ts가 toISOString()으로 UTC 날짜를 쓰므로 여기도 UTC로 읽는다.
       // 로컬 시간대로 읽으면 같은 글이 KST와 CI에서 다른 달로 떨어진다.
+      // 경로는 초안을 만든 달이고 date는 발행 시각이라, 다음 달 이후에 발행하면 date가 늦는 게 정상이다.
       const pathYearMonth = file.slice(POSTS_DIR.length + 1).slice(0, 7)
       const dateYearMonth = date.toISOString().slice(0, 7).replace('-', '/')
       if (
         /^\d{4}\/\d{2}$/.test(pathYearMonth) &&
-        pathYearMonth !== dateYearMonth
+        dateYearMonth < pathYearMonth
       ) {
         report(
           'warn',
           0,
-          `date(${dateYearMonth})가 경로(${pathYearMonth})와 다르다`,
+          `date(${dateYearMonth})가 경로(${pathYearMonth})보다 이르다`,
         )
       }
     }
