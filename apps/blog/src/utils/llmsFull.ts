@@ -1,5 +1,6 @@
 import fs from 'fs'
 
+import {stripTitleEmphasis} from '@yceffort/shared/utils'
 import frontMatter from 'front-matter'
 
 import {SiteConfig} from '@/config'
@@ -37,7 +38,7 @@ export function buildLlmsFullResponse(locale: Locale): Response {
     parts.push('---')
     parts.push('')
     parts.push(`Source: ${urlPrefix}/${slug}.md`)
-    parts.push(`Title: ${attributes.title}`)
+    parts.push(`Title: ${stripTitleEmphasis(attributes.title)}`)
     if (attributes.description) {
       parts.push(`Description: ${attributes.description}`)
     }
