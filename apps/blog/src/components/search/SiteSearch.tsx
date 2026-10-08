@@ -1,6 +1,7 @@
 'use client'
 
 import type MiniSearch from 'minisearch'
+import type {SearchResult} from 'minisearch'
 import Link from 'next/link'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import type {ReactNode} from 'react'
@@ -16,9 +17,7 @@ import {
   type StoredDoc,
 } from '@/utils/search'
 const MAX_RESULTS = 20
-type Result = StoredDoc & {
-  terms: string[]
-}
+type Result = SearchResult & StoredDoc
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
@@ -104,7 +103,7 @@ export default function SiteSearch() {
     }
     return index
       .search(trimmed, searchOptions)
-      .slice(0, MAX_RESULTS) as unknown as Result[]
+      .slice(0, MAX_RESULTS) as Result[]
   }, [trimmed, index])
   return (
     <>
