@@ -3,11 +3,12 @@ import {
   AmbientEffects,
   BotTracker,
   GoogleAnalyticsPageViewTracker,
+  GoogleAnalyticsScripts,
   OutboundLinkTracker,
   Providers,
 } from '@yceffort/shared/components'
+import {THEME_COOKIE_SCRIPT} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
-import Script from 'next/script'
 
 import '@/styles/stylex.css'
 import '@/styles/tokens.stylex'
@@ -100,9 +101,6 @@ export const metadata: Metadata = {
   },
 }
 const GA_MEASUREMENT_ID = SiteConfig.googleAnalyticsId
-// 로컬에서 프로덕션 빌드를 띄우면(next start) NODE_ENV가 production이라 아래 가드를
-// 통과하고, 개발 중 조회가 운영 GA4에 그대로 섞인다. 실제 서비스 호스트에서만 켠다.
-const GA_HOST = new URL(SiteConfig.url).hostname
 export default async function Layout({children}: {children: ReactNode}) {
   const enSlugs = (await getAllPosts('en')).map((post) => post.fields.slug)
   return (
@@ -111,8 +109,7 @@ export default async function Layout({children}: {children: ReactNode}) {
         <head>
           <script
             dangerouslySetInnerHTML={{
-              __html:
-                "(function(){try{var m=document.cookie.match(/(?:^|;\\s*)tw-theme=([^;]+)/);if(m){localStorage.setItem('theme',decodeURIComponent(m[1]));}}catch(e){}})();",
+              __html: THEME_COOKIE_SCRIPT,
             }}
           />
           <link
@@ -157,25 +154,9 @@ export default async function Layout({children}: {children: ReactNode}) {
           </Providers>
           {GA_MEASUREMENT_ID && process.env.NODE_ENV === 'production' && (
             <>
-              <Script
-                strategy="afterInteractive"
-                src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-              />
-              <Script
-                id="google-analytics"
-                strategy="afterInteractive"
-                dangerouslySetInnerHTML={{
-                  __html: `
-                  if (window.location.hostname === '${GA_HOST}') {
-                    window.dataLayer = window.dataLayer || [];
-                    window.gtag = function gtag(){window.dataLayer.push(arguments);};
-                    window.gtag('js', new Date());
-                    window.gtag('config', '${GA_MEASUREMENT_ID}', {
-                      page_path: window.location.pathname,
-                    });
-                  }
-                `,
-                }}
+              <GoogleAnalyticsScripts
+                measurementId={GA_MEASUREMENT_ID}
+                siteUrl={SiteConfig.url}
               />
               <Suspense fallback={null}>
                 <GoogleAnalyticsPageViewTracker />
