@@ -1,13 +1,11 @@
 import {parseTitleEmphasis} from '@yceffort/shared/utils'
 import {ImageResponse} from 'next/og'
 
+import {loadOgFont} from '@/utils/ogFont'
 import {unblockSvgLoader} from '@/utils/ogSharpUnblock'
 
 import {LAYOUTS, LAYOUT_BY_NAME, HEIGHT, INK, WIDTH, alpha} from './layouts'
 import type {Ctx} from './layouts'
-
-const FONT_URL =
-  'https://cdn.jsdelivr.net/gh/fonts-archive/NanumGothic/NanumGothicBold.ttf'
 
 const DUOS: [string, string][] = [
   ['#fb923c', '#ec4899'],
@@ -195,10 +193,7 @@ export async function GET(request: Request) {
 
   let fontData: ArrayBuffer | undefined
   if (title || hero || layout === LAYOUT_BY_NAME.glyph) {
-    const fontRes = await fetch(FONT_URL)
-    if (fontRes.ok) {
-      fontData = await fontRes.arrayBuffer()
-    }
+    fontData = await loadOgFont()
   }
 
   const inkColor = dark ? '#f2f2f7' : INK

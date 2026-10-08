@@ -1,6 +1,7 @@
 import {ImageResponse} from 'next/og'
 
 import {SiteConfig} from '@/config'
+import {loadOgFont, OG_FONT_URL} from '@/utils/ogFont'
 import {unblockSvgLoader} from '@/utils/ogSharpUnblock'
 export async function GET(request: Request) {
   try {
@@ -53,14 +54,10 @@ export async function GET(request: Request) {
     const imageMime = hasThumbnail ? 'image/png' : 'image/jpeg'
     const imageBase64 = Buffer.from(imageBuffer).toString('base64')
 
-    // Using NanumGothicBold.ttf for thicker, clearer text
-    const fontUrl =
-      'https://cdn.jsdelivr.net/gh/fonts-archive/NanumGothic/NanumGothicBold.ttf'
-    const fontRes = await fetch(fontUrl)
-    if (!fontRes.ok) {
-      throw new Error(`Failed to fetch font: ${fontUrl}`)
+    const fontData = await loadOgFont()
+    if (!fontData) {
+      throw new Error(`Failed to fetch font: ${OG_FONT_URL}`)
     }
-    const fontData = await fontRes.arrayBuffer()
     return new ImageResponse(
       <div
         style={{
