@@ -98,7 +98,8 @@ async function toNotification(filePath) {
   if (post) {
     return {
       title: '새 글이 올라왔어요',
-      body: fm.title || post[3],
+      // 알림 본문은 일반 텍스트라 제목의 <em> 강조를 걷어낸다
+      body: fm.title?.replace(/<\/?em>/g, '') || post[3],
       url: `/${post[1]}/${post[2]}/${post[3]}`,
     }
   }
