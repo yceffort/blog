@@ -262,15 +262,8 @@ export const getFeaturedPosts = cache(async function getFeaturedPostsImpl(
   return {popular, recent}
 })
 
-export const getFeaturedSlugs = cache(async function getFeaturedSlugsImpl(
-  locale: Locale = 'ko',
-): Promise<string[]> {
-  const {popular, recent} = await getFeaturedPosts(locale)
-  return [...popular, ...recent].map((p) => p.fields.slug)
-})
-
 // 빌드 시 사전 생성할 슬러그. 검색 롱테일 유입이 콜드 함수 렌더(TTFB 상승)를
-// 밟지 않도록, 홈 노출용(getFeaturedSlugs)보다 넓게 최근 1년 인기 상위를 포함한다.
+// 밟지 않도록, 홈 노출용(getFeaturedPosts)보다 넓게 최근 1년 인기 상위를 포함한다.
 export const getPrerenderSlugs = cache(async function getPrerenderSlugsImpl(
   locale: Locale = 'ko',
 ): Promise<string[]> {

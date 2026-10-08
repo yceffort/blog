@@ -7,5 +7,3 @@ export const HOME_RECENT_CARD_COUNT = 3
 export const HOME_SERIES_COUNT = 5
 // 빌드 시 사전 생성할 GA4 인기 포스트(최근 1년) 수
 export const PRERENDER_POSTS_COUNT = 50
-export const PINNED_POPULAR_SLUG =
-  '2026/07/frontend-performance-deep-dive-is-out-now'
