@@ -1,3 +1,5 @@
+import {getCookie} from '@yceffort/shared/utils'
+
 export type TransitionType = 'slide' | 'fade' | 'zoom' | 'glide' | 'none'
 
 export const TRANSITION_TYPES: TransitionType[] = [
@@ -20,9 +22,8 @@ export function readTransition(): TransitionType {
   if (isTransitionType(value)) {
     return value
   }
-  const match = document.cookie.match(/(?:^|; )tw-transition=([^;]+)/)
-  const decoded = match ? decodeURIComponent(match[1]) : null
-  return isTransitionType(decoded) ? decoded : 'slide'
+  const stored = getCookie('tw-transition')
+  return isTransitionType(stored) ? stored : 'slide'
 }
 
 export const SHORTCUT_GROUPS: {
