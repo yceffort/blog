@@ -330,24 +330,18 @@ const LayoutWrapper = ({
 }) => {
   const pathname = usePathname()
   const isEn = useLocale().locale === 'en'
-  let containerClass = stylex.props(sx.containerClass).className
-  if (pathname === '/' || pathname === '/en') {
-    containerClass = stylex.props(sx.container).className
-  } else if (pathname === '/about' || pathname === '/en/about') {
-    containerClass = stylex.props(sx.container2).className
-  } else if (
-    pathname?.startsWith('/pages') ||
-    pathname?.startsWith('/en/pages')
-  ) {
-    containerClass = stylex.props(sx.container).className
-  } else if (
-    pathname?.startsWith('/tags') ||
-    pathname?.startsWith('/en/tags')
-  ) {
-    containerClass = stylex.props(sx.container).className
-  } else if (pathname === '/series' || pathname === '/en/series') {
-    containerClass = stylex.props(sx.container).className
-  }
+  // 영문 경로도 같은 폭을 쓰도록 /en 접두사를 떼고 고른다
+  const path = pathname === '/en' ? '/' : pathname?.replace(/^\/en(?=\/.)/, '')
+  const containerClass = stylex.props(
+    path === '/about'
+      ? sx.container2
+      : path === '/' ||
+          path === '/series' ||
+          path?.startsWith('/pages') ||
+          path?.startsWith('/tags')
+        ? sx.container
+        : sx.containerClass,
+  ).className
   return (
     <>
       <a href="#main" className={`skip-link ${skipLink}`}>
