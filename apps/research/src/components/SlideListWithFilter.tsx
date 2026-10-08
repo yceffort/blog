@@ -11,7 +11,7 @@ import {DownloadButton} from './offline/DownloadButton'
 import {OfflineLink} from './offline/OfflineLink'
 import {SlidePreview} from './SlidePreview'
 
-interface Slide {
+export interface Slide {
   slug: string
   date: string | null
   tags: string[]

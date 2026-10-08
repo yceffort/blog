@@ -2,26 +2,9 @@ import {cacheLife, cacheTag} from 'next/cache'
 
 import Hero from '@/components/Hero'
 import LayoutWrapper from '@/components/LayoutWrapper'
-import {SlideListWithFilter} from '@/components/SlideListWithFilter'
+import {SlideListWithFilter, type Slide} from '@/components/SlideListWithFilter'
 import {generateRenderedMarp} from '@/lib/marp'
 import {getAllSlides} from '@/lib/slidesIndex'
-
-interface Slide {
-  slug: string
-  date: string | null
-  tags: string[]
-  description?: string
-  title: string
-  published: boolean
-  featured: boolean
-  post?: string
-  slideCount: number
-  preview: {
-    html: string
-    cssIndex: number
-    fonts: string[]
-  }
-}
 
 interface HomeSlidesData {
   slides: Slide[]
