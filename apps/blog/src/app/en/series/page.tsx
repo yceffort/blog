@@ -2,8 +2,8 @@ import SeriesIndexView, {
   seriesIndexMetadata,
 } from '@/components/series/SeriesIndexView'
 
-export const metadata = seriesIndexMetadata('ko')
+export const metadata = seriesIndexMetadata('en')
 
 export default function Page() {
-  return <SeriesIndexView locale="ko" />
+  return <SeriesIndexView locale="en" />
 }

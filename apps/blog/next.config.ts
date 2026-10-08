@@ -176,6 +176,16 @@ const config: NextConfig = {
         permanent: true,
       },
       {
+        source: '/en/tags/:tag/pages/((?!\\d).*)',
+        destination: '/en/tags/:tag/pages/1',
+        permanent: true,
+      },
+      {
+        source: '/en/tags/:tag',
+        destination: '/en/tags/:tag/pages/1',
+        permanent: true,
+      },
+      {
         source: '/category/:tag',
         destination: '/tags/:tag/pages/1',
         permanent: true,

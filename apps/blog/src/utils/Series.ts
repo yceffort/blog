@@ -7,7 +7,7 @@ import {cache} from 'react'
 
 import type {Series} from '../type'
 import {getPopularPostViews} from './analytics'
-import {getSeriesPosts} from './Post'
+import {getAllPosts, getSeriesPosts} from './Post'
 import type {Locale} from './postPaths'
 
 const SERIES_ROOT = path.join(process.cwd(), 'series')
@@ -26,23 +26,42 @@ function latestPostDate(series: Series): string {
   )
 }
 
+function readSeriesFile(filePath: string) {
+  return frontMatter<SeriesFrontMatter>(
+    fs.readFileSync(filePath, {encoding: 'utf8'}),
+  )
+}
+
 export const getAllSeries = cache(async function getAllSeriesImpl(
   locale: Locale = 'ko',
 ): Promise<Series[]> {
   const files = sync(`${SERIES_ROOT}/*.md`).filter((f) => !f.endsWith('.en.md'))
+  const enPosts = locale === 'en' ? await getAllPosts('en') : []
 
   const series = await Promise.all(
     files.map(async (filePath): Promise<Series> => {
-      const file = fs.readFileSync(filePath, {encoding: 'utf8'})
-      const {attributes, body} = frontMatter<SeriesFrontMatter>(file)
+      const ko = readSeriesFile(filePath)
+      const koPosts = await getSeriesPosts(ko.attributes.name)
+      // 영문본의 series 값은 글마다 표기가 달라 이름으로 묶지 않고, 한국어 원문 글의 번역본을 같은 순서로 모은다
+      const enPath = filePath.replace(/\.md$/, '.en.md')
+      const readmePath =
+        locale === 'en' && fs.existsSync(enPath) ? enPath : filePath
+      const {attributes, body} =
+        readmePath === filePath ? ko : readSeriesFile(readmePath)
       return {
         slug: path.basename(filePath, '.md'),
         name: attributes.name,
         title: attributes.title ?? attributes.name,
         description: attributes.description,
         body,
-        path: filePath,
-        posts: await getSeriesPosts(attributes.name, locale),
+        path: readmePath,
+        posts:
+          locale === 'en'
+            ? koPosts.flatMap(
+                (post) =>
+                  enPosts.find((p) => p.fields.slug === post.fields.slug) ?? [],
+              )
+            : koPosts,
       }
     }),
   )

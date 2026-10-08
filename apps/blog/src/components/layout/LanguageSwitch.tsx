@@ -27,6 +27,8 @@ export default function LanguageSwitch({enSlugs}: {enSlugs: string[]}) {
     pathname === '/about' ||
     pathname === '/resume' ||
     pathname.startsWith('/pages') ||
+    pathname.startsWith('/series') ||
+    pathname.startsWith('/tags') ||
     enSlugs.includes(pathname.slice(1))
   return (
     <Link

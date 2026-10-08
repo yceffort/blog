@@ -7,9 +7,11 @@ import type {Series} from '@/type'
 export default function SeriesRow({
   series,
   index,
+  pathPrefix = '',
 }: {
   series: Series
   index: number
+  pathPrefix?: string
 }) {
   const {slug, name, title, description, posts} = series
   const latest = posts.reduce(
@@ -25,7 +27,7 @@ export default function SeriesRow({
   return (
     <div className={`rec-row ${recentStyles.rec_row}`}>
       <Link
-        href={`/series/${slug}`}
+        href={`${pathPrefix}/series/${slug}`}
         aria-label={name}
         prefetch={false}
         className={recentStyles.element_a}
@@ -47,7 +49,7 @@ export default function SeriesRow({
         <b className={recentStyles.element_b}>
           <PostDate value={latest} />
         </b>
-        마지막 업데이트
+        {pathPrefix ? 'last updated' : '마지막 업데이트'}
       </div>
       <div className={`rarrow ${recentStyles.rarrow}`} aria-hidden="true">
         <svg

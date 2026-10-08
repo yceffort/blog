@@ -22,6 +22,8 @@ const EN_PREFIXES = new Set([
   'llms-full.txt',
   'about',
   'resume',
+  'series',
+  'tags',
 ])
 
 // [year]/[...slug]는 loading.tsx 셸을 먼저 스트리밍하므로 페이지의 notFound()와 리다이렉트가 200이 된다.

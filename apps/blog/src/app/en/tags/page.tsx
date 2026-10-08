@@ -1,7 +1,7 @@
 import TagsIndexView, {tagsIndexMetadata} from '@/components/tags/TagsIndexView'
 
-export const metadata = tagsIndexMetadata('ko')
+export const metadata = tagsIndexMetadata('en')
 
 export default function Page() {
-  return <TagsIndexView locale="ko" />
+  return <TagsIndexView locale="en" />
 }
