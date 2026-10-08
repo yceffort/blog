@@ -651,7 +651,7 @@ export function mosaicLayout(ctx: Ctx) {
   return [svgWrap(tiles, 'mosaic')]
 }
 
-// frontmatter `art.layout` 이름 → 레이아웃. scripts/generate-art-spec.mjs 의 목록과 맞출 것
+// frontmatter `art.layout` 이름 → 레이아웃
 export const LAYOUT_BY_NAME: Record<string, (ctx: Ctx) => ReactNode[]> = {
   bands: wavesLayout,
   rings: orbitLayout,

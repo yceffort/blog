@@ -1,4 +1,4 @@
-/** 코드 생성 썸네일 스펙. scripts/generate-art-spec.mjs 가 본문에서 뽑아 frontmatter `art`에 쓴다 */
+/** 코드 생성 썸네일 스펙. frontmatter `art`에서 읽는다 */
 export interface ArtSpec {
   layout?: string
   hue?: string

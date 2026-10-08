@@ -43,7 +43,7 @@ node apps/blog/scripts/retag-posts.mjs <파일> --apply
 node apps/blog/scripts/generate-undraw-thumbnail.mjs <파일>
 ```
 
-frontmatter `art.undraw`를 고르고 `apps/blog/public/thumbnails/{slug}.webp`를 만든다. `generate-thumbnail.mjs`(Gemini)와 `generate-art-spec.mjs`는 쓰지 않는다.
+frontmatter `art.undraw`를 고르고 `apps/blog/public/thumbnails/{slug}.webp`를 만든다.
 
 - 만든 webp를 png로 바꿔 직접 열어 보고 확인한다(`sharp(webp).png().toFile(...)`).
 - **사람이 들어간 그림은 쓰지 않는다.** 카탈로그 필터(피부색 fill)를 통과한 이름이라도 사람 실루엣이 새어 나올 수 있다.
