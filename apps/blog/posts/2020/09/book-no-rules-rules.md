@@ -1,5 +1,5 @@
 ---
-title: '[Book] No Rules Rules'
+title: '[Book] <em>No Rules Rules</em>'
 tags:
   - essay
   - software-engineering

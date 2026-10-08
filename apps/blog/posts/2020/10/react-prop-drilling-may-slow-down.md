@@ -1,5 +1,5 @@
 ---
-title: 'Prop drilling 해결을 위해 context를 사용하기 전에 구조를 생각해보자.'
+title: '<em>Prop drilling</em> 해결을 위해 context를 사용하기 전에 구조를 생각해보자.'
 tags:
   - react
   - design-patterns

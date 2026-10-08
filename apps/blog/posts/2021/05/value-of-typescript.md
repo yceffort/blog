@@ -1,5 +1,5 @@
 ---
-title: 'Typescript, 객체의 키와 값 타이핑하기'
+title: 'Typescript, <em>객체의 키와 값</em> 타이핑하기'
 tags:
   - typescript
 published: true

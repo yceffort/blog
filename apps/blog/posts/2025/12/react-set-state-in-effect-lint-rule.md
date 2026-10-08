@@ -1,5 +1,5 @@
 ---
-title: 'React의 새로운 lint 규칙: set-state-in-effect'
+title: 'React의 새로운 lint 규칙: <em>set-state-in-effect</em>'
 tags:
   - react
   - eslint

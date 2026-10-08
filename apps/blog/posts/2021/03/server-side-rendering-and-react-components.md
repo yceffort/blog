@@ -1,5 +1,5 @@
 ---
-title: '리액트 서버사이드 렌더링과 컴포넌트'
+title: '리액트 <em>서버사이드 렌더링</em>과 컴포넌트'
 tags:
   - react
   - nextjs

@@ -1,5 +1,5 @@
 ---
-title: 'Object.freeze(), Object.seal(), Object.preventExtensions()의 차이'
+title: '<em>Object.freeze(), Object.seal(), Object.preventExtensions()</em>의 차이'
 tags:
   - javascript
 published: true

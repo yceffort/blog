@@ -1,5 +1,5 @@
 ---
-title: 자바스크립트 제네레이터
+title: '자바스크립트 <em>제네레이터</em>'
 tags:
   - javascript
 published: true

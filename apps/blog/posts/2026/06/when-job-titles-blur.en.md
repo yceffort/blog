@@ -1,5 +1,5 @@
 ---
-title: 'If AI Erases the Boundaries Between Planning, Development, and Design, What Remains?'
+title: 'If AI Erases the Boundaries Between Planning, Development, and Design, <em>What Remains</em>?'
 tags:
   - ai
   - essay

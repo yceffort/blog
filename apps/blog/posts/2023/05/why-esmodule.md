@@ -1,5 +1,5 @@
 ---
-title: '3부) 왜 esmodule 이어야 하는가?'
+title: '3부) 왜 <em>esmodule</em> 이어야 하는가?'
 tags:
   - npm
   - nodejs

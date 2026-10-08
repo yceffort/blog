@@ -1,5 +1,5 @@
 ---
-title: "React's New Lint Rule: set-state-in-effect"
+title: "React's New Lint Rule: <em>set-state-in-effect</em>"
 tags:
   - react
   - eslint

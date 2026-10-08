@@ -1,5 +1,5 @@
 ---
-title: 'eslint-config 를 위한 테스트 코드를 작성하기 (CI)'
+title: '<em>eslint-config</em> 를 위한 테스트 코드를 작성하기 (CI)'
 tags:
   - eslint
   - testing

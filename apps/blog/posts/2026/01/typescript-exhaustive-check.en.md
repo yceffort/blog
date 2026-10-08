@@ -1,5 +1,5 @@
 ---
-title: 'How to Check if All Cases Are Handled in TypeScript Switch Statements'
+title: 'How to Check if <em>All Cases</em> Are Handled in TypeScript Switch Statements'
 tags:
   - typescript
 published: true

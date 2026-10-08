@@ -1,5 +1,5 @@
 ---
-title: 'Nextjs 11 릴리즈 노트 살펴보고 블로그에 적용하기'
+title: '<em>Nextjs 11</em> 릴리즈 노트 살펴보고 블로그에 적용하기'
 tags:
   - nextjs
   - web-performance

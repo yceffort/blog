@@ -1,5 +1,5 @@
 ---
-title: 'Effect 시스템 심층 분석: 모나드에서 Algebraic Effects까지, 그리고 Effect-TS의 선택'
+title: '<em>Effect 시스템</em> 심층 분석: 모나드에서 Algebraic Effects까지, 그리고 Effect-TS의 선택'
 tags:
   - typescript
   - error-handling

@@ -1,5 +1,5 @@
 ---
-title: npm Deep Dive 온라인 저자 특강
+title: '<em>npm Deep Dive</em> 온라인 저자 특강'
 tags:
   - book
   - npm

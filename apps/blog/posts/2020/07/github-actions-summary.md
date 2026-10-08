@@ -1,5 +1,5 @@
 ---
-title: Github actions 요약
+title: '<em>Github actions</em> 요약'
 tags:
   - ci-cd
   - git

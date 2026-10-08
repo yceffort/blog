@@ -1,5 +1,5 @@
 ---
-title: '문자열 리터럴 유니온에 string을 추가하면 자동완성이 사라지는 이유'
+title: '<em>문자열 리터럴 유니온</em>에 string을 추가하면 자동완성이 사라지는 이유'
 tags:
   - typescript
 published: true

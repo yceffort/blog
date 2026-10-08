@@ -1,5 +1,5 @@
 ---
-title: 'React Compiler Deep Dive: From Principles to Output'
+title: '<em>React Compiler</em> Deep Dive: From Principles to Output'
 tags:
   - react
   - compiler

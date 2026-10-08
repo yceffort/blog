@@ -1,5 +1,5 @@
 ---
-title: '『npm Deep Dive』 가 출간되었습니다.'
+title: '『<em>npm Deep Dive</em>』 가 출간되었습니다.'
 tags:
   - book
   - npm

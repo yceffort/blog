@@ -1,5 +1,5 @@
 ---
-title: 알고리즘 - 연결 리스트
+title: '알고리즘 - <em>연결 리스트</em>'
 tags:
   - algorithm
   - python

@@ -1,5 +1,5 @@
 ---
-title: '거대한 JSON 응답을 효율적으로 처리하는 방법'
+title: '<em>거대한 JSON 응답</em>을 효율적으로 처리하는 방법'
 tags:
   - web-performance
   - memory

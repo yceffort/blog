@@ -1,5 +1,5 @@
 ---
-title: 'Rust로 web assembly 만들어보기 (3) - Rust로 다양한 Web Assembly 만들어보기'
+title: 'Rust로 <em>web assembly</em> 만들어보기 (3) - Rust로 다양한 Web Assembly 만들어보기'
 tags:
   - webassembly
   - rust

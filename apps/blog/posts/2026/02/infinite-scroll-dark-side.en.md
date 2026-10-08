@@ -1,5 +1,5 @@
 ---
-title: 'The Downfall of Infinite Scroll — Why Google Removed Infinite Scrolling'
+title: 'The Downfall of <em>Infinite Scroll</em> — Why Google Removed Infinite Scrolling'
 tags:
   - accessibility
   - web-performance

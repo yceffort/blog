@@ -1,5 +1,5 @@
 ---
-title: 머지된 브랜치를 삭제하는 스크립트
+title: '<em>머지된 브랜치</em>를 삭제하는 스크립트'
 tags:
   - git
 published: true

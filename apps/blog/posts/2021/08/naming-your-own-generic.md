@@ -1,5 +1,5 @@
 ---
-title: '타입스크립트의 제네릭은 적절한 네이밍과 함께 사용하자'
+title: '타입스크립트의 <em>제네릭</em>은 적절한 네이밍과 함께 사용하자'
 tags:
   - typescript
 published: true

@@ -1,5 +1,5 @@
 ---
-title: 'Why Is Your Node.js Pod That Size? Sizing Measured Firsthand, from <em>NODE_OPTIONS</em> to Pod Count'
+title: 'Why Is Your <em>Node.js Pod</em> That Size? Sizing Measured Firsthand, from NODE_OPTIONS to Pod Count'
 tags:
   - memory
   - nodejs

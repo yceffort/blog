@@ -1,5 +1,5 @@
 ---
-title: 'WebGPU Is Finally Available in Every Browser'
+title: '<em>WebGPU</em> Is Finally Available in Every Browser'
 tags:
   - browser
   - web-performance

@@ -1,5 +1,5 @@
 ---
-title: '타입스크립트 타입 never 에 대해 자세히 알아보자'
+title: '타입스크립트 타입 <em>never</em> 에 대해 자세히 알아보자'
 tags:
   - typescript
 published: true

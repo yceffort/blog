@@ -1,5 +1,5 @@
 ---
-title: 타입스크립트 타입 단언
+title: '타입스크립트 <em>타입 단언</em>'
 date: 2019-08-20 06:30:52
 published: true
 tags:

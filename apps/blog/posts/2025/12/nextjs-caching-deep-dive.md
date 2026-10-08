@@ -1,5 +1,5 @@
 ---
-title: 'Next.js 캐싱 가이드'
+title: '<em>Next.js 캐싱</em> 가이드'
 tags:
   - nextjs
   - caching

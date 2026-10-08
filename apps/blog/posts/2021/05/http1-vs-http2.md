@@ -1,5 +1,5 @@
 ---
-title: 'HTTP1 vs HTTP2'
+title: '<em>HTTP1 vs HTTP2</em>'
 tags:
   - networking
   - web-performance

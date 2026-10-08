@@ -1,5 +1,5 @@
 ---
-title: 프로그래머 기초 수학 2-1 - 정수
+title: '프로그래머 기초 수학 2-1 - <em>정수</em>'
 tags:
   - algorithm
 published: true

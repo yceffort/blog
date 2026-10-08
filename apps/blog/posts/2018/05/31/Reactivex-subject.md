@@ -1,5 +1,5 @@
 ---
-title: ReactiveX) Subject
+title: 'ReactiveX) <em>Subject</em>'
 date: 2018-05-31 09:43:40
 published: true
 tags:

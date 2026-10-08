@@ -1,5 +1,5 @@
 ---
-title: 'Largest Contentful Paint (LCP) 최적화하기'
+title: '<em>Largest Contentful Paint (LCP)</em> 최적화하기'
 tags:
   - web-performance
   - browser

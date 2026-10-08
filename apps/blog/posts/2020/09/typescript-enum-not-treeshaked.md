@@ -1,5 +1,5 @@
 ---
-title: typescript의 enum은 tree shaking이 되지 않는다?
+title: 'typescript의 <em>enum</em>은 tree shaking이 되지 않는다?'
 tags:
   - typescript
   - bundler

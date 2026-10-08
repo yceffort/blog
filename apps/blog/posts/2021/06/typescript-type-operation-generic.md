@@ -1,5 +1,5 @@
 ---
-title: '타입스크립트의 타입과 제네릭 적극 활용하기'
+title: '타입스크립트의 <em>타입과 제네릭</em> 적극 활용하기'
 tags:
   - typescript
 published: true

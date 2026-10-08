@@ -1,5 +1,5 @@
 ---
-title: 자바스크립트의 프록시
+title: '자바스크립트의 <em>프록시</em>'
 date: 2021-03-12 18:34:41
 tags:
   - javascript

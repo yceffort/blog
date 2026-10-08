@@ -1,5 +1,5 @@
 ---
-title: '떠난 페이지는 죽지 않고 숨는다: Next.js cacheComponents와 React Activity'
+title: '떠난 페이지는 죽지 않고 숨는다: Next.js <em>cacheComponents</em>와 React Activity'
 tags:
   - nextjs
   - react

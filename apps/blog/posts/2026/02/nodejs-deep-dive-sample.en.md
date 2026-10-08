@@ -1,5 +1,5 @@
 ---
-title: "The Pitfalls of Node.js vm Module: Why It's Not a Sandbox"
+title: "The Pitfalls of <em>Node.js vm Module</em>: Why It's Not a Sandbox"
 tags:
   - nodejs
   - security

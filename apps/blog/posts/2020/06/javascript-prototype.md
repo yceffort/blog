@@ -1,6 +1,6 @@
 ---
 
-title: Javascript Prototype
+title: 'Javascript <em>Prototype</em>'
 tags:
   - javascript
 published: true

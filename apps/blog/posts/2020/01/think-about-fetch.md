@@ -1,5 +1,5 @@
 ---
-title: 자바스크립트에서 http 요청하기 - fetch에 대한 고찰
+title: '자바스크립트에서 http 요청하기 - <em>fetch</em>에 대한 고찰'
 tags:
   - networking
   - async

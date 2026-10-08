@@ -1,5 +1,5 @@
 ---
-title: 두 String의 유사도를 측정해보자 - Levenshtein distance
+title: '두 String의 유사도를 측정해보자 - <em>Levenshtein distance</em>'
 date: 2018-05-31 08:11:51
 tags:
   - algorithm

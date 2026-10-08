@@ -1,5 +1,5 @@
 ---
-title: 'Nodejs의 이벤트 루프 살펴보기'
+title: 'Nodejs의 <em>이벤트 루프</em> 살펴보기'
 tags:
   - nodejs
   - async

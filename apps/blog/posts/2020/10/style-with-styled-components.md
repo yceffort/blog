@@ -1,5 +1,5 @@
 ---
-title: 'styled-components로 스타일 적용하는법'
+title: '<em>styled-components</em>로 스타일 적용하는법'
 category: styledComponents
 tags:
   - css

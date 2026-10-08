@@ -1,5 +1,5 @@
 ---
-title: "Tracing When This Blog's JavaScript Actually Runs"
+title: "Tracing When This Blog's JavaScript <em>Actually Runs</em>"
 tags:
   - web-performance
   - bundler

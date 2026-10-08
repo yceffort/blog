@@ -1,5 +1,5 @@
 ---
-title: '리액트의 렌더링은 어떻게 일어나는가?'
+title: '리액트의 <em>렌더링</em>은 어떻게 일어나는가?'
 tags:
   - react
   - web-performance

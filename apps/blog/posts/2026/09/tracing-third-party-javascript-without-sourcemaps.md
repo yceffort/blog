@@ -1,5 +1,5 @@
 ---
-title: '소스맵 없이 토스증권의 JavaScript 추적해보기'
+title: '<em>소스맵 없이</em> 토스증권의 JavaScript 추적해보기'
 tags:
   - debugging
   - web-performance

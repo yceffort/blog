@@ -1,5 +1,5 @@
 ---
-title: '자바스크립트 성능과 번들 사이즈'
+title: '자바스크립트 성능과 <em>번들 사이즈</em>'
 tags:
   - web-performance
   - bundler

@@ -1,5 +1,5 @@
 ---
-title: '자바스크립트로 메모이제이션 구현하기'
+title: '자바스크립트로 <em>메모이제이션</em> 구현하기'
 tags:
   - javascript
   - algorithm

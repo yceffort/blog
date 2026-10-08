@@ -1,5 +1,5 @@
 ---
-title: 'I Only Saw Why Rails Was Good After Its Creator Put the Pencil Down'
+title: 'I Only Saw Why <em>Rails</em> Was Good After Its Creator Put the Pencil Down'
 tags:
   - essay
   - oss

@@ -1,5 +1,5 @@
 ---
-title: 'useEvent에서 useEffectEvent까지: React의 이벤트 핸들러 안정화 여정'
+title: 'useEvent에서 <em>useEffectEvent</em>까지: React의 이벤트 핸들러 안정화 여정'
 tags:
   - react
 published: true

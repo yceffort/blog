@@ -1,5 +1,5 @@
 ---
-title: Github을 아름답게 관리하기
+title: '<em>Github</em>을 아름답게 관리하기'
 date: 2019-12-18 11:31:17
 published: true
 tags:

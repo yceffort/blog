@@ -1,5 +1,5 @@
 ---
-title: '내가 타입스크립트에서 Enum을 잘 쓰지 않는 이유'
+title: '내가 타입스크립트에서 <em>Enum</em>을 잘 쓰지 않는 이유'
 tags:
   - typescript
 published: true

@@ -1,5 +1,5 @@
 ---
-title: 'React''s New Hook, "use"'
+title: 'React''s New Hook, <em>"use"</em>'
 tags:
   - react
   - async

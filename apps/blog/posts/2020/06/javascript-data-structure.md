@@ -1,6 +1,6 @@
 ---
 
-title: 자바스크립트 자료 구조
+title: '자바스크립트 <em>자료 구조</em>'
 tags:
   - algorithm
 published: true

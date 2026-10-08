@@ -1,5 +1,5 @@
 ---
-title: 'When Was the Last Time You Read Code Seriously?'
+title: 'When Was the Last Time You <em>Read Code Seriously</em>?'
 tags:
   - essay
   - ai

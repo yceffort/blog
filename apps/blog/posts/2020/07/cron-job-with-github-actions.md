@@ -1,5 +1,5 @@
 ---
-title: Github 액션으로 스케쥴링 작업하기
+title: '<em>Github 액션</em>으로 스케쥴링 작업하기'
 tags:
   - git
   - ci-cd

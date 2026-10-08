@@ -1,5 +1,5 @@
 ---
-title: Node.js Deep Dive (가제) 베타 리더를 모십니다.
+title: '<em>Node.js Deep Dive</em> (가제) 베타 리더를 모십니다.'
 tags:
   - nodejs
   - book

@@ -1,5 +1,5 @@
 ---
-title: "If the Code Meets Spec and the Bugs Get Fixed, Does It Matter That You Can't Read It?"
+title: "If the Code Meets Spec and the Bugs Get Fixed, Does It Matter That <em>You Can't Read It</em>?"
 tags:
   - ai
   - essay

@@ -1,5 +1,5 @@
 ---
-title: 'I Grew Never-Executed JavaScript to <em>10MiB</em>'
+title: 'I Grew <em>Never-Executed JavaScript</em> to 10MiB'
 tags:
   - web-performance
   - javascript

@@ -1,5 +1,5 @@
 ---
-title: Javascript Execution Context
+title: 'Javascript <em>Execution Context</em>'
 tags:
   - javascript
 published: true

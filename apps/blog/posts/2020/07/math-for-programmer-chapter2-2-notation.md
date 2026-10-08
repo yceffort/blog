@@ -1,5 +1,5 @@
 ---
-title: 프로그래머 기초 수학 2-2 - 기수법
+title: '프로그래머 기초 수학 2-2 - <em>기수법</em>'
 tags:
   - algorithm
 published: true

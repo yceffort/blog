@@ -1,5 +1,5 @@
 ---
-title: '크롬 메모리 프로파일러 사용하는 방법'
+title: '크롬 <em>메모리 프로파일러</em> 사용하는 방법'
 tags:
   - memory
   - debugging

@@ -1,5 +1,5 @@
 ---
-title: 'Preventing Memory Leaks with IntersectionObserver Singleton Pattern and WeakMap'
+title: 'Preventing Memory Leaks with <em>IntersectionObserver Singleton Pattern</em> and WeakMap'
 tags:
   - memory
   - web-performance

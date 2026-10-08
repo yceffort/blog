@@ -1,5 +1,5 @@
 ---
-title: 'Rust로 web assembly로 game of life 만들어보기 (2)'
+title: 'Rust로 web assembly로 <em>game of life</em> 만들어보기 (2)'
 tags:
   - webassembly
   - rust

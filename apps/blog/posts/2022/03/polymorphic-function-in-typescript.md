@@ -1,5 +1,5 @@
 ---
-title: '타입스크립트의 함수의 다형성'
+title: '타입스크립트의 함수의 <em>다형성</em>'
 tags:
   - typescript
 published: true

@@ -1,5 +1,5 @@
 ---
-title: 'JSON.stringify 만들어보기'
+title: '<em>JSON.stringify</em> 만들어보기'
 tags:
   - javascript
   - algorithm

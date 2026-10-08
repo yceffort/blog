@@ -1,5 +1,5 @@
 ---
-title: 자바스크립트로 다음 사전 크롤링해보기
+title: '자바스크립트로 <em>다음 사전</em> 크롤링해보기'
 tags:
   - web-scraping
 published: true

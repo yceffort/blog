@@ -1,5 +1,5 @@
 ---
-title: '웹에서 사용 가능한 스토리지 살펴보기'
+title: '웹에서 사용 가능한 <em>스토리지</em> 살펴보기'
 tags:
   - pwa
   - browser

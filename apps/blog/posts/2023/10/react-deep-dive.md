@@ -1,5 +1,5 @@
 ---
-title: '모던 리액트 Deep dive가 출간되었습니다.'
+title: '<em>모던 리액트 Deep dive</em>가 출간되었습니다.'
 tags:
   - book
   - essay

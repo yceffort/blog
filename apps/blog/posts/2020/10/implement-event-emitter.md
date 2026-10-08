@@ -1,5 +1,5 @@
 ---
-title: 'EventEmitter 구현해보기'
+title: '<em>EventEmitter</em> 구현해보기'
 tags:
   - design-patterns
   - javascript

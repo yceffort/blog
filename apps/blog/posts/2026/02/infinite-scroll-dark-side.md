@@ -1,5 +1,5 @@
 ---
-title: 'Infinite Scroll의 몰락 — Google은 왜 무한 스크롤을 걷어냈는가'
+title: '<em>Infinite Scroll</em>의 몰락 — Google은 왜 무한 스크롤을 걷어냈는가'
 tags:
   - accessibility
   - web-performance

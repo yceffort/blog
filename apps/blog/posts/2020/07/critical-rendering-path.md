@@ -1,5 +1,5 @@
 ---
-title: 주요 렌더링 경로 - 브라우저의 원리를 이해하고 최적화 하기
+title: '<em>주요 렌더링 경로</em> - 브라우저의 원리를 이해하고 최적화 하기'
 tags:
   - browser
   - web-performance

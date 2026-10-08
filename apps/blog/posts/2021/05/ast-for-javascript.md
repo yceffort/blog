@@ -1,5 +1,5 @@
 ---
-title: '자바스크립트 개발자를 위한 AST 이해하기 (2026년 업데이트)'
+title: '자바스크립트 개발자를 위한 <em>AST</em> 이해하기 (2026년 업데이트)'
 tags:
   - compiler
   - javascript

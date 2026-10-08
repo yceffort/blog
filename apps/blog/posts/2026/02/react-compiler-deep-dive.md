@@ -1,5 +1,5 @@
 ---
-title: 'React Compiler 딥다이브: 원리부터 결과물까지'
+title: '<em>React Compiler</em> 딥다이브: 원리부터 결과물까지'
 tags:
   - react
   - compiler

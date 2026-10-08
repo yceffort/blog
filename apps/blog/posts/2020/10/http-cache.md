@@ -1,5 +1,5 @@
 ---
-title: 'HTTP Cache로 불필요한 네트워크 요청 줄이기'
+title: '<em>HTTP Cache</em>로 불필요한 네트워크 요청 줄이기'
 tags:
   - caching
   - web-performance

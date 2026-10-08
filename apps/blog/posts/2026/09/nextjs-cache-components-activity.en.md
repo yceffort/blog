@@ -1,5 +1,5 @@
 ---
-title: "Pages You Leave Don't Die, They Hide: Next.js cacheComponents and React Activity"
+title: "Pages You Leave Don't Die, They Hide: Next.js <em>cacheComponents</em> and React Activity"
 tags:
   - nextjs
   - react

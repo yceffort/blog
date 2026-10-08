@@ -1,5 +1,5 @@
 ---
-title: Git Cheat Sheet
+title: '<em>Git</em> Cheat Sheet'
 tags:
   - git
 published: true

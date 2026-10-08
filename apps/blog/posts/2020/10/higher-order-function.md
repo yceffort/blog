@@ -1,5 +1,5 @@
 ---
-title: 'higher order function, 고차함수'
+title: '<em>higher order function</em>, 고차함수'
 tags:
   - javascript
 published: true

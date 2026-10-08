@@ -1,5 +1,5 @@
 ---
-title: "Deep Dive into Effect Systems: From Monads to Algebraic Effects, and Effect-TS's Choices"
+title: "Deep Dive into <em>Effect Systems</em>: From Monads to Algebraic Effects, and Effect-TS's Choices"
 tags:
   - typescript
   - error-handling

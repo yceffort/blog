@@ -1,5 +1,5 @@
 ---
-title: 'A Guide to Node.js Memory Limits and Leak Tracking'
+title: 'A Guide to <em>Node.js Memory Limits</em> and Leak Tracking'
 tags:
   - memory
   - nodejs

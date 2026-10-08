@@ -1,5 +1,5 @@
 ---
-title: 'Node.js 파드는 왜 그 크기인가: <em>NODE_OPTIONS</em>부터 파드 수까지 직접 재본 사이징'
+title: '<em>Node.js 파드</em>는 왜 그 크기인가: NODE_OPTIONS부터 파드 수까지 직접 재본 사이징'
 tags:
   - memory
   - nodejs

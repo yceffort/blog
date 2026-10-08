@@ -1,5 +1,5 @@
 ---
-title: 타입스크립트 제네릭
+title: '타입스크립트 <em>제네릭</em>'
 date: 2019-09-20 12:10:14
 updated: 2020-10-08 22:31:33
 published: true

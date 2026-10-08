@@ -1,5 +1,5 @@
 ---
-title: 'Nextjs app router의 Rendered more hooks than during the previous render 버그 패치 후기'
+title: 'Nextjs app router의 <em>Rendered more hooks than during the previous render</em> 버그 패치 후기'
 tags:
   - nextjs
   - debugging

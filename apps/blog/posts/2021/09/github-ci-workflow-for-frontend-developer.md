@@ -1,5 +1,5 @@
 ---
-title: '프론트엔드 프로젝트를 위한 github CI workflow'
+title: '프론트엔드 프로젝트를 위한 <em>github CI workflow</em>'
 tags:
   - ci-cd
   - git

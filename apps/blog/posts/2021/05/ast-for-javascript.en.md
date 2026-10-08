@@ -1,5 +1,5 @@
 ---
-title: 'Understanding AST for JavaScript Developers (2026 Update)'
+title: 'Understanding <em>AST</em> for JavaScript Developers (2026 Update)'
 tags:
   - compiler
   - javascript

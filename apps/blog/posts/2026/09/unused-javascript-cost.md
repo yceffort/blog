@@ -1,5 +1,5 @@
 ---
-title: '실행하지 않는 JavaScript를 <em>10MiB</em>까지 늘려봤다'
+title: '<em>실행하지 않는 JavaScript</em>를 10MiB까지 늘려봤다'
 tags:
   - web-performance
   - javascript

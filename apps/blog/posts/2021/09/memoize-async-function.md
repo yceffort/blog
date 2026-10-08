@@ -1,5 +1,5 @@
 ---
-title: '비동기 함수 memoize 하는 방법'
+title: '<em>비동기 함수 memoize</em> 하는 방법'
 tags:
   - async
   - caching

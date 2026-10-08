@@ -1,5 +1,5 @@
 ---
-title: 'Nextjs에서 Server Side props를 새로고침하기'
+title: 'Nextjs에서 <em>Server Side props</em>를 새로고침하기'
 tags:
   - nextjs
   - react

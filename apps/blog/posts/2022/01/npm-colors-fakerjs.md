@@ -1,5 +1,5 @@
 ---
-title: 'colors.js와 faker.js 사태가 준 교훈'
+title: '<em>colors.js와 faker.js 사태</em>가 준 교훈'
 tags:
   - security
   - npm

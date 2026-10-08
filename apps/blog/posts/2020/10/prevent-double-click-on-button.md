@@ -1,5 +1,5 @@
 ---
-title: '(함수형으로) 자바스크립트로 HTML 버튼 중복 클릭 방지하기'
+title: '(함수형으로) 자바스크립트로 HTML 버튼 <em>중복 클릭 방지</em>하기'
 tags:
   - javascript
   - design-patterns

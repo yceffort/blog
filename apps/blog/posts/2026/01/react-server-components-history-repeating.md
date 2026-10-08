@@ -1,5 +1,5 @@
 ---
-title: 'React의 "서버로 회귀"는 역사의 반복인가?'
+title: 'React의 "<em>서버로 회귀</em>"는 역사의 반복인가?'
 tags:
   - react
   - design-patterns

@@ -1,5 +1,5 @@
 ---
-title: 업무 자동화 (1) - 구글 스프레드 시트 API 활용하기
+title: '업무 자동화 (1) - <em>구글 스프레드 시트 API</em> 활용하기'
 date: 2019-02-14 07:56:22
 published: true
 tags:

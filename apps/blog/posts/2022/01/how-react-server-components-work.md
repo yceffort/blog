@@ -1,5 +1,5 @@
 ---
-title: '리액트 서버 컴포넌트의 동작 방식'
+title: '<em>리액트 서버 컴포넌트</em>의 동작 방식'
 tags:
   - react
   - design-patterns

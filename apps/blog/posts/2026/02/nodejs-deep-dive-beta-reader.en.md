@@ -1,5 +1,5 @@
 ---
-title: Seeking Beta Readers for Node.js Deep Dive (Working Title)
+title: 'Seeking Beta Readers for <em>Node.js Deep Dive</em> (Working Title)'
 tags:
   - nodejs
   - book

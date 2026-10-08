@@ -1,5 +1,5 @@
 ---
-title: 왜 CommonJS는 번들사이즈를 크게 하는가?
+title: '왜 <em>CommonJS</em>는 번들사이즈를 크게 하는가?'
 tags:
   - bundler
   - web-performance

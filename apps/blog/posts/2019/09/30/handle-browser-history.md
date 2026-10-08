@@ -1,5 +1,5 @@
 ---
-title: 브라우저 히스토리 조작
+title: '<em>브라우저 히스토리</em> 조작'
 date: 2019-09-30 06:28:48
 published: true
 tags:

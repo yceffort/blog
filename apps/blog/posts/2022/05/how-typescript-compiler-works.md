@@ -1,5 +1,5 @@
 ---
-title: '타입스크립트 컴파일러는 어떻게 동작하는가?'
+title: '<em>타입스크립트 컴파일러</em>는 어떻게 동작하는가?'
 tags:
   - typescript
   - compiler

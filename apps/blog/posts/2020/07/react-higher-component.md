@@ -1,5 +1,5 @@
 ---
-title: 리액트 고차 컴포넌트 (React Higher Order Component)
+title: '리액트 <em>고차 컴포넌트</em> (React Higher Order Component)'
 tags:
   - react
   - design-patterns

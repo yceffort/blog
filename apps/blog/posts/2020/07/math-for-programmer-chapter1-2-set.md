@@ -1,5 +1,5 @@
 ---
-title: 프로그래머 기초 수학 1-2 - 집합
+title: '프로그래머 기초 수학 1-2 - <em>집합</em>'
 tags:
   - algorithm
 published: true

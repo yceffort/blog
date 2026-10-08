@@ -1,5 +1,5 @@
 ---
-title: 'https://research.yceffort.kr/ 를 오픈했습니다'
+title: '<em>https://research.yceffort.kr/</em> 를 오픈했습니다'
 tags:
   - blogging
   - markdown

@@ -1,5 +1,5 @@
 ---
-title: 'Critical Request - request 순서는 웹사이트 속도에 어떤 영향을 미치는가'
+title: '<em>Critical Request</em> - request 순서는 웹사이트 속도에 어떤 영향을 미치는가'
 tags:
   - web-performance
   - browser

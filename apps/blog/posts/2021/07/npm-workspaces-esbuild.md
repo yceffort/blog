@@ -1,5 +1,5 @@
 ---
-title: 'npm workspace와 esbuild로 monorepo 구축해보기'
+title: 'npm workspace와 esbuild로 <em>monorepo</em> 구축해보기'
 tags:
   - monorepo
   - npm

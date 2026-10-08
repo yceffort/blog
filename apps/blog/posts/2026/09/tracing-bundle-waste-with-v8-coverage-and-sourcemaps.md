@@ -1,5 +1,5 @@
 ---
-title: '블로그의 JavaScript가 언제 실행되는지 추적해보기'
+title: '블로그의 JavaScript가 <em>언제 실행되는지</em> 추적해보기'
 tags:
   - web-performance
   - bundler

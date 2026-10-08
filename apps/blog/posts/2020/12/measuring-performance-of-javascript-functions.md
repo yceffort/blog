@@ -1,5 +1,5 @@
 ---
-title: '자바스크립트 함수의 성능 측정하기'
+title: '자바스크립트 함수의 <em>성능 측정</em>하기'
 tags:
   - web-performance
   - browser

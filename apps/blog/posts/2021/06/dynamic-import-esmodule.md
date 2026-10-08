@@ -1,5 +1,5 @@
 ---
-title: 'ESModule을 동적으로 import 하기'
+title: 'ESModule을 <em>동적으로 import</em> 하기'
 tags:
   - javascript
   - async

@@ -1,5 +1,5 @@
 ---
-title: 'V8에서의 메모리 관리'
+title: 'V8에서의 <em>메모리 관리</em>'
 tags:
   - v8
   - memory

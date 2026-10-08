@@ -1,5 +1,5 @@
 ---
-title: 블로그 gatsby에서 nextjs로 옮긴 이야기
+title: '블로그 <em>gatsby에서 nextjs로</em> 옮긴 이야기'
 tags:
   - blogging
   - nextjs

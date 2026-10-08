@@ -1,5 +1,5 @@
 ---
-title: '왜 Async 보다는 Defer를 써야할까'
+title: '왜 Async 보다는 <em>Defer</em>를 써야할까'
 tags:
   - web-performance
   - browser

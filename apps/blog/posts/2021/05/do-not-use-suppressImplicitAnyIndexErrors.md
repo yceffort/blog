@@ -1,5 +1,5 @@
 ---
-title: 'suppressImplicitAnyIndexErrors 옵션을 키기 전에'
+title: '<em>suppressImplicitAnyIndexErrors</em> 옵션을 키기 전에'
 tags:
   - typescript
 published: true

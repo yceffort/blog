@@ -1,5 +1,5 @@
 ---
-title: Typescript, React, NextJs, Koa, Styled Component 로 프론트엔드 환경 만들기
+title: 'Typescript, React, NextJs, Koa, Styled Component 로 <em>프론트엔드 환경</em> 만들기'
 date: 2019-06-21 04:07:40
 published: true
 tags:

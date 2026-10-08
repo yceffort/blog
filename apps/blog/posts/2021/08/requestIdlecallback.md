@@ -1,5 +1,5 @@
 ---
-title: 'requestIdleCallback으로 최적화하기'
+title: '<em>requestIdleCallback</em>으로 최적화하기'
 tags:
   - web-performance
   - browser

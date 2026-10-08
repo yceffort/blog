@@ -1,5 +1,5 @@
 ---
-title: '비동기 리소스 (async resources)와 비동기 훅 (async hooks) 이해하기'
+title: '비동기 리소스 (async resources)와 비동기 훅 (<em>async hooks</em>) 이해하기'
 tags:
   - nodejs
   - async

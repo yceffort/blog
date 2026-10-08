@@ -1,5 +1,5 @@
 ---
-title: '자바스크립트의 가비지 컬렉션'
+title: '자바스크립트의 <em>가비지 컬렉션</em>'
 tags:
   - memory
   - javascript

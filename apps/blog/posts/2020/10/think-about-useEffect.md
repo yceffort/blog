@@ -1,5 +1,5 @@
 ---
-title: 'useEffect는 라이프 사이클 메소드가 아니다.'
+title: '<em>useEffect</em>는 라이프 사이클 메소드가 아니다.'
 category: react
 tags:
   - react

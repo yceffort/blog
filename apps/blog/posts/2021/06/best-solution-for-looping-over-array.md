@@ -1,5 +1,5 @@
 ---
-title: 'for vs for-in vs forEach vs for-of 무엇으로 자바스크립트 리스트를 돌아야 하나'
+title: '<em>for vs for-in vs forEach vs for-of</em> 무엇으로 자바스크립트 리스트를 돌아야 하나'
 tags:
   - javascript
 published: true

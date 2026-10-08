@@ -1,5 +1,5 @@
 ---
-title: 블로그 개편했습니다. 😎
+title: '<em>블로그 개편</em>했습니다. 😎'
 tags:
   - blogging
 published: true

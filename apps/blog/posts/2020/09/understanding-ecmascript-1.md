@@ -1,5 +1,5 @@
 ---
-title: ECMAScript 명세 읽어보기 (1)
+title: '<em>ECMAScript 명세</em> 읽어보기 (1)'
 tags:
   - javascript
 published: true

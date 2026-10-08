@@ -1,5 +1,5 @@
 ---
-title: '『npm Deep Dive』 스터디원 모집중입니다!'
+title: '『<em>npm Deep Dive</em>』 스터디원 모집중입니다!'
 tags:
   - career
   - book

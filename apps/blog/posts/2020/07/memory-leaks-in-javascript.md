@@ -1,5 +1,5 @@
 ---
-title: 자바스크립트 메모리 누수와 해결 방법
+title: '자바스크립트 <em>메모리 누수</em>와 해결 방법'
 tags:
   - memory
   - javascript

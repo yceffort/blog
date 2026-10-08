@@ -1,5 +1,5 @@
 ---
-title: '서버 사이드 이벤트 (Server Side Events, SSE)'
+title: '<em>서버 사이드 이벤트</em> (Server Side Events, SSE)'
 tags:
   - networking
   - backend

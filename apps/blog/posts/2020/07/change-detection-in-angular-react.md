@@ -1,5 +1,5 @@
 ---
-title: 프론트엔드 개발자가 알아야 하는 Angular와 React의 Change Detection
+title: '프론트엔드 개발자가 알아야 하는 Angular와 React의 <em>Change Detection</em>'
 tags:
   - angular
   - react

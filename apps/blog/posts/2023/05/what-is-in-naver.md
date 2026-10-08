@@ -1,5 +1,5 @@
 ---
-title: '새로 바뀐 네이버 메인 훔쳐보기'
+title: '새로 바뀐 <em>네이버 메인</em> 훔쳐보기'
 tags:
   - debugging
   - react

@@ -1,5 +1,5 @@
 ---
-title: '2020년 사이드 프로젝트 회고'
+title: '2020년 <em>사이드 프로젝트</em> 회고'
 tags:
   - nextjs
   - backend

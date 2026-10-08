@@ -1,5 +1,5 @@
 ---
-title: Notion 성능 최적화
+title: '<em>Notion</em> 성능 최적화'
 tags:
   - web-performance
   - bundler

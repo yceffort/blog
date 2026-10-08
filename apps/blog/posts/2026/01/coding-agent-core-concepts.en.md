@@ -1,5 +1,5 @@
 ---
-title: '<em>Complete Guide</em> to Core Coding Agent Concepts'
+title: 'Complete Guide to Core <em>Coding Agent</em> Concepts'
 tags:
   - ai
 published: true

@@ -1,5 +1,5 @@
 ---
-title: '블로그 정상영업합니다'
+title: '블로그 <em>정상영업</em>합니다'
 tags:
   - ai
   - career

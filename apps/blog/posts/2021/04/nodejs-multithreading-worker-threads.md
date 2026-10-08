@@ -1,5 +1,5 @@
 ---
-title: 'nodejs의 멀티쓰레딩과 worker threads'
+title: 'nodejs의 멀티쓰레딩과 <em>worker threads</em>'
 tags:
   - nodejs
   - async

@@ -1,5 +1,5 @@
 ---
-title: '자바스크립트의 제네레이터와 regeneratorRuntime'
+title: '자바스크립트의 제네레이터와 <em>regeneratorRuntime</em>'
 tags:
   - javascript
 published: true

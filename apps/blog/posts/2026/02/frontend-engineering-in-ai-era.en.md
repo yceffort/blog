@@ -1,5 +1,5 @@
 ---
-title: 'In the Age of AI-Generated Code, Where is Frontend Engineering Headed?'
+title: 'In the Age of AI-Generated Code, Where is <em>Frontend Engineering</em> Headed?'
 tags:
   - ai
   - essay

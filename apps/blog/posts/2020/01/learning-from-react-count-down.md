@@ -1,5 +1,5 @@
 ---
-title: React count down에서 배운 event-emitter 와 requestAnimationFrame
+title: 'React count down에서 배운 <em>event-emitter 와 requestAnimationFrame</em>'
 tags:
   - javascript
   - browser

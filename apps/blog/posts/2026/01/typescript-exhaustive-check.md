@@ -1,5 +1,5 @@
 ---
-title: 'TypeScript에서 switch문의 모든 케이스를 빠짐없이 처리했는지 검사하는 방법'
+title: 'TypeScript에서 switch문의 <em>모든 케이스</em>를 빠짐없이 처리했는지 검사하는 방법'
 tags:
   - typescript
 published: true

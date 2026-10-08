@@ -1,5 +1,5 @@
 ---
-title: 'Promise 관련 API 살펴보기'
+title: '<em>Promise</em> 관련 API 살펴보기'
 tags:
   - async
   - javascript

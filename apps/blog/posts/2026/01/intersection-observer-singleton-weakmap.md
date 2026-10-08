@@ -1,5 +1,5 @@
 ---
-title: 'IntersectionObserver 싱글톤 패턴과 WeakMap으로 메모리 누수 방지하기'
+title: '<em>IntersectionObserver 싱글톤 패턴</em>과 WeakMap으로 메모리 누수 방지하기'
 tags:
   - memory
   - web-performance

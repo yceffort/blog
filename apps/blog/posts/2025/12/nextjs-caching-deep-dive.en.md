@@ -1,5 +1,5 @@
 ---
-title: 'A Guide to Next.js Caching'
+title: 'A Guide to <em>Next.js Caching</em>'
 tags:
   - nextjs
   - caching

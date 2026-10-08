@@ -1,5 +1,5 @@
 ---
-title: '뒤로가기, 앞으로가기의 캐시 aka bfcache'
+title: '뒤로가기, 앞으로가기의 캐시 aka <em>bfcache</em>'
 tags:
   - browser
   - caching

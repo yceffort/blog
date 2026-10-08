@@ -1,5 +1,5 @@
 ---
-title: 'Export에 숨겨져 있는 심오함'
+title: '<em>Export</em>에 숨겨져 있는 심오함'
 tags:
   - javascript
 published: true

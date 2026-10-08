@@ -1,5 +1,5 @@
 ---
-title: '타입스크립트의 구조 타이핑'
+title: '타입스크립트의 <em>구조 타이핑</em>'
 tags:
   - typescript
 published: true

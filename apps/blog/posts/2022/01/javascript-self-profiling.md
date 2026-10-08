@@ -1,5 +1,5 @@
 ---
-title: '웹 애플리케이션에서 자바스크립트 프로파일링 해보기'
+title: '웹 애플리케이션에서 <em>자바스크립트 프로파일링</em> 해보기'
 tags:
   - web-performance
   - browser

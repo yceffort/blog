@@ -1,5 +1,5 @@
 ---
-title: Typescript Type, Enum, Partial, Record로 글로벌 변수 관리하기
+title: 'Typescript Type, Enum, Partial, Record로 <em>글로벌 변수 관리</em>하기'
 date: 2019-06-18 01:20:52
 published: true
 tags:

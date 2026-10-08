@@ -1,5 +1,5 @@
 ---
-title: 자바스크립트의 private
+title: '자바스크립트의 <em>private</em>'
 tags:
   - javascript
 published: true

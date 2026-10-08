@@ -1,5 +1,5 @@
 ---
-title: 'useEffect와 메모리 누수'
+title: 'useEffect와 <em>메모리 누수</em>'
 tags:
   - react
   - memory

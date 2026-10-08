@@ -1,5 +1,5 @@
 ---
-title: '클라이언트 서버 모두에서 nextjs에서 api에러 핸들링하기'
+title: '클라이언트 서버 모두에서 nextjs에서 <em>api에러 핸들링</em>하기'
 tags:
   - error-handling
   - nextjs

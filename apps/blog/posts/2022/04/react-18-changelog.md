@@ -1,5 +1,5 @@
 ---
-title: '리액트 v18 버전 톺아보기'
+title: '<em>리액트 v18</em> 버전 톺아보기'
 tags:
   - react
 published: true

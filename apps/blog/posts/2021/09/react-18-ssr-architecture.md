@@ -1,5 +1,5 @@
 ---
-title: '리액트 18에서 변경될 새로운 SSR 아키텍쳐'
+title: '리액트 18에서 변경될 새로운 <em>SSR 아키텍쳐</em>'
 tags:
   - react
   - web-performance

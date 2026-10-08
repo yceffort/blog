@@ -1,5 +1,5 @@
 ---
-title: 'export default를 쓰지 말아야 할 이유'
+title: '<em>export default</em>를 쓰지 말아야 할 이유'
 tags:
   - javascript
   - bundler

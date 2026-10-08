@@ -1,5 +1,5 @@
 ---
-title: 'nextjs를 적용하면서 알게 된 사실들'
+title: '<em>nextjs</em>를 적용하면서 알게 된 사실들'
 tags:
   - nextjs
   - debugging

@@ -1,5 +1,5 @@
 ---
-title: '크롬에서 자바스크립트 로딩 순서'
+title: '크롬에서 자바스크립트 <em>로딩 순서</em>'
 tags:
   - browser
   - web-performance

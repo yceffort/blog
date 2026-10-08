@@ -1,5 +1,5 @@
 ---
-title: '브라우저 탭 사이에서 통신 하는 방법'
+title: '<em>브라우저 탭 사이</em>에서 통신 하는 방법'
 tags:
   - browser
 published: true

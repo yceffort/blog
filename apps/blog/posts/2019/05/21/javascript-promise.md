@@ -1,5 +1,5 @@
 ---
-title: Javascript - Promise
+title: 'Javascript - <em>Promise</em>'
 date: 2019-05-21 11:42:41
 published: true
 tags:

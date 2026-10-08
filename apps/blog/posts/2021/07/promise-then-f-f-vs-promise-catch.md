@@ -1,5 +1,5 @@
 ---
-title: 'promise.then(f, f) vs promise.then(f).catch(f) 는 무엇이 다를까?'
+title: '<em>promise.then(f, f) vs promise.then(f).catch(f)</em> 는 무엇이 다를까?'
 tags:
   - javascript
   - async

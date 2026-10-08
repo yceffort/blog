@@ -1,5 +1,5 @@
 ---
-title: 'Saving Marp Slides from a Next.js App for Offline Use'
+title: 'Saving Marp Slides from a Next.js App for <em>Offline Use</em>'
 tags:
   - pwa
   - caching

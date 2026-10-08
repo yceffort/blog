@@ -1,5 +1,5 @@
 ---
-title: 프로그래머 기초 수학 2-3 - 유리수, 무리수, 실수
+title: '프로그래머 기초 수학 2-3 - <em>유리수, 무리수, 실수</em>'
 tags:
   - algorithm
 published: true

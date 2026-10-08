@@ -1,5 +1,5 @@
 ---
-title: '웹사이트의 성능지표, Core Web Vital'
+title: '웹사이트의 성능지표, <em>Core Web Vital</em>'
 tags:
   - web-performance
 published: true

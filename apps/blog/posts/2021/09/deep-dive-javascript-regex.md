@@ -1,5 +1,5 @@
 ---
-title: '자바스크립트에서의 정규식, 이론부터 조심해야 할 것 까지'
+title: '자바스크립트에서의 <em>정규식</em>, 이론부터 조심해야 할 것 까지'
 tags:
   - javascript
 published: true

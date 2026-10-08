@@ -1,5 +1,5 @@
 ---
-title: 'GitHub Actions cron이 제시간에 실행되지 않는 이유와 대안'
+title: '<em>GitHub Actions cron</em>이 제시간에 실행되지 않는 이유와 대안'
 tags:
   - ci-cd
   - git

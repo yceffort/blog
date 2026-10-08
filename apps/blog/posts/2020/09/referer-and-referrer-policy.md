@@ -1,5 +1,5 @@
 ---
-title: Referer와 Referer-Policy를 위한 가이드
+title: '<em>Referer와 Referer-Policy</em>를 위한 가이드'
 tags:
   - networking
   - security

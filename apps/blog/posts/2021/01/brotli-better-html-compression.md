@@ -1,5 +1,5 @@
 ---
-title: '더 나은 압축 알고리즘, Brotli'
+title: '더 나은 압축 알고리즘, <em>Brotli</em>'
 tags:
   - web-performance
   - networking

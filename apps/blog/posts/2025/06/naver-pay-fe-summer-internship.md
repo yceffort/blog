@@ -1,5 +1,5 @@
 ---
-title: '[네이버페이] 채용 연계형 FE 개발 인턴십'
+title: '[네이버페이] 채용 연계형 <em>FE 개발 인턴십</em>'
 tags:
   - career
 published: true

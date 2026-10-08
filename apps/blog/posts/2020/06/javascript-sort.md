@@ -1,5 +1,5 @@
 ---
-title: 자바스크립트로 구현해보는 다양한 정렬
+title: '자바스크립트로 구현해보는 다양한 <em>정렬</em>'
 tags:
   - algorithm
 published: true

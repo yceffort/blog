@@ -1,5 +1,5 @@
 ---
-title: web performance deep dive (가제) 베타 리더를 모십니다. (마감)
+title: '<em>web performance deep dive</em> (가제) 베타 리더를 모십니다. (마감)'
 tags:
   - book
   - web-performance

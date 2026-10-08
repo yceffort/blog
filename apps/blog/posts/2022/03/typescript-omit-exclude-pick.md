@@ -1,5 +1,5 @@
 ---
-title: '타입스크립트의 Omit은 어떻게 동작할까? Exclude, Pick 부터 알아보기'
+title: '타입스크립트의 <em>Omit</em>은 어떻게 동작할까? Exclude, Pick 부터 알아보기'
 tags:
   - typescript
 published: true

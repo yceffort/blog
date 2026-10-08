@@ -1,5 +1,5 @@
 ---
-title: javascript 일반 함수와 화살표 함수의 차이
+title: 'javascript <em>일반 함수와 화살표 함수</em>의 차이'
 date: 2020-05-19 06:39:42
 published: true
 tags:

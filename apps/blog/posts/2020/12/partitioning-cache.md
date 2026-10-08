@@ -1,5 +1,5 @@
 ---
-title: '파티셔닝 캐시 (partitioning cache)'
+title: '<em>파티셔닝 캐시</em> (partitioning cache)'
 tags:
   - caching
   - browser

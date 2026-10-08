@@ -1,5 +1,5 @@
 ---
-title: 자바스크립트 커링과 클로져
+title: '자바스크립트 <em>커링과 클로져</em>'
 tags:
   - javascript
 published: true

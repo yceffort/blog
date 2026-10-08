@@ -1,5 +1,5 @@
 ---
-title: '자바스크립트 함수를 선언하는 여섯가지 방법'
+title: '자바스크립트 <em>함수를 선언하는</em> 여섯가지 방법'
 tags:
   - javascript
 published: true

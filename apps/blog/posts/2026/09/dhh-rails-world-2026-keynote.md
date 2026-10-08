@@ -1,5 +1,5 @@
 ---
-title: 'Rails가 왜 좋았는지는, 만든 사람이 내려놓고 나서야 보였다'
+title: '<em>Rails</em>가 왜 좋았는지는, 만든 사람이 내려놓고 나서야 보였다'
 tags:
   - essay
   - oss

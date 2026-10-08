@@ -1,5 +1,5 @@
 ---
-title: '좋은 자바스크립트 테스트 코드를 짜는 방법'
+title: '좋은 자바스크립트 <em>테스트 코드</em>를 짜는 방법'
 tags:
   - testing
 published: true

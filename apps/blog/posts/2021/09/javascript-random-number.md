@@ -1,5 +1,5 @@
 ---
-title: '자바스크립트에서 안전하게 난수 생성하는 방법'
+title: '자바스크립트에서 안전하게 <em>난수 생성</em>하는 방법'
 tags:
   - javascript
   - security

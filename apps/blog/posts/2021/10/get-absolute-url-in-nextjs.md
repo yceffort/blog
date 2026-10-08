@@ -1,5 +1,5 @@
 ---
-title: 'nextjs 서버사이드에서 absolute url 가져오기'
+title: 'nextjs 서버사이드에서 <em>absolute url</em> 가져오기'
 tags:
   - nextjs
   - backend

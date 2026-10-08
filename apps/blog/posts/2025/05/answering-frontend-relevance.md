@@ -1,5 +1,5 @@
 ---
-title: 'AI 시대 "프론트엔드, 정말 중요할까?" 라는 질문에 답합니다. (성능, AI, UI/UX, 그리고 미래)'
+title: 'AI 시대 "<em>프론트엔드, 정말 중요할까?</em>" 라는 질문에 답합니다. (성능, AI, UI/UX, 그리고 미래)'
 tags:
   - essay
   - web-performance

@@ -1,5 +1,5 @@
 ---
-title: 'Typescript 4.0 릴리즈 노트 '
+title: '<em>Typescript 4.0</em> 릴리즈 노트 '
 tags:
   - typescript
   - compiler

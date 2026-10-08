@@ -1,5 +1,5 @@
 ---
-title: 'React 19: ref를 prop으로 사용하기'
+title: 'React 19: <em>ref를 prop으로</em> 사용하기'
 tags:
   - react
 published: true

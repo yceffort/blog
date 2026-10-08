@@ -1,5 +1,5 @@
 ---
-title: 'package.json에 쌓여있는 개발 부채'
+title: '<em>package.json</em>에 쌓여있는 개발 부채'
 tags:
   - npm
 published: true

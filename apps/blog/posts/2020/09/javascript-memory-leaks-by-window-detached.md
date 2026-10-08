@@ -1,5 +1,5 @@
 ---
-title: detached window로 인한 자바스크립트 메모리 누수
+title: '<em>detached window</em>로 인한 자바스크립트 메모리 누수'
 tags:
   - memory
   - javascript

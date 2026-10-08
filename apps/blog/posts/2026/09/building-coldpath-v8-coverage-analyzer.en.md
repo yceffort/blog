@@ -1,5 +1,5 @@
 ---
-title: 'Building a Bundle Analyzer with V8 Coverage and Source Maps'
+title: 'Building a <em>Bundle Analyzer</em> with V8 Coverage and Source Maps'
 tags:
   - web-performance
   - bundler

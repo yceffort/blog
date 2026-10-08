@@ -1,5 +1,5 @@
 ---
-title: 'overflow: auto vs overflow: scroll 왜 윈도우에서만 쓸모없는 스크롤바가 노출될까'
+title: '<em>overflow: auto vs overflow: scroll</em> 왜 윈도우에서만 쓸모없는 스크롤바가 노출될까'
 tags:
   - css
   - browser

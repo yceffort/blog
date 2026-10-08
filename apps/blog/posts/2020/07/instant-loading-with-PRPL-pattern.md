@@ -1,5 +1,5 @@
 ---
-title: 빠른 로딩을 위한 PRPL 패턴
+title: '빠른 로딩을 위한 <em>PRPL 패턴</em>'
 tags:
   - web-performance
   - design-patterns

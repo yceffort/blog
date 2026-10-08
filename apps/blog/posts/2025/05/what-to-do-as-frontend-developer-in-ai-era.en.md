@@ -1,5 +1,5 @@
 ---
-title: 'In an Era Where AI Writes Code, What Should I Do as a Frontend Developer?'
+title: 'In an Era Where AI Writes Code, <em>What Should I Do</em> as a Frontend Developer?'
 tags:
   - ai
   - career

@@ -1,5 +1,5 @@
 ---
-title: '디렉토리에 있는 모든 이미지 최적화 하기'
+title: '디렉토리에 있는 모든 <em>이미지 최적화</em> 하기'
 tags:
   - web-performance
   - blogging

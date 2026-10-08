@@ -1,5 +1,5 @@
 ---
-title: 'Where Frontend Came From, and Where It Goes After Agents'
+title: 'Where <em>Frontend</em> Came From, and Where It Goes After Agents'
 tags:
   - essay
   - ai

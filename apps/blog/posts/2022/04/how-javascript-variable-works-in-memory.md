@@ -1,5 +1,5 @@
 ---
-title: 'V8에서 관리되는 자바스크립트 변수'
+title: 'V8에서 관리되는 <em>자바스크립트 변수</em>'
 tags:
   - javascript
   - v8

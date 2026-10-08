@@ -1,5 +1,5 @@
 ---
-title: '개발자가 알아야 하는 4가지 nodejs 디자인 패턴'
+title: '개발자가 알아야 하는 4가지 <em>nodejs 디자인 패턴</em>'
 tags:
   - design-patterns
   - nodejs

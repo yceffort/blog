@@ -1,5 +1,5 @@
 ---
-title: '타입스크립트 type과 interface의 공통점과 차이점'
+title: '타입스크립트 <em>type과 interface</em>의 공통점과 차이점'
 tags:
   - typescript
 published: true

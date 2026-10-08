@@ -1,5 +1,5 @@
 ---
-title: '알아두면 유용한 타입스크립트 팁'
+title: '알아두면 유용한 <em>타입스크립트 팁</em>'
 tags:
   - typescript
 published: true

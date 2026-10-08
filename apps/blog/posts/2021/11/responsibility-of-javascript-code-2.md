@@ -1,5 +1,5 @@
 ---
-title: '자바스크립트 코드가 가져야할 책임감 (2)'
+title: '자바스크립트 코드가 가져야할 <em>책임감</em> (2)'
 tags:
   - web-performance
   - bundler

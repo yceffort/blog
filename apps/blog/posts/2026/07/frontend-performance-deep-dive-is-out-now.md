@@ -1,5 +1,5 @@
 ---
-title: '『프런트엔드 성능 최적화 Deep Dive』가 출간되었습니다.'
+title: '『<em>프런트엔드 성능 최적화 Deep Dive</em>』가 출간되었습니다.'
 tags:
   - web-performance
   - book

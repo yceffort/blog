@@ -1,5 +1,5 @@
 ---
-title: Javascript - Closure
+title: 'Javascript - <em>Closure</em>'
 date: 2019-05-09 08:11:56
 published: true
 tags:

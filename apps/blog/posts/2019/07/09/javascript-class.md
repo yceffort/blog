@@ -1,5 +1,5 @@
 ---
-title: javascript class
+title: 'javascript <em>class</em>'
 date: 2019-07-10 01:01:24
 published: true
 tags:

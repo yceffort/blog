@@ -1,5 +1,5 @@
 ---
-title: '트리쉐이킹으로 자바스크립트 사이즈 줄이기'
+title: '<em>트리쉐이킹</em>으로 자바스크립트 사이즈 줄이기'
 tags:
   - bundler
   - web-performance

@@ -1,5 +1,5 @@
 ---
-title: 'Why GitHub Actions Cron Jobs Run Late, and What to Use Instead'
+title: 'Why <em>GitHub Actions Cron Jobs</em> Run Late, and What to Use Instead'
 tags:
   - ci-cd
   - git

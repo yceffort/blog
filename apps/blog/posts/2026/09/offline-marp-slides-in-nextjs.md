@@ -1,5 +1,5 @@
 ---
-title: 'Next.js 앱의 Marp 슬라이드를 오프라인에 저장하기'
+title: 'Next.js 앱의 Marp 슬라이드를 <em>오프라인</em>에 저장하기'
 tags:
   - pwa
   - caching

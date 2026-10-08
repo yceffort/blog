@@ -1,5 +1,5 @@
 ---
-title: 'map과 reduce에서 async await 사용하기'
+title: 'map과 reduce에서 <em>async await</em> 사용하기'
 tags:
   - async
   - javascript

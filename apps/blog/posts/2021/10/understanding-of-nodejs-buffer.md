@@ -1,5 +1,5 @@
 ---
-title: 'nodejs의 버퍼 이해하기'
+title: 'nodejs의 <em>버퍼</em> 이해하기'
 tags:
   - nodejs
 published: true

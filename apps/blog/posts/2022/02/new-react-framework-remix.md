@@ -1,5 +1,5 @@
 ---
-title: 'Remix nextjs와 비교하면서 살펴보기'
+title: '<em>Remix</em> nextjs와 비교하면서 살펴보기'
 tags:
   - nextjs
   - design-patterns

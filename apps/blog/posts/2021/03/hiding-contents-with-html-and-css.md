@@ -1,5 +1,5 @@
 ---
-title: 'HTML과 CSS를 활용해서 콘텐츠를 숨기는 10가지 방법'
+title: 'HTML과 CSS를 활용해서 <em>콘텐츠를 숨기는</em> 10가지 방법'
 tags:
   - css
   - accessibility

@@ -1,5 +1,5 @@
 ---
-title: '브라우저와 Nodejs의 이벤트 루프는 무엇이 다를까'
+title: '브라우저와 Nodejs의 <em>이벤트 루프</em>는 무엇이 다를까'
 tags:
   - javascript
   - async

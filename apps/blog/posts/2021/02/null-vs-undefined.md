@@ -1,5 +1,5 @@
 ---
-title: 'null과 undefined의 차이, 그리고 역사'
+title: '<em>null과 undefined</em>의 차이, 그리고 역사'
 tags:
   - javascript
 published: true

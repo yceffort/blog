@@ -1,5 +1,5 @@
 ---
-title: 'Typescript의 Immutability'
+title: 'Typescript의 <em>Immutability</em>'
 tags:
   - typescript
   - javascript

@@ -1,5 +1,5 @@
 ---
-title: 'JSX에서 && 대신에 3항 연산자를 더 선호하는 이유'
+title: 'JSX에서 && 대신에 <em>3항 연산자</em>를 더 선호하는 이유'
 tags:
   - react
   - javascript

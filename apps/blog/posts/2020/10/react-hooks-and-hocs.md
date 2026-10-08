@@ -1,5 +1,5 @@
 ---
-title: '리액트의 Hooks과 HOC, HOC의 사용이 복잡해지는 경우'
+title: '리액트의 <em>Hooks과 HOC</em>, HOC의 사용이 복잡해지는 경우'
 tags:
   - react
   - design-patterns

@@ -1,5 +1,5 @@
 ---
-title: 'WebGPU, 드디어 모든 브라우저에서 사용 가능해지다'
+title: '<em>WebGPU</em>, 드디어 모든 브라우저에서 사용 가능해지다'
 tags:
   - browser
   - web-performance

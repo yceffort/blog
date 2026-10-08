@@ -1,5 +1,5 @@
 ---
-title: typescript debounce
+title: 'typescript <em>debounce</em>'
 date: 2019-10-14 06:17:00
 published: true
 tags:

@@ -1,5 +1,5 @@
 ---
-title: '리액트의 새로운 훅, useEvent'
+title: '리액트의 새로운 훅, <em>useEvent</em>'
 tags:
   - react
   - web-performance

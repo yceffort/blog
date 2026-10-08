@@ -1,5 +1,5 @@
 ---
-title: '알쏭 달쏭한 자바스크립트 정규식'
+title: '알쏭 달쏭한 자바스크립트 <em>정규식</em>'
 tags:
   - javascript
   - debugging

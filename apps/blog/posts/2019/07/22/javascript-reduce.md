@@ -1,5 +1,5 @@
 ---
-title: Javascript Reduce
+title: 'Javascript <em>Reduce</em>'
 date: 2019-07-22 08:36:28
 published: true
 tags:

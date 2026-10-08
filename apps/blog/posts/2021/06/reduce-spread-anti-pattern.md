@@ -1,5 +1,5 @@
 ---
-title: 'reduce에 spread 를 쓰면 안되는 이유'
+title: '<em>reduce에 spread</em> 를 쓰면 안되는 이유'
 tags:
   - javascript
   - web-performance

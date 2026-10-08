@@ -1,5 +1,5 @@
 ---
-title: 'Array vs ArrayLike, Promise vs PromiseLike'
+title: '<em>Array vs ArrayLike, Promise vs PromiseLike</em>'
 tags:
   - typescript
   - async

@@ -1,5 +1,5 @@
 ---
-title: "From useEvent to useEffectEvent: React's Event Handler Stabilization Journey"
+title: "From useEvent to <em>useEffectEvent</em>: React's Event Handler Stabilization Journey"
 tags:
   - react
 published: true

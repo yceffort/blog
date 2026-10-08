@@ -1,5 +1,5 @@
 ---
-title: '참조 동일성을 위한 메모이제이션'
+title: '<em>참조 동일성</em>을 위한 메모이제이션'
 tags:
   - react
   - web-performance

@@ -1,5 +1,5 @@
 ---
-title: '타입스크립트에서 조심해야할 습관'
+title: '타입스크립트에서 <em>조심해야할 습관</em>'
 tags:
   - typescript
 published: true

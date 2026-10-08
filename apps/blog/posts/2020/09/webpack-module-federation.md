@@ -1,5 +1,5 @@
 ---
-title: Webpack Module Federation에 대해 알아보자
+title: 'Webpack <em>Module Federation</em>에 대해 알아보자'
 tags:
   - bundler
   - design-patterns

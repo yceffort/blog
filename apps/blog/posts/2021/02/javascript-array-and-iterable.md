@@ -1,5 +1,5 @@
 ---
-title: '자바스크립트의 배열, 그리고 이터러블과 이터레이터 (ES6)'
+title: '자바스크립트의 배열, 그리고 <em>이터러블과 이터레이터</em> (ES6)'
 tags:
   - javascript
 published: true

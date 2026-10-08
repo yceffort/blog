@@ -1,5 +1,5 @@
 ---
-title: 블로그 업데이트에 대한 회고
+title: '<em>블로그 업데이트</em>에 대한 회고'
 tags:
   - blogging
   - devops

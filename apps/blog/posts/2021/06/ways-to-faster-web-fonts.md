@@ -1,5 +1,5 @@
 ---
-title: '웹 폰트 로딩을 더 빠르게 하는 방법'
+title: '<em>웹 폰트</em> 로딩을 더 빠르게 하는 방법'
 tags:
   - web-performance
   - css

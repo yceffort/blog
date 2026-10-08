@@ -1,5 +1,5 @@
 ---
-title: '웹 페이지에서의 자바스크립트 메모리 사용량 벤치마킹'
+title: '웹 페이지에서의 자바스크립트 <em>메모리 사용량</em> 벤치마킹'
 tags:
   - memory
   - web-performance

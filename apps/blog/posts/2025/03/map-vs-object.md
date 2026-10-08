@@ -1,5 +1,5 @@
 ---
-title: '맵과 객체 중 무엇을 언제 쓰는 것이 좋을까?'
+title: '<em>맵과 객체</em> 중 무엇을 언제 쓰는 것이 좋을까?'
 tags:
   - javascript
   - algorithm

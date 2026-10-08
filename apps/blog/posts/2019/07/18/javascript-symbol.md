@@ -1,5 +1,5 @@
 ---
-title: Javascript Symbol
+title: 'Javascript <em>Symbol</em>'
 date: 2019-07-18 07:03:36
 published: true
 tags:

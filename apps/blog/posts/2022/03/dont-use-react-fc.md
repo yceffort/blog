@@ -1,5 +1,5 @@
 ---
-title: 'React.FC를 사용하지 않는 이유'
+title: '<em>React.FC</em>를 사용하지 않는 이유'
 tags:
   - react
   - typescript

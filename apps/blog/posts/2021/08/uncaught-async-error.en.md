@@ -1,5 +1,5 @@
 ---
-title: 'Handling Uncaught Async Errors in JavaScript Correctly'
+title: 'Handling <em>Uncaught Async Errors</em> in JavaScript Correctly'
 tags:
   - error-handling
   - javascript

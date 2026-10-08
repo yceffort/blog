@@ -1,5 +1,5 @@
 ---
-title: '[Rust] 자바스크립트에서 러스트로 (1) - rustup, hello world, 그리고 소유권과 빌림'
+title: '[Rust] <em>자바스크립트에서 러스트로</em> (1) - rustup, hello world, 그리고 소유권과 빌림'
 tags:
   - rust
   - career
