@@ -6,6 +6,7 @@ tags:
   - compiler
 published: true
 date: 2026-10-08 23:04:00
+updated: 2026-10-08 23:20:06
 description: 'Turbopack 분석 파일의 동기 의존성을 정적 import로 해석한 coldpath의 분류 오류를 추적했다. webpack, Turbopack, Vite, esbuild의 그래프 정보와 산출물을 비교하고, 원래 구문을 판별할 수 있는 단서와 복원할 수 없는 경우를 살펴본다.'
 series: 'coldpath 제작기'
 seriesOrder: 4
@@ -53,6 +54,8 @@ export default function Page() {
 
 토스증권의 청크는 Next.js가 쓰는 `webpackChunk_N_E` 전역에 등록돼 있었고, 당시 살펴본 모듈 호출에는 이 설명이 맞았다. 그런데 같은 입력을 여러 번들러로 빌드해 보니 호출 자체가 최적화로 사라지기도 했고, Turbopack처럼 분석 파일에 없는 구분이 런타임 호출에는 남기도 했다. 처음 발견한 설명의 오류도 Turbopack의 분석 파일에 기록된 동기 의존성을 모두 정적 import로 해석한 데서 생겼다.
 
+다만 지연 로딩을 제안할 때 필요한 것은 구문의 이름보다 그 구문이 대상 모듈을 언제 실행하는지였다. 모듈 본문에서 바로 부른 `require()`는 import와 같은 시점에 대상 모듈을 실행하고, 함수 안에서 부른 `require()`는 그 함수가 불릴 때 실행한다. 그 시점을 알아내려면 먼저 구문의 종류와 위치를 알아야 했다.
+
 이번에는 번들러가 `import`와 `require()`의 차이를 어디에 남기는지 살펴봤다. webpack의 stats, Turbopack의 분석 파일, Vite 플러그인의 모듈 정보, esbuild의 metafile을 브라우저가 받는 산출물과 비교했다. 여기서 원래 구문을 어디까지 알아낼 수 있는지 확인하고, 그 결과를 바탕으로 coldpath의 분류를 고친 뒤 제안이 어떻게 바뀌는지 버전별로 따라갔다.
 
 > 기본 실험은 2026년 10월 4일, macOS(arm64)와 Node.js 24.20.0에서 진행했다. 번들러 버전은 webpack [`v5.111.1`](https://github.com/webpack/webpack/tree/v5.111.1), Next.js [`v16.3.8`](https://github.com/vercel/next.js/tree/v16.3.8)(Turbopack, 내장 webpack 5.98.0), Vite 8.3.2와 그 빌드를 맡는 Rolldown [`v1.2.12`](https://github.com/rolldown/rolldown/tree/v1.2.12), esbuild [`v0.28.2`](https://github.com/evanw/esbuild/tree/v0.28.2)로 고정했다.
@@ -64,14 +67,9 @@ export default function Page() {
 - **간선**: 의존성 그래프에서 한 모듈이 다른 모듈을 가져오는 연결 하나다. `entry.js`가 `esm-dep.js`를 가져오면 `entry.js -> esm-dep.js`가 간선 하나이고, 그 연결을 만든 구문(정적 import, `require()`, 동적 `import()`)을 간선의 종류라고 부른다.
 - **정적 import 체인**: 진입점에서 어떤 모듈까지 정적 import 간선만으로 이어진 경로다.
 - **복원 그래프**: 번들러의 그래프 정보 없이 산출물의 모듈 호출만 읽어 다시 만든 의존성 그래프다. coldpath의 `modules --graph`가 만든다.
-- **어댑터**: 번들러마다 다른 그래프 정보를 coldpath의 그래프 형식으로 옮기는 coldpath의 코드다.
 - **지정자**: `'./cjs-dep.js'`처럼 import나 `require()`에 넘기는 경로 문자열(specifier)이다.
 - **최상위**: 함수 안이 아니라 모듈 본문에서 바로 실행되는 자리다. 최상위 `require()`는 그 모듈이 실행될 때 함께 실행된다.
 - **모듈 함수**: 번들러가 모듈 하나의 코드를 감싸 만든 함수다. webpack과 Turbopack 산출물은 이 함수를 id로 찾아 실행한다.
-- **네임스페이스 객체**: `import * as ns`로 받는, 모듈의 export를 모은 객체다.
-- **orphan**: webpack stats에서 어느 청크에도 들어가지 않은 모듈이다.
-- **추적(traced) 대상**: Turbopack이 번들에 넣지 않지만 실행할 때 필요해서 배포 파일 목록에 남기는 파일이다. 정적 자산이나 번들 밖 외부 패키지가 여기에 해당한다.
-- **조건부 해석**: `package.json` `exports`의 조건(`import`, `require`, `browser` 등)에 따라 다른 파일을 고르는 해석이다.
 
 ## 일곱 가지 경우를 담은 입력
 
@@ -145,7 +143,7 @@ get type() {
 
 1번 줄의 import 문에는 reason이 두 개 붙어 있다. `harmony side effect evaluation`은 import 선언의 위치(`1:0-35`), `harmony import specifier`는 가져온 이름을 실제로 쓰는 위치(`9:10-16`)를 가리킨다. `sideEffects`로 부수 효과가 없다고 선언된 모듈은 선언 위치의 reason이 `inactive`가 되고 사용 위치만 활성으로 남는다.
 
-쓰지 않아서 번들에서 빠진 `unused-dep.js`도 orphan 모듈로 stats에 남아 있다. stats에서는 산출물에 포함되지 않은 import까지 확인할 수 있다. 다만 orphan 표시만으로 번들에서 빠졌다고 판단할 수는 없다. 모듈 연결을 켠 기본 빌드에서는 진입점에 합쳐진 `entry.js`, `esm-dep.js`, `esm-required.js`도 orphan으로 표시됐다.
+쓰지 않아서 번들에서 빠진 `unused-dep.js`도 orphan 모듈(어느 청크에도 들어가지 않은 모듈)로 stats에 남아 있다. stats에서는 산출물에 포함되지 않은 import까지 확인할 수 있다. 다만 orphan 표시만으로 번들에서 빠졌다고 판단할 수는 없다. 모듈 연결을 켠 기본 빌드에서는 진입점에 합쳐진 `entry.js`, `esm-dep.js`, `esm-required.js`도 orphan으로 표시됐다.
 
 ### 산출물의 모듈 호출은 같아질 수 있다
 
@@ -292,7 +290,7 @@ fn chunking_type(&self) -> Option<ChunkingType> {
 
 `ChunkingType`의 주석을 보면 `inherit_async`는 의존하는 모듈이 비동기일 때 이를 가져오는 모듈도 비동기가 되는지를 나타낸다. 최상위 `await`를 쓰는 모듈이 이런 경우에 해당한다. 주석에는 "ESM import에서는 그래야 하지만 CommonJS require에서는 아니다"라고 적혀 있다. `hoisted`는 가져온 모듈을 항상 먼저 실행하는지, 즉 ESM import의 실행 순서를 따르는지를 나타낸다. 같은 파일의 다른 CommonJS 참조(`CjsAssetReference`, `require.resolve()`의 `CjsRequireResolveAssetReference`)도 `require()`와 같은 값을 쓴다. 따라서 이 값으로는 ESM import와 CommonJS 참조를 구분할 수 있고, CommonJS 참조끼리는 구분할 수 없다.
 
-이 차이는 분석기에서 `modules.data`를 만들 때 사라진다. `analyze_module_graphs`는 그래프를 순회하면서 추적(traced) 대상인지를 먼저 확인한다. 나머지 간선은 `chunking_type`에 따라 목록에 넣는다.[^10]
+이 차이는 분석기에서 `modules.data`를 만들 때 사라진다. `analyze_module_graphs`는 그래프를 순회하면서 추적(traced) 대상인지를 먼저 확인한다. 추적 대상은 번들에는 넣지 않지만 실행할 때 필요해서 배포 파일 목록에 남기는 파일로, 정적 자산이나 번들 밖 외부 패키지가 여기에 해당한다. 나머지 간선은 `chunking_type`에 따라 목록에 넣는다.[^10]
 
 ```rust
 match reference.chunking_type {
@@ -330,7 +328,7 @@ pub const TURBOPACK_MODULE_CONTEXT: &TurbopackRuntimeFunctionShortcut = make_sho
 pub const TURBOPACK_IMPORT: &TurbopackRuntimeFunctionShortcut = make_shortcut!("i");
 ```
 
-두 호출의 역할은 런타임에서 확인할 수 있다. `i`는 네임스페이스 객체를 제공하고, `r`은 `module.exports`를 반환한다. CommonJS 모듈을 가져올 때는 같은 모듈을 가리켜도 반환값이 달라질 수 있다.[^12]
+두 호출의 역할은 런타임에서 확인할 수 있다. `i`는 네임스페이스 객체(`import * as ns`로 받는, 모듈의 export를 모은 객체)를 제공하고, `r`은 `module.exports`를 반환한다. CommonJS 모듈을 가져올 때는 같은 모듈을 가리켜도 반환값이 달라질 수 있다.[^12]
 
 ```ts
 function esmImport(
@@ -369,22 +367,9 @@ contextPrototype.r = commonJsRequire
 
 ### 블로그 빌드에서 확인한 차이
 
-이 블로그(Next.js 16.3.5, 커밋 `f1ff09a9`)에서도 `next experimental-analyze --output`과 `next build`를 실행해 분석 파일과 산출물을 비교했다. `modules.data`에는 모듈이 6,659개 있었다. 클라이언트 동기 간선을 서로 다른 경로 쌍으로 세면 3,600개였다. 각 파일의 소스를 파싱하고 지정자를 Node.js의 `require` 해석 규칙으로 풀어, 그래프에 연결된 모듈과 일치하는지 확인했다.[^14] 산출물에서는 소스맵을 뺀 `.next/static`의 JavaScript 109개를 coldpath의 `modules --graph`로 분석해 간선을 복원했다.
+이 블로그(Next.js 16.3.5, 커밋 `f1ff09a9`)에서도 `next experimental-analyze --output`과 `next build`를 실행해 분석 파일과 산출물을 비교했다. `modules.data`의 클라이언트 동기 간선은 서로 다른 경로 쌍으로 세면 3,600개였다. 가져오는 파일의 소스를 파싱하고 지정자를 Node.js의 `require` 해석 규칙으로 풀어 맞춰 보니, 73%(2,639개)는 어느 구문에서 나온 간선인지 판정할 수 있었다. 그중 `require()`로 확인한 588개는 모두 `node_modules` 안에 있었고, 주로 `next/dist`의 CommonJS 산출물에서 나왔다. 판정하지 못한 961개에는 `process` 폴리필, JSX 변환이 주입한 `jsx-runtime`, `react`를 `next/dist/compiled/react`로 바꾸는 별칭, 블로그 코드의 `@/` 경로 별칭처럼 소스와 맞추기 어려운 간선이 섞여 있다. 그래서 전체 `require()` 간선이 최대 몇 개인지는 알 수 없다.[^14]
 
-| 관측 지점                                      |  간선 |     import | `require()` | 그 밖          |
-| ---------------------------------------------- | ----: | ---------: | ----------: | -------------- |
-| `modules.data`의 클라이언트 동기 간선(경로 쌍) | 3,600 |      2,051 |         588 | 판정 못 함 961 |
-| 산출물에서 복원한 간선                         |   986 | 456(`e.i`) |  496(`e.r`) | 동적 34        |
-
-소스의 `require()` 호출과 연결 대상을 모두 확인한 간선은 588개로, 전체 경로 쌍의 16.3%였다. 모두 `node_modules` 안에 있었고, 주로 `next/dist`의 CommonJS 산출물에서 나왔다.
-
-판정하지 못한 961개 중 201개는 가져오는 파일에 문자열 지정자의 `require()`가 있었지만, 어느 호출에서 나온 간선인지는 찾지 못했다. 나머지에는 `process` 폴리필, SWC가 주입한 `@swc/helpers`, JSX 변환이 주입한 `jsx-runtime`, `react`를 `next/dist/compiled/react`로 바꾸는 별칭처럼 소스와 맞추기 어려운 간선도 있다. 따라서 이 집계로 확인한 것은 588개이고, 전체 `require()` 간선이 최대 몇 개인지까지는 알 수 없다.
-
-블로그 코드(`apps/blog`와 `packages/shared`)에서 나가는 경로 쌍 193개는 판정하기가 더 어려웠다. import로 확인한 것은 16개뿐이고 177개는 판정하지 못했다. 대상이 블로그 파일인 91개 중 74개는 `@/` 경로 별칭(46개)이나 확장자를 생략한 상대 경로(28개)라서 Node.js 규칙으로 풀리지 않았다. 패키지를 가리키는 46개에는 앞의 `react` 별칭이나, pnpm이 피어 의존성 조합마다 따로 설치한 `next`처럼 번들러가 고른 파일과 Node.js 규칙으로 푼 파일이 다른 경우가 섞여 있었다. 나머지 40개는 JSX 변환이 주입한 `jsx-runtime`(38개)과 폴리필(2개)이다. 이 블로그 코드에는 `require()`가 없으므로 종류를 잘못 고를 일은 없지만, 소스와 맞춰 확인할 수 있는 간선은 그만큼 적었다.
-
-산출물에서 복원한 간선 중에는 `e.r`이 절반을 넘었다. scope hoisting으로 ESM 모듈끼리 한 모듈 함수로 합쳐지면 그 사이의 import 간선은 사라진다. 반면 별도 모듈 함수로 남은 CommonJS 모듈을 부르는 `e.r`은 복원 대상에 남는다.
-
-이 차이가 비율에 영향을 줄 수는 있지만, 표의 두 행은 집계 대상부터 다르다. 산출물에서 복원한 모듈 함수는 청크 91개에 걸쳐 677개(중복을 빼면 339개)였고, 복원하지 못한 id를 가리키는 호출 527개는 간선에서 빠졌다. 따라서 비율 차이를 모두 scope hoisting의 효과로 보기는 어렵다.
+산출물 쪽에서는 소스맵을 뺀 `.next/static`의 JavaScript 109개를 coldpath의 `modules --graph`로 분석해 간선 986개를 복원했고, 그중 절반이 넘는 496개가 `e.r` 호출이었다. scope hoisting으로 ESM 모듈끼리 한 모듈 함수로 합쳐지면 그 사이의 import 간선은 사라지고, 별도 모듈 함수로 남은 CommonJS 모듈을 부르는 `e.r`은 남는다. 다만 복원하지 못한 id를 가리키는 호출 527개가 빠져 있고 분석 파일과는 세는 대상부터 달라서, 이 비율을 앞의 판정 결과와 견줄 수는 없다.
 
 ## Vite: 형식 호환 처리가 남기는 단서
 
@@ -524,7 +509,7 @@ esbuild는 `require()`로 가져온 ESM 모듈을 `__esm` 래퍼로 감싸 `requ
 
 ### 소스를 읽어 간선의 종류와 위치를 고치기
 
-coldpath 0.6.0의 Turbopack 어댑터는 `modules.data`의 세 목록을 이렇게 옮겼다.[^20]
+coldpath 0.6.0의 Turbopack 어댑터(번들러의 그래프 정보를 coldpath 그래프로 바꾸는 코드)는 `modules.data`의 세 목록을 이렇게 옮겼다.[^20]
 
 ```ts
 for (const [field, kind] of [
@@ -538,7 +523,7 @@ for (const [field, kind] of [
 
 0.6.1에서는 소스에서 확인할 수 있는 동기 간선부터 다시 분류했다. 가져오는 파일을 파싱해 `require()` 호출의 대상과 그래프의 대상이 같으면 `require`로 바꾼다. 이 파일에 인식한 `require()`가 있지만 어느 import나 `require()`로도 연결 대상을 설명할 수 없으면 `unknown`으로 두고 경고에 개수를 남긴다. 나머지는 기존의 `static`을 유지한다. 구현은 [분류 수정 `58b1a6a`](https://github.com/yceffort/coldpath/commit/58b1a6a8395d4a95fdf46b6decc985dafadcbca6)와 [패키지 지정자 대응 수정 `fec91ef`](https://github.com/yceffort/coldpath/commit/fec91ef351ea732a547051f1682ccc1bbbea2b97)에서 볼 수 있다.
 
-패키지 이름은 가져오는 파일을 기준으로 Node.js의 `require` 해석 규칙에 따라 풀고, 패키지의 `exports`에 선언된 대상 파일도 후보로 비교한다. 상대 경로는 확장자를 생략한 경우까지 후보를 차례로 대 본다. 번들러의 별칭과 조건부 해석을 모두 재현하지는 않는다. 그래프에 이미 연결된 모듈을 소스의 어느 구문에서 가져왔는지 찾는 데 이 후보들을 쓴다.
+패키지 이름은 가져오는 파일을 기준으로 Node.js의 `require` 해석 규칙에 따라 풀고, 패키지의 `exports`에 선언된 대상 파일도 후보로 비교한다. 상대 경로는 확장자를 생략한 경우까지 후보를 차례로 대 본다. 번들러의 별칭과 조건부 해석(`package.json` `exports`의 `import`, `require`, `browser` 같은 조건에 따라 다른 파일을 고르는 해석)을 모두 재현하지는 않는다. 그래프에 이미 연결된 모듈을 소스의 어느 구문에서 가져왔는지 찾는 데 이 후보들을 쓴다.
 
 앞에서 본 것처럼 산출물의 `e.i`와 `e.r`로도 간선 종류를 구분할 수 있다. 그래도 수정에는 소스를 읽는 방법을 썼다. `modules.data`의 모듈 항목에는 `ident`와 `path`만 있어서 `e.r(1934)` 같은 산출물의 숫자 id와 바로 이어지지 않고, 분석 파일과 산출물은 따로 실행한 결과다. 블로그 빌드에서 본 것처럼 산출물에서 복원할 수 있는 간선은 일부이고, 다른 모듈에 합쳐진 ESM import는 호출 자체가 남지 않는다. 산출물의 호출에는 소스 위치도 없다. 제안에서 해당 코드를 찾아가려면 어차피 소스를 읽어야 했고, 소스를 읽으면 구문의 종류도 함께 알 수 있었다.
 
@@ -585,7 +570,7 @@ impl ImportStep {
 
 블로그 그래프의 `require` 678개 중 661개가 최상위 호출이었다. 나머지 17개 중 8개는 UMD 래퍼 안의 호출이다. 최상위가 아닌 `require()`나 `unknown` 간선이 낀 경로에는 동기 체인을 전제로 하는 제안이 붙지 않는다.
 
-0.8.1에서 제안은 다시 `split-review`가 됐고, 설명의 앞부분도 "A synchronous import chain (static imports or top-level require() calls)"로 바뀌었다. 다만 "part of it executes initially"라는 뒷부분은 남았다. 첫 진입에서 이 모듈이 실행한 것은 모듈 함수가 `t.exports`에 객체를 대입하는 코드뿐이었는데, Turbopack 산출물에서 `heavy-cjs.js`의 마지막 소스맵 매핑이 바로 뒤 `index.jsx` 모듈 함수의 시작 부분까지 이어져 그 실행이 이 모듈의 함수 실행으로 집계됐기 때문이다.[^24] 매핑 범위를 모듈 함수의 경계에서 자르는 수정([`9c89cbc`](https://github.com/yceffort/coldpath/commit/9c89cbc9239a04e29d14e35e591895a0a74733df))과 CommonJS 내보내기 대입을 최상위 부수 효과에서 빼는 수정([`34f908b`](https://github.com/yceffort/coldpath/commit/34f908bbc186503a31f58352f353e84bdc825a30))이 들어간 0.8.2에서 `heavy-cjs.js`에는 다음 제안이 붙었다.
+0.8.1에서 제안은 다시 `split-review`가 됐고, 설명의 앞부분도 "A synchronous import chain (static imports or top-level require() calls)"로 바뀌었다. 뒷부분의 "part of it executes initially"는 import 분류와는 별개인 실행 집계 쪽 결함에서 나온 판정이었고, 이 결함은 0.8.2에서 고쳐졌다.[^24] 0.8.2에서 `heavy-cjs.js`에는 다음 제안이 붙었다.
 
 ```json
 {
@@ -594,7 +579,7 @@ impl ImportStep {
 }
 ```
 
-간선 종류만 고친 0.6.1에서는 제안이 일반적인 문장으로 물러났고, 최상위 `require()`를 동기 간선으로 다루고 실행 판정까지 고친 뒤에야 버튼을 누를 때만 쓰이는 모듈이라는 재현 페이지의 의도에 맞는 제안이 나왔다.
+간선 종류만 고친 0.6.1에서는 제안이 일반적인 문장으로 물러났고, 최상위 `require()`를 동기 간선으로 다루고 실행 집계까지 고친 뒤에야 버튼을 누를 때만 쓰이는 모듈이라는 재현 페이지의 의도에 맞는 제안이 나왔다.
 
 이 제안은 `require()`를 버튼 클릭 뒤로 옮기는 것을 검토해 보라는 뜻이다. 이번에는 제안이 바뀌는 과정까지 확인했고, 실제로 코드를 옮겼을 때 동작이나 전송량이 어떻게 달라지는지는 측정하지 않았다.
 
@@ -613,7 +598,7 @@ impl ImportStep {
 
 그래프를 읽을 때도 API가 무엇을 기록하는지 확인해야 했다. webpack stats의 `reasons`에서는 구문의 종류와 위치, 활성 여부를 알 수 있었지만, Next.js의 `modules.data`에서는 동기와 비동기, 추적 대상인지만 구분할 수 있었다. Rolldown의 `getModuleInfo`는 Rollup 플러그인 API를 따라 의존 대상을 `importedIds`와 `dynamicallyImportedIds`로 나눈다.[^25] Rollup은 CommonJS를 플러그인으로 처리하고,[^26] Rolldown은 직접 처리하는 `require()`도 `importedIds`에 넣는다. 같은 목록에 들어 있다는 이유로 소스의 구문까지 같다고 가정하면, coldpath에서 겪은 것과 같은 분류 오류가 생긴다.
 
-coldpath에서는 그래프에 연결된 모듈을 소스의 어느 구문에서 가져오는지 확인해 분류를 고쳤다. 다만 구문의 종류를 바로잡는 것만으로는 제안이 나아지지 않았다. 최상위 `require()`가 import와 같은 시점에 실행된다는 점을 반영하고, 첫 진입에서 실행된 코드를 모듈 경계에 맞게 나눈 뒤에야 `heavy-cjs.js`에 `defer-review`가 붙었다. 이제 제안에서 해당 모듈을 가져오는 3행 18열의 `require()`까지 찾아갈 수 있다.
+coldpath에서는 그래프에 연결된 모듈을 소스의 어느 구문에서 가져오는지 확인해 분류를 고쳤다. 다만 구문의 종류를 바로잡는 것만으로는 제안이 나아지지 않았다. 최상위 `require()`가 import와 같은 시점에 대상 모듈을 실행한다는 점을 반영하고 실행 집계 쪽 결함까지 고친 뒤에야 `heavy-cjs.js`에 `defer-review`가 붙었다. 제안에 필요했던 것은 구문의 이름보다 실행 시점이었고, 구문의 종류와 위치는 그 시점을 알아내는 수단이었다. 이제 제안에서 해당 모듈을 가져오는 3행 18열의 `require()`까지 찾아갈 수 있다.
 
 이번 문제를 풀 때는 그래프에서 연결된 모듈을 찾고, 산출물에서 실제 호출을 확인하고, 소스에서 구문과 위치를 찾았다. 분리를 검토할 때도 이렇게 찾은 코드를 첫 진입과 상호작용에서 수집한 실행 기록과 함께 봐야 한다. 어떤 모듈이 연결돼 있는지에서 시작해, 어디서 가져오고 언제 실행되는지까지 확인할 수 있어야 분리할 코드를 구체적으로 짚을 수 있다.
 
@@ -643,7 +628,7 @@ coldpath에서는 그래프에 연결된 모듈을 소스의 어느 구문에서
 
 [^13]: [`runtime-utils.ts#L221-L239`](https://github.com/vercel/next.js/blob/v16.3.8/turbopack/crates/turbopack-ecmascript-runtime/js/src/shared/runtime/runtime-utils.ts#L221-L239)의 `esmExport`. 236행에서 `module.namespaceObject = exports`로 지정한다.
 
-[^14]: 판정 스크립트는 [`scripts/blog-edges.mjs`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/scripts/blog-edges.mjs)에 있다. 한 파일에서 갈라진 부분 모듈끼리 잇는 간선은 세지 않았다.
+[^14]: 판정 스크립트는 [`scripts/blog-edges.mjs`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/scripts/blog-edges.mjs)에 있다. 한 파일에서 갈라진 부분 모듈끼리 잇는 간선은 세지 않았다. 판정 결과의 내역(import 2,051, `require()` 588, 판정 못 함 961)과 블로그 코드에서 나가는 간선 193개의 판정 결과는 [`FINDINGS.md`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/FINDINGS.md)의 7절에 있다.
 
 [^15]: [`crates/rolldown/src/module_loader/module_task.rs#L157-L171`](https://github.com/rolldown/rolldown/blob/v1.2.12/crates/rolldown/src/module_loader/module_task.rs#L157-L171)
 
@@ -663,7 +648,7 @@ coldpath에서는 그래프에 연결된 모듈을 소스의 어느 구문에서
 
 [^23]: [`src/graph.rs#L38-L45`](https://github.com/yceffort/coldpath/blob/v0.8.2/src/graph.rs#L38-L45). 이 판정을 쓰는 분기는 [`src/recommendations.rs#L49-L98`](https://github.com/yceffort/coldpath/blob/v0.8.2/src/recommendations.rs#L49-L98)에 있다.
 
-[^24]: 청크 `0mlnz1g9-icsv.js`에서 `heavy-cjs.js`의 마지막 매핑(1376열 `}},`)은 다음 매핑인 `index.jsx`의 1417열 직전까지 이어지고, 그 사이에 첫 진입에서 실행된 `index.jsx` 모듈 함수의 시작(1384열 `e=>{`)이 들어 있다. `heavy-cjs.js` 모듈 함수의 실행 횟수는 1이고 안쪽 `compute`는 0이다. 확인 과정은 [`FINDINGS.md`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/FINDINGS.md)의 8-1절에 있다.
+[^24]: 첫 진입에서 `heavy-cjs.js`가 실행한 것은 모듈 함수가 `t.exports`에 객체를 대입하는 코드뿐이었고, 모듈 함수의 실행 횟수는 1, 안쪽 `compute`는 0이다. 그런데 청크 `0mlnz1g9-icsv.js`에서 `heavy-cjs.js`의 마지막 매핑(1376열 `}},`)이 다음 매핑인 `index.jsx`의 1417열 직전까지 이어지고, 그 사이에 첫 진입에서 실행된 `index.jsx` 모듈 함수의 시작(1384열 `e=>{`)이 들어 있어서 그 실행이 `heavy-cjs.js`의 함수 실행으로 집계됐다. 0.8.2는 매핑 범위를 모듈 함수의 경계에서 자르고([`9c89cbc`](https://github.com/yceffort/coldpath/commit/9c89cbc9239a04e29d14e35e591895a0a74733df)), `module.exports`와 `exports.x` 대입을 최상위 부수 효과에서 뺀다([`34f908b`](https://github.com/yceffort/coldpath/commit/34f908bbc186503a31f58352f353e84bdc825a30)). 확인 과정은 [`FINDINGS.md`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/FINDINGS.md)의 8-1절에 있다.
 
 [^25]: [`src/rollup/types.d.ts#L193-L212`](https://github.com/rollup/rollup/blob/v4.64.0/src/rollup/types.d.ts#L193-L212)(Rollup v4.64.0)
 

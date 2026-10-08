@@ -6,6 +6,7 @@ tags:
   - compiler
 published: true
 date: 2026-10-08 23:04:00
+updated: 2026-10-08 23:20:06
 description: 'Tracing a coldpath misclassification that read every synchronous dependency in the Turbopack analysis file as a static import. This post compares the graph information and build output of webpack, Turbopack, Vite, and esbuild, and looks at which clues reveal the original syntax and which cases cannot be recovered.'
 series: 'Building coldpath'
 seriesOrder: 4
@@ -53,6 +54,8 @@ To see where this difference disappears, I had to look at what the bundler expor
 
 Toss Securities' chunks were registered on the `webpackChunk_N_E` global that Next.js uses, and the statement held for the module calls I looked at then. But when I built the same input with several bundlers, the calls themselves sometimes disappeared through optimization, and with Turbopack a distinction missing from the analysis file survived in the runtime calls. The wrong explanation I first found also came from reading every synchronous dependency recorded in Turbopack's analysis file as a static import.
 
+Still, what a lazy-loading suggestion needs is less the name of the syntax than when that syntax runs its target module. A `require()` called directly in the module body runs its target at the same time as an import, while a `require()` called inside a function runs it when that function is called. To find out that timing, I first needed the kind and location of the syntax.
+
 This time I looked at where bundlers leave the difference between `import` and `require()`. I compared webpack's stats, Turbopack's analysis file, the module information from Vite plugins, and esbuild's metafile against the output the browser receives. From there I checked how far the original syntax can be recovered, fixed coldpath's classification based on the results, and followed how the suggestion changed from version to version.
 
 > The base experiments ran on October 4, 2026, on macOS (arm64) with Node.js 24.20.0. Bundler versions were pinned to webpack [`v5.111.1`](https://github.com/webpack/webpack/tree/v5.111.1), Next.js [`v16.3.8`](https://github.com/vercel/next.js/tree/v16.3.8) (Turbopack, with bundled webpack 5.98.0), Vite 8.3.2 with Rolldown [`v1.2.12`](https://github.com/rolldown/rolldown/tree/v1.2.12) doing its builds, and esbuild [`v0.28.2`](https://github.com/evanw/esbuild/tree/v0.28.2).
@@ -64,14 +67,9 @@ This post uses the following terms with these meanings.
 - **Edge**: one connection in a dependency graph where one module loads another. If `entry.js` loads `esm-dep.js`, then `entry.js -> esm-dep.js` is one edge, and the syntax that created that connection (static import, `require()`, dynamic `import()`) is called the edge kind.
 - **Static import chain**: a path from an entry point to a module that is connected only by static import edges.
 - **Recovered graph**: a dependency graph rebuilt only from the module calls in the build output, without the bundler's graph information. coldpath's `modules --graph` builds it.
-- **Adapter**: the coldpath code that converts each bundler's graph information into coldpath's graph format.
 - **Specifier**: the path string passed to an import or `require()`, like `'./cjs-dep.js'`.
 - **Top level**: a position that runs directly in the module body rather than inside a function. A top-level `require()` runs when its module runs.
 - **Module function**: a function the bundler creates by wrapping the code of one module. webpack and Turbopack output look up this function by id and run it.
-- **Namespace object**: the object that collects a module's exports, the one you receive with `import * as ns`.
-- **orphan**: in webpack stats, a module that is not included in any chunk.
-- **Traced target**: a file that Turbopack does not put in the bundle but keeps in the list of deployed files because it is needed at runtime. Static assets and external packages outside the bundle fall into this group.
-- **Conditional resolution**: resolution that picks a different file depending on the conditions in `package.json` `exports` (`import`, `require`, `browser`, and so on).
 
 ## An Input With Seven Cases
 
@@ -145,7 +143,7 @@ get type() {
 
 The import statement on line 1 has two reasons. `harmony side effect evaluation` points to the location of the import declaration (`1:0-35`), and `harmony import specifier` points to where the imported name is actually used (`9:10-16`). For a module declared side-effect free through `sideEffects`, the reason at the declaration becomes `inactive` and only the usage stays active.
 
-`unused-dep.js`, which was dropped from the bundle because it is unused, still remains in stats as an orphan module. Stats lets you see even imports that are not included in the output. Still, the orphan flag alone does not mean a module was dropped from the bundle. In the default build with module concatenation on, `entry.js`, `esm-dep.js`, and `esm-required.js`, which were merged into the entry point, were also marked as orphans.
+`unused-dep.js`, which was dropped from the bundle because it is unused, still remains in stats as an orphan module (a module not included in any chunk). Stats lets you see even imports that are not included in the output. Still, the orphan flag alone does not mean a module was dropped from the bundle. In the default build with module concatenation on, `entry.js`, `esm-dep.js`, and `esm-required.js`, which were merged into the entry point, were also marked as orphans.
 
 ### Module Calls in the Output Can Look the Same
 
@@ -292,7 +290,7 @@ fn chunking_type(&self) -> Option<ChunkingType> {
 
 According to the comments on `ChunkingType`, `inherit_async` indicates whether a module that loads an async dependency becomes async as well. A module that uses top-level `await` is such a case. The comment says this "should be true for ESM imports, but false for CommonJS requires." `hoisted` indicates whether the loaded module always runs first, that is, whether it follows ESM import execution order. The other CommonJS references in the same file (`CjsAssetReference`, and `CjsRequireResolveAssetReference` for `require.resolve()`) use the same values as `require()`. So these values can tell ESM imports apart from CommonJS references, but cannot tell CommonJS references apart from each other.
 
-This difference disappears when the analyzer builds `modules.data`. `analyze_module_graphs` walks the graph and first checks whether a reference is a traced target. The remaining edges go into lists by `chunking_type`.[^10]
+This difference disappears when the analyzer builds `modules.data`. `analyze_module_graphs` walks the graph and first checks whether a reference is a traced target. A traced target is a file that is not put in the bundle but is kept in the list of deployed files because it is needed at runtime, such as static assets or external packages outside the bundle. The remaining edges go into lists by `chunking_type`.[^10]
 
 ```rust
 match reference.chunking_type {
@@ -330,7 +328,7 @@ pub const TURBOPACK_MODULE_CONTEXT: &TurbopackRuntimeFunctionShortcut = make_sho
 pub const TURBOPACK_IMPORT: &TurbopackRuntimeFunctionShortcut = make_shortcut!("i");
 ```
 
-The roles of the two calls can be seen in the runtime. `i` provides a namespace object, and `r` returns `module.exports`. When loading a CommonJS module, the return value can differ even for the same module.[^12]
+The roles of the two calls can be seen in the runtime. `i` provides a namespace object (the object that collects a module's exports, the one you receive with `import * as ns`), and `r` returns `module.exports`. When loading a CommonJS module, the return value can differ even for the same module.[^12]
 
 ```ts
 function esmImport(
@@ -369,22 +367,9 @@ For a typical synchronous ESM module, `i` and `r` may return the same object, be
 
 ### What the Blog Build Showed
 
-On this blog (Next.js 16.3.5, commit `f1ff09a9`), I also ran `next experimental-analyze --output` and `next build` to compare the analysis file with the output. `modules.data` had 6,659 modules. Counting the client synchronous edges as distinct path pairs gave 3,600. I parsed the source of each file and resolved its specifiers with Node.js `require` resolution rules to check whether they matched the modules connected in the graph.[^14] On the output side, I analyzed the 109 JavaScript files in `.next/static`, without source maps, with coldpath's `modules --graph` to recover edges.
+On this blog (Next.js 16.3.5, commit `f1ff09a9`), I also ran `next experimental-analyze --output` and `next build` to compare the analysis file with the output. Counted as distinct path pairs, the client synchronous edges in `modules.data` numbered 3,600. Parsing the source of each importing file and resolving its specifiers with Node.js `require` resolution rules, I could determine which syntax produced 73% (2,639) of them. The 588 confirmed as `require()` were all inside `node_modules`, mostly from the CommonJS output of `next/dist`. The 961 undetermined edges include ones that are hard to match against the source, such as the `process` polyfill, `jsx-runtime` injected by the JSX transform, the alias that turns `react` into `next/dist/compiled/react`, and the `@/` path alias in the blog's own code. So it cannot tell how many `require()` edges there are at most.[^14]
 
-| Observation point                                       | Edges |      import | `require()` | Other            |
-| ------------------------------------------------------- | ----: | ----------: | ----------: | ---------------- |
-| Client synchronous edges in `modules.data` (path pairs) | 3,600 |       2,051 |         588 | 961 undetermined |
-| Edges recovered from the output                         |   986 | 456 (`e.i`) | 496 (`e.r`) | 34 dynamic       |
-
-588 edges were confirmed by both a `require()` call in the source and its target, 16.3% of all path pairs. All of them were inside `node_modules`, mostly from the CommonJS output of `next/dist`.
-
-Of the 961 undetermined edges, 201 came from importing files that did contain a `require()` with a string specifier, but I could not find which call produced the edge. The rest include edges that are hard to match against the source, such as the `process` polyfill, `@swc/helpers` injected by SWC, `jsx-runtime` injected by the JSX transform, and the alias that turns `react` into `next/dist/compiled/react`. So this count confirms 588, and it cannot tell how many `require()` edges there are at most.
-
-The 193 path pairs going out of the blog's own code (`apps/blog` and `packages/shared`) were even harder to determine. Only 16 were confirmed as imports, and 177 stayed undetermined. Of the 91 that point to blog files, 74 used the `@/` path alias (46) or relative paths without extensions (28), which Node.js rules do not resolve. The 46 that point to packages mix cases where the file the bundler picked differs from the file Node.js rules resolve to, such as the `react` alias above or the copies of `next` that pnpm installs separately for each combination of peer dependencies. The remaining 40 are `jsx-runtime` injected by the JSX transform (38) and polyfills (2). The blog's own code has no `require()`, so there is no chance of picking the wrong kind, but that many fewer edges could be checked against the source.
-
-Among the edges recovered from the output, `e.r` made up more than half. When scope hoisting merges ESM modules into one module function, the import edges between them disappear, while the `e.r` calls to CommonJS modules that stay in separate module functions remain recoverable.
-
-This difference may affect the ratio, but the two rows count different things to begin with. The module functions recovered from the output numbered 677 across 91 chunks (339 after removing duplicates), and 527 calls pointing to ids that could not be recovered were left out of the edges. So it is hard to attribute the whole difference in ratio to scope hoisting.
+On the output side, I analyzed the 109 JavaScript files in `.next/static`, without source maps, with coldpath's `modules --graph` and recovered 986 edges, more than half of which (496) were `e.r` calls. When scope hoisting merges ESM modules into one module function, the import edges between them disappear, while the `e.r` calls to CommonJS modules that stay in separate module functions remain. However, 527 calls pointing to ids that could not be recovered are missing, and this count covers different things from the analysis file, so its ratio cannot be compared with the result above.
 
 ## Vite: Clues Left by Format Interop
 
@@ -524,7 +509,7 @@ esbuild wraps an ESM module loaded with `require()` in an `__esm` wrapper and in
 
 ### Reading the Source to Fix Edge Kinds and Locations
 
-coldpath 0.6.0's Turbopack adapter converted the three lists in `modules.data` like this.[^20]
+coldpath 0.6.0's Turbopack adapter (the code that turns a bundler's graph information into a coldpath graph) converted the three lists in `modules.data` like this.[^20]
 
 ```ts
 for (const [field, kind] of [
@@ -538,7 +523,7 @@ With this code, every synchronous edge becomes `static`. The later step that par
 
 In 0.6.1, I started by reclassifying the synchronous edges that can be confirmed in the source. The importing file is parsed, and if the target of a `require()` call matches the target in the graph, the edge becomes `require`. If the file has a recognized `require()` but no import or `require()` explains the connected target, the edge is left as `unknown` and the count goes into a warning. Everything else keeps the existing `static`. The implementation is in [the classification fix `58b1a6a`](https://github.com/yceffort/coldpath/commit/58b1a6a8395d4a95fdf46b6decc985dafadcbca6) and [the package specifier fix `fec91ef`](https://github.com/yceffort/coldpath/commit/fec91ef351ea732a547051f1682ccc1bbbea2b97).
 
-Package names are resolved from the importing file with Node.js `require` resolution rules, and the target files declared in the package's `exports` are also compared as candidates. For relative paths, candidates are tried one by one, including omitted extensions. Bundler aliases and conditional resolution are not fully reproduced. These candidates are used to find which syntax in the source loaded a module that is already connected in the graph.
+Package names are resolved from the importing file with Node.js `require` resolution rules, and the target files declared in the package's `exports` are also compared as candidates. For relative paths, candidates are tried one by one, including omitted extensions. Bundler aliases and conditional resolution (picking a different file depending on conditions in `package.json` `exports` such as `import`, `require`, and `browser`) are not fully reproduced. These candidates are used to find which syntax in the source loaded a module that is already connected in the graph.
 
 As we saw earlier, the `e.i` and `e.r` in the output can also tell edge kinds apart. Even so, the fix reads the source instead. The module entries in `modules.data` have only `ident` and `path`, so they do not map directly to numeric ids in the output such as `e.r(1934)`, and the analysis file and the output come from separate runs. As the blog build showed, only some edges can be recovered from the output, and ESM imports merged into another module leave no call at all. Calls in the output have no source location either. To lead a suggestion back to the code, the source had to be read anyway, and reading the source also reveals the kind of syntax.
 
@@ -585,7 +570,7 @@ impl ImportStep {
 
 Of the 678 `require` edges in the blog graph, 661 were top-level calls. Of the remaining 17, 8 are calls inside UMD wrappers. Paths that include a `require()` that is not top-level, or an `unknown` edge, do not get suggestions that assume a synchronous chain.
 
-In 0.8.1 the suggestion went back to `split-review`, and the first half of its explanation changed to "A synchronous import chain (static imports or top-level require() calls)". The second half, "part of it executes initially", remained, though. On first entry, the only thing this module ran was the code where its module function assigns an object to `t.exports`. But in the Turbopack output, the last source map mapping of `heavy-cjs.js` extended into the start of the `index.jsx` module function right after it, so that execution was counted as a function execution of this module.[^24] In 0.8.2, which includes the fix that cuts mapping ranges at module function boundaries ([`9c89cbc`](https://github.com/yceffort/coldpath/commit/9c89cbc9239a04e29d14e35e591895a0a74733df)) and the fix that excludes CommonJS export assignments from top-level side effects ([`34f908b`](https://github.com/yceffort/coldpath/commit/34f908bbc186503a31f58352f353e84bdc825a30)), `heavy-cjs.js` got the following suggestion.
+In 0.8.1 the suggestion went back to `split-review`, and the first half of its explanation changed to "A synchronous import chain (static imports or top-level require() calls)". The second half, "part of it executes initially", came from a separate defect in execution counting, unrelated to import classification, which was fixed in 0.8.2.[^24] In 0.8.2, `heavy-cjs.js` got the following suggestion.
 
 ```json
 {
@@ -594,7 +579,7 @@ In 0.8.1 the suggestion went back to `split-review`, and the first half of its e
 }
 ```
 
-In 0.6.1, which fixed only the edge kind, the suggestion fell back to a generic sentence. Only after top-level `require()` was treated as a synchronous edge and the execution check was fixed as well did a suggestion appear that matched the intent of the repro page, a module used only when the button is pressed.
+In 0.6.1, which fixed only the edge kind, the suggestion fell back to a generic sentence. Only after top-level `require()` was treated as a synchronous edge and execution counting was fixed as well did a suggestion appear that matched the intent of the repro page, a module used only when the button is pressed.
 
 This suggestion means it is worth reviewing whether to move the `require()` behind the button click. This time I confirmed how the suggestion changed, and did not measure how behavior or transfer size changes when the code is actually moved.
 
@@ -613,7 +598,7 @@ In the output, interop handling was the clue for telling import from `require()`
 
 Reading the graph also required checking what each API records. webpack stats `reasons` showed the kind of syntax, its location, and whether it is active, but Next.js `modules.data` only distinguished synchronous, asynchronous, and traced targets. Rolldown's `getModuleInfo` follows the Rollup plugin API and splits dependencies into `importedIds` and `dynamicallyImportedIds`.[^25] Rollup handles CommonJS through a plugin,[^26] while Rolldown handles `require()` itself and also puts it into `importedIds`. Assuming the source syntax is the same just because the entries sit in the same list leads to the same misclassification I ran into with coldpath.
 
-In coldpath, I fixed the classification by checking which syntax in the source loads each module connected in the graph. But correcting the kind of syntax alone did not improve the suggestion. Only after reflecting that a top-level `require()` runs at the same time as an import, and splitting the code that ran on first entry along module boundaries, did `heavy-cjs.js` get `defer-review`. Now the suggestion leads all the way to the `require()` at line 3, column 18 that loads the module.
+In coldpath, I fixed the classification by checking which syntax in the source loads each module connected in the graph. But correcting the kind of syntax alone did not improve the suggestion. Only after reflecting that a top-level `require()` runs its target at the same time as an import, and fixing the defect in execution counting, did `heavy-cjs.js` get `defer-review`. What the suggestion needed was less the name of the syntax than the timing of execution, and the kind and location of the syntax were the means to find that timing. Now the suggestion leads all the way to the `require()` at line 3, column 18 that loads the module.
 
 To solve this problem, I found the connected module in the graph, checked the actual call in the output, and found the syntax and location in the source. When considering a split, the code found this way should also be read together with the execution records collected on first entry and during interactions. Starting from which modules are connected, you need to be able to confirm where a module is loaded from and when it runs before you can point to the specific code to split.
 
@@ -643,7 +628,7 @@ To solve this problem, I found the connected module in the graph, checked the ac
 
 [^13]: `esmExport` in [`runtime-utils.ts#L221-L239`](https://github.com/vercel/next.js/blob/v16.3.8/turbopack/crates/turbopack-ecmascript-runtime/js/src/shared/runtime/runtime-utils.ts#L221-L239). Line 236 sets `module.namespaceObject = exports`.
 
-[^14]: The classification script is [`scripts/blog-edges.mjs`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/scripts/blog-edges.mjs). Edges between partial modules split from the same file were not counted.
+[^14]: The classification script is [`scripts/blog-edges.mjs`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/scripts/blog-edges.mjs). Edges between partial modules split from the same file were not counted. The breakdown of the results (2,051 import, 588 `require()`, 961 undetermined) and the results for the 193 edges going out of the blog's own code are in section 7 of [`FINDINGS.md`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/FINDINGS.md).
 
 [^15]: [`crates/rolldown/src/module_loader/module_task.rs#L157-L171`](https://github.com/rolldown/rolldown/blob/v1.2.12/crates/rolldown/src/module_loader/module_task.rs#L157-L171)
 
@@ -663,7 +648,7 @@ To solve this problem, I found the connected module in the graph, checked the ac
 
 [^23]: [`src/graph.rs#L38-L45`](https://github.com/yceffort/coldpath/blob/v0.8.2/src/graph.rs#L38-L45). The branches that use this check are in [`src/recommendations.rs#L49-L98`](https://github.com/yceffort/coldpath/blob/v0.8.2/src/recommendations.rs#L49-L98).
 
-[^24]: In the chunk `0mlnz1g9-icsv.js`, the last mapping of `heavy-cjs.js` (column 1376, `}},`) extends up to just before the next mapping at column 1417 in `index.jsx`, and that range contains the start of the `index.jsx` module function (column 1384, `e=>{`), which ran on first entry. The `heavy-cjs.js` module function ran once, and the `compute` inside it ran zero times. The verification steps are in section 8-1 of [`FINDINGS.md`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/FINDINGS.md).
+[^24]: On first entry, the only thing `heavy-cjs.js` ran was the code where its module function assigns an object to `t.exports`. The module function ran once, and the `compute` inside it ran zero times. But in the chunk `0mlnz1g9-icsv.js`, the last mapping of `heavy-cjs.js` (column 1376, `}},`) extends up to just before the next mapping at column 1417 in `index.jsx`, and that range contains the start of the `index.jsx` module function (column 1384, `e=>{`), which ran on first entry, so that execution was counted as a function execution of `heavy-cjs.js`. 0.8.2 cuts mapping ranges at module function boundaries ([`9c89cbc`](https://github.com/yceffort/coldpath/commit/9c89cbc9239a04e29d14e35e591895a0a74733df)) and excludes `module.exports` and `exports.x` assignments from top-level side effects ([`34f908b`](https://github.com/yceffort/coldpath/commit/34f908bbc186503a31f58352f353e84bdc825a30)). The verification steps are in section 8-1 of [`FINDINGS.md`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/FINDINGS.md).
 
 [^25]: [`src/rollup/types.d.ts#L193-L212`](https://github.com/rollup/rollup/blob/v4.64.0/src/rollup/types.d.ts#L193-L212) (Rollup v4.64.0)
 
