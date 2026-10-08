@@ -2,7 +2,7 @@
 title: '<em>higher order function</em>, 고차함수'
 tags:
   - javascript
-published: true
+published: false
 date: 2020-10-26 23:29:24
 description: '자바스크립트 고차 함수'
 ---

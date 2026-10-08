@@ -3,7 +3,7 @@ title: '리액트 <em>고차 컴포넌트</em> (React Higher Order Component)'
 tags:
   - react
   - design-patterns
-published: true
+published: false
 date: 2020-07-04 04:06:10
 description:
   '[이 글](https://ko.reactjs.org/docs/higher-order-components.html)이

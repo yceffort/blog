@@ -2,7 +2,7 @@
 title: '<em>ECMAScript 명세</em> 읽어보기 (1)'
 tags:
   - javascript
-published: true
+published: false
 date: 2020-09-24 18:49:14
 description: '가끔 문서를 볼 때 마다 도망쳤던 그 곳'
 category: javascript

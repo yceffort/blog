@@ -2,7 +2,7 @@
 title: '자바스크립트 <em>String</em>'
 tags:
   - javascript
-published: true
+published: false
 date: 2020-09-21 22:12:37
 description: '자바스크립트의 String'
 category: typescript

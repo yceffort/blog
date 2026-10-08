@@ -3,7 +3,7 @@ title: '<em>Notion</em> 성능 최적화'
 tags:
   - web-performance
   - bundler
-published: true
+published: false
 date: 2020-06-29 07:42:01
 description: '[Case Study: Analyzing Notion app
   performance](https://3perf.com/blog/notion/)를 제멋대로 요약한 글입니다. 왠만하면 저 글을 참고하세요.

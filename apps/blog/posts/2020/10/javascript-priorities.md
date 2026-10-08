@@ -5,7 +5,7 @@ tags:
   - web-performance
   - html
   - javascript
-published: true
+published: false
 date: 2020-10-20 23:14:39
 description: '크롬에서 자바스크립트를 로딩하는 순서'
 ---

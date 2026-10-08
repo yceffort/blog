@@ -3,7 +3,7 @@ title: '자바스크립트 코드가 가져야할 <em>책임감</em> (2)'
 tags:
   - web-performance
   - bundler
-published: true
+published: false
 date: 2021-11-20 20:12:01
 description: '알지만 왠지 선뜻 내키지 않는 최적화, 이유가 무엇일까 🤔'
 ---

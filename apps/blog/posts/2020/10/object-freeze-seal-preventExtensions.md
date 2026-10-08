@@ -2,7 +2,7 @@
 title: '<em>Object.freeze(), Object.seal(), Object.preventExtensions()</em>의 차이'
 tags:
   - javascript
-published: true
+published: false
 date: 2020-10-27 23:58:46
 description: 'ECMAScript 5부터 있었는데 몰랐음'
 ---

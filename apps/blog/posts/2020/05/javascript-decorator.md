@@ -2,7 +2,7 @@
 title: '자바스크립트 <em>데코레이터</em>'
 tags:
   - javascript
-published: true
+published: false
 date: 2020-05-20 07:33:36
 description:
   '## 데코레이터 ### 0. 설명자  데코레이터에 대해 시작하기 전에, 설명자(Descriptor)에 대해

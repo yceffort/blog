@@ -2,7 +2,7 @@
 title: '타입스크립트의 <em>타입과 제네릭</em> 적극 활용하기'
 tags:
   - typescript
-published: true
+published: false
 date: 2021-06-15 18:23:35
 description: 'interface를 더 좋아하지만 type이 더 간지남'
 ---

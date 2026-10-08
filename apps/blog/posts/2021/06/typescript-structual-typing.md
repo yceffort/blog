@@ -2,7 +2,7 @@
 title: '타입스크립트의 <em>구조 타이핑</em>'
 tags:
   - typescript
-published: true
+published: false
 date: 2021-06-10 22:30:19
 description: '얀센 맞고 정신 나가서 하루를 순삭당했습니다'
 ---

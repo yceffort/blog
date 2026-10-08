@@ -3,7 +3,7 @@ title: '[Book] <em>No Rules Rules</em>'
 tags:
   - essay
   - software-engineering
-published: true
+published: false
 date: 2020-09-17 10:51:42
 description: '규칙 없음: 넷플릭스, 지구상 가장 빠르고 유연한 기업의 비밀'
 category: book

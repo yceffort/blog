@@ -3,7 +3,7 @@ title: '알고리즘 - <em>연결 리스트</em>'
 tags:
   - algorithm
   - python
-published: true
+published: false
 date: 2020-06-19 04:34:32
 description:
   '## 연결리스트 연결리스트, Linked List 는 각 노드들이 한 줄로 연결되어 있는 방식으로 각 노드는 데이터와

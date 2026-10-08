@@ -3,7 +3,7 @@
 title: 'Javascript <em>Prototype</em>'
 tags:
   - javascript
-published: true
+published: false
 date: 2020-06-27 04:25:30
 description: "`toc tight: true, from-heading: 1 to-heading: 4 ` #
 프로토타입 상속이라는 관점에서 봤을 때, 자바스크립트의 유일한 생성자는 객체 뿐이다. 모든 객체는 `[[prototype]]` 이라는

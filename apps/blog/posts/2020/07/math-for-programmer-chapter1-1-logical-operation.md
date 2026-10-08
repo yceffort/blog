@@ -2,7 +2,7 @@
 title: '프로그래머 기초 수학 1-1 - <em>명제와 논리연산</em>'
 tags:
   - algorithm
-published: true
+published: false
 mathjax: true
 date: 2020-07-16 06:53:30
 description: '명제와 논리연산'

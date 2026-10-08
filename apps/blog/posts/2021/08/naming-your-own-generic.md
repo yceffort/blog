@@ -2,7 +2,7 @@
 title: '타입스크립트의 <em>제네릭</em>은 적절한 네이밍과 함께 사용하자'
 tags:
   - typescript
-published: true
+published: false
 date: 2021-08-27 23:27:41
 updated: 2021-09-05 16:55:08
 description: '무지성 T, U, K 멈춰!'

@@ -2,7 +2,7 @@
 title: '<em>머지된 브랜치</em>를 삭제하는 스크립트'
 tags:
   - git
-published: true
+published: false
 date: 2020-01-02 08:15:56
 description: '이미 머지된 브랜치를 로컬에서 삭제하기'
 category: git

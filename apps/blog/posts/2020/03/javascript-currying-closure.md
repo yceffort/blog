@@ -2,7 +2,7 @@
 title: '자바스크립트 <em>커링과 클로져</em>'
 tags:
   - javascript
-published: true
+published: false
 date: 2020-03-05 06:03:40
 description: '## 커링 [이
   글](https://www.sitepoint.com/currying-in-functional-javascript/) 에 잘 정리 되어

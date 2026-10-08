@@ -4,7 +4,7 @@ tags:
   - blogging
   - devops
   - git
-published: true
+published: false
 date: 2020-08-31 13:47:56
 description: '백수가 될 때마다 블로그를 갈아엎는 습관'
 category: blog

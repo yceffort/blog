@@ -1,7 +1,7 @@
 ---
 title: 'Javascript <em>Symbol</em>'
 date: 2019-07-18 07:03:36
-published: true
+published: false
 tags:
   - javascript
 description:

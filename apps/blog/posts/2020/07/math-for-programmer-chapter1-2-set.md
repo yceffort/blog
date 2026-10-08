@@ -2,7 +2,7 @@
 title: '프로그래머 기초 수학 1-2 - <em>집합</em>'
 tags:
   - algorithm
-published: true
+published: false
 mathjax: true
 date: 2020-07-17 07:28:25
 description: '집합'

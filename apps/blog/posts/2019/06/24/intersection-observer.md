@@ -1,7 +1,7 @@
 ---
 title: '<em>Intersection Observer</em>'
 date: 2019-06-24 06:01:35
-published: true
+published: false
 tags:
   - browser
   - web-performance

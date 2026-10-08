@@ -2,7 +2,7 @@
 title: '프로그래머 기초 수학 2-3 - <em>유리수, 무리수, 실수</em>'
 tags:
   - algorithm
-published: true
+published: false
 mathjax: true
 date: 2020-07-29 09:36:41
 updated: 2020-09-22 14:27:20

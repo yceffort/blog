@@ -1,7 +1,7 @@
 ---
 title: 'javascript <em>event bubbling & capturing</em>'
 date: 2019-07-17 07:22:22
-published: true
+published: false
 tags:
   - javascript
 description: "![image](https://miro.medium.com/max/1200/1*Et5UjVPGLfF1L43T7Errx\

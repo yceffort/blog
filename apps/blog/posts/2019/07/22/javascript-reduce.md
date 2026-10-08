@@ -1,7 +1,7 @@
 ---
 title: 'Javascript <em>Reduce</em>'
 date: 2019-07-22 08:36:28
-published: true
+published: false
 tags:
   - javascript
 description:

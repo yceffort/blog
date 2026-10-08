@@ -5,7 +5,7 @@ tags:
   - design-patterns
   - browser
   - caching
-published: true
+published: false
 date: 2020-07-06 09:38:02
 description: '[Apply instant loading with the PRPL
   pattern](https://web.dev/apply-instant-loading-with-prpl/)을 번역한 글입니다. PRPL은 웹

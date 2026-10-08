@@ -2,7 +2,7 @@
 title: '프로그래머 기초 수학 2-2 - <em>기수법</em>'
 tags:
   - algorithm
-published: true
+published: false
 mathjax: true
 date: 2020-07-24 06:34:51
 description: '기수법'

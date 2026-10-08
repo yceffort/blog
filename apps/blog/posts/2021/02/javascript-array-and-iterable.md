@@ -2,7 +2,7 @@
 title: '자바스크립트의 배열, 그리고 <em>이터러블과 이터레이터</em> (ES6)'
 tags:
   - javascript
-published: true
+published: false
 date: 2021-02-21 15:54:51
 description: '이터러블과 이터레이터 이름이 헷갈림'
 ---

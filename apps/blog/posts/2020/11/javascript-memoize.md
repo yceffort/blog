@@ -6,7 +6,7 @@ tags:
   - web-performance
   - caching
   - design-patterns
-published: true
+published: false
 date: 2020-11-23 22:47:01
 description: '까먹지 않게 기억해두기'
 ---

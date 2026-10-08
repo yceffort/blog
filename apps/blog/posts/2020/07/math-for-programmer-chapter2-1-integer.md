@@ -2,7 +2,7 @@
 title: '프로그래머 기초 수학 2-1 - <em>정수</em>'
 tags:
   - algorithm
-published: true
+published: false
 mathjax: true
 date: 2020-07-23 06:39:54
 description: '정수'
