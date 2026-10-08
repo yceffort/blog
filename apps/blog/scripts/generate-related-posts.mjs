@@ -63,7 +63,8 @@ function loadPosts(locale) {
           .relative(POST_ROOT, f)
           .replace(/\.en\.mdx?$/, '')
           .replace(/\.mdx?$/, ''),
-        title: fm.title,
+        // 제목의 <em> 강조가 검색어 em으로 잡혀 후보가 흔들리지 않게 걷어낸다
+        title: fm.title?.replace(/<\/?em>/g, ''),
         description: fm.description ?? '',
         tags: (fm.tags ?? []).map((t) => t.trim()),
         series: fm.series,

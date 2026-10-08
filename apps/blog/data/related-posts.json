@@ -268,8 +268,8 @@
         "score": 0.13
       },
       {
-        "slug": "2026/01/intersection-observer-singleton-weakmap",
-        "score": 0.12
+        "slug": "2020/07/the-cost-of-javascript-2019",
+        "score": 0.13
       }
     ],
     "2026/09/offline-marp-slides-in-nextjs": [
@@ -312,6 +312,10 @@
         "score": 0.43
       },
       {
+        "slug": "2022/05/npm-vs-yarn-vs-pnpm",
+        "score": 0.43
+      },
+      {
         "slug": "2025/05/npm-deep-dive-is-out-now",
         "score": 0.42
       },
@@ -324,20 +328,16 @@
         "score": 0.26
       },
       {
+        "slug": "2026/02/nodejs-deep-dive-sample",
+        "score": 0.26
+      },
+      {
         "slug": "2026/05/tanstack-npm-supply-chain-attack",
         "score": 0.21
       },
       {
         "slug": "2025/06/npm-deep-dive-study",
         "score": 0.15
-      },
-      {
-        "slug": "2021/05/ast-for-javascript",
-        "score": 0.12
-      },
-      {
-        "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
-        "score": 0.09
       }
     ],
     "2026/09/nextjs-cache-components-activity": [
@@ -506,8 +506,8 @@
         "score": 0.3
       },
       {
-        "slug": "2021/08/core-web-vital",
-        "score": 0.29
+        "slug": "2026/08/framer-motion-banner-frame-drop",
+        "score": 0.23
       }
     ],
     "2026/08/who-learns-to-judge-interviews": [
@@ -546,10 +546,6 @@
     ],
     "2026/08/typescript-7-oxc-migration": [
       {
-        "slug": "2020/11/test-eslint-config",
-        "score": 0.35
-      },
-      {
         "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
         "score": 0.29
       },
@@ -559,10 +555,6 @@
       },
       {
         "slug": "2026/09/blog-performance-after-migrations",
-        "score": 0.19
-      },
-      {
-        "slug": "2022/06/how-to-write-my-own-eslint-rules",
         "score": 0.19
       },
       {
@@ -576,6 +568,14 @@
       {
         "slug": "2026/09/nextjs-cache-components-activity",
         "score": 0.18
+      },
+      {
+        "slug": "2026/09/markdown-pipeline-to-rust-wasm",
+        "score": 0.17
+      },
+      {
+        "slug": "2023/05/blog-app-dir",
+        "score": 0.17
       }
     ],
     "2026/08/turbopack-scope-hoisting-singleton-split": [
@@ -608,8 +608,8 @@
         "score": 0.14
       },
       {
-        "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
-        "score": 0.12
+        "slug": "2026/03/why-still-nextjs",
+        "score": 0.13
       }
     ],
     "2026/08/service-worker-caching-3": [
@@ -620,6 +620,10 @@
       {
         "slug": "2020/12/partitioning-cache",
         "score": 0.34
+      },
+      {
+        "slug": "2020/11/storage-for-the-web",
+        "score": 0.32
       },
       {
         "slug": "2026/09/offline-marp-slides-in-nextjs",
@@ -640,10 +644,6 @@
       {
         "slug": "2026/09/unused-javascript-cost",
         "score": 0.2
-      },
-      {
-        "slug": "2020/07/critical-rendering-path",
-        "score": 0.18
       }
     ],
     "2026/08/service-worker-caching-2": [
@@ -660,6 +660,10 @@
         "score": 0.49
       },
       {
+        "slug": "2020/11/storage-for-the-web",
+        "score": 0.47
+      },
+      {
         "slug": "2020/12/partitioning-cache",
         "score": 0.38
       },
@@ -674,10 +678,6 @@
       {
         "slug": "2026/05/use-cache-deep-dive",
         "score": 0.27
-      },
-      {
-        "slug": "2020/11/pwa-pros-and-cons",
-        "score": 0.23
       }
     ],
     "2026/08/service-worker-caching-1": [
@@ -744,8 +744,8 @@
         "score": 0.38
       },
       {
-        "slug": "2021/01/effectiveness-of-brotli",
-        "score": 0.33
+        "slug": "2021/02/javascript-performance-bundle-size",
+        "score": 0.28
       }
     ],
     "2026/08/og-scraping-server-2": [
@@ -890,10 +890,6 @@
         "score": 0.14
       },
       {
-        "slug": "2026/05/pr-diff-vs-bundle",
-        "score": 0.11
-      },
-      {
         "slug": "2026/03/nextjs-edge-runtime-rise-and-fall",
         "score": 0.1
       },
@@ -915,6 +911,10 @@
       },
       {
         "slug": "2025/11/web-performance-deep-dive-beta-reader",
+        "score": 0.09
+      },
+      {
+        "slug": "2020/07/critical-rendering-path",
         "score": 0.09
       }
     ],
@@ -996,10 +996,6 @@
         "score": 0.46
       },
       {
-        "slug": "2026/02/nodejs-deep-dive-beta-reader",
-        "score": 0.19
-      },
-      {
         "slug": "2019/08/07/haproxy",
         "score": 0.16
       },
@@ -1017,6 +1013,10 @@
       },
       {
         "slug": "2021/01/brotli-better-html-compression",
+        "score": 0.13
+      },
+      {
+        "slug": "2026/03/why-still-nextjs",
         "score": 0.13
       }
     ],
@@ -1076,16 +1076,16 @@
         "score": 0.24
       },
       {
+        "slug": "2020/12/measuring-performance-of-javascript-functions",
+        "score": 0.23
+      },
+      {
         "slug": "2026/09/unused-javascript-cost",
         "score": 0.2
       },
       {
         "slug": "2026/08/number-flow-fork-for-old-browsers",
         "score": 0.2
-      },
-      {
-        "slug": "2026/01/intersection-observer-singleton-weakmap",
-        "score": 0.19
       }
     ],
     "2026/07/frontend-performance-deep-dive-is-out-now": [
@@ -1536,12 +1536,24 @@
         "score": 0.5
       },
       {
+        "slug": "2025/12/nextjs-react-security-vulnerability",
+        "score": 0.33
+      },
+      {
         "slug": "2026/05/good-package-for-long-term-users",
         "score": 0.32
       },
       {
+        "slug": "2020/10/migrate-gatsby-from-nextjs",
+        "score": 0.31
+      },
+      {
         "slug": "2026/09/nextjs-cache-components-activity",
         "score": 0.29
+      },
+      {
+        "slug": "2025/12/nextjs-caching-deep-dive",
+        "score": 0.28
       },
       {
         "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
@@ -1550,18 +1562,6 @@
       {
         "slug": "2021/05/review-of-vercel-cs",
         "score": 0.2
-      },
-      {
-        "slug": "2026/08/service-worker-caching-2",
-        "score": 0.19
-      },
-      {
-        "slug": "2025/06/fixing-nextjs-rendered-more-hooks-error",
-        "score": 0.18
-      },
-      {
-        "slug": "2025/06/web-performance-analysis-3",
-        "score": 0.18
       }
     ],
     "2026/03/why-cloudflare-rebuilt-nextjs": [
@@ -2338,11 +2338,11 @@
         "score": 0.2
       },
       {
-        "slug": "2026/03/react-is-whose",
-        "score": 0.15
+        "slug": "2026/05/react-cache-function-deep-dive",
+        "score": 0.16
       },
       {
-        "slug": "2021/03/server-side-rendering-and-react-components",
+        "slug": "2026/03/react-is-whose",
         "score": 0.15
       }
     ],
@@ -2564,10 +2564,6 @@
         "score": 0.54
       },
       {
-        "slug": "2021/07/javascript-dependency-manager-dont-mange-dependencies",
-        "score": 0.5
-      },
-      {
         "slug": "2025/08/npm-deep-dive-author-talk",
         "score": 0.43
       },
@@ -2582,6 +2578,10 @@
       {
         "slug": "2021/07/npm-workspaces-esbuild",
         "score": 0.25
+      },
+      {
+        "slug": "2026/09/npm-deep-dive-sejong-books",
+        "score": 0.11
       }
     ],
     "2025/06/naver-pay-fe-summer-internship": [
@@ -3120,12 +3120,12 @@
         "score": 0.21
       },
       {
-        "slug": "2019/08/13/reactjs-interview-questions",
-        "score": 0.2
+        "slug": "2022/03/dont-use-react-fc",
+        "score": 0.21
       },
       {
-        "slug": "2025/05/why-i-wrote-a-book-in-the-age-of-ai",
-        "score": 0.19
+        "slug": "2019/08/13/reactjs-interview-questions",
+        "score": 0.2
       }
     ],
     "2023/06/react-use-hook": [
@@ -7732,10 +7732,6 @@
         "score": 0.27
       },
       {
-        "slug": "2021/07/javascript-dependency-manager-dont-mange-dependencies",
-        "score": 0.25
-      },
-      {
         "slug": "2026/05/good-package-for-long-term-users",
         "score": 0.24
       },
@@ -7750,6 +7746,10 @@
       {
         "slug": "2026/05/tanstack-npm-supply-chain-attack",
         "score": 0.19
+      },
+      {
+        "slug": "2026/08/rebuilding-a-vendor-sdk",
+        "score": 0.18
       }
     ],
     "2020/11/nodejs-best-pratices-for-performance": [
@@ -8492,12 +8492,12 @@
         "score": 0.6
       },
       {
-        "slug": "2026/08/og-scraping-server-1",
-        "score": 0.53
+        "slug": "2021/08/uncaught-async-error",
+        "score": 0.57
       },
       {
-        "slug": "2021/06/error-handling-in-nodejs",
-        "score": 0.48
+        "slug": "2026/08/og-scraping-server-1",
+        "score": 0.53
       }
     ],
     "2020/10/higher-order-function": [
@@ -11268,7 +11268,7 @@
         "score": 0.27
       },
       {
-        "slug": "2020/09/referer-and-referrer-policy",
+        "slug": "2022/06/preload-scanner",
         "score": 0.13
       },
       {
@@ -11456,8 +11456,8 @@
         "score": 0.23
       },
       {
-        "slug": "2026/01/handling-large-json-responses",
-        "score": 0.2
+        "slug": "2026/02/react-compiler-deep-dive",
+        "score": 0.21
       }
     ],
     "2026/09/tracing-third-party-javascript-without-sourcemaps": [
@@ -11530,6 +11530,10 @@
     ],
     "2026/09/porting-markdownlint-cli2-to-rust": [
       {
+        "slug": "2021/05/ast-for-javascript",
+        "score": 0.32
+      },
+      {
         "slug": "2026/05/good-package-for-long-term-users",
         "score": 0.23
       },
@@ -11546,20 +11550,16 @@
         "score": 0.14
       },
       {
+        "slug": "2026/05/pr-diff-vs-bundle",
+        "score": 0.13
+      },
+      {
         "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
         "score": 0.12
       },
       {
         "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
         "score": 0.11
-      },
-      {
-        "slug": "2026/08/number-flow-fork-for-old-browsers",
-        "score": 0.1
-      },
-      {
-        "slug": "2026/03/why-still-nextjs",
-        "score": 0.09
       }
     ],
     "2026/09/one-web-on-multiple-webviews": [
@@ -11720,15 +11720,15 @@
         "score": 0.17
       },
       {
-        "slug": "2026/09/unused-javascript-cost",
-        "score": 0.17
-      },
-      {
         "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
         "score": 0.14
       },
       {
         "slug": "2026/09/nextjs-cache-components-activity",
+        "score": 0.13
+      },
+      {
+        "slug": "2026/08/k8s-for-frontend-4",
         "score": 0.13
       }
     ],
@@ -11908,6 +11908,10 @@
         "score": 0.11
       },
       {
+        "slug": "2026/08/k8s-for-frontend-1",
+        "score": 0.11
+      },
+      {
         "slug": "2026/02/nodejs-deep-dive-beta-reader",
         "score": 0.1
       },
@@ -11929,10 +11933,6 @@
       },
       {
         "slug": "2025/12/nextjs-react-security-vulnerability",
-        "score": 0.07
-      },
-      {
-        "slug": "2026/08/k8s-for-frontend-4",
         "score": 0.07
       }
     ],
@@ -12044,15 +12044,15 @@
         "score": 0.11
       },
       {
-        "slug": "2026/08/og-scraping-server-1",
-        "score": 0.1
-      },
-      {
         "slug": "2026/01/handling-large-json-responses",
         "score": 0.09
       },
       {
         "slug": "2026/09/unused-javascript-cost",
+        "score": 0.09
+      },
+      {
+        "slug": "2026/05/pr-diff-vs-bundle",
         "score": 0.09
       },
       {
@@ -12086,10 +12086,6 @@
         "score": 0.12
       },
       {
-        "slug": "2026/05/use-client-deep-dive",
-        "score": 0.11
-      },
-      {
         "slug": "2026/08/og-scraping-server-1",
         "score": 0.1
       },
@@ -12103,6 +12099,10 @@
       },
       {
         "slug": "2026/03/react-server-functions-deep-dive",
+        "score": 0.09
+      },
+      {
+        "slug": "2026/03/nextjs-edge-runtime-rise-and-fall",
         "score": 0.09
       }
     ],
@@ -12124,6 +12124,10 @@
         "score": 0.06
       },
       {
+        "slug": "2026/02/nodejs-deep-dive-beta-reader",
+        "score": 0.06
+      },
+      {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.05
       },
@@ -12133,10 +12137,6 @@
       },
       {
         "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
-        "score": 0.05
-      },
-      {
-        "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
         "score": 0.05
       }
     ],
@@ -12154,6 +12154,10 @@
         "score": 0.13
       },
       {
+        "slug": "2026/03/why-still-nextjs",
+        "score": 0.13
+      },
+      {
         "slug": "2025/12/nextjs-caching-deep-dive",
         "score": 0.12
       },
@@ -12168,20 +12172,12 @@
       {
         "slug": "2026/08/service-worker-caching-2",
         "score": 0.09
-      },
-      {
-        "slug": "2026/08/service-worker-caching-3",
-        "score": 0.09
       }
     ],
     "2026/08/k8s-for-frontend-1": [
       {
         "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
         "score": 0.16
-      },
-      {
-        "slug": "2026/08/og-scraping-server-1",
-        "score": 0.12
       },
       {
         "slug": "2026/02/nodejs-deep-dive-sample",
@@ -12200,11 +12196,15 @@
         "score": 0.07
       },
       {
-        "slug": "2021/05/ast-for-javascript",
-        "score": 0.06
+        "slug": "2026/01/handling-large-json-responses",
+        "score": 0.07
       },
       {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
+        "slug": "2026/05/react-cache-function-deep-dive",
+        "score": 0.07
+      },
+      {
+        "slug": "2021/05/ast-for-javascript",
         "score": 0.06
       }
     ],
@@ -12506,11 +12506,11 @@
         "score": 0.16
       },
       {
-        "slug": "2026/03/is-nextjs-fast-enough",
-        "score": 0.11
+        "slug": "2023/06/react-use-hook",
+        "score": 0.13
       },
       {
-        "slug": "2025/12/nextjs-react-security-vulnerability",
+        "slug": "2026/03/is-nextjs-fast-enough",
         "score": 0.11
       }
     ],
@@ -12850,8 +12850,8 @@
         "score": 0.18
       },
       {
-        "slug": "2026/08/k8s-for-frontend-4",
-        "score": 0.17
+        "slug": "2026/08/service-worker-caching-2",
+        "score": 0.14
       }
     ],
     "2026/03/is-nextjs-fast-enough": [
@@ -13212,6 +13212,10 @@
         "score": 0.15
       },
       {
+        "slug": "2021/05/ast-for-javascript",
+        "score": 0.15
+      },
+      {
         "slug": "2026/07/frontend-past-present-after-agents",
         "score": 0.14
       },
@@ -13221,10 +13225,6 @@
       },
       {
         "slug": "2026/06/learning-what-ai-cant-do",
-        "score": 0.09
-      },
-      {
-        "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
         "score": 0.09
       }
     ],
