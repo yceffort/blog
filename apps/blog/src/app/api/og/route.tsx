@@ -36,9 +36,15 @@ export async function GET(request: Request) {
     const host = request.headers.get('host')
     const baseUrl = `${protocol}://${host}`
     const hasThumbnail = !!thumbnailParam
-    const imageUrl = hasThumbnail
-      ? `${baseUrl}${thumbnailParam}`
-      : `${baseUrl}/${type === 'page' ? 'og-background-page.jpg' : 'og-background.jpg'}`
+    const imageUrl = new URL(
+      thumbnailParam ||
+        `/${type === 'page' ? 'og-background-page.jpg' : 'og-background.jpg'}`,
+      baseUrl,
+    )
+    // thumbnail은 이 사이트의 경로만 받는다. 이어 붙이면 `.evil.com/x.png`로 호스트가 바뀐다
+    if (imageUrl.origin !== new URL(baseUrl).origin) {
+      return new Response('Invalid thumbnail', {status: 400})
+    }
     const imageRes = await fetch(imageUrl)
     if (!imageRes.ok) {
       throw new Error(`Failed to fetch image: ${imageUrl}`)
