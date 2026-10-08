@@ -11,7 +11,6 @@ date: 2026-06-12
 description: "If the spec is satisfied and the bugs get fixed, do you still need to be able to read the code? Understanding doesn't disappear — this essay traces where it moves."
 series: 'Judgment in the AI Era'
 seriesOrder: 1
-thumbnail: /thumbnails/2026/06/do-you-need-to-read-code.png
 art:
   undraw: books
   layout: glyph

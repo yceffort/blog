@@ -9,7 +9,6 @@ tags:
 published: true
 date: 2026-05-01 12:00:00
 description: "Module boundaries created by a single line of 'use client', build-time transformations, Flight serialization, and performance implications"
-thumbnail: /thumbnails/2026/05/use-client-deep-dive.png
 series: Directive Deep Dive
 seriesOrder: 1
 art:

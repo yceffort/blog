@@ -8,7 +8,6 @@ tags:
 published: true
 date: 2026-08-22 14:00:00
 description: 'A feature where the server opens a URL the user handed it has the textbook conditions for SSRF written into its spec. Six ways a whitelist gets bypassed first, then five defensive principles that block them, all actually run on Node. Strip IPv4-mapped by hand and it gets through in hex notation, undici lookup hook is never called when the host is an IP literal, and URL.hostname keeps the brackets on an IPv6 literal. The final post of a two-part design note on OG scraping servers.'
-thumbnail: /thumbnails/2026/08/og-scraping-server-2.png
 series: 'OG Scraping Server Design Notes'
 seriesOrder: 2
 art:

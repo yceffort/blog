@@ -10,7 +10,6 @@ published: true
 date: 2026-08-27 20:00:00
 updated: 2026-09-02 18:48:34
 description: 'Armed with the theory from Part 1, I made this blog (Next.js App Router) open offline. On the first deploy, the post I had just read would not open offline; on the second, posts opened but every image was broken. This is a chronicle of fixing, one deploy at a time, the traps created by soft navigation, prefetching, and next/image, and a record of settling the results with GA4 real-user data. Returning-visitor FCP improved by 634ms on average, while TTFB worsened by 525ms on average. The second post of the Service Worker Caching Deep Dive series.'
-thumbnail: /thumbnails/2026/08/service-worker-caching-2.png
 series: 'Service Worker Caching Deep Dive'
 seriesOrder: 2
 art:

@@ -11,7 +11,6 @@ date: 2026-06-21 11:00:00
 description: 'The friction that made judgment expensive is the same friction that taught it. Why the skill growing most valuable in the AI era is the one being cultivated least'
 series: 'Judgment in the AI Era'
 seriesOrder: 3
-thumbnail: /thumbnails/2026/06/learning-what-ai-cant-do.png
 art:
   undraw: open-book
   layout: glyph

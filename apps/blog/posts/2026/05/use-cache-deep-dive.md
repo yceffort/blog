@@ -10,7 +10,6 @@ published: true
 date: 2026-05-01 19:47:20
 updated: 2026-09-04 23:41:59
 description: '"use cache" 한 줄이 만드는 빌드 타임 변환, 캐시 키 직렬화, ResumeDataCache, cacheHandler, 그리고 Cache Components까지'
-thumbnail: /thumbnails/2026/05/use-cache-deep-dive.png
 series: 디렉티브 딥다이브
 seriesOrder: 3
 slide: use-cache-deep-dive

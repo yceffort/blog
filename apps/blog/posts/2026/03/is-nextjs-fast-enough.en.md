@@ -8,7 +8,6 @@ tags:
 published: true
 date: 2026-03-21 22:00:00
 description: 'The uncomfortable truth benchmarks reveal'
-thumbnail: '/thumbnails/2026/03/is-nextjs-fast-enough.png'
 series: 'The State of Next.js'
 seriesOrder: 4
 art:

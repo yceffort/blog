@@ -9,7 +9,6 @@ published: true
 date: 2026-08-06 23:00:00
 updated: 2026-09-23 17:21:48
 description: 'Service의 ClusterIP는 어느 기계에도 붙어 있지 않은 IP인데 curl은 어떻게 닿는가. iptables 규칙과 conntrack, EndpointSlice, 클러스터 DNS의 ndots, Gateway, port-forward까지, 요청이 파드에 도착하는 경로 전체를 kind 클러스터에서 직접 열어본 기록이다. 프론트엔드 개발자를 위한 쿠버네티스 시리즈의 세 번째 편이다.'
-thumbnail: /thumbnails/2026/08/k8s-for-frontend-3.png
 series: '프론트엔드 개발자가 알아야 할 쿠버네티스'
 seriesOrder: 3
 art:

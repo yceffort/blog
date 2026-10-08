@@ -9,7 +9,6 @@ published: true
 date: 2026-03-23 22:00:00
 updated: 2026-03-25 09:35:39
 description: 'Switching costs stronger than technical superiority'
-thumbnail: /thumbnails/2026/03/why-still-nextjs.png
 series: 'The State of Next.js'
 seriesOrder: 5
 art:

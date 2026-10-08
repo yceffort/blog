@@ -10,7 +10,6 @@ published: true
 date: 2026-05-01 19:47:36
 updated: 2026-09-04 23:41:59
 description: "Build-time transformations, cache key serialization, ResumeDataCache, cacheHandler, and Cache Components - everything created by a single 'use cache' line"
-thumbnail: /thumbnails/2026/05/use-cache-deep-dive.png
 series: Directive Deep Dive
 seriesOrder: 3
 art:

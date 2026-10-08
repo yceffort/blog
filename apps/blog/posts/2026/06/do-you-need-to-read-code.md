@@ -12,7 +12,6 @@ updated: 2026-06-21 17:58:02
 description: '스펙을 만족하고 버그를 고칠 수 있다면 코드를 읽을 줄 몰라도 될까. 이해는 사라지는 게 아니라 어디로 이동하는지를 따진다.'
 series: 'AI 시대의 판단'
 seriesOrder: 1
-thumbnail: /thumbnails/2026/06/do-you-need-to-read-code.png
 art:
   undraw: books
   layout: glyph

@@ -8,7 +8,6 @@ published: true
 date: 2026-09-09 14:00:00
 updated: 2026-09-30 13:18:14
 description: 'We supported the iOS and Android WebViews of our own app and of a partner app, and gathered the scattered environment branching into adapters. This is a record of how we organized insets, the bridge, and CSS, along with the problems we hit with the SSR seed and hydration.'
-thumbnail: /thumbnails/2026/09/one-web-on-multiple-webviews.png
 art:
   undraw: device-sync
   layout: rings

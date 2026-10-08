@@ -9,7 +9,6 @@ tags:
 published: true
 date: 2026-05-01 12:00:00
 description: '"use client" 한 줄이 만드는 모듈 경계, 빌드 타임 변환, Flight 직렬화, 그리고 성능까지'
-thumbnail: /thumbnails/2026/05/use-client-deep-dive.png
 series: 디렉티브 딥다이브
 seriesOrder: 1
 slide: use-client-deep-dive

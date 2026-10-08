@@ -8,7 +8,6 @@ published: true
 date: 2026-08-05 21:00:00
 updated: 2026-09-23 17:21:48
 description: '같은 Next.js 앱인데 이미지 하나는 1.72GB, 하나는 208MB였다. 사라진 1.5GB를 레이어에서 역추적하고, 컨테이너가 격리된 프로세스라는 것을 PID와 cgroup 파일로 직접 확인한다. 프론트엔드 개발자를 위한 쿠버네티스 시리즈의 두 번째 편이다.'
-thumbnail: /thumbnails/2026/08/k8s-for-frontend-2.png
 series: '프론트엔드 개발자가 알아야 할 쿠버네티스'
 seriesOrder: 2
 art:

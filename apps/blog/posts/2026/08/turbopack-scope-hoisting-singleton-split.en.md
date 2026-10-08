@@ -9,7 +9,6 @@ tags:
 published: true
 date: 2026-08-19 12:00:00
 description: 'In a Next.js 16 Turbopack production build, a module-scope singleton became two live instances at runtime. Inside the same synchronous block, one condition contradicted the other, and responses that arrived in 30ms still timed out. This is the record of tracing the cause through the bundle output: a partial scope hoisting merge, a circular import, an upstream bug that had already been fixed, and the single-variable experiment I ran too late.'
-thumbnail: /thumbnails/2026/08/turbopack-scope-hoisting-singleton-split.png
 art:
   undraw: buggy-code
   layout: field

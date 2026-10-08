@@ -11,7 +11,6 @@ featured: false
 date: 2026-08-10 13:00:00
 updated: 2026-10-05 22:06:18
 description: '『남은 판단은 누가 배우는가』 인터뷰와 베타리더 모집이 모두 마감되었습니다. 경험을 나눠주시고 베타리더로 함께해 주신 모든 분께 감사드립니다. 인터뷰는 예외 없이 익명으로 처리합니다.'
-thumbnail: /thumbnails/2026/08/who-learns-to-judge-interviews.png
 art:
   undraw: collaborative-writing
   layout: bauhaus

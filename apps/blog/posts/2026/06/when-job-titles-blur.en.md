@@ -10,7 +10,6 @@ date: 2026-06-12
 description: 'The claim that job boundaries are collapsing is only half true. What collapses is production; judgment and responsibility remain.'
 series: 'Judgment in the AI Era'
 seriesOrder: 2
-thumbnail: /thumbnails/2026/06/when-job-titles-blur.png
 art:
   undraw: hr-presentation
   layout: bauhaus

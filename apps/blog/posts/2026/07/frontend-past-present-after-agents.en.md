@@ -8,7 +8,6 @@ tags:
 published: true
 date: 2026-07-22 10:00:00
 description: 'Why the layers piled up, why we returned to the server, and why the stack survives even after agents. And why the survival of a stack and the value of the people who know it are two separate things'
-thumbnail: /thumbnails/2026/07/frontend-past-present-after-agents.png
 art:
   undraw: launch-day
   layout: bauhaus

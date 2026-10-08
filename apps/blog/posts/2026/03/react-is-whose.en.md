@@ -9,7 +9,6 @@ tags:
 published: true
 date: 2026-03-19 23:30:00
 description: 'The questions React Foundation must answer'
-thumbnail: '/thumbnails/2026/03/react-is-whose.png'
 series: 'The State of Next.js'
 seriesOrder: 3
 art:

@@ -9,7 +9,6 @@ tags:
 published: true
 date: 2026-03-09 22:02:05
 description: 'What happens behind a single line of "use server"?'
-thumbnail: /thumbnails/2026/03/react-server-functions-deep-dive.png
 series: Directive Deep Dive
 seriesOrder: 2
 art:
