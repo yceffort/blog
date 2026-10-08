@@ -486,9 +486,6 @@ importers:
 
   packages/shared:
     dependencies:
-      date-fns:
-        specifier: 'catalog:'
-        version: 4.4.0
       isbot:
         specifier: 'catalog:'
         version: 5.2.1

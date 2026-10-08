@@ -12,7 +12,6 @@
   },
   "scripts": {},
   "dependencies": {
-    "date-fns": "catalog:",
     "isbot": "catalog:",
     "next-themes": "catalog:",
     "react": "catalog:",
