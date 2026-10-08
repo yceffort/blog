@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import * as aboutStyles from '@/components/about/about.styles'
-import type {Locale} from '@/utils/postPaths'
+import {pathPrefixOf, type Locale} from '@/utils/postPaths'
 
 export function AboutTabs({
   active,
@@ -10,7 +10,7 @@ export function AboutTabs({
   active: 'about' | 'resume'
   locale: Locale
 }) {
-  const prefix = locale === 'en' ? '/en' : ''
+  const prefix = pathPrefixOf(locale)
   return (
     <nav
       className={`tabs ${aboutStyles.tabs}`}

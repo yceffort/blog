@@ -1,7 +1,8 @@
 'use client'
 
-import {usePathname} from 'next/navigation'
 import {useEffect, useRef, useState} from 'react'
+
+import {useLocale} from '@/hooks/useLocale'
 
 import * as pushAlertTooltipStyles from './PushAlertTooltip.styles'
 const SEEN_KEY = 'push-alert-tooltip-seen'
@@ -18,7 +19,7 @@ export default function PushAlertTooltip({onOpen}: {onOpen: () => void}) {
   const [mounted, setMounted] = useState(false)
   const [visible, setVisible] = useState(false)
   const timers = useRef<ReturnType<typeof setTimeout>[]>([])
-  const isEn = usePathname()?.startsWith('/en')
+  const isEn = useLocale().locale === 'en'
   const dismiss = () => {
     setVisible(false)
     timers.current.push(setTimeout(() => setMounted(false), EXIT_DURATION))

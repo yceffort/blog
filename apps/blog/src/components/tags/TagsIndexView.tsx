@@ -7,8 +7,7 @@ import * as ambientStyles from '@/components/layout/ambient.styles'
 import {SiteConfig} from '@/config'
 import {buildOgImageUrl} from '@/utils/og'
 import {getAllTagsFromPosts, type Locale} from '@/utils/Post'
-
-const pathPrefixOf = (locale: Locale) => (locale === 'en' ? '/en' : '')
+import {pathPrefixOf} from '@/utils/postPaths'
 
 // tags 하위 페이지 전체(태그별 목록 포함)에 걸리는 기본 메타데이터
 export function tagsLayoutMetadata(locale: Locale): Metadata {

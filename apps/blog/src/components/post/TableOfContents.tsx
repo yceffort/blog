@@ -1,10 +1,10 @@
 'use client'
 
-import {usePathname} from 'next/navigation'
 import {useEffect, useRef, useState} from 'react'
 
 import * as readingProgressStyles from '@/components/post/reading-progress.styles'
 import * as tableOfContentsStyles from '@/components/post/table-of-contents.styles'
+import {useLocale} from '@/hooks/useLocale'
 
 interface TOCItem {
   id: string
@@ -84,7 +84,7 @@ function FloatingTOC({
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [copied, setCopied] = useState(false)
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const isEn = usePathname()?.startsWith('/en')
+  const isEn = useLocale().locale === 'en'
   const panelRef = useRef<HTMLDivElement>(null)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const itemRefs = useRef<Map<string, HTMLLIElement>>(new Map())

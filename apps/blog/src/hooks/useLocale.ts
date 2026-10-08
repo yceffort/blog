@@ -4,7 +4,7 @@ import {usePathname} from 'next/navigation'
 
 export function useLocale() {
   const pathname = usePathname() ?? '/'
-  const isEn = pathname.startsWith('/en')
+  const isEn = pathname === '/en' || pathname.startsWith('/en/')
 
   return {
     locale: isEn ? 'en' : 'ko',

@@ -2,7 +2,7 @@ import type {Metadata} from 'next'
 
 import {SiteConfig} from '@/config'
 import {buildOgImageUrl} from '@/utils/og'
-import type {Locale} from '@/utils/postPaths'
+import {pathPrefixOf, type Locale} from '@/utils/postPaths'
 
 const pages = {
   about: {
@@ -27,7 +27,7 @@ export function pageMetadata(
   locale: Locale,
 ): Metadata {
   const {title, description} = pages[page]
-  const path = `${locale === 'en' ? '/en' : ''}/${page}`
+  const path = `${pathPrefixOf(locale)}/${page}`
   const fullTitle = `${title} - ${SiteConfig.title}`
   return {
     title: fullTitle,

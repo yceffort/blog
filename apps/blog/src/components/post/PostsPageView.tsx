@@ -6,8 +6,7 @@ import {SiteConfig} from '@/config'
 import {DEFAULT_NUMBER_OF_POSTS} from '@/constants'
 import {buildOgImageUrl} from '@/utils/og'
 import {getAllPosts, type Locale} from '@/utils/Post'
-
-const pathPrefixOf = (locale: Locale) => (locale === 'en' ? '/en' : '')
+import {pathPrefixOf} from '@/utils/postPaths'
 
 export function postsPageMetadata(id: string, locale: Locale): Metadata {
   const path = `${pathPrefixOf(locale)}/pages/${id}`

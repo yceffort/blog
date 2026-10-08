@@ -5,12 +5,15 @@ import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 import {startTransition, useEffect, useState, ViewTransition} from 'react'
 
+import {useLocale} from '@/hooks/useLocale'
+
 import * as announcementBannerStyles from './AnnouncementBanner.styles'
 const POST_PATH = '/2026/09/who-learns-to-judge-beta-reader'
 const END_AT = new Date('2026-09-30T23:59:59+09:00').getTime()
 const COOKIE_NAME = 'beta-reader-banner-dismissed'
 export default function AnnouncementBanner() {
   const pathname = usePathname() ?? '/'
+  const {locale} = useLocale()
   const [visible, setVisible] = useState(false)
   useEffect(() => {
     if (Date.now() > END_AT || getCookie(COOKIE_NAME)) {
@@ -18,7 +21,7 @@ export default function AnnouncementBanner() {
     }
     startTransition(() => setVisible(true))
   }, [])
-  if (!visible || pathname.startsWith('/en') || pathname === POST_PATH) {
+  if (!visible || locale === 'en' || pathname === POST_PATH) {
     return null
   }
   const dismiss = () => {

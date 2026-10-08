@@ -6,8 +6,7 @@ import PaginatedList from '@/components/post/PaginatedList'
 import {SiteConfig} from '@/config'
 import {DEFAULT_NUMBER_OF_POSTS} from '@/constants'
 import {getAllPosts, getAllTagsFromPosts, type Locale} from '@/utils/Post'
-
-const pathPrefixOf = (locale: Locale) => (locale === 'en' ? '/en' : '')
+import {pathPrefixOf} from '@/utils/postPaths'
 
 export function tagPostsMetadata(
   {tag, id}: {tag: string; id: string},
