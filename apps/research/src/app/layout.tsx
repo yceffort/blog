@@ -67,6 +67,10 @@ export const metadata: Metadata = {
   },
 }
 
+// 로컬에서 프로덕션 빌드를 띄우면(next start) NODE_ENV가 production이라 아래 가드를
+// 통과하고, 개발 중 조회가 운영 GA4에 그대로 섞인다. 실제 서비스 호스트에서만 켠다.
+const GA_HOST = new URL(SiteConfig.url).hostname
+
 export default function Layout({children}: {children: ReactNode}) {
   return (
     <>
@@ -104,13 +108,15 @@ export default function Layout({children}: {children: ReactNode}) {
               />
               <Script id="google-analytics" strategy="afterInteractive">
                 {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
+          if (window.location.hostname === '${GA_HOST}') {
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function gtag(){window.dataLayer.push(arguments);};
+            window.gtag('js', new Date());
 
-          gtag('config', '${SiteConfig.googleAnalyticsId}', {
-            page_path: window.location.pathname,
-          });
+            window.gtag('config', '${SiteConfig.googleAnalyticsId}', {
+              page_path: window.location.pathname,
+            });
+          }
         `}
               </Script>
               <Suspense fallback={null}>
