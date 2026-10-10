@@ -9,7 +9,7 @@ tags:
   - async
 date: 2026-10-10
 description: '처음 마운트되는 중에 suspend된 컴포넌트는 아무것도 남기지 못한다. 이 사실 하나로 useSuspenseQuery의 렌더 중 요청부터 experimental_prefetchInRender의 도입과 제거까지 실험으로 따라간다.'
-published: false
+published: true
 ---
 
 # useQuery는 왜 스스로 suspend하지 못할까
