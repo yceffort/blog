@@ -1,5 +1,39 @@
 {
   "ko": {
+    "2026/10/swe-bench-before-swapping-models": [
+      {
+        "slug": "2026/01/coding-agent-core-concepts",
+        "score": 0.22
+      },
+      {
+        "slug": "2026/06/do-you-need-to-read-code",
+        "score": 0.21
+      },
+      {
+        "slug": "2026/02/frontend-engineering-in-ai-era",
+        "score": 0.16
+      },
+      {
+        "slug": "2026/05/bun-rust-rewrite-real-story",
+        "score": 0.14
+      },
+      {
+        "slug": "2026/04/ai-only-amplifies-what-you-see",
+        "score": 0.14
+      },
+      {
+        "slug": "2026/07/frontend-past-present-after-agents",
+        "score": 0.13
+      },
+      {
+        "slug": "2026/06/learning-what-ai-cant-do",
+        "score": 0.1
+      },
+      {
+        "slug": "2025/05/frontend-truth-ai-misconceptions",
+        "score": 0.09
+      }
+    ],
     "2026/10/number-flow-compositor-performance": [
       {
         "slug": "2026/08/framer-motion-banner-frame-drop",
@@ -2144,6 +2178,10 @@
     ],
     "2026/01/coding-agent-core-concepts": [
       {
+        "slug": "2026/10/swe-bench-before-swapping-models",
+        "score": 0.24
+      },
+      {
         "slug": "2026/02/frontend-engineering-in-ai-era",
         "score": 0.22
       },
@@ -2169,10 +2207,6 @@
       },
       {
         "slug": "2026/06/learning-what-ai-cant-do",
-        "score": 0.1
-      },
-      {
-        "slug": "2026/06/when-job-titles-blur",
         "score": 0.1
       }
     ],
@@ -7494,6 +7528,10 @@
         "score": 0.12
       },
       {
+        "slug": "2020/06/javascript-execution-context",
+        "score": 0.12
+      },
+      {
         "slug": "2021/08/event-loop-deep-dive",
         "score": 0.11
       },
@@ -7507,10 +7545,6 @@
       },
       {
         "slug": "2026/09/unused-javascript-cost",
-        "score": 0.09
-      },
-      {
-        "slug": "2021/01/nodejs-4-design-pattern",
         "score": 0.09
       }
     ],
@@ -9352,6 +9386,40 @@
     ]
   },
   "en": {
+    "2026/10/swe-bench-before-swapping-models": [
+      {
+        "slug": "2026/01/coding-agent-core-concepts",
+        "score": 0.21
+      },
+      {
+        "slug": "2026/06/do-you-need-to-read-code",
+        "score": 0.19
+      },
+      {
+        "slug": "2026/05/bun-rust-rewrite-real-story",
+        "score": 0.13
+      },
+      {
+        "slug": "2026/02/frontend-engineering-in-ai-era",
+        "score": 0.13
+      },
+      {
+        "slug": "2026/04/ai-only-amplifies-what-you-see",
+        "score": 0.11
+      },
+      {
+        "slug": "2026/07/frontend-past-present-after-agents",
+        "score": 0.09
+      },
+      {
+        "slug": "2026/06/learning-what-ai-cant-do",
+        "score": 0.09
+      },
+      {
+        "slug": "2026/06/when-job-titles-blur",
+        "score": 0.07
+      }
+    ],
     "2026/10/number-flow-compositor-performance": [
       {
         "slug": "2026/08/framer-motion-banner-frame-drop",
@@ -10118,10 +10186,6 @@
         "score": 0.06
       },
       {
-        "slug": "2026/02/nodejs-deep-dive-beta-reader",
-        "score": 0.06
-      },
-      {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.05
       },
@@ -10131,6 +10195,10 @@
       },
       {
         "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
+        "score": 0.05
+      },
+      {
+        "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
         "score": 0.05
       }
     ],
@@ -10148,10 +10216,6 @@
         "score": 0.13
       },
       {
-        "slug": "2026/03/why-still-nextjs",
-        "score": 0.13
-      },
-      {
         "slug": "2025/12/nextjs-caching-deep-dive",
         "score": 0.12
       },
@@ -10166,6 +10230,10 @@
       {
         "slug": "2026/08/service-worker-caching-2",
         "score": 0.09
+      },
+      {
+        "slug": "2026/09/nextjs-cache-components-activity",
+        "score": 0.08
       }
     ],
     "2026/08/k8s-for-frontend-1": [
@@ -10292,15 +10360,15 @@
         "score": 0.25
       },
       {
+        "slug": "2026/10/swe-bench-before-swapping-models",
+        "score": 0.16
+      },
+      {
         "slug": "2026/01/coding-agent-core-concepts",
         "score": 0.16
       },
       {
         "slug": "2026/03/react-is-whose",
-        "score": 0.09
-      },
-      {
-        "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
         "score": 0.09
       }
     ],
@@ -10348,6 +10416,10 @@
         "score": 0.28
       },
       {
+        "slug": "2026/10/swe-bench-before-swapping-models",
+        "score": 0.28
+      },
+      {
         "slug": "2026/01/coding-agent-core-concepts",
         "score": 0.24
       },
@@ -10366,10 +10438,6 @@
       {
         "slug": "2026/07/frontend-past-present-after-agents",
         "score": 0.15
-      },
-      {
-        "slug": "2026/05/good-package-for-long-term-users",
-        "score": 0.12
       }
     ],
     "2026/05/use-client-deep-dive": [
@@ -10586,6 +10654,10 @@
         "score": 0.5
       },
       {
+        "slug": "2026/10/swe-bench-before-swapping-models",
+        "score": 0.32
+      },
+      {
         "slug": "2026/04/ai-only-amplifies-what-you-see",
         "score": 0.19
       },
@@ -10603,10 +10675,6 @@
       },
       {
         "slug": "2026/06/when-job-titles-blur",
-        "score": 0.15
-      },
-      {
-        "slug": "2026/02/frontend-engineering-in-ai-era",
         "score": 0.15
       }
     ],
@@ -10636,12 +10704,12 @@
         "score": 0.26
       },
       {
-        "slug": "2026/05/bun-rust-rewrite-real-story",
-        "score": 0.23
+        "slug": "2026/10/swe-bench-before-swapping-models",
+        "score": 0.25
       },
       {
-        "slug": "2026/07/frontend-past-present-after-agents",
-        "score": 0.19
+        "slug": "2026/05/bun-rust-rewrite-real-story",
+        "score": 0.23
       }
     ],
     "2026/03/why-still-nextjs": [
@@ -10946,7 +11014,7 @@
         "score": 0.1
       },
       {
-        "slug": "2026/08/k8s-for-frontend-2",
+        "slug": "2026/03/why-still-nextjs",
         "score": 0.1
       }
     ],
@@ -11048,8 +11116,8 @@
         "score": 0.25
       },
       {
-        "slug": "2025/05/what-to-do-as-frontend-developer-in-ai-era",
-        "score": 0.2
+        "slug": "2026/10/swe-bench-before-swapping-models",
+        "score": 0.24
       }
     ],
     "2026/02/effect-ts-deep-dive": [
@@ -11116,7 +11184,7 @@
         "score": 0.05
       },
       {
-        "slug": "2026/01/handling-large-json-responses",
+        "slug": "2026/10/swe-bench-before-swapping-models",
         "score": 0.04
       }
     ],
@@ -11190,6 +11258,10 @@
     ],
     "2026/01/coding-agent-core-concepts": [
       {
+        "slug": "2026/10/swe-bench-before-swapping-models",
+        "score": 0.32
+      },
+      {
         "slug": "2026/06/do-you-need-to-read-code",
         "score": 0.24
       },
@@ -11216,10 +11288,6 @@
       {
         "slug": "2025/05/what-to-do-as-frontend-developer-in-ai-era",
         "score": 0.1
-      },
-      {
-        "slug": "2026/06/learning-what-ai-cant-do",
-        "score": 0.09
       }
     ],
     "2025/12/webgpu-all-browsers": [
@@ -11230,10 +11298,6 @@
       {
         "slug": "2026/09/nextjs-cache-components-activity",
         "score": 0.11
-      },
-      {
-        "slug": "2026/08/number-flow-fork-for-old-browsers",
-        "score": 0.1
       },
       {
         "slug": "2026/09/unused-javascript-cost",
@@ -11254,6 +11318,10 @@
       {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.08
+      },
+      {
+        "slug": "2026/01/intersection-observer-singleton-weakmap",
+        "score": 0.07
       }
     ],
     "2025/12/use-effect-event": [

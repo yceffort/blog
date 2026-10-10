@@ -2,13 +2,13 @@
 title: '<em>SWE-bench</em>로 코딩 에이전트의 모델을 비교하는 방법'
 tags:
   - ai
-  - typescript
-  - testing
-published: false
-date: 2026-10-08 22:00:00
+published: true
+date: 2026-10-10 12:05:00
 description: '코딩 에이전트의 모델 성능은 어떻게 측정할까?'
 series: '코딩 에이전트 모델 교체 실험'
 seriesOrder: 1
+art:
+  undraw: performance-comparison
 ---
 
 ## Table of Contents
