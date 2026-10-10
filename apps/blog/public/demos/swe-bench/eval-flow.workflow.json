@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Claude Code에서 모델을 비교하는 평가 설계",
+    "quality_profile": "showcase",
+    "legend": { "mode": "hidden" },
+    "output": "eval-flow.html"
+  },
+  "lanes": [
+    { "id": "provider", "label": "모델 제공사" },
+    { "id": "container", "label": "격리 컨테이너 (문항마다 하나)" },
+    { "id": "grade", "label": "채점" },
+    { "id": "cost", "label": "비용 집계" }
+  ],
+  "mainPath": ["prepare", "agent", "collect", "grader", "resolved", "metric"],
+  "nodes": [
+    { "id": "endpoint", "lane": "provider", "col": 1, "type": "external", "label": "Anthropic 호환 API", "sublabel": "Claude, GLM, Qwen, vLLM", "width": 200 },
+    { "id": "prepare", "lane": "container", "col": 0, "type": "backend", "label": "문항 준비", "sublabel": "base 커밋, 이슈 본문", "width": 160 },
+    { "id": "agent", "lane": "container", "col": 1, "type": "backend", "label": "Claude Code", "sublabel": "고정한 설정과 도구", "width": 170 },
+    { "id": "collect", "lane": "container", "col": 2, "type": "backend", "label": "패치 수집", "sublabel": "기준 커밋 대비 변경 수집", "width": 190 },
+    { "id": "grader", "lane": "grade", "col": 3, "type": "backend", "label": "multi-swe-bench 채점기", "sublabel": "저장된 기록과 대조", "width": 200 },
+    { "id": "resolved", "lane": "grade", "col": 4, "type": "backend", "label": "해결 여부", "sublabel": "실행 유효성과 목록 대조", "width": 170 },
+    { "id": "usage", "lane": "cost", "col": 1, "type": "database", "label": "토큰 사용량", "sublabel": "modelUsage와 제공사 기록", "width": 200 },
+    { "id": "metric", "lane": "cost", "col": 5, "type": "frontend", "label": "해결 1건당 비용", "sublabel": "총 API 비용 ÷ 해결 수", "width": 190 }
+  ],
+  "edges": [
+    { "id": "send-issue", "from": "prepare", "to": "agent", "label": "이슈 전달", "role": "main" },
+    { "id": "agent-done", "from": "agent", "to": "collect", "label": "작업 종료", "role": "main" },
+    { "id": "submit-patch", "from": "collect", "to": "grader", "label": "JSONL 패치", "role": "main" },
+    { "id": "run-tests", "from": "grader", "to": "resolved", "label": "테스트 실행", "role": "main" },
+    { "id": "count-resolved", "from": "resolved", "to": "metric", "label": "해결 수", "role": "main", "variant": "emphasis" },
+    { "id": "call-model", "from": "agent", "to": "endpoint", "label": "/v1/messages", "role": "branch" },
+    { "id": "record-usage", "from": "agent", "to": "usage", "label": "토큰 기록", "role": "branch", "variant": "dashed" },
+    { "id": "sum-cost", "from": "usage", "to": "metric", "label": "총비용", "role": "branch", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "실행 조건을 함께 고정한다", "items": ["버전, 도구, 실행 예산을 맞추고 모델별 추론 설정과 컨텍스트 한도를 기록한다."] },
+    { "dot": "amber", "title": "채점 환경은 따로 둔다", "items": ["정답 자료는 에이전트에게 노출하지 않고, 채점기는 실행 유효성을 확인한 뒤 f2p, p2p, s2p, n2p 목록을 대조한다."] },
+    { "dot": "violet", "title": "품질 조건과 비용을 함께 본다", "items": ["허용할 해결률 하락 폭을 먼저 정하고, 실패와 재시도 비용도 합산한다."] }
+  ]
+}
