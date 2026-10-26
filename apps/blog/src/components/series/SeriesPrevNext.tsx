@@ -1,6 +1,7 @@
 import {stripTitleEmphasis} from '@yceffort/shared/utils'
 import Link from 'next/link'
 
+import LinkPendingHint from '@/components/post/LinkPendingHint'
 import type {Post} from '@/type'
 
 import {seriesNeighbors} from './neighbors'
@@ -43,9 +44,11 @@ export default function SeriesPrevNext({
         <Link
           href={`${pathPrefix}/${prevPost.fields.slug}`}
           className="series-endnav-card prev"
+          data-vt-back
         >
           <span className="series-endnav-label">{labels.prev}</span>
           <strong>{stripTitleEmphasis(prevPost.frontMatter.title)}</strong>
+          <LinkPendingHint />
         </Link>
       ) : (
         <span className="series-endnav-card empty" aria-hidden="true" />
@@ -57,6 +60,7 @@ export default function SeriesPrevNext({
         >
           <span className="series-endnav-label">{labels.next}</span>
           <strong>{stripTitleEmphasis(nextPost.frontMatter.title)}</strong>
+          <LinkPendingHint />
         </Link>
       ) : (
         <span className="series-endnav-card empty" aria-hidden="true" />

@@ -23,6 +23,7 @@ export default function PageNumber({
           <Link
             href={prev}
             className={`pagination-link ${paginationStyles.pagination_link}`}
+            data-vt-back
           >
             <span aria-hidden="true">←</span>
             <span>Page {pageNo - 1}</span>

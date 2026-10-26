@@ -277,6 +277,7 @@ async function PostBody({year, slug, locale}: PostParams & {locale: Locale}) {
         <Link
           href={pathPrefix || '/'}
           className={`post-back ${readingProgressStyles.post_back}`}
+          data-vt-back
         >
           <span className={`dot ${readingProgressStyles.dot}`}>
             <svg
@@ -423,7 +424,9 @@ async function PostBody({year, slug, locale}: PostParams & {locale: Locale}) {
             <Link href={`${pathPrefix}/about`}>yceffort</Link>
             {labels.authorNote}
           </p>
-          <Link href={pathPrefix || '/'}>&larr; Back to the blog</Link>
+          <Link href={pathPrefix || '/'} data-vt-back>
+            &larr; Back to the blog
+          </Link>
           {locale === 'ko' ? (
             <Link
               href={`https://github.com/yceffort/yceffort-blog-v2/issues/new?labels=%F0%9F%92%AC%20Discussion&title=[Discussion] issue on ${plainTitle}&assignees=yceffort&body=${SiteConfig.url}/${postSlug}`}
