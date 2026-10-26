@@ -482,6 +482,7 @@ export function SavedPostsView({locale}: {locale: 'ko' | 'en'}) {
                       {/* 상세 페이지 제목과 이름을 맞춘다. 경로의 /en은 slug에 없다 */}
                       <ViewTransition
                         name={`post-${post.path.replace(/^\/(en\/)?/, '').replace(/\//g, '-')}`}
+                        share="morph"
                       >
                         <Link
                           href={post.path}

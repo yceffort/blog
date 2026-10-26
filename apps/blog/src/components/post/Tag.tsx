@@ -44,7 +44,7 @@ const tagClassName = stylex.props(sx.tagClassName).className
 const Tag = ({text, pathPrefix = ''}: {text: string; pathPrefix?: string}) => {
   const label = text.split(' ').join('-')
   return (
-    <ViewTransition name={`tag-${label}`}>
+    <ViewTransition name={`tag-${label}`} share="morph">
       <Link href={`${pathPrefix}/tags/${text}`} className={tagClassName}>
         {label}
       </Link>

@@ -25,7 +25,7 @@ export default function ListLayout({
             {String(posts.length).padStart(2, '0')} POSTS
           </span>
           {titleTransitionName ? (
-            <ViewTransition name={titleTransitionName}>
+            <ViewTransition name={titleTransitionName} share="morph">
               {heading}
             </ViewTransition>
           ) : (

@@ -96,7 +96,7 @@ export default function PostRow({
                 ` · ${pathPrefix ? `Part ${seriesOrder}` : `${seriesOrder}편`}`}
             </span>
           )}
-          <ViewTransition name={`${transitionName}-tags`}>
+          <ViewTransition name={`${transitionName}-tags`} share="morph">
             <div className={`post-row-tags ${listStyles.post_row_tags}`}>
               {tags.slice(0, 3).map((tag) => (
                 <span key={tag} className={`tag-chip ${listStyles.tag_chip}`}>
@@ -107,7 +107,7 @@ export default function PostRow({
           </ViewTransition>
         </div>
 
-        <ViewTransition name={transitionName}>
+        <ViewTransition name={transitionName} share="morph">
           <h3 className={`post-row-title ${listStyles.post_row_title}`}>
             <EmphasizedTitle title={rawTitle} />
           </h3>

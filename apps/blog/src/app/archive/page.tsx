@@ -71,6 +71,7 @@ export default async function ArchivePage() {
                     </span>
                     <ViewTransition
                       name={`post-${post.fields.slug.replace(/\//g, '-')}`}
+                      share="morph"
                     >
                       <span
                         className={`archive-title ${archiveStyles.archive_title}`}

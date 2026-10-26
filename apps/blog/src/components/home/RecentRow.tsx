@@ -75,12 +75,12 @@ export default function RecentRow({
         </ViewTransition>
       )}
       <div>
-        <ViewTransition name={transitionName}>
+        <ViewTransition name={transitionName} share="morph">
           <h4 className={recentStyles.element_h4}>
             <EmphasizedTitle title={rawTitle} />
           </h4>
         </ViewTransition>
-        <ViewTransition name={`${transitionName}-tags`}>
+        <ViewTransition name={`${transitionName}-tags`} share="morph">
           <div className={`rtags ${recentStyles.rtags}`}>
             {tags.slice(0, 3).map((t) => (
               <span key={t}>#{t}</span>

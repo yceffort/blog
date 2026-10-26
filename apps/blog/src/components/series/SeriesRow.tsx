@@ -37,7 +37,7 @@ export default function SeriesRow({
         {String(index + 1).padStart(2, '0')}
       </div>
       <div>
-        <ViewTransition name={`series-${slug}`}>
+        <ViewTransition name={`series-${slug}`} share="morph">
           <h4 className={recentStyles.element_h4}>
             <EmphasizedTitle title={title} />
           </h4>

@@ -88,6 +88,11 @@
   html:not([data-vt-direction])::view-transition-group(*.page) {
     animation: none;
   }
+
+  /* 줄바꿈이 다른 제목끼리 크로스페이드하면 글자가 겹쳐 보여서 old를 먼저 지운다 */
+  html::view-transition-old(*.morph) {
+    animation-duration: 0.12s;
+  }
 }
 
 @supports (view-transition-name: none) {

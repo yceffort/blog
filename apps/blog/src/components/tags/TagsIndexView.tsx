@@ -109,7 +109,7 @@ export default async function TagsIndexView({locale}: {locale: Locale}) {
                 animationDelay: `${i * 32}ms`,
               }}
             >
-              <ViewTransition name={`tag-${tag}`}>
+              <ViewTransition name={`tag-${tag}`} share="morph">
                 <span className={`n ${tagsStyles.n}`}>{tag}</span>
               </ViewTransition>
               <span className={`c ${tagsStyles.c}`}>{count}</span>

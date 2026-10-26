@@ -77,7 +77,7 @@ export default function SeriesCard({
         />
       </div>
       <div className={`body ${listStyles.body}`}>
-        <ViewTransition name={`series-${slug}`}>
+        <ViewTransition name={`series-${slug}`} share="morph">
           <h3 className={listStyles.element_h3}>
             <EmphasizedTitle title={title} />
           </h3>

@@ -311,7 +311,7 @@ async function PostBody({year, slug, locale}: PostParams & {locale: Locale}) {
               'ESSAY'
             )}
           </div>
-          <ViewTransition name={transitionName}>
+          <ViewTransition name={transitionName} share="morph">
             <h1 className={`post-title ${readingProgressStyles.post_title}`}>
               {titleParts.map((part, i) =>
                 part.emphasis ? (
@@ -363,7 +363,7 @@ async function PostBody({year, slug, locale}: PostParams & {locale: Locale}) {
             </div>
           </div>
           {tags && (
-            <ViewTransition name={`${transitionName}-tags`}>
+            <ViewTransition name={`${transitionName}-tags`} share="morph">
               <div
                 className={`post-tags-row ${readingProgressStyles.post_tags_row}`}
               >
