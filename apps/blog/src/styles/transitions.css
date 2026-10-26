@@ -49,20 +49,24 @@
 }
 
 @layer site {
+  /* 이동 전환(본문 슬라이드, 공유 요소) 속도. 여기 한 곳에서 조절한다 */
+  :root {
+    --vt-nav-duration: 0.45s;
+  }
   [data-vt-direction='back']::view-transition-new(*.page) {
-    animation: vt-slide-in-left 0.3s ease-in-out 0s 1 normal both running;
+    animation: vt-slide-in-left var(--vt-nav-duration) ease-in-out 0s 1 normal both running;
   }
   [data-vt-direction='back']::view-transition-old(*.page) {
-    animation: vt-slide-out-right 0.3s ease-in-out 0s 1 normal both running;
+    animation: vt-slide-out-right var(--vt-nav-duration) ease-in-out 0s 1 normal both running;
   }
   [data-vt-direction='forward']::view-transition-new(*.page) {
-    animation: vt-slide-in-right 0.3s ease-in-out 0s 1 normal both running;
+    animation: vt-slide-in-right var(--vt-nav-duration) ease-in-out 0s 1 normal both running;
   }
   .theme-transition-circle::view-transition-old(root) {
     animation: none 0s ease 0s 1 normal none running;
   }
   [data-vt-direction='forward']::view-transition-old(*.page) {
-    animation: vt-slide-out-left 0.3s ease-in-out 0s 1 normal both running;
+    animation: vt-slide-out-left var(--vt-nav-duration) ease-in-out 0s 1 normal both running;
   }
   .theme-transition-circle::view-transition-new(root) {
     animation: circle-clip 0.5s ease-in-out 0s 1 normal none running;
@@ -91,7 +95,12 @@
 
   /* 줄바꿈이 다른 제목끼리 크로스페이드하면 글자가 겹쳐 보여서 old를 먼저 지운다 */
   html::view-transition-old(*.morph) {
-    animation-duration: 0.12s;
+    animation-duration: 0.18s;
+  }
+
+  /* 제목, 태그, 헤더 점 같은 공유 요소도 본문과 같은 속도로 움직인다 */
+  html::view-transition-group(*) {
+    animation-duration: var(--vt-nav-duration);
   }
 }
 
@@ -102,15 +111,15 @@
       animation-timing-function: ease-in-out;
     }
     [data-vt-direction='forward']::view-transition-new(*.page) {
-      animation-duration: 0.3s;
+      animation-duration: var(--vt-nav-duration);
       animation-timing-function: ease-in-out;
     }
     [data-vt-direction='back']::view-transition-new(*.page) {
-      animation-duration: 0.3s;
+      animation-duration: var(--vt-nav-duration);
       animation-timing-function: ease-in-out;
     }
     [data-vt-direction='back']::view-transition-old(*.page) {
-      animation-duration: 0.3s;
+      animation-duration: var(--vt-nav-duration);
       animation-timing-function: ease-in-out;
     }
     html::view-transition-new(root) {
@@ -118,7 +127,7 @@
       animation-timing-function: ease-in-out;
     }
     [data-vt-direction='forward']::view-transition-old(*.page) {
-      animation-duration: 0.3s;
+      animation-duration: var(--vt-nav-duration);
       animation-timing-function: ease-in-out;
     }
   }
