@@ -111,6 +111,10 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* 언어 전환처럼 문서를 새로 받는 이동에도 root 크로스페이드를 건다 */
+  @view-transition {
+    navigation: auto;
+  }
   @layer site {
     html::view-transition-new(announcement-banner):only-child {
       animation: vt-banner-in 0.3s ease-out 0s 1 normal both running;
