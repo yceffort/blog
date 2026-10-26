@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>실무 성능 개선 작업 흐름</title>
+<script>
+  // 블로그 iframe 안에서는 부모 문서의 테마 클래스를 따르고, 단독으로 열면 OS 설정을 따른다.
+  (function () {
+    var root = document.documentElement
+    function apply(theme) {
+      root.setAttribute('data-theme', theme)
+    }
+    try {
+      var param = new URLSearchParams(location.search).get('theme')
+      if (param === 'light' || param === 'dark') {
+        apply(param)
+        return
+      }
+    } catch (_) {}
+    var host = null
+    try {
+      if (window.parent !== window) host = window.parent.document.documentElement
+    } catch (_) {}
+    if (host) {
+      var sync = function () {
+        apply(host.classList.contains('dark') ? 'dark' : 'light')
+      }
+      sync()
+      new MutationObserver(sync).observe(host, {attributes: true, attributeFilter: ['class']})
+      return
+    }
+    var mq = window.matchMedia('(prefers-color-scheme: dark)')
+    var follow = function () {
+      apply(mq.matches ? 'dark' : 'light')
+    }
+    follow()
+    if (mq.addEventListener) mq.addEventListener('change', follow)
+  })()
+</script>
+<style>
+  :root,
+  [data-theme='dark'] {
+    --bg: #020617;
+    --canvas-dot: rgba(148, 163, 184, 0.16);
+    --text: #ffffff;
+    --text-muted: #94a3b8;
+    --lane-fill: rgba(15, 23, 42, 0.22);
+    --lane-stroke: #334155;
+    --arrow: #64748b;
+    --arrow-emphasis: #34d399;
+    --mask: #0f172a;
+    --pill-border: #334155;
+    --common-fill: rgba(6, 78, 59, 0.4);
+    --common-stroke: #34d399;
+    --mine-fill: rgba(8, 51, 68, 0.4);
+    --mine-stroke: #22d3ee;
+    --others-fill: rgba(120, 53, 15, 0.3);
+    --others-stroke: #fbbf24;
+    --infra-fill: rgba(136, 19, 55, 0.4);
+    --infra-stroke: #fb7185;
+    --ops-fill: rgba(76, 29, 149, 0.4);
+    --ops-stroke: #a78bfa;
+  }
+  [data-theme='light'] {
+    --bg: #f4f5f7;
+    --canvas-dot: #d9dee5;
+    --text: #111827;
+    --text-muted: #5b6474;
+    --lane-fill: rgba(248, 250, 252, 0.65);
+    --lane-stroke: #cbd5e1;
+    --arrow: #94a3b8;
+    --arrow-emphasis: #059669;
+    --mask: #ffffff;
+    --pill-border: #cbd5e1;
+    --common-fill: rgba(52, 211, 153, 0.18);
+    --common-stroke: #059669;
+    --mine-fill: rgba(34, 211, 238, 0.15);
+    --mine-stroke: #0891b2;
+    --others-fill: rgba(251, 191, 36, 0.18);
+    --others-stroke: #d97706;
+    --infra-fill: rgba(251, 113, 133, 0.15);
+    --infra-stroke: #e11d48;
+    --ops-fill: rgba(167, 139, 250, 0.2);
+    --ops-stroke: #7c3aed;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  html,
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    background-image: radial-gradient(var(--canvas-dot) 1px, transparent 1px);
+    background-size: 22px 22px;
+    color: var(--text);
+    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+      'Noto Sans KR', system-ui, sans-serif;
+  }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 12px;
+    overflow-x: auto;
+  }
+  svg {
+    display: block;
+    width: 100%;
+    min-width: 640px;
+    height: auto;
+  }
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+    fill: var(--text);
+  }
+  .lane {
+    fill: var(--lane-fill);
+    stroke: var(--lane-stroke);
+    stroke-width: 1;
+  }
+  .lane-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    fill: var(--text-muted);
+  }
+  .lane-num {
+    font-family: ui-monospace, 'JetBrains Mono', SFMono-Regular, Menlo, monospace;
+    fill: var(--arrow-emphasis);
+  }
+  .node rect.box {
+    stroke-width: 1.5;
+  }
+  .node .label {
+    font-size: 15px;
+    font-weight: 650;
+    fill: var(--text);
+    text-anchor: middle;
+  }
+  .node .sub {
+    font-size: 12px;
+    fill: var(--text-muted);
+    text-anchor: middle;
+  }
+  .node .eyebrow {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-anchor: middle;
+  }
+  .node .tag rect {
+    fill: var(--mask);
+    stroke-width: 1;
+  }
+  .node .tag text {
+    font-size: 11px;
+    text-anchor: middle;
+    fill: var(--text-muted);
+  }
+  .common rect.box {
+    fill: var(--common-fill);
+    stroke: var(--common-stroke);
+  }
+  .common .tag rect {
+    stroke: var(--common-stroke);
+  }
+  .mine rect.box {
+    fill: var(--mine-fill);
+    stroke: var(--mine-stroke);
+  }
+  .mine .eyebrow {
+    fill: var(--mine-stroke);
+  }
+  .others rect.box {
+    fill: var(--others-fill);
+    stroke: var(--others-stroke);
+  }
+  .others .eyebrow {
+    fill: var(--others-stroke);
+  }
+  .others .tag rect {
+    stroke: var(--others-stroke);
+  }
+  .infra rect.box {
+    fill: var(--infra-fill);
+    stroke: var(--infra-stroke);
+  }
+  .infra .eyebrow {
+    fill: var(--infra-stroke);
+  }
+  .ops rect.box {
+    fill: var(--ops-fill);
+    stroke: var(--ops-stroke);
+  }
+  .edge {
+    fill: none;
+    stroke: var(--arrow);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+  }
+  .edge.main {
+    stroke: var(--arrow-emphasis);
+    stroke-width: 2;
+  }
+  .edge.dashed {
+    stroke-dasharray: 5 5;
+  }
+  .edge.flow {
+    stroke-dasharray: 7 5;
+    animation: flow 1.4s linear infinite;
+  }
+  @keyframes flow {
+    from {
+      stroke-dashoffset: 24;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .edge.flow {
+      animation: none;
+      stroke-dasharray: none;
+    }
+  }
+  .head {
+    fill: var(--arrow);
+  }
+  .head.main {
+    fill: var(--arrow-emphasis);
+  }
+  .junction {
+    fill: var(--arrow-emphasis);
+  }
+  .pill rect {
+    fill: var(--mask);
+    stroke: var(--pill-border);
+  }
+  .pill text {
+    font-size: 11px;
+    fill: var(--text-muted);
+    text-anchor: middle;
+  }
+  .note {
+    font-size: 12.5px;
+    fill: var(--text-muted);
+  }
+  .group {
+    fill: none;
+    stroke: var(--lane-stroke);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+  }
+  .group-label {
+    font-size: 11px;
+    font-weight: 600;
+    fill: var(--text-muted);
+    text-anchor: end;
+  }
+  .legend text {
+    font-size: 11.5px;
+    fill: var(--text-muted);
+  }
+  .legend .legend-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .sw-common {
+    fill: var(--common-fill);
+    stroke: var(--common-stroke);
+  }
+  .sw-mine {
+    fill: var(--mine-fill);
+    stroke: var(--mine-stroke);
+  }
+  .sw-others {
+    fill: var(--others-fill);
+    stroke: var(--others-stroke);
+  }
+  .sw-infra {
+    fill: var(--infra-fill);
+    stroke: var(--infra-stroke);
+  }
+  .sw-ops {
+    fill: var(--ops-fill);
+    stroke: var(--ops-stroke);
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+<svg viewBox="0 0 840 1032" role="img" aria-labelledby="t d" xmlns="http://www.w3.org/2000/svg">
+  <title id="t">실무 성능 개선 작업 흐름</title>
+  <desc id="d">지원 범위 설정을 준비로 먼저 한다. 관측 단계에서는 운영 대시보드부터 점검하고, 조건을 고정해 랩에서 관측한다. 의존성 분석과 정리, 서버 코드 유입 확인은 처음에 한 번 정리하고, 관측하다 다시 나오면 반복하는 점검 항목이다. 원인을 분류하고 우선순위를 정한 뒤, 원인이 내 코드면 기법을 적용하고, 남의 코드면 복사, 래퍼, 내재화, SDK 재조립, 포크 중에서 대응을 고르고, 남의 인프라면 재현 가능한 요청서를 쓰고 거절되면 내 코드로 우회한다. 세 갈래는 검증으로 모여 재발 방지 장치로 남기고, 측정과 보고, 배포 뒤 운영 계측으로 이어지며, 운영 계측에서 본 것이 다음 작업으로 이어진다.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="head" d="M0 0 L10 5 L0 10 z" />
+    </marker>
+    <marker id="arrow-main" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="head main" d="M0 0 L10 5 L0 10 z" />
+    </marker>
+  </defs>
+
+  <text class="title" x="24" y="46">실무 성능 개선 작업 흐름</text>
+
+  <!-- 단계 띠 -->
+  <rect class="lane" x="20" y="72" width="800" height="140" rx="14" />
+  <text class="lane-label" x="40" y="96"><tspan class="lane-num">01</tspan>  준비</text>
+  <text class="note" x="40" y="152">한 번 정해 두면</text>
+  <text class="note" x="40" y="170">이후 모든 판단의 기준이 된다</text>
+  <rect class="lane" x="20" y="228" width="800" height="242" rx="14" />
+  <text class="lane-label" x="40" y="252"><tspan class="lane-num">02</tspan>  관측과 분류</text>
+  <rect class="group" x="288" y="370" width="484" height="92" rx="12" />
+  <text class="group-label" x="760" y="387">처음 한 번 정리하고, 관측하다 다시 나오면 반복하는 점검</text>
+  <rect class="lane" x="20" y="486" width="800" height="288" rx="14" />
+  <text class="lane-label" x="160" y="510"><tspan class="lane-num">03</tspan>  대응: 원인의 위치에 따라 갈린다</text>
+  <rect class="lane" x="20" y="790" width="800" height="222" rx="14" />
+  <text class="lane-label" x="40" y="814"><tspan class="lane-num">04</tspan>  검증과 측정</text>
+
+  <!-- 연결선 -->
+  <path class="edge main flow" d="M660 180 V272" marker-end="url(#arrow-main)" />
+  <path class="edge main flow" d="M560 314 H502" marker-end="url(#arrow-main)" />
+  <path class="edge main flow" d="M300 314 H242" marker-end="url(#arrow-main)" />
+  <path class="edge dashed" d="M400 356 V392" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <path class="edge" d="M500 423 H558" marker-end="url(#arrow)" />
+  <path class="edge main flow" d="M140 346 V556" marker-end="url(#arrow-main)" />
+  <path class="edge" d="M140 532 H400 V556" marker-end="url(#arrow)" />
+  <path class="edge" d="M400 532 H660 V556" marker-end="url(#arrow)" />
+  <circle class="junction" cx="140" cy="532" r="3.5" />
+  <path class="edge dashed" d="M660 642 V672" marker-end="url(#arrow)" />
+  <path class="edge main flow" d="M140 642 V782 H400" />
+  <path class="edge" d="M660 758 V782 H400" />
+  <path class="edge" d="M400 658 V782" />
+  <path class="edge main flow" d="M400 782 V834" marker-end="url(#arrow-main)" />
+  <circle class="junction" cx="400" cy="782" r="3.5" />
+  <path class="edge main flow" d="M500 868 H558" marker-end="url(#arrow-main)" />
+  <path class="edge" d="M400 900 V930" marker-end="url(#arrow)" />
+  <path class="edge main flow" d="M660 900 V930" marker-end="url(#arrow-main)" />
+  <path class="edge dashed" d="M760 964 H800 V314 H762" marker-end="url(#arrow)" />
+  <g class="pill">
+    <rect x="766" y="590" width="68" height="22" rx="11" />
+    <text x="800" y="605">다음 작업</text>
+  </g>
+
+  <!-- 01 준비 -->
+  <g class="node common">
+    <rect class="box" x="560" y="116" width="200" height="64" rx="10" />
+    <text class="label" x="660" y="144">지원 범위 설정</text>
+    <text class="sub" x="660" y="164">browserslist 공유 설정</text>
+  </g>
+
+  <!-- 02 관측과 분류 -->
+  <g class="node ops">
+    <rect class="box" x="560" y="274" width="200" height="80" rx="10" />
+    <text class="label" x="660" y="300">운영 대시보드 확인</text>
+    <text class="sub" x="660" y="319">패널 쿼리 점검</text>
+    <g class="tag">
+      <rect x="590" y="328" width="140" height="18" rx="9" />
+      <text x="660" y="341">개선이 늦으면 랩으로</text>
+    </g>
+  </g>
+  <g class="node common">
+    <rect class="box" x="300" y="274" width="200" height="80" rx="10" />
+    <text class="label" x="400" y="300">랩에서 관측</text>
+    <text class="sub" x="400" y="319">패널, 번들, 커버리지</text>
+    <g class="tag">
+      <rect x="352" y="328" width="96" height="18" rx="9" />
+      <text x="400" y="341">조건 고정 먼저</text>
+    </g>
+  </g>
+  <g class="node common">
+    <rect class="box" x="40" y="282" width="200" height="64" rx="10" />
+    <text class="label" x="140" y="310">원인 분류</text>
+    <text class="sub" x="140" y="330">성질, 위치, 우선순위</text>
+  </g>
+  <g class="node common">
+    <rect class="box" x="300" y="394" width="200" height="58" rx="10" />
+    <text class="label" x="400" y="418">의존성 분석, 정리</text>
+    <text class="sub" x="400" y="437">중복, 고정 버전, 순환 import</text>
+  </g>
+  <g class="node common">
+    <rect class="box" x="560" y="394" width="200" height="58" rx="10" />
+    <text class="label" x="660" y="418">서버 코드 유입 확인</text>
+    <text class="sub" x="660" y="437">클라이언트 번들 검사</text>
+  </g>
+
+  <!-- 03 대응 -->
+  <g class="node mine">
+    <rect class="box" x="40" y="558" width="200" height="84" rx="10" />
+    <text class="eyebrow" x="140" y="578">원인이 내 코드</text>
+    <text class="label" x="140" y="602">기법 적용</text>
+    <text class="sub" x="140" y="622">DCE, 지연 로드, 렌더 수정</text>
+  </g>
+  <g class="node others">
+    <rect class="box" x="300" y="558" width="200" height="100" rx="10" />
+    <text class="eyebrow" x="400" y="578">원인이 남의 코드</text>
+    <text class="label" x="400" y="600">대응 선택</text>
+    <text class="sub" x="400" y="619">복사, 래퍼, 내재화</text>
+    <g class="tag">
+      <rect x="344" y="628" width="112" height="18" rx="9" />
+      <text x="400" y="641">SDK 재조립, 포크</text>
+    </g>
+  </g>
+  <g class="node infra">
+    <rect class="box" x="560" y="558" width="200" height="84" rx="10" />
+    <text class="eyebrow" x="660" y="578">원인이 남의 인프라</text>
+    <text class="label" x="660" y="602">재현 가능한 요청서</text>
+    <text class="sub" x="660" y="622">근거, 시각, 우선순위</text>
+  </g>
+  <g class="node infra">
+    <rect class="box" x="560" y="674" width="200" height="84" rx="10" />
+    <text class="eyebrow" x="660" y="694">요청이 거절되면</text>
+    <text class="label" x="660" y="718">내 코드로 우회</text>
+    <text class="sub" x="660" y="738">수집 코드로 대응</text>
+  </g>
+
+  <!-- 04 검증과 측정 -->
+  <g class="node common">
+    <rect class="box" x="300" y="836" width="200" height="64" rx="10" />
+    <text class="label" x="400" y="864">검증</text>
+    <text class="sub" x="400" y="884">산출물, 원본 대조, 뮤테이션</text>
+  </g>
+  <g class="node common">
+    <rect class="box" x="560" y="836" width="200" height="64" rx="10" />
+    <text class="label" x="660" y="864">측정과 보고</text>
+    <text class="sub" x="660" y="884">등급 구분, 사용자 언어</text>
+  </g>
+  <g class="node common">
+    <rect class="box" x="300" y="932" width="200" height="64" rx="10" />
+    <text class="label" x="400" y="960">재발 방지 장치</text>
+    <text class="sub" x="400" y="980">린트, CI 검사, 기준선</text>
+  </g>
+  <g class="node ops">
+    <rect class="box" x="560" y="932" width="200" height="64" rx="10" />
+    <text class="label" x="660" y="960">배포 뒤 운영 계측</text>
+    <text class="sub" x="660" y="980">원본 재집계</text>
+  </g>
+
+  <!-- 범례 -->
+  <g class="legend">
+    <text class="legend-title" x="44" y="848">범례</text>
+    <rect class="sw-common" x="44" y="860" width="18" height="12" rx="3" />
+    <text x="70" y="870">공통 단계</text>
+    <rect class="sw-mine" x="44" y="882" width="18" height="12" rx="3" />
+    <text x="70" y="892">원인이 내 코드</text>
+    <rect class="sw-others" x="44" y="904" width="18" height="12" rx="3" />
+    <text x="70" y="914">원인이 남의 코드</text>
+    <rect class="sw-infra" x="44" y="926" width="18" height="12" rx="3" />
+    <text x="70" y="936">원인이 남의 인프라</text>
+    <rect class="sw-ops" x="44" y="948" width="18" height="12" rx="3" />
+    <text x="70" y="958">운영 계측</text>
+    <path class="edge main" d="M44 976 H62" />
+    <text x="70" y="980">주 경로</text>
+    <path class="edge dashed" d="M44 996 H62" />
+    <text x="70" y="1000">분기, 반복, 되돌아감</text>
+  </g>
+</svg>
+</main>
+</body>
+</html>
