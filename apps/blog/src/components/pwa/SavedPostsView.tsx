@@ -2,7 +2,14 @@
 
 import * as stylex from '@stylexjs/stylex'
 import Link from 'next/link'
-import {useEffect, useId, useState, useSyncExternalStore} from 'react'
+import {
+  startTransition,
+  useEffect,
+  useId,
+  useState,
+  useSyncExternalStore,
+  ViewTransition,
+} from 'react'
 
 import {useIsStandalone} from '@/hooks/useIsStandalone'
 import {listSavedPosts, type OfflineDeps} from '@/utils/offline/cache'
@@ -359,7 +366,9 @@ export function SavedPostsView({locale}: {locale: 'ko' | 'en'}) {
     try {
       const deps = browserDeps()
       await action(deps)
-      setSaved(await loadSaved(deps))
+      const next = await loadSaved(deps)
+      // 트랜지션으로 반영해야 지운 줄이 ViewTransition exit로 빠진다
+      startTransition(() => setSaved(next))
     } finally {
       setBusy(false)
     }
@@ -468,50 +477,54 @@ export function SavedPostsView({locale}: {locale: 'ko' | 'en'}) {
             <>
               <ul>
                 {posts.map((post) => (
-                  <li
-                    key={post.path}
-                    className={stylex.props(sx.row).className}
-                  >
-                    <Link
-                      href={post.path}
-                      // 목록이 화면에 들어올 때마다 글마다 RSC를 미리 받지 않는다
-                      prefetch={false}
-                      className={stylex.props(sx.title).className}
-                    >
-                      {post.title}
-                    </Link>
-                    {meta?.sizes[post.path] && (
-                      <span className={stylex.props(sx.size).className}>
-                        {formatBytes(meta.sizes[post.path].bytes) +
-                          externalNote(meta.sizes[post.path].external)}
-                      </span>
-                    )}
-                    <span className={stylex.props(sx.tag).className}>
-                      {meta?.auto.includes(post.path) ? copy.auto : copy.read}
-                    </span>
-                    <button
-                      type="button"
-                      aria-label={copy.delete}
-                      disabled={busy}
-                      onClick={() =>
-                        void run((deps) => deleteSaved(post.path, deps))
-                      }
-                      className={stylex.props(sx.remove).className}
-                    >
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        aria-hidden="true"
+                  <ViewTransition key={post.path}>
+                    <li className={stylex.props(sx.row).className}>
+                      {/* 상세 페이지 제목과 이름을 맞춘다. 경로의 /en은 slug에 없다 */}
+                      <ViewTransition
+                        name={`post-${post.path.replace(/^\/(en\/)?/, '').replace(/\//g, '-')}`}
                       >
-                        <path d="M18 6L6 18M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </li>
+                        <Link
+                          href={post.path}
+                          // 목록이 화면에 들어올 때마다 글마다 RSC를 미리 받지 않는다
+                          prefetch={false}
+                          className={stylex.props(sx.title).className}
+                        >
+                          {post.title}
+                        </Link>
+                      </ViewTransition>
+                      {meta?.sizes[post.path] && (
+                        <span className={stylex.props(sx.size).className}>
+                          {formatBytes(meta.sizes[post.path].bytes) +
+                            externalNote(meta.sizes[post.path].external)}
+                        </span>
+                      )}
+                      <span className={stylex.props(sx.tag).className}>
+                        {meta?.auto.includes(post.path) ? copy.auto : copy.read}
+                      </span>
+                      <button
+                        type="button"
+                        aria-label={copy.delete}
+                        disabled={busy}
+                        onClick={() =>
+                          void run((deps) => deleteSaved(post.path, deps))
+                        }
+                        className={stylex.props(sx.remove).className}
+                      >
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          aria-hidden="true"
+                        >
+                          <path d="M18 6L6 18M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </li>
+                  </ViewTransition>
                 ))}
               </ul>
               <button
