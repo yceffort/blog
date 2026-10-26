@@ -1,5 +1,5 @@
 ---
-title: '실무에서 <em>성능 개선</em>을 진행하는 순서: 준비, 관측, 대응, 검증, 측정'
+title: '성능 개선에서 <em>기법</em>은 짧았고 판단은 길었다: 준비, 관측, 대응, 검증, 측정'
 tags:
   - web-performance
   - software-engineering

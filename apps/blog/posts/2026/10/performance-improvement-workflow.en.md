@@ -1,5 +1,5 @@
 ---
-title: 'The Order of <em>Performance Work</em> in Practice: Preparation, Observation, Response, Verification, Measurement'
+title: 'In Performance Work, the <em>Techniques</em> Were Short and the Judgment Was Long: Preparation, Observation, Response, Verification, Measurement'
 tags:
   - web-performance
   - software-engineering

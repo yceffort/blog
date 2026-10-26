@@ -98,8 +98,8 @@
         "score": 0.5
       },
       {
-        "slug": "2026/08/service-worker-caching-1",
-        "score": 0.38
+        "slug": "2020/12/measuring-performance-of-javascript-functions",
+        "score": 0.35
       }
     ],
     "2026/10/number-flow-compositor-performance": [
@@ -9654,8 +9654,8 @@
         "score": 0.41
       },
       {
-        "slug": "2026/05/use-client-deep-dive",
-        "score": 0.3
+        "slug": "2025/05/web-performance-analysis-2",
+        "score": 0.27
       }
     ],
     "2026/10/number-flow-compositor-performance": [
@@ -9728,10 +9728,6 @@
     ],
     "2026/10/cwv-to-tempo-and-mimir": [
       {
-        "slug": "2026/10/performance-improvement-workflow",
-        "score": 0.26
-      },
-      {
         "slug": "2026/08/framer-motion-banner-frame-drop",
         "score": 0.2
       },
@@ -9758,6 +9754,10 @@
       {
         "slug": "2026/08/service-worker-caching-3",
         "score": 0.16
+      },
+      {
+        "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
+        "score": 0.14
       }
     ],
     "2026/10/cwv-send-on-page-leave": [
@@ -10390,6 +10390,10 @@
         "score": 0.13
       },
       {
+        "slug": "2026/10/performance-improvement-workflow",
+        "score": 0.13
+      },
+      {
         "slug": "2026/10/cwv-to-tempo-and-mimir",
         "score": 0.1
       },
@@ -10400,10 +10404,6 @@
       {
         "slug": "2026/09/one-web-on-multiple-webviews",
         "score": 0.09
-      },
-      {
-        "slug": "2026/09/porting-markdownlint-cli2-to-rust",
-        "score": 0.08
       }
     ],
     "2026/08/nodejs-k8s-pod-sizing": [
@@ -11354,8 +11354,8 @@
         "score": 0.1
       },
       {
-        "slug": "2026/08/nodejs-k8s-pod-sizing",
-        "score": 0.09
+        "slug": "2026/03/why-still-nextjs",
+        "score": 0.1
       }
     ],
     "2026/02/nodejs-deep-dive-beta-reader": [
