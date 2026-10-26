@@ -1,9 +1,11 @@
 import {stripTitleEmphasis} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 import Link from 'next/link'
+import {ViewTransition} from 'react'
 
 import * as archiveStyles from '@/app/archive/archive.styles'
 import * as ambientStyles from '@/components/layout/ambient.styles'
+import LinkPendingHint from '@/components/post/LinkPendingHint'
 import PostDate from '@/components/post/PostDate'
 import {SiteConfig} from '@/config'
 import type {Post} from '@/type'
@@ -67,11 +69,15 @@ export default async function ArchivePage() {
                     >
                       <PostDate value={post.frontMatter.date} pattern="MM-dd" />
                     </span>
-                    <span
-                      className={`archive-title ${archiveStyles.archive_title}`}
+                    <ViewTransition
+                      name={`post-${post.fields.slug.replace(/\//g, '-')}`}
                     >
-                      {stripTitleEmphasis(post.frontMatter.title)}
-                    </span>
+                      <span
+                        className={`archive-title ${archiveStyles.archive_title}`}
+                      >
+                        {stripTitleEmphasis(post.frontMatter.title)}
+                      </span>
+                    </ViewTransition>
                     {post.frontMatter.updated && (
                       <span
                         className={`archive-updated ${archiveStyles.archive_updated}`}
@@ -79,6 +85,7 @@ export default async function ArchivePage() {
                         수정 <PostDate value={post.frontMatter.updated} />
                       </span>
                     )}
+                    <LinkPendingHint />
                   </Link>
                 </li>
               ))}

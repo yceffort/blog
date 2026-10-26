@@ -1,5 +1,6 @@
 import type {Metadata} from 'next'
 import {notFound, permanentRedirect} from 'next/navigation'
+import {ViewTransition} from 'react'
 
 import * as recentStyles from '@/components/home/recent.styles'
 import RecentRow from '@/components/home/RecentRow'
@@ -94,9 +95,11 @@ export default async function SeriesDetailView({
         <div className={`post-eyebrow ${readingProgressStyles.post_eyebrow}`}>
           ◆ SERIES · {posts.length} POSTS
         </div>
-        <h1 className={`post-title ${readingProgressStyles.post_title}`}>
-          <EmphasizedTitle title={title} />
-        </h1>
+        <ViewTransition name={`series-${slug}`}>
+          <h1 className={`post-title ${readingProgressStyles.post_title}`}>
+            <EmphasizedTitle title={title} />
+          </h1>
+        </ViewTransition>
         <p className={`page-sub ${seriesStyles.description}`}>{description}</p>
       </section>
 

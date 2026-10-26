@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import {ViewTransition} from 'react'
 
 import * as recentStyles from '@/components/home/recent.styles'
 import {EmphasizedTitle} from '@/components/post/EmphasizedTitle'
@@ -36,9 +37,11 @@ export default function SeriesRow({
         {String(index + 1).padStart(2, '0')}
       </div>
       <div>
-        <h4 className={recentStyles.element_h4}>
-          <EmphasizedTitle title={title} />
-        </h4>
+        <ViewTransition name={`series-${slug}`}>
+          <h4 className={recentStyles.element_h4}>
+            <EmphasizedTitle title={title} />
+          </h4>
+        </ViewTransition>
         <div className={`rtags ${recentStyles.rtags}`}>
           <span>{String(posts.length).padStart(2, '0')} POSTS</span>
           <span>· {period}</span>

@@ -1,9 +1,11 @@
 import {stripTitleEmphasis} from '@yceffort/shared/utils'
 import Image from 'next/image'
 import Link from 'next/link'
+import {ViewTransition} from 'react'
 
 import * as recentStyles from '@/components/home/recent.styles'
 import {EmphasizedTitle} from '@/components/post/EmphasizedTitle'
+import LinkPendingHint from '@/components/post/LinkPendingHint'
 import * as listStyles from '@/components/post/list.styles'
 import PostDate from '@/components/post/PostDate'
 import type {Post} from '@/type'
@@ -37,6 +39,7 @@ export default function RecentRow({
     readingTime,
   } = post
   const plainTitle = stripTitleEmphasis(rawTitle)
+  const transitionName = `post-${slug.replace(/\//g, '-')}`
   return (
     <div className={`rec-row ${ROW_CLASS[variant]}`}>
       <Link
@@ -44,7 +47,9 @@ export default function RecentRow({
         aria-label={plainTitle}
         prefetch={false}
         className={recentStyles.element_a}
-      />
+      >
+        <LinkPendingHint />
+      </Link>
       {!published && variant !== 'thumb' && (
         <span className={listStyles.draft_badge}>Draft</span>
       )}
@@ -52,28 +57,36 @@ export default function RecentRow({
         {String(index + 1).padStart(2, '0')}
       </div>
       {variant === 'thumb' && (
-        <div className={recentStyles.rthumb}>
-          {thumbnail && (
-            <Image
-              src={thumbnail}
-              alt=""
-              fill
-              sizes="(min-width: 901px) 128px, 88px"
-              className={recentStyles.rthumb_img}
-            />
-          )}
-          {!published && <span className={listStyles.draft_badge}>Draft</span>}
-        </div>
+        <ViewTransition name={`${transitionName}-thumbnail`}>
+          <div className={recentStyles.rthumb}>
+            {thumbnail && (
+              <Image
+                src={thumbnail}
+                alt=""
+                fill
+                sizes="(min-width: 901px) 128px, 88px"
+                className={recentStyles.rthumb_img}
+              />
+            )}
+            {!published && (
+              <span className={listStyles.draft_badge}>Draft</span>
+            )}
+          </div>
+        </ViewTransition>
       )}
       <div>
-        <h4 className={recentStyles.element_h4}>
-          <EmphasizedTitle title={rawTitle} />
-        </h4>
-        <div className={`rtags ${recentStyles.rtags}`}>
-          {tags.slice(0, 3).map((t) => (
-            <span key={t}>#{t}</span>
-          ))}
-        </div>
+        <ViewTransition name={transitionName}>
+          <h4 className={recentStyles.element_h4}>
+            <EmphasizedTitle title={rawTitle} />
+          </h4>
+        </ViewTransition>
+        <ViewTransition name={`${transitionName}-tags`}>
+          <div className={`rtags ${recentStyles.rtags}`}>
+            {tags.slice(0, 3).map((t) => (
+              <span key={t}>#{t}</span>
+            ))}
+          </div>
+        </ViewTransition>
       </div>
       <div className={`rd ${recentStyles.rd}`}>{description}</div>
       <div className={`rmeta ${recentStyles.rmeta}`}>

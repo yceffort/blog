@@ -3,7 +3,7 @@
 import {stripTitleEmphasis} from '@yceffort/shared/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import {useRef} from 'react'
+import {useRef, ViewTransition} from 'react'
 
 import {EmphasizedTitle} from '@/components/post/EmphasizedTitle'
 import * as listStyles from '@/components/post/list.styles'
@@ -77,9 +77,11 @@ export default function SeriesCard({
         />
       </div>
       <div className={`body ${listStyles.body}`}>
-        <h3 className={listStyles.element_h3}>
-          <EmphasizedTitle title={title} />
-        </h3>
+        <ViewTransition name={`series-${slug}`}>
+          <h3 className={listStyles.element_h3}>
+            <EmphasizedTitle title={title} />
+          </h3>
+        </ViewTransition>
         {description && <p className={listStyles.desc}>{description}</p>}
         <div className={`meta ${listStyles.meta}`}>
           <span>
