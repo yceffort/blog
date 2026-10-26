@@ -1,5 +1,6 @@
 import * as stylex from '@stylexjs/stylex'
 import Link from 'next/link'
+import {ViewTransition} from 'react'
 
 const sx = stylex.create({
   tagClassName: {
@@ -43,9 +44,11 @@ const tagClassName = stylex.props(sx.tagClassName).className
 const Tag = ({text, pathPrefix = ''}: {text: string; pathPrefix?: string}) => {
   const label = text.split(' ').join('-')
   return (
-    <Link href={`${pathPrefix}/tags/${text}`} className={tagClassName}>
-      {label}
-    </Link>
+    <ViewTransition name={`tag-${label}`}>
+      <Link href={`${pathPrefix}/tags/${text}`} className={tagClassName}>
+        {label}
+      </Link>
+    </ViewTransition>
   )
 }
 export default Tag

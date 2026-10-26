@@ -12,12 +12,14 @@ export default function PaginatedList({
   pageNo,
   basePath,
   title,
+  titleTransitionName,
   pathPrefix,
 }: {
   posts: Post[]
   pageNo: number
   basePath: string
   title: string
+  titleTransitionName?: string
   pathPrefix: string
 }) {
   const lastPage = pageCount(posts.length, DEFAULT_NUMBER_OF_POSTS)
@@ -35,6 +37,7 @@ export default function PaginatedList({
       <ListLayout
         posts={pageItems(posts, pageNo, DEFAULT_NUMBER_OF_POSTS)}
         title={title}
+        titleTransitionName={titleTransitionName}
         pathPrefix={pathPrefix}
       />
       <PageNumber

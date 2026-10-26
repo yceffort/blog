@@ -73,6 +73,7 @@ export default async function TagPostsView({
       pageNo={pageNo}
       basePath={`${pathPrefix}/tags/${encodeURIComponent(tag)}/pages`}
       title={title}
+      titleTransitionName={`tag-${tag}`}
       pathPrefix={pathPrefix}
     />
   )

@@ -1,5 +1,6 @@
 import type {Metadata} from 'next'
 import Link from 'next/link'
+import {ViewTransition} from 'react'
 
 import * as tagsStyles from '@/app/tags/tags.styles'
 import * as heroStyles from '@/components/home/hero.styles'
@@ -108,7 +109,9 @@ export default async function TagsIndexView({locale}: {locale: Locale}) {
                 animationDelay: `${i * 32}ms`,
               }}
             >
-              <span className={`n ${tagsStyles.n}`}>{tag}</span>
+              <ViewTransition name={`tag-${tag}`}>
+                <span className={`n ${tagsStyles.n}`}>{tag}</span>
+              </ViewTransition>
               <span className={`c ${tagsStyles.c}`}>{count}</span>
             </Link>
           )
