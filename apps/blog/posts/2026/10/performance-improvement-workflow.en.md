@@ -6,6 +6,7 @@ tags:
   - essay
 published: true
 date: 2026-10-26 17:59:00
+updated: 2026-10-26 18:21:01
 description: "I think order matters more than technique in performance work. This post lays out the practical flow: settle the support range and dependencies first, measure before picking a technique, decide what to fix first, choose a response when the cause lives in someone else's code or infrastructure, prove nothing broke and keep it guarded, and report numbers by grade."
 art:
   undraw: route-planning
@@ -27,7 +28,7 @@ Based on that experience, this post lays out the order in which performance work
 
 The overall flow looks like this.
 
-<LiveDemo src="/demos/performance-workflow/flow.html" title="A performance workflow that settles the support range and dependencies, picks a response by where the cause lives, and converges on verification and measurement" height={1160} />
+<LiveDemo src="/demos/performance-workflow/flow.html?present=1" title="A performance workflow that settles the support range and dependencies, picks a response by where the cause lives, and converges on verification and measurement" aspectRatio="960 / 740" minHeight={420} />
 
 Set the support range, clean up dependencies and server code leaking into the client, then check the production dashboard and measure in the lab under fixed conditions. When observation turns up new duplicates or server code leaks, clean them up again. Once you find causes, separate what the problem is from whose code it is, and set priorities. For your own code, apply the technique that fits the cause; when the cause is in someone else's code or infrastructure, first decide how it can be fixed at all. After a change, verify the behavior and put a regression guard in place. Report the measurements and check production instrumentation again after deployment, and that result tells you what to work on next.
 
