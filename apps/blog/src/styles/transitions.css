@@ -49,19 +49,19 @@
 }
 
 @layer site {
-  [data-vt-direction='back']::view-transition-new(root) {
+  [data-vt-direction='back']::view-transition-new(*.page) {
     animation: vt-slide-in-left 0.3s ease-in-out 0s 1 normal both running;
   }
-  [data-vt-direction='back']::view-transition-old(root) {
+  [data-vt-direction='back']::view-transition-old(*.page) {
     animation: vt-slide-out-right 0.3s ease-in-out 0s 1 normal both running;
   }
-  [data-vt-direction='forward']::view-transition-new(root) {
+  [data-vt-direction='forward']::view-transition-new(*.page) {
     animation: vt-slide-in-right 0.3s ease-in-out 0s 1 normal both running;
   }
   .theme-transition-circle::view-transition-old(root) {
     animation: none 0s ease 0s 1 normal none running;
   }
-  [data-vt-direction='forward']::view-transition-old(root) {
+  [data-vt-direction='forward']::view-transition-old(*.page) {
     animation: vt-slide-out-left 0.3s ease-in-out 0s 1 normal both running;
   }
   .theme-transition-circle::view-transition-new(root) {
@@ -79,6 +79,15 @@
     mix-blend-mode: normal;
     z-index: 1;
   }
+
+  /* 목차 표시나 저장 글 삭제처럼 이동이 아닌 업데이트로 본문 경계가 바뀌면 본문은 그대로 둔다 */
+  html:not([data-vt-direction])::view-transition-old(*.page) {
+    display: none;
+  }
+  html:not([data-vt-direction])::view-transition-new(*.page),
+  html:not([data-vt-direction])::view-transition-group(*.page) {
+    animation: none;
+  }
 }
 
 @supports (view-transition-name: none) {
@@ -87,15 +96,15 @@
       animation-duration: 0.3s;
       animation-timing-function: ease-in-out;
     }
-    [data-vt-direction='forward']::view-transition-new(root) {
+    [data-vt-direction='forward']::view-transition-new(*.page) {
       animation-duration: 0.3s;
       animation-timing-function: ease-in-out;
     }
-    [data-vt-direction='back']::view-transition-new(root) {
+    [data-vt-direction='back']::view-transition-new(*.page) {
       animation-duration: 0.3s;
       animation-timing-function: ease-in-out;
     }
-    [data-vt-direction='back']::view-transition-old(root) {
+    [data-vt-direction='back']::view-transition-old(*.page) {
       animation-duration: 0.3s;
       animation-timing-function: ease-in-out;
     }
@@ -103,7 +112,7 @@
       animation-duration: 0.3s;
       animation-timing-function: ease-in-out;
     }
-    [data-vt-direction='forward']::view-transition-old(root) {
+    [data-vt-direction='forward']::view-transition-old(*.page) {
       animation-duration: 0.3s;
       animation-timing-function: ease-in-out;
     }

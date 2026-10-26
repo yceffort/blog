@@ -350,9 +350,12 @@ const LayoutWrapper = ({
       </a>
       <Header enSlugs={enSlugs} />
       <SectionContainer className={containerClass}>
-        <main id="main" className={stylex.props(sx.main).className}>
-          {children}
-        </main>
+        {/* React는 root 전환을 취소하므로 본문을 경계로 감싸 page 클래스로 슬라이드한다 */}
+        <ViewTransition default="page">
+          <main id="main" className={stylex.props(sx.main).className}>
+            {children}
+          </main>
+        </ViewTransition>
         <Footer />
       </SectionContainer>
       <ScrollTop />
