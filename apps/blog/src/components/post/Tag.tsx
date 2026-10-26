@@ -45,7 +45,11 @@ const Tag = ({text, pathPrefix = ''}: {text: string; pathPrefix?: string}) => {
   const label = text.split(' ').join('-')
   return (
     <ViewTransition name={`tag-${label}`} share="morph">
-      <Link href={`${pathPrefix}/tags/${text}`} className={tagClassName}>
+      <Link
+        href={`${pathPrefix}/tags/${text}`}
+        className={tagClassName}
+        transitionTypes={['to-tag']}
+      >
         {label}
       </Link>
     </ViewTransition>

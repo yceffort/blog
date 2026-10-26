@@ -17,6 +17,7 @@ import RelatedPosts from '@/components/post/RelatedPosts'
 import SubscribeCta from '@/components/post/SubscribeCta'
 import TableOfContents from '@/components/post/TableOfContents'
 import Tag from '@/components/post/Tag'
+import {POST_TITLE_SHARE} from '@/components/post/titleShare'
 import SeriesNavigation from '@/components/series/SeriesNavigation'
 import SeriesPrevNext from '@/components/series/SeriesPrevNext'
 import {SiteConfig} from '@/config'
@@ -311,7 +312,7 @@ async function PostBody({year, slug, locale}: PostParams & {locale: Locale}) {
               'ESSAY'
             )}
           </div>
-          <ViewTransition name={transitionName} share="morph">
+          <ViewTransition name={transitionName} share={POST_TITLE_SHARE}>
             <h1 className={`post-title ${readingProgressStyles.post_title}`}>
               {titleParts.map((part, i) =>
                 part.emphasis ? (
@@ -363,7 +364,10 @@ async function PostBody({year, slug, locale}: PostParams & {locale: Locale}) {
             </div>
           </div>
           {tags && (
-            <ViewTransition name={`${transitionName}-tags`} share="morph">
+            <ViewTransition
+              name={`${transitionName}-tags`}
+              share={POST_TITLE_SHARE}
+            >
               <div
                 className={`post-tags-row ${readingProgressStyles.post_tags_row}`}
               >

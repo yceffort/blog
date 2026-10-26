@@ -8,6 +8,7 @@ import {EmphasizedTitle} from '@/components/post/EmphasizedTitle'
 import LinkPendingHint from '@/components/post/LinkPendingHint'
 import * as listStyles from '@/components/post/list.styles'
 import PostDate from '@/components/post/PostDate'
+import {POST_TITLE_SHARE} from '@/components/post/titleShare'
 import type {Post} from '@/type'
 const sx = stylex.create({
   article: {
@@ -96,7 +97,10 @@ export default function PostRow({
                 ` · ${pathPrefix ? `Part ${seriesOrder}` : `${seriesOrder}편`}`}
             </span>
           )}
-          <ViewTransition name={`${transitionName}-tags`} share="morph">
+          <ViewTransition
+            name={`${transitionName}-tags`}
+            share={POST_TITLE_SHARE}
+          >
             <div className={`post-row-tags ${listStyles.post_row_tags}`}>
               {tags.slice(0, 3).map((tag) => (
                 <span key={tag} className={`tag-chip ${listStyles.tag_chip}`}>
@@ -107,7 +111,7 @@ export default function PostRow({
           </ViewTransition>
         </div>
 
-        <ViewTransition name={transitionName} share="morph">
+        <ViewTransition name={transitionName} share={POST_TITLE_SHARE}>
           <h3 className={`post-row-title ${listStyles.post_row_title}`}>
             <EmphasizedTitle title={rawTitle} />
           </h3>
