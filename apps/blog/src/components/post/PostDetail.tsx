@@ -327,10 +327,7 @@ async function PostBody({year, slug, locale}: PostParams & {locale: Locale}) {
             className={`post-meta-row ${readingProgressStyles.post_meta_row}`}
           >
             <div className={`post-author ${readingProgressStyles.post_author}`}>
-              <ProfileImage
-                size={36}
-                transitionName={`${transitionName}-avatar`}
-              />
+              <ProfileImage size={36} />
               <div>
                 <div className={`nm ${readingProgressStyles.nm}`}>
                   {SiteConfig.author.name}

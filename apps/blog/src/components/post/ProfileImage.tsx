@@ -1,6 +1,5 @@
 import * as stylex from '@stylexjs/stylex'
 import Image from 'next/image'
-import {ViewTransition} from 'react'
 
 import profile from '@/public/profile.jpeg'
 const sx = stylex.create({
@@ -41,14 +40,8 @@ const sizeClasses: Record<ProfileImageSize, string> = {
   40: stylex.props(sx.size40).className ?? '',
   192: stylex.props(sx.size192).className ?? '',
 }
-export default function ProfileImage({
-  size = 40,
-  transitionName,
-}: {
-  size?: ProfileImageSize
-  transitionName?: string
-}) {
-  const image = (
+export default function ProfileImage({size = 40}: {size?: ProfileImageSize}) {
+  return (
     <Image
       src={profile}
       alt="avatar"
@@ -59,8 +52,4 @@ export default function ProfileImage({
       }
     />
   )
-  if (transitionName) {
-    return <ViewTransition name={transitionName}>{image}</ViewTransition>
-  }
-  return image
 }
