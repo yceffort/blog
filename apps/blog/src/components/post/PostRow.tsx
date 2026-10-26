@@ -5,6 +5,7 @@ import Link from 'next/link'
 import {ViewTransition} from 'react'
 
 import {EmphasizedTitle} from '@/components/post/EmphasizedTitle'
+import LinkPendingHint from '@/components/post/LinkPendingHint'
 import * as listStyles from '@/components/post/list.styles'
 import PostDate from '@/components/post/PostDate'
 import type {Post} from '@/type'
@@ -48,7 +49,9 @@ export default function PostRow({
         aria-label={plainTitle}
         className={`post-row-link ${listStyles.post_row_link}`}
         prefetch={false}
-      />
+      >
+        <LinkPendingHint />
+      </Link>
       {!published && <span className={listStyles.draft_badge}>Draft</span>}
       {thumbnail ? (
         <ViewTransition name={`${transitionName}-thumbnail`}>

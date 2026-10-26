@@ -62,6 +62,7 @@ const styles = stylex.create({
   },
   archive_item: {
     '@layer site': {
+      position: 'relative',
       display: 'flex',
       alignItems: 'baseline',
       padding: '7px 8px',
