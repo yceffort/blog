@@ -313,125 +313,17 @@ const styles = stylex.create({
       },
     },
   },
-  nav_link_label_active: {
-    content: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': "''",
-      },
-    },
-    display: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': 'inline-block',
-      },
-    },
-    width: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': '4px',
-      },
-    },
-    height: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': '4px',
-      },
-    },
-    marginRight: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': '8px',
-      },
-    },
-    borderRadius: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': '50%',
-      },
-    },
-    boxShadow: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': '0 0 10px var(--primary-3)',
-      },
-    },
-    backgroundColor: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': 'var(--primary-3)',
-      },
-    },
-    backgroundImage: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': 'none',
-      },
-    },
-    backgroundPosition: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': 'initial',
-      },
-    },
-    backgroundSize: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': 'auto',
-      },
-    },
-    backgroundRepeat: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': 'repeat',
-      },
-    },
-    backgroundOrigin: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': 'padding-box',
-      },
-    },
-    backgroundClip: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': 'border-box',
-      },
-    },
-    backgroundAttachment: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': 'scroll',
-      },
-    },
-    verticalAlign: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': 'middle',
-      },
-    },
-    transform: {
-      default: null,
-      '::before': {
-        default: null,
-        '@layer site': 'translateY(-1px)',
-      },
+  nav_active_dot: {
+    '@layer site': {
+      display: 'inline-block',
+      width: '4px',
+      height: '4px',
+      marginRight: '8px',
+      borderRadius: '50%',
+      boxShadow: '0 0 10px var(--primary-3)',
+      backgroundColor: 'var(--primary-3)',
+      verticalAlign: 'middle',
+      transform: 'translateY(-1px)',
     },
   },
   nav_link_ext: {
@@ -587,8 +479,6 @@ export const header_icons = stylex.props(styles.header_icons).className!
 export const header_sep = stylex.props(styles.header_sep).className!
 export const nav_pills = stylex.props(styles.nav_pills).className!
 export const nav_link = stylex.props(styles.nav_link).className!
-export const nav_link_label_active = stylex.props(
-  styles.nav_link_label_active,
-).className!
+export const nav_active_dot = stylex.props(styles.nav_active_dot).className!
 export const nav_link_ext = stylex.props(styles.nav_link_ext).className!
 export const icon_btn = stylex.props(styles.icon_btn).className!

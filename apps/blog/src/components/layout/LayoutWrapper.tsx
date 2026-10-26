@@ -8,6 +8,7 @@ import {
   useEffect,
   useRef,
   useState,
+  ViewTransition,
   type ReactNode,
   type RefObject,
 } from 'react'
@@ -149,9 +150,6 @@ function HeaderNav() {
           'data-active': active ? 'true' : 'false',
           'data-external': external ? 'true' : 'false',
         } as const
-        const labelClassName = active
-          ? `nav-link-label ${headerStyles.nav_link_label_active}`
-          : 'nav-link-label'
         if (external) {
           return (
             <a
@@ -162,7 +160,7 @@ function HeaderNav() {
               {...common}
               className={common.className}
             >
-              <span className={labelClassName}>{link.label}</span>
+              <span className="nav-link-label">{link.label}</span>
               <svg
                 className={`nav-link-ext ${headerStyles.nav_link_ext}`}
                 width="11"
@@ -188,7 +186,15 @@ function HeaderNav() {
             {...common}
             className={common.className}
           >
-            <span className={labelClassName}>{link.label}</span>
+            <span className="nav-link-label">
+              {/* 이름이 하나뿐이라 활성 메뉴가 바뀌면 점이 옆 메뉴로 옮겨 간다 */}
+              {active && (
+                <ViewTransition name="nav-active-dot">
+                  <span className={headerStyles.nav_active_dot} />
+                </ViewTransition>
+              )}
+              {link.label}
+            </span>
           </Link>
         )
       })}
