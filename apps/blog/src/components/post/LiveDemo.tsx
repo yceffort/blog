@@ -37,13 +37,23 @@ interface LiveDemoProps {
   src: string
   title: string
   height?: number
+  /** 지정하면 height 대신 폭에 비례한 높이를 쓴다 (예: '960 / 740') */
+  aspectRatio?: string
+  /** aspectRatio를 쓸 때 좁은 화면에서 지킬 최소 높이 */
+  minHeight?: number
 }
 
 /**
  * 본문 안에서 바로 돌아가는 HTML 데모. public/demos/ 아래의 자급자족 HTML을
  * sandbox iframe으로 렌더링한다.
  */
-export default function LiveDemo({src, title, height = 480}: LiveDemoProps) {
+export default function LiveDemo({
+  src,
+  title,
+  height = 480,
+  aspectRatio,
+  minHeight,
+}: LiveDemoProps) {
   return (
     <figure className={stylex.props(sx.figure).className}>
       <iframe
@@ -55,9 +65,7 @@ export default function LiveDemo({src, title, height = 480}: LiveDemoProps) {
         // 아래 자급자족 파일이라 격리를 풀어도 사이트 스크립트와 같은 신뢰 범위다
         // oxlint-disable-next-line react/iframe-missing-sandbox
         sandbox="allow-scripts allow-same-origin"
-        style={{
-          height,
-        }}
+        style={aspectRatio ? {aspectRatio, minHeight} : {height}}
         className={stylex.props(sx.iframe).className}
       />
       <figcaption className={stylex.props(sx.figcaption).className}>
