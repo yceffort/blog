@@ -6,7 +6,7 @@ tags:
   - essay
 published: true
 date: 2026-10-26 17:59:00
-updated: 2026-10-26 18:28:51
+updated: 2026-10-26 20:07:02
 description: "I think order matters more than technique in performance work. This post lays out the practical flow: settle the support range and dependencies first, measure before picking a technique, decide what to fix first, choose a response when the cause lives in someone else's code or infrastructure, prove nothing broke and keep it guarded, and report numbers by grade."
 art:
   undraw: route-planning
@@ -18,11 +18,7 @@ art:
 
 Over the past two months of improving one service's performance, the time spent applying techniques was shorter than I expected. Deleting unused code, loading heavy modules later and merging duplicate dependencies took less time than the work before and after them. Most of the time went into finding what was heavy, deciding what to do when the cause was not in my code, and confirming the effect with numbers.
 
-Initial-entry JavaScript transfer dropped 40.1% in production. Whether users actually feel faster because of this bundle work, however, I have not yet confirmed with production metrics. The existing instrumentation could not tell the change apart, so I am rebuilding the collection path. The speed effects of the first bundle improvement are explained with values measured in a sandbox or locally.
-
-The second improvement that followed was the October release, which shipped a framework upgrade and bundler switch, CSS reduction, a fix for layout shift when the banner appears, and a number animation improvement together. This time even the existing dashboard showed CLS p75 dropping by nearly half, and FCP and LCP starting to go down. After the number animation change, main-thread occupancy measured locally dropped from 85.8% to 49.6%. I only looked at the production metrics right after the deployment, so I have not yet confirmed how much of this change holds over time.
-
-Inside the company I heard quite a few comments that the service had become faster, but I kept those separate from what production metrics confirmed. The experience of reassembling a third-party SDK also led to a talk at FEConf 2026.
+In the first round, I cut initial-entry JavaScript transfer by 40.1% as measured at the production CDN, and main-thread work in the 5 seconds after opening the page dropped 30% in the sandbox. Right after the second round, which shipped a framework upgrade and bundler switch, CSS reduction, a fix for layout shift when the banner appears, and a number animation improvement together, the production dashboard showed CLS p75 dropping from around 0.30 to around 0.15 (Android). For the number animation, main-thread occupancy measured locally dropped from 85.8% to 49.6%. Whether the bundle reduction translated into speed users can feel, however, I have not yet confirmed with production metrics. The reason is explained in the measurement stage.
 
 Based on that experience, this post lays out the order in which performance work proceeds and the decisions made at each step. If the book _Frontend Performance Optimization Deep Dive_ covered the techniques one by one, this post is about when, and on what grounds, to choose them. The details are covered in the posts linked from each section.
 
@@ -34,9 +30,9 @@ Set the support range, clean up dependencies and server code leaking into the cl
 
 In this order, what you confirmed earlier feeds the next decision. You need the support range to judge what can be deleted, and you need measurements to decide what to fix first. You also need to know where the cause lives to choose between fixing it yourself and asking another team or the vendor.
 
-> The example is a single Next.js service opened in an app webview, improved from late August to October 2026. The decisions come from the conditions of an app webview, server rendering and a monorepo, so parts may not fit a static site or a client-rendered-only app as is. The scope is mostly loading performance, and interaction performance (INP) is covered only in part. Production numbers are bytes served by the CDN and RUM aggregates. Sandbox numbers are medians of Chrome traces recorded on a cold first visit with iPhone 16 Pro Max emulation and 4x CPU throttling. Values aggregated differently are marked in the text. Some vendor and package names are pseudonyms.
+> The example is a single Next.js service opened in an app webview, improved from late August to October 2026. The decisions come from the conditions of an app webview, server rendering and a monorepo, so parts may not fit a static site or a client-rendered-only app as is. The scope is mostly loading performance, and interaction performance (INP) is covered only in part. Production numbers are bytes served by the CDN and RUM aggregates from the existing collection path. Sizes I converted from bytes myself use 1KiB = 1,024 bytes. Sandbox numbers are medians of Chrome traces recorded on a cold first visit with iPhone 16 Pro Max emulation and 4x CPU throttling. Values aggregated differently are marked in the text. Some vendor and package names are pseudonyms.
 
-## What to Settle Before Looking at Performance
+## Preparation: What to Settle Before Looking at Performance
 
 Before opening the Performance tab, look at the supported browsers and the installed dependencies. To judge what can be removed you need the support range, and to find what to remove you need to know which packages are installed. Server-only code leaking into the client is checked along with the dependencies.
 
@@ -44,9 +40,7 @@ The support range is decided once at the start and used as the baseline for late
 
 With the support range settled, you can decide whether to delete a polyfill, whether to ship syntax as is, and whether to patch an external library to support old browsers. Cleaning up duplicate dependencies also explains why the same code shows up several times in the bundle. If you trace which package pins an old version, you can separate what you can fix yourself from what you have to ask the owning team for. Packages that are hard to ask about come back later when choosing other responses.
 
-The results of this cleanup are useful for other work too. The support range config is shared with the team's other services, and the cleaned-up dependencies save the next analysis from tracing duplicates all over again.
-
-## Set the Support Range
+### Set the Support Range
 
 Write the supported browsers down. Without a baseline, "Can we delete this polyfill?" and "Can we ship this syntax as is?" have to be debated every time. Packaging a [browserslist](https://github.com/browserslist/browserslist) config that the team shares also aligns the build targets with the same baseline. This config is in fact used by four other services now.
 
@@ -56,7 +50,7 @@ This baseline keeps being used after the build config is done. When removing pol
 
 I did not measure how much size the config alone saved. The support range is less a means of shrinking size than a baseline for later decisions, so I don't think its value needs to be proven in bytes.
 
-## Analyze and Clean Up Dependencies
+### Analyze and Clean Up Dependencies
 
 Look at dependencies in this order.
 
@@ -74,7 +68,7 @@ For peer dependencies, I think it works better to fix the version of the baselin
 
 Forcing versions with overrides is only a stopgap, removed once the offending package is fixed. In practice, only after upgrading the log adapter package to a new version could I remove the override that forced the SDK version. Still, not every duplicate collapsed into one. react-intersection-observer and the user-agent packages only went from three installed versions down to two.
 
-## Check Whether Server Code Is Going to the Client
+### Check Whether Server Code Is Going to the Client
 
 After looking at the installed dependencies, check whether server-only packages also end up in the client bundle. When server and client code share one repository, as in Next.js, a server logger or HTTP wrapper imported through a shared module easily ends up in the client bundle too.
 
@@ -113,7 +107,11 @@ In this case you need to look at both the config that excludes the package from 
 
 A workaround in bundler config has to be revisited when you switch bundlers. In fact, when switching to Turbopack, I removed the webpack alias workaround and added a server-only guard to the logger. Looking back, it would have been better to mark it as a server-only module with a guard from the start.
 
-## Look at the Production Dashboard Before the Lab
+## Observation: Find What Is Heavy
+
+Once the cleanup is done, find what is heavy and sort the causes by their nature and location.
+
+### Look at the Production Dashboard Before the Lab
 
 Before measuring in the lab, I looked at the production dashboard. You need to know what users currently experience to decide what to improve. But although the graphs looked fine, opening the panel queries showed the data was being displayed wrong.
 
@@ -131,19 +129,11 @@ While improving the service, I also started fixing the collection path. Instead 
 
 It is worth putting alerts on the state of the instrumentation too. If the order of quantiles flips, the series for an expected label combination drops to zero, or the sample count suddenly changes, you can first check whether something is wrong with the instrumentation.
 
-Fixing the collection path took longer than improving the service. It meant requesting changes to shared infrastructure, and finding workarounds when they were refused. That process is covered later in "When the Cause Is in Someone Else's Infrastructure." In the meantime, I measured the effect of the bundle improvement in a lab (sandbox) under fixed conditions. Even re-aggregating the raw time series of the existing dashboard with [sum_over_time](https://prometheus.io/docs/prometheus/latest/querying/functions/#aggregation_over_time) after deployment, the production FCP mean before and after the deployment that cut the bundle by 40% moved only 1.7%, from 594.0ms to 584.1ms.
-
-This result alone makes it hard to judge whether there was an effect in production. Even for the same build, FCP was 1,119ms in the lab and 594ms as the production mean. The lab fixes conditions where the benefit is likely to be large (cold first visit, slow device) and compares before and after, but in production such users are only part of the whole. Their gains may have been diluted in the mean, but whether that actually happened could not be confirmed with the existing instrumentation.
+Fixing the collection path took longer than improving the service. It meant requesting changes to shared infrastructure, and finding workarounds when they were refused. That process is covered later in "When the Cause Is in Someone Else's Infrastructure." In the meantime, I measured the effect of the bundle improvement in a lab (sandbox) under fixed conditions.
 
 I checked the new dashboard by the same standard. The collector dropped and restarted the cumulative value of any series not updated for more than 5 minutes, so counts computed with `increase()` came out lower than reality. So I judged only by ratios and quantiles, and labeled the count panels as undercounted.
 
-After the second improvement, the existing dashboard did show a change. On panels comparing against the same time 7 days earlier, CLS p75 dropped by about half right after deployment, from around 0.30 to around 0.15 (CLS is collected only on Android). FCP and LCP also started falling below the values from the same time 7 days earlier from the moment of deployment, while server response time (TTFB) stayed the same.
-
-However, this was observed over only about 10 minutes after deployment, and at that point the difference in FCP and LCP was around 1%. That is about the same size as the production FCP change from the first deployment, so I need to check again whether the difference holds over a longer observation period.
-
-The October release that shipped the second improvement included a framework upgrade, a bundler switch, and code reduction through an icon wrapper. It also included shrinking the initial-entry CSS with partial CSS imports (29% by gzip), compressing the banner fallback image (286KB to 58KB), and fixing layout shift when the banner appears. Since cleaning up duplicate BE API calls in server rendering, removing unnecessary re-renders of the holdings balance and the number animation improvement were all deployed at once, I did not split out how much each change contributed.
-
-## Measure Before Picking a Technique
+### Measure Before Picking a Technique
 
 Since the effect of the bundle improvement was hard to judge from production metrics, I measured it in the lab. First I fixed the device emulation, the CPU throttling factor and the cache state. For every trace I also checked that cache hits were zero and that network throttling was actually applied. If these conditions vary, before and after cannot be compared properly.
 
@@ -158,7 +148,11 @@ To connect the unexecuted code found by Coverage to source files, I built [coldp
 
 When organizing the observations, separate the nature of the cause from its location. First check whether it is a duplicate install or a server code leak, whether code needed only in certain environments is in every build, and whether code that is large but not always needed sits in the first chunk. Then check whether the cause is in your code, or in someone else's code or infrastructure. The same problem calls for different responses depending on what you can fix directly. Looking back, most of the time went into observing and classifying up to this point, and applying techniques took less time.
 
-## Decide What to Fix First
+## Response: It Depends on Where the Cause Lives
+
+Once you find the causes, decide what to fix first, and choose a response depending on whether the cause is in your code or in someone else's code or infrastructure.
+
+### Decide What to Fix First
 
 Organizing the observations turns up many things to fix at once. Treating them all with equal weight makes it easy to spend time first on things with a small effect. In this work I set the order by whether it affects the first screen, where the bottleneck is, and which cost it can reduce.
 
@@ -170,7 +164,7 @@ Break LCP into phases to find the bottleneck. Even when LCP is slow, it is hard 
 
 After the improvement, the wait dropped to 5.6 seconds. Since it is a mean of 5 runs, though, the size of the improvement should be taken only as a reference. It was a release that also included a framework upgrade and a bundler switch, so I did not split out the contribution of each change. Finding the bottleneck in the pre-improvement trace and separating the effect of each change after the improvement were separate tasks.
 
-Even at the same code size, the cost differed by how the code runs. In an experiment, function declarations that are never called cost about 21ms per MiB, barely increasing even with the CPU slowed 4x. Initialization code that runs as soon as the file is read, by contrast, added about 201ms of main-thread work per MiB ([I Grew Never-Executed JavaScript to 10MiB](/2026/09/unused-javascript-cost)). Based on this, I reduced the code executed on the first screen first, and pushed back work where only a transfer reduction was confirmed or where there was no evidence it reduced CPU cost.
+Even at the same code size, the cost differed by how the code runs. In an experiment, function declarations that are never called added about 21ms per MiB to script ready time, barely increasing even with the CPU slowed 4x. This appears to be because much of the pre-parsing that scans function bodies was handled off the main thread. Initialization code that runs as soon as the file is read, by contrast, added about 201ms per MiB to ready time under the same throttling ([I Grew Never-Executed JavaScript to 10MiB](/2026/09/unused-javascript-cost)). Based on this, I reduced the code executed on the first screen first, and pushed back work where only a transfer reduction was confirmed or where there was no evidence it reduced CPU cost.
 
 I also dropped approaches with a small effect partway through. When shrinking a third-party SDK, I checked two possibilities: whether code remained because the bundler could not prove it had no side effects, or because it was actually used. To check the first, I forcibly added [PURE annotations](https://esbuild.github.io/api/#pure) to the distributed build. A bundle importing just one constant shrank 74%, so it looked solvable with a few annotations, but the bundle that actually initializes the client shrank only 1%. Had I looked only at the minimal example, I would have ended the work by adding annotations.
 
@@ -178,7 +172,7 @@ I dropped the annotation approach there and switched to cutting the imports that
 
 There were also problems I found and did not fix. While reassembling the SDK I found several defects in the vendor code, but fixing them would change the meaning of the data before and after the swap, so I left them as they were and reported them to the vendor. I think stopping is also necessary once the effect is confirmed to be small in real use, or once the cost of keeping the improvement grows larger than its benefit.
 
-## The Nature of the Cause Decides the Technique
+### The Nature of the Cause Decides the Technique
 
 When the cause is in your own code, you can pick a technique to fit the nature of the problem. After cleaning up server code leaks and duplicate installs, I looked at the new problems found during observation by the same standard.
 
@@ -193,13 +187,11 @@ To remove code with DCE, the branch condition must be computable as a build-time
 
 Even if you pass a flag that turns a feature off at runtime, the code stays in the bundle if the import at the top of the shared module remains. In that case you have to move the import itself into another file to cut the link. As with the PURE annotation case earlier, the minimal example and real use need to be measured separately.
 
-For lazy loading, look at transfer reduction and CPU time reduction separately. Splitting code with [next/dynamic](https://nextjs.org/docs/app/guides/lazy-loading) reduces the initial transfer, but whether CPU time also drops depends on the shape of the code. Splitting swiper into a lazy load removed 94KB (about 30.6KB gzip) from the initial load. I found no evidence that CPU time dropped, so I described the effect only as a transfer reduction.
+For lazy loading, look at transfer reduction and CPU time reduction separately. Splitting code with [next/dynamic](https://nextjs.org/docs/app/guides/lazy-loading) reduces the initial transfer, but whether CPU time also drops depends on the shape of the code. Splitting swiper into a lazy load removed 94KiB (about 30.6KiB gzip) from the initial load. I found no evidence that CPU time dropped, so I described the effect only as a transfer reduction.
 
 Beyond the bundle, I also looked at the rendering process. When a scale animation runs on the main thread and opacity on the compositor thread, the two animations drift apart when frames slip. A tween that grows `height` from 0 to `auto` forces layout to be recomputed every frame. I solved this by moving both animations to the same CSS transition and replaying the push-down of the content below as a FLIP that uses only `transform`. Impression logging was also deferred until after the motion ended. The process of fixing it against the original motion is in [Killing Frame Drops in a framer-motion Banner](/2026/08/framer-motion-banner-frame-drop). Cutting re-renders on same-price ticks from 98 per 100 ticks to zero, and cleaning up duplicate BE API calls in server rendering (a 40.8% duplicate rate in production logs before the fix), were also found and handled at this stage.
 
-After the first deployment, initial-entry JavaScript transfer confirmed in production dropped 40.1%, from 839.9KB to 503.3KB. In the sandbox, main-thread work in the 5 seconds after opening the page dropped 30%, from 4,073ms to 2,850ms. The biggest drop was in rendering work, from 1,041ms to 226ms. With fewer elements to draw, the work that had bunched up for 0.5 seconds at the 2-second mark of loading was also broken into smaller tasks.
-
-## When the Cause Is in Someone Else's Code
+### When the Cause Is in Someone Else's Code
 
 Tracing a problem often leads into other teams' packages or external libraries. Fixing it at the source would be best, but this time I fixed things myself more often than I waited for upstream fixes.
 
@@ -226,17 +218,17 @@ The responses chosen in this work, and the costs left afterwards, are as follows
 
 The methods differ, but they share preserving the original and preparing a way back.
 
-### If an Internal Package Is Hard to Fix, Bring It In
+#### If an Internal Package Is Hard to Fix, Bring It In
 
 Sometimes a shared workspace package pins an old version, and changing it would affect every other service. Such a change can be hard to take on within one service's performance work. Copying only the needed code into the service and cutting the workspace dependency is an option to consider here. You accept the cost of maintaining the same code in two places, but keep it ready to be folded back into the shared package later. Workspace dependencies are convenient, but you also have to accept the dependency versions that package decides.
 
-For the design system managed by another team, I kept the original and built a local wrapper. The icons were exported as a map collected with `import *`, so they were not tree-shaken even with `sideEffects: false`. Only 13 icons were actually used, but 126 were in the bundle. I re-exported the 13 needed icons via named imports and tested that the rendered markup matched the original. Code importing the original directly was blocked with [no-restricted-imports](https://eslint.org/docs/latest/rules/no-restricted-imports). This change cut initial-entry JS by 133KB.
+For the design system managed by another team, I kept the original and built a local wrapper. The icons were exported as a map collected with `import *`, so they were not tree-shaken even with `sideEffects: false`. Only 13 icons were actually used, but 126 were in the bundle. I re-exported the 13 needed icons via named imports and tested that the rendered markup matched the original. Code importing the original directly was blocked with [no-restricted-imports](https://eslint.org/docs/latest/rules/no-restricted-imports). This change cut initial-entry JS by 133KiB.
 
 If you pull in an entire package for a single component, it is worth considering moving the needed implementation into the service. This is the case where keeping it as a package brings no benefit and only leaves the constraint of not being able to set dependency versions yourself.
 
 When bringing code in, attach tests that check it behaves the same as the original, block the original package from coming back with lint, and pin the imported version. Since you take over maintenance after copying, it needs to stay in a state where you can return to the original or fold it into the shared package.
 
-### Ask a Vendor SDK With Evidence, and Reassemble It If That Fails
+#### Ask a Vendor SDK With Evidence, and Reassemble It If That Fails
 
 For the vendor SDK, I first organized measured evidence and requested an improvement. I also verified the causes and alternatives the vendor suggested in its reply. The vendor of the experimentation platform SDK said the size came from a conservative minimum supported browser, and recommended its React SDK as an alternative. But the React SDK also re-exported the entire web SDK, and polyfills that depend on the browser target were only 13.3% of the whole. Neither explanation matched the measurements. The reply also said no improvement schedule had been set.
 
@@ -244,7 +236,7 @@ To cut the transfer cost while waiting, I reassembled the SDK myself. The source
 
 How to restore the original from source maps, the assembly structure that cuts imports, and the verification process are covered in detail in [Tearing Apart a Third-Party SDK and Rebuilding It My Way](/2026/08/rebuilding-a-vendor-sdk) and my FEConf 2026 talk [Reassembling a Third-Party SDK](https://research.yceffort.kr/slides/feconf-2026-vendor-sdk).
 
-### For Open Source, Check Upstream and Build an API-Preserving Fork
+#### For Open Source, Check Upstream and Build an API-Preserving Fork
 
 When open source doesn't support the environment you need, first check upstream issues. The number animation library [number-flow](https://github.com/barvian/number-flow) relied on recent CSS features, so on Chrome below 125 and Safari below 17.2 the animation silently turned off. The same request ([#131](https://github.com/barvian/number-flow/issues/131)) and report ([#164](https://github.com/barvian/number-flow/issues/164)) were open but unresolved, so I built a fork that keeps the API and visual result and replaces only the engine. Since the API is the same, the calling code doesn't need to change, and since I manage the fork, I could fix performance problems myself. Later, 0.2.0 moved the animation to the compositor thread and cut style recalculation time by 81-85%.
 
@@ -256,7 +248,7 @@ Because the API stays the same as the original, I can return to upstream if it s
 
 The porting process is in [Porting number-flow to Old Browsers](/2026/08/number-flow-fork-for-old-browsers), and the move to the compositor thread is in [Improving number-flow Performance](/2026/10/number-flow-compositor-performance).
 
-## When the Cause Is in Someone Else's Infrastructure
+### When the Cause Is in Someone Else's Infrastructure
 
 Observability infrastructure shared by many teams is hard to change directly the way service code is. I had to send reproducible requests and prepare alternatives for when requests were not accepted. In the meantime I also looked for ways to solve things in the service code.
 
@@ -268,11 +260,13 @@ When proposing alternatives, I think it is better to write down the roles you ne
 
 Some requests were not accepted. spanmetrics, which builds metrics from traces, could not be used because of the resource load, and the collector's tail sampling policy (wait 15 seconds, then drop traces with fewer than 2 spans) could not be changed. So the browser builds histogram metrics directly and sends them, and traces are used only for root-cause analysis in the verification environment. The root span is sent along with the first metric so that tail sampling does not drop it.
 
-This collection path works in the sandbox but has not reached production yet. All production RUM numbers in this post come from the existing path.
-
 Check platform limits in advance too. iOS webviews do not support [LayoutShift](https://developer.mozilla.org/en-US/docs/Web/API/LayoutShift), so CLS is not collected, and LCP and INP arrive only on iOS 26.2 and later. When web-vitals reports values, how to send them when leaving the page, and where they get lost in shared infrastructure are covered in turn in [When Does web-vitals Report Core Web Vitals](/2026/10/web-vitals-report-timing), [Sending Core Web Vitals at the Moment of Leaving the Page](/2026/10/cwv-send-on-page-leave) and [Sending the Core Web Vitals of an App Webview to a Shared Observability Platform](/2026/10/cwv-to-tempo-and-mimir).
 
-## Prove You Didn't Break It Before Proving You Shrank It
+## Verification: Prove Nothing Broke and Keep It That Way
+
+After changing code, confirm that the behavior stayed the same, and keep the same problem from coming back.
+
+### Prove You Didn't Break It Before Proving You Shrank It
 
 How much size dropped was relatively easy to measure. What took longer was confirming that behavior did not change. I widened the scope of checks from the build output to comparison with the original and then to the actual execution path.
 
@@ -285,7 +279,7 @@ Even changes not meant to reduce size, like switching bundlers, can change runti
 
 Verification results also record what was checked and how. I separated comparisons run side by side with the original (compared), values asserted by our own tests (self-asserted), and parts that could not be run (unverified). If everything just says "confirmed," the difference in evidence is hard to see.
 
-## Leave Guards That Keep the Improvement
+### Leave Guards That Keep the Improvement
 
 Even after cutting bundle size and execution time, the next PR can grow them again. For changes that passed verification, I also added checks so the same problem doesn't come back. Collecting the guards described so far:
 
@@ -301,9 +295,35 @@ Even after cutting bundle size and execution time, the next PR can grow them aga
 
 The tests guarding original behavior include a check that keeps the vendor's defects as they are. If someone fixes a defect left in during the SDK reassembly, the meaning of the data before and after the swap changes. So I checked that the original-comparison test fails when code with the defect fixed is deliberately injected. What this check guards is behavior identical to the original.
 
-I track changes in overall bundle size by applying [coldpath](https://github.com/yceffort/coldpath) to the service. Analyzing the baseline build and the new build the same way shows, per source file and package, where size grew and which modules came in. It can also post the comparison as a comment on every PR through a GitHub Action, and fail CI when a byte budget is exceeded. With this, the reason for any growth can be checked in review.
+I track changes in overall bundle size by applying [coldpath](https://github.com/yceffort/coldpath) to the service. Analyzing the baseline build and the new build the same way shows, per source file and package, where size grew and which modules came in. It also posts the comparison as a comment on every PR through a GitHub Action, and fails CI when a byte budget is exceeded. So the reason for any growth can be checked in review.
 
-## Grade the Numbers When You Report Them
+## Measurement: Confirm the Results and Report Them
+
+Finally, confirm the results and report them so the difference in evidence stays visible.
+
+### Results From the Two Deployments
+
+The main results, together with where they were measured, are as follows.
+
+| Deploy | Metric                                                   | Change                       | Measured in                                               |
+| ------ | -------------------------------------------------------- | ---------------------------- | --------------------------------------------------------- |
+| 1st    | Initial-entry JavaScript transfer                        | 839.9KiB → 503.3KiB (-40.1%) | Production, CDN bytes                                     |
+| 1st    | Main-thread work in the 5 seconds after opening the page | 4,073ms → 2,850ms (-30%)     | Sandbox                                                   |
+| 1st    | FCP mean                                                 | 594.0ms → 584.1ms (-1.7%)    | Production, existing RUM                                  |
+| 2nd    | CLS p75                                                  | around 0.30 → around 0.15    | Production, existing RUM, Android, right after deployment |
+| 2nd    | Main-thread occupancy during number animation            | 85.8% → 49.6%                | Local, 4x CPU throttling                                  |
+
+The biggest drop in the first deployment was in rendering work in the sandbox, from 1,041ms to 226ms. With fewer elements to draw, the work that had bunched up for 0.5 seconds at the 2-second mark of loading was also broken into smaller tasks.
+
+The October release that shipped the second improvement included a framework upgrade, a bundler switch, and code reduction through an icon wrapper. It also included shrinking the initial-entry CSS with partial CSS imports (29% by gzip), compressing the banner fallback image (286KiB to 58KiB), and fixing layout shift when the banner appears. Since cleaning up duplicate BE API calls in server rendering, removing unnecessary re-renders of the holdings balance and the number animation improvement were all deployed at once, I did not split out how much each change contributed.
+
+Right after this release, the existing dashboard did show a change. On panels comparing against the same time 7 days earlier, CLS p75 dropped by about half (CLS is collected only on Android). FCP and LCP also started falling around 1% below the values from the same time 7 days earlier from the moment of deployment, while server response time (TTFB) stayed the same.
+
+The effect of the bundle reduction is hard to judge from production metrics. Even re-aggregating the raw time series of the existing dashboard with [sum_over_time](https://prometheus.io/docs/prometheus/latest/querying/functions/#aggregation_over_time) after the first deployment, the production FCP mean moved only 1.7%. For the same build, FCP was 1,119ms in the lab and 594ms as the production mean. The lab fixes conditions where the benefit is likely to be large (cold first visit, slow device) and compares before and after, but in production such users are only part of the whole. Their gains may have been diluted in the mean, but whether that actually happened could not be confirmed with the existing instrumentation.
+
+The second deployment's changes were also observed over only about 10 minutes after deployment, and the FCP and LCP differences are about the same size as the production FCP change from the first deployment. The new collection path that can segment users works in the sandbox but has not reached production yet.
+
+### Grade the Numbers When You Report Them
 
 Measuring the same change gave very different numbers depending on tools and conditions. When reporting, I separated values confirmed directly, values that vary with conditions, and values converted under assumptions.
 
@@ -324,7 +344,7 @@ When comparing and explaining numbers, I also checked the following.
 
 Why measurements under different conditions must not be mixed is also covered in [Remeasuring the First Screen After Fixing the Blog](/2026/09/blog-performance-after-migrations).
 
-## Turn the Report Into Scenes Users Experience
+### Turn the Report Into Scenes Users Experience
 
 Showing only FCP and TBT numbers to planners or executives makes it hard to convey what got better. A report needs to spell out how the change connects to the user's experience.
 
@@ -340,7 +360,7 @@ Condensing a real report according to these principles looks like this.
 >
 > **Confirmed changes** (measured at the production CDN)
 >
-> - JavaScript downloaded: down 40.1%, from 839.9KB to 503.3KB
+> - JavaScript downloaded: down 40.1%, from 839.9KiB to 503.3KiB
 > - HTML document size: down about 10%
 >
 > **Changes users experience** (pre-deployment test environment measurements and conversions)
@@ -358,7 +378,7 @@ The report also included a chart showing how the same transfer reduction turns i
 
 <BarCompare title="Time to finish downloading the initial JavaScript (transfer divided by bandwidth, a converted value)" unit="ms" before="Before" after="After" rows="Slow 4G (1.44Mbps)|4778|2863;Fast 4G (8.1Mbps)|849|509" />
 
-Converted to time, the same 336.6KB reduction makes a 1.9-second difference on a slow network and 0.3 seconds on a fast one. The bandwidth used in the calculation is the effective value of the Chrome DevTools network presets. To keep it from being mistaken for a measured download time, the chart title also says it is a converted value.
+Converted to time, the same 336.6KiB reduction makes a 1.9-second difference on a slow network and 0.3 seconds on a fast one. The bandwidth used in the calculation is the effective value of the Chrome DevTools network presets. To keep it from being mistaken for a measured download time, the chart title also says it is a converted value.
 
 Reporting this way separates changes confirmed in production, test environment measurements, and values converted under assumptions. The users expected to see little effect and the parts that still need production confirmation stay on record too. Why the existing dashboard was hard to judge by is explained earlier in "Look at the Production Dashboard Before the Lab."
 
@@ -368,4 +388,6 @@ While cutting initial-entry JavaScript by 40%, the time spent applying technique
 
 When fixing code managed by others, I came to think especially about maintenance cost. I looked at who owns it, how far a change reaches, what waiting costs, and whether it can be rolled back. From the moment you copy or reassemble, you have to maintain it yourself, so I think the important call is whether you can bear that cost too.
 
-What remains is confirming with production metrics whether the effect of shrinking the bundle actually reached users. Once the new instrumentation is in production, the next round of work can check whether effects confirmed in the lab also show up in production.
+The work also left results outside the service. The browserslist config that set the support range is now used by four other services as well. The criteria for choosing peer versions became training material for people who build internal packages. coldpath posts a comparison against the baseline build on every PR and fails CI when a byte budget is exceeded.
+
+The next step is getting the new collection path into production. Once p75 can be split by navigation type and device tier, I can check which production users see the effects confirmed in the lab.

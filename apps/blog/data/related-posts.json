@@ -1348,16 +1348,16 @@
         "score": 0.83
       },
       {
+        "slug": "2026/10/performance-improvement-workflow",
+        "score": 0.82
+      },
+      {
         "slug": "2020/12/partitioning-cache",
         "score": 0.8
       },
       {
         "slug": "2020/07/make-use-of-long-term-caching",
         "score": 0.76
-      },
-      {
-        "slug": "2026/10/web-vitals-report-timing",
-        "score": 0.75
       }
     ],
     "2026/07/frontend-past-present-after-agents": [
@@ -6156,10 +6156,6 @@
     ],
     "2021/05/compress-all-images-in-directory": [
       {
-        "slug": "2022/06/optimize-LCP",
-        "score": 0.33
-      },
-      {
         "slug": "2021/08/core-web-vital",
         "score": 0.28
       },
@@ -6186,6 +6182,10 @@
       {
         "slug": "2022/06/preload-scanner",
         "score": 0.21
+      },
+      {
+        "slug": "2026/09/tracing-third-party-javascript-without-sourcemaps",
+        "score": 0.2
       }
     ],
     "2021/05/bad-habits-of-typescript": [
@@ -7128,15 +7128,15 @@
         "score": 0.33
       },
       {
+        "slug": "2026/10/performance-improvement-workflow",
+        "score": 0.33
+      },
+      {
         "slug": "2020/01/learning-from-react-count-down",
         "score": 0.32
       },
       {
         "slug": "2026/10/cwv-send-on-page-leave",
-        "score": 0.32
-      },
-      {
-        "slug": "2026/10/number-flow-compositor-performance",
         "score": 0.32
       }
     ],
@@ -11354,8 +11354,8 @@
         "score": 0.1
       },
       {
-        "slug": "2026/03/why-still-nextjs",
-        "score": 0.1
+        "slug": "2026/08/nodejs-k8s-pod-sizing",
+        "score": 0.09
       }
     ],
     "2026/02/nodejs-deep-dive-beta-reader": [
