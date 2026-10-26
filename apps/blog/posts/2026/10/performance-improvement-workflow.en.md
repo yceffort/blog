@@ -6,7 +6,7 @@ tags:
   - essay
 published: true
 date: 2026-10-26 17:59:00
-updated: 2026-10-26 18:21:01
+updated: 2026-10-26 18:21:02
 description: "I think order matters more than technique in performance work. This post lays out the practical flow: settle the support range and dependencies first, measure before picking a technique, decide what to fix first, choose a response when the cause lives in someone else's code or infrastructure, prove nothing broke and keep it guarded, and report numbers by grade."
 art:
   undraw: route-planning
@@ -162,7 +162,7 @@ When organizing the observations, separate the nature of the cause from its loca
 
 Organizing the observations turns up many things to fix at once. Treating them all with equal weight makes it easy to spend time first on things with a small effect. In this work I set the order by whether it affects the first screen, where the bottleneck is, and which cost it can reduce.
 
-First, I narrowed the scope to the first screen. The first wait users experience is the time until the screen appears and becomes usable. The first batch of work was even named ATF (above the fold) optimization. The targets were the entrance animation of the top banner, the JavaScript shipped on first load, and the rendering work bunched up at the 2-second mark of loading.
+First, I narrowed the scope to the first screen. The first wait users experience is the time until the screen appears and becomes usable. So the first batch of work fixed what sits above the fold. The targets were the entrance animation of the top banner, the JavaScript shipped on first load, and the rendering work bunched up at the 2-second mark of loading.
 
 Break LCP into phases to find the bottleneck. Even when LCP is slow, it is hard to conclude right away that the image download is the cause. The web-vitals [attribution build](https://github.com/GoogleChrome/web-vitals/tree/v6.2.1#attribution-build) splits LCP into TTFB, the delay until the resource request starts, the time to download the resource, and the render delay from download to paint. In the pre-improvement trace on a slow network, the download of the LCP element, the banner image, finished at 2.0 seconds. Then it took another 7.5 seconds to reach LCP while waiting for the screen code (hydration). In this case JavaScript was the bottleneck, so reducing JavaScript came before optimizing the image.
 
