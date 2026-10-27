@@ -14,6 +14,10 @@ export const SiteConfig = {
       label: '📚 Blog',
       path: isDev ? 'http://localhost:3000' : 'https://yceffort.kr',
     },
+    {
+      label: '📰 News',
+      path: isDev ? 'http://localhost:3003' : 'https://news.yceffort.kr',
+    },
   ],
   author: {
     name: 'yceffort',

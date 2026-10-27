@@ -35,6 +35,10 @@ export const SiteConfig = {
       label: '🧪 Research',
       path: isDev ? 'http://localhost:3001' : 'https://research.yceffort.kr',
     },
+    {
+      label: '📰 News',
+      path: isDev ? 'http://localhost:3003' : 'https://news.yceffort.kr',
+    },
   ],
   author: {
     name: 'yceffort',
