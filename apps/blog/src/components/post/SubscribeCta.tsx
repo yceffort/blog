@@ -1,9 +1,8 @@
 'use client'
 
+import {usePushSubscription} from '@yceffort/shared/hooks'
 import type {ReactNode} from 'react'
 import {useSyncExternalStore} from 'react'
-
-import {usePushSubscription} from '@/hooks/usePushSubscription'
 
 // iOS는 홈 화면에 추가한 앱에서만 PushManager가 있어서, 브라우저 탭에서는 추가하는 방법을 안내한다.
 // iPadOS는 데스크톱 UA를 쓰므로 터치 지원 여부로 구분한다.

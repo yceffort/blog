@@ -1,12 +1,12 @@
 'use client'
 
 import {Monitor, Moon, Sun} from '@yceffort/shared/components'
+import {usePushSubscription} from '@yceffort/shared/hooks'
 import {getCookie, setCookie} from '@yceffort/shared/utils'
 import {useTheme} from 'next-themes'
 import {useEffect, useRef, useState} from 'react'
 
 import * as tweaksStyles from '@/components/settings/tweaks.styles'
-import {usePushSubscription} from '@/hooks/usePushSubscription'
 
 const ACCENTS: {
   name: string

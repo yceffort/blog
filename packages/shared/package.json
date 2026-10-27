@@ -9,6 +9,8 @@
     ".": "./src/index.ts",
     "./components": "./src/components/index.ts",
     "./utils": "./src/utils/index.ts",
+    "./hooks": "./src/hooks/usePushSubscription.ts",
+    "./server": "./src/server/index.ts",
     "./scripts/*": "./scripts/*.mjs"
   },
   "scripts": {},

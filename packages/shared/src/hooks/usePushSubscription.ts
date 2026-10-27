@@ -3,9 +3,9 @@
 import {useEffect, useState} from 'react'
 
 export type PushState = 'unsupported' | 'off' | 'on' | 'busy'
-export type PushSource = 'tweaks' | 'post_end'
+export type PushSource = 'tweaks' | 'post_end' | 'news_floating'
 
-// Tweaks 패널과 글 끝 안내가 각자 상태를 들고 있으므로, 한쪽에서 바꾸면 다른 쪽이 다시 읽게 한다.
+// 한 페이지의 구독 버튼들(blog의 Tweaks 패널과 글 끝 안내)이 각자 상태를 들고 있으므로, 한쪽에서 바꾸면 다른 쪽이 다시 읽게 한다.
 const CHANGE_EVENT = 'push-subscription-change'
 
 function urlBase64ToUint8Array(base64: string) {
