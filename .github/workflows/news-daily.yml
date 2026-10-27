@@ -60,6 +60,9 @@ jobs:
           FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
         run: pnpm --filter news-bot collect ${AS_OF:+--as-of "$AS_OF"}
 
+      # 같은 날을 다시 만들 때 큐레이터가 기존 호를 보고 그대로 두지 않게 치운다.
+      - run: rm -f "apps/news/content/daily/${{ steps.date.outputs.date }}.md"
+
       - name: 일간 호 작성
         uses: anthropics/claude-code-action@v1
         with:
