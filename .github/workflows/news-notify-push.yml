@@ -1,0 +1,70 @@
+name: news-notify-push
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/news/content/daily/*.md'
+      - 'apps/news/content/weekly/*.md'
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 같은 날을 다시 큐레이션하면 기존 파일이 바뀌는 것(M)이라 여기서 걸러진다.
+      - name: 새로 추가된 호 찾기
+        id: added
+        run: |
+          base="${{ github.event.before }}"
+          if [ "$base" = "0000000000000000000000000000000000000000" ]; then
+            base="HEAD^"
+          fi
+          files=$(git diff --name-only --diff-filter=A "$base" HEAD -- 'apps/news/content/daily/*.md' 'apps/news/content/weekly/*.md')
+          echo "files<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$files" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      # news 프로젝트는 GitHub deployment를 남기지 않는다. 대신 없는 호가 404라서
+      # 새 호 URL이 200을 돌려주면 그 호가 들어간 배포가 나간 것이다.
+      - name: news 배포 기다리기
+        if: steps.added.outputs.files != ''
+        env:
+          FILES: ${{ steps.added.outputs.files }}
+        run: |
+          for file in $FILES; do
+            path=$(echo "$file" | sed -E 's#^apps/news/content/(daily|weekly)/(.+)\.md$#/\1/\2#')
+            for _ in $(seq 1 60); do
+              if curl -sf -o /dev/null "https://news.yceffort.kr$path"; then
+                echo "$path 배포 확인"
+                continue 2
+              fi
+              sleep 20
+            done
+            echo "$path 배포를 기다리다 시간 초과"
+            exit 1
+          done
+
+      - uses: actions/setup-node@v4
+        if: steps.added.outputs.files != ''
+        with:
+          node-version: 24
+
+      - name: 푸시 알림 보내기
+        if: steps.added.outputs.files != ''
+        env:
+          KV_REST_API_URL: ${{ secrets.KV_REST_API_URL }}
+          KV_REST_API_TOKEN: ${{ secrets.KV_REST_API_TOKEN }}
+          VAPID_PUBLIC_KEY: ${{ secrets.VAPID_PUBLIC_KEY }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          FILES: ${{ steps.added.outputs.files }}
+        run: |
+          npm install --no-save --prefix apps/news/scripts web-push
+          echo "$FILES" | xargs node apps/news/scripts/notify-push.mjs
