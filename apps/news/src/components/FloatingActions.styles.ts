@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex'
 
-// 블로그 글 페이지의 플로팅 목차(apps/blog/src/components/post)를 옮겨 왔다.
+// 공통 플로팅 목차(packages/shared FloatingToc)에 넘기는 news 스타일.
 const sx = stylex.create({
   root: {
     '@layer site': {
@@ -44,21 +44,46 @@ const sx = stylex.create({
       },
     },
   },
-  panelTitle: {
+  header: {
     '@layer site': {
       position: 'sticky',
       top: '0',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
       padding: '12px 16px',
       borderBottomWidth: '1px',
       borderBottomStyle: 'solid',
       borderBottomColor: 'var(--border)',
       backgroundColor: 'var(--surface)',
+    },
+  },
+  title: {
+    '@layer site': {
+      margin: '0',
       fontFamily: 'var(--font-mono), monospace',
       fontSize: '11px',
       fontWeight: '600',
+      lineHeight: '1.4',
       letterSpacing: '0.1em',
       textTransform: 'uppercase',
       color: 'var(--ink-3)',
+    },
+  },
+  close: {
+    '@layer site': {
+      display: 'grid',
+      width: '24px',
+      height: '24px',
+      borderWidth: '0',
+      borderRadius: '6px',
+      backgroundColor: 'transparent',
+      color: {
+        default: 'var(--ink-3)',
+        ':hover': 'var(--ink)',
+      },
+      cursor: 'pointer',
+      placeItems: 'center',
     },
   },
   list: {
@@ -102,7 +127,6 @@ const sx = stylex.create({
       fontSize: '11px',
       letterSpacing: '0.08em',
       color: 'var(--ink-4)',
-      cursor: 'default',
     },
   },
   button: {
@@ -129,11 +153,12 @@ const sx = stylex.create({
       placeItems: 'center',
     },
   },
-  hidden: {
+  // 공통 컴포넌트가 맨 위로 버튼의 표시 여부를 data-show로 알린다
+  scrollTopHidden: {
     '@layer site': {
-      pointerEvents: 'none',
-      transform: 'translateY(8px)',
-      opacity: '0',
+      pointerEvents: {default: null, ':is([data-show="false"])': 'none'},
+      transform: {default: null, ':is([data-show="false"])': 'translateY(8px)'},
+      opacity: {default: null, ':is([data-show="false"])': '0'},
     },
   },
   dial: {
@@ -223,17 +248,24 @@ const sx = stylex.create({
   },
 })
 
-export const root = stylex.props(sx.root).className ?? ''
-export const panel = stylex.props(sx.panel).className ?? ''
-export const panelTitle = stylex.props(sx.panelTitle).className ?? ''
-export const list = stylex.props(sx.list).className ?? ''
-export const item = stylex.props(sx.item).className ?? ''
-export const section = stylex.props(sx.item, sx.section).className ?? ''
 export const button = stylex.props(sx.button).className ?? ''
-export const buttonHidden = stylex.props(sx.button, sx.hidden).className ?? ''
-export const dial = stylex.props(sx.dial).className ?? ''
-export const dialSvg = stylex.props(sx.dialSvg).className ?? ''
-export const dialTrack = stylex.props(sx.dialTrack).className ?? ''
-export const dialFill = stylex.props(sx.dialFill).className ?? ''
-export const dialNum = stylex.props(sx.dialNum).className ?? ''
-export const toast = stylex.props(sx.toast).className ?? ''
+
+export const floatingTocClassNames = {
+  root: stylex.props(sx.root).className ?? '',
+  panel: stylex.props(sx.panel).className ?? '',
+  header: stylex.props(sx.header).className ?? '',
+  title: stylex.props(sx.title).className ?? '',
+  close: stylex.props(sx.close).className ?? '',
+  list: '',
+  ul: stylex.props(sx.list).className ?? '',
+  link: stylex.props(sx.item).className ?? '',
+  linkByLevel: {2: stylex.props(sx.item, sx.section).className ?? ''},
+  scrollTop: stylex.props(sx.button, sx.scrollTopHidden).className ?? '',
+  dial: stylex.props(sx.dial).className ?? '',
+  dialSvg: stylex.props(sx.dialSvg).className ?? '',
+  dialTrack: stylex.props(sx.dialTrack).className ?? '',
+  dialFill: stylex.props(sx.dialFill).className ?? '',
+  dialNum: stylex.props(sx.dialNum).className ?? '',
+  toast: stylex.props(sx.toast).className ?? '',
+  share: button,
+}
