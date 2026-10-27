@@ -3,6 +3,7 @@
 import {useEffect, useRef, useState} from 'react'
 
 import * as styles from '@/components/FloatingActions.styles'
+import PushToggle from '@/components/PushToggle'
 
 interface Heading {
   el: HTMLElement
@@ -174,6 +175,8 @@ export default function FloatingActions() {
           <span className={styles.dialNum}>{Math.round(progress)}</span>
         </button>
       )}
+
+      <PushToggle />
 
       <output className={styles.toast} data-show={copied ? 'true' : 'false'}>
         링크를 복사했습니다

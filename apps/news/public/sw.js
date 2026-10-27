@@ -162,3 +162,50 @@ self.addEventListener('fetch', (event) => {
   // 프로필 이미지, 파비콘 같은 나머지 동일 출처 리소스
   event.respondWith(networkFirst(event, STATIC_CACHE))
 })
+
+self.addEventListener('push', (event) => {
+  if (!event.data) {
+    return
+  }
+  let payload
+  try {
+    payload = event.data.json()
+  } catch {
+    return
+  }
+  event.waitUntil(
+    self.registration.showNotification(payload.title || 'yceffort news', {
+      body: payload.body || '',
+      icon: '/favicon/web-app-manifest-192x192.png',
+      badge: '/favicon/favicon-96x96.png',
+      data: {url: payload.url || '/'},
+      // 같은 호의 알림이 중복으로 오면 하나로 병합한다
+      tag: payload.url || 'yceffort-news',
+    }),
+  )
+})
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close()
+  // 상대 URL은 일부 플랫폼(iOS PWA 등)의 openWindow에서 조용히 실패한다
+  const url = new URL(event.notification.data?.url || '/', self.location.origin)
+    .href
+  // 알림 URL에는 utm 꼬리표가 붙으므로, 이미 열린 창을 찾을 때는 경로만 비교한다
+  const samePage = (href) => new URL(href).pathname === new URL(url).pathname
+  event.waitUntil(
+    self.clients
+      .matchAll({type: 'window', includeUncontrolled: true})
+      .then((clientList) => {
+        for (const client of clientList) {
+          if (samePage(client.url) && 'focus' in client) {
+            return client.focus()
+          }
+        }
+        return self.clients.openWindow(url).catch(() => {
+          // openWindow가 막히면 이미 떠 있는 창을 호로 이동시켜 재사용한다
+          const client = clientList.find((c) => 'navigate' in c)
+          return client?.navigate(url).then((c) => c?.focus())
+        })
+      }),
+  )
+})
