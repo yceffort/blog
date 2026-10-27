@@ -19,6 +19,7 @@ const processor = unified()
 const SECTION_KINDS: Record<string, string> = {
   '오늘 하나만 본다면': 'pick',
   '읽을 만한 것': 'reads',
+  '보안과 릴리스': 'brief',
   '짧게 알아두기': 'brief',
   '수집 상태': 'status',
   '이번 주': 'overview',
