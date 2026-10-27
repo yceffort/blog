@@ -13,6 +13,7 @@ import {Suspense, type ReactNode} from 'react'
 
 import LayoutWrapper from '@/components/LayoutWrapper'
 import PreferenceSync from '@/components/PreferenceSync'
+import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
 import {SiteConfig} from '@/config'
 
 const ACCENT_COOKIE_SCRIPT =
@@ -80,6 +81,7 @@ export default function Layout({children}: {children: ReactNode}) {
           sizes="180x180"
           href="/favicon/apple-touch-icon.png"
         />
+        <link rel="manifest" href="/favicon/site.webmanifest" />
       </head>
       <body>
         {/* 블로그 설정에서 고른 액센트 색(.yceffort.kr 쿠키)을 칠하기 전에 따라간다. */}
@@ -104,6 +106,7 @@ export default function Layout({children}: {children: ReactNode}) {
               <BotTracker />
             </Suspense>
             <OutboundLinkTracker />
+            <ServiceWorkerRegistration />
           </>
         )}
       </body>

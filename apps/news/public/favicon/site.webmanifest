@@ -1,6 +1,6 @@
 {
-  "name": "yceffort research",
-  "short_name": "research",
+  "name": "yceffort news",
+  "short_name": "news",
   "icons": [
     {
       "src": "/favicon/web-app-manifest-192x192.png",
@@ -24,7 +24,7 @@
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "standalone",
-  "description": "프론트엔드 딥다이브 슬라이드와 오프라인 보관함",
+  "description": "매일 아침 9시, 주장이 있는 글만 골라 핵심을 요약합니다.",
   "id": "/",
   "start_url": "/",
   "scope": "/"
