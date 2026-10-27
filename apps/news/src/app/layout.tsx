@@ -43,6 +43,11 @@ export const metadata: Metadata = {
     shortcut: '/favicon/apple-touch-icon.png',
     apple: '/favicon/apple-touch-icon.png',
   },
+  alternates: {
+    types: {
+      'application/rss+xml': '/feed.xml',
+    },
+  },
   robots: {
     index: true,
     follow: true,

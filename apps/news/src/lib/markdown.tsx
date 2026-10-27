@@ -1,4 +1,5 @@
 import type {Element, ElementContent, Properties, Root, RootContent} from 'hast'
+import {toHtml} from 'hast-util-to-html'
 import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
 import type {ComponentProps} from 'react'
 import {Fragment, jsx, jsxs} from 'react/jsx-runtime'
@@ -139,4 +140,9 @@ export function renderIssueBody(body: string) {
     jsxs,
     components: {a: Anchor},
   })
+}
+
+// 피드 리더는 사이트 CSS가 없으므로 절과 항목을 감싸지 않은 HTML을 준다.
+export function renderIssueHtml(body: string) {
+  return toHtml(processor.runSync(processor.parse(body)))
 }
