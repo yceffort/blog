@@ -1,0 +1,130 @@
+name: news-daily
+
+# schedule은 첫 수동 실행이 성공한 뒤 따로 넣는다. 올리는 순간 크론이 켜지는 것을 피한다.
+on:
+  workflow_dispatch:
+
+# 월요일에는 주간과 겹친다. 같은 그룹으로 묶어 직렬화한다.
+concurrency:
+  group: news
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  # 큐레이터는 신뢰할 수 없는 외부 본문을 읽는다. 본문에 심은 지시가 main 변조로
+  # 이어지지 않도록 이 job은 읽기 권한만 갖고, 결과물을 artifact로 넘긴다.
+  curate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      date: ${{ steps.date.outputs.date }}
+      written: ${{ steps.check.outputs.written }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile --filter news-bot
+
+      - name: 후보 수집
+        run: pnpm --filter news-bot collect
+        env:
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+
+      # 큐레이터에게 셸을 주지 않으므로 날짜는 여기서 정해 넘긴다.
+      - id: date
+        run: echo "date=$(TZ=Asia/Seoul date +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+
+      - name: 일간 호 작성
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            `services/news/prompts/daily.md` 파일을 읽고, 거기 적힌 작업을 그대로 수행한다.
+            그 문서가 이 작업의 유일한 지시서다. 오늘 날짜는 ${{ steps.date.outputs.date }} 이다.
+          # 실패하면 요약 JSON만으로는 원인을 알 수 없다. 전체 출력을 남긴다.
+          show_full_output: 'true'
+          claude_args: |
+            --allowedTools "Read(services/news/**),Read(apps/news/content/**),Glob,Grep,Edit(apps/news/content/daily/**)"
+
+      - id: check
+        run: |
+          if [ -f "apps/news/content/daily/${{ steps.date.outputs.date }}.md" ]; then
+            echo 'written=true' >> "$GITHUB_OUTPUT"
+          else
+            echo '후보가 없어 호를 만들지 않았다.'
+            echo 'written=false' >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.check.outputs.written == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: news-daily
+          path: |
+            apps/news/content/daily/${{ steps.date.outputs.date }}.md
+            services/news/state/seen-urls.json
+          retention-days: 3
+
+  publish:
+    needs: curate
+    if: needs.curate.outputs.written == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      ISSUE: apps/news/content/daily/${{ needs.curate.outputs.date }}.md
+    steps:
+      # main은 보호 규칙이 있어 기본 GITHUB_TOKEN으로는 푸시하지 못한다.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.NEWS_BOT_TOKEN }}
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: news-daily
+          path: ${{ runner.temp }}/news
+
+      - run: |
+          cp "$RUNNER_TEMP/news/$ISSUE" "$ISSUE"
+          cp "$RUNNER_TEMP/news/services/news/state/seen-urls.json" services/news/state/seen-urls.json
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          cache: pnpm
+
+      # oxfmt와 rust-markdownlint는 루트 devDependency다.
+      - run: pnpm install --frozen-lockfile --filter yceffort-monorepo
+
+      - run: |
+          pnpm exec oxfmt "$ISSUE"
+          pnpm exec rust-markdownlint --fix --no-globs "$ISSUE"
+
+      - name: 커밋과 푸시
+        run: |
+          git config user.name 'news-bot'
+          git config user.email 'root@yceffort.kr'
+          git add apps/news/content services/news/state
+          if git diff --cached --quiet; then
+            echo '변경 없음. 커밋하지 않는다.'
+            exit 0
+          fi
+          # 포맷과 린트는 위에서 끝났다. lefthook은 전체 의존성을 요구하므로 건너뛴다.
+          git commit --no-verify -m "news: ${{ needs.curate.outputs.date }}"
+          for i in 1 2 3; do
+            git push origin HEAD:main && exit 0
+            echo "push 실패. rebase 후 재시도 ($i/3)"
+            git pull --rebase origin main
+          done
+          exit 1
