@@ -1,15 +1,17 @@
-# 뉴스레터 봇
+# news 봇
 
-매일 09시(KST) 기술 글을 모아 고른 5~8편을 `clippings/`에 캡처하고 그 읽기 목록을 `digest/`에 쓴다. 월요일 09시 30분에는 지난 7일 clippings(사람의 캡처 포함)를 종합해 `digest/weekly/`에 쓰고, 핵심 한두 편을 루트 MOC에 잇는다. 발송은 없다.
+매일 09시(KST) 기술 글을 모아 고른 5~8편을 요약한 일간 호를 `apps/news/content/daily/`에 쓴다. 월요일 09시 30분에는 지난 7일의 일간 호를 종합해 `apps/news/content/weekly/`에 쓴다. 결과는 news.yceffort.kr에 공개된다. 발송은 없다.
 
 ## 구조
 
 두 단계로 나뉜다.
 
-1. **수집기** (`src/collect.ts`). RSS 59개와 API 2종(Hacker News, GitHub Trending)에서 긁고, URL을 정규화하고, 이미 내보낸 것을 걸러내고, 본문을 추출해 `out/candidates.json`을 만든다. LLM을 쓰지 않아 비용이 0이고 결과가 재현 가능하다.
-2. **큐레이터** (`anthropics/claude-code-action`). 그 JSON의 `content`를 읽고 판단해 노트를 쓴다. 지시서는 `prompts/daily.md`와 `prompts/weekly.md`다.
+1. **수집기** (`src/collect.ts`). RSS 67개와 API 2종(Hacker News, GitHub Trending)에서 긁고, URL을 정규화하고, 이미 내보낸 것을 걸러내고, 본문을 추출해 `out/candidates.json`을 만든다. LLM을 쓰지 않아 비용이 0이고 결과가 재현 가능하다.
+2. **큐레이터** (`anthropics/claude-code-action`). 그 JSON의 `content`를 읽고 판단해 호를 쓴다. 지시서는 `prompts/daily.md`와 `prompts/weekly.md`다.
 
 판단이 필요 없는 일을 에이전트에게 맡기지 않는 것이 이 구조의 요점이다.
+
+워크플로는 `.github/workflows/news-daily.yml`과 `news-weekly.yml`이다. 큐레이터는 신뢰할 수 없는 외부 본문을 읽으므로 읽기 권한만 가진 `curate` job에서 돌고, 결과물을 artifact로 넘긴다. 포맷과 린트, 커밋과 푸시는 `publish` job이 `NEWS_BOT_TOKEN`으로 한다.
 
 ## 로컬 실행
 
@@ -26,29 +28,28 @@ dry-run 결과 확인.
 node -e "const d=require('./out/candidates.json'); console.log(d.candidates.length); console.table(d.reports.filter(r=>!r.ok))"
 ```
 
-pnpm이 없으면 `corepack enable pnpm`으로 켠다.
-
 ## secrets
 
-- `CLAUDE_CODE_OAUTH_TOKEN` (필수). `claude setup-token`으로 발급해 `gh secret set CLAUDE_CODE_OAUTH_TOKEN --repo yceffort/brain`으로 등록한다. 만료되면 워크플로가 인증 오류로 실패하니 같은 절차로 재발급한다.
+- `CLAUDE_CODE_OAUTH_TOKEN` (필수). `claude setup-token`으로 발급해 `gh secret set CLAUDE_CODE_OAUTH_TOKEN --repo yceffort/blog`로 등록한다. 만료되면 워크플로가 인증 오류로 실패하니 같은 절차로 재발급한다.
+- `NEWS_BOT_TOKEN` (필수). 이 저장소 하나에 Contents 읽기/쓰기 권한을 준 fine-grained PAT다. main의 보호 규칙을 우회해 푸시하는 데 쓴다.
 - `FIRECRAWL_API_KEY` (선택). 없으면 본문 추출 폴백을 건너뛴다. 없어도 파이프라인 전체가 동작한다.
 
 Anthropic API 키는 쓰지 않는다. 구독으로 커버된다.
 
 ## 알려진 제약
 
-**GitHub Trending은 공식 API가 없어 HTML을 읽는다.** 구조가 바뀌면 0건이 되는데, 그때는 다이제스트의 "수집 상태" 절에 "HTML 구조 변경 의심"으로 뜬다.
+**GitHub Trending은 공식 API가 없어 HTML을 읽는다.** 구조가 바뀌면 0건이 되는데, 그때는 호의 "수집 상태" 절에 "HTML 구조 변경 의심"으로 뜬다.
 
 ## 소스를 고치고 싶을 때
 
-`src/config/sources.ts`를 고친다. 추가하거나 빼면 `test/sources.test.ts`의 개수도 함께 고친다.
+`src/config/sources.ts`를 고친다. 추가하거나 빼면 `test/sources.test.ts`의 개수도 함께 고친다. `group: 'personal'`인 소스는 쇼트리스트에서 개인 블로그 몫을 받는다.
 
-피드는 예고 없이 죽는다. 실제로 기존 Worker의 Chrome Developers 피드는 404인 채로 방치돼 있었다. 다이제스트의 "수집 상태" 절에 실패한 소스 이름이 남으니 주기적으로 본다.
+피드는 예고 없이 죽는다. 호의 "수집 상태" 절에 실패한 소스 이름이 남으니 주기적으로 본다.
 
 새 피드를 넣기 전에 살아있는지 먼저 확인한다.
 
 ```bash
-curl -sL -A 'brain-newsletter-bot/1.0' <피드 URL> | head -c 300
+curl -sL -A 'news-bot/1.0' <피드 URL> | head -c 300
 ```
 
 ## 튜닝 지점
@@ -60,8 +61,8 @@ curl -sL -A 'brain-newsletter-bot/1.0' <피드 URL> | head -c 300
 - `HN_MIN_SCORE` (50), `HN_TOP_COUNT` (30).
 - `CONTENT_MAX_CHARS` (12000). 큐레이터에 넘기는 본문 상한.
 
-`src/shortlist.ts`의 `LANES`가 소스 종류별 몫을 정한다. 몫을 없애면 발행량 많은 쪽이 전부 가져간다.
+`src/shortlist.ts`의 `LANES`가 소스 종류별 몫을 정한다. 커뮤니티 6칸, 트렌딩 2칸, 개인 블로그 8칸이고 나머지가 남은 자리를 최신순으로 채운다. 몫을 없애면 발행량 많은 쪽이 전부 가져간다.
 
 ## 되돌리기
 
-워크플로가 만든 커밋은 `digest:` 또는 `weekly:` 접두사를 쓴다. 잘못된 결과는 `git revert`로 지운다.
+워크플로가 만든 커밋은 `news:` 또는 `news weekly:` 접두사를 쓴다. 잘못된 호는 `git revert`로 지운다.
