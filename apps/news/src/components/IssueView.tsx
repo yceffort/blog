@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import FloatingActions from '@/components/FloatingActions'
 import * as styles from '@/components/Issue.styles'
 import type {Issue} from '@/lib/content'
 import {issueHref, issueSubtitle, issueTitle, issueYear} from '@/lib/format'
@@ -55,6 +56,7 @@ export default function IssueView({
           )}
         </nav>
       )}
+      <FloatingActions />
     </article>
   )
 }
