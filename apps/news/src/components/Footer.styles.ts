@@ -3,41 +3,34 @@ import * as stylex from '@stylexjs/stylex'
 const sx = stylex.create({
   inner: {
     '@layer utilities': {
-      marginTop: '5rem',
-      paddingBottom: '2.5rem',
+      marginTop: '4rem',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      gap: '0.5rem',
+    },
+  },
+  icons: {
+    '@layer utilities': {
+      marginBottom: '0.75rem',
+      display: 'flex',
+      gap: '1rem',
     },
   },
   line: {
     '@layer utilities': {
+      marginBottom: '0.5rem',
       display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-      gap: '0.6rem',
-      fontSize: '0.8125rem',
-      color: 'var(--ink-3)',
-    },
-  },
-  sep: {
-    '@layer utilities': {
-      color: 'var(--ink-4)',
-    },
-  },
-  link: {
-    '@layer utilities': {
+      gap: '0.5rem',
+      fontSize: '0.875rem',
+      lineHeight: 'calc(1.25 / 0.875)',
       color: {
-        default: 'var(--ink-3)',
-        ':hover': 'var(--ink)',
+        default: 'oklch(55.2% 0.016 285.938)',
+        ':is(.dark *)': 'oklch(70.5% 0.015 286.067)',
       },
-      transition: 'color 160ms ease',
     },
   },
 })
 
-export const inner = stylex.props(sx.inner).className ?? ''
+export const root = stylex.props(sx.inner).className ?? ''
+export const icons = stylex.props(sx.icons).className ?? ''
 export const line = stylex.props(sx.line).className ?? ''
-export const sep = stylex.props(sx.sep).className ?? ''
-export const link = stylex.props(sx.link).className ?? ''

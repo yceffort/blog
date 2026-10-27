@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex'
-import Link from 'next/link'
+import {Footer as SharedFooter} from '@yceffort/shared/components'
 
-import SocialIcon from '@/components/icons'
+import {socialIconClassNames} from '@/components/icons/SocialIcon.styles'
 import {SiteConfig} from '@/config'
 
 const sx = stylex.create({
@@ -32,36 +32,19 @@ const sx = stylex.create({
     },
   },
 })
-const YEAR = new Date().getFullYear()
+// social-links, compact-stack은 styles/spacing.css가 자식 사이 간격을 줄 때 쓴다
+const classNames = {
+  root: stylex.props(sx.div).className ?? '',
+  icons: `social-links ${stylex.props(sx.div2).className}`,
+  line: `compact-stack ${stylex.props(sx.div3).className}`,
+}
 export default function Footer() {
   return (
-    <footer>
-      <div className={stylex.props(sx.div).className}>
-        <div className={`social-links ${stylex.props(sx.div2).className}`}>
-          <SocialIcon
-            kind="mail"
-            href={`mailto:${SiteConfig.author.contacts.email}`}
-            size={6}
-          />
-          <SocialIcon
-            kind="github"
-            href={SiteConfig.author.contacts.github}
-            size={6}
-          />
-          <SocialIcon
-            kind="twitter"
-            href={SiteConfig.author.contacts.twitter}
-            size={6}
-          />
-        </div>
-        <div className={`compact-stack ${stylex.props(sx.div3).className}`}>
-          <div>{SiteConfig.author.name}</div>
-          <div>{' \u2022 '}</div>
-          <div>{`© ${YEAR}`}</div>
-          <div>{' \u2022 '}</div>
-          <Link href="/">{SiteConfig.url}</Link>
-        </div>
-      </div>
-    </footer>
+    <SharedFooter
+      author={SiteConfig.author}
+      siteUrl={SiteConfig.url}
+      classNames={classNames}
+      socialIconClassNames={socialIconClassNames}
+    />
   )
 }

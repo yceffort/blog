@@ -31,6 +31,6 @@ const sx = stylex.create({
   },
 })
 
-export const inner = stylex.props(sx.inner).className ?? ''
+export const root = stylex.props(sx.inner).className ?? ''
 export const icons = stylex.props(sx.icons).className ?? ''
 export const line = stylex.props(sx.line).className ?? ''
