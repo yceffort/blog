@@ -1,6 +1,7 @@
 import type {Metadata} from 'next'
 
 import * as styles from '@/components/Issue.styles'
+import IssueCalendar from '@/components/IssueCalendar'
 import {IssueArchive} from '@/components/IssueList'
 import {listIssues} from '@/lib/content'
 
@@ -17,6 +18,7 @@ export default function Page() {
           {`매일 아침 9시에 발행합니다. 지금까지 ${issues.length}호.`}
         </p>
       </header>
+      <IssueCalendar issues={issues} />
       <IssueArchive issues={issues} />
     </>
   )
