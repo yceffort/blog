@@ -24,6 +24,7 @@ import NavigationDirection from '@/components/layout/NavigationDirection'
 import PullToRefresh from '@/components/pwa/PullToRefresh'
 import {ServiceWorkerRegistration} from '@/components/pwa/ServiceWorkerRegistration'
 import {SiteConfig} from '@/config'
+import startupImages from '@/splash.json'
 import {buildOgImageUrl} from '@/utils/og'
 import {getAllPosts} from '@/utils/Post'
 const sx = stylex.create({
@@ -135,6 +136,15 @@ export default async function Layout({children}: {children: ReactNode}) {
           <link rel="manifest" href="/favicon/site.webmanifest" />
           <meta name="theme-color" content="#ffffff" />
           <meta name="mobile-web-app-capable" content="yes" />
+          {/* iOS 홈 화면 앱의 스플래시. scripts/generate-splash.mjs가 만든다 */}
+          {startupImages.map(({url, media}) => (
+            <link
+              key={url}
+              rel="apple-touch-startup-image"
+              href={url}
+              media={media}
+            />
+          ))}
         </head>
         <body className={stylex.props(sx.body).className}>
           <Suspense fallback={null}>
