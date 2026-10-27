@@ -11,7 +11,8 @@ import {unified} from 'unified'
 
 const processor = unified()
   .use(remarkParse)
-  .use(remarkGfm)
+  // "4~8명에서 12~14명"처럼 범위 표기의 물결 두 개가 취소선으로 묶이지 않게 한다.
+  .use(remarkGfm, {singleTilde: false})
   .use(remarkCjkFriendly)
   .use(remarkRehype)
 
