@@ -8,7 +8,6 @@ import Script from 'next/script'
 import {connection} from 'next/server'
 import {ViewTransition} from 'react'
 
-import * as ambientStyles from '@/components/layout/ambient.styles'
 import {PostArticle} from '@/components/post/PostArticle'
 import PostDate from '@/components/post/PostDate'
 import ProfileImage from '@/components/post/ProfileImage'
@@ -272,9 +271,7 @@ async function PostBody({year, slug, locale}: PostParams & {locale: Locale}) {
       >
         {JSON.stringify(jsonLd)}
       </Script>
-      <div
-        className={`page-view ${ambientStyles.page_view} ${stylex.props(sx.div).className}`}
-      >
+      <div className={`page-view ${stylex.props(sx.div).className}`}>
         <Link
           href={pathPrefix || '/'}
           className={`post-back ${readingProgressStyles.post_back}`}

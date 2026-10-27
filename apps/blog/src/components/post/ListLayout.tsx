@@ -1,6 +1,5 @@
 import {ViewTransition} from 'react'
 
-import * as ambientStyles from '@/components/layout/ambient.styles'
 import * as sectionStyles from '@/components/layout/section.styles'
 import * as listStyles from '@/components/post/list.styles'
 import PostRow from '@/components/post/PostRow'
@@ -18,7 +17,7 @@ export default function ListLayout({
 }) {
   const heading = <h2 className={sectionStyles.element_h2}>{title}</h2>
   return (
-    <div className={`page-view ${ambientStyles.page_view}`}>
+    <div className="page-view">
       <div className={`sec-head ${sectionStyles.sec_head}`}>
         <div>
           <span className={`sec-count ${sectionStyles.sec_count}`}>

@@ -4,7 +4,6 @@ import {ViewTransition} from 'react'
 
 import * as tagsStyles from '@/app/tags/tags.styles'
 import * as heroStyles from '@/components/home/hero.styles'
-import * as ambientStyles from '@/components/layout/ambient.styles'
 import {SiteConfig} from '@/config'
 import {buildOgImageUrl} from '@/utils/og'
 import {getAllTagsFromPosts, type Locale} from '@/utils/Post'
@@ -76,7 +75,7 @@ export default async function TagsIndexView({locale}: {locale: Locale}) {
   const totalPosts = tags.reduce((sum, t) => sum + t.count, 0)
   const maxCount = tags.reduce((max, t) => Math.max(max, t.count), 1)
   return (
-    <div className={`page-view ${ambientStyles.page_view}`}>
+    <div className="page-view">
       <section className={`page-hero ${tagsStyles.page_hero}`}>
         <div className={`hero-eyebrow ${tagsStyles.hero_eyebrow}`}>
           <span className={`dot ${heroStyles.dot}`} />

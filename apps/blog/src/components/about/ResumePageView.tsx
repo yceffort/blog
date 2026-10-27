@@ -3,7 +3,6 @@ import * as stylex from '@stylexjs/stylex'
 import {AboutTabs} from '@/components/about/AboutTabs'
 import {Resume} from '@/components/about/Resume'
 import * as resumeStyles from '@/components/about/Resume.styles'
-import * as ambientStyles from '@/components/layout/ambient.styles'
 import {SiteConfig} from '@/config'
 import type {Locale} from '@/utils/postPaths'
 
@@ -27,7 +26,7 @@ const sx = stylex.create({
 })
 export function ResumePageView({locale}: {locale: Locale}) {
   return (
-    <div className={`page-view ${ambientStyles.page_view}`}>
+    <div className="page-view">
       <header className={`resume-pageHeader ${resumeStyles.resume_pageHeader}`}>
         <div>
           <p className={`resume-eyebrow ${resumeStyles.resume_eyebrow}`}>

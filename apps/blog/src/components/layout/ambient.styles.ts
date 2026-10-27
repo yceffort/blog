@@ -1,14 +1,4 @@
 import * as stylex from '@stylexjs/stylex'
-const motion_page_fade = stylex.keyframes({
-  from: {
-    transform: 'translateY(10px)',
-    opacity: '0',
-  },
-  to: {
-    transform: 'none',
-    opacity: '1',
-  },
-})
 const styles = stylex.create({
   effect_grain: {
     '@layer site': {
@@ -68,18 +58,6 @@ const styles = stylex.create({
       },
     },
   },
-  page_view: {
-    '@layer site': {
-      animationName: motion_page_fade,
-      animationDuration: '450ms',
-      animationTimingFunction: 'cubic-bezier(0.2, 0.9, 0.2, 1)',
-      animationDelay: '0s',
-      animationIterationCount: '1',
-      animationDirection: 'normal',
-      animationFillMode: 'both',
-      animationPlayState: 'running',
-    },
-  },
 })
 
 // Resolve locally so the compiler can erase style composition.
@@ -88,4 +66,3 @@ export const effect_anim_bg = stylex.props(styles.effect_anim_bg).className!
 export const effect_cursor_glow = stylex.props(
   styles.effect_cursor_glow,
 ).className!
-export const page_view = stylex.props(styles.page_view).className!

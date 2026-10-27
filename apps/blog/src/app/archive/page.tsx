@@ -4,7 +4,6 @@ import Link from 'next/link'
 import {ViewTransition} from 'react'
 
 import * as archiveStyles from '@/app/archive/archive.styles'
-import * as ambientStyles from '@/components/layout/ambient.styles'
 import LinkPendingHint from '@/components/post/LinkPendingHint'
 import PostDate from '@/components/post/PostDate'
 import {SiteConfig} from '@/config'
@@ -31,7 +30,7 @@ export default async function ArchivePage() {
   }
   const years = [...byYear.keys()].toSorted((a, b) => b - a)
   return (
-    <div className={`page-view archive-view ${ambientStyles.page_view}`}>
+    <div className="page-view archive-view">
       <header className={`archive-head ${archiveStyles.archive_head}`}>
         <span className="sec-count">ARCHIVE</span>
         <h1 className={archiveStyles.element_h1}>전체 글</h1>

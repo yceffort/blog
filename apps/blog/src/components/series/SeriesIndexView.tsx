@@ -3,7 +3,6 @@ import type {Metadata} from 'next'
 import * as tagsStyles from '@/app/tags/tags.styles'
 import * as heroStyles from '@/components/home/hero.styles'
 import * as recentStyles from '@/components/home/recent.styles'
-import * as ambientStyles from '@/components/layout/ambient.styles'
 import SeriesRow from '@/components/series/SeriesRow'
 import {SiteConfig} from '@/config'
 import type {Locale} from '@/utils/Post'
@@ -40,7 +39,7 @@ export default async function SeriesIndexView({locale}: {locale: Locale}) {
   const series = await getAllSeries(locale)
   const totalPosts = series.reduce((sum, s) => sum + s.posts.length, 0)
   return (
-    <div className={`page-view ${ambientStyles.page_view}`}>
+    <div className="page-view">
       <section className={`page-hero ${tagsStyles.page_hero}`}>
         <div className={`hero-eyebrow ${tagsStyles.hero_eyebrow}`}>
           <span className={`dot ${heroStyles.dot}`} />

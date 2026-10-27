@@ -4,7 +4,6 @@ import {ViewTransition} from 'react'
 
 import * as recentStyles from '@/components/home/recent.styles'
 import RecentRow from '@/components/home/RecentRow'
-import * as ambientStyles from '@/components/layout/ambient.styles'
 import * as sectionStyles from '@/components/layout/section.styles'
 import {EmphasizedTitle} from '@/components/post/EmphasizedTitle'
 import {PostArticle} from '@/components/post/PostArticle'
@@ -88,7 +87,7 @@ export default async function SeriesDetailView({
   const {pathPrefix, allPosts} = LABELS[locale]
   const {title, description, body, path, posts} = series
   return (
-    <div className={`page-view series-view ${ambientStyles.page_view}`}>
+    <div className="page-view series-view">
       <section
         className={`post-masthead ${readingProgressStyles.post_masthead}`}
       >

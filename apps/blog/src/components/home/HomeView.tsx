@@ -8,7 +8,6 @@ import FeaturedPost from '@/components/home/FeaturedPost'
 import Hero from '@/components/home/HeroE'
 import * as recentStyles from '@/components/home/recent.styles'
 import RecentRow from '@/components/home/RecentRow'
-import * as ambientStyles from '@/components/layout/ambient.styles'
 import * as sectionStyles from '@/components/layout/section.styles'
 import SeriesCard from '@/components/series/SeriesCard'
 import {HOME_SERIES_COUNT} from '@/constants'
@@ -109,7 +108,7 @@ async function HomeContent({locale}: {locale: Locale}) {
   } = homeData
   const {pathPrefix} = LABELS[locale]
   return (
-    <div className={`page-view ${ambientStyles.page_view}`}>
+    <div className="page-view">
       <Hero
         postCount={postCount}
         tagCount={tagCount}

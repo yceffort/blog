@@ -1,8 +1,6 @@
 import * as stylex from '@stylexjs/stylex'
 import type {Metadata} from 'next'
 
-import * as ambientStyles from '@/components/layout/ambient.styles'
-
 const sx = stylex.create({
   div: {
     '@layer utilities': {
@@ -80,7 +78,7 @@ export const metadata: Metadata = {
 }
 export default function OfflinePage() {
   return (
-    <div className={`page-view ${ambientStyles.page_view}`}>
+    <div className="page-view">
       <div className={stylex.props(sx.div).className}>
         <svg
           width="64"

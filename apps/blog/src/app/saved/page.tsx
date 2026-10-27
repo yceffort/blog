@@ -1,6 +1,5 @@
 import type {Metadata} from 'next'
 
-import * as ambientStyles from '@/components/layout/ambient.styles'
 import {SavedPostsView} from '@/components/pwa/SavedPostsView'
 
 export const metadata: Metadata = {
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function SavedPage() {
   return (
-    <div className={`page-view ${ambientStyles.page_view}`}>
+    <div className="page-view">
       <SavedPostsView locale="ko" />
     </div>
   )
