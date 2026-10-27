@@ -63,7 +63,7 @@ describe('shortlist', () => {
     const picked = shortlist([...rss, ...hn])
     expect(
       picked.filter((a) => a.sourceKind === 'hn').length,
-    ).toBeGreaterThanOrEqual(4)
+    ).toBeGreaterThanOrEqual(3)
   })
 
   it('Hacker News 하나가 커뮤니티 몫을 다 먹지 못한다', () => {
@@ -76,10 +76,10 @@ describe('shortlist', () => {
     const picked = shortlist([...hn, ...rss])
     expect(
       picked.filter((a) => a.source === 'Hacker News').length,
-    ).toBeLessThanOrEqual(5)
+    ).toBeLessThanOrEqual(3)
   })
 
-  it('GitHub Trending은 3건을 넘지 않는다', () => {
+  it('GitHub Trending은 2건을 넘지 않는다', () => {
     const tr = Array.from({length: 12}, (_, i) =>
       article({sourceKind: 'trending', source: `GitHub Trending ${i % 3}`}),
     )
@@ -89,7 +89,7 @@ describe('shortlist', () => {
     const picked = shortlist([...tr, ...rss])
     expect(
       picked.filter((a) => a.sourceKind === 'trending').length,
-    ).toBeLessThanOrEqual(3)
+    ).toBeLessThanOrEqual(2)
   })
 
   it('한 소스가 목록을 독점하지 못한다', () => {
@@ -125,7 +125,51 @@ describe('shortlist', () => {
       article({source: 'Lobsters', score: 10}),
     )
     const picked = shortlist([...rss, ...lob])
-    expect(picked.filter((a) => a.source === 'Lobsters').length).toBe(5)
+    expect(picked.filter((a) => a.source === 'Lobsters').length).toBe(3)
+  })
+
+  it('개인 블로그의 자리를 확보한다', () => {
+    const rss = Array.from({length: 200}, (_, i) => article({source: `S${i}`}))
+    const personal = [
+      'Dan Luu',
+      'Julia Evans',
+      'antirez',
+      'matklad',
+      'Kent Beck',
+    ].flatMap((source) => [
+      article({source}),
+      article({source}),
+      article({source}),
+    ])
+    const picked = shortlist([...rss, ...personal])
+    const names = new Set(personal.map((a) => a.source))
+    expect(picked.filter((a) => names.has(a.source))).toHaveLength(8)
+  })
+
+  it('개인 블로그 하나가 몫을 다 먹지 못한다', () => {
+    const flood = Array.from({length: 10}, () => article({source: 'Dan Luu'}))
+    const rss = Array.from({length: 40}, (_, i) => article({source: `S${i}`}))
+    const picked = shortlist([...flood, ...rss])
+    expect(picked.filter((a) => a.source === 'Dan Luu')).toHaveLength(2)
+  })
+
+  it('나머지는 최신 글을 먼저 고른다', () => {
+    const old = article({
+      source: 'Deno',
+      publishedAt: '2026-08-25T00:00:00Z',
+      title: 'old',
+    })
+    const fresh = article({
+      source: 'Vite',
+      publishedAt: '2026-08-30T00:00:00Z',
+      title: 'fresh',
+    })
+    const undated = article({source: 'Bun', publishedAt: '', title: 'undated'})
+    expect(shortlist([undated, old, fresh]).map((a) => a.title)).toEqual([
+      'fresh',
+      'old',
+      'undated',
+    ])
   })
 
   it('결과에 중복이 없다', () => {

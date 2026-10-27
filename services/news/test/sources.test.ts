@@ -3,8 +3,8 @@ import {describe, expect, it} from 'vitest'
 import {RSS_FEEDS} from '../src/config/sources'
 
 describe('RSS_FEEDS', () => {
-  it('59개다', () => {
-    expect(RSS_FEEDS).toHaveLength(59)
+  it('67개다', () => {
+    expect(RSS_FEEDS).toHaveLength(67)
   })
 
   it('URL이 중복되지 않는다', () => {

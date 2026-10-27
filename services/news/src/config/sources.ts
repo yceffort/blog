@@ -4,11 +4,6 @@ export const RSS_FEEDS: FeedSource[] = [
   {group: 'vendor', name: 'Lobsters', url: 'https://lobste.rs/rss'},
   {
     group: 'vendor',
-    name: 'AWS Blog',
-    url: 'https://feeds.feedburner.com/AmazonWebServicesBlog',
-  },
-  {
-    group: 'vendor',
     name: 'Chromium Blog',
     url: 'https://blog.chromium.org/feeds/posts/default',
   },
@@ -27,13 +22,25 @@ export const RSS_FEEDS: FeedSource[] = [
   {group: 'vendor', name: 'GitHub Blog', url: 'https://github.blog/feed/'},
   {group: 'vendor', name: 'Vercel Blog', url: 'https://vercel.com/atom'},
   {group: 'vendor', name: 'WebKit Blog', url: 'https://webkit.org/feed/'},
+  {
+    group: 'vendor',
+    name: 'Grafana Labs',
+    url: 'https://grafana.com/blog/index.xml',
+  },
+  {
+    group: 'vendor',
+    name: 'Socket',
+    url: 'https://socket.dev/api/blog/feed.atom',
+  },
+  {
+    group: 'vendor',
+    name: 'Platformatic',
+    url: 'https://blog.platformatic.dev/rss.xml',
+  },
 
   {group: 'framework', name: 'React', url: 'https://react.dev/rss.xml'},
   {group: 'framework', name: 'Next.js', url: 'https://nextjs.org/feed.xml'},
-  {group: 'framework', name: 'Svelte', url: 'https://svelte.dev/blog/rss.xml'},
-  {group: 'framework', name: 'Vue', url: 'https://blog.vuejs.org/feed.rss'},
   {group: 'framework', name: 'Astro', url: 'https://astro.build/rss.xml'},
-  {group: 'framework', name: 'Remix', url: 'https://remix.run/blog/rss.xml'},
   {group: 'framework', name: 'Bun', url: 'https://bun.sh/rss.xml'},
   {group: 'framework', name: 'Deno', url: 'https://deno.com/feed'},
   {group: 'framework', name: 'Vite', url: 'https://vite.dev/blog.rss'},
@@ -45,14 +52,19 @@ export const RSS_FEEDS: FeedSource[] = [
   },
   {
     group: 'framework',
-    name: 'Tailwind',
-    url: 'https://tailwindcss.com/feeds/feed.xml',
-  },
-  {group: 'framework', name: 'Biome', url: 'https://biomejs.dev/blog/rss.xml'},
-  {
-    group: 'framework',
     name: 'Rust Blog',
     url: 'https://blog.rust-lang.org/feed.xml',
+  },
+  {group: 'framework', name: 'Oxc', url: 'https://oxc.rs/feeds/blog-en.rss'},
+  {
+    group: 'framework',
+    name: 'OpenTelemetry',
+    url: 'https://opentelemetry.io/blog/index.xml',
+  },
+  {
+    group: 'framework',
+    name: 'Kubernetes Blog',
+    url: 'https://kubernetes.io/feed.xml',
   },
 
   {
@@ -125,6 +137,59 @@ export const RSS_FEEDS: FeedSource[] = [
     name: 'Frontend Masters',
     url: 'https://frontendmasters.com/blog/feed/',
   },
+  {
+    group: 'personal',
+    name: 'The Pragmatic Engineer',
+    url: 'https://newsletter.pragmaticengineer.com/feed',
+  },
+  {
+    group: 'personal',
+    name: 'Kent Beck',
+    url: 'https://tidyfirst.substack.com/feed',
+  },
+  {
+    group: 'personal',
+    name: 'The Engineering Manager',
+    url: 'https://www.theengineeringmanager.com/feed/',
+  },
+  {group: 'personal', name: 'antirez', url: 'https://antirez.com/rss'},
+  {group: 'personal', name: 'Charity Majors', url: 'https://charity.wtf/feed/'},
+  {group: 'personal', name: 'Fred Hebert', url: 'https://ferd.ca/feed.rss'},
+  {
+    group: 'personal',
+    name: 'matklad',
+    url: 'https://matklad.github.io/feed.xml',
+  },
+  {
+    group: 'personal',
+    name: 'Hillel Wayne',
+    url: 'https://buttondown.com/hillelwayne/rss',
+  },
+  {
+    group: 'personal',
+    name: 'Geoffrey Litt',
+    url: 'https://www.geoffreylitt.com/feed.xml',
+  },
+  {
+    group: 'personal',
+    name: 'Harry Roberts',
+    url: 'https://csswizardry.com/feed.xml',
+  },
+  {
+    group: 'personal',
+    name: 'Alex Russell',
+    url: 'https://infrequently.org/feed/',
+  },
+  {
+    group: 'personal',
+    name: 'Philip Walton',
+    url: 'https://philipwalton.com/atom.xml',
+  },
+  {
+    group: 'personal',
+    name: 'Barry Pollard',
+    url: 'https://www.tunetheweb.com/rss.xml',
+  },
 
   {
     group: 'company',
@@ -135,17 +200,6 @@ export const RSS_FEEDS: FeedSource[] = [
     group: 'company',
     name: 'Stack Overflow',
     url: 'https://stackoverflow.blog/feed/',
-  },
-  {
-    group: 'company',
-    name: 'Netflix Tech',
-    url: 'https://netflixtechblog.com/feed',
-  },
-  {group: 'company', name: 'Sentry', url: 'https://blog.sentry.io/feed.xml'},
-  {
-    group: 'company',
-    name: 'Smashing Magazine',
-    url: 'https://www.smashingmagazine.com/feed/',
   },
   {
     group: 'company',
@@ -185,13 +239,6 @@ export const RSS_FEEDS: FeedSource[] = [
     url: 'https://developer.mozilla.org/en-US/blog/rss.xml',
   },
 
-  {group: 'ai', name: 'OpenAI', url: 'https://openai.com/news/rss.xml'},
-  {
-    group: 'ai',
-    name: 'Hugging Face',
-    url: 'https://huggingface.co/blog/feed.xml',
-  },
-
   {
     group: 'newsletter',
     name: 'JavaScript Weekly',
@@ -209,11 +256,14 @@ export const NEWSLETTERS = new Set(
   RSS_FEEDS.filter((f) => f.group === 'newsletter').map((f) => f.name),
 )
 
+export const PERSONAL_BLOGS = new Set(
+  RSS_FEEDS.filter((f) => f.group === 'personal').map((f) => f.name),
+)
+
 export const HN_TOP_COUNT = 30
 export const HN_MIN_SCORE = 50
 
-export const USER_AGENT =
-  'brain-newsletter-bot/1.0 (+https://github.com/yceffort/brain)'
+export const USER_AGENT = 'news-bot/1.0 (+https://github.com/yceffort/blog)'
 export const FETCH_TIMEOUT_MS = 20_000
 // 개인 블로그와 프레임워크 블로그는 매일 글을 쓰지 않는다. 36시간 창에서는 이들이
 // 구조적으로 배제된다(실측: 36시간에 개인 2건 프레임워크 0건, 7일에 25건과 5건).

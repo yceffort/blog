@@ -1,4 +1,8 @@
-import {RECENT_WINDOW_HOURS, SHORTLIST_SIZE} from './config/sources'
+import {
+  PERSONAL_BLOGS,
+  RECENT_WINDOW_HOURS,
+  SHORTLIST_SIZE,
+} from './config/sources'
 import type {Article} from './types'
 
 // 소스 성격이 다르므로 몫을 나눠 배분한다. 안 그러면 발행량이 많은 쪽이 전부 가져간다.
@@ -6,17 +10,32 @@ import type {Article} from './types'
 // 개인 블로그와 프레임워크는 0건이었다.
 const LANES = [
   // 무엇이 읽혔는가. 다만 Hacker News 하나가 전부 먹지 않도록 소스당 상한을 건다.
-  {name: 'community', quota: 10, perSource: 5, match: isCommunity},
+  {
+    name: 'community',
+    quota: 6,
+    perSource: 3,
+    match: isCommunity,
+    order: byScore,
+  },
   // 노이즈가 많아 몫을 작게 준다.
   {
     name: 'trending',
-    quota: 3,
+    quota: 2,
     perSource: 1,
     match: (a: Article) => a.sourceKind === 'trending',
+    order: byScore,
+  },
+  // 실측: 몫이 없을 때 본문 확보 23건 중 개인 블로그는 2건이었다.
+  {
+    name: 'personal',
+    quota: 8,
+    perSource: 2,
+    match: (a: Article) => PERSONAL_BLOGS.has(a.source),
+    order: byNewest,
   },
 ] as const
 
-// 나머지(개인 블로그, 프레임워크, 벤더, 표준, 릴리스)가 쓰는 몫과 상한.
+// 나머지(프레임워크, 벤더, 표준, 릴리스, 뉴스레터)가 쓰는 소스당 상한.
 const REST_PER_SOURCE = 2
 
 export function filterRecent(articles: Article[], now: Date): Article[] {
@@ -27,6 +46,16 @@ export function filterRecent(articles: Article[], now: Date): Article[] {
     if (Number.isNaN(ts)) return true
     return ts >= cutoff
   })
+}
+
+function byScore(a: Article, b: Article): number {
+  return (b.score ?? 0) - (a.score ?? 0)
+}
+
+// 발행일이 없거나 깨진 글은 뒤로 보낸다.
+function byNewest(a: Article, b: Article): number {
+  const time = (x: Article) => new Date(x.publishedAt).getTime() || 0
+  return time(b) - time(a)
 }
 
 function isCommunity(a: Article): boolean {
@@ -58,13 +87,13 @@ export function shortlist(articles: Article[]): Article[] {
   const out: Article[] = []
 
   for (const lane of LANES) {
-    const pool = articles
-      .filter(lane.match)
-      .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
+    const pool = articles.filter(lane.match).toSorted(lane.order)
     out.push(...takeCapped(pool, lane.quota, lane.perSource, taken))
   }
 
-  const rest = articles.filter((a) => !LANES.some((lane) => lane.match(a)))
+  const rest = articles
+    .filter((a) => !LANES.some((lane) => lane.match(a)))
+    .toSorted(byNewest)
   out.push(
     ...takeCapped(rest, SHORTLIST_SIZE - out.length, REST_PER_SOURCE, taken),
   )
