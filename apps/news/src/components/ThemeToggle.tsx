@@ -1,5 +1,6 @@
 'use client'
 
+import {setCookie} from '@yceffort/shared/utils'
 import {useTheme} from 'next-themes'
 import {useSyncExternalStore} from 'react'
 
@@ -25,7 +26,12 @@ export default function ThemeToggle() {
       type="button"
       className={icon_btn}
       aria-label={dark ? '밝은 테마로' : '어두운 테마로'}
-      onClick={() => setTheme(dark ? 'light' : 'dark')}
+      onClick={() => {
+        const next = dark ? 'light' : 'dark'
+        setTheme(next)
+        // 블로그, 리서치와 같은 쿠키에 남겨 그쪽도 따라오게 한다.
+        setCookie('tw-theme', next)
+      }}
     >
       {dark ? (
         <svg

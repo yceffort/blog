@@ -12,7 +12,11 @@ import type {Metadata} from 'next'
 import {Suspense, type ReactNode} from 'react'
 
 import LayoutWrapper from '@/components/LayoutWrapper'
+import PreferenceSync from '@/components/PreferenceSync'
 import {SiteConfig} from '@/config'
+
+const ACCENT_COOKIE_SCRIPT =
+  '(function(){try{var m=document.cookie.match(/(?:^|;\\s*)tw-accent=([^;]+)/);if(m){document.body.dataset.accent=decodeURIComponent(m[1]);}}catch(e){}})();'
 
 export const metadata: Metadata = {
   title: {
@@ -78,8 +82,15 @@ export default function Layout({children}: {children: ReactNode}) {
         />
       </head>
       <body>
+        {/* 블로그 설정에서 고른 액센트 색(.yceffort.kr 쿠키)을 칠하기 전에 따라간다. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: ACCENT_COOKIE_SCRIPT,
+          }}
+        />
         <AmbientEffects />
         <Providers>
+          <PreferenceSync />
           <LayoutWrapper>{children}</LayoutWrapper>
         </Providers>
         {process.env.NODE_ENV === 'production' && (
