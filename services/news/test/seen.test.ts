@@ -84,6 +84,11 @@ describe('pruneSeen', () => {
 })
 
 describe('seenAsOf', () => {
+  it('기준 시각과 같은 시각에 기록된 URL도 뺀다', () => {
+    const seen: SeenStore = {'https://a.com/1': '2026-08-30T00:00:00Z'}
+    expect(seenAsOf(seen, NOW)).toEqual({})
+  })
+
   it('기준 시각 뒤에 기록된 URL을 뺀다', () => {
     const seen: SeenStore = {
       'https://a.com/1': '2026-08-29T23:59:59Z',
