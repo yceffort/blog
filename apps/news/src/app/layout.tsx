@@ -1,6 +1,7 @@
 import '@/styles/stylex.css'
 import {
   AmbientEffects,
+  AppleStartupImages,
   BotTracker,
   GoogleAnalyticsPageViewTracker,
   GoogleAnalyticsScripts,
@@ -83,15 +84,7 @@ export default function Layout({children}: {children: ReactNode}) {
           href="/favicon/apple-touch-icon.png"
         />
         <link rel="manifest" href="/favicon/site.webmanifest" />
-        {/* iOS 홈 화면 앱의 스플래시. apps/blog/scripts/generate-splash.mjs가 만든다 */}
-        {startupImages.map(({url, media}) => (
-          <link
-            key={url}
-            rel="apple-touch-startup-image"
-            href={url}
-            media={media}
-          />
-        ))}
+        <AppleStartupImages images={startupImages} />
       </head>
       <body>
         {/* 블로그 설정에서 고른 액센트 색(.yceffort.kr 쿠키)을 칠하기 전에 따라간다. */}

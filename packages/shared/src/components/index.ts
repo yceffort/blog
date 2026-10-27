@@ -1,5 +1,6 @@
 export {Providers} from './Provider'
 export {default as AmbientEffects} from './AmbientEffects'
+export {AppleStartupImages} from './AppleStartupImages'
 export {BotTracker} from './BotTracker'
 export {GoogleAnalyticsPageViewTracker} from './GoogleAnalyticsPageViewTracker'
 export {GoogleAnalyticsScripts} from './GoogleAnalyticsScripts'

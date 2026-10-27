@@ -1,6 +1,7 @@
 import * as stylex from '@stylexjs/stylex'
 import {
   AmbientEffects,
+  AppleStartupImages,
   BotTracker,
   GoogleAnalyticsPageViewTracker,
   GoogleAnalyticsScripts,
@@ -136,15 +137,7 @@ export default async function Layout({children}: {children: ReactNode}) {
           <link rel="manifest" href="/favicon/site.webmanifest" />
           <meta name="theme-color" content="#ffffff" />
           <meta name="mobile-web-app-capable" content="yes" />
-          {/* iOS 홈 화면 앱의 스플래시. scripts/generate-splash.mjs가 만든다 */}
-          {startupImages.map(({url, media}) => (
-            <link
-              key={url}
-              rel="apple-touch-startup-image"
-              href={url}
-              media={media}
-            />
-          ))}
+          <AppleStartupImages images={startupImages} />
         </head>
         <body className={stylex.props(sx.body).className}>
           <Suspense fallback={null}>
