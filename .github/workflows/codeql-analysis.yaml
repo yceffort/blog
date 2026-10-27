@@ -14,6 +14,10 @@ name: 'CodeQL'
 on:
   push:
     branches: [main]
+    # news 봇이 매일 PAT로 푸시하는 호와 상태 파일에는 분석할 코드가 없다.
+    paths-ignore:
+      - 'apps/news/content/**'
+      - 'services/news/state/**'
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [main]
