@@ -1,3 +1,5 @@
+import {format, parseISO, subDays} from 'date-fns'
+
 import {IssueSection} from '@/components/IssueList'
 import IssueView from '@/components/IssueView'
 import {getLatest, getNeighbors, listIssues} from '@/lib/content'
@@ -8,7 +10,11 @@ export default function Page() {
     return <p>아직 발행된 호가 없습니다.</p>
   }
   const {prev, next} = getNeighbors('daily', latest.slug)
-  const recentDaily = listIssues('daily').slice(1, 8)
+  // 정적 페이지라 빌드 시각이 아닌 최신 호 날짜를 기준으로 7일을 센다.
+  const since = format(subDays(parseISO(latest.date), 7), 'yyyy-MM-dd')
+  const recentDaily = listIssues('daily')
+    .slice(1)
+    .filter((issue) => issue.date > since)
   const recentWeekly = listIssues('weekly').slice(0, 3)
   return (
     <>
