@@ -43,8 +43,10 @@ jobs:
             그 문서가 이 작업의 유일한 지시서다. 오늘 날짜는 ${{ steps.date.outputs.today }}, ISO 주차는 ${{ steps.date.outputs.week }}, 6일 전 날짜는 ${{ steps.date.outputs.start }} 이다.
           # 실패하면 요약 JSON만으로는 원인을 알 수 없다. 전체 출력을 남긴다.
           show_full_output: 'true'
+          # allowedTools는 허용을 더할 뿐 나머지를 막지 않는다. 셸과 네트워크 도구는 따로 막는다.
           claude_args: |
-            --allowedTools "Read(services/news/**),Read(apps/news/content/**),Glob,Grep,Edit(apps/news/content/weekly/**)"
+            --allowedTools "Read(services/news/**),Read(apps/news/content/**),Glob,Grep,Write(apps/news/content/weekly/**),Edit(apps/news/content/weekly/**)"
+            --disallowedTools "Bash,WebFetch,WebSearch,NotebookEdit,Task,Agent"
 
       - id: check
         run: |

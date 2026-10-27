@@ -54,8 +54,11 @@ jobs:
             그 문서가 이 작업의 유일한 지시서다. 오늘 날짜는 ${{ steps.date.outputs.date }} 이다.
           # 실패하면 요약 JSON만으로는 원인을 알 수 없다. 전체 출력을 남긴다.
           show_full_output: 'true'
+          # allowedTools는 허용을 더할 뿐 나머지를 막지 않는다. 첫 실행에서 Bash가 그대로 돌았다.
+          # 셸과 네트워크 도구는 disallowedTools로 막아 토큰이 밖으로 새는 길을 닫는다.
           claude_args: |
-            --allowedTools "Read(services/news/**),Read(apps/news/content/**),Glob,Grep,Edit(apps/news/content/daily/**)"
+            --allowedTools "Read(services/news/**),Read(apps/news/content/**),Glob,Grep,Write(apps/news/content/daily/**),Edit(apps/news/content/daily/**)"
+            --disallowedTools "Bash,WebFetch,WebSearch,NotebookEdit,Task,Agent"
 
       - id: check
         run: |
