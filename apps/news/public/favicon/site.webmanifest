@@ -24,7 +24,7 @@
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "standalone",
-  "description": "매일 아침 9시, 주장이 있는 글만 골라 핵심을 요약합니다.",
+  "description": "매일 아침 10시, 오늘 읽을 글",
   "id": "/",
   "start_url": "/",
   "scope": "/"

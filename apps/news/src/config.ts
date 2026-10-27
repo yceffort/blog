@@ -5,7 +5,7 @@ const isDev = process.env.NODE_ENV === 'development'
 export const SiteConfig = {
   url: isDev ? 'http://localhost:3003' : 'https://news.yceffort.kr',
   title: 'yceffort news',
-  description: '매일 아침 9시, 주장이 있는 글만 골라 핵심을 요약합니다.',
+  description: '매일 아침 10시, 오늘 읽을 글',
   googleAnalyticsId: 'G-ND58S24JBX',
   menu: [
     {label: '일간', path: '/daily'},

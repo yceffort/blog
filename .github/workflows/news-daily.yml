@@ -1,7 +1,10 @@
 name: news-daily
 
-# schedule은 첫 수동 실행이 성공한 뒤 따로 넣는다. 올리는 순간 크론이 켜지는 것을 피한다.
 on:
+  # 10시(KST)에 배포와 알림이 나가도록 10분 앞서 시작한다. 큐레이션과 배포에 5분 안팎이 걸리고,
+  # 정각은 GitHub 스케줄이 몰려 늦어지거나 건너뛰는 시간대라 피한다.
+  schedule:
+    - cron: '50 0 * * *'
   workflow_dispatch:
     inputs:
       date:

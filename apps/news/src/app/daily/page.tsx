@@ -16,7 +16,7 @@ export default function Page() {
         <div className={styles.eyebrow}>Daily</div>
         <h1 className={styles.title}>일간</h1>
         <p className={styles.subtitle}>
-          {`매일 아침 9시에 발행합니다. 지금까지 ${issues.length}호.`}
+          {`매일 아침 10시에 발행합니다. 지금까지 ${issues.length}호.`}
         </p>
       </header>
       <IssueCalendar issues={issues.map(summarize)} />
