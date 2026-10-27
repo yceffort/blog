@@ -4,6 +4,7 @@ import * as styles from '@/components/Issue.styles'
 import IssueCalendar from '@/components/IssueCalendar'
 import {IssueArchive} from '@/components/IssueList'
 import {listIssues} from '@/lib/content'
+import {summarize} from '@/lib/summary'
 
 export const metadata: Metadata = {title: '일간'}
 
@@ -18,7 +19,7 @@ export default function Page() {
           {`매일 아침 9시에 발행합니다. 지금까지 ${issues.length}호.`}
         </p>
       </header>
-      <IssueCalendar issues={issues} />
+      <IssueCalendar issues={issues.map(summarize)} />
       <IssueArchive issues={issues} />
     </>
   )
