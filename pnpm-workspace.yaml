@@ -1,6 +1,7 @@
 packages:
   - 'apps/*'
   - 'packages/*'
+  - 'services/*'
 
 catalog:
   '@anthropic-ai/sdk': ^0.120.0
@@ -32,6 +33,7 @@ catalog:
 
 allowBuilds:
   '@parcel/watcher': false
+  esbuild: false
   lefthook: true
   protobufjs: false
 
