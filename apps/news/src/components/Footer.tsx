@@ -64,6 +64,9 @@ export default function Footer() {
             research
           </a>
         </div>
+        <p className={styles.line}>
+          이 사이트의 모든 내용은 블로그 주인의 취향에 따라 AI로 생성되었습니다.
+        </p>
       </div>
     </footer>
   )
