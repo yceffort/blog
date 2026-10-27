@@ -1,5 +1,6 @@
 {
   "installCommand": "pnpm install --frozen-lockfile",
+  "ignoreCommand": "git diff --quiet \"$VERCEL_GIT_PREVIOUS_SHA\" HEAD -- \":(top)\" \":(top,exclude)apps/news\" \":(top,exclude)services/news\" || exit 1",
   "headers": [
     {
       "source": "/(.*)",
