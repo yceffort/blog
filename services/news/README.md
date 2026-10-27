@@ -6,8 +6,8 @@
 
 두 단계로 나뉜다.
 
-1. **수집기** (`src/collect.ts`). RSS 67개와 API 2종(Hacker News, GitHub Trending)에서 긁고, URL을 정규화하고, 이미 내보낸 것을 걸러내고, 본문을 추출해 `out/candidates.json`을 만든다. LLM을 쓰지 않아 비용이 0이고 결과가 재현 가능하다.
-2. **큐레이터** (`anthropics/claude-code-action`). 그 JSON의 `content`를 읽고 판단해 호를 쓴다. 지시서는 `prompts/daily.md`와 `prompts/weekly.md`다.
+1. **수집기** (`src/collect.ts`). RSS 67개와 API 2종(Hacker News, GitHub Trending)에서 긁고, URL을 정규화하고, 이미 내보낸 것을 걸러내고, 남은 글 전부의 본문을 추출한다. 목록은 `out/index.json`, 본문은 `out/articles/<id>.txt`다. LLM을 쓰지 않아 비용이 0이고 결과가 재현 가능하다.
+2. **큐레이터** (`anthropics/claude-code-action`). 목록 전체를 훑어 읽을 글을 고르고, 그 본문을 읽고 판단해 호를 쓴다. 출처별 몫이나 상한은 없다. 지시서는 `prompts/daily.md`와 `prompts/weekly.md`다.
 
 판단이 필요 없는 일을 에이전트에게 맡기지 않는 것이 이 구조의 요점이다.
 
@@ -18,6 +18,7 @@
 ```bash
 pnpm install
 pnpm collect --dry-run    # state/seen-urls.json을 건드리지 않는다
+pnpm collect --dry-run --as-of 2026-10-21    # 그날 09시(KST)에 돌았던 것처럼 수집한다
 pnpm test
 pnpm typecheck
 ```
@@ -25,7 +26,7 @@ pnpm typecheck
 dry-run 결과 확인.
 
 ```bash
-node -e "const d=require('./out/candidates.json'); console.log(d.candidates.length); console.table(d.reports.filter(r=>!r.ok))"
+node -e "const d=require('./out/index.json'); console.log(d.candidates.length); console.table(d.reports.filter(r=>!r.ok))"
 ```
 
 ## secrets
@@ -42,7 +43,7 @@ Anthropic API 키는 쓰지 않는다. 구독으로 커버된다.
 
 ## 소스를 고치고 싶을 때
 
-`src/config/sources.ts`를 고친다. 추가하거나 빼면 `test/sources.test.ts`의 개수도 함께 고친다. `group: 'personal'`인 소스는 쇼트리스트에서 개인 블로그 몫을 받는다.
+`src/config/sources.ts`를 고친다. 추가하거나 빼면 `test/sources.test.ts`의 개수도 함께 고친다.
 
 피드는 예고 없이 죽는다. 호의 "수집 상태" 절에 실패한 소스 이름이 남으니 주기적으로 본다.
 
@@ -57,11 +58,10 @@ curl -sL -A 'news-bot/1.0' <피드 URL> | head -c 300
 `src/config/sources.ts`의 상수들이다.
 
 - `RECENT_WINDOW_HOURS` (168). 좁히면 개인 블로그와 프레임워크 블로그가 배제된다. 36시간에서 실측했을 때 개인 2건 프레임워크 0건이었다.
-- `SHORTLIST_SIZE` (30). 본문을 실제로 읽는 개수다. 늘리면 수집 시간과 구독 사용량이 함께 는다.
 - `HN_MIN_SCORE` (50), `HN_TOP_COUNT` (30).
 - `CONTENT_MAX_CHARS` (12000). 큐레이터에 넘기는 본문 상한.
 
-`src/shortlist.ts`의 `LANES`가 소스 종류별 몫을 정한다. 커뮤니티 6칸, 트렌딩 2칸, 개인 블로그 8칸이고 나머지가 남은 자리를 최신순으로 채운다. 몫을 없애면 발행량 많은 쪽이 전부 가져간다.
+큐레이터가 본문을 읽는 개수(25건 안팎)는 `prompts/daily.md`의 "훑기" 단계가 정한다. 늘리면 구독 사용량이 는다.
 
 ## 되돌리기
 

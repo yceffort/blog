@@ -33,9 +33,18 @@ export interface FetchReport {
   error?: string
 }
 
+// 큐레이터가 먼저 훑는 목록 한 줄. 본문은 out/articles/<id>.txt에 따로 둔다.
+export interface IndexEntry extends Omit<
+  Candidate,
+  'content' | 'contentSource'
+> {
+  id: string
+  chars: number
+}
+
 export interface CollectOutput {
   generatedAt: string
-  candidates: Candidate[]
+  candidates: IndexEntry[]
   reports: FetchReport[]
   droppedForExtraction: {title: string; url: string; reason: string}[]
 }

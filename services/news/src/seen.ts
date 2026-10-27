@@ -28,6 +28,15 @@ export function recordSeen(
   return next
 }
 
+// 소급 실행용. 그 시각 뒤에 기록된 URL은 그때는 아직 본 적이 없던 것이다.
+export function seenAsOf(seen: SeenStore, now: Date): SeenStore {
+  const next: SeenStore = {}
+  for (const [url, stamp] of Object.entries(seen)) {
+    if (new Date(stamp).getTime() <= now.getTime()) next[url] = stamp
+  }
+  return next
+}
+
 export function pruneSeen(seen: SeenStore, now: Date): SeenStore {
   const cutoff = now.getTime() - SEEN_RETENTION_DAYS * 24 * 60 * 60 * 1000
   const next: SeenStore = {}

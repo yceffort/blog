@@ -3,6 +3,11 @@ name: news-daily
 # schedule은 첫 수동 실행이 성공한 뒤 따로 넣는다. 올리는 순간 크론이 켜지는 것을 피한다.
 on:
   workflow_dispatch:
+    inputs:
+      date:
+        description: '소급해 만들 날짜(YYYY-MM-DD, KST). 비우면 오늘'
+        required: false
+        default: ''
 
 # 월요일에는 주간과 겹친다. 같은 그룹으로 묶어 직렬화한다.
 concurrency:
@@ -35,14 +40,25 @@ jobs:
 
       - run: pnpm install --frozen-lockfile --filter news-bot
 
-      - name: 후보 수집
-        run: pnpm --filter news-bot collect
-        env:
-          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
-
       # 큐레이터에게 셸을 주지 않으므로 날짜는 여기서 정해 넘긴다.
       - id: date
-        run: echo "date=$(TZ=Asia/Seoul date +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+        env:
+          AS_OF: ${{ inputs.date }}
+        run: |
+          if [ -z "$AS_OF" ]; then
+            echo "date=$(TZ=Asia/Seoul date +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+          elif [[ "$AS_OF" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+            echo "date=$AS_OF" >> "$GITHUB_OUTPUT"
+          else
+            echo "date 입력이 YYYY-MM-DD 형식이 아니다: $AS_OF"
+            exit 1
+          fi
+
+      - name: 후보 수집
+        env:
+          AS_OF: ${{ inputs.date }}
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        run: pnpm --filter news-bot collect ${AS_OF:+--as-of "$AS_OF"}
 
       - name: 일간 호 작성
         uses: anthropics/claude-code-action@v1

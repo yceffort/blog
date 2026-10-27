@@ -256,10 +256,6 @@ export const NEWSLETTERS = new Set(
   RSS_FEEDS.filter((f) => f.group === 'newsletter').map((f) => f.name),
 )
 
-export const PERSONAL_BLOGS = new Set(
-  RSS_FEEDS.filter((f) => f.group === 'personal').map((f) => f.name),
-)
-
 export const HN_TOP_COUNT = 30
 export const HN_MIN_SCORE = 50
 
@@ -269,6 +265,5 @@ export const FETCH_TIMEOUT_MS = 20_000
 // 구조적으로 배제된다(실측: 36시간에 개인 2건 프레임워크 0건, 7일에 25건과 5건).
 // 창을 넓히고 재등장은 seen-urls.json이 막는다.
 export const RECENT_WINDOW_HOURS = 168
-export const SHORTLIST_SIZE = 30
 export const CONTENT_MAX_CHARS = 12_000
 export const SEEN_RETENTION_DAYS = 60

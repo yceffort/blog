@@ -1,6 +1,12 @@
 import {describe, expect, it} from 'vitest'
 
-import {filterUnseen, pruneSeen, recordSeen, type SeenStore} from '../src/seen'
+import {
+  filterUnseen,
+  pruneSeen,
+  recordSeen,
+  seenAsOf,
+  type SeenStore,
+} from '../src/seen'
 import type {Article} from '../src/types'
 
 function article(url: string): Article {
@@ -74,5 +80,15 @@ describe('pruneSeen', () => {
 
   it('날짜가 깨진 항목은 지운다', () => {
     expect(pruneSeen({'https://x.com': 'garbage'}, NOW)).toEqual({})
+  })
+})
+
+describe('seenAsOf', () => {
+  it('기준 시각 뒤에 기록된 URL을 뺀다', () => {
+    const seen: SeenStore = {
+      'https://a.com/1': '2026-08-29T23:59:59Z',
+      'https://a.com/2': '2026-08-30T00:00:01Z',
+    }
+    expect(Object.keys(seenAsOf(seen, NOW))).toEqual(['https://a.com/1'])
   })
 })
