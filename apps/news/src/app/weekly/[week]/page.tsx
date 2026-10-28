@@ -3,7 +3,8 @@ import {notFound} from 'next/navigation'
 
 import IssueView from '@/components/IssueView'
 import {getIssue, getNeighbors, listIssues} from '@/lib/content'
-import {issueTitle} from '@/lib/format'
+import {issueHref, issueSubtitle, issueTitle} from '@/lib/format'
+import {pageMetadata} from '@/lib/metadata'
 
 interface Params {
   week: string
@@ -23,7 +24,11 @@ export async function generateMetadata({
   if (!issue) {
     return {}
   }
-  return {title: `${issue.slug.slice(0, 4)}년 ${issueTitle(issue)}`}
+  return pageMetadata({
+    title: `${issue.slug.slice(0, 4)}년 ${issueTitle(issue)}`,
+    description: issueSubtitle(issue) ?? undefined,
+    path: issueHref(issue),
+  })
 }
 
 export default async function Page({params}: {params: Promise<Params>}) {

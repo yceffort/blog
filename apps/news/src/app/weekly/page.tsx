@@ -3,8 +3,9 @@ import type {Metadata} from 'next'
 import * as styles from '@/components/Issue.styles'
 import {IssueArchive} from '@/components/IssueList'
 import {listIssues} from '@/lib/content'
+import {pageMetadata} from '@/lib/metadata'
 
-export const metadata: Metadata = {title: '주간'}
+export const metadata: Metadata = pageMetadata({title: '주간', path: '/weekly'})
 
 export default function Page() {
   const issues = listIssues('weekly')

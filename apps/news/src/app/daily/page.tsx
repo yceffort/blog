@@ -4,9 +4,10 @@ import * as styles from '@/components/Issue.styles'
 import IssueCalendar from '@/components/IssueCalendar'
 import {IssueArchive} from '@/components/IssueList'
 import {listIssues} from '@/lib/content'
+import {pageMetadata} from '@/lib/metadata'
 import {summarize} from '@/lib/summary'
 
-export const metadata: Metadata = {title: '일간'}
+export const metadata: Metadata = pageMetadata({title: '일간', path: '/daily'})
 
 export default function Page() {
   const issues = listIssues('daily')

@@ -8,7 +8,7 @@ import {
   OutboundLinkTracker,
   Providers,
 } from '@yceffort/shared/components'
-import {THEME_COOKIE_SCRIPT} from '@yceffort/shared/utils'
+import {buildOgImageUrl, THEME_COOKIE_SCRIPT} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 import {Suspense, type ReactNode} from 'react'
 
@@ -39,6 +39,20 @@ export const metadata: Metadata = {
     siteName: SiteConfig.title,
     locale: 'ko_KR',
     type: 'website',
+    images: [
+      {
+        url: buildOgImageUrl({
+          title: SiteConfig.title,
+          description: SiteConfig.description,
+        }),
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+  // title, description, images는 Next가 각 페이지의 openGraph에서 채운다
+  twitter: {
+    card: 'summary_large_image',
   },
   formatDetection: {
     email: false,
