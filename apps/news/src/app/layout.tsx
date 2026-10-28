@@ -13,7 +13,6 @@ import type {Metadata} from 'next'
 import {Suspense, type ReactNode} from 'react'
 
 import LayoutWrapper from '@/components/LayoutWrapper'
-import PreferenceSync from '@/components/PreferenceSync'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
 import {SiteConfig} from '@/config'
 import startupImages from '@/splash.json'
@@ -109,7 +108,6 @@ export default function Layout({children}: {children: ReactNode}) {
         />
         <AmbientEffects />
         <Providers>
-          <PreferenceSync />
           <LayoutWrapper>{children}</LayoutWrapper>
         </Providers>
         {process.env.NODE_ENV === 'production' && (
