@@ -4,7 +4,13 @@ import {Monitor, Moon, Sun} from '@yceffort/shared/components'
 import {usePushSubscription} from '@yceffort/shared/hooks'
 import {getCookie, setCookie} from '@yceffort/shared/utils'
 import {useTheme} from 'next-themes'
-import {useEffect, useRef, useState} from 'react'
+import {
+  startTransition,
+  useEffect,
+  useOptimistic,
+  useRef,
+  useState,
+} from 'react'
 
 import * as tweaksStyles from '@/components/settings/tweaks.styles'
 
@@ -137,6 +143,18 @@ export default function TweaksPanel({open, onClose}: Props) {
     })
   }
   const {pushState, togglePush} = usePushSubscription('tweaks')
+  // 구독은 푸시 서비스 등록과 서버 저장이 끝나야 'on'이 되므로, 그동안 누른 결과를 먼저 보여 주고 실패하면 되돌린다.
+  const [pushOn, setPushOn] = useOptimistic(pushState === 'on')
+  const onTogglePush = () => {
+    // 스위치가 버튼이 아니라 처리 중에도 눌리므로, 그때 겉모습만 뒤집히지 않게 막는다.
+    if (pushState === 'busy') {
+      return
+    }
+    startTransition(async () => {
+      setPushOn(!pushOn)
+      await togglePush()
+    })
+  }
   const [dragOffset, setDragOffset] = useState(0)
   const dragStartY = useRef<number | null>(null)
   const onHandleTouchStart = (e: React.TouchEvent) => {
@@ -297,14 +315,14 @@ export default function TweaksPanel({open, onClose}: Props) {
             className={`tweaks-switch ${tweaksStyles.tweaks_switch}`}
             role="switch"
             aria-label="new post alerts"
-            aria-checked={pushState === 'on'}
+            aria-checked={pushOn}
             aria-busy={pushState === 'busy'}
             tabIndex={0}
-            data-on={pushState === 'on'}
-            onClick={() => void togglePush()}
+            data-on={pushOn}
+            onClick={onTogglePush}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
-                void togglePush()
+                onTogglePush()
               }
             }}
           />
