@@ -23,10 +23,7 @@ const styles = stylex.create({
       justifyContent: 'space-between',
       maxWidth: '1440px',
       margin: '0 auto',
-      padding: {
-        default: '12px 16px',
-        '@media (min-width: 640px)': '16px 32px',
-      },
+      padding: '16px 32px',
       gap: '16px',
     },
   },
