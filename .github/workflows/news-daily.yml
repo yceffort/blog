@@ -1,10 +1,8 @@
 name: news-daily
 
 on:
-  # 10시(KST)에 배포와 알림이 나가도록 10분 앞서 시작한다. 큐레이션과 배포에 5분 안팎이 걸리고,
-  # 정각은 GitHub 스케줄이 몰려 늦어지거나 건너뛰는 시간대라 피한다.
-  schedule:
-    - cron: '50 0 * * *'
+  # 매일 실행은 news 앱의 Vercel Cron(apps/news/vercel.json)이 이 workflow_dispatch로 시작한다.
+  # GitHub 예약 실행은 부하가 몰리면 늦거나 빠져서 쓰지 않는다.
   workflow_dispatch:
     inputs:
       date:
