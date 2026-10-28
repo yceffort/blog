@@ -1,3 +1,4 @@
+import {buildOgImageUrl} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 import {notFound, permanentRedirect} from 'next/navigation'
 import {ViewTransition} from 'react'
@@ -10,7 +11,7 @@ import {PostArticle} from '@/components/post/PostArticle'
 import * as readingProgressStyles from '@/components/post/reading-progress.styles'
 import * as seriesStyles from '@/components/series/series.styles'
 import {SiteConfig} from '@/config'
-import {buildOgImageUrl} from '@/utils/og'
+import {openGraphBase} from '@/utils/metadata'
 import {resolveThumbnail, type Locale} from '@/utils/Post'
 import {findSeriesBySlug, getAllSeries} from '@/utils/Series'
 
@@ -35,6 +36,7 @@ export async function seriesDetailMetadata(
     title: series.name,
     description: series.description,
     openGraph: {
+      ...openGraphBase(locale),
       title: series.name,
       description: series.description,
       url: `${SiteConfig.url}${pathPrefix}/series/${slug}`,

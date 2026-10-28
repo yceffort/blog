@@ -1,12 +1,14 @@
+import {buildOgImageUrl} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 
 import HomeView from '@/components/home/HomeView'
 import {SiteConfig} from '@/config'
-import {buildOgImageUrl} from '@/utils/og'
+import {openGraphBase} from '@/utils/metadata'
 export const metadata: Metadata = {
   title: SiteConfig.title,
   description: SiteConfig.subtitle,
   openGraph: {
+    ...openGraphBase('ko'),
     title: SiteConfig.title,
     description: SiteConfig.subtitle,
     url: SiteConfig.url,

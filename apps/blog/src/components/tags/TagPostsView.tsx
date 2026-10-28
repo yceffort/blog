@@ -1,10 +1,11 @@
-import {pageCount} from '@yceffort/shared/utils'
+import {buildOgImageUrl, pageCount} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 import {permanentRedirect} from 'next/navigation'
 
 import PaginatedList from '@/components/post/PaginatedList'
 import {SiteConfig} from '@/config'
 import {DEFAULT_NUMBER_OF_POSTS} from '@/constants'
+import {openGraphBase} from '@/utils/metadata'
 import {getAllPosts, getAllTagsFromPosts, type Locale} from '@/utils/Post'
 import {pathPrefixOf} from '@/utils/postPaths'
 
@@ -12,14 +13,25 @@ export function tagPostsMetadata(
   {tag, id}: {tag: string; id: string},
   locale: Locale,
 ): Metadata {
-  const url = `${SiteConfig.url}${pathPrefixOf(locale)}/tags/${encodeURIComponent(tag)}/pages/${id}`
+  const path = `${pathPrefixOf(locale)}/tags/${encodeURIComponent(tag)}/pages/${id}`
+  const url = `${SiteConfig.url}${path}`
+  const title = `${tag}: Page ${id}`
   return {
-    title: `${tag}: Page ${id}`,
+    title,
     alternates: {
       canonical: url,
     },
     openGraph: {
+      ...openGraphBase(locale),
+      title,
       url,
+      images: [
+        {
+          url: buildOgImageUrl({title, path, type: 'page'}),
+          width: 1200,
+          height: 630,
+        },
+      ],
     },
   }
 }

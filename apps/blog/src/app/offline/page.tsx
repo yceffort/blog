@@ -74,7 +74,7 @@ const sx = stylex.create({
   },
 })
 export const metadata: Metadata = {
-  title: 'Offline - yceffort',
+  title: 'Offline',
 }
 export default function OfflinePage() {
   return (

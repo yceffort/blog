@@ -1,4 +1,4 @@
-import {stripTitleEmphasis} from '@yceffort/shared/utils'
+import {buildOgImageUrl, stripTitleEmphasis} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 import Link from 'next/link'
 import {ViewTransition} from 'react'
@@ -8,10 +8,29 @@ import LinkPendingHint from '@/components/post/LinkPendingHint'
 import PostDate from '@/components/post/PostDate'
 import {SiteConfig} from '@/config'
 import type {Post} from '@/type'
+import {openGraphBase} from '@/utils/metadata'
 import {getAllPosts} from '@/utils/Post'
 export const metadata: Metadata = {
   title: 'Archive',
   description: `${SiteConfig.title}의 전체 글을 연도별로 모아봅니다.`,
+  openGraph: {
+    ...openGraphBase('ko'),
+    title: 'Archive',
+    description: `${SiteConfig.title}의 전체 글을 연도별로 모아봅니다.`,
+    url: `${SiteConfig.url}/archive`,
+    images: [
+      {
+        url: buildOgImageUrl({
+          title: 'Archive',
+          description: `${SiteConfig.title}의 전체 글을 연도별로 모아봅니다.`,
+          path: '/archive',
+          type: 'page',
+        }),
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
   alternates: {
     canonical: `${SiteConfig.url}/archive`,
   },

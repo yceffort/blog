@@ -1,5 +1,9 @@
 import * as stylex from '@stylexjs/stylex'
-import {parseTitleEmphasis, stripTitleEmphasis} from '@yceffort/shared/utils'
+import {
+  buildOgImageUrl,
+  parseTitleEmphasis,
+  stripTitleEmphasis,
+} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 import {cacheLife, cacheTag} from 'next/cache'
 import Link from 'next/link'
@@ -21,7 +25,7 @@ import SeriesNavigation from '@/components/series/SeriesNavigation'
 import SeriesPrevNext from '@/components/series/SeriesPrevNext'
 import {SiteConfig} from '@/config'
 import {buildBlogPostingJsonLd, buildBreadcrumbJsonLd} from '@/utils/jsonLd'
-import {buildOgImageUrl} from '@/utils/og'
+import {openGraphBase} from '@/utils/metadata'
 import {
   findPostByYearAndSlug,
   getPrerenderSlugs,
@@ -111,8 +115,8 @@ export async function generatePostMetadata(
     openGraph: {
       title: plainTitle,
       description: post.frontMatter.description,
+      ...openGraphBase(locale),
       url: `${SiteConfig.url}${pathPrefix}/${postSlug}`,
-      ...(locale === 'en' && {locale: 'en_US'}),
       images: [
         {
           url: buildOgImageUrl({

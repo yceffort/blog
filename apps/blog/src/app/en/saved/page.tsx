@@ -3,7 +3,7 @@ import type {Metadata} from 'next'
 import {SavedPostsView} from '@/components/pwa/SavedPostsView'
 
 export const metadata: Metadata = {
-  title: 'Saved posts - yceffort',
+  title: 'Saved posts',
   robots: {index: false},
 }
 

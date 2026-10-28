@@ -1,3 +1,4 @@
+import {buildOgImageUrl} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 
 import * as tagsStyles from '@/app/tags/tags.styles'
@@ -5,6 +6,7 @@ import * as heroStyles from '@/components/home/hero.styles'
 import * as recentStyles from '@/components/home/recent.styles'
 import SeriesRow from '@/components/series/SeriesRow'
 import {SiteConfig} from '@/config'
+import {openGraphBase} from '@/utils/metadata'
 import type {Locale} from '@/utils/Post'
 import {getAllSeries} from '@/utils/Series'
 
@@ -24,6 +26,24 @@ export function seriesIndexMetadata(locale: Locale): Metadata {
   return {
     title: 'Series',
     description: 'All series',
+    openGraph: {
+      ...openGraphBase(locale),
+      title: 'Series',
+      description: 'All series',
+      url: `${SiteConfig.url}${pathPrefix}/series`,
+      images: [
+        {
+          url: buildOgImageUrl({
+            title: 'Series',
+            description: 'All series',
+            path: `${pathPrefix}/series`,
+            type: 'page',
+          }),
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
     alternates: {
       canonical: `${SiteConfig.url}${pathPrefix}/series`,
       languages:

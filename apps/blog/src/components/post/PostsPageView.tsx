@@ -1,22 +1,23 @@
-import {pageCount} from '@yceffort/shared/utils'
+import {buildOgImageUrl, pageCount} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 
 import PaginatedList from '@/components/post/PaginatedList'
 import {SiteConfig} from '@/config'
 import {DEFAULT_NUMBER_OF_POSTS} from '@/constants'
-import {buildOgImageUrl} from '@/utils/og'
+import {openGraphBase} from '@/utils/metadata'
 import {getAllPosts, type Locale} from '@/utils/Post'
 import {pathPrefixOf} from '@/utils/postPaths'
 
 export function postsPageMetadata(id: string, locale: Locale): Metadata {
   const path = `${pathPrefixOf(locale)}/pages/${id}`
-  const pageTitle = `Page ${id} - ${SiteConfig.title}${locale === 'en' ? ' (English)' : ''}`
+  const pageTitle = `Page ${id}${locale === 'en' ? ' (English)' : ''}`
   const pageDescription = `${locale === 'en' ? 'English posts' : 'Posts'} list page ${id}`
 
   return {
     title: pageTitle,
     description: pageDescription,
     openGraph: {
+      ...openGraphBase(locale),
       title: pageTitle,
       description: pageDescription,
       url: `${SiteConfig.url}${path}`,

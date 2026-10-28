@@ -8,7 +8,7 @@ import {
   OutboundLinkTracker,
   Providers,
 } from '@yceffort/shared/components'
-import {THEME_COOKIE_SCRIPT} from '@yceffort/shared/utils'
+import {buildOgImageUrl, THEME_COOKIE_SCRIPT} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 
 import '@/styles/stylex.css'
@@ -26,7 +26,6 @@ import PullToRefresh from '@/components/pwa/PullToRefresh'
 import {ServiceWorkerRegistration} from '@/components/pwa/ServiceWorkerRegistration'
 import {SiteConfig} from '@/config'
 import startupImages from '@/splash.json'
-import {buildOgImageUrl} from '@/utils/og'
 import {getAllPosts} from '@/utils/Post'
 const sx = stylex.create({
   body: {
@@ -37,8 +36,11 @@ const sx = stylex.create({
   },
 })
 export const metadata: Metadata = {
-  title: SiteConfig.title,
-  description: SiteConfig.url,
+  title: {
+    default: SiteConfig.title,
+    template: `%s | ${SiteConfig.title}`,
+  },
+  description: 'Frontend-focused full stack engineer',
   authors: [
     {
       name: SiteConfig.author.name,
@@ -73,17 +75,9 @@ export const metadata: Metadata = {
     locale: 'ko_KR',
     type: 'website',
   },
+  // title, description, images는 Next가 각 페이지의 openGraph에서 채운다
   twitter: {
     card: 'summary_large_image',
-    title: SiteConfig.title,
-    description: 'Frontend-focused full stack engineer',
-    images: [
-      buildOgImageUrl({
-        title: SiteConfig.title,
-        description: 'Frontend-focused full stack engineer',
-        type: 'page',
-      }),
-    ],
   },
   icons: {
     icon: '/favicon/apple-touch-icon.png',

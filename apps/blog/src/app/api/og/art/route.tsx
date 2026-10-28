@@ -1,8 +1,6 @@
+import {loadOgFont, unblockSvgLoader} from '@yceffort/shared/og'
 import {parseTitleEmphasis} from '@yceffort/shared/utils'
 import {ImageResponse} from 'next/og'
-
-import {loadOgFont} from '@/utils/ogFont'
-import {unblockSvgLoader} from '@/utils/ogSharpUnblock'
 
 import {LAYOUTS, LAYOUT_BY_NAME, HEIGHT, INK, WIDTH, alpha} from './layouts'
 import type {Ctx} from './layouts'

@@ -1,3 +1,4 @@
+import {buildOgImageUrl} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 import Link from 'next/link'
 import {ViewTransition} from 'react'
@@ -5,24 +6,25 @@ import {ViewTransition} from 'react'
 import * as tagsStyles from '@/app/tags/tags.styles'
 import * as heroStyles from '@/components/home/hero.styles'
 import {SiteConfig} from '@/config'
-import {buildOgImageUrl} from '@/utils/og'
+import {openGraphBase} from '@/utils/metadata'
 import {getAllTagsFromPosts, type Locale} from '@/utils/Post'
 import {pathPrefixOf} from '@/utils/postPaths'
 
-// tags 하위 페이지 전체(태그별 목록 포함)에 걸리는 기본 메타데이터
+// tags 하위 페이지 전체(태그별 목록 포함)에 걸리는 기본 메타데이터.
+// title은 두지 않는다. 중간 layout이 title을 문자열로 정하면 그 아래 페이지에 루트 template이 붙지 않는다
 export function tagsLayoutMetadata(locale: Locale): Metadata {
   const pathPrefix = pathPrefixOf(locale)
   return {
-    title: 'Tags - ' + SiteConfig.title,
     description: 'All posts by tags',
     openGraph: {
-      title: 'Tags - ' + SiteConfig.title,
+      ...openGraphBase(locale),
+      title: 'Tags',
       description: 'All posts by tags',
       url: `${SiteConfig.url}${pathPrefix}/tags`,
       images: [
         {
           url: buildOgImageUrl({
-            title: 'Tags - ' + SiteConfig.title,
+            title: 'Tags',
             description: 'All posts by tags',
             path: `${pathPrefix}/tags`,
             type: 'page',

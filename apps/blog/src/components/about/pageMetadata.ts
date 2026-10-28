@@ -1,7 +1,8 @@
+import {buildOgImageUrl} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 
 import {SiteConfig} from '@/config'
-import {buildOgImageUrl} from '@/utils/og'
+import {openGraphBase} from '@/utils/metadata'
 import {pathPrefixOf, type Locale} from '@/utils/postPaths'
 
 const pages = {
@@ -28,18 +29,18 @@ export function pageMetadata(
 ): Metadata {
   const {title, description} = pages[page]
   const path = `${pathPrefixOf(locale)}/${page}`
-  const fullTitle = `${title} - ${SiteConfig.title}`
   return {
-    title: fullTitle,
+    title,
     description: description[locale],
     openGraph: {
-      title: fullTitle,
+      ...openGraphBase(locale),
+      title,
       description: description[locale],
       url: `${SiteConfig.url}${path}`,
       images: [
         {
           url: buildOgImageUrl({
-            title: fullTitle,
+            title,
             description: description[locale],
             path,
             type: 'page',
