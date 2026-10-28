@@ -9,6 +9,7 @@
     ".": "./src/index.ts",
     "./components": "./src/components/index.ts",
     "./utils": "./src/utils/index.ts",
+    "./og": "./src/og/index.ts",
     "./hooks": "./src/hooks/usePushSubscription.ts",
     "./server": "./src/server/index.ts",
     "./scripts/*": "./scripts/*.mjs"
@@ -18,7 +19,8 @@
     "isbot": "catalog:",
     "next-themes": "catalog:",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "sharp": "catalog:"
   },
   "peerDependencies": {
     "next": ">=14.0.0"
@@ -29,7 +31,6 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "next": "catalog:",
-    "sharp": "catalog:",
     "typescript": "catalog:",
     "undraw-svg": "catalog:"
   }

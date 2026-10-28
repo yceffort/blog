@@ -43,7 +43,7 @@
       }
     },
     {
-      "files": ["**/api/og/**"],
+      "files": ["**/api/og/**", "packages/shared/src/og/**"],
       "rules": {
         "nextjs/no-img-element": "off"
       }
