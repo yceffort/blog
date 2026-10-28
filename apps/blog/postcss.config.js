@@ -7,7 +7,10 @@ export default {
     [fileURLToPath(new URL('./scripts/postcss-imports.cjs', import.meta.url))]:
       {},
     '@stylexjs/postcss-plugin': {
-      include: ['src/**/*.{js,jsx,ts,tsx}'],
+      include: [
+        'src/**/*.{js,jsx,ts,tsx}',
+        '../../packages/shared/src/**/*.{js,jsx,ts,tsx}',
+      ],
       babelConfig: {
         babelrc: false,
         configFile: false,

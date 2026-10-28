@@ -1,12 +1,12 @@
 'use client'
 
+import {siteHeaderStyles} from '@yceffort/shared/components'
 import type MiniSearch from 'minisearch'
 import type {SearchResult} from 'minisearch'
 import Link from 'next/link'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import type {ReactNode} from 'react'
 
-import * as headerStyles from '@/components/layout/header.styles'
 import * as searchInputStyles from '@/components/search/search-input.styles'
 import * as searchStyles from '@/components/search/search.styles'
 import {useLocale} from '@/hooks/useLocale'
@@ -109,7 +109,7 @@ export default function SiteSearch() {
     <>
       <button
         type="button"
-        className={`icon-btn ${headerStyles.icon_btn}`}
+        className={siteHeaderStyles.icon_btn}
         aria-label={locale === 'en' ? 'Search' : '검색'}
         onClick={handleOpen}
       >

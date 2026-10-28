@@ -1,9 +1,9 @@
 'use client'
 
 import * as stylex from '@stylexjs/stylex'
+import {siteHeaderStyles} from '@yceffort/shared/components'
 import {usePathname} from 'next/navigation'
 
-import * as headerStyles from '@/components/layout/header.styles'
 import {useLocale} from '@/hooks/useLocale'
 
 const sx = stylex.create({
@@ -37,7 +37,7 @@ export default function LanguageSwitch({enSlugs}: {enSlugs: string[]}) {
       onClick={() => {
         document.cookie = `locale=${locale === 'ko' ? 'en' : 'ko'};path=/;max-age=${60 * 60 * 24 * 365}`
       }}
-      className={`icon-btn ${headerStyles.icon_btn} ${stylex.props(sx.link).className}`}
+      className={`${siteHeaderStyles.icon_btn} ${stylex.props(sx.link).className}`}
       aria-label={locale === 'ko' ? 'Switch to English' : '한국어로 전환'}
     >
       {locale === 'ko' ? 'EN' : 'KO'}
