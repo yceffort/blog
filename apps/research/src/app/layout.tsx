@@ -8,15 +8,23 @@ import {
   OutboundLinkTracker,
   Providers,
 } from '@yceffort/shared/components'
-import {THEME_COOKIE_SCRIPT} from '@yceffort/shared/utils'
+import {buildOgImageUrl, THEME_COOKIE_SCRIPT} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 import {Suspense, type ReactNode} from 'react'
 
 import {OfflineRegistration} from '@/components/offline/OfflineRegistration'
-import {SiteConfig} from '@/config'
+import {openGraphBase, SiteConfig} from '@/config'
+
+const ogImageUrl = buildOgImageUrl({
+  title: SiteConfig.title,
+  description: '프론트엔드 딥다이브 슬라이드',
+})
 
 export const metadata: Metadata = {
-  title: SiteConfig.title,
+  title: {
+    default: SiteConfig.title,
+    template: `%s | ${SiteConfig.title}`,
+  },
   description: 'yceffort research — 프론트엔드 딥다이브 슬라이드',
   authors: [{name: SiteConfig.author.name}],
   referrer: 'origin-when-cross-origin',
@@ -24,26 +32,15 @@ export const metadata: Metadata = {
   publisher: SiteConfig.author.name,
   metadataBase: new URL('https://research.yceffort.kr'),
   openGraph: {
+    ...openGraphBase,
     title: SiteConfig.title,
     description: 'yceffort research — 프론트엔드 딥다이브 슬라이드',
     url: SiteConfig.url,
-    siteName: SiteConfig.title,
-    images: [
-      {
-        url: `/api/og?title=${encodeURIComponent(SiteConfig.title)}&description=${encodeURIComponent('프론트엔드 딥다이브 슬라이드')}`,
-        width: 1200,
-        height: 630,
-      },
-    ],
-    type: 'website',
+    images: [{url: ogImageUrl, width: 1200, height: 630}],
   },
+  // title, description, images는 Next가 각 페이지의 openGraph에서 채운다
   twitter: {
     card: 'summary_large_image',
-    title: SiteConfig.title,
-    description: 'yceffort research — 프론트엔드 딥다이브 슬라이드',
-    images: [
-      `/api/og?title=${encodeURIComponent(SiteConfig.title)}&description=${encodeURIComponent('프론트엔드 딥다이브 슬라이드')}`,
-    ],
   },
   formatDetection: {
     email: false,

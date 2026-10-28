@@ -1,7 +1,7 @@
 import {notFound} from 'next/navigation'
 
 import {MarpSlides} from '@/components/MarpSlides'
-import {SiteConfig} from '@/config'
+import {openGraphBase, SiteConfig} from '@/config'
 import {getRenderedSlide, getSlideStaticParams} from '@/lib/slidesIndex'
 
 import {devBanner} from '../devBanner.styles'
@@ -32,6 +32,7 @@ export async function generateMetadata(props: {
       },
     },
     openGraph: {
+      ...openGraphBase,
       title: data.title,
       description: data.description,
       url: `${SiteConfig.url}/slides/${params.slug}`,

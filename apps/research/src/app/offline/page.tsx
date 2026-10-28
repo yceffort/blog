@@ -3,7 +3,7 @@ import type {Metadata} from 'next'
 import {OfflineLibrary} from '@/components/offline/OfflineLibrary'
 
 export const metadata: Metadata = {
-  title: 'Offline · yceffort research',
+  title: 'Offline',
   robots: {index: false, follow: false},
 }
 
