@@ -11,11 +11,11 @@ export const SiteConfig = {
   menu: [
     {label: 'Offline', path: '/offline'},
     {
-      label: '📚 Blog',
+      label: 'Blog',
       path: isDev ? 'http://localhost:3000' : 'https://yceffort.kr',
     },
     {
-      label: '📰 News',
+      label: 'News',
       path: isDev ? 'http://localhost:3003' : 'https://news.yceffort.kr',
     },
   ],
