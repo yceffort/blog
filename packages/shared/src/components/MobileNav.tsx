@@ -6,27 +6,7 @@ import {memo, useCallback, useEffect, useRef, useState} from 'react'
 import type {PointerEvent as ReactPointerEvent, MouseEvent} from 'react'
 import {createPortal} from 'react-dom'
 
-export interface MobileNavClassNames {
-  root: string
-  toggle: string
-  toggleIcon: string
-  visible: string
-  hidden: string
-  backdrop: string
-  sheetVisible: string
-  sheetHidden: string
-  sheet: string
-  dialog: string
-  handleContainer: string
-  handle: string
-  heading: string
-  nav: string
-  link: string
-  index: string
-  label: string
-  activeDot: string
-  close: string
-}
+import {mobileNavClassNames as classNames} from './MobileNav.styles'
 
 interface MenuItem {
   label: string
@@ -35,7 +15,6 @@ interface MenuItem {
 
 interface MobileNavProps {
   menu: MenuItem[]
-  classNames: MobileNavClassNames
 }
 
 // 닫힘 전환(220ms)이 끝난 뒤에 언마운트한다
@@ -55,10 +34,7 @@ interface DragState {
   offset: number
 }
 
-const MobileNav = memo(function MobileNavBase({
-  menu,
-  classNames,
-}: MobileNavProps) {
+const MobileNav = memo(function MobileNavBase({menu}: MobileNavProps) {
   const pathname = usePathname() ?? '/'
   const [rendered, setRendered] = useState(false)
   const [open, setOpen] = useState(false)

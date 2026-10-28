@@ -16,6 +16,7 @@
   },
   "scripts": {},
   "dependencies": {
+    "@stylexjs/stylex": "catalog:",
     "isbot": "catalog:",
     "next-themes": "catalog:",
     "react": "catalog:",

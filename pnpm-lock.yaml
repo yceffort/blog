@@ -586,6 +586,9 @@ importers:
 
   packages/shared:
     dependencies:
+      '@stylexjs/stylex':
+        specifier: 'catalog:'
+        version: 0.19.1
       isbot:
         specifier: 'catalog:'
         version: 5.2.2

@@ -20,3 +20,7 @@ export {
   FacebookIcon,
   YoutubeIcon,
 } from './icons/social'
+export {SiteHeader} from './SiteHeader'
+export * as siteHeaderStyles from './SiteHeader.styles'
+export {TweaksPanel, TweaksSwitchRow} from './TweaksPanel'
+export * as tweaksStyles from './TweaksPanel.styles'
