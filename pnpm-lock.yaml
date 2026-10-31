@@ -218,8 +218,8 @@ importers:
         specifier: 'catalog:'
         version: 0.120.0(zod@4.4.3)
       '@google-analytics/data':
-        specifier: ^7.0.0
-        version: 7.0.0(supports-color@10.2.2)
+        specifier: ^7.3.0
+        version: 7.3.0(supports-color@10.2.2)
       '@opentelemetry/api':
         specifier: 1.9.1
         version: 1.9.1
@@ -1037,8 +1037,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@google-analytics/data@7.0.0':
-    resolution: {integrity: sha512-pAucE4Ek6i6KDprqYXioAhKl2aiKUuM6i2IThOtZV/Andr95+XF3fBsUW67MgT1a+LcwJTCCJLhabzZWGDp9pA==}
+  '@google-analytics/data@7.3.0':
+    resolution: {integrity: sha512-LJ/smH0TxhTLYve8rn1Kwis90WCXXihKTGODbJkTu5L+EDbqJBgcP2Dsl6opZ9zhBdkyhqn1cZGnQD9jZIVSRw==}
     engines: {node: '>=22'}
 
   '@grpc/grpc-js@1.14.4':
@@ -5266,7 +5266,7 @@ snapshots:
   '@esbuild/win32-x64@0.28.2':
     optional: true
 
-  '@google-analytics/data@7.0.0(supports-color@10.2.2)':
+  '@google-analytics/data@7.3.0(supports-color@10.2.2)':
     dependencies:
       google-gax: 6.0.0(supports-color@10.2.2)
     transitivePeerDependencies:
