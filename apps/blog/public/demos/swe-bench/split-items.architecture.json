@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "묶음 PR 하나를 주제별 문항 3개로 쪼개는 구조",
+    "output": "split-items.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "pr",
+      "type": "external",
+      "label": "병합 PR 1건",
+      "sublabel": "서로 다른 수정 3가지",
+      "pos": [
+        20,
+        240
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "base",
+      "type": "database",
+      "label": "base 커밋",
+      "sublabel": "PR 직전 코드",
+      "pos": [
+        330,
+        110
+      ],
+      "size": [
+        160,
+        60
+      ]
+    },
+    {
+      "id": "testpatch",
+      "type": "backend",
+      "label": "테스트 패치",
+      "sublabel": "f2p 전체 목록",
+      "pos": [
+        330,
+        240
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "gold",
+      "type": "backend",
+      "label": "정답 패치",
+      "sublabel": "검증용, 에이전트 비공개",
+      "pos": [
+        330,
+        370
+      ],
+      "size": [
+        160,
+        60
+      ],
+      "tag": "채점에는 안 씀"
+    },
+    {
+      "id": "item1",
+      "type": "frontend",
+      "label": "문항 -1",
+      "sublabel": "f2p: 주제 1 테스트만",
+      "pos": [
+        700,
+        110
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "item2",
+      "type": "frontend",
+      "label": "문항 -2",
+      "sublabel": "f2p: 주제 2 테스트만",
+      "pos": [
+        700,
+        240
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "item3",
+      "type": "frontend",
+      "label": "문항 -3",
+      "sublabel": "f2p: 주제 3 테스트만",
+      "pos": [
+        700,
+        370
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "witness",
+      "type": "backend",
+      "label": "부분 정답 3개",
+      "sublabel": "주제 파일만 추린 패치",
+      "pos": [
+        330,
+        500
+      ],
+      "size": [
+        160,
+        60
+      ]
+    },
+    {
+      "id": "grade",
+      "type": "security",
+      "label": "채점기 검증",
+      "sublabel": "해결 / 미해결 판정",
+      "pos": [
+        1030,
+        232
+      ],
+      "size": [
+        170,
+        80
+      ],
+      "tag": "25문항 통과"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "원본과 공유: 같은 base, 같은 테스트 패치, 같은 정답 패치",
+      "wraps": [
+        "base",
+        "testpatch",
+        "gold"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "쪼갠 문항 (주 세트): f2p 만 주제별로 좁힘",
+      "wraps": [
+        "item1",
+        "item2",
+        "item3"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "pr-base",
+      "from": "pr",
+      "to": "base",
+      "label": "출발 커밋",
+      "fromSide": "top",
+      "toSide": "left"
+    },
+    {
+      "id": "pr-test",
+      "from": "pr",
+      "to": "testpatch",
+      "label": "테스트 파일 변경",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left",
+      "route": "straight"
+    },
+    {
+      "id": "pr-gold",
+      "from": "pr",
+      "to": "gold",
+      "label": "나머지 변경",
+      "fromSide": "bottom",
+      "toSide": "left"
+    },
+    {
+      "id": "test-item1",
+      "from": "testpatch",
+      "to": "item1",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "test-item2",
+      "from": "testpatch",
+      "to": "item2",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left",
+      "route": "straight"
+    },
+    {
+      "id": "test-item3",
+      "from": "testpatch",
+      "to": "item3",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "gold-witness",
+      "from": "gold",
+      "to": "witness",
+      "label": "주제 파일만 추림",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "item1-grade",
+      "from": "item1",
+      "to": "grade"
+    },
+    {
+      "id": "item2-grade",
+      "from": "item2",
+      "to": "grade",
+      "label": "부분 정답으로 채점"
+    },
+    {
+      "id": "item3-grade",
+      "from": "item3",
+      "to": "grade"
+    },
+    {
+      "id": "witness-grade",
+      "from": "witness",
+      "to": "grade",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "bottom"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "f2p 만 좁힌다",
+      "items": [
+        "쪼갠 문항은 base, 테스트 패치, 정답 패치를 원본과 공유하고 f2p 만 그 주제의 테스트로 줄인다.",
+        "다른 주제의 테스트는 base 에서 원래 실패하므로 p2p 에 없다."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "단독 해결을 검증한다",
+      "items": [
+        "정답 패치에서 그 주제의 파일만 모은 부분 정답으로 채점하면 해결, 빈 패치로 채점하면 미해결이어야 한다.",
+        "25문항 모두 통과. 4문항은 부분 정답에 다른 주제 파일이 섞여 엄밀한 증명은 아니다."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "원본은 주 세트에서 뺀다",
+      "items": [
+        "쪼개기 전 원본은 남기되 주 세트에 넣지 않는다. 같이 세면 같은 테스트를 두 번 센다."
+      ]
+    }
+  ]
+}
