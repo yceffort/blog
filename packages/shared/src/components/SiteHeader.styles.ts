@@ -22,13 +22,13 @@ const styles = stylex.create({
       backdropFilter: 'blur(14px) saturate(140%)',
       transition: {
         default: null,
-        '@media (max-width: 639px)':
+        '@media (width < 53rem)':
           'transform 260ms cubic-bezier(0.2, 0.9, 0.2, 1)',
         '@media (prefers-reduced-motion: reduce)': 'none',
       },
       transform: {
         default: null,
-        '@media (max-width: 639px)': {
+        '@media (width < 53rem)': {
           default: null,
           ':is([data-hidden="true"])': 'translateY(-100%)',
         },
@@ -126,7 +126,7 @@ const styles = stylex.create({
       color: 'var(--ink)',
       display: {
         default: null,
-        '@media (max-width: 639px)': 'none',
+        '@media (width < 53rem)': 'none',
       },
     },
   },
@@ -142,7 +142,7 @@ const styles = stylex.create({
     '@layer site': {
       display: {
         default: null,
-        '@media (max-width: 639px)': 'none',
+        '@media (width < 53rem)': 'none',
       },
     },
   },
@@ -178,7 +178,7 @@ const styles = stylex.create({
     '@layer site': {
       display: {
         default: 'none',
-        '@media (min-width: 640px)': 'inline-block',
+        '@media (width >= 53rem)': 'inline-block',
       },
       width: '1px',
       height: '22px',
@@ -191,7 +191,7 @@ const styles = stylex.create({
     '@layer site': {
       display: {
         default: 'none',
-        '@media (width >= 40rem)': 'flex',
+        '@media (width >= 53rem)': 'flex',
       },
       alignItems: 'center',
       position: 'relative',

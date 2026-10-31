@@ -8,7 +8,7 @@ const sx = stylex.create({
     '@layer utilities': {
       display: {
         default: null,
-        '@media (width >= 40rem)': 'none',
+        '@media (width >= 53rem)': 'none',
       },
     },
   },
