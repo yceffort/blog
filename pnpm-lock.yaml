@@ -630,8 +630,8 @@ importers:
   services/news:
     dependencies:
       '@mozilla/readability':
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.6.0
+        version: 0.6.0
       fast-xml-parser:
         specifier: ^5.3.6
         version: 5.11.2
@@ -1283,8 +1283,8 @@ packages:
     resolution: {integrity: sha512-K8BeapFUfrfxbRAUQAG5oBOCwo1+bNWzaVnPxTCutkfrTBn6T/j91FIhqxWJ32SUeQ9T3iy1zcmPZ5ROZEvDrg==}
     engines: {node: '>=22.12.0'}
 
-  '@mozilla/readability@0.5.0':
-    resolution: {integrity: sha512-Z+CZ3QaosfFaTqvhQsIktyGrjFjSC0Fa4EMph4mqKnWhmyoGICsV/8QK+8HpXut6zV7zwfWwqDmEjtk1Qf6EgQ==}
+  '@mozilla/readability@0.6.0':
+    resolution: {integrity: sha512-juG5VWh4qAivzTAeMzvY9xs9HY5rAcr2E4I7tiSSCokRFi7XIZCAu92ZkSTsIj1OPceCifL3cpfteP3pDT9/QQ==}
     engines: {node: '>=14.0.0'}
 
   '@naverpay/stylelint-config@1.0.0':
@@ -5503,7 +5503,7 @@ snapshots:
     dependencies:
       '@chevrotain/types': 11.1.2
 
-  '@mozilla/readability@0.5.0': {}
+  '@mozilla/readability@0.6.0': {}
 
   '@naverpay/stylelint-config@1.0.0(postcss-scss@4.0.9(postcss@8.5.30))(postcss@8.5.30)(supports-color@10.2.2)(typescript@7.0.2)':
     dependencies:
