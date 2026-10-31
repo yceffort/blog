@@ -8,4 +8,4 @@ art:
   tone: light
 ---
 
-[number-flow](https://github.com/barvian/number-flow)의 숫자 애니메이션을 구형 브라우저에서도 보여주려고 [포크](https://github.com/yceffort/number-flow)를 만들었다. 첫 글에서는 원본의 움직임을 유지하는 rAF 폴백 엔진을 다뤘다. 두 번째 글에서는 모던 브라우저에서도 남아 있던 스타일 재계산을 줄이기 위해 애니메이션을 합성 스레드에서 실행할 수 있는 형태로 바꾼 과정을 다룬다.
+[number-flow](https://github.com/barvian/number-flow)의 숫자 애니메이션을 구형 브라우저에서도 보여주려고 [포크](https://github.com/yceffort/number-flow)를 만들었다. 첫 글에서는 원본의 움직임을 유지하는 rAF 폴백 엔진을 다뤘다. 두 번째 글에서는 모던 브라우저에서도 남아 있던 스타일 재계산을 줄이기 위해 애니메이션을 합성 스레드에서 실행할 수 있는 형태로 바꾼 과정을 다룬다. 세 번째 글에서는 값을 바꾸는 호출 안에서 섹션과 자릿수마다 반복되던 강제 동기 레이아웃을, 0.2.1에서 DOM 읽기와 쓰기 단계를 나눠 줄인 과정과 그 측정을 다룬다.
