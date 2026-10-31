@@ -43,7 +43,7 @@ services:
       - mimir
 
   tempo:
-    image: grafana/tempo:3.1.0
+    image: grafana/tempo:3.1.1
     restart: unless-stopped
     logging: *logging
     command:
