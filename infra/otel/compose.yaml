@@ -25,7 +25,7 @@ services:
       - collector
 
   collector:
-    image: otel/opentelemetry-collector-contrib:0.163.1
+    image: otel/opentelemetry-collector-contrib:0.164.0
     restart: unless-stopped
     logging: *logging
     command: ['--config=/etc/otelcol/config.yaml']
@@ -43,7 +43,7 @@ services:
       - mimir
 
   tempo:
-    image: grafana/tempo:3.1.0
+    image: grafana/tempo:3.1.1
     restart: unless-stopped
     logging: *logging
     command:
@@ -72,7 +72,7 @@ services:
       - mimir-data:/data
 
   grafana:
-    image: grafana/grafana:13.2.4
+    image: grafana/grafana:13.3.0
     restart: unless-stopped
     logging: *logging
     environment:
