@@ -54,6 +54,65 @@ const SKIN =
 const PEOPLE_NAME =
   /walk|people|person|team|together|\bman\b|woman|girl|boy|friend|couple|family|selfie|yoga|fitness|danc|jogging|love|wedding|portrait|profile|avatar|hiring|interview|meditat|relax|sleep|hang/i
 
+// 위 필터를 빠져나가는 사람 그림(검은 실루엣, 캐릭터)을 눈으로 보고 모은 목록.
+// 이름과 피부색으로는 못 거르므로, 새로 걸리는 그림이 있으면 여기에 더한다
+const PEOPLE_LEAKS = new Set([
+  'add-content',
+  'analysis',
+  'application',
+  'applications',
+  'apps-notifications',
+  'cloud-hosting',
+  'cloud-sync',
+  'code-inspection',
+  'compose-email',
+  'convert',
+  'decorate-christmas-tree',
+  'documents',
+  'email-campaign',
+  'email-capture',
+  'file-synchronization',
+  'files-sent',
+  'fingerprint-login',
+  'for-review',
+  'fresh-notification',
+  'inbox',
+  'listening',
+  'location-review',
+  'master-plan',
+  'memory-storage',
+  'mobile-search',
+  'online-gallery',
+  'online-page',
+  'open-notes',
+  'order-flowers',
+  'organized-content',
+  'pending-approval',
+  'posts',
+  'raining',
+  'resume-folder',
+  'search-app',
+  'search-engines',
+  'server',
+  'speed-test',
+  'split-testing',
+  'synchronize',
+  'the-search',
+  'to-do-list',
+  'updated',
+  'video-upload',
+  'watch-app',
+  'watch-notification',
+  'web-browsing',
+  'website',
+  'young-and-happy',
+  'browser-stats',
+  'contemplating',
+  'informed-decision',
+  'design-thinking',
+  'fast-loading',
+])
+
 // 키가 들어 있는 첫 파일에서 읽는다. 파일만 있고 키가 없으면 다음 후보로 넘어간다
 function loadEnv(envPaths, key) {
   for (const path of envPaths.filter((p) => existsSync(p))) {
@@ -73,6 +132,7 @@ function loadCatalog() {
     .map((f) => f.replace(/\.svg$/, ''))
     .filter(
       (name) =>
+        !PEOPLE_LEAKS.has(name) &&
         !PEOPLE_NAME.test(name) &&
         !SKIN.test(readFileSync(resolve(SVG_DIR, `${name}.svg`), 'utf-8')),
     )
@@ -134,7 +194,7 @@ async function pickNames(claude, targets, catalog, used, {subject, noun}) {
     messages: [
       {
         role: 'user',
-        content: `아래 ${subject} 각각에 가장 어울리는 unDraw 일러스트를 카탈로그에서 하나씩 고른다. 사물 위주 카탈로그다. ${noun}의 핵심 사물이나 행위(서버, 컨테이너, 브라우저, 코드 창, 파일, 캐시, 네트워크, 번들, 애니메이션, 차트, 책, 열쇠 등)에 가장 가까운 이름을 고른다. 이 목록 안에서는 같은 이름을 두 ${noun}에 쓰지 않는다. "이미 쓰인 이름"은 가능하면 피하되 훨씬 더 어울리면 써도 된다. 카탈로그에 없는 이름은 절대 쓰지 않는다.
+        content: `아래 ${subject} 각각에 가장 어울리는 unDraw 일러스트를 카탈로그에서 하나씩 고른다. 사물 위주 카탈로그다. ${noun}의 핵심 사물이나 행위(서버, 컨테이너, 브라우저, 코드 창, 파일, 캐시, 네트워크, 번들, 애니메이션, 차트, 책, 열쇠 등)에 가장 가까운 이름을 고른다. 같은 이름을 두 ${noun}에 쓰지 않는다. "이미 쓰인 이름"도 쓰지 않는다. 카탈로그에 없는 이름은 절대 쓰지 않는다.
 JSON 배열만 출력: [{"slug": "...", "pick": "<catalog name>"}]
 
 ## 카탈로그
@@ -192,6 +252,21 @@ async function render(target, thumbDir) {
     .toFile(outPath)
 }
 
+// 같은 그림이 두 글에 쓰이면 목록에서 구분이 안 된다. 이번 대상끼리, 그리고 scanFiles의 다른 글과 겹치면 멈춘다
+function assertUnique(targets, elsewhere) {
+  const seen = new Map(elsewhere)
+  const dupes = []
+  for (const t of targets.filter((x) => x.undraw)) {
+    if (seen.has(t.undraw)) {
+      dupes.push(`${t.undraw}: ${t.slug} / ${seen.get(t.undraw)}`)
+    }
+    seen.set(t.undraw, t.slug)
+  }
+  if (dupes.length > 0) {
+    throw new Error(`duplicate undraw names\n  ${dupes.join('\n  ')}`)
+  }
+}
+
 // translationsOf: 고른 이름을 같이 기록할 번역본 경로, wording: 프롬프트에 쓸 대상 이름
 export async function generateUndrawThumbnails({
   files,
@@ -202,6 +277,7 @@ export async function generateUndrawThumbnails({
   slugOf,
   translationsOf = () => [],
   wording,
+  scanFiles = [],
 }) {
   if (files.length === 0) {
     console.error(usage)
@@ -214,6 +290,21 @@ export async function generateUndrawThumbnails({
     .map((path) => readTarget(path, slugOf))
     .filter((t) => !existsSync(resolve(thumbDir, `${t.slug}.png`)))
     .toSorted((a, b) => b.slug.localeCompare(a.slug))
+  // 이번 대상이 아닌 글이 이미 쓰는 이름. 고를 카탈로그에서 뺀다
+  const targetSlugs = new Set(targets.map((t) => t.slug))
+  const elsewhere = new Map(
+    scanFiles
+      .map((path) => readTarget(path, slugOf))
+      .filter((t) => t.undraw && !targetSlugs.has(t.slug))
+      .map((t) => [t.undraw, t.slug]),
+  )
+  const pickable = catalog.filter((name) => !elsewhere.has(name))
+  for (const t of targets.filter((x) => !force && x.undraw)) {
+    if (PEOPLE_LEAKS.has(t.undraw)) {
+      console.warn(`warn  ${t.slug}: ${t.undraw} 은 사람이 나오는 그림이다`)
+    }
+  }
+  assertUnique(force ? [] : targets, elsewhere)
   const used = new Set(
     targets.filter((t) => !force && t.undraw).map((t) => t.undraw),
   )
@@ -231,7 +322,7 @@ export async function generateUndrawThumbnails({
     })
     for (let i = 0; i < pending.length; i += BATCH) {
       const batch = pending.slice(i, i + BATCH)
-      const picks = await pickNames(claude, batch, catalog, [...used], wording)
+      const picks = await pickNames(claude, batch, pickable, [...used], wording)
       for (const target of batch) {
         target.undraw = picks.get(target.slug)
         used.add(target.undraw)
@@ -248,6 +339,7 @@ export async function generateUndrawThumbnails({
     }
   }
 
+  assertUnique(targets, elsewhere)
   for (const target of targets) {
     await render(target, thumbDir)
     console.log(`done  ${target.slug}  [${target.hue}]  ${target.undraw}`)

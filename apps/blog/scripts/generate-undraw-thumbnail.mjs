@@ -33,6 +33,9 @@ generateUndrawThumbnails({
       .replace(/\.md$/, ''),
   translationsOf: (path) => [path.replace(/\.md$/, '.en.md')],
   wording: {subject: '블로그 글', noun: '글'},
+  scanFiles: sync(`${BLOG_ROOT}/{posts/**,series}/*.md`, {
+    ignore: '**/*.en.md',
+  }),
 }).catch((err) => {
   console.error(err)
   process.exit(1)
