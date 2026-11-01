@@ -11,7 +11,7 @@ description: 'Turbopack 분석 파일의 동기 의존성을 정적 import로 �
 series: 'coldpath 제작기'
 seriesOrder: 4
 art:
-  undraw: buggy-code
+  undraw: computer-files
 ---
 
 ## Table of Contents

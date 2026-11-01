@@ -3,7 +3,7 @@ name: 서비스 워커 캐싱 딥다이브
 title: '<em>서비스 워커</em> 캐싱 딥다이브'
 description: '『프런트엔드 성능 최적화 Deep Dive』의 캐시 장에서 못 다한 세 번째 캐시 레이어. 프록시와 라이프사이클과 전략의 일반론부터, Next.js 블로그에 직접 적용하고 GA4로 실측한 기록까지'
 art:
-  undraw: cloud-files
+  undraw: real-time-sync
   hue: cyan
   tone: light
 ---

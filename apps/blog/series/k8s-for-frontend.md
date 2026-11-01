@@ -3,7 +3,7 @@ name: '프론트엔드 개발자가 알아야 할 쿠버네티스'
 title: '프론트엔드 개발자가 알아야 할 <em>쿠버네티스</em>'
 description: 'SSR을 운영하는 프론트엔드 개발자가 쿠버네티스를 블랙박스로 두지 않기 위해, kind 클러스터에서 직접 열어보고 실측한 기록'
 art:
-  undraw: server-cluster
+  undraw: connected-world
   hue: warm
   tone: light
 ---

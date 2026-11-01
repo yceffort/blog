@@ -8,7 +8,7 @@ description: '코딩 에이전트의 모델 성능은 어떻게 측정할까?'
 series: '코딩 에이전트 모델 교체 실험'
 seriesOrder: 1
 art:
-  undraw: performance-comparison
+  undraw: system-update
 ---
 
 ## Table of Contents

@@ -13,7 +13,7 @@ description: '"use server" 한 줄 뒤에서 무슨 일이 벌어지고 있는�
 series: 디렉티브 딥다이브
 seriesOrder: 2
 art:
-  undraw: code-deployed
+  undraw: online-transactions
   layout: codePanel
   hue: violet
   tone: dark

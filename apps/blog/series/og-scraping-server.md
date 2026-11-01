@@ -3,7 +3,7 @@ name: 'OG 스크래핑 서버 설계 노트'
 title: '<em>OG 스크래핑</em> 서버 설계 노트'
 description: '링크 미리보기 서버를 짓는다면 무엇을 먼저 정해야 하는가. 런타임 선택의 근거부터 SSRF, 인코딩, 캐시 스탬피드까지 원리로 따라가고, 그렇게 쓴 코드를 전부 돌려본 기록'
 art:
-  undraw: local-server
+  undraw: landing-page
   hue: rose
   tone: light
 ---

@@ -13,7 +13,7 @@ description: 'I set out to confirm the 500 ms hint that part 2 left behind, but 
 series: 'Service Worker Caching Deep Dive'
 seriesOrder: 3
 art:
-  undraw: data-transfer
+  undraw: successful-upload
   layout: gridChart
   hue: cyan
   tone: light

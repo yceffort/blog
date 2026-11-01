@@ -13,7 +13,7 @@ description: '블로그의 remark/rehype 체인을 Rust로 옮기고 WASM으로 
 series: '블로그 성능 개선하기'
 seriesOrder: 2
 art:
-  undraw: data-transfer
+  undraw: markdown-file
 ---
 
 ## Table of Contents

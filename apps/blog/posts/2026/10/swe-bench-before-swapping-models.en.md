@@ -8,7 +8,7 @@ description: 'How do you measure the model performance of a coding agent?'
 series: 'Swapping the Model Behind a Coding Agent'
 seriesOrder: 1
 art:
-  undraw: performance-comparison
+  undraw: system-update
 ---
 
 ## Table of Contents

@@ -12,7 +12,7 @@ description: 'What happens behind a single line of "use server"?'
 series: Directive Deep Dive
 seriesOrder: 2
 art:
-  undraw: code-deployed
+  undraw: online-transactions
   layout: codePanel
   hue: violet
   tone: dark

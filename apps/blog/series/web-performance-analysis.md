@@ -3,7 +3,7 @@ name: '웹 서비스 성능 분석'
 title: '웹 서비스 <em>성능 분석</em>'
 description: '실제 운영 중인 서비스 네 곳을 직접 성능 분석해 드리고, 그 과정과 개발자분들의 피드백을 남긴 기록'
 art:
-  undraw: performance-comparison
+  undraw: app-dark-mode
   hue: green
   tone: light
 ---

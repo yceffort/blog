@@ -13,7 +13,7 @@ description: '2편 끝에 남긴 "워커 경유 비용 500ms"를 확정하려 �
 series: '서비스 워커 캐싱 딥다이브'
 seriesOrder: 3
 art:
-  undraw: data-transfer
+  undraw: successful-upload
   layout: gridChart
   hue: cyan
   tone: light
