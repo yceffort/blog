@@ -42,7 +42,6 @@ next-env.d.ts
 .lighthouseci/
 
 # Claude Code
-CLAUDE.md
 AGENTS.md
 .claude/*
 !.claude/skills/
