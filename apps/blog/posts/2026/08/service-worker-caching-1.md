@@ -13,7 +13,7 @@ description: '서비스 워커는 사이트와 네트워크 사이에 선 프로
 series: '서비스 워커 캐싱 딥다이브'
 seriesOrder: 1
 art:
-  undraw: firewall
+  undraw: progressive-web-app
   layout: bands
   hue: cyan
   tone: light

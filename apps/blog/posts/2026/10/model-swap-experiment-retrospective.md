@@ -8,7 +8,7 @@ description: '실행 1,164회를 마치고 사내 벤치마크를 만든 과정�
 series: '코딩 에이전트 모델 교체 실험'
 seriesOrder: 4
 art:
-  undraw: idea-to-plan
+  undraw: finish-line
 ---
 
 ## Table of Contents

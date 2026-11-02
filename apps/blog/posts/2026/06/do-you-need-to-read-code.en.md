@@ -12,7 +12,7 @@ description: "If the spec is satisfied and the bugs get fixed, do you still need
 series: 'Judgment in the AI Era'
 seriesOrder: 1
 art:
-  undraw: books
+  undraw: reading-book
   layout: glyph
   hue: violet
   tone: dark

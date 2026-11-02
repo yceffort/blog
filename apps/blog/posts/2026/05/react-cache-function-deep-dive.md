@@ -8,7 +8,7 @@ date: 2026-05-30 14:00:00
 updated: 2026-06-03 00:24:10
 description: 'React cache() 함수의 모든 이상한 규칙은 30여 줄짜리 구현에서 직접 따라 나온다. dispatcher, getCacheForType, WeakMap/Map 트리를 소스 레벨로 따라가며 요청 단위 메모이제이션의 동작을 끝까지 본다.'
 art:
-  undraw: code-sample
+  undraw: code-thinking
   layout: codePanel
   hue: violet
   tone: dark

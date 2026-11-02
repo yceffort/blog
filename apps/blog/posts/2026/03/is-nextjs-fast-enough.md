@@ -12,7 +12,7 @@ description: '벤치마크가 말해주는 불편한 진실'
 series: 'Next.js의 현주소'
 seriesOrder: 4
 art:
-  undraw: app-benchmarks
+  undraw: speed-test
   layout: gridChart
   hue: warm
   tone: light

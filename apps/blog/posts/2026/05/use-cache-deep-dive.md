@@ -14,7 +14,7 @@ series: 디렉티브 딥다이브
 seriesOrder: 3
 slide: use-cache-deep-dive
 art:
-  undraw: database-tables
+  undraw: cloud-files
   layout: rings
   hue: violet
   tone: dark

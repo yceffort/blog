@@ -8,7 +8,7 @@ description: 'I solved 36 internal tasks three times each with Claude Sonnet 5.5
 series: 'Swapping the Model Behind a Coding Agent'
 seriesOrder: 3
 art:
-  undraw: ai-agent
+  undraw: cli-coding-agent
 ---
 
 ## Table of Contents

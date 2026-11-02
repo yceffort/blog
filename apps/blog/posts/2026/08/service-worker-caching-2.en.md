@@ -13,7 +13,7 @@ description: 'Armed with the theory from Part 1, I made this blog (Next.js App R
 series: 'Service Worker Caching Deep Dive'
 seriesOrder: 2
 art:
-  undraw: cloud-files
+  undraw: going-offline
   layout: steps
   hue: cyan
   tone: dark

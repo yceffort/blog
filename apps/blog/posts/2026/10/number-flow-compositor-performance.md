@@ -12,7 +12,7 @@ description: '구형 브라우저를 지원하도록 만든 number-flow 포크�
 series: 'number-flow 개선기'
 seriesOrder: 2
 art:
-  undraw: charts
+  undraw: statistic-chart
 ---
 
 ## Table of Contents

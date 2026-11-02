@@ -12,7 +12,7 @@ description: 'The "10% error rate" of a link preview server is a single number t
 series: 'OG Scraping Server Design Notes'
 seriesOrder: 1
 art:
-  undraw: local-server
+  undraw: link-shortener
   layout: codePanel
   hue: cyan
   tone: light

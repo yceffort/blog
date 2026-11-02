@@ -13,7 +13,7 @@ description: "Build-time transformations, cache key serialization, ResumeDataCac
 series: Directive Deep Dive
 seriesOrder: 3
 art:
-  undraw: database-tables
+  undraw: cloud-files
   layout: rings
   hue: violet
   tone: dark

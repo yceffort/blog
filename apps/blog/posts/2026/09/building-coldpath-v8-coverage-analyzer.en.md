@@ -12,7 +12,7 @@ description: 'Chuseok side quest, part 2: building a V8 coverage analyzer, one d
 series: 'Building coldpath'
 seriesOrder: 2
 art:
-  undraw: data-processing
+  undraw: heatmap
   layout: codePanel
   hue: violet
   tone: light

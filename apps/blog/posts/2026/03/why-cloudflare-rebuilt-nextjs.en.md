@@ -12,7 +12,7 @@ description: 'What question does vinext really ask?'
 series: 'The State of Next.js'
 seriesOrder: 2
 art:
-  undraw: server-cluster
+  undraw: cloudflare-dev
   layout: bands
   hue: blue
   tone: light

@@ -3,7 +3,7 @@ name: 'AI 시대의 판단'
 title: 'AI 시대의 <em>판단</em>'
 description: 'AI가 코드를 대신 쓰는 시대에 개발자에게 남는 것은 무엇인지, 판단과 책임이라는 축으로 따져본 에세이'
 art:
-  undraw: ai-generated-document
+  undraw: decide
   hue: slate
   tone: light
 ---

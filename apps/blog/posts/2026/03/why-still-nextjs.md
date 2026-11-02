@@ -12,7 +12,7 @@ description: '기술 우위보다 강한 전환 비용'
 series: 'Next.js의 현주소'
 seriesOrder: 5
 art:
-  undraw: building
+  undraw: next-js
   layout: columns
   hue: slate
   tone: light

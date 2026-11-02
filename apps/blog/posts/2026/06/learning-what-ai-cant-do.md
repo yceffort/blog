@@ -13,7 +13,7 @@ description: '판단을 비싸게 만든 마찰이, 동시에 판단을 못 배�
 series: 'AI 시대의 판단'
 seriesOrder: 3
 art:
-  undraw: open-book
+  undraw: learning
   layout: glyph
   hue: violet
   tone: dark

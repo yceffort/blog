@@ -8,7 +8,7 @@ published: true
 date: 2026-09-28 10:49:47
 description: '10년쯤 전 카카오에서 Rails를 쓰던 주니어가 DHH의 Rails World 2026 키노트를 보고 정리한 생각. Rails의 무대와 DHH의 행보를 짚고, 손코딩 은퇴 선언이 왜 불편하게 남았는지, 아직 판단을 배우는 사람에게 무엇이 빠져 있었는지 키노트 원문을 근거로 따라간다.'
 art:
-  undraw: informed-decision
+  undraw: tech-keynote
   layout: bauhaus
   hue: slate
   tone: light

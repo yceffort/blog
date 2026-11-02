@@ -12,7 +12,7 @@ description: 'The claim that job boundaries are collapsing is only half true. Wh
 series: 'Judgment in the AI Era'
 seriesOrder: 2
 art:
-  undraw: hr-presentation
+  undraw: multitasking
   layout: bauhaus
   hue: slate
   tone: light

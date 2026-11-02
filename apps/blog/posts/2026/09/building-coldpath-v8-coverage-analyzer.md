@@ -12,7 +12,7 @@ description: '추석맞이 뻘짓 대작전 2탄: 여러차례 삽질에 막힌 
 series: 'coldpath 제작기'
 seriesOrder: 2
 art:
-  undraw: data-processing
+  undraw: heatmap
   layout: codePanel
   hue: violet
   tone: light

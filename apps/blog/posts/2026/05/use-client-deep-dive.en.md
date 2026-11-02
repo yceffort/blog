@@ -12,7 +12,7 @@ description: "Module boundaries created by a single line of 'use client', build-
 series: Directive Deep Dive
 seriesOrder: 1
 art:
-  undraw: web-app
+  undraw: browsing-online
   layout: rings
   hue: violet
   tone: dark

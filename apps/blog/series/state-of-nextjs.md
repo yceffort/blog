@@ -3,7 +3,7 @@ name: 'Next.js의 현주소'
 title: '<em>Next.js</em>의 현주소'
 description: 'Edge Runtime의 후퇴, Cloudflare의 재구현, React Foundation 출범까지. 2026년의 Next.js가 서 있는 자리를 다섯 편에 걸쳐 짚어본 기록'
 art:
-  undraw: progressive-web-app
+  undraw: trends
   hue: slate
   tone: dark
 ---

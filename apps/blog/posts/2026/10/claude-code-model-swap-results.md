@@ -8,7 +8,7 @@ description: '사내 문항 36개를 Claude Sonnet 5.5와 GLM 5.3으로 3회씩 
 series: '코딩 에이전트 모델 교체 실험'
 seriesOrder: 3
 art:
-  undraw: ai-agent
+  undraw: cli-coding-agent
 ---
 
 ## Table of Contents

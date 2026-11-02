@@ -12,7 +12,7 @@ description: '직군의 경계가 무너진다는 말은 절반만 맞다. 무�
 series: 'AI 시대의 판단'
 seriesOrder: 2
 art:
-  undraw: hr-presentation
+  undraw: multitasking
   layout: bauhaus
   hue: slate
   tone: light

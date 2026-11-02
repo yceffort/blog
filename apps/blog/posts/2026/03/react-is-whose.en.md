@@ -12,7 +12,7 @@ description: 'The questions React Foundation must answer'
 series: 'The State of Next.js'
 seriesOrder: 3
 art:
-  undraw: guidelines
+  undraw: open-source
   layout: bands
   hue: violet
   tone: light

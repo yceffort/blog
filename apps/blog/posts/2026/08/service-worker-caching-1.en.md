@@ -13,7 +13,7 @@ description: 'A service worker is a programmable proxy standing between your sit
 series: 'Service Worker Caching Deep Dive'
 seriesOrder: 1
 art:
-  undraw: firewall
+  undraw: progressive-web-app
   layout: bands
   hue: cyan
   tone: light

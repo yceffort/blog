@@ -12,7 +12,7 @@ date: 2026-09-09 19:00:00
 updated: 2026-10-05 22:11:30
 description: 'AI가 코드를 쓰는 시대의 개발자와 판단에 대한 에세이입니다. 베타리더 모집과 인터뷰가 모두 마감되었습니다. 지원해 주신 모든 분께 감사드립니다.'
 art:
-  undraw: document-ready
+  undraw: book-reading
   layout: bauhaus
   hue: violet
   tone: light

@@ -13,7 +13,7 @@ description: '앱 웹뷰에서 측정한 핵심 웹 지표를 공용 관측 인�
 series: 'Core Web Vitals 직접 수집하기'
 seriesOrder: 3
 art:
-  undraw: data-points
+  undraw: monitor
 ---
 
 ## Table of Contents

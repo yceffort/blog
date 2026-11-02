@@ -12,7 +12,7 @@ description: 'Chuseok side quest, part 1: starting with my own blog'
 series: 'Building coldpath'
 seriesOrder: 1
 art:
-  undraw: data-analysis
+  undraw: file-search
   layout: contours
   hue: warm
   tone: light

@@ -8,7 +8,7 @@ published: false
 date: 2026-09-28 10:49:47
 description: "A former junior Rails developer at Kakao reflects on DHH's Rails World 2026 keynote. It traces the stages Rails grew up on and the path DHH has taken, and follows, from what he actually said, why his retirement from hand-written code left me uneasy, and what it left out for people still learning judgment."
 art:
-  undraw: informed-decision
+  undraw: tech-keynote
   layout: bauhaus
   hue: slate
   tone: light

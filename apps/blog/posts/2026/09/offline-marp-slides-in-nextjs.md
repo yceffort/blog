@@ -10,7 +10,7 @@ published: true
 date: 2026-09-30 11:23:00
 description: '기존 Marp 뷰어를 오프라인에서 실행하려던 접근부터 배포와 네트워크, 발표자 창에서 드러난 문제를 보완해 저장 기능을 완성하기까지의 기록'
 art:
-  undraw: connection-lost
+  undraw: presentation
 ---
 
 FEConf 2026을 앞두고 행사 측에서 인터넷 연결 없이도 발표할 수 있도록 자료를 준비해 달라는 요청을 받았다. 이를 계기로 발표 자료를 올리는 [research](https://research.yceffort.kr)에 오프라인 저장 기능을 붙였다.

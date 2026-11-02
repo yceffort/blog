@@ -9,7 +9,7 @@ published: true
 date: 2026-05-03 15:50:00
 description: 'The bundle costs that code review misses, and how to surface them in the PR.'
 art:
-  undraw: performance-comparison
+  undraw: image-comparison
   layout: bands
   hue: cyan
   tone: light

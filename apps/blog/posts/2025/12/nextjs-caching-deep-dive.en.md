@@ -10,7 +10,7 @@ published: true
 date: 2025-12-24 10:00:00
 description: 'Exploring the four cache layers of the Next.js App Router'
 art:
-  undraw: file-manager
+  undraw: database-tables
   layout: rings
   hue: cyan
   tone: light

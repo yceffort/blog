@@ -11,7 +11,7 @@ description: 'The uncomfortable truth benchmarks reveal'
 series: 'The State of Next.js'
 seriesOrder: 4
 art:
-  undraw: app-benchmarks
+  undraw: speed-test
   layout: gridChart
   hue: warm
   tone: light

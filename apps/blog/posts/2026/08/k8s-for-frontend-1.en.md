@@ -10,7 +10,7 @@ description: 'The Kubernetes vocabulary and structure that frontend developers r
 series: 'Kubernetes for Frontend Developers'
 seriesOrder: 1
 art:
-  undraw: mcp-server
+  undraw: map
   layout: field
   hue: blue
   tone: light

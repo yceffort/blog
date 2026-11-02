@@ -13,7 +13,7 @@ description: 'The friction that made judgment expensive is the same friction tha
 series: 'Judgment in the AI Era'
 seriesOrder: 3
 art:
-  undraw: open-book
+  undraw: learning
   layout: glyph
   hue: violet
   tone: dark

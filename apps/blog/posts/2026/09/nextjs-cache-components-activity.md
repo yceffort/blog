@@ -9,7 +9,7 @@ published: true
 date: 2026-09-26 22:00:00
 description: 'Next.js 16의 cacheComponents는 떠난 페이지를 언마운트하지 않고 React Activity로 숨긴다. 하얗게 빈 three.js 캔버스를 따라 라우터, React, react-three-fiber의 소스를 읽고 브라우저에서 재현했다.'
 art:
-  undraw: tabs
+  undraw: opened-tabs
   layout: glyph
   hue: cyan
   tone: light

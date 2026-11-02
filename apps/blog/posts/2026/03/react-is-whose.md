@@ -12,7 +12,7 @@ description: 'React Foundation이 답해야 할 질문'
 series: 'Next.js의 현주소'
 seriesOrder: 3
 art:
-  undraw: guidelines
+  undraw: open-source
   layout: bands
   hue: violet
   tone: light

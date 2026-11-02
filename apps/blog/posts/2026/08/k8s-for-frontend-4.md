@@ -12,7 +12,7 @@ description: '코드를 한 줄도 바꾸지 않은 배포에서도 에러는 �
 series: '프론트엔드 개발자가 알아야 할 쿠버네티스'
 seriesOrder: 4
 art:
-  undraw: server-failure
+  undraw: server-down
   layout: halftone
   hue: blue
   tone: dark

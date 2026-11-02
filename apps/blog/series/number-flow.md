@@ -3,7 +3,7 @@ name: 'number-flow 개선기'
 title: '<em>number-flow</em> 개선기'
 description: 'number-flow를 포크해 구형 브라우저를 지원하고, 모던 브라우저의 애니메이션 성능을 개선한 과정을 기록한다.'
 art:
-  undraw: going-upwards
+  undraw: going-up
   hue: cyan
   tone: light
 ---

@@ -9,7 +9,7 @@ description: '추석맞이 뻘짓 대작전 3탄: 사랑해요 토스증권'
 series: 'coldpath 제작기'
 seriesOrder: 3
 art:
-  undraw: file-search
+  undraw: surveillance
   layout: bands
   hue: cyan
   tone: light

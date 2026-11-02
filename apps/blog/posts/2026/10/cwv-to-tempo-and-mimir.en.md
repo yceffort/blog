@@ -13,7 +13,7 @@ description: 'Sent the Core Web Vitals measured in an app webview to an observab
 series: 'Core Web Vitals 직접 수집하기'
 seriesOrder: 3
 art:
-  undraw: data-points
+  undraw: monitor
 ---
 
 ## Table of Contents

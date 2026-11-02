@@ -11,7 +11,7 @@ description: "Raise traffic 12x and it takes 31.5 seconds for a new pod to recei
 series: 'Kubernetes for Frontend Developers'
 seriesOrder: 5
 art:
-  undraw: data-trends
+  undraw: growth-analytics
   layout: gridChart
   hue: blue
   tone: dark

@@ -12,7 +12,7 @@ description: 'Even a deploy that changes not a single line of code leaks errors.
 series: 'Kubernetes for Frontend Developers'
 seriesOrder: 4
 art:
-  undraw: server-failure
+  undraw: server-down
   layout: halftone
   hue: blue
   tone: dark

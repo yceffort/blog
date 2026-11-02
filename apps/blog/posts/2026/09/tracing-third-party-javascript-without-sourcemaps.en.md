@@ -9,7 +9,7 @@ description: 'Chuseok side quest, part 3: with love, to Toss Securities'
 series: 'Building coldpath'
 seriesOrder: 3
 art:
-  undraw: file-search
+  undraw: surveillance
   layout: bands
   hue: cyan
   tone: light

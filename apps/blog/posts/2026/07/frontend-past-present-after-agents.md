@@ -10,7 +10,7 @@ date: 2026-07-22 10:00:00
 updated: 2026-10-19 13:52:52
 description: '층은 왜 쌓였고, 왜 서버로 돌아왔고, 에이전트 이후에도 스택이 남는 이유는 무엇인가. 그리고 스택이 이기는 것과 그 스택을 아는 사람의 가치는 왜 별개인가'
 art:
-  undraw: launch-day
+  undraw: journey
   layout: bauhaus
   hue: slate
   tone: light

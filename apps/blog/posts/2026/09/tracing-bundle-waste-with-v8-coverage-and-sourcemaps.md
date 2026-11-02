@@ -13,7 +13,7 @@ description: '추석맞이 뻘짓 대작전 1탄: 내 블로그 부터 살펴보
 series: 'coldpath 제작기'
 seriesOrder: 1
 art:
-  undraw: data-analysis
+  undraw: file-search
   layout: contours
   hue: warm
   tone: light

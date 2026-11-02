@@ -13,7 +13,7 @@ description: '스펙을 만족하고 버그를 고칠 수 있다면 코드를 �
 series: 'AI 시대의 판단'
 seriesOrder: 1
 art:
-  undraw: books
+  undraw: reading-book
   layout: glyph
   hue: violet
   tone: dark

@@ -10,7 +10,7 @@ description: 'SSR을 운영하는 프론트엔드 개발자가 마주치는 쿠�
 series: '프론트엔드 개발자가 알아야 할 쿠버네티스'
 seriesOrder: 1
 art:
-  undraw: mcp-server
+  undraw: map
   layout: field
   hue: blue
   tone: light

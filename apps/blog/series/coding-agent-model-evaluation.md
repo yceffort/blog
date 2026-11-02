@@ -3,7 +3,7 @@ name: '코딩 에이전트 모델 교체 실험'
 title: '코딩 에이전트의 <em>모델 교체</em>를 판단하기'
 description: 'SWE-bench의 문항과 채점 방식을 살펴보고, Claude Code에서 모델을 비교할 실험을 설계한 뒤 해결률과 비용을 바탕으로 교체 여부를 판단한다.'
 art:
-  undraw: cli-coding-agent
+  undraw: ai-agent
   hue: violet
   tone: light
 ---

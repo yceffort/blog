@@ -11,7 +11,7 @@ description: 'The same Next.js app produced one 1.72GB image and one 208MB image
 series: 'Kubernetes for Frontend Developers'
 seriesOrder: 2
 art:
-  undraw: code-deployed
+  undraw: container-ship
   layout: rings
   hue: blue
   tone: dark

@@ -10,7 +10,7 @@ published: true
 date: 2026-09-30 11:23:00
 description: 'From running the existing Marp viewer offline to fixing what deployments, networks, and the presenter window exposed along the way.'
 art:
-  undraw: connection-lost
+  undraw: presentation
 ---
 
 Ahead of FEConf 2026, the organizers asked speakers to prepare their materials so they could present without an internet connection. That request was the push I needed to add offline saving to [research](https://research.yceffort.kr), where I publish my presentation decks.

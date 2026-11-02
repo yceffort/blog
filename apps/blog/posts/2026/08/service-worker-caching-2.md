@@ -13,7 +13,7 @@ description: '1편의 일반론을 들고 이 블로그(Next.js App Router)를 �
 series: '서비스 워커 캐싱 딥다이브'
 seriesOrder: 2
 art:
-  undraw: cloud-files
+  undraw: going-offline
   layout: steps
   hue: cyan
   tone: dark

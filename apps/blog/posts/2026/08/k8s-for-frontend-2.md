@@ -11,7 +11,7 @@ description: '같은 Next.js 앱인데 이미지 하나는 1.72GB, 하나는 208
 series: '프론트엔드 개발자가 알아야 할 쿠버네티스'
 seriesOrder: 2
 art:
-  undraw: code-deployed
+  undraw: container-ship
   layout: rings
   hue: blue
   tone: dark

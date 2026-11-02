@@ -8,7 +8,7 @@ description: 'Looking back on 1,164 runs and the process of building an internal
 series: 'Swapping the Model Behind a Coding Agent'
 seriesOrder: 4
 art:
-  undraw: idea-to-plan
+  undraw: finish-line
 ---
 
 ## Table of Contents

@@ -11,7 +11,7 @@ description: 'Tracing a coldpath misclassification that read every synchronous d
 series: 'Building coldpath'
 seriesOrder: 4
 art:
-  undraw: computer-files
+  undraw: memory-storage
 ---
 
 ## Table of Contents

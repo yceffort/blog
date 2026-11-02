@@ -10,7 +10,7 @@ date: 2026-07-22 10:00:00
 updated: 2026-10-19 13:52:52
 description: 'Why the layers piled up, why we returned to the server, and why the stack survives even after agents. And why the survival of a stack and the value of the people who know it are two separate things'
 art:
-  undraw: launch-day
+  undraw: journey
   layout: bauhaus
   hue: slate
   tone: light

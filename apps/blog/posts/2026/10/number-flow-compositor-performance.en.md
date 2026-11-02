@@ -12,7 +12,7 @@ description: 'In the number-flow fork I built to support old browsers, animation
 series: 'Improving number-flow'
 seriesOrder: 2
 art:
-  undraw: charts
+  undraw: statistic-chart
 ---
 
 ## Table of Contents

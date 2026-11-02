@@ -12,7 +12,7 @@ description: 'Switching costs stronger than technical superiority'
 series: 'The State of Next.js'
 seriesOrder: 5
 art:
-  undraw: building
+  undraw: next-js
   layout: columns
   hue: slate
   tone: light

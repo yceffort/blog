@@ -14,7 +14,7 @@ slide: og-scraping-server-nodejs-1
 series: 'OG 스크래핑 서버 설계 노트'
 seriesOrder: 1
 art:
-  undraw: local-server
+  undraw: link-shortener
   layout: codePanel
   hue: cyan
   tone: light
