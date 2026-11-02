@@ -82,7 +82,7 @@ oxfmt --migrate prettier
 
 이날 가장 재미있었던 부분이다. oxlint의 기본 모드는 타입 정보를 아예 쓰지 않는다. 0.4초의 비결이 그것이고, 대신 `no-floating-promises` 같은 타입 기반 규칙은 못 돌린다. typescript-eslint를 버리며 잃은 것이 바로 이 typed linting인데, [tsgolint](https://github.com/oxc-project/tsgolint)가 이 자리를 메운다. typescript-go 위에 타입 기반 규칙을 구현한 프로젝트라, `oxlint --type-aware`로 붙이면 타입 인식 린트가 돌아온다.
 
-그러니까 이런 아이러니가 된다. tsgolint는 TS 7의 컴파일러 위에 서 있어서, **typescript-eslint가 크래시하는 바로 그 TS 7 환경에서 타입 인식 린트가 전체 모노레포 기준 1.9초에 돈다.** TS 7 때문에 typed lint를 포기해야 했던 자리에서, TS 7 덕분에 더 빠른 typed lint를 얻었다.
+그러니까 이런 아이러니가 된다. tsgolint는 TS 7의 컴파일러 위에 서 있어서, **typescript-eslint가 크래시하는 바로 그 TS 7 환경에서 타입 인식 린트가 전체 모노레포 기준 1.9초에 돈다.** TS 7 때문에 typed lint를 포기해야 했던 상황에서, TS 7 덕분에 더 빠른 typed lint를 얻었다.
 
 켠 첫날 실제 버그도 나왔다. `no-base-to-string`이 sitemap에서 잡아낸 버그가 백미였다.
 

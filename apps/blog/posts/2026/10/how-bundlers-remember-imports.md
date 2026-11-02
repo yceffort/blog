@@ -68,7 +68,7 @@ export default function Page() {
 - **정적 import 체인**: 진입점에서 어떤 모듈까지 정적 import 간선만으로 이어진 경로다.
 - **복원 그래프**: 번들러의 그래프 정보 없이 산출물의 모듈 호출만 읽어 다시 만든 의존성 그래프다. coldpath의 `modules --graph`가 만든다.
 - **지정자**: `'./cjs-dep.js'`처럼 import나 `require()`에 넘기는 경로 문자열(specifier)이다.
-- **최상위**: 함수 안이 아니라 모듈 본문에서 바로 실행되는 자리다. 최상위 `require()`는 그 모듈이 실행될 때 함께 실행된다.
+- **최상위**: 함수 안이 아니라 모듈 본문에서 바로 실행되는 위치다. 최상위 `require()`는 그 모듈이 실행될 때 함께 실행된다.
 - **모듈 함수**: 번들러가 모듈 하나의 코드를 감싸 만든 함수다. webpack과 Turbopack 산출물은 이 함수를 id로 찾아 실행한다.
 
 ## 일곱 가지 경우를 담은 입력
@@ -182,7 +182,7 @@ source.replace(dep.range[0], dep.range[1] - 1, RuntimeGlobals.require);
 
 하나는 문장을 새로 쓰고 다른 하나는 기존 호출을 고쳐 쓰는데, 결과 문자열은 둘 다 `__webpack_require__(id)`가 된다. 지난 글에서 coldpath의 복원 그래프 간선이 대부분 `unknown`이었던 이유가 여기에 있다.
 
-동적 import의 모양도 달랐다. Next.js 내장 webpack 산출물에서는 `n.e(990).then(n.bind(n,6990))`였고, coldpath 0.6.0은 이 `bind` 형태만 동적 간선으로 인식했다. webpack 5.111.1을 단독으로 쓰면 같은 자리가 `r.e(132).then(()=>r(132))`가 된다. 대상 환경이 화살표 함수를 지원하면 `bind` 대신 화살표 함수를 쓰기 때문이다.[^4] coldpath 0.6.0은 이 `r(132)`를 평범한 호출로 보고 `unknown`으로 분류했다.
+동적 import의 모양도 달랐다. Next.js 내장 webpack 산출물에서는 `n.e(990).then(n.bind(n,6990))`였고, coldpath 0.6.0은 이 `bind` 형태만 동적 간선으로 인식했다. webpack 5.111.1을 단독으로 쓰면 같은 코드가 `r.e(132).then(()=>r(132))`가 된다. 대상 환경이 화살표 함수를 지원하면 `bind` 대신 화살표 함수를 쓰기 때문이다.[^4] coldpath 0.6.0은 이 `r(132)`를 평범한 호출로 보고 `unknown`으로 분류했다.
 
 수정한 복원 로직은 `n.e(chunk)`나 청크 로드 호출만 담은 `Promise.all([n.e(a), ...])` 뒤의 `.then`에 넘긴 화살표 함수도 동적 간선으로 인식한다. 다만 `Promise.resolve().then(() => n(id))`는 `unknown`으로 남긴다. 새 청크를 받지 않는 `import()`와 사용자가 작성한 `Promise.resolve().then(() => require(...))`가 같은 모양이 될 수 있기 때문이다. [수정 커밋 `90b7baa`](https://github.com/yceffort/coldpath/commit/90b7baa263b605e03a64969874b9b0dd44415577)에 이 구분과 검증 사례가 있다.
 
@@ -640,7 +640,7 @@ coldpath에서는 그래프에 연결된 모듈을 소스의 어느 구문에서
 
 [^19]: 종류 문자열은 [`internal/ast/ast.go#L43-L64`](https://github.com/evanw/esbuild/blob/v0.28.2/internal/ast/ast.go#L43-L64), metafile을 쓰는 코드는 [`internal/bundler/bundler.go#L2516-L2521`](https://github.com/evanw/esbuild/blob/v0.28.2/internal/bundler/bundler.go#L2516-L2521)에, 외부 모듈을 쓰는 코드는 [`#L2478-L2482`](https://github.com/evanw/esbuild/blob/v0.28.2/internal/bundler/bundler.go#L2478-L2482)에 있다.
 
-[^20]: [`lib/graph.ts#L295-L299`](https://github.com/yceffort/coldpath/blob/v0.6.0/lib/graph.ts#L295-L299). 종류가 같은 자리만 받아들이는 조건은 [`#L140`](https://github.com/yceffort/coldpath/blob/v0.6.0/lib/graph.ts#L140)에 있다.
+[^20]: [`lib/graph.ts#L295-L299`](https://github.com/yceffort/coldpath/blob/v0.6.0/lib/graph.ts#L295-L299). 종류가 같은 구문만 받아들이는 조건은 [`#L140`](https://github.com/yceffort/coldpath/blob/v0.6.0/lib/graph.ts#L140)에 있다.
 
 [^21]: 버전별 그래프와 분석 결과는 [`results/coldpath-versions`](https://github.com/yceffort/blog-experiments/tree/main/bundler-import-memory/results/coldpath-versions)에 있고, [`scripts/coldpath-versions.sh`](https://github.com/yceffort/blog-experiments/blob/main/bundler-import-memory/scripts/coldpath-versions.sh)로 다시 만들 수 있다. 실행 기록과 같은 10월 4일 빌드의 `.next`가 있어야 한다.
 

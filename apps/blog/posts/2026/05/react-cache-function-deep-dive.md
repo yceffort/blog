@@ -455,7 +455,7 @@ export const getUser = cache((id: string) =>
 
 ## 그래서 언제 쓰나
 
-구현을 다 봤으니 실무 판단으로 돌아온다. `cache()`의 자리는 생각보다 좁고 분명하다.
+구현을 다 봤으니 실무 판단으로 돌아온다. `cache()`를 쓸 곳은 생각보다 좁고 분명하다.
 
 **쓰기 좋은 곳.** 한 RSC 렌더 안에서 같은 데이터를 여러 컴포넌트가 필요로 할 때다. 레이아웃과 페이지가 둘 다 현재 유저를 조회한다거나, 사이드바와 본문이 같은 설정을 읽는다거나. fetch가 아닌 **DB·ORM 쿼리의 요청 단위 중복 제거**, 그리고 **비싼 계산을 트리 전체에서 한 번만** 하는 용도. `preload`로 워터폴을 줄이는 것도 여기 포함된다. 공통점은 전부 "한 요청, 한 렌더 안에서의 공유"라는 것이다.
 
@@ -467,13 +467,13 @@ export const getUser = cache((id: string) =>
 
 App Router를 쓰면 한 가지가 걸린다. Next가 `fetch`를 자동으로 dedup하기 때문이다. 같은 URL·옵션의 GET `fetch`는 한 렌더 안에서 [자동으로 메모이즈](https://nextjs.org/docs/app/api-reference/functions/fetch#memoization)된다(React의 request memoization). 그래서 **`fetch`는 `cache()`로 감쌀 필요가 없다.** 공식 문서도 "React cache로 감쌀 필요 없다"고 못 박는다.
 
-그럼 `cache()`의 자리는 어디인가. **`fetch`가 아닌 것** 전부다. Next 공식 문서가 직접 권장한다 — "ORM이나 데이터베이스를 직접 쓴다면 React `cache`로 감싸 한 렌더 안의 중복 호출을 제거하라"며 [Drizzle 예제](https://nextjs.org/docs/app/guides/caching-without-cache-components#deduplicating-requests)를 든다. Prisma·Drizzle·raw SQL은 `fetch`처럼 자동 dedup되지 않는다. 이걸 fetch처럼 알아서 합쳐진다고 착각하는 게 가장 흔한 실수다.
+그럼 `cache()`는 어디에 쓰는가. **`fetch`가 아닌 것** 전부다. Next 공식 문서가 직접 권장한다 — "ORM이나 데이터베이스를 직접 쓴다면 React `cache`로 감싸 한 렌더 안의 중복 호출을 제거하라"며 [Drizzle 예제](https://nextjs.org/docs/app/guides/caching-without-cache-components#deduplicating-requests)를 든다. Prisma·Drizzle·raw SQL은 `fetch`처럼 자동 dedup되지 않는다. 이걸 fetch처럼 알아서 합쳐진다고 착각하는 게 가장 흔한 실수다.
 
 가장 대표적인 패턴은 **인증 DAL(Data Access Layer)**이다. `getCurrentUser()`나 `verifySession()`을 `cache()`로 감싸두면, 레이아웃·페이지·말단 컴포넌트·Server Action이 제각기 호출해도 DB 조회와 세션 복호화가 요청당 한 번만 일어난다. Next의 [Authentication](https://nextjs.org/docs/app/guides/authentication)·[Data Security](https://nextjs.org/docs/app/guides/data-security) 가이드가 미는 정석 패턴이고, `cookies()` 같은 요청 단위 동적 값은 `'use cache'`로 감쌀 수 없으니 여기서는 `cache()`가 정답이다.
 
 오해 하나만 더. `cache()`는 `'use cache'`에 밀려난 게 아니다. 둘은 **직교**한다 — `cache()`는 요청 단위 dedup, `'use cache'`는 요청을 넘는 영속 캐시. Next 16에서 대체되는 건 `cache()`가 아니라 `unstable_cache`(→ `'use cache'`)다. `cache()`는 이전 모델과 Cache Components 모델 양쪽에서 그대로 유효하고, 공식 문서도 현행으로 권장한다.
 
-정리하면, **Next.js에서 `cache()`는 좁지만 분명한 자리가 있다.** fetch만 쓰는 앱이면 평생 안 쓸 수도 있지만, ORM·세션·권한이 얽힌 진지한 서버 트리에서는 사실상 필수에 가깝다.
+정리하면, **Next.js에서 `cache()`는 쓰임새가 좁지만 분명하다.** fetch만 쓰는 앱이면 평생 안 쓸 수도 있지만, ORM·세션·권한이 얽힌 진지한 서버 트리에서는 사실상 필수에 가깝다.
 
 ## 마치며
 

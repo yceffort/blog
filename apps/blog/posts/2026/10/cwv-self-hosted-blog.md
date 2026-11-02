@@ -271,7 +271,7 @@ max by (reason) (max_over_time(cortex_discarded_samples_total{job="mimir", user=
 
 ## 9. preview 배포도 production 빌드다
 
-Vercel의 preview 배포에서도 수집 코드가 실행되고 있었다. 수집 코드는 `NODE_ENV`가 production일 때만 켜지는데, preview 배포도 production 빌드라 그대로 켜졌다. collector는 블로그 origin만 허용하므로 브라우저가 요청을 막고, 2편의 표대로 exporter는 CORS 거부를 네트워크 오류로 보고 약 8초 동안 5번 시도한다(처음 요청과 재시도 4번). 값이 잘못 들어가지는 않았지만, preview에서 글을 확인할 때마다 SDK를 받고 실패할 요청을 보내고 있었다. SDK를 받기 전에 origin을 비교해 거른다. 같은 자리에서 동적 import의 실패도 잡았다. 청크를 받지 못하면 `unhandledrejection`으로 새던 것을 삼켜서, 계측이 실패해도 독자에게 오류로 보이지 않게 했다.
+Vercel의 preview 배포에서도 수집 코드가 실행되고 있었다. 수집 코드는 `NODE_ENV`가 production일 때만 켜지는데, preview 배포도 production 빌드라 그대로 켜졌다. collector는 블로그 origin만 허용하므로 브라우저가 요청을 막고, 2편의 표대로 exporter는 CORS 거부를 네트워크 오류로 보고 약 8초 동안 5번 시도한다(처음 요청과 재시도 4번). 값이 잘못 들어가지는 않았지만, preview에서 글을 확인할 때마다 SDK를 받고 실패할 요청을 보내고 있었다. SDK를 받기 전에 origin을 비교해 거른다. 같은 코드에서 동적 import의 실패도 잡았다. 청크를 받지 못하면 `unhandledrejection`으로 새던 것을 삼켜서, 계측이 실패해도 독자에게 오류로 보이지 않게 했다.
 
 ```tsx
 // apps/blog/src/components/analytics/CwvTelemetry.tsx
@@ -289,7 +289,7 @@ Vercel의 preview 배포에서도 수집 코드가 실행되고 있었다. 수�
 
 ## 11. flush 시점은 수집 코드 하나가 정한다
 
-2편에서 `BatchSpanProcessor`가 document의 `pagehide`에 건 리스너는 불리지 않는다고 썼다. 같은 자리에서 document의 `visibilitychange`에 건 리스너는 불린다. 이 리스너는 SDK를 만들 때 등록되므로 수집 코드의 리스너보다 먼저 돌고, 수집 코드가 뒤이어 부르는 trace의 `forceFlush`는 빈 큐에 대고 부르는 셈이었다. 나가는 값은 같지만, flush 시점을 수집 코드가 정한다는 주석이 span에는 맞지 않았다. 2.12.0의 `disableAutoFlushOnDocumentHide` 옵션으로 SDK의 리스너를 끄고, 수집 코드의 리스너 하나가 span과 metric의 flush를 함께 부르게 했다.
+2편에서 `BatchSpanProcessor`가 document의 `pagehide`에 건 리스너는 불리지 않는다고 썼다. 같은 상황에서 document의 `visibilitychange`에 건 리스너는 불린다. 이 리스너는 SDK를 만들 때 등록되므로 수집 코드의 리스너보다 먼저 돌고, 수집 코드가 뒤이어 부르는 trace의 `forceFlush`는 빈 큐에 대고 부르는 셈이었다. 나가는 값은 같지만, flush 시점을 수집 코드가 정한다는 주석이 span에는 맞지 않았다. 2.12.0의 `disableAutoFlushOnDocumentHide` 옵션으로 SDK의 리스너를 끄고, 수집 코드의 리스너 하나가 span과 metric의 flush를 함께 부르게 했다.
 
 ```ts
 // apps/blog/src/utils/telemetry/setup.ts

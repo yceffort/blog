@@ -338,7 +338,7 @@ if (!this.computedAnimated || !this._preUpdated) {
 - **`Num` 생성자가 rAF 모드에서 초기값을 인라인으로 심는다.** `--scale-x: 1`, `--_number-flow-dx: 0px`. rAF 엔진은 폭 델타 변수를 애니메이션하는 대신 `--scale-x`를 계산 완료된 숫자로 직접 쓰는데(구형 브라우저는 치환 결과가 `calc()` 수식인 `var()` 값으로 나누는 연산을 소화하지 못한다), 그러려면 애니메이션이 없는 평상시에도 나눗셈의 기준이 될 안정된 값이 있어야 한다.
 - **접근성 폴백.** Chrome 77~80은 `ElementInternals`는 있지만 ARIAMixin이 없어서 `internals.ariaLabel = ...` 대입이 조용히 무시된다. `'ariaLabel' in internals`로 감지해서 없으면 `setAttribute('aria-label', ...)`로 폴백한다. "구형 브라우저 지원"을 표방하는 순간, 이런 조용한 무시들이 전부 지원 범위의 책임이 된다.
 - **React 19의 이중 마운트 리플로우 차단은 업스트림에서 물려받은 것이다.** React 19는 커밋 중에 커스텀 엘리먼트의 `data` 프로퍼티를 설정하고, 래퍼의 `componentDidMount`가 같은 객체를 한 번 더 설정하는데, 동일성 검사가 없으면 두 번째 설정이 업데이트 경로를 타서 마운트마다 모든 섹션과 자릿수를 재측정하며 동기 리플로우를 강제한다([이슈 #195](https://github.com/barvian/number-flow/issues/195)). 이 검사는 vendoring한 시점의 업스트림에 이미 들어 있었고(upstream PR #196), 포크는 유지만 했다. 포크의 개선이 아니므로 성격을 분리해 적어 둔다.
-- **백그라운드 탭 애니메이션 누수 가드도 마찬가지로 업스트림의 것이다.** 숨은 탭에서는 WAAPI 애니메이션이 pending인 채 쌓여서, 초 단위로 값이 갱신되는 페이지를 오래 백그라운드에 두면 메모리가 기가바이트 단위로 새는 문제가 보고되어 있었다([이슈 #165](https://github.com/barvian/number-flow/issues/165)). 이를 막는 `visibilityState === 'visible'` 게이트 역시 업스트림에 이미 있었고 포크는 물려받았다. 포크 고유의 기여는 rAF 폴백 경로에 한정된다: 그쪽에서는 백스톱 타이머가 백그라운드에서도 트윈을 끝까지 진행시키므로, pending이 쌓일 자리 자체가 없다.
+- **백그라운드 탭 애니메이션 누수 가드도 마찬가지로 업스트림의 것이다.** 숨은 탭에서는 WAAPI 애니메이션이 pending인 채 쌓여서, 초 단위로 값이 갱신되는 페이지를 오래 백그라운드에 두면 메모리가 기가바이트 단위로 새는 문제가 보고되어 있었다([이슈 #165](https://github.com/barvian/number-flow/issues/165)). 이를 막는 `visibilityState === 'visible'` 게이트 역시 업스트림에 이미 있었고 포크는 물려받았다. 포크 고유의 기여는 rAF 폴백 경로에 한정된다: 그쪽에서는 백스톱 타이머가 백그라운드에서도 트윈을 끝까지 진행시키므로, pending이 쌓일 여지 자체가 없다.
 - **섹션 diff의 제거 감지를 O(n²)에서 O(n)으로.** 기존 자식마다 새 파트 배열을 선형 탐색(`parts.find(...)`)하던 것을, 키 `Set`을 한 번 만들어 `has()`로 조회하게 바꿨다. 자릿수가 많은 숫자에서 업데이트마다 반복되는 경로라서다.
 
 ### styles.ts: 기능 감지와 폴백 스타일
@@ -397,7 +397,7 @@ if (!this.computedAnimated || !this._preUpdated) {
 
 - **저장소**: [github.com/yceffort/number-flow](https://github.com/yceffort/number-flow). 이 글에서 인용한 코드와 selftest, 구형 브라우저 러너, CI 구성이 모두 들어 있다.
 - **라이브 데모**: [yceffort.github.io/number-flow](https://yceffort.github.io/number-flow/). Storybook에서 실시간 티커, 인터럽트 연타 같은 시나리오를 직접 조작해 볼 수 있다. rAF 폴백을 강제하는 스토리도 있어서, 모던 브라우저에서도 폴백 엔진의 결과를 눈으로 비교할 수 있다.
-- **패키지**: [`@yceffort/number-flow`](https://www.npmjs.com/package/@yceffort/number-flow), [`@yceffort/number-flow-react`](https://www.npmjs.com/package/@yceffort/number-flow-react). 결정 1에서 다룬 alias 방식으로 원본 자리에 코드 수정 없이 끼울 수 있다.
+- **패키지**: [`@yceffort/number-flow`](https://www.npmjs.com/package/@yceffort/number-flow), [`@yceffort/number-flow-react`](https://www.npmjs.com/package/@yceffort/number-flow-react). 결정 1에서 다룬 alias 방식으로 원본 대신 코드 수정 없이 끼울 수 있다.
 
 반례 제보나 질문은 저장소 이슈로 남겨 주시면 감사하겠다. 특히 Safari 절의 `getComputedStyle()` 어긋남에 대해 독립 재현이나 추가 정보를 가진 분이 있다면 더욱 반갑다.
 

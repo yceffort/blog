@@ -407,7 +407,7 @@ describe('isPublicAddress', () => {
 
 ### 원리 2: 검증한 주소로 직접 연결한다
 
-여기가 rebinding을 막는 자리이고, 1편에서 미리 말한 `lookup` 훅을 쓰는 자리이기도 하다.
+rebinding은 여기서 막고, 1편에서 미리 말한 `lookup` 훅도 여기서 쓴다.
 
 ```ts
 import {Agent} from 'undici'
@@ -440,7 +440,7 @@ single   -> throw TypeError: Invalid IP address: undefined   (options.all = [tru
 array    -> status 200                                        (options.all = [true])
 ```
 
-undici는 이 콜백을 `{ all: true }`로 호출하고 주소 배열을 기대한다. `{ all: true }` 결과를 그대로 넘기면 되고, 주소 하나만 넘기면 위 에러가 난다. 문서를 읽고 짐작으로 쓴 코드와 돌려본 코드의 차이가 이런 자리에서 나온다.
+undici는 이 콜백을 `{ all: true }`로 호출하고 주소 배열을 기대한다. `{ all: true }` 결과를 그대로 넘기면 되고, 주소 하나만 넘기면 위 에러가 난다. 문서를 읽고 짐작으로 쓴 코드와 돌려본 코드의 차이가 이런 데서 나온다.
 
 이 훅이 rebinding을 막는 이유는 조회와 연결 사이에 틈이 없어지기 때문이다.
 
