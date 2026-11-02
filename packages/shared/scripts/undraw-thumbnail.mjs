@@ -2,7 +2,7 @@
  * unDraw 일러스트로 썸네일을 만드는 공통 엔진. apps/blog의
  * scripts/generate-undraw-thumbnail.mjs가 대상 파일, slug 규칙, 키 위치만 넘겨 쓴다.
  *
- * 1) Claude가 제목/설명을 보고 unDraw 카탈로그(사람 없는 그림만)에서 이름 하나를 고른다
+ * 1) Claude가 제목/설명을 보고 unDraw 카탈로그에서 이름 하나를 고른다
  *    → frontmatter `art.undraw`에 기록(있으면 그대로 쓴다. 손으로 바꾸고 다시 돌리면 됨)
  * 2) 그 SVG를 frontmatter `art.hue` 색으로 칠해 {thumbDir}/{slug}.webp 로 저장
  *
@@ -48,71 +48,6 @@ const PAPER = {
 }
 const HUES = Object.keys(ACCENT)
 
-// 사람 피부색 fill이 있는 그림과 이름에 사람이 드러나는 그림은 뺀다
-const SKIN =
-  /fill="#(a0616a|ffb6b6|ffb8b8|9f616a|ffb7b7|feb8b8|ffb9b9|e8a3a3|9e616a|fbbebe|be6f72|a06e6e|d0b0a0|f2a7a7|ed9da0|fed2b1|ffb5b5|ffd7ba)"/i
-const PEOPLE_NAME =
-  /walk|people|person|team|together|\bman\b|woman|girl|boy|friend|couple|family|selfie|yoga|fitness|danc|jogging|love|wedding|portrait|profile|avatar|hiring|interview|meditat|relax|sleep|hang/i
-
-// 위 필터를 빠져나가는 사람 그림(검은 실루엣, 캐릭터)을 눈으로 보고 모은 목록.
-// 이름과 피부색으로는 못 거르므로, 새로 걸리는 그림이 있으면 여기에 더한다
-const PEOPLE_LEAKS = new Set([
-  'add-content',
-  'analysis',
-  'application',
-  'applications',
-  'apps-notifications',
-  'cloud-hosting',
-  'cloud-sync',
-  'code-inspection',
-  'compose-email',
-  'convert',
-  'decorate-christmas-tree',
-  'documents',
-  'email-campaign',
-  'email-capture',
-  'file-synchronization',
-  'files-sent',
-  'fingerprint-login',
-  'for-review',
-  'fresh-notification',
-  'inbox',
-  'listening',
-  'location-review',
-  'master-plan',
-  'memory-storage',
-  'mobile-search',
-  'online-gallery',
-  'online-page',
-  'open-notes',
-  'order-flowers',
-  'organized-content',
-  'pending-approval',
-  'posts',
-  'raining',
-  'resume-folder',
-  'search-app',
-  'search-engines',
-  'server',
-  'speed-test',
-  'split-testing',
-  'synchronize',
-  'the-search',
-  'to-do-list',
-  'updated',
-  'video-upload',
-  'watch-app',
-  'watch-notification',
-  'web-browsing',
-  'website',
-  'young-and-happy',
-  'browser-stats',
-  'contemplating',
-  'informed-decision',
-  'design-thinking',
-  'fast-loading',
-])
-
 // 키가 들어 있는 첫 파일에서 읽는다. 파일만 있고 키가 없으면 다음 후보로 넘어간다
 function loadEnv(envPaths, key) {
   for (const path of envPaths.filter((p) => existsSync(p))) {
@@ -130,12 +65,6 @@ function loadCatalog() {
   return readdirSync(SVG_DIR)
     .filter((f) => f.endsWith('.svg'))
     .map((f) => f.replace(/\.svg$/, ''))
-    .filter(
-      (name) =>
-        !PEOPLE_LEAKS.has(name) &&
-        !PEOPLE_NAME.test(name) &&
-        !SKIN.test(readFileSync(resolve(SVG_DIR, `${name}.svg`), 'utf-8')),
-    )
 }
 
 function hashCode(str) {
@@ -299,11 +228,6 @@ export async function generateUndrawThumbnails({
       .map((t) => [t.undraw, t.slug]),
   )
   const pickable = catalog.filter((name) => !elsewhere.has(name))
-  for (const t of targets.filter((x) => !force && x.undraw)) {
-    if (PEOPLE_LEAKS.has(t.undraw)) {
-      console.warn(`warn  ${t.slug}: ${t.undraw} 은 사람이 나오는 그림이다`)
-    }
-  }
   assertUnique(force ? [] : targets, elsewhere)
   const used = new Set(
     targets.filter((t) => !force && t.undraw).map((t) => t.undraw),
