@@ -5,6 +5,7 @@ tags:
   - testing
 published: true
 date: 2026-11-01 06:17:00
+updated: 2026-11-02 20:01:38
 description: 'Turning merged PRs from an internal WebSocket package into coding-agent evaluation tasks, validating the grader, and isolating personal instructions from the Claude Code run environment'
 series: 'Swapping the Model Behind a Coding Agent'
 seriesOrder: 2
@@ -50,9 +51,9 @@ Split tasks share the same base, the same test patch, and the same gold patch, b
 
 For example, one PR that fixed a batch of review comments became two tasks: "version string components get truncated to two characters" and "the log masking function corrupts class instances rather than plain objects." One release PR became five tasks: teardown that also discards pending requests, log serialization of error objects, attempting login on a dead socket while waiting for a token, handling a missed close event, and state diverging when the module is loaded twice. Each is the kind of thing that would plausibly be reported as its own issue.
 
-<LiveDemo src="/demos/swe-bench/split-items.html?present=1" title="How one bundled PR is split into three tasks by topic. The three tasks share base, the test patch, and the gold patch, narrow only f2p per topic, and the grader is validated with a partial gold patch that keeps only the topic's files" height={640} />
+<LiveDemo src="/demos/swe-bench/split-items.en.html?present=1" title="How one bundled PR is split into three tasks by topic. The three tasks share base, the test patch, and the gold patch, narrow only f2p per topic, and the grader is validated with a partial gold patch that keeps only the topic's files" height={640} />
 
-The viewer menu in the diagram is in English, and the labels are generalized for this post.
+The labels in the diagram are generalized for this post.
 
 I also checked that each split task is solved by fixing only its topic. Grading a partial gold patch that collected only that topic's files from the gold patch resolved all 25 tasks, and an empty patch left all of them unresolved. For 4 tasks, however, the code imported names newly created by another topic, so the partial gold patch had to include that other topic's files too. For these 4, what was confirmed is that they can be solved without changing the other topic's tests. Whether they can be solved by changing only the topic's own code was not verified.
 

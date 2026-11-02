@@ -8,6 +8,7 @@ tags:
   - v8
 published: true
 date: 2026-09-22 18:00:00
+updated: 2026-11-02 20:01:38
 description: 'Chuseok side quest, part 2: building a V8 coverage analyzer, one dead end after another.'
 series: 'Building coldpath'
 seriesOrder: 2
@@ -398,9 +399,9 @@ I left the [verification code and results](https://github.com/yceffort/blog/tree
 
 Even as features grew, I kept the boundary I set at the start. Work that needs a JavaScript runtime, like launching a browser or calling a model, stays with the Node.js CLI (`bin/coldpath.mjs`), while aggregation stays with the Rust analyzer, which only reads files.
 
-<iframe src="/demos/coldpath/coldpath-architecture-2026-09-26.html" title="Structure of coldpath 0.3.1" width="100%" height="980" loading="lazy" frameBorder="0"></iframe>
+<iframe src="/demos/coldpath/coldpath-architecture-2026-09-26.en.html" title="Structure of coldpath 0.3.1" width="100%" height="980" loading="lazy" frameBorder="0"></iframe>
 
-[Open the coldpath architecture diagram in a new window](/demos/coldpath/coldpath-architecture-2026-09-26.html)
+[Open the coldpath architecture diagram in a new window](/demos/coldpath/coldpath-architecture-2026-09-26.en.html)
 
 There are four commands on the Node.js side. `collect` and `snapshot` open Chromium via Playwright and receive V8 coverage through CDP. When analyzing a local build, they record the hashes of the JS and source map the browser read; when analyzing an external site, they save the script body to a file. `graph` converts the analysis output of esbuild, webpack, Rollup/Vite, or Turbopack into the `graph.json` that coldpath reads, and `modules` finds module boundaries in webpack chunks that have no source map and builds a synthetic source map. `label` sends a portion of a module's code to a model to guess its name.
 

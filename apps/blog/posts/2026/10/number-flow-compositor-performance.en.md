@@ -8,6 +8,7 @@ tags:
   - css
 published: true
 date: 2026-10-07 16:05:00
+updated: 2026-11-02 20:01:38
 description: 'In the number-flow fork I built to support old browsers, animations in modern browsers were still recalculating styles on every frame. This post records how 0.2.0 moved additive compositing into transform and opacity keyframes, how the change was measured, and the costs that remain in the mask and in interruptions.'
 series: 'Improving number-flow'
 seriesOrder: 2
@@ -269,9 +270,9 @@ The new engine does not reproduce every timing the public API can accept. [`toCo
 
 Such an input can arrive while an animation is in flight. Throwing away the existing contributions at that point would break the motion this work set out to preserve. The `demote` handling in `flush()` restores each remaining contribution as an animation in its original form and moves its `startTime` back to the past start. The new `accumulate` request is added on top. Timing information has to be kept not only when moving to the new engine but also when falling back to the old one.
 
-To sum up, what moved onto the compositor thread in 0.2.0 is the playback of movement and fades. Processing updates and computing keyframes, mask correction, and the compatibility exceptions stay on the main thread, and old browsers keep using the rAF engine. In the diagram below, the top row is what happens the moment a new value arrives, and the bottom two rows are the paths that play the animation afterward. Clicking a node shows the corresponding 0.2.0 source file and line numbers. GitHub source links open from the view opened in a new tab. The diagram labels are in Korean, and the viewer's fixed menus are in English.
+To sum up, what moved onto the compositor thread in 0.2.0 is the playback of movement and fades. Processing updates and computing keyframes, mask correction, and the compatibility exceptions stay on the main thread, and old browsers keep using the rAF engine. In the diagram below, the top row is what happens the moment a new value arrives, and the bottom two rows are the paths that play the animation afterward. Clicking a node shows the corresponding 0.2.0 source file and line numbers. GitHub source links open from the view opened in a new tab.
 
-<LiveDemo src="/demos/number-flow/engine-path.html?present=1" title="0.2.0's animation path: keyframes are computed on the main thread at update time, and movement and fades play on the compositor thread" height={600} />
+<LiveDemo src="/demos/number-flow/engine-path.en.html?present=1" title="0.2.0's animation path: keyframes are computed on the main thread at update time, and movement and fades play on the compositor thread" height={600} />
 
 ## How much did performance change?
 

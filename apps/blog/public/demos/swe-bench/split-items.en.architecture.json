@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "How one bundled PR is split into three tasks by topic",
+    "output": "split-items.en.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "pr",
+      "type": "external",
+      "label": "1 merged PR",
+      "sublabel": "three unrelated fixes",
+      "pos": [
+        20,
+        240
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "base",
+      "type": "database",
+      "label": "base commit",
+      "sublabel": "code just before the PR",
+      "pos": [
+        330,
+        110
+      ],
+      "size": [
+        160,
+        60
+      ]
+    },
+    {
+      "id": "testpatch",
+      "type": "backend",
+      "label": "Test patch",
+      "sublabel": "full f2p list",
+      "pos": [
+        330,
+        240
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "gold",
+      "type": "backend",
+      "label": "Gold patch",
+      "sublabel": "for validation, hidden from the agent",
+      "pos": [
+        330,
+        370
+      ],
+      "size": [
+        160,
+        60
+      ],
+      "tag": "Not used for grading"
+    },
+    {
+      "id": "item1",
+      "type": "frontend",
+      "label": "Task -1",
+      "sublabel": "f2p: topic 1 tests only",
+      "pos": [
+        700,
+        110
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "item2",
+      "type": "frontend",
+      "label": "Task -2",
+      "sublabel": "f2p: topic 2 tests only",
+      "pos": [
+        700,
+        240
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "item3",
+      "type": "frontend",
+      "label": "Task -3",
+      "sublabel": "f2p: topic 3 tests only",
+      "pos": [
+        700,
+        370
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "witness",
+      "type": "backend",
+      "label": "3 partial gold patches",
+      "sublabel": "patches keeping only the topic's files",
+      "pos": [
+        330,
+        500
+      ],
+      "size": [
+        160,
+        60
+      ]
+    },
+    {
+      "id": "grade",
+      "type": "security",
+      "label": "Grader validation",
+      "sublabel": "resolved / unresolved verdict",
+      "pos": [
+        1030,
+        232
+      ],
+      "size": [
+        170,
+        80
+      ],
+      "tag": "25 tasks passed"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Shared with the original: same base, same test patch, same gold patch",
+      "wraps": [
+        "base",
+        "testpatch",
+        "gold"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Split tasks (main set): only f2p is narrowed per topic",
+      "wraps": [
+        "item1",
+        "item2",
+        "item3"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "pr-base",
+      "from": "pr",
+      "to": "base",
+      "label": "Starting commit",
+      "fromSide": "top",
+      "toSide": "left"
+    },
+    {
+      "id": "pr-test",
+      "from": "pr",
+      "to": "testpatch",
+      "label": "Test file changes",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left",
+      "route": "straight"
+    },
+    {
+      "id": "pr-gold",
+      "from": "pr",
+      "to": "gold",
+      "label": "Remaining changes",
+      "fromSide": "bottom",
+      "toSide": "left"
+    },
+    {
+      "id": "test-item1",
+      "from": "testpatch",
+      "to": "item1",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "test-item2",
+      "from": "testpatch",
+      "to": "item2",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left",
+      "route": "straight"
+    },
+    {
+      "id": "test-item3",
+      "from": "testpatch",
+      "to": "item3",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "gold-witness",
+      "from": "gold",
+      "to": "witness",
+      "label": "Keep only the topic's files",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "item1-grade",
+      "from": "item1",
+      "to": "grade"
+    },
+    {
+      "id": "item2-grade",
+      "from": "item2",
+      "to": "grade",
+      "label": "Grade with partial gold"
+    },
+    {
+      "id": "item3-grade",
+      "from": "item3",
+      "to": "grade"
+    },
+    {
+      "id": "witness-grade",
+      "from": "witness",
+      "to": "grade",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "bottom"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Only f2p is narrowed",
+      "items": [
+        "A split task shares the base, the test patch, and the gold patch with the original, and only f2p is reduced to that topic's tests.",
+        "Tests for other topics already fail on base, so they are not in p2p."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Verify that each task can be solved alone",
+      "items": [
+        "Grading a partial gold patch that collects only that topic's files from the gold patch must give resolved, and grading an empty patch must give unresolved.",
+        "All 25 tasks passed. For 4 tasks the partial gold patch includes files from another topic, so it is not a strict proof."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Leave the original out of the main set",
+      "items": [
+        "Keep the original from before the split, but do not put it in the main set. Counting both would count the same tests twice."
+      ]
+    }
+  ]
+}

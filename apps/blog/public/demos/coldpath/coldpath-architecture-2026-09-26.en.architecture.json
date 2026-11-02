@@ -1,0 +1,350 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Structure of coldpath 0.3.1",
+    "output": "coldpath-architecture-2026-09-26.en.html",
+    "quality_profile": "showcase",
+    "viewBox": [
+      700,
+      880
+    ],
+    "repository": {
+      "url": "https://github.com/yceffort/coldpath",
+      "revision": "85187c3093711e0787b485b20903a92d11c14ba2",
+      "provider": "github"
+    },
+    "locale": "en"
+  },
+  "components": [
+    {
+      "id": "browser",
+      "type": "external",
+      "label": "Chromium",
+      "sublabel": "Playwright + CDP",
+      "pos": [
+        40,
+        60
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "collect",
+      "type": "backend",
+      "label": "collect, snapshot",
+      "sublabel": "collects run records",
+      "pos": [
+        40,
+        200
+      ],
+      "size": [
+        220,
+        64
+      ],
+      "sources": [
+        {
+          "path": "lib/collect.mjs"
+        },
+        {
+          "path": "lib/snapshot.mjs"
+        }
+      ]
+    },
+    {
+      "id": "modules",
+      "type": "backend",
+      "label": "modules",
+      "sublabel": "restores webpack module boundaries",
+      "pos": [
+        40,
+        320
+      ],
+      "size": [
+        220,
+        64
+      ],
+      "sources": [
+        {
+          "path": "lib/modules.mjs"
+        }
+      ]
+    },
+    {
+      "id": "graph",
+      "type": "backend",
+      "label": "graph",
+      "sublabel": "converts bundler graphs",
+      "pos": [
+        40,
+        440
+      ],
+      "size": [
+        220,
+        64
+      ],
+      "sources": [
+        {
+          "path": "lib/graph.mjs"
+        },
+        {
+          "path": "lib/export-graph.mjs"
+        }
+      ]
+    },
+    {
+      "id": "label",
+      "type": "backend",
+      "label": "label",
+      "sublabel": "infers module names with a model",
+      "pos": [
+        40,
+        560
+      ],
+      "size": [
+        220,
+        64
+      ],
+      "sources": [
+        {
+          "path": "lib/label.mjs"
+        }
+      ]
+    },
+    {
+      "id": "build",
+      "type": "database",
+      "label": "JS and source maps",
+      "sublabel": "local build or saved copy",
+      "pos": [
+        440,
+        60
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "norm",
+      "type": "backend",
+      "label": "Range normalization",
+      "sublabel": "resolve nesting, UTF-16 to UTF-8",
+      "pos": [
+        440,
+        200
+      ],
+      "size": [
+        220,
+        64
+      ],
+      "sources": [
+        {
+          "path": "src/coverage.rs"
+        },
+        {
+          "path": "src/text.rs"
+        }
+      ]
+    },
+    {
+      "id": "attr",
+      "type": "backend",
+      "label": "Attribution and aggregation",
+      "sublabel": "sources, scenarios, baseline diff",
+      "pos": [
+        440,
+        440
+      ],
+      "size": [
+        220,
+        64
+      ],
+      "sources": [
+        {
+          "path": "src/attribution.rs"
+        },
+        {
+          "path": "src/scenario.rs"
+        },
+        {
+          "path": "src/baseline.rs"
+        }
+      ]
+    },
+    {
+      "id": "report",
+      "type": "frontend",
+      "label": "Report",
+      "sublabel": "JSON, Markdown, HTML",
+      "pos": [
+        440,
+        620
+      ],
+      "size": [
+        220,
+        64
+      ],
+      "sources": [
+        {
+          "path": "src/report.rs"
+        }
+      ]
+    },
+    {
+      "id": "action",
+      "type": "cloud",
+      "label": "GitHub Action",
+      "sublabel": "PR diff, size budget",
+      "pos": [
+        440,
+        760
+      ],
+      "size": [
+        220,
+        64
+      ],
+      "sources": [
+        {
+          "path": "action.yml"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Node.js CLI  bin/coldpath.mjs",
+      "wraps": [
+        "collect",
+        "modules",
+        "graph",
+        "label"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Rust analyzer  coldpath binary",
+      "wraps": [
+        "norm",
+        "attr"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "capture",
+      "from": "browser",
+      "to": "collect",
+      "label": "V8 coverage",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "save-scripts",
+      "from": "collect",
+      "to": "build",
+      "label": "save scripts",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "coverage-in",
+      "from": "collect",
+      "to": "norm",
+      "label": "records + SHA-256",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "code-in",
+      "from": "build",
+      "to": "norm",
+      "label": "generated code",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "synthetic-maps",
+      "from": "modules",
+      "to": "attr",
+      "label": "synthetic source maps",
+      "fromSide": "right",
+      "toSide": "top"
+    },
+    {
+      "id": "graph-in",
+      "from": "graph",
+      "to": "attr",
+      "label": "graph.json",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "labels-in",
+      "from": "label",
+      "to": "attr",
+      "label": "labels.json",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "bottom"
+    },
+    {
+      "id": "spans",
+      "from": "norm",
+      "to": "attr",
+      "label": "execution ranges",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "write-report",
+      "from": "attr",
+      "to": "report",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "pr-comment",
+      "from": "report",
+      "to": "action",
+      "label": "PR comment",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Node.js CLI",
+      "items": [
+        "Input preparation that handles the browser and files",
+        "analyze runs the Rust analyzer as is"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Rust analyzer",
+      "items": [
+        "Reads only JS, source maps, and coverage files",
+        "Builds aggregates and reports without a browser or Node"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Distribution",
+      "items": [
+        "@yceffort/coldpath and per-platform binary packages",
+        "The analyzer is also found via COLDPATH_ANALYZER, then PATH"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Evaluation design for comparing models in Claude Code",
+    "quality_profile": "showcase",
+    "legend": {
+      "mode": "hidden"
+    },
+    "output": "eval-flow.en.html"
+  },
+  "lanes": [
+    {
+      "id": "provider",
+      "label": "Model provider"
+    },
+    {
+      "id": "container",
+      "label": "Isolated container (one per task)"
+    },
+    {
+      "id": "grade",
+      "label": "Grading"
+    },
+    {
+      "id": "cost",
+      "label": "Cost aggregation"
+    }
+  ],
+  "mainPath": [
+    "prepare",
+    "agent",
+    "collect",
+    "grader",
+    "resolved",
+    "metric"
+  ],
+  "nodes": [
+    {
+      "id": "endpoint",
+      "lane": "provider",
+      "col": 1,
+      "type": "external",
+      "label": "Anthropic-compatible API",
+      "sublabel": "Claude, GLM, Qwen, vLLM",
+      "width": 200
+    },
+    {
+      "id": "prepare",
+      "lane": "container",
+      "col": 0,
+      "type": "backend",
+      "label": "Task setup",
+      "sublabel": "base commit, issue text",
+      "width": 160
+    },
+    {
+      "id": "agent",
+      "lane": "container",
+      "col": 1,
+      "type": "backend",
+      "label": "Claude Code",
+      "sublabel": "pinned settings and tools",
+      "width": 170
+    },
+    {
+      "id": "collect",
+      "lane": "container",
+      "col": 2,
+      "type": "backend",
+      "label": "Collect patch",
+      "sublabel": "diff against base commit",
+      "width": 190
+    },
+    {
+      "id": "grader",
+      "lane": "grade",
+      "col": 3,
+      "type": "backend",
+      "label": "multi-swe-bench grader",
+      "sublabel": "compared with stored records",
+      "width": 200
+    },
+    {
+      "id": "resolved",
+      "lane": "grade",
+      "col": 4,
+      "type": "backend",
+      "label": "Resolved or not",
+      "sublabel": "run validity and list comparison",
+      "width": 170
+    },
+    {
+      "id": "usage",
+      "lane": "cost",
+      "col": 1,
+      "type": "database",
+      "label": "Token usage",
+      "sublabel": "modelUsage and provider records",
+      "width": 200
+    },
+    {
+      "id": "metric",
+      "lane": "cost",
+      "col": 5,
+      "type": "frontend",
+      "label": "Cost per resolved task",
+      "sublabel": "total API cost / resolved count",
+      "width": 190
+    }
+  ],
+  "edges": [
+    {
+      "id": "send-issue",
+      "from": "prepare",
+      "to": "agent",
+      "label": "Pass issue",
+      "role": "main"
+    },
+    {
+      "id": "agent-done",
+      "from": "agent",
+      "to": "collect",
+      "label": "Work ends",
+      "role": "main"
+    },
+    {
+      "id": "submit-patch",
+      "from": "collect",
+      "to": "grader",
+      "label": "JSONL patch",
+      "role": "main"
+    },
+    {
+      "id": "run-tests",
+      "from": "grader",
+      "to": "resolved",
+      "label": "Run tests",
+      "role": "main"
+    },
+    {
+      "id": "count-resolved",
+      "from": "resolved",
+      "to": "metric",
+      "label": "Resolved count",
+      "role": "main",
+      "variant": "emphasis"
+    },
+    {
+      "id": "call-model",
+      "from": "agent",
+      "to": "endpoint",
+      "label": "/v1/messages",
+      "role": "branch"
+    },
+    {
+      "id": "record-usage",
+      "from": "agent",
+      "to": "usage",
+      "label": "Token records",
+      "role": "branch",
+      "variant": "dashed"
+    },
+    {
+      "id": "sum-cost",
+      "from": "usage",
+      "to": "metric",
+      "label": "Total cost",
+      "role": "branch",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Pin the run conditions together",
+      "items": [
+        "Match the version, tools, and run budget, and record each model's reasoning settings and context limit."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Keep the grading environment separate",
+      "items": [
+        "The gold material is never exposed to the agent, and the grader checks run validity before comparing the f2p, p2p, s2p, and n2p lists."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Look at the quality bar and cost together",
+      "items": [
+        "Decide the acceptable drop in resolved rate first, and add up the cost of failures and retries too."
+      ]
+    }
+  ]
+}

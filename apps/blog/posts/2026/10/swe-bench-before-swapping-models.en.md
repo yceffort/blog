@@ -4,6 +4,7 @@ tags:
   - ai
 published: true
 date: 2026-10-10 12:05:00
+updated: 2026-11-02 20:01:38
 description: 'How do you measure the model performance of a coding agent?'
 series: 'Swapping the Model Behind a Coding Agent'
 seriesOrder: 1
@@ -262,7 +263,7 @@ First, decide how much lower the resolved rate is allowed to be, and how much ti
 
 The overall flow is shown in the diagram below. For each task, Claude Code produces a patch in an isolated container, the patch is graded in a separate environment, and cost is aggregated from usage records.
 
-<LiveDemo src="/demos/swe-bench/eval-flow.html?present=1" title="An evaluation flow in which Claude Code produces a patch in an isolated container per task and the cost per resolved task is calculated from grading results and token usage" height={640} />
+<LiveDemo src="/demos/swe-bench/eval-flow.en.html?present=1" title="An evaluation flow in which Claude Code produces a patch in an isolated container per task and the cost per resolved task is calculated from grading results and token usage" height={640} />
 
 ### Checking the actual configuration of the model and harness
 

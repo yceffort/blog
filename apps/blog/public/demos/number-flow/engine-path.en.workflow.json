@@ -1,0 +1,198 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "The native animation path in 0.2.0",
+    "quality_profile": "showcase",
+    "animation": "trace",
+    "legend": {
+      "mode": "hidden"
+    },
+    "output": "apps/blog/public/demos/number-flow/engine-path.en.html",
+    "repository": {
+      "url": "https://github.com/yceffort/number-flow.git",
+      "revision": "3438c3eed55c65a07d99b634ca2c0fe75becf470",
+      "provider": "github"
+    }
+  },
+  "lanes": [
+    {
+      "id": "prepare",
+      "label": "Main thread: at update time"
+    },
+    {
+      "id": "remaining",
+      "label": "Playback that stays on the main thread",
+      "variant": "exception"
+    },
+    {
+      "id": "compositor",
+      "label": "Compositor thread: frame playback"
+    }
+  ],
+  "mainPath": [
+    "requests",
+    "commit",
+    "bake",
+    "play"
+  ],
+  "nodes": [
+    {
+      "id": "requests",
+      "lane": "prepare",
+      "col": 0,
+      "type": "backend",
+      "label": "Collect requests",
+      "sublabel": "queue()",
+      "width": 160,
+      "sources": [
+        {
+          "path": "packages/number-flow/src/engine/compositor.ts",
+          "line": 97,
+          "end_line": 106
+        }
+      ]
+    },
+    {
+      "id": "commit",
+      "lane": "prepare",
+      "col": 1,
+      "type": "backend",
+      "label": "Merge contributions",
+      "sublabel": "flush()",
+      "width": 160,
+      "sources": [
+        {
+          "path": "packages/number-flow/src/engine/compositor.ts",
+          "line": 224,
+          "end_line": 270
+        }
+      ]
+    },
+    {
+      "id": "bake",
+      "lane": "prepare",
+      "col": 2,
+      "type": "backend",
+      "label": "Compute keyframes",
+      "sublabel": "bake()",
+      "width": 160,
+      "sources": [
+        {
+          "path": "packages/number-flow/src/engine/compositor.ts",
+          "line": 393,
+          "end_line": 435
+        }
+      ]
+    },
+    {
+      "id": "play",
+      "lane": "compositor",
+      "col": 3,
+      "type": "frontend",
+      "label": "Movement and fades",
+      "sublabel": "transform / opacity",
+      "width": 192,
+      "sources": [
+        {
+          "path": "packages/number-flow/src/engine/compositor.ts",
+          "line": 301,
+          "end_line": 312
+        },
+        {
+          "path": "README.md",
+          "line": 38,
+          "end_line": 42
+        }
+      ]
+    },
+    {
+      "id": "legacy",
+      "lane": "remaining",
+      "col": 1,
+      "type": "backend",
+      "label": "Old WAAPI",
+      "sublabel": "accumulate",
+      "width": 160,
+      "sources": [
+        {
+          "path": "packages/number-flow/src/engine/compositor.ts",
+          "line": 277,
+          "end_line": 299
+        }
+      ]
+    },
+    {
+      "id": "mask",
+      "lane": "remaining",
+      "col": 2,
+      "type": "backend",
+      "label": "Mask correction",
+      "sublabel": "width delta update",
+      "width": 160,
+      "sources": [
+        {
+          "path": "packages/number-flow/src/engine/compositor.ts",
+          "line": 440,
+          "end_line": 487
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "update-complete",
+      "from": "requests",
+      "to": "commit",
+      "label": "Update done",
+      "role": "main"
+    },
+    {
+      "id": "supported",
+      "from": "commit",
+      "to": "bake",
+      "label": "Reproducible",
+      "role": "main"
+    },
+    {
+      "id": "submit-keyframes",
+      "from": "bake",
+      "to": "play",
+      "label": "Play with replace",
+      "role": "main",
+      "variant": "emphasis"
+    },
+    {
+      "id": "unsupported",
+      "from": "commit",
+      "to": "legacy",
+      "label": "Compatibility exception",
+      "role": "branch",
+      "variant": "dashed"
+    },
+    {
+      "id": "width-changes",
+      "from": "bake",
+      "to": "mask",
+      "label": "Width-change segment",
+      "role": "branch",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Computed when a new value arrives",
+      "items": [
+        "The remaining time of in-flight contributions is folded into the new keyframes."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Some work stays on the main thread",
+      "items": [
+        "Masks and unsupported timings keep a separate path."
+      ]
+    }
+  ]
+}
