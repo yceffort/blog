@@ -85,7 +85,7 @@ It was hard to attach much meaning to the two-run difference in the basic track.
 
 In the spec track, Sonnet solved all 42 and GLM 35. Of GLM's 8 unresolved runs, 7 were in the spec track. The per-round results for all 36 tasks look like this as a grid. Task identifiers are anonymized symbols grouped by PR, and a numeric suffix marks a task split from one PR by topic. A number in a cell is the turn count of a resolved run, X is a failure, and hatching marks a run stopped at the 60-turn limit.
 
-<LiveDemo src="/demos/swe-bench/results-grid.html" title="Result grid of 36 tasks × 3 rounds × 2 models. GLM 5.3 stopped at the 60-turn limit in 36 of 42 spec-track runs, and Sonnet 5.5's only failures are K4 and L3" height={790} />
+<LiveDemo src="/demos/swe-bench/results-grid.html?lang=en" title="Result grid of 36 tasks × 3 rounds × 2 models. GLM 5.3 stopped at the 60-turn limit in 36 of 42 spec-track runs, and Sonnet 5.5's only failures are K4 and L3" height={790} />
 
 The same content as a table follows. A number in a cell is the turn count of a resolved run, X is a failure, and \* marks a run stopped at the 60-turn limit.
 

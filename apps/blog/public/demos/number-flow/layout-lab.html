@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>number-flow 갱신 순서와 강제 레이아웃</title>
+  <title data-t="docTitle">number-flow 갱신 순서와 강제 레이아웃</title>
   <style>
     :root { color-scheme: light dark; --bg:#fbfaf7; --panel:#fff; --ink:#252338; --muted:#706d7d; --line:#e5e1ec; --violet:#6550d8; --teal:#137b6b; --amber:#b76216; --soft:#f0edf9; --read:#8fd3c4; --write:#f3c99a; --forced:#6550d8; }
     @media (prefers-color-scheme:dark) { :root { --bg:#181820; --panel:#23232f; --ink:#f0eef8; --muted:#b5b0c5; --line:#3d394d; --violet:#ad9aff; --teal:#66d9bf; --amber:#ffbd7a; --soft:#302b45; --read:#2f7d6d; --write:#8a5a2a; --forced:#ad9aff; } }
@@ -73,51 +73,51 @@
 
   <section id="order" hidden>
     <div class="buttons">
-      <label for="scenario" style="font-size:12px;color:var(--muted)">갱신 종류</label>
-      <select id="scenario" aria-label="갱신 종류">
-        <option value="same">같은 자릿수: +123,456,789% → +987,654,321%</option>
-        <option value="grows">자릿수 증가: +5% → +123,456,789%</option>
-        <option value="shrinks">자릿수 감소: +123,456,789% → +5%</option>
-        <option value="symbols">기호만 제거: +5% → 5</option>
-        <option value="native-same">네이티브 엔진, 같은 자릿수 (flush와 prepare 포함)</option>
+      <label for="scenario" style="font-size:12px;color:var(--muted)" data-t="scenarioLabel">갱신 종류</label>
+      <select id="scenario" aria-label="갱신 종류" data-t-label="scenarioLabel">
+        <option value="same" data-t="same">같은 자릿수: +123,456,789% → +987,654,321%</option>
+        <option value="grows" data-t="grows">자릿수 증가: +5% → +123,456,789%</option>
+        <option value="shrinks" data-t="shrinks">자릿수 감소: +123,456,789% → +5%</option>
+        <option value="symbols" data-t="symbols">기호만 제거: +5% → 5</option>
+        <option value="native-same" data-t="nativeSame">네이티브 엔진, 같은 자릿수 (flush와 prepare 포함)</option>
       </select>
     </div>
     <div class="cards">
       <div class="card" data-version="v0.2.0">
-        <h2><span class="amber">v0.2.0</span><small>섹션마다, 글자마다 읽고 쓴다</small></h2>
-        <div class="stats"><div>작업<strong data-stat="step">0</strong></div><div>읽기 / 쓰기<strong data-stat="rw">0 / 0</strong></div><div class="forced">쓰기 뒤 읽기<strong data-stat="forced">0</strong></div></div>
+        <h2><span class="amber">v0.2.0</span><small data-t="oldDesc">섹션마다, 글자마다 읽고 쓴다</small></h2>
+        <div class="stats"><div><span data-t="statStep">작업</span><strong data-stat="step">0</strong></div><div><span data-t="statRw">읽기 / 쓰기</span><strong data-stat="rw">0 / 0</strong></div><div class="forced"><span data-t="statForced">쓰기 뒤 읽기</span><strong data-stat="forced">0</strong></div></div>
         <div class="strip" aria-hidden="true"></div>
         <p class="op" aria-live="polite"></p>
       </div>
       <div class="card" data-version="v0.2.1">
-        <h2><span class="teal">v0.2.1</span><small>읽기 단계와 쓰기 단계를 번갈아</small></h2>
-        <div class="stats"><div>작업<strong data-stat="step">0</strong></div><div>읽기 / 쓰기<strong data-stat="rw">0 / 0</strong></div><div class="forced">쓰기 뒤 읽기<strong data-stat="forced">0</strong></div></div>
+        <h2><span class="teal">v0.2.1</span><small data-t="newDesc">읽기 단계와 쓰기 단계를 번갈아</small></h2>
+        <div class="stats"><div><span data-t="statStep">작업</span><strong data-stat="step">0</strong></div><div><span data-t="statRw">읽기 / 쓰기</span><strong data-stat="rw">0 / 0</strong></div><div class="forced"><span data-t="statForced">쓰기 뒤 읽기</span><strong data-stat="forced">0</strong></div></div>
         <div class="strip" aria-hidden="true"></div>
         <p class="op" aria-live="polite"></p>
       </div>
     </div>
-    <p class="legend"><span><i style="background:var(--read)"></i>읽기</span><span><i style="background:var(--write)"></i>쓰기</span><span><i style="background:var(--forced)"></i>쓰기 뒤의 읽기 (모델 집계)</span></p>
+    <p class="legend"><span><i style="background:var(--read)"></i><span data-t="read">읽기</span></span><span><i style="background:var(--write)"></i><span data-t="write">쓰기</span></span><span><i style="background:var(--forced)"></i><span data-t="legendForced">쓰기 뒤의 읽기 (모델 집계)</span></span></p>
     <div class="controls">
-      <div class="buttons"><button type="button" class="primary" id="play">재생</button><button type="button" id="restart">처음으로</button><button type="button" id="next-forced">다음 보라색 표시</button></div>
-      <label class="scrub-label" for="step"><span>작업을 하나씩 넘기기</span><output id="step-output" for="step">0</output></label>
-      <input type="range" id="step" min="0" max="1" value="0" step="1" aria-label="진행한 작업 수">
+      <div class="buttons"><button type="button" class="primary" id="play" data-t="play">재생</button><button type="button" id="restart" data-t="restart">처음으로</button><button type="button" id="next-forced" data-t="nextForced">다음 보라색 표시</button></div>
+      <label class="scrub-label" for="step"><span data-t="scrub">작업을 하나씩 넘기기</span><output id="step-output" for="step">0</output></label>
+      <input type="range" id="step" min="0" max="1" value="0" step="1" aria-label="진행한 작업 수" data-t-label="stepLabel">
     </div>
   </section>
 
   <section id="thrash" hidden>
     <div class="card">
       <div class="buttons">
-        <label for="count" style="font-size:12px;color:var(--muted)">상자 수</label>
-        <select id="count" aria-label="상자 수"><option value="100">100</option><option value="300" selected>300</option><option value="1000">1000</option></select>
-        <button type="button" class="primary" id="run-interleaved">섞어서: 상자마다 읽고 바로 쓰기</button>
-        <button type="button" id="run-batched">모아서: 모두 읽고, 모두 쓰기</button>
+        <label for="count" style="font-size:12px;color:var(--muted)" data-t="countLabel">상자 수</label>
+        <select id="count" aria-label="상자 수" data-t-label="countLabel"><option value="100">100</option><option value="300" selected>300</option><option value="1000">1000</option></select>
+        <button type="button" class="primary" id="run-interleaved" data-t="runInterleaved">섞어서: 상자마다 읽고 바로 쓰기</button>
+        <button type="button" id="run-batched" data-t="runBatched">모아서: 모두 읽고, 모두 쓰기</button>
       </div>
       <div class="field" id="field" aria-hidden="true"></div>
       <div class="bars" id="bars">
-        <span class="violet">섞어서</span><div class="bar" id="bar-interleaved" style="width:0"></div><output id="ms-interleaved">-</output>
-        <span class="teal">모아서</span><div class="bar teal" id="bar-batched" style="width:0"></div><output id="ms-batched">-</output>
+        <span class="violet" data-t="interleaved">섞어서</span><div class="bar" id="bar-interleaved" style="width:0"></div><output id="ms-interleaved">-</output>
+        <span class="teal" data-t="batched">모아서</span><div class="bar teal" id="bar-batched" style="width:0"></div><output id="ms-batched">-</output>
       </div>
-      <p class="result-note" id="thrash-note">두 버튼을 눌러 비교해 보세요. 각 버튼은 같은 쓰기를 5번 반복한 중앙값을 보여 줍니다.</p>
+      <p class="result-note" id="thrash-note" data-t="thrashHint">두 버튼을 눌러 비교해 보세요. 각 버튼은 같은 쓰기를 5번 반복한 중앙값을 보여 줍니다.</p>
     </div>
   </section>
   <p class="note" id="note"></p>
@@ -126,22 +126,60 @@
 <script>
   const scenes = {
     order: {
-      eyebrow: '01 / 갱신 한 번의 읽기와 쓰기',
-      title: '읽기와 쓰기를 단계별로 모았습니다',
-      intro: '값 하나를 바꾸는 동안 라이브러리가 DOM을 읽고 쓴 순서를 보여 줍니다. DOM을 바꾼 뒤 값을 읽은 부분은 보라색으로 표시했습니다. 브라우저에서 실제로 레이아웃을 계산했는지는 이 기록만으로 알 수 없습니다.',
-      note: '포크의 코드를 jsdom에서 실행하며 기록했습니다. DOM 변경은 MutationObserver로 확인하고, 레이아웃과 스타일을 읽는 API 호출도 기록했습니다. jsdom은 레이아웃을 계산하지 않으므로 실제 횟수는 본문의 브라우저 측정 표를 참고하세요. 같은 글자의 값을 바꾸는 작업과 요소를 제거했다가 삽입하는 작업은 한 칸으로 합쳤습니다. Web Animations의 모의 구현에는 브라우저 내부의 스타일 갱신이 포함되지 않습니다.',
+      ko: {
+        eyebrow: '01 / 갱신 한 번의 읽기와 쓰기',
+        title: '읽기와 쓰기를 단계별로 모았습니다',
+        intro: '값 하나를 바꾸는 동안 라이브러리가 DOM을 읽고 쓴 순서를 보여 줍니다. DOM을 바꾼 뒤 값을 읽은 부분은 보라색으로 표시했습니다. 브라우저에서 실제로 레이아웃을 계산했는지는 이 기록만으로 알 수 없습니다.',
+        note: '포크의 코드를 jsdom에서 실행하며 기록했습니다. DOM 변경은 MutationObserver로 확인하고, 레이아웃과 스타일을 읽는 API 호출도 기록했습니다. jsdom은 레이아웃을 계산하지 않으므로 실제 횟수는 본문의 브라우저 측정 표를 참고하세요. 같은 글자의 값을 바꾸는 작업과 요소를 제거했다가 삽입하는 작업은 한 칸으로 합쳤습니다. Web Animations의 모의 구현에는 브라우저 내부의 스타일 갱신이 포함되지 않습니다.',
+      },
+      en: {
+        eyebrow: '01 / Reads and writes in one update',
+        title: 'Reads and writes grouped into phases',
+        intro: 'Shows the order in which the library read and wrote the DOM while changing one value. Reads that follow a DOM change are shown in purple. This record alone cannot tell whether the browser actually calculated layout.',
+        note: 'Recorded by running the fork\'s code in jsdom. DOM changes are detected with MutationObserver, and calls to APIs that read layout and style are recorded too. jsdom does not calculate layout, so see the browser measurement table in the post for real counts. Changing the value of the same character and removing then inserting an element are merged into one step. The mock Web Animations implementation does not include the browser\'s internal style updates.',
+      },
     },
     thrash: {
-      eyebrow: '02 / 쓰기 뒤의 읽기',
-      title: '폭을 바꾸고 레이아웃을 계산하는 데 걸린 시간',
-      intro: '상자의 폭을 읽고 바꾸는 작업을 두 가지 순서로 실행합니다. 두 방식 모두 40px에서 56px로 바꾸며, 마지막 변경에 따른 레이아웃 계산이 끝날 때까지 시간을 잽니다.',
-      note: 'performance.now()로 5회 측정한 중앙값입니다. 초기 폭을 설정하고 레이아웃을 계산하는 시간은 제외했습니다. 폭을 바꾼 뒤 마지막으로 레이아웃을 계산하는 시간은 포함하며, 페인트와 합성 시간은 포함하지 않습니다. 결과는 기기와 브라우저에 따라 달라집니다.',
+      ko: {
+        eyebrow: '02 / 쓰기 뒤의 읽기',
+        title: '폭을 바꾸고 레이아웃을 계산하는 데 걸린 시간',
+        intro: '상자의 폭을 읽고 바꾸는 작업을 두 가지 순서로 실행합니다. 두 방식 모두 40px에서 56px로 바꾸며, 마지막 변경에 따른 레이아웃 계산이 끝날 때까지 시간을 잽니다.',
+        note: 'performance.now()로 5회 측정한 중앙값입니다. 초기 폭을 설정하고 레이아웃을 계산하는 시간은 제외했습니다. 폭을 바꾼 뒤 마지막으로 레이아웃을 계산하는 시간은 포함하며, 페인트와 합성 시간은 포함하지 않습니다. 결과는 기기와 브라우저에 따라 달라집니다.',
+      },
+      en: {
+        eyebrow: '02 / Read after write',
+        title: 'Time to change widths and calculate layout',
+        intro: 'Runs the job of reading and changing box widths in two orders. Both change the width from 40px to 56px, and the timer runs until the layout calculation for the last change has finished.',
+        note: 'The median of 5 runs measured with performance.now(). The time to set the initial width and calculate layout is excluded. The time of the last layout calculation after the width change is included; paint and compositing time are not. Results vary by device and browser.',
+      },
     },
   }
-  const requested = new URLSearchParams(location.search).get('scene')
+  const params = new URLSearchParams(location.search)
+  const lang = params.get('lang') === 'en' ? 'en' : 'ko'
+  const requested = params.get('scene')
   const scene = Object.hasOwn(scenes, requested) ? requested : 'order'
-  const config = scenes[scene]
+  const config = scenes[scene][lang]
+  // Static labels are written in Korean in the markup; English swaps them in by data-t key.
+  const text = {
+    ko: {read:'읽기', write:'쓰기', forcedRead:'쓰기 뒤 읽기', afterWrite:'앞서 값을 읽은 뒤 DOM이 바뀌었습니다. 실제로 레이아웃을 다시 계산하는지는 브라우저에서 확인해야 합니다.', idle:'재생을 누르거나 막대를 움직여 보세요.', play:'재생', replay:'다시 재생', pause:'일시 정지',
+      thrashDone: (n, ratio) => `상자 ${n}개를 바꿨습니다. 마지막 레이아웃 계산까지 포함하면, 쓰기 뒤의 읽기는 섞어서 ${n}번, 모아서 1번입니다. 실행 시간의 중앙값은 ${ratio}배 차이가 났습니다. 페인트와 합성 시간은 제외한 값입니다.`,
+      thrashWait: (n) => `상자 ${n}개. 다른 버튼도 눌러 비교해 보세요.`, ops: []},
+    en: {read:'Read', write:'Write', forcedRead:'Read after write', afterWrite:'The DOM changed after an earlier read. Whether the browser actually recalculates layout has to be checked in the browser.', idle:'Press play or move the slider.', play:'Play', replay:'Replay', pause:'Pause',
+      thrashDone: (n, ratio) => `Changed ${n} boxes. Counting the final layout calculation, reads after a write are ${n} when interleaved and 1 when batched. The median run time differed by ${ratio}x. Paint and compositing time are excluded.`,
+      thrashWait: (n) => `${n} boxes. Press the other button to compare.`,
+      // Korean strings recorded in the order data are translated here at render time.
+      ops: [[/(\S+)을\(를\) 다시 append \(DOM 이동\)/, 're-append $1 (DOM move)'], [/(\S+) 삽입/, 'insert $1'], [/숫자 요소 inert 갱신/, 'update inert numeral elements'], [/투명도 델타 기록/, 'record opacity delta'], [/--width 기록/, 'record --width'], [/inert 설정 \(흐름에서 뺌\)/, 'set inert (taken out of flow)'], [/is-spinning 클래스 추가/, 'add is-spinning class'], [/(left|right|top) 고정/, 'pin $1'], [/role, aria-label 갱신/, 'update role, aria-label'], [/\(브라우저에서는 스타일 갱신\)/, '(a style update in the browser)']],
+      docTitle:'How number-flow orders updates and forced layout', scenarioLabel:'Update type', same:'Same digit count: +123,456,789% → +987,654,321%', grows:'Digits added: +5% → +123,456,789%', shrinks:'Digits removed: +123,456,789% → +5%', symbols:'Symbols removed only: +5% → 5', nativeSame:'Native engine, same digit count (with flush and prepare)',
+      oldDesc:'Reads and writes per section and per character', newDesc:'Alternates a read phase and a write phase', statStep:'Steps', statRw:'Reads / writes', statForced:'Read after write', legendForced:'Read after write (model count)',
+      restart:'Restart', nextForced:'Next purple mark', scrub:'Step through one at a time', stepLabel:'Steps taken', countLabel:'Boxes', runInterleaved:'Interleaved: read and write each box', runBatched:'Batched: read all, then write all', interleaved:'Interleaved', batched:'Batched', thrashHint:'Press both buttons to compare. Each shows the median of 5 repeats of the same writes.'},
+  }[lang]
   const $ = (id) => document.getElementById(id)
+  if (lang === 'en') {
+    document.documentElement.lang = 'en'
+    document.querySelectorAll('[data-t]').forEach((el) => { el.textContent = text[el.dataset.t] })
+    document.querySelectorAll('[data-t-label]').forEach((el) => { el.setAttribute('aria-label', text[el.dataset.tLabel]) })
+  }
+  const tr = (str) => text.ops.reduce((acc, [re, to]) => acc.replace(re, to), str)
   document.title = config.title + ' | number-flow'
   $('title').textContent = config.title
   $('eyebrow').textContent = config.eyebrow
@@ -172,10 +210,10 @@
     }
     const describe = (op) => {
       if (!op) return ''
-      if (op.k === 'W') return `<span class="tag w">쓰기</span><b>${op.t}</b>: ${op.w}`
-      const tag = op.f ? '<span class="tag f">쓰기 뒤 읽기</span>' : '<span class="tag r">읽기</span>'
-      const by = op.b.replace(/</g, '&lt;')
-      return `${tag}<b>${op.t}</b>.${op.a} ← ${by}${op.f ? '<br>앞서 값을 읽은 뒤 DOM이 바뀌었습니다. 실제로 레이아웃을 다시 계산하는지는 브라우저에서 확인해야 합니다.' : ''}`
+      if (op.k === 'W') return `<span class="tag w">${text.write}</span><b>${op.t}</b>: ${tr(op.w)}`
+      const tag = op.f ? `<span class="tag f">${text.forcedRead}</span>` : `<span class="tag r">${text.read}</span>`
+      const by = tr(op.b).replace(/</g, '&lt;')
+      return `${tag}<b>${op.t}</b>.${op.a} ← ${by}${op.f ? `<br>${text.afterWrite}` : ''}`
     }
     function render(n) {
       step = Math.max(0, Math.min(n, maxLen()))
@@ -192,16 +230,16 @@
         cards[v].querySelector('[data-stat="step"]').textContent = `${done} / ${ops.length}`
         cards[v].querySelector('[data-stat="rw"]').textContent = `${reads} / ${shown.length - reads}`
         cards[v].querySelector('[data-stat="forced"]').textContent = String(forced)
-        cards[v].querySelector('.op').innerHTML = done === 0 ? `${data[v][current].from} → ${data[v][current].to}. 재생을 누르거나 막대를 움직여 보세요.` : describe(ops[done - 1])
+        cards[v].querySelector('.op').innerHTML = done === 0 ? `${data[v][current].from} → ${data[v][current].to}. ${text.idle}` : describe(ops[done - 1])
       }
-      if (!timer) $('play').textContent = step >= maxLen() ? '다시 재생' : '재생'
+      if (!timer) $('play').textContent = step >= maxLen() ? text.replay : text.play
     }
-    function pause() { clearInterval(timer); timer = 0; $('play').textContent = step >= maxLen() ? '다시 재생' : '재생' }
+    function pause() { clearInterval(timer); timer = 0; $('play').textContent = step >= maxLen() ? text.replay : text.play }
     $('play').addEventListener('click', () => {
       if (timer) { pause(); return }
       if (reducedMotion.matches) { render(maxLen()); pause(); return }
       if (step >= maxLen()) render(0)
-      $('play').textContent = '일시 정지'
+      $('play').textContent = text.pause
       timer = setInterval(() => { render(step + 1); if (step >= maxLen()) pause() }, 45)
     })
     $('restart').addEventListener('click', () => { pause(); render(0) })
@@ -260,9 +298,9 @@
       const n = boxes.length
       if (results.interleaved != null && results.batched != null) {
         const ratio = results.interleaved / Math.max(results.batched, 0.001)
-        $('thrash-note').textContent = `상자 ${n}개를 바꿨습니다. 마지막 레이아웃 계산까지 포함하면, 쓰기 뒤의 읽기는 섞어서 ${n}번, 모아서 1번입니다. 실행 시간의 중앙값은 ${ratio.toFixed(1)}배 차이가 났습니다. 페인트와 합성 시간은 제외한 값입니다.`
+        $('thrash-note').textContent = text.thrashDone(n, ratio.toFixed(1))
       } else {
-        $('thrash-note').textContent = `상자 ${n}개. 다른 버튼도 눌러 비교해 보세요.`
+        $('thrash-note').textContent = text.thrashWait(n)
       }
     }
     $('run-interleaved').addEventListener('click', () => { results.interleaved = median(Array.from({length: 5}, runInterleaved)); show() })

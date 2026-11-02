@@ -222,46 +222,46 @@
 <body>
   <div class="container">
     <h1>WebGPU Demo</h1>
-    <p class="subtitle">브라우저에서 GPU 연산 성능 테스트</p>
+    <p class="subtitle" data-t="subtitle">브라우저에서 GPU 연산 성능 테스트</p>
 
     <!-- 지원 여부 확인 -->
     <div class="card">
-      <h2>1. WebGPU 지원 여부</h2>
-      <div id="support-status">확인 중...</div>
+      <h2 data-t="h1">1. WebGPU 지원 여부</h2>
+      <div id="support-status" data-t="checking">확인 중...</div>
       <div id="adapter-info" class="info" style="display: none;"></div>
     </div>
 
     <!-- Compute Shader 데모 -->
     <div class="card">
-      <h2>2. Compute Shader 데모</h2>
-      <p style="color: #888; margin-bottom: 1rem;">
+      <h2 data-t="h2">2. Compute Shader 데모</h2>
+      <p style="color: #888; margin-bottom: 1rem;" data-t="computeDesc">
         GPU에서 100만 개 배열의 덧셈 연산을 수행합니다.
       </p>
-      <button id="compute-btn" disabled>Compute Shader 실행</button>
+      <button id="compute-btn" data-t="computeRun" disabled>Compute Shader 실행</button>
       <div id="compute-result" class="result" style="display: none;"></div>
     </div>
 
     <!-- 벤치마크 -->
     <div class="card">
-      <h2>3. 행렬 연산 벤치마크</h2>
-      <p style="color: #888; margin-bottom: 1rem;">
+      <h2 data-t="h3">3. 행렬 연산 벤치마크</h2>
+      <p style="color: #888; margin-bottom: 1rem;" data-t="benchDesc">
         512x512 행렬 곱셈을 각 백엔드에서 20회 실행하고 평균 시간을 측정합니다.
       </p>
-      <button id="benchmark-btn" disabled>벤치마크 실행</button>
+      <button id="benchmark-btn" data-t="benchRun" disabled>벤치마크 실행</button>
       <div id="benchmark-results" class="benchmark-results" style="display: none;"></div>
     </div>
 
     <!-- 텍스트 유사도 검색 -->
     <div class="card">
-      <h2>4. 텍스트 유사도 검색 (실전 예제)</h2>
+      <h2 data-t="h4">4. 텍스트 유사도 검색 (실전 예제)</h2>
       <p style="color: #888; margin-bottom: 1rem;">
-        Transformers.js + WebGPU로 텍스트를 벡터로 변환하고 유사도를 계산합니다.<br>
-        모델 첫 로드 시 약 30MB 다운로드가 필요합니다.
+        <span data-t="simDesc1">Transformers.js + WebGPU로 텍스트를 벡터로 변환하고 유사도를 계산합니다.</span><br>
+        <span data-t="simDesc2">모델 첫 로드 시 약 30MB 다운로드가 필요합니다.</span>
       </p>
 
       <div style="margin-bottom: 1rem;">
-        <label style="display: block; color: #888; margin-bottom: 0.5rem;">검색 대상 문장들 (줄바꿈으로 구분)</label>
-        <textarea id="corpus-input" rows="5" style="width: 100%; background: #0d0d0d; border: 1px solid #333; border-radius: 4px; padding: 0.75rem; color: #e5e5e5; font-size: 0.875rem; resize: vertical;">오늘 날씨가 정말 좋다
+        <label style="display: block; color: #888; margin-bottom: 0.5rem;" data-t="corpusLabel">검색 대상 문장들 (줄바꿈으로 구분)</label>
+        <textarea id="corpus-input" rows="5" style="width: 100%; background: #0d0d0d; border: 1px solid #333; border-radius: 4px; padding: 0.75rem; color: #e5e5e5; font-size: 0.875rem; resize: vertical;" data-t="corpus">오늘 날씨가 정말 좋다
 비가 와서 우산을 챙겼다
 주식 시장이 크게 하락했다
 맛있는 점심을 먹었다
@@ -270,20 +270,20 @@
       </div>
 
       <div style="margin-bottom: 1rem;">
-        <label style="display: block; color: #888; margin-bottom: 0.5rem;">검색 쿼리</label>
+        <label style="display: block; color: #888; margin-bottom: 0.5rem;" data-t="queryLabel">검색 쿼리</label>
         <input type="text" id="query-input" value="날씨가 좋아서 기분이 좋다"
           style="width: 100%; background: #0d0d0d; border: 1px solid #333; border-radius: 4px; padding: 0.75rem; color: #e5e5e5; font-size: 0.875rem;">
       </div>
 
-      <button id="similarity-btn">유사도 검색 실행</button>
+      <button id="similarity-btn" data-t="simRun">유사도 검색 실행</button>
       <div id="similarity-status" style="margin-top: 0.5rem; color: #888; font-size: 0.875rem;"></div>
       <div id="similarity-result" style="display: none; margin-top: 1rem;"></div>
     </div>
 
     <!-- 이미지 분류 -->
     <div class="card">
-      <h2>5. 이미지 분류 (MobileNet)</h2>
-      <p style="color: #888; margin-bottom: 1rem;">
+      <h2 data-t="h5">5. 이미지 분류 (MobileNet)</h2>
+      <p style="color: #888; margin-bottom: 1rem;" data-t="imgDesc">
         이미지를 업로드하면 WebGPU로 뭔지 알려줍니다.
       </p>
 
@@ -304,7 +304,7 @@
             <svg width="48" height="48" fill="none" stroke="#666" stroke-width="1.5" viewBox="0 0 24 24">
               <path d="M12 16V4m0 0L8 8m4-4l4 4M4 20h16"/>
             </svg>
-            <span style="color: #666; margin-top: 0.5rem;">클릭하거나 드래그해서 업로드</span>
+            <span style="color: #666; margin-top: 0.5rem;" data-t="upload">클릭하거나 드래그해서 업로드</span>
             <input type="file" id="image-upload" accept="image/*" style="display: none;">
           </label>
           <img id="preview-image" style="display: none; max-width: 100%; max-height: 200px; border-radius: 8px; margin-top: 1rem;">
@@ -320,7 +320,7 @@
             flex-direction: column;
             justify-content: center;
           ">
-            <div style="color: #666; text-align: center;">이미지를 업로드하면<br>분류 결과가 여기에 표시됩니다</div>
+            <div style="color: #666; text-align: center;"><span data-t="hint1">이미지를 업로드하면</span><br><span data-t="hint2">분류 결과가 여기에 표시됩니다</span></div>
           </div>
         </div>
       </div>
@@ -329,9 +329,119 @@
     </div>
 
     <div class="footer">
-      <a href="https://yceffort.kr/2025/12/webgpu-all-browsers">← 블로그 글로 돌아가기</a>
+      <a id="back-link" href="https://yceffort.kr/2025/12/webgpu-all-browsers" data-t="back">← 블로그 글로 돌아가기</a>
     </div>
   </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const lang = params.get('lang') === 'en' ? 'en' : 'ko';
+    // 정적 문구는 마크업에 한국어로 두고, 영어는 data-t 키로 교체한다.
+    const text = {
+      ko: {
+        unsupported: 'WebGPU 미지원',
+        unsupportedDesc: '이 브라우저는 WebGPU를 지원하지 않습니다.<br>Chrome 113+, Edge 113+, Safari 26+, Firefox 141+ 에서 사용 가능합니다.',
+        noAdapter: 'GPU 어댑터 없음',
+        supported: 'WebGPU 지원됨',
+        gpuInfo: 'GPU 정보',
+        initFailed: 'WebGPU 초기화 실패',
+        running: '실행 중...',
+        preparing: '준비 중...',
+        verification: '검증 (처음 5개):',
+        computeDone: (n) => `${n}M 원소 배열 덧셈 완료!`,
+        elapsedLabel: '실행 시간',
+        throughputLabel: '처리량',
+        error: (msg) => `오류: ${msg}`,
+        benchRunning: '벤치마크 실행 중...',
+        initTf: 'TensorFlow.js 초기화 중...',
+        testing: (name) => `${name} 테스트 중...`,
+        summary: '결과 요약',
+        matmul: (size, n) => `${size}x${size} 행렬 곱셈, ${n}회 평균`,
+        speedup: 'WebGPU vs CPU 속도 향상',
+        modelLoading: '모델 로딩 중... (첫 실행 시 약 30MB 다운로드)',
+        downloading: (pct) => `모델 다운로드 중... ${pct}%`,
+        initModel: '모델 초기화 중...',
+        needInput: '검색 대상 문장과 쿼리를 입력해주세요.',
+        embedding: '임베딩 생성 중...',
+        done: (ms) => `완료! (${ms}ms)`,
+        queryPrefix: '쿼리',
+        model: '모델',
+        backend: '백엔드',
+        embedSummary: (n, ms) => `${n}개 문장 임베딩 + 유사도 계산: ${ms}ms`,
+        imgModelLoading: '모델 로딩 중... (첫 실행 시 약 15MB 다운로드)',
+        classifying: '분류 중...',
+        hint1: '이미지를 업로드하면',
+        hint2: '분류 결과가 여기에 표시됩니다',
+        computeRun: 'Compute Shader 실행',
+        benchRun: '벤치마크 실행',
+        simRun: '유사도 검색 실행',
+      },
+      en: {
+        unsupported: 'WebGPU not supported',
+        unsupportedDesc: 'This browser does not support WebGPU.<br>It is available in Chrome 113+, Edge 113+, Safari 26+, and Firefox 141+.',
+        noAdapter: 'No GPU adapter',
+        supported: 'WebGPU supported',
+        gpuInfo: 'GPU info',
+        initFailed: 'WebGPU initialization failed',
+        running: 'Running...',
+        preparing: 'Preparing...',
+        verification: 'Verification (first 5):',
+        computeDone: (n) => `Added arrays of ${n}M elements!`,
+        elapsedLabel: 'Execution time',
+        throughputLabel: 'Throughput',
+        error: (msg) => `Error: ${msg}`,
+        benchRunning: 'Running benchmark...',
+        initTf: 'Initializing TensorFlow.js...',
+        testing: (name) => `Testing ${name}...`,
+        summary: 'Summary',
+        matmul: (size, n) => `${size}x${size} matrix multiplication, average of ${n} runs`,
+        speedup: 'WebGPU vs CPU speedup',
+        modelLoading: 'Loading model... (about 30MB download on first run)',
+        downloading: (pct) => `Downloading model... ${pct}%`,
+        initModel: 'Initializing model...',
+        needInput: 'Please enter the sentences to search and a query.',
+        embedding: 'Generating embeddings...',
+        done: (ms) => `Done! (${ms}ms)`,
+        queryPrefix: 'Query',
+        model: 'Model',
+        backend: 'Backend',
+        embedSummary: (n, ms) => `Embedding ${n} sentences + similarity calculation: ${ms}ms`,
+        imgModelLoading: 'Loading model... (about 15MB download on first run)',
+        classifying: 'Classifying...',
+        hint1: 'Upload an image and',
+        hint2: 'the classification result will appear here',
+        computeRun: 'Run compute shader',
+        benchRun: 'Run benchmark',
+        simRun: 'Run similarity search',
+        subtitle: 'GPU compute performance test in the browser',
+        h1: '1. WebGPU support',
+        checking: 'Checking...',
+        h2: '2. Compute shader demo',
+        computeDesc: 'Adds two arrays of 1 million elements on the GPU.',
+        h3: '3. Matrix multiplication benchmark',
+        benchDesc: 'Runs a 512x512 matrix multiplication 20 times on each backend and measures the average time.',
+        h4: '4. Text similarity search (practical example)',
+        simDesc1: 'Converts text to vectors with Transformers.js + WebGPU and calculates similarity.',
+        simDesc2: 'The first model load requires about 30MB of download.',
+        corpusLabel: 'Sentences to search (one per line)',
+        corpus: 'The weather is really nice today\nIt rained, so I brought an umbrella\nThe stock market dropped sharply\nI had a delicious lunch\nThe sky is clear and sunny\nThe recession makes it hard to find a job',
+        queryLabel: 'Search query',
+        query: 'The weather is nice, so I feel good',
+        h5: '5. Image classification (MobileNet)',
+        imgDesc: 'Upload an image and WebGPU will tell you what it is.',
+        upload: 'Click or drag to upload',
+        back: '← Back to the blog post',
+      },
+    }[lang];
+    if (lang === 'en') {
+      document.documentElement.lang = 'en';
+      document.querySelectorAll('[data-t]').forEach((el) => {
+        el.textContent = text[el.dataset.t];
+      });
+      document.getElementById('query-input').value = text.query;
+      document.getElementById('back-link').href = 'https://yceffort.kr/en/2025/12/webgpu-all-browsers';
+    }
+  </script>
 
   <!-- TensorFlow.js -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.21.0/dist/tf.min.js"></script>
@@ -364,21 +474,21 @@
 
     async function runSimilaritySearch() {
       similarityBtn.disabled = true;
-      similarityBtn.innerHTML = '<span class="loading"></span>실행 중...';
+      similarityBtn.innerHTML = `<span class="loading"></span>${text.running}`;
       similarityResult.style.display = 'none';
 
       try {
         // 모델 로드
         if (!extractor) {
-          similarityStatus.textContent = '모델 로딩 중... (첫 실행 시 약 30MB 다운로드)';
+          similarityStatus.textContent = text.modelLoading;
           extractor = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', {
             device: 'webgpu',
             progress_callback: (progress) => {
               if (progress.status === 'downloading') {
                 const pct = progress.progress?.toFixed(0) || 0;
-                similarityStatus.textContent = `모델 다운로드 중... ${pct}%`;
+                similarityStatus.textContent = text.downloading(pct);
               } else if (progress.status === 'loading') {
-                similarityStatus.textContent = '모델 초기화 중...';
+                similarityStatus.textContent = text.initModel;
               }
             }
           });
@@ -389,11 +499,11 @@
         const query = queryInput.value.trim();
 
         if (corpus.length === 0 || !query) {
-          throw new Error('검색 대상 문장과 쿼리를 입력해주세요.');
+          throw new Error(text.needInput);
         }
 
         // 임베딩 생성
-        similarityStatus.textContent = '임베딩 생성 중...';
+        similarityStatus.textContent = text.embedding;
         const startTime = performance.now();
 
         const queryOutput = await extractor(query, { pooling: 'mean', normalize: true });
@@ -411,13 +521,13 @@
         results.sort((a, b) => b.similarity - a.similarity);
 
         const elapsed = performance.now() - startTime;
-        similarityStatus.textContent = `완료! (${elapsed.toFixed(0)}ms)`;
+        similarityStatus.textContent = text.done(elapsed.toFixed(0));
 
         // 결과 표시
         similarityResult.style.display = 'block';
         similarityResult.innerHTML = `
           <div style="margin-bottom: 0.5rem; color: #888; font-size: 0.875rem;">
-            쿼리: "${esc(query)}"
+            ${text.queryPrefix}: "${esc(query)}"
           </div>
           ${results.map((r, i) => `
             <div style="display: flex; align-items: center; padding: 0.75rem; background: ${i === 0 ? '#064e3b' : '#0d0d0d'}; border-radius: 4px; margin-bottom: 0.5rem;">
@@ -430,20 +540,20 @@
             </div>
           `).join('')}
           <div class="info" style="margin-top: 1rem;">
-            모델: all-MiniLM-L6-v2 (22MB)<br>
-            백엔드: WebGPU<br>
-            ${corpus.length}개 문장 임베딩 + 유사도 계산: ${elapsed.toFixed(0)}ms
+            ${text.model}: all-MiniLM-L6-v2 (22MB)<br>
+            ${text.backend}: WebGPU<br>
+            ${text.embedSummary(corpus.length, elapsed.toFixed(0))}
           </div>
         `;
 
       } catch (e) {
         similarityStatus.textContent = '';
         similarityResult.style.display = 'block';
-        similarityResult.innerHTML = `<p style="color: #ef4444;">오류: ${esc(e.message)}</p>`;
+        similarityResult.innerHTML = `<p style="color: #ef4444;">${text.error(esc(e.message))}</p>`;
       }
 
       similarityBtn.disabled = false;
-      similarityBtn.textContent = '유사도 검색 실행';
+      similarityBtn.textContent = text.simRun;
     }
 
     similarityBtn.addEventListener('click', runSimilaritySearch);
@@ -490,31 +600,31 @@
       previewImage.style.display = 'block';
       uploadArea.style.display = 'none';
 
-      classificationResult.innerHTML = '<div style="color: #888; text-align: center;"><span class="loading"></span> 분류 중...</div>';
+      classificationResult.innerHTML = `<div style="color: #888; text-align: center;"><span class="loading"></span> ${text.classifying}</div>`;
 
       try {
         // 모델 로드
         if (!classifier) {
-          classificationStatus.textContent = '모델 로딩 중... (첫 실행 시 약 15MB 다운로드)';
+          classificationStatus.textContent = text.imgModelLoading;
           classifier = await pipeline('image-classification', 'Xenova/vit-base-patch16-224', {
             device: 'webgpu',
             progress_callback: (progress) => {
               if (progress.status === 'downloading') {
                 const pct = progress.progress?.toFixed(0) || 0;
-                classificationStatus.textContent = `모델 다운로드 중... ${pct}%`;
+                classificationStatus.textContent = text.downloading(pct);
               }
             }
           });
         }
 
-        classificationStatus.textContent = '분류 중...';
+        classificationStatus.textContent = text.classifying;
         const startTime = performance.now();
 
         // 이미지 분류
         const results = await classifier(url, { topk: 5 });
         const elapsed = performance.now() - startTime;
 
-        classificationStatus.textContent = `완료! (${elapsed.toFixed(0)}ms)`;
+        classificationStatus.textContent = text.done(elapsed.toFixed(0));
 
         // 결과 표시
         classificationResult.innerHTML = results.map((r, i) => {
@@ -535,7 +645,7 @@
         }).join('');
 
       } catch (e) {
-        classificationResult.innerHTML = `<div style="color: #ef4444;">오류: ${esc(e.message)}</div>`;
+        classificationResult.innerHTML = `<div style="color: #ef4444;">${text.error(esc(e.message))}</div>`;
         classificationStatus.textContent = '';
       }
     }
@@ -545,7 +655,7 @@
       previewImage.style.display = 'none';
       uploadArea.style.display = 'flex';
       imageUpload.value = '';
-      classificationResult.innerHTML = '<div style="color: #666; text-align: center;">이미지를 업로드하면<br>분류 결과가 여기에 표시됩니다</div>';
+      classificationResult.innerHTML = `<div style="color: #666; text-align: center;">${text.hint1}<br>${text.hint2}</div>`;
       classificationStatus.textContent = '';
     });
   </script>
@@ -567,11 +677,10 @@
         supportStatus.innerHTML = `
           <span class="status unsupported">
             <span class="status-dot"></span>
-            WebGPU 미지원
+            ${text.unsupported}
           </span>
           <p style="margin-top: 1rem; color: #888;">
-            이 브라우저는 WebGPU를 지원하지 않습니다.<br>
-            Chrome 113+, Edge 113+, Safari 26+, Firefox 141+ 에서 사용 가능합니다.
+            ${text.unsupportedDesc}
           </p>
         `;
         return false;
@@ -583,7 +692,7 @@
           supportStatus.innerHTML = `
             <span class="status unsupported">
               <span class="status-dot"></span>
-              GPU 어댑터 없음
+              ${text.noAdapter}
             </span>
           `;
           return false;
@@ -594,7 +703,7 @@
         supportStatus.innerHTML = `
           <span class="status supported">
             <span class="status-dot"></span>
-            WebGPU 지원됨
+            ${text.supported}
           </span>
         `;
 
@@ -602,7 +711,7 @@
         const info = adapter.info;
         adapterInfo.style.display = 'block';
         adapterInfo.innerHTML = `
-          <strong>GPU 정보</strong><br>
+          <strong>${text.gpuInfo}</strong><br>
           Vendor: ${info.vendor || 'Unknown'}<br>
           Architecture: ${info.architecture || 'Unknown'}<br>
           Device: ${info.device || 'Unknown'}
@@ -615,7 +724,7 @@
         supportStatus.innerHTML = `
           <span class="status unsupported">
             <span class="status-dot"></span>
-            WebGPU 초기화 실패
+            ${text.initFailed}
           </span>
           <p style="margin-top: 1rem; color: #888;">${e.message}</p>
         `;
@@ -626,9 +735,9 @@
     // 2. Compute Shader 데모
     async function runComputeShader() {
       computeBtn.disabled = true;
-      computeBtn.innerHTML = '<span class="loading"></span>실행 중...';
+      computeBtn.innerHTML = `<span class="loading"></span>${text.running}`;
       computeResult.style.display = 'block';
-      computeResult.textContent = '준비 중...';
+      computeResult.textContent = text.preparing;
 
       try {
         const ARRAY_SIZE = 1000000; // 100만 개
@@ -726,7 +835,7 @@
         const endTime = performance.now();
 
         // 검증 (처음 5개만)
-        let verification = '검증 (처음 5개):\n';
+        let verification = `${text.verification}\n`;
         for (let i = 0; i < 5; i++) {
           const expected = inputA[i] + inputB[i];
           const actual = resultArray[i];
@@ -734,10 +843,10 @@
           verification += `  ${inputA[i].toFixed(4)} + ${inputB[i].toFixed(4)} = ${actual.toFixed(4)} ${match}\n`;
         }
 
-        computeResult.textContent = `${(ARRAY_SIZE / 1000000).toFixed(0)}M 원소 배열 덧셈 완료!
+        computeResult.textContent = `${text.computeDone((ARRAY_SIZE / 1000000).toFixed(0))}
 
-실행 시간: ${(endTime - startTime).toFixed(2)}ms
-처리량: ${((ARRAY_SIZE / (endTime - startTime)) * 1000 / 1000000).toFixed(2)}M ops/sec
+${text.elapsedLabel}: ${(endTime - startTime).toFixed(2)}ms
+${text.throughputLabel}: ${((ARRAY_SIZE / (endTime - startTime)) * 1000 / 1000000).toFixed(2)}M ops/sec
 
 ${verification}`;
 
@@ -748,19 +857,19 @@ ${verification}`;
         bufferStaging.destroy();
 
       } catch (e) {
-        computeResult.textContent = `오류: ${e.message}`;
+        computeResult.textContent = text.error(e.message);
       }
 
       computeBtn.disabled = false;
-      computeBtn.textContent = 'Compute Shader 실행';
+      computeBtn.textContent = text.computeRun;
     }
 
     // 3. 벤치마크
     async function runBenchmark() {
       benchmarkBtn.disabled = true;
-      benchmarkBtn.innerHTML = '<span class="loading"></span>벤치마크 실행 중...';
+      benchmarkBtn.innerHTML = `<span class="loading"></span>${text.benchRunning}`;
       benchmarkResults.style.display = 'block';
-      benchmarkResults.innerHTML = '<p style="color: #888;">TensorFlow.js 초기화 중...</p>';
+      benchmarkResults.innerHTML = `<p style="color: #888;">${text.initTf}</p>`;
 
       const results = {};
       const SIZE = 512;
@@ -768,7 +877,7 @@ ${verification}`;
 
       try {
         // WebGPU 벤치마크
-        benchmarkResults.innerHTML = '<p style="color: #888;">WebGPU 테스트 중...</p>';
+        benchmarkResults.innerHTML = `<p style="color: #888;">${text.testing('WebGPU')}</p>`;
         try {
           await tf.setBackend('webgpu');
           await tf.ready();
@@ -797,7 +906,7 @@ ${verification}`;
         }
 
         // WebGL 벤치마크
-        benchmarkResults.innerHTML = '<p style="color: #888;">WebGL 테스트 중...</p>';
+        benchmarkResults.innerHTML = `<p style="color: #888;">${text.testing('WebGL')}</p>`;
         try {
           await tf.setBackend('webgl');
           await tf.ready();
@@ -826,7 +935,7 @@ ${verification}`;
         }
 
         // CPU 벤치마크
-        benchmarkResults.innerHTML = '<p style="color: #888;">CPU 테스트 중...</p>';
+        benchmarkResults.innerHTML = `<p style="color: #888;">${text.testing('CPU')}</p>`;
         try {
           await tf.setBackend('cpu');
           await tf.ready();
@@ -904,18 +1013,18 @@ ${verification}`;
           </div>
 
           <div class="info" style="margin-top: 1.5rem;">
-            <strong>결과 요약</strong><br>
-            ${SIZE}x${SIZE} 행렬 곱셈, ${ITERATIONS}회 평균<br>
-            WebGPU vs CPU 속도 향상: <strong>${speedup}x</strong>
+            <strong>${text.summary}</strong><br>
+            ${text.matmul(SIZE, ITERATIONS)}<br>
+            ${text.speedup}: <strong>${speedup}x</strong>
           </div>
         `;
 
       } catch (e) {
-        benchmarkResults.innerHTML = `<p style="color: #ef4444;">오류: ${e.message}</p>`;
+        benchmarkResults.innerHTML = `<p style="color: #ef4444;">${text.error(e.message)}</p>`;
       }
 
       benchmarkBtn.disabled = false;
-      benchmarkBtn.textContent = '벤치마크 실행';
+      benchmarkBtn.textContent = text.benchRun;
     }
 
     // 이벤트 리스너

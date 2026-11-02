@@ -77,32 +77,32 @@
 
   <section id="delta" hidden>
     <div class="card delta-stage">
-      <div><div class="digit" data-digit="delta" aria-hidden="true"></div><p class="value">현재 보이는 숫자</p></div>
-      <div class="delta-copy"><strong>목표 7은 처음부터 정해 둡니다</strong><p>이동량을 -4에서 0으로 줄이면 숫자는 3에서 7로 움직입니다. 아래 막대를 움직여 보세요.</p></div>
+      <div><div class="digit" data-digit="delta" aria-hidden="true"></div><p class="value" data-t="visible">현재 보이는 숫자</p></div>
+      <div class="delta-copy"><strong data-t="fixedTarget">목표 7은 처음부터 정해 둡니다</strong><p data-t="deltaCopy">이동량을 -4에서 0으로 줄이면 숫자는 3에서 7로 움직입니다. 아래 막대를 움직여 보세요.</p></div>
     </div>
-    <div class="equation" aria-label="목표값과 남은 델타의 합">
-      <div class="term"><strong>7</strong><small>목표값</small></div><span class="operator">+</span>
-      <div class="term violet"><strong id="delta-rest">-4.00</strong><small>남은 델타</small></div><span class="operator">=</span>
-      <div class="term"><strong id="delta-result">3.00</strong><small>스핀 위치</small></div>
+    <div class="equation" aria-label="목표값과 남은 델타의 합" data-t-label="deltaSum">
+      <div class="term"><strong>7</strong><small data-t="target">목표값</small></div><span class="operator">+</span>
+      <div class="term violet"><strong id="delta-rest">-4.00</strong><small data-t="rest">남은 델타</small></div><span class="operator">=</span>
+      <div class="term"><strong id="delta-result">3.00</strong><small data-t="spin">스핀 위치</small></div>
     </div>
     <div class="number-map" id="number-map" aria-hidden="true"></div>
-    <p class="map-label">색이 채워진 숫자만 지금 마스크 안에 보입니다.</p>
+    <p class="map-label" data-t="mapLabel">색이 채워진 숫자만 지금 마스크 안에 보입니다.</p>
   </section>
 
   <section id="interrupt" hidden>
     <div class="cards">
-      <div class="card"><h2 class="violet">남은 기여를 합산</h2><div class="digit" data-digit="sum" aria-hidden="true"></div><p class="value" id="sum-value"></p></div>
-      <div class="card"><h2 class="amber">현재 위치에서 단순 교체</h2><div class="digit" data-digit="reset" aria-hidden="true"></div><p class="value" id="reset-value"></p></div>
+      <div class="card"><h2 class="violet" data-t="sumTitle">남은 기여를 합산</h2><div class="digit" data-digit="sum" aria-hidden="true"></div><p class="value" id="sum-value"></p></div>
+      <div class="card"><h2 class="amber" data-t="resetTitle">현재 위치에서 단순 교체</h2><div class="digit" data-digit="reset" aria-hidden="true"></div><p class="value" id="reset-value"></p></div>
     </div>
     <p class="status" id="interrupt-status"></p>
     <div class="chart">
-      <div class="legend"><span class="violet">남은 기여 합산</span><span class="amber">단순 교체</span></div>
+      <div class="legend"><span class="violet" data-t="sumLegend">남은 기여 합산</span><span class="amber" data-t="resetLegend">단순 교체</span></div>
       <svg viewBox="0 0 600 145" role="img" aria-labelledby="chart-title">
-        <title id="chart-title">600ms에 새 목표 5가 들어오면 두 방식의 이후 경로가 달라진다</title>
+        <title id="chart-title" data-t="chartTitle">600ms에 새 목표 5가 들어오면 두 방식의 이후 경로가 달라진다</title>
         <path d="M30 20H580 M30 65H580 M30 110H580" fill="none" stroke="var(--line)" />
         <text x="8" y="24">7</text><text x="8" y="69">5</text><text x="8" y="114">3</text>
         <path d="M167.5 15V114" stroke="var(--muted)" stroke-dasharray="3 4" />
-        <text x="175" y="24">목표 7 → 5</text>
+        <text x="175" y="24" data-t="targetChange">목표 7 → 5</text>
         <polyline id="sum-curve" fill="none" stroke="var(--violet)" stroke-width="3" />
         <polyline id="reset-curve" fill="none" stroke="var(--amber)" stroke-width="2.5" stroke-dasharray="6 4" />
         <path id="needle" stroke="var(--ink)" stroke-width="1" />
@@ -110,24 +110,24 @@
         <text x="30" y="137">0ms</text><text x="145" y="137">600ms</text><text x="535" y="137">2400ms</text>
       </svg>
     </div>
-    <div class="equation" id="interrupt-equation" aria-label="합산 경로의 현재 위치"></div>
-    <p class="map-label">목표값 + 이전 애니메이션의 남은 델타 + 새 델타</p>
+    <div class="equation" id="interrupt-equation" aria-label="합산 경로의 현재 위치" data-t-label="sumPosition"></div>
+    <p class="map-label" data-t="sumFormula">목표값 + 이전 애니메이션의 남은 델타 + 새 델타</p>
   </section>
 
   <section id="mask" hidden>
-    <div class="scale-info"><div>바깥 요소의 배율<strong id="outer-scale">1.60</strong></div><div>안쪽 숫자의 역배율<strong id="inner-scale">0.625</strong></div></div>
+    <div class="scale-info"><div><span data-t="outerScale">바깥 요소의 배율</span><strong id="outer-scale">1.60</strong></div><div><span data-t="innerScale">안쪽 숫자의 역배율</span><strong id="inner-scale">0.625</strong></div></div>
     <div class="cards">
-      <div class="card"><h2 class="amber">마스크 보정 없음</h2><div class="mask-stage"><div class="mask-box" id="mask-fixed"><div class="mask-inner">128</div></div></div><div class="gauge" id="gauge-fixed"></div><p class="mask-stat">페이드 <strong id="fade-fixed">38.4</strong>px</p></div>
-      <div class="card"><h2 class="teal">페이드 폭을 배율로 나눔</h2><div class="mask-stage"><div class="mask-box" id="mask-corrected"><div class="mask-inner">128</div></div></div><div class="gauge" id="gauge-corrected"></div><p class="mask-stat">페이드 <strong id="fade-corrected">24.0</strong>px</p></div>
+      <div class="card"><h2 class="amber" data-t="fixedTitle">마스크 보정 없음</h2><div class="mask-stage"><div class="mask-box" id="mask-fixed"><div class="mask-inner">128</div></div></div><div class="gauge" id="gauge-fixed"></div><p class="mask-stat"><span data-t="fade">페이드</span> <strong id="fade-fixed">38.4</strong>px</p></div>
+      <div class="card"><h2 class="teal" data-t="correctedTitle">페이드 폭을 배율로 나눔</h2><div class="mask-stage"><div class="mask-box" id="mask-corrected"><div class="mask-inner">128</div></div></div><div class="gauge" id="gauge-corrected"></div><p class="mask-stat"><span data-t="fade">페이드</span> <strong id="fade-corrected">24.0</strong>px</p></div>
     </div>
-    <div class="equation"><div class="term"><strong id="fade-formula">24 ÷ 1.60 × 1.60 = 24</strong><small>기준 페이드 폭 ÷ 배율 × 화면 배율</small></div></div>
-    <p class="status">두 예제 모두 숫자에는 역배율을 적용합니다. 다른 것은 가장자리의 흐려지는 폭입니다.</p>
+    <div class="equation"><div class="term"><strong id="fade-formula">24 ÷ 1.60 × 1.60 = 24</strong><small data-t="fadeFormula">기준 페이드 폭 ÷ 배율 × 화면 배율</small></div></div>
+    <p class="status" data-t="maskStatus">두 예제 모두 숫자에는 역배율을 적용합니다. 다른 것은 가장자리의 흐려지는 폭입니다.</p>
   </section>
 
   <div class="controls">
-    <div class="buttons"><button type="button" class="primary" id="play">재생</button><button type="button" id="restart">처음으로</button><button type="button" id="at-interrupt" hidden>새 값이 들어오는 순간</button></div>
-    <label class="scrub-label" for="time"><span>시간을 직접 움직여 보기</span><output id="time-output" for="time">0ms</output></label>
-    <input type="range" id="time" min="0" max="3000" value="0" step="1" aria-label="애니메이션 시간">
+    <div class="buttons"><button type="button" class="primary" id="play">재생</button><button type="button" id="restart" data-t="restart">처음으로</button><button type="button" id="at-interrupt" data-t="atInterrupt" hidden>새 값이 들어오는 순간</button></div>
+    <label class="scrub-label" for="time"><span data-t="scrub">시간을 직접 움직여 보기</span><output id="time-output" for="time">0ms</output></label>
+    <input type="range" id="time" min="0" max="3000" value="0" step="1" aria-label="애니메이션 시간" data-t-label="time">
   </div>
   <p class="note" id="note"></p>
 </main>
@@ -135,14 +135,33 @@
   // Educational models, not a benchmark or a recording of the shipped engine.
   // digitYPercent follows @yceffort/number-flow v0.2.0's compositor.ts.
   const scenes = {
-    delta: {title:'목표값은 두고, 델타를 줄입니다', eyebrow:'01 / 숫자 스핀', duration:3000, intro:'3 → 7로 움직이는 한 자릿수를 천천히 살펴봅니다.', note:'설명용 모델입니다. 스핀 위치 수식은 0.2.0을 따르며, 진행은 이해를 돕기 위해 선형으로 단순화했습니다. 성능 비교가 아닙니다.'},
-    interrupt: {title:'같은 위치에서 시작해도 경로는 다릅니다', eyebrow:'02 / 진행 중 새 값', duration:2400, intro:'3 → 7로 이동하다 600ms에 목표를 5로 바꿉니다. 시작 위치가 같아도 남은 움직임의 처리에 따라 차이가 납니다.', note:'설명용 모델입니다. 두 경로 모두 1800ms의 ease-out 곡선 1-(1-t)³을 사용합니다. 합산은 0.2.0이 보존하려는 원리이며 실제 라이브러리나 성능 측정 결과를 재생한 것이 아닙니다.'},
-    mask: {title:'숫자의 폭과 페이드 폭은 따로 보정합니다', eyebrow:'03 / 마스크와 폭', duration:3000, intro:'바깥 요소의 배율을 1.6에서 1로 줄입니다. 숫자 모양은 유지하면서 가장자리의 페이드 폭을 비교합니다.', note:'설명용으로 페이드 폭을 24px로 크게 잡았습니다. 실제 number-flow의 마스크는 여러 그래디언트를 겹칩니다. 이 예제는 가로 페이드 하나만 보여줍니다.'},
+    delta: {duration:3000, ko: {title:'목표값은 두고, 델타를 줄입니다', eyebrow:'01 / 숫자 스핀', intro:'3 → 7로 움직이는 한 자릿수를 천천히 살펴봅니다.', note:'설명용 모델입니다. 스핀 위치 수식은 0.2.0을 따르며, 진행은 이해를 돕기 위해 선형으로 단순화했습니다. 성능 비교가 아닙니다.'},
+      en: {title:'Keep the target, shrink the delta', eyebrow:'01 / Digit spin', intro:'A slow look at a single digit moving from 3 → 7.', note:'An explanatory model. The spin position formula follows 0.2.0, and progress is simplified to linear for clarity. This is not a performance comparison.'}},
+    interrupt: {duration:2400, ko: {title:'같은 위치에서 시작해도 경로는 다릅니다', eyebrow:'02 / 진행 중 새 값', intro:'3 → 7로 이동하다 600ms에 목표를 5로 바꿉니다. 시작 위치가 같아도 남은 움직임의 처리에 따라 차이가 납니다.', note:'설명용 모델입니다. 두 경로 모두 1800ms의 ease-out 곡선 1-(1-t)³을 사용합니다. 합산은 0.2.0이 보존하려는 원리이며 실제 라이브러리나 성능 측정 결과를 재생한 것이 아닙니다.'},
+      en: {title:'Same starting position, different paths', eyebrow:'02 / New value mid-flight', intro:'While moving 3 → 7, the target changes to 5 at 600ms. Even from the same starting position, the result depends on how the remaining motion is handled.', note:'An explanatory model. Both paths use the 1800ms ease-out curve 1-(1-t)³. Summing is the principle 0.2.0 aims to preserve, not a playback of the actual library or of performance measurements.'}},
+    mask: {duration:3000, ko: {title:'숫자의 폭과 페이드 폭은 따로 보정합니다', eyebrow:'03 / 마스크와 폭', intro:'바깥 요소의 배율을 1.6에서 1로 줄입니다. 숫자 모양은 유지하면서 가장자리의 페이드 폭을 비교합니다.', note:'설명용으로 페이드 폭을 24px로 크게 잡았습니다. 실제 number-flow의 마스크는 여러 그래디언트를 겹칩니다. 이 예제는 가로 페이드 하나만 보여줍니다.'},
+      en: {title:'Numeral width and fade width are corrected separately', eyebrow:'03 / Mask and width', intro:'The outer element\'s scale shrinks from 1.6 to 1. The numeral shapes stay intact while the fade width at the edges is compared.', note:'The fade width is set large, at 24px, for illustration. The real number-flow mask layers several gradients. This example shows only one horizontal fade.'}},
   }
-  const requested = new URLSearchParams(location.search).get('scene')
+  const params = new URLSearchParams(location.search)
+  const lang = params.get('lang') === 'en' ? 'en' : 'ko'
+  const requested = params.get('scene')
   const scene = Object.hasOwn(scenes, requested) ? requested : 'delta'
-  const config = scenes[scene]
+  const config = {...scenes[scene], ...scenes[scene][lang]}
+  // Static labels are written in Korean in the markup; English swaps them in by data-t key.
+  const text = {
+    ko: {spin:'스핀 위치', before:'현재 목표: 7. 두 경로가 같은 움직임으로 출발합니다.', after:'새 목표: 5. 보라색은 이전 기여와 새 기여를 함께 계산합니다.', play:'재생', replay:'다시 재생', pause:'일시 정지', reduced:' 동작 줄이기 설정에서는 재생 버튼으로 마지막 상태를 표시하며, 시간 막대로 중간 상태를 확인할 수 있습니다.'},
+    en: {spin:'Spin position', before:'Current target: 7. Both paths start with the same motion.', after:'New target: 5. Violet computes the earlier and the new contributions together.', play:'Play', replay:'Replay', pause:'Pause', reduced:' With reduced motion on, the play button shows the final state, and the time slider shows the states in between.',
+      visible:'Numeral in view', fixedTarget:'The target 7 is set from the start', deltaCopy:'Shrinking the offset from -4 to 0 moves the numeral from 3 to 7. Try moving the slider below.', deltaSum:'Sum of the target and the remaining delta', target:'Target', rest:'Remaining delta', mapLabel:'Only the filled numerals are visible inside the mask right now.',
+      sumTitle:'Sum the remaining contributions', resetTitle:'Simple replace from the current position', sumLegend:'Summed remaining contributions', resetLegend:'Simple replace', chartTitle:'When the new target 5 arrives at 600ms, the two approaches take different paths', targetChange:'Target 7 → 5', sumPosition:'Current position on the summed path', sumFormula:'Target + remaining delta of the earlier animation + new delta',
+      outerScale:'Outer element scale', innerScale:'Inner numeral inverse scale', fixedTitle:'No mask correction', correctedTitle:'Fade width divided by the scale', fade:'Fade', fadeFormula:'Base fade width ÷ scale × on-screen scale', maskStatus:'Both examples apply the inverse scale to the numerals. What differs is the width of the fading edge.',
+      restart:'Back to start', atInterrupt:'The moment the new value arrives', scrub:'Move through time yourself', time:'Animation time'},
+  }[lang]
   const $ = (id) => document.getElementById(id)
+  if (lang === 'en') {
+    document.documentElement.lang = 'en'
+    document.querySelectorAll('[data-t]').forEach((el) => { el.textContent = text[el.dataset.t] })
+    document.querySelectorAll('[data-t-label]').forEach((el) => { el.setAttribute('aria-label', text[el.dataset.tLabel]) })
+  }
   document.title = config.title + ' | number-flow'
   $('title').textContent = config.title
   $('eyebrow').textContent = config.eyebrow
@@ -218,9 +237,9 @@
       const v = valuesAt(time)
       showDigit('sum', v.sum)
       showDigit('reset', v.reset)
-      $('sum-value').textContent = `스핀 위치 ${v.sum.toFixed(3)}`
-      $('reset-value').textContent = `스핀 위치 ${v.reset.toFixed(3)}`
-      $('interrupt-status').textContent = time < interruption ? '현재 목표: 7. 두 경로가 같은 움직임으로 출발합니다.' : '새 목표: 5. 보라색은 이전 기여와 새 기여를 함께 계산합니다.'
+      $('sum-value').textContent = `${text.spin} ${v.sum.toFixed(3)}`
+      $('reset-value').textContent = `${text.spin} ${v.reset.toFixed(3)}`
+      $('interrupt-status').textContent = time < interruption ? text.before : text.after
       $('interrupt-equation').textContent = `${v.base} + (${v.old.toFixed(3)}) + (${v.added.toFixed(3)}) = ${v.sum.toFixed(3)}`
       $('needle').setAttribute('d', `M${graphX(time)} 15V114`)
       $('sum-dot').setAttribute('cx', graphX(time))
@@ -242,25 +261,25 @@
       }
       $('fade-formula').textContent = `24 ÷ ${scale.toFixed(2)} × ${scale.toFixed(2)} = 24`
     }
-    if (!raf) $('play').textContent = time >= config.duration ? '다시 재생' : '재생'
+    if (!raf) $('play').textContent = time >= config.duration ? text.replay : text.play
   }
-  function pause() { cancelAnimationFrame(raf); raf = 0; $('play').textContent = time >= config.duration ? '다시 재생' : '재생' }
+  function pause() { cancelAnimationFrame(raf); raf = 0; $('play').textContent = time >= config.duration ? text.replay : text.play }
   function tick(now) { render(now - start); if (time < config.duration) raf = requestAnimationFrame(tick); else pause() }
   $('play').addEventListener('click', () => {
     if (raf) { pause(); return }
     if (reducedMotion.matches) { render(config.duration); pause(); return }
     if (time >= config.duration) render(0)
     start = performance.now() - time
-    $('play').textContent = '일시 정지'
+    $('play').textContent = text.pause
     raf = requestAnimationFrame(tick)
   })
-  $('restart').addEventListener('click', () => { pause(); render(0); $('play').textContent = '재생' })
+  $('restart').addEventListener('click', () => { pause(); render(0); $('play').textContent = text.play })
   $('time').addEventListener('input', (event) => { pause(); render(Number(event.target.value)) })
   $('at-interrupt').addEventListener('click', () => { pause(); render(interruption) })
   document.addEventListener('visibilitychange', () => { if (document.hidden) pause() })
   window.addEventListener('pagehide', pause)
   reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) pause() })
-  if (reducedMotion.matches) $('note').textContent += ' 동작 줄이기 설정에서는 재생 버튼으로 마지막 상태를 표시하며, 시간 막대로 중간 상태를 확인할 수 있습니다.'
+  if (reducedMotion.matches) $('note').textContent += text.reduced
   render(0)
 </script>
 </body>

@@ -549,7 +549,7 @@ Two things stand out:
 
 If you're interested, just experiment with the WebGPU backend of TensorFlow.js or Transformers.js yourself. Setup is simpler than you'd expect, and the performance difference is something you can feel.
 
-**[👉 Try the WebGPU demo yourself](/demos/webgpu/)**
+**[👉 Try the WebGPU demo yourself](/demos/webgpu/?lang=en)**
 
 ```bash
 # TensorFlow.js

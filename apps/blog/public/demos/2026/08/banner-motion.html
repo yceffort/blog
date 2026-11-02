@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>배너 모션 4종 비교: 원본 · 재구현1 · 재구현2 · CSS only</title>
+    <title data-t="docTitle">배너 모션 4종 비교: 원본 · 재구현1 · 재구현2 · CSS only</title>
     <style>
       :root {
         color-scheme: light dark;
@@ -288,28 +288,29 @@
     <div class="panel">
       <div class="row-controls">
         <button data-mode="original">
-          <span class="dot" style="background: #e03131"></span>원본
+          <span class="dot" style="background: #e03131"></span><span data-t="original">원본</span>
         </button>
         <button data-mode="reimpl">
-          <span class="dot" style="background: #1b64da"></span>재구현1
+          <span class="dot" style="background: #1b64da"></span><span data-t="reimpl">재구현1</span>
         </button>
         <button data-mode="fixed">
-          <span class="dot" style="background: #12b886"></span>재구현2
+          <span class="dot" style="background: #12b886"></span><span data-t="fixed">재구현2</span>
         </button>
         <button data-mode="css">
           <span class="dot" style="background: #f59f00"></span>CSS only
         </button>
-        <button id="clear">지우기</button>
+        <button id="clear" data-t="clear">지우기</button>
         <select
           id="load"
           title="매 프레임 메인 스레드를 태워 저사양 기기를 흉내 낸다"
+          data-t-title="loadTitle"
         >
-          <option value="0">부하 없음</option>
-          <option value="14">부하 중</option>
-          <option value="22">부하 강</option>
+          <option value="0" data-t="load0">부하 없음</option>
+          <option value="14" data-t="load1">부하 중</option>
+          <option value="22" data-t="load2">부하 강</option>
         </select>
         <span class="lane"><span class="ball" id="ball"></span></span>
-        <span class="stats" id="stats">버튼을 누르면 0.8초간 계측한다</span>
+        <span class="stats" id="stats" data-t="idle">버튼을 누르면 0.8초간 계측한다</span>
       </div>
       <div class="chart-wrap">
         <svg
@@ -317,42 +318,51 @@
           viewBox="0 0 100 40"
           preserveAspectRatio="none"
           aria-label="밀림 곡선 비교"
+          data-t-label="chartLabel"
         >
           <line class="grid" x1="0" x2="100" y1="20" y2="20" />
           <line class="grid" x1="12.5" x2="12.5" y1="0" y2="40" />
           <line class="grid" x1="50" x2="50" y1="0" y2="40" />
         </svg>
         <div class="chart-note">
-          <span
+          <span data-t="chartNote"
             >아래 목록의 이동 곡선. 세로 = 밀림 진행률, 세로선 = 100ms ·
             400ms</span
           >
-          <span>가로 0 → 800ms</span>
+          <span data-t="chartAxis">가로 0 → 800ms</span>
         </div>
       </div>
     </div>
     <details class="note">
-      <summary>모드 설명과 읽는 법</summary>
+      <summary data-t="summary">모드 설명과 읽는 법</summary>
       <ul>
-        <li><b>원본</b> rAF로 매 프레임 height를 쓴다. 매 프레임 리플로우.</li>
         <li>
-          <b>재구현1</b> 1차 재구현의 재현. 곡선은 같은데 100ms 일찍 출발.
+          <b data-t="mOrig">원본</b>
+          <span data-t="dOrig">rAF로 매 프레임 height를 쓴다. 매 프레임 리플로우.</span>
         </li>
         <li>
-          <b>재구현2</b> height는 100ms에 한 계단, 밀림은 transform (JS 타이머).
+          <b data-t="mReimpl">재구현1</b>
+          <span data-t="dReimpl">1차 재구현의 재현. 곡선은 같은데 100ms 일찍 출발.</span>
         </li>
         <li>
-          <b>CSS only</b> 같은 계단을 CSS 지연 transition + ResizeObserver로.
+          <b data-t="mFixed">재구현2</b>
+          <span data-t="dFixed">height는 100ms에 한 계단, 밀림은 transform (JS 타이머).</span>
+        </li>
+        <li>
+          <b data-t="mCss">CSS only</b>
+          <span data-t="dCss">같은 계단을 CSS 지연 transition + ResizeObserver로.</span>
         </li>
       </ul>
-      <p>공은 매 프레임 JS로 움직인다. 메인 스레드가 밀리면 공이 멈칫한다.</p>
+      <p data-t="ballNote">공은 매 프레임 JS로 움직인다. 메인 스레드가 밀리면 공이 멈칫한다.</p>
       <p>
-        <b>부하</b>는 저사양 기기를 흉내 내는 눈 비교용 장치다. 켜면 공은 어느
+        <b data-t="loadWord">부하</b
+        ><span data-t="loadNote">는 저사양 기기를 흉내 내는 눈 비교용 장치다. 켜면 공은 어느
         모드든 덜컹이지만, 원본은 목록까지 같이 끊기고 계단 방식(재구현2·CSS
         only)의 목록은 컴포지터에서 돌아 그대로 미끄러진다. 부하 중에는 곡선을
-        그리지 않는다.
+        그리지 않는다.</span
+        >
       </p>
-      <p>
+      <p data-t="dropNote">
         드랍 수치의 차이까지 보려면 모바일 기기나 DevTools의 CPU 스로틀(4~6x)이
         확실하다. 부하 없음에서 계단 방식이 1~2 드랍 나오는 건 계단 순간의
         레이아웃 커밋 1회가 한 프레임에 몰려서다(목록 레이어는 재생 직전에
@@ -365,8 +375,8 @@
     <div class="banner-wrapper" id="wrapper">
       <div class="banner" id="card">
         <div class="text">
-          <h2>새로운 혜택이 도착했어요</h2>
-          <p>
+          <h2 data-t="bannerTitle">새로운 혜택이 도착했어요</h2>
+          <p data-t="bannerBody">
             이 카드가 등장하는 0.6초 동안, 아래 목록 전체가 매 프레임 다시
             배치될 수도, 한 번만 배치될 수도 있다.
           </p>
@@ -379,12 +389,90 @@
     <div class="rows" id="rows"></div>
 
     <script>
+      const params = new URLSearchParams(location.search);
+      const lang = params.get("lang") === "en" ? "en" : "ko";
+      // Static labels are written in Korean in the markup; English swaps them in by data-t key.
+      const text = {
+        ko: {
+          original: "원본",
+          reimpl: "재구현1",
+          fixed: "재구현2",
+          css: "CSS only",
+          names: "가나다라마바사아자차카타파하",
+          item: "항목 ",
+          earn: "적립",
+          event: "이벤트",
+          sub: "부가 설명이 붙는 두 번째 줄 · ",
+          ago: "분 전 · 조회 ",
+          won: "원",
+          measuring: "측정 중…",
+          idle: "버튼을 누르면 0.8초간 계측한다",
+          frames: " · 프레임 ",
+          drops: " · 드랍 ",
+          longest: " · 최장 ",
+        },
+        en: {
+          original: "Original",
+          reimpl: "Reimpl 1",
+          fixed: "Reimpl 2",
+          css: "CSS only",
+          names: "ABCDEFGHIJKLMN",
+          item: "Item ",
+          earn: "Reward",
+          event: "Event",
+          sub: "Second line with extra detail, ",
+          ago: " min ago, views ",
+          won: " KRW",
+          measuring: "Measuring…",
+          frames: ", frames ",
+          drops: ", drops ",
+          longest: ", longest ",
+          docTitle: "Banner motion compared: Original, Reimpl 1, Reimpl 2, CSS only",
+          clear: "Clear",
+          loadTitle: "Burns the main thread every frame to imitate a low-end device",
+          load0: "No load",
+          load1: "Medium load",
+          load2: "Heavy load",
+          idle: "Press a button to measure for 0.8s",
+          chartLabel: "Push curve comparison",
+          chartNote: "Movement curve of the list below. Vertical = push progress, vertical lines = 100ms, 400ms",
+          chartAxis: "Horizontal 0 → 800ms",
+          summary: "Mode descriptions and how to read",
+          mOrig: "Original",
+          dOrig: "Writes height every frame via rAF. A reflow every frame.",
+          mReimpl: "Reimpl 1",
+          dReimpl: "A reproduction of the first reimplementation. Same curve, but it starts 100ms early.",
+          mFixed: "Reimpl 2",
+          dFixed: "Height takes one step at 100ms, and the push is a transform (JS timer).",
+          mCss: "CSS only",
+          dCss: "The same step in CSS, with a delayed transition + ResizeObserver.",
+          ballNote: "The ball moves with JS every frame. If the main thread is pushed, the ball hitches.",
+          loadWord: "Load",
+          loadNote: " is a device for eyeball comparison that imitates a low-end device. When on, the ball judders in every mode, but the original's list hitches along with it, while the list in the stepped approaches (Reimpl 2, CSS only) runs on the compositor and keeps gliding. The curve is not drawn under load.",
+          dropNote: "To see differences in drop counts, a mobile device or DevTools CPU throttling (4x to 6x) is the reliable way. With no load, the stepped approaches can show 1 or 2 drops because one layout commit at the moment of the step lands on a single frame (the list layer is promoted ahead of time with will-change right before playback). The original pays the same cost every frame. The conditions where that ordering flips (a heavy document, a tight frame budget) are exactly the conditions for using this technique.",
+          bannerTitle: "New benefits have arrived",
+          bannerBody: "During the 0.6 seconds this card appears, the whole list below may be re-laid out every frame, or only once.",
+        },
+      }[lang];
+      if (lang === "en") {
+        document.documentElement.lang = "en";
+        document.querySelectorAll("[data-t]").forEach((el) => {
+          el.textContent = text[el.dataset.t];
+        });
+        document.querySelectorAll("[data-t-label]").forEach((el) => {
+          el.setAttribute("aria-label", text[el.dataset.tLabel]);
+        });
+        document.querySelectorAll("[data-t-title]").forEach((el) => {
+          el.setAttribute("title", text[el.dataset.tTitle]);
+        });
+      }
+
       // ── 아래 콘텐츠 (일부러 많고 무겁다: 레이아웃·프리페인트 비용은 문서의
       // 노드 수에 비례하고, 페인트 비용은 뷰포트에 걸린 행의 복잡도에 비례) ──
       const rows = document.getElementById("rows");
       const ROW_COUNT = 2000;
       const HUES = [212, 262, 152, 22, 332, 190];
-      const NAMES = "가나다라마바사아자차카타파하";
+      const NAMES = text.names;
       let html = "";
       for (let i = 0; i < ROW_COUNT; i++) {
         const hue = HUES[i % HUES.length];
@@ -397,14 +485,18 @@
           ',72%,45%))">' +
           NAMES[i % NAMES.length] +
           "</div>" +
-          '<div class="grow"><div class="title">항목 ' +
+          '<div class="grow"><div class="title">' +
+          text.item +
           (i + 1) +
-          '<span class="badge">적립</span>' +
-          (i % 4 === 0 ? '<span class="badge warm">이벤트</span>' : "") +
+          '<span class="badge">' +
+          text.earn +
+          "</span>" +
+          (i % 4 === 0 ? '<span class="badge warm">' + text.event + "</span>" : "") +
           "</div>" +
-          '<div class="sub">부가 설명이 붙는 두 번째 줄 · ' +
+          '<div class="sub">' +
+          text.sub +
           ((i % 23) + 1) +
-          "분 전 · 조회 " +
+          text.ago +
           ((i * 37) % 997) +
           "</div>" +
           '<div class="bar"><span style="width:' +
@@ -412,7 +504,8 @@
           '%"></span></div></div>' +
           '<div><div class="amount">' +
           (1234567 - i * 811).toLocaleString() +
-          "원</div>" +
+          text.won +
+          "</div>" +
           '<div class="delta">' +
           (i % 3 === 0 ? "▲" : "▼") +
           " " +
@@ -472,10 +565,10 @@
         css: "#f59f00",
       };
       const LABELS = {
-        original: "원본",
-        reimpl: "재구현1",
-        fixed: "재구현2",
-        css: "CSS only",
+        original: text.original,
+        reimpl: text.reimpl,
+        fixed: text.fixed,
+        css: text.css,
       };
       const RECORD_MS = 800;
       let running = false;
@@ -695,7 +788,7 @@
         if (running) return;
         running = true;
         buttons.forEach((b) => (b.disabled = true));
-        statsEl.textContent = "측정 중…";
+        statsEl.textContent = text.measuring;
         await reset(mode);
         const H = measureCardHeight();
         const withCurve = loadMs === 0;
@@ -716,15 +809,18 @@
         }
         statsEl.innerHTML =
           LABELS[mode] +
-          " · 프레임 <b>" +
+          text.frames +
+          "<b>" +
           stats.frames +
           "</b>" +
-          ' · 드랍 <b class="' +
+          text.drops +
+          '<b class="' +
           (stats.dropped > 0 ? "bad" : "") +
           '">' +
           stats.dropped +
           "</b>" +
-          " · 최장 <b>" +
+          text.longest +
+          "<b>" +
           stats.longest.toFixed(1) +
           "ms</b>";
         running = false;
@@ -737,7 +833,7 @@
       document.getElementById("clear").addEventListener("click", () => {
         for (const key of Object.keys(curves)) delete curves[key];
         drawCurves();
-        statsEl.textContent = "버튼을 누르면 0.8초간 계측한다";
+        statsEl.textContent = text.idle;
       });
     </script>
   </body>

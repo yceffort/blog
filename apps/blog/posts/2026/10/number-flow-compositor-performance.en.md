@@ -98,9 +98,9 @@ In the real number-flow, digit spins, width changes, and enter and exit transiti
 
 For example, when one digit changes from 3 to 7, the final target can be set to 7 first, with a delta of -4 shrinking to 0. It starts at `7 + (-4) = 3` and ends at `7 + 0 = 7`. A real spin adds the wrap direction and per-numeral positions on top, but the principle of separating the target from the motion is the same.
 
-Moving the time slider in the example below keeps the target 7 fixed and changes only the delta. A spin position of 4.5 is the midpoint where 4 moves up and 5 comes in. The list of numerals below shows which elements are inside the mask at that moment. The demos in this post have Korean labels.
+Moving the time slider in the example below keeps the target 7 fixed and changes only the delta. A spin position of 4.5 is the midpoint where 4 moves up and 5 comes in. The list of numerals below shows which elements are inside the mask at that moment.
 
-<LiveDemo src="/demos/number-flow/animation-lab.html?scene=delta" title="An explanatory animation that adds the remaining delta to the target 7 to move from 3 to 7" height={700} />
+<LiveDemo src="/demos/number-flow/animation-lab.html?scene=delta&lang=en" title="An explanatory animation that adds the remaining delta to the target 7 to move from 3 to 7" height={700} />
 
 | Channel   | Previously animated value                      | New keyframes                                                |
 | --------- | ---------------------------------------------- | ------------------------------------------------------------ |
@@ -127,9 +127,9 @@ Switching to `replace` and simply starting a new animation from the current posi
 
 The example below shows the difference. Both numbers move from 3 to 7, and at 600ms the target changes to 5. The left one computes the earlier movement's remaining delta together with the new delta. The right one takes only the position at that moment and starts a new `ease-out` animation. For this example, the easing is unified to a simple curve that slows down toward the end.
 
-<LiveDemo src="/demos/number-flow/animation-lab.html?scene=interrupt" title="The difference between a simple replace from the current position and summing the remaining contributions" height={900} />
+<LiveDemo src="/demos/number-flow/animation-lab.html?scene=interrupt&lang=en" title="The difference between a simple replace from the current position and summing the remaining contributions" height={900} />
 
-Pressing `새 값이 들어오는 순간` (the moment the new value arrives) shows both numbers at the same position. Moving time a little further pulls the graphs and the numbers apart. On the left, the deceleration of the earlier movement and of the new movement both remain; on the right, only the single new curve continues. What 0.2.0 preserves is the summed result on the left. It does not force the speed to match before and after the new input; it reproduces the motion that `accumulate` produced afterward.
+Pressing `The moment the new value arrives` shows both numbers at the same position. Moving time a little further pulls the graphs and the numbers apart. On the left, the deceleration of the earlier movement and of the new movement both remain; on the right, only the single new curve continues. What 0.2.0 preserves is the summed result on the left. It does not force the speed to match before and after the new input; it reproduces the motion that `accumulate` produced afterward.
 
 The new engine stores that information in a `Contribution`: the starting delta `from`, the start time `start`, the delay `delay`, the duration `duration`, and the easing function. When a new update arrives, it reads the `currentTime` of the running WAAPI animations and rebases the existing contributions onto the new start.
 
@@ -242,7 +242,7 @@ The outer element's mask, however, is affected by the scale too. That is why [`s
 
 The mask decides where the number starts to fade and where it is fully hidden. Even with a horizontal fade width of 24px, if the outer element is stretched 1.6x, the fade spans 38.4px on screen. The width inside the mask has to be reduced to `24 / 1.6 = 15px` in advance to come back to 24px on screen. The example below uses a large fade width so the difference is easy to see.
 
-<LiveDemo src="/demos/number-flow/animation-lab.html?scene=mask" title="How the numeral shape and the mask's fade width are each corrected when the width changes" height={850} />
+<LiveDemo src="/demos/number-flow/animation-lab.html?scene=mask&lang=en" title="How the numeral shape and the mask's fade width are each corrected when the width changes" height={850} />
 
 Both examples apply the inverse scale to the inner numerals. The right one also corrects the mask width, so the orange bar below stays at 24px. The left one keeps the numeral shapes, but the width of the fading area changes. This was the visual difference that `transform` keyframes alone could not preserve.
 

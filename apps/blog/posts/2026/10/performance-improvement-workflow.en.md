@@ -24,7 +24,7 @@ Based on that experience, this post lays out the order in which performance work
 
 The overall flow looks like this.
 
-<LiveDemo src="/demos/performance-workflow/flow.html" title="A performance workflow that settles the support range and dependencies, picks a response by where the cause lives, and converges on verification and measurement" aspectRatio="840 / 1032" minHeight={887} />
+<LiveDemo src="/demos/performance-workflow/flow.html?lang=en" title="A performance workflow that settles the support range and dependencies, picks a response by where the cause lives, and converges on verification and measurement" aspectRatio="840 / 1032" minHeight={887} />
 
 Set the support range, clean up dependencies and server code leaking into the client, then check the production dashboard and measure in the lab under fixed conditions. When observation turns up new duplicates or server code leaks, clean them up again. Once you find causes, separate what the problem is from whose code it is, and set priorities. For your own code, apply the technique that fits the cause; when the cause is in someone else's code or infrastructure, first decide how it can be fixed at all. After a change, verify the behavior and put a regression guard in place. Report the measurements and check production instrumentation again after deployment, and that result tells you what to work on next.
 

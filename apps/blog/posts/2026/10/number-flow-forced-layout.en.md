@@ -50,7 +50,7 @@ Not every DOM change leads to a layout calculation. The problem arises when chan
 
 The demo below runs the same job, reading and changing the width of boxes, in two orders. One reads and immediately changes each box's width; the other reads every width first and then changes them all at once. Both start from the same width, and the timer runs until the layout calculation for the last change has finished. Paint and compositing time are not included.
 
-<LiveDemo src="/demos/number-flow/layout-lab.html?scene=thrash" title="Time to change box widths and calculate layout" height={760} />
+<LiveDemo src="/demos/number-flow/layout-lab.html?scene=thrash&lang=en" title="Time to change box widths and calculate layout" height={760} />
 
 Since a forced layout happens while the function that asked for coordinates is running, it appears under that function in the trace. In a 20-second CPU profile, I grouped the self time of `getBoundingClientRect` by caller. Chrome's Forced reflow insight put the forced layout time in the same trace at 261ms.
 
@@ -206,7 +206,7 @@ This structure came from upstream. The upstream `main` commit of September 20, 2
 
 The demo below shows the order in which these four parts run during one update. I ran the fork's code in jsdom and recorded the order of DOM reads and writes. The left side is `v0.2.0`, the right side is `v0.2.1`, and reads that follow a write are shown in purple. Choosing the example where the digit count shrinks shows how `pop()` reading coordinates for every character pushes the count up to 34. The native engine example also marks where `flush()` reads values.
 
-<LiveDemo src="/demos/number-flow/layout-lab.html?scene=order" title="The order in which v0.2.0 and v0.2.1 read and write the DOM during one update" height={800} />
+<LiveDemo src="/demos/number-flow/layout-lab.html?scene=order&lang=en" title="The order in which v0.2.0 and v0.2.1 read and write the DOM during one update" height={800} />
 
 On the right, reads and writes are each grouped together. In the same-digit-count example, purple appears once; in the examples where characters are added or digits drop, it appears twice. Purple marks the reads-after-write recorded by the test, not the number of times the browser actually calculated layout.
 
