@@ -43,6 +43,7 @@ next-env.d.ts
 
 # Claude Code
 CLAUDE.md
+AGENTS.md
 .claude/*
 !.claude/skills/
 
