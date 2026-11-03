@@ -20,7 +20,14 @@
     // 같은 출처의 부모(index.html)가 postMessage로 값을 보낸다.
     // 커스텀 엘리먼트 이름이 모두 number-flow라 빌드마다 문서를 따로 둔다.
     const BUILDS = ['upstream', 'fork', 'opus', 'sonnet', 'fable', 'astra', 'terra']
-    const build = new URLSearchParams(location.search).get('build')
+    const params = new URLSearchParams(location.search)
+    const build = params.get('build')
+    const lang = params.get('lang') === 'en' ? 'en' : 'ko'
+    const t = (ko, en) => (lang === 'en' ? en : ko)
+    if (lang === 'en') {
+      document.documentElement.lang = 'en'
+      document.title = 'One number-flow build'
+    }
     const nf = document.getElementById('nf')
     const post = (message) => parent.postMessage({...message, build}, location.origin)
     let base = null
@@ -106,11 +113,11 @@
     })
 
     if (!BUILDS.includes(build)) {
-      fail('알 수 없는 빌드')
+      fail(t('알 수 없는 빌드', 'Unknown build'))
     } else {
       const script = document.createElement('script')
       script.src = `builds/${build}.js`
-      script.onerror = () => fail('번들을 불러오지 못했다')
+      script.onerror = () => fail(t('번들을 불러오지 못했다', 'Failed to load the bundle'))
       script.onload = () => {
         nf.format = {style: 'percent', signDisplay: 'always', maximumFractionDigits: 0}
         nf.locales = 'en-US'

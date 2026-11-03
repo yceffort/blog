@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>number-flow 빌드 비교</title>
+  <title data-t="docTitle">number-flow 빌드 비교</title>
   <style>
     :root { color-scheme:light dark; --bg:#fbfaf7; --panel:#fff; --ink:#252338; --muted:#706d7d; --line:#e5e1ec; --grid:#efecf3; --accent:#6550d8; --focus:#137b6b; --s1:#2a78d6; --s2:#eb6834; --bad:#c23a3a; }
     @media (prefers-color-scheme:dark) { :root { --bg:#181820; --panel:#23232f; --ink:#f0eef8; --muted:#b5b0c5; --line:#3d394d; --grid:#2e2c3a; --accent:#ad9aff; --focus:#66d9bf; --s1:#3987e5; --s2:#d95926; --bad:#ff8a8a; } }
@@ -92,59 +92,59 @@
 <body>
 <main>
   <section id="width" hidden data-condition="mono">
-    <p class="eyebrow">글꼴 하나의 차이</p>
-    <h1>숫자 폭이 달라지면?</h1>
-    <p class="intro">배경 갱신을 끄고 9자리 숫자 하나만 바꿨다. 글꼴 조건을 바꿔 별도로 잰 결과를 비교해 보자.</p>
-    <div class="group width-controls" role="group" aria-label="측정한 숫자 폭 조건">
-      <button type="button" data-width="mono" aria-pressed="true">숫자 폭 그대로</button>
-      <button type="button" data-width="prop" aria-pressed="false">숫자 폭 바뀜</button>
+    <p class="eyebrow" data-t="widthEyebrow">글꼴 하나의 차이</p>
+    <h1 data-t="widthTitle">숫자 폭이 달라지면?</h1>
+    <p class="intro" data-t="widthIntro">배경 갱신을 끄고 9자리 숫자 하나만 바꿨다. 글꼴 조건을 바꿔 별도로 잰 결과를 비교해 보자.</p>
+    <div class="group width-controls" role="group" aria-label="측정한 숫자 폭 조건" data-t-label="widthGroup">
+      <button type="button" data-width="mono" aria-pressed="true" data-t="widthMono">숫자 폭 그대로</button>
+      <button type="button" data-width="prop" aria-pressed="false" data-t="widthProp">숫자 폭 바뀜</button>
     </div>
     <div class="width-summary" role="status" aria-live="polite" aria-atomic="true">
       <strong id="width-headline"></strong>
       <p id="width-explanation"></p>
     </div>
-    <ul class="width-chart" id="width-chart" aria-label="빌드별 스타일 재계산 횟수"></ul>
-    <p class="width-unit">회/s, 막대 눈금은 두 조건 모두 0~60</p>
-    <p class="note">2026년 11월 2일, Chromium 151, CPU 4배 감속에서 잰 3회 평균이다. 실시간 측정값이 아니다. 갱신 태스크와 JavaScript 실행 밖의 재계산을 세어 시작과 종료 주변의 처리도 포함했다. 횟수가 같아도 실제로 쓴 시간은 다를 수 있다.</p>
+    <ul class="width-chart" id="width-chart" aria-label="빌드별 스타일 재계산 횟수" data-t-label="widthChartLabel"></ul>
+    <p class="width-unit" data-t="widthUnit">회/s, 막대 눈금은 두 조건 모두 0~60</p>
+    <p class="note" data-t="widthNote">2026년 11월 2일, Chromium 151, CPU 4배 감속에서 잰 3회 평균이다. 실시간 측정값이 아니다. 갱신 태스크와 JavaScript 실행 밖의 재계산을 세어 시작과 종료 주변의 처리도 포함했다. 횟수가 같아도 실제로 쓴 시간은 다를 수 있다.</p>
   </section>
   <section id="builds">
-    <p class="eyebrow">같은 입력, 7개 빌드</p>
-    <h1>다 굴러가기 전에 새 값이 오면?</h1>
-    <p class="intro">인터럽트 연타는 250ms 간격으로 값을 바꾼다. 느리게 보기를 켜서 이전 움직임이 어떻게 이어지는지 살펴보자.</p>
+    <p class="eyebrow" data-t="buildsEyebrow">같은 입력, 7개 빌드</p>
+    <h1 data-t="buildsTitle">다 굴러가기 전에 새 값이 오면?</h1>
+    <p class="intro" data-t="buildsIntro">인터럽트 연타는 250ms 간격으로 값을 바꾼다. 느리게 보기를 켜서 이전 움직임이 어떻게 이어지는지 살펴보자.</p>
     <div class="controls">
-      <div class="group" role="group" aria-label="장면">
-        <button type="button" data-scene="tick" aria-pressed="true">1초마다 갱신</button>
-        <button type="button" data-scene="burst" aria-pressed="false">인터럽트 연타</button>
-        <button type="button" data-scene="digits" aria-pressed="false">자릿수 변화</button>
-        <button type="button" data-scene="sign" aria-pressed="false">부호 전환</button>
+      <div class="group" role="group" aria-label="장면" data-t-label="sceneGroup">
+        <button type="button" data-scene="tick" aria-pressed="true" data-t="sceneTick">1초마다 갱신</button>
+        <button type="button" data-scene="burst" aria-pressed="false" data-t="sceneBurst">인터럽트 연타</button>
+        <button type="button" data-scene="digits" aria-pressed="false" data-t="sceneDigits">자릿수 변화</button>
+        <button type="button" data-scene="sign" aria-pressed="false" data-t="sceneSign">부호 전환</button>
       </div>
       <div class="group">
-        <button type="button" id="slow" aria-pressed="false">느리게 보기 ×3</button>
-        <button type="button" id="mono" aria-pressed="false">숫자 폭 고정</button>
-        <button type="button" id="pause" aria-pressed="false">멈추기</button>
+        <button type="button" id="slow" aria-pressed="false" data-t="slow">느리게 보기 ×3</button>
+        <button type="button" id="mono" aria-pressed="false" data-t="monoButton">숫자 폭 고정</button>
+        <button type="button" id="pause" aria-pressed="false" data-t="pause">멈추기</button>
       </div>
     </div>
-    <p class="note">각 빌드에 같은 값을 보낸다. 메시지를 받는 시점에는 차이가 있어 움직임이 정확히 같은지 재는 도구는 아니다.</p>
-    <details class="demo-help"><summary>재생 방식과 조작 안내</summary><p>느리게 보기는 애니메이션과 갱신 간격을 함께 3배로 늘린다. 숫자 폭 고정은 monospace 글꼴로 바꾼다. 멈추기는 각 빌드의 애니메이션과 JavaScript 프레임 진행을 함께 멈춘다. 시스템에서 동작 줄이기를 켰다면 number-flow가 애니메이션을 끈다.</p></details>
+    <p class="note" data-t="buildsNote">각 빌드에 같은 값을 보낸다. 메시지를 받는 시점에는 차이가 있어 움직임이 정확히 같은지 재는 도구는 아니다.</p>
+    <details class="demo-help"><summary data-t="helpSummary">재생 방식과 조작 안내</summary><p data-t="helpBody">느리게 보기는 애니메이션과 갱신 간격을 함께 3배로 늘린다. 숫자 폭 고정은 monospace 글꼴로 바꾼다. 멈추기는 각 빌드의 애니메이션과 JavaScript 프레임 진행을 함께 멈춘다. 시스템에서 동작 줄이기를 켰다면 number-flow가 애니메이션을 끈다.</p></details>
     <div class="cards" id="cards"></div>
-    <p class="note">빌드 파일은 재측정에 쓴 번들(esbuild 0.28.2, es2019) 그대로이고, 업스트림 number-flow(MIT, Maxwell Barvian)의 파생물이다. <a href="builds/LICENSE.md" style="color:inherit">라이선스</a></p>
+    <p class="note"><span data-t="licenseNote">빌드 파일은 재측정에 쓴 번들(esbuild 0.28.2, es2019) 그대로이고, 업스트림 number-flow(MIT, Maxwell Barvian)의 파생물이다.</span> <a href="builds/LICENSE.md" style="color:inherit" data-t="license">라이선스</a></p>
   </section>
 
   <section id="perf">
-    <p class="eyebrow">재측정</p>
-    <h1>같은 조건에서 다시 잰 성능</h1>
-    <div class="tabs" role="group" aria-label="지표">
-      <button type="button" data-metric="task" aria-pressed="true">갱신 태스크</button>
-      <button type="button" data-metric="page" aria-pressed="false">재계산과 레이아웃 전체</button>
-      <button type="button" data-metric="idle" aria-pressed="false">재생 중 재계산 횟수</button>
-      <button type="button" data-metric="idleMs" aria-pressed="false">재생 중 재계산 시간</button>
+    <p class="eyebrow" data-t="perfEyebrow">재측정</p>
+    <h1 data-t="perfTitle">같은 조건에서 다시 잰 성능</h1>
+    <div class="tabs" role="group" aria-label="지표" data-t-label="metricGroup">
+      <button type="button" data-metric="task" aria-pressed="true" data-t="metricTask">갱신 태스크</button>
+      <button type="button" data-metric="page" aria-pressed="false" data-t="metricPage">재계산과 레이아웃 전체</button>
+      <button type="button" data-metric="idle" aria-pressed="false" data-t="metricIdle">재생 중 재계산 횟수</button>
+      <button type="button" data-metric="idleMs" aria-pressed="false" data-t="metricIdleMs">재생 중 재계산 시간</button>
     </div>
     <p class="desc" id="desc"></p>
-    <div class="legend" id="legend"><span class="s1">숫자 폭 그대로 (monospace)</span><span class="s2">숫자 폭 바뀜 (system-ui)</span></div>
+    <div class="legend" id="legend"><span class="s1" data-t="legendMono">숫자 폭 그대로 (monospace)</span><span class="s2" data-t="legendProp">숫자 폭 바뀜 (system-ui)</span></div>
     <div class="chart" id="chart"></div>
     <div class="axis"><span></span><div class="ticks" id="ticks"></div></div>
-    <p class="note">Chromium 151.0.7922.34 헤드리스, 390x844, CPU 4배 감속, 10초 트레이스, 빌드마다 3회. 2026년 11월 2일 Apple M5에서 측정했다. 막대 끝의 선은 3회 실행의 범위다.</p>
-    <button type="button" class="table-toggle" id="table-toggle" aria-expanded="false">표로 보기</button>
+    <p class="note" data-t="perfNote">Chromium 151.0.7922.34 헤드리스, 390x844, CPU 4배 감속, 10초 트레이스, 빌드마다 3회. 2026년 11월 2일 Apple M5에서 측정했다. 막대 끝의 선은 3회 실행의 범위다.</p>
+    <button type="button" class="table-toggle" id="table-toggle" aria-expanded="false" data-t="tableShow">표로 보기</button>
     <div class="table-wrap" id="table" hidden></div>
   </section>
 </main>
@@ -164,6 +164,43 @@
   ]
 
   const params = new URLSearchParams(location.search)
+  const lang = params.get('lang') === 'en' ? 'en' : 'ko'
+  const t = (ko, en) => (lang === 'en' ? en : ko)
+  // 정적 문구는 마크업에 한국어로 두고, 영문은 data-t 키로 바꿔 넣는다.
+  const text = {
+    docTitle: 'number-flow build comparison',
+    widthEyebrow: 'One font difference', widthTitle: 'What if the digit width changes?',
+    widthIntro: 'Background updates were off and only one 9-digit number changed. Compare the results measured separately under each font condition.',
+    widthGroup: 'Measured digit width condition', widthMono: 'Width unchanged', widthProp: 'Width changing',
+    widthChartLabel: 'Style recalculations per second by build', widthUnit: 'per second; the bar scale is 0-60 for both conditions',
+    widthNote: 'Averages of 3 runs measured on November 2, 2026 in Chromium 151 with 4x CPU throttling. Not a live measurement. Recalculations outside the update task and JavaScript execution were counted, including handling around the start and end. Equal counts can still differ in time spent.',
+    buildsEyebrow: 'Same input, 7 builds', buildsTitle: 'What if a new value arrives mid-roll?',
+    buildsIntro: 'Interrupt burst changes the value every 250ms. Turn on slow motion to see how the previous motion carries over.',
+    sceneGroup: 'Scene', sceneTick: 'Update every second', sceneBurst: 'Interrupt burst', sceneDigits: 'Digit count change', sceneSign: 'Sign flip',
+    slow: 'Slow motion ×3', monoButton: 'Fixed digit width', pause: 'Pause', resume: 'Resume',
+    buildsNote: 'Every build receives the same values. The timing at which messages arrive differs, so this is not a tool for measuring whether the motion is exactly the same.',
+    helpSummary: 'Playback and controls',
+    helpBody: 'Slow motion stretches both the animation and the update interval by 3x. Fixed digit width switches to a monospace font. Pause stops the animations and the JavaScript frame progression of each build together. If reduced motion is enabled in the system, number-flow turns animation off.',
+    licenseNote: 'The build files are the exact bundles used for the re-measurement (esbuild 0.28.2, es2019) and are derivatives of upstream number-flow (MIT, Maxwell Barvian).', license: 'License',
+    perfEyebrow: 'Re-measurement', perfTitle: 'Performance measured again under the same conditions', metricGroup: 'Metric',
+    metricTask: 'Update task', metricPage: 'Recalculation and layout, page-wide', metricIdle: 'Recalculations during playback', metricIdleMs: 'Recalculation time during playback',
+    legendMono: 'Width unchanged (monospace)', legendProp: 'Width changing (system-ui)',
+    perfNote: 'Headless Chromium 151.0.7922.34, 390x844, 4x CPU throttling, 10-second traces, 3 runs per build. Measured on November 2, 2026 on an Apple M5. The line at the end of each bar is the range of the 3 runs.',
+    tableShow: 'Show table', tableHide: 'Hide table',
+  }
+  if (lang === 'en') {
+    document.documentElement.lang = 'en'
+    document.querySelectorAll('[data-t]').forEach((el) => { el.textContent = text[el.dataset.t] })
+    document.querySelectorAll('[data-t-label]').forEach((el) => { el.setAttribute('aria-label', text[el.dataset.tLabel]) })
+    const interrupt = {'남은 움직임 합산(원본)': 'sums the remaining motion (original)', '남은 움직임 합산': 'sums the remaining motion', '위치만 이어서 새 곡선': 'new curve from the current position', '남은 움직임을 JavaScript로 이어 합산': 'sums the remaining motion in JavaScript'}
+    for (const b of BUILDS) {
+      b.name = b.id === 'upstream' ? 'upstream' : b.id === 'fork' ? 'fork v0.2.1' : `${b.id} build`
+      if (b.id === 'fork') b.sub = 'result of Parts 1-3'
+      b.interrupt = interrupt[b.interrupt]
+    }
+  }
+  const shortName = (b) => b.name.replace(t(' 빌드', ' build'), '').replace(t('포크 ', 'fork '), '')
+  const perSecond = t('회/s', '/s')
   const view = params.get('view')
   const showBuilds = view !== 'perf' && view !== 'width'
   document.getElementById('width').hidden = view !== 'width'
@@ -174,7 +211,7 @@
   // ---------- 글꼴 조건 비교: 앞에서 고정한 실측값만 사용 ----------
   const widthChart = document.getElementById('width-chart')
   widthChart.innerHTML = BUILDS.map((b) => `<li class="width-row" data-build="${b.id}">
-    <span>${b.name.replace(' 빌드', '').replace('포크 ', '')}</span>
+    <span>${shortName(b)}</span>
     <span class="width-track" aria-hidden="true"><span class="width-fill"></span></span>
     <strong></strong>
   </li>`).join('')
@@ -184,13 +221,13 @@
       const row = widthChart.querySelector(`[data-build="${b.id}"]`)
       const value = b.idle[condition][0]
       row.querySelector('.width-fill').style.width = `${value / 60 * 100}%`
-      row.querySelector('strong').textContent = `${fmt(value)}회/s`
+      row.querySelector('strong').textContent = `${fmt(value)}${perSecond}`
     }
     const astra = BUILDS.find((b) => b.id === 'astra')
-    document.getElementById('width-headline').textContent = `astra ${fmt(astra.idle[condition][0])}회/s`
+    document.getElementById('width-headline').textContent = `astra ${fmt(astra.idle[condition][0])}${perSecond}`
     document.getElementById('width-explanation').textContent = condition === 'mono'
-      ? 'monospace: 같은 자릿수라면 폭이 그대로다. 다섯 에이전트 빌드 모두 초당 5회 안팎이었다.'
-      : 'system-ui: 자릿수가 같아도 폭이 바뀌었다. opus를 뺀 네 빌드에서 초당 약 50회로 늘었다.'
+      ? t('monospace: 같은 자릿수라면 폭이 그대로다. 다섯 에이전트 빌드 모두 초당 5회 안팎이었다.', 'monospace: with the same digit count, the width stays the same. All five agent builds were around 5 per second.')
+      : t('system-ui: 자릿수가 같아도 폭이 바뀌었다. opus를 뺀 네 빌드에서 초당 약 50회로 늘었다.', 'system-ui: the width changed even with the same digit count. The four builds other than opus rose to about 50 per second.')
   }
   document.querySelectorAll('[data-width]').forEach((button) => {
     button.addEventListener('click', () => {
@@ -222,8 +259,8 @@
     card.className = 'card'
     card.innerHTML = `
       <header><strong>${b.name}</strong><span>${b.sub}</span></header>
-      <iframe src="frame.html?build=${b.id}" title="${b.name}의 number-flow"></iframe>
-      <p class="tags">인터럽트: <b>${b.id === 'terra' ? '새 곡선 (위치 불연속 가능)' : b.interrupt}</b><br><span class="state" data-state>불러오는 중</span></p>`
+      <iframe src="frame.html?build=${b.id}${lang === 'en' ? '&lang=en' : ''}" title="${t(`${b.name}의 number-flow`, `number-flow in the ${b.name}`)}"></iframe>
+      <p class="tags">${t('인터럽트', 'Interrupt')}: <b>${b.id === 'terra' ? t('새 곡선 (위치 불연속 가능)', 'new curve (position may jump)') : b.interrupt}</b><br><span class="state" data-state>${t('불러오는 중', 'loading')}</span></p>`
     cards.appendChild(card)
     frames.set(b.id, {card, win: card.querySelector('iframe').contentWindow, ready: false})
   }
@@ -246,7 +283,7 @@
       if (state.paused) send(frame, {type: 'pause', paused: true})
     }
     if (type === 'error') {
-      label.textContent = `오류: ${message}`
+      label.textContent = `${t('오류', 'Error')}: ${message}`
       label.classList.add('bad')
     }
   })
@@ -287,7 +324,7 @@
   document.getElementById('pause').addEventListener('click', (event) => {
     state.paused = !state.paused
     event.currentTarget.setAttribute('aria-pressed', String(state.paused))
-    event.currentTarget.textContent = state.paused ? '이어서 재생' : '멈추기'
+    event.currentTarget.textContent = state.paused ? t('이어서 재생', text.resume) : t('멈추기', text.pause)
     broadcast({type: 'pause', paused: state.paused})
     step()
   })
@@ -309,11 +346,12 @@
 
   // ---------- 성능 차트 ----------
   const METRICS = {
-    task: {unit: 'ms', max: 15, ticks: [0, 5, 10, 15], digits: 1, pair: false, desc: '값을 바꾸는 호출 하나가 메인 스레드를 차지한 시간이다. 배경 텍스트를 초당 약 182회 바꾸는 3편의 재현 페이지에서 9자리 숫자를 1초마다 10회 갱신했다. 짧을수록 좋다.'},
-    page: {unit: 'ms/s', max: 200, ticks: [0, 100, 200], digits: 1, pair: false, desc: '같은 기본 조건에서 페이지 전체의 스타일 재계산과 레이아웃에 쓴 시간이다. 배경 텍스트 갱신의 비용도 들어 있다. 다음 두 탭에서는 배경 갱신을 끈 조건을 따로 비교한다.'},
-    idle: {unit: '회/s', max: 60, ticks: [0, 20, 40, 60], digits: 1, pair: true, desc: '배경 갱신을 끄고 숫자 하나만 재생할 때, 갱신 태스크 밖과 JavaScript 밖에서 일어난 스타일 재계산 횟수다. 애니메이션이 메인 스레드에서 돌면 프레임마다 일어나서 초당 약 50회가 된다.'},
-    idleMs: {unit: 'ms/s', max: 160, ticks: [0, 80, 160], digits: 1, pair: true, desc: '같은 조건에서 재생 중 재계산에 쓴 시간이다. 횟수가 같아도 한 번에 다시 계산하는 요소 수에 따라 시간이 달라진다.'},
+    task: {unit: 'ms', max: 15, ticks: [0, 5, 10, 15], digits: 1, pair: false, desc: t('값을 바꾸는 호출 하나가 메인 스레드를 차지한 시간이다. 배경 텍스트를 초당 약 182회 바꾸는 3편의 재현 페이지에서 9자리 숫자를 1초마다 10회 갱신했다. 짧을수록 좋다.', 'Time one value-changing call occupied the main thread. A 9-digit number was updated 10 times, once per second, on the Part 3 reproduction page where background text changes about 182 times per second. Shorter is better.')},
+    page: {unit: 'ms/s', max: 200, ticks: [0, 100, 200], digits: 1, pair: false, desc: t('같은 기본 조건에서 페이지 전체의 스타일 재계산과 레이아웃에 쓴 시간이다. 배경 텍스트 갱신의 비용도 들어 있다. 다음 두 탭에서는 배경 갱신을 끈 조건을 따로 비교한다.', 'Time spent on page-wide style recalculation and layout under the same base condition. It includes the cost of the background text updates. The next two tabs compare the condition with background updates off.')},
+    idle: {unit: perSecond, max: 60, ticks: [0, 20, 40, 60], digits: 1, pair: true, desc: t('배경 갱신을 끄고 숫자 하나만 재생할 때, 갱신 태스크 밖과 JavaScript 밖에서 일어난 스타일 재계산 횟수다. 애니메이션이 메인 스레드에서 돌면 프레임마다 일어나서 초당 약 50회가 된다.', 'With background updates off and a single number playing, the number of style recalculations outside the update task and outside JavaScript. If the animation runs on the main thread it happens every frame, about 50 per second.')},
+    idleMs: {unit: 'ms/s', max: 160, ticks: [0, 80, 160], digits: 1, pair: true, desc: t('같은 조건에서 재생 중 재계산에 쓴 시간이다. 횟수가 같아도 한 번에 다시 계산하는 요소 수에 따라 시간이 달라진다.', 'Time spent on recalculation during playback under the same condition. Even with the same count, the time differs with how many elements are recalculated each time.')},
   }
+  const COND = {mono: t('폭 그대로', 'width unchanged'), prop: t('폭 바뀜', 'width changing')}
   let metric = 'task'
   const chart = document.getElementById('chart')
   const tooltip = document.getElementById('tooltip')
@@ -322,9 +360,10 @@
     const m = METRICS[metric]
     const [mean, min, max] = values
     const pct = (v) => `${(v / m.max) * 100}%`
-    const cf = condition ? `<br><small>합성 실패 ${b.cf[condition === '폭 그대로' ? 'mono' : 'prop']}</small>` : ''
-    const tip = `<b>${b.name}</b>${condition ? ` <small>${condition}</small>` : ''}<br>평균 ${fmt(mean, m.digits)}${m.unit} <small>(범위 ${fmt(min, m.digits)}~${fmt(max, m.digits)})</small>${cf}`
-    return `<div class="bar" tabindex="0" data-tip="${encodeURIComponent(tip)}" aria-label="${b.name} ${condition || ''} ${fmt(mean, m.digits)}${m.unit}">
+    const label = condition ? COND[condition] : ''
+    const cf = condition ? `<br><small>${t('합성 실패', 'composite failures')} ${b.cf[condition]}</small>` : ''
+    const tip = `<b>${b.name}</b>${label ? ` <small>${label}</small>` : ''}<br>${t('평균', 'mean')} ${fmt(mean, m.digits)}${m.unit} <small>(${t('범위', 'range')} ${fmt(min, m.digits)}${t('~', '-')}${fmt(max, m.digits)})</small>${cf}`
+    return `<div class="bar" tabindex="0" data-tip="${encodeURIComponent(tip)}" aria-label="${b.name} ${label} ${fmt(mean, m.digits)}${m.unit}">
       <span class="fill ${series}" style="width:${pct(mean)}"></span>
       <span class="whisker" style="left:${pct(min)};width:calc(${pct(max)} - ${pct(min)})"></span>
       <span class="value" style="left:${pct(Math.max(mean, max))}">${fmt(mean, m.digits)}</span>
@@ -338,9 +377,9 @@
     const lines = m.ticks.map((t) => `<i style="left:${(t / m.max) * 100}%"></i>`).join('')
     chart.innerHTML = BUILDS.map((b) => {
       const bars = m.pair
-        ? bar(b, b[metric].mono, 's1', '폭 그대로') + bar(b, b[metric].prop, 's2', '폭 바뀜')
+        ? bar(b, b[metric].mono, 's1', 'mono') + bar(b, b[metric].prop, 's2', 'prop')
         : bar(b, b[metric], 's1', '')
-      return `<div class="row"><div class="name">${b.name.replace(' 빌드', '')}<small>${b.id === 'upstream' || b.id === 'fork' ? '기준' : '에이전트'}</small></div><div class="track"><div class="gridlines">${lines}</div>${bars}</div></div>`
+      return `<div class="row"><div class="name">${b.name.replace(t(' 빌드', ' build'), '')}<small>${b.id === 'upstream' || b.id === 'fork' ? t('기준', 'baseline') : t('에이전트', 'agent')}</small></div><div class="track"><div class="gridlines">${lines}</div>${bars}</div></div>`
     }).join('')
     document.getElementById('ticks').innerHTML = m.ticks.map((t) => `<span style="left:${(t / m.max) * 100}%">${t}${t === m.max ? ` ${m.unit}` : ''}</span>`).join('')
   }
@@ -377,13 +416,17 @@
   )
 
   const table = document.getElementById('table')
-  table.innerHTML = `<table><thead><tr><th>빌드</th><th>갱신 태스크 (ms)</th><th>재계산과 레이아웃 전체 (ms/s)</th><th>재계산 폭 그대로 (회/s)</th><th>재계산 폭 바뀜 (회/s)</th><th>재계산 시간 폭 그대로 (ms/s)</th><th>재계산 시간 폭 바뀜 (ms/s)</th><th>합성 실패 폭 그대로</th><th>합성 실패 폭 바뀜</th></tr></thead><tbody>${BUILDS.map(
+  const headers = t(
+    ['빌드', '갱신 태스크 (ms)', '재계산과 레이아웃 전체 (ms/s)', '재계산 폭 그대로 (회/s)', '재계산 폭 바뀜 (회/s)', '재계산 시간 폭 그대로 (ms/s)', '재계산 시간 폭 바뀜 (ms/s)', '합성 실패 폭 그대로', '합성 실패 폭 바뀜'],
+    ['Build', 'Update task (ms)', 'Recalculation and layout, page-wide (ms/s)', 'Recalculations, width unchanged (per s)', 'Recalculations, width changing (per s)', 'Recalculation time, width unchanged (ms/s)', 'Recalculation time, width changing (ms/s)', 'Composite failures, width unchanged', 'Composite failures, width changing'],
+  )
+  table.innerHTML = `<table><thead><tr>${headers.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${BUILDS.map(
     (b) => `<tr><td>${b.name}</td><td>${fmt(b.task[0])}</td><td>${fmt(b.page[0])}</td><td>${fmt(b.idle.mono[0])}</td><td>${fmt(b.idle.prop[0])}</td><td>${fmt(b.idleMs.mono[0])}</td><td>${fmt(b.idleMs.prop[0])}</td><td>${b.cf.mono}</td><td>${b.cf.prop}</td></tr>`,
   ).join('')}</tbody></table>`
   document.getElementById('table-toggle').addEventListener('click', (event) => {
     table.hidden = !table.hidden
     event.currentTarget.setAttribute('aria-expanded', String(!table.hidden))
-    event.currentTarget.textContent = table.hidden ? '표로 보기' : '표 닫기'
+    event.currentTarget.textContent = table.hidden ? t('표로 보기', text.tableShow) : t('표 닫기', text.tableHide)
   })
 
   renderChart()
