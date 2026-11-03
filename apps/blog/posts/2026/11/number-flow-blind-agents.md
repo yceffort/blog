@@ -1,5 +1,5 @@
 ---
-title: '다섯 에이전트가 고친 <em>number-flow</em>를 다시 재 봤다'
+title: '<em>number-flow</em>를 에이전트에게 맡기면 어디까지 고칠까'
 tags:
   - web-performance
   - animation

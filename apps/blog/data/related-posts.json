@@ -18,20 +18,20 @@
         "score": 0.25
       },
       {
+        "slug": "2020/12/measuring-performance-of-javascript-functions",
+        "score": 0.23
+      },
+      {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.2
       },
       {
+        "slug": "2022/06/optimize-LCP",
+        "score": 0.19
+      },
+      {
         "slug": "2026/09/blog-performance-after-migrations",
         "score": 0.18
-      },
-      {
-        "slug": "2026/10/web-vitals-report-timing",
-        "score": 0.16
-      },
-      {
-        "slug": "2026/09/tracing-third-party-javascript-without-sourcemaps",
-        "score": 0.16
       }
     ],
     "2026/10/web-vitals-report-timing": [
@@ -1118,8 +1118,8 @@
         "score": 0.24
       },
       {
-        "slug": "2021/03/javascript-proxy",
-        "score": 0.19
+        "slug": "2020/11/pwa-pros-and-cons",
+        "score": 0.2
       }
     ],
     "2026/08/rebuilding-a-vendor-sdk": [
@@ -10616,6 +10616,10 @@
         "score": 0.77
       },
       {
+        "slug": "2026/10/performance-improvement-workflow",
+        "score": 0.62
+      },
+      {
         "slug": "2026/10/how-bundlers-remember-imports",
         "score": 0.61
       },
@@ -10638,10 +10642,6 @@
       {
         "slug": "2026/10/cwv-to-tempo-and-mimir",
         "score": 0.2
-      },
-      {
-        "slug": "2026/10/cwv-send-on-page-leave",
-        "score": 0.19
       }
     ],
     "2026/08/og-scraping-server-2": [

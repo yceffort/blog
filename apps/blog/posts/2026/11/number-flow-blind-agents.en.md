@@ -1,5 +1,5 @@
 ---
-title: 'Measuring <em>number-flow</em> Again After Five Agents Fixed It'
+title: 'How Far Will Agents Fix <em>number-flow</em>?'
 tags:
   - web-performance
   - animation

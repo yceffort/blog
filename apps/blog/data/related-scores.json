@@ -18869,5 +18869,11 @@
   "en:2025/05/web-performance-analysis-1|2026/11/number-flow-blind-agents": 0.27,
   "en:2021/12/nodejs-memory-limit|2026/11/number-flow-blind-agents": 0.03,
   "en:2021/08/uncaught-async-error|2026/11/number-flow-blind-agents": 0.03,
-  "en:2021/01/from-github-workflow-to-firebase-functions|2026/11/number-flow-blind-agents": 0.02
+  "en:2021/01/from-github-workflow-to-firebase-functions|2026/11/number-flow-blind-agents": 0.02,
+  "ko:2026/11/number-flow-blind-agents|2022/06/optimize-LCP": 0.19,
+  "ko:2026/11/number-flow-blind-agents|2025/11/web-performance-deep-dive-beta-reader": 0.09,
+  "ko:2026/11/number-flow-blind-agents|2020/12/measuring-performance-of-javascript-functions": 0.23,
+  "ko:2026/11/number-flow-blind-agents|2020/10/http-cache": 0.09,
+  "en:2026/11/number-flow-blind-agents|2025/06/web-performance-analysis-3": 0.06,
+  "en:2026/11/number-flow-blind-agents|2025/05/web-performance-analysis-1": 0.05
 }
