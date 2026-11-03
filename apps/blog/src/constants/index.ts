@@ -4,5 +4,3 @@ export const POPULAR_POSTS_COUNT = 4
 export const RECENT_POSTS_COUNT = 8
 // 홈 시리즈 카드 수. 그리드가 1열/2열/4열이라 4의 배수여야 빈자리 없이 채워진다. 나머지는 /series 에서 본다
 export const HOME_SERIES_COUNT = 4
-// 빌드 시 사전 생성할 GA4 인기 포스트(최근 1년) 수
-export const PRERENDER_POSTS_COUNT = 50

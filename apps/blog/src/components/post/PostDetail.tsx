@@ -10,7 +10,7 @@ import Link from 'next/link'
 import {notFound, permanentRedirect} from 'next/navigation'
 import Script from 'next/script'
 import {connection} from 'next/server'
-import {ViewTransition} from 'react'
+import {Suspense, ViewTransition} from 'react'
 
 import {PostArticle} from '@/components/post/PostArticle'
 import PostDate from '@/components/post/PostDate'
@@ -28,7 +28,7 @@ import {buildBlogPostingJsonLd, buildBreadcrumbJsonLd} from '@/utils/jsonLd'
 import {openGraphBase} from '@/utils/metadata'
 import {
   findPostByYearAndSlug,
-  getPrerenderSlugs,
+  getAllPosts,
   getRelatedPosts,
   type Locale,
 } from '@/utils/Post'
@@ -151,8 +151,10 @@ export async function generatePostMetadata(
   }
 }
 
+// 공개 글 전부를 빌드 때 만든다. dynamicParams=false와 함께 fallback 셸을 없애
+// 레이아웃이 Suspense 없이 본문을 정적 HTML에 그대로 싣게 한다
 export async function generatePostStaticParams(locale: Locale) {
-  const slugs = await getPrerenderSlugs(locale)
+  const slugs = (await getAllPosts(locale)).map((post) => post.fields.slug)
   return slugs.map((slug) => {
     const [year, ...rest] = slug.split('/')
     return {
@@ -178,10 +180,23 @@ export async function PostDetail({
     return notFound()
   }
   if (process.env.NODE_ENV !== 'production') {
-    await connection()
-    return <PostBody year={year} slug={slug} locale={locale} />
+    // 레이아웃에 Suspense가 없으므로 개발 모드의 동적 접근은 여기서 경계를 친다
+    return (
+      <Suspense>
+        <DevPostBody year={year} slug={slug} locale={locale} />
+      </Suspense>
+    )
   }
   return <CachedPostBody year={year} slug={slug} locale={locale} />
+}
+
+async function DevPostBody({
+  year,
+  slug,
+  locale,
+}: PostParams & {locale: Locale}) {
+  await connection()
+  return <PostBody year={year} slug={slug} locale={locale} />
 }
 
 async function CachedPostBody({

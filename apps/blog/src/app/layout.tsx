@@ -14,7 +14,7 @@ import type {Metadata} from 'next'
 import '@/styles/stylex.css'
 import '@/styles/tokens.stylex'
 
-import {Suspense, type ReactNode} from 'react'
+import type {ReactNode} from 'react'
 
 import {CwvTelemetry} from '@/components/analytics/CwvTelemetry'
 import {GoogleAnalyticsWebVitalsTracker} from '@/components/analytics/GoogleAnalyticsWebVitalsTracker'
@@ -134,9 +134,7 @@ export default async function Layout({children}: {children: ReactNode}) {
           <AppleStartupImages images={startupImages} />
         </head>
         <body className={stylex.props(sx.body).className}>
-          <Suspense fallback={null}>
-            <NavigationDirection />
-          </Suspense>
+          <NavigationDirection />
           <AmbientEffects
             classNames={{
               animBg: ambientStyles.effect_anim_bg,
@@ -145,10 +143,10 @@ export default async function Layout({children}: {children: ReactNode}) {
             }}
           />
           <PullToRefresh />
+          {/* 본문을 Suspense로 감싸면 React가 12.8KB를 넘는 경계는 완성돼 있어도 hidden 세그먼트로
+              빼내므로 JS 없는 크롤러가 본문을 못 읽는다. usePathname 소비자는 경계 없이도 빌드가 통과한다 */}
           <Providers>
-            <Suspense fallback={null}>
-              <LayoutWrapper enSlugs={enSlugs}>{children}</LayoutWrapper>
-            </Suspense>
+            <LayoutWrapper enSlugs={enSlugs}>{children}</LayoutWrapper>
           </Providers>
           {GA_MEASUREMENT_ID && process.env.NODE_ENV === 'production' && (
             <>
@@ -156,9 +154,7 @@ export default async function Layout({children}: {children: ReactNode}) {
                 measurementId={GA_MEASUREMENT_ID}
                 siteUrl={SiteConfig.url}
               />
-              <Suspense fallback={null}>
-                <GoogleAnalyticsPageViewTracker />
-              </Suspense>
+              <GoogleAnalyticsPageViewTracker />
               <OutboundLinkTracker />
               <InternalNavTracker />
             </>
