@@ -13,6 +13,8 @@ pre-commit:
             exclude:
               - 'labs/**'
               - 'experiments/**'
+              # .oxlintrc.json 이 public/ 을 무시하므로 데모 번들만 staged 면 "No files found" 로 실패한다
+              - 'apps/blog/public/demos/**'
             run: pnpm exec oxlint --type-aware --fix {staged_files}
             stage_fixed: true
           - name: oxfmt
