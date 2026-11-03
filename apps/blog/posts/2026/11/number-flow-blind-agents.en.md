@@ -12,7 +12,7 @@ seriesOrder: 4
 date: 2026-11-03 17:56:00
 description: 'I compared number-flow as fixed by five coding agents against my fork v0.2.1 once more. The post records performance reports that changed with the font, an anonymized code review, and the follow-up experiment that ended with keeping the mask default.'
 art:
-  undraw: performance-comparison
+  undraw: chat-bot
 ---
 
 <details>

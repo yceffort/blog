@@ -12,7 +12,7 @@ seriesOrder: 4
 date: 2026-11-03 17:56:00
 description: '다섯 코딩 에이전트가 고친 number-flow와 내 포크 v0.2.1을 다시 비교했다. 글꼴에 따라 달라진 성능 보고, 익명 코드 리뷰, 마스크 기본값을 유지하기로 한 후속 실험까지 기록했다.'
 art:
-  undraw: performance-comparison
+  undraw: chat-bot
 ---
 
 <details>
