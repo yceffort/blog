@@ -10,7 +10,7 @@ published: true
 series: 'Improving number-flow'
 seriesOrder: 4
 date: 2026-11-03 17:56:00
-updated: 2026-11-04 10:44:51
+updated: 2026-11-04 10:45:05
 description: 'I compared number-flow as fixed by five coding agents against my fork v0.2.1 once more. The post records performance reports that changed with the font, an anonymized code review, and the follow-up experiment that ended with keeping the mask default.'
 art:
   undraw: chat-bot
@@ -213,9 +213,9 @@ What I got from the agents in this comparison was code that actually reduced cos
 
 ## Experiment record
 
-Below is the record of the agent comparison experiment on November 2. The conditions of the November 3 mask tolerance experiment are in the section above.
+Below is the record of the agent comparison experiment run on November 2, 2026. The conditions of the November 3 mask tolerance experiment are in the section above.
 
-The agent comparison was run on November 2, 2026. The fork compared is [`v0.2.1`](https://github.com/yceffort/number-flow/tree/477893f382cff2562df1c8522c6f1aa6a63e3f87), and the agent builds are all derivatives of upstream's MIT-licensed code. The prompts and main results are below. The original transcripts and evaluation reports have not been published yet.
+The fork compared is [`v0.2.1`](https://github.com/yceffort/number-flow/tree/477893f382cff2562df1c8522c6f1aa6a63e3f87), and the agent builds are all derivatives of upstream's MIT-licensed code. The prompts and main results are below. The original transcripts and evaluation reports have not been published yet.
 
 ### Environment
 
@@ -274,7 +274,7 @@ The numbers below are the turn of first discovery. `-` means there is no record 
 |  11 | `flush()` pre-read (Part 3)                    | 3               | 3               | -                            | -                | 1               |
 |  12 | Ordering regression test (Part 3)              | -               | -               | -                            | 3                | -               |
 
-The record splits each item into discovery (was it named as a problem), fix (was it actually fixed in the code), and proof (was it measured and shown with numbers). The behavior changes that the original scorecard classified as avoidance are described in the body in terms of what changed. For item 6, the criterion at grading time was whether the custom property path of the digit rotation was identified. fable's turn 2 width-path finding was excluded from this tally, so the tally is not a count of all playback cost discoveries. The 6 hypotheses written before the run and their results are below.
+The record splits each item into discovery (was it named as a problem), fix (was it actually fixed in the code), and proof (was it measured and shown with numbers). The behavior changes that the original scorecard classified as avoidance are described in the body in terms of what changed. For item 6, the criterion at grading time was whether the custom property path of the digit rotation was identified, and for item 8, whether the remaining cost of the mask correction was recognized and reduced. fable's turn 2 remarks on the width path and the mask cost were excluded from both tallies, so the tally is not a count of all playback cost discoveries. The 6 hypotheses written before the run and their results are below.
 
 | Hypothesis                                                                             | Result                                                                                                                                                  |
 | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
