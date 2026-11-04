@@ -10,27 +10,11 @@ published: true
 series: 'Improving number-flow'
 seriesOrder: 4
 date: 2026-11-03 17:56:00
-updated: 2026-11-03 18:21:31
+updated: 2026-11-04 10:44:51
 description: 'I compared number-flow as fixed by five coding agents against my fork v0.2.1 once more. The post records performance reports that changed with the font, an anonymized code review, and the follow-up experiment that ended with keeping the mask default.'
 art:
   undraw: chat-bot
 ---
-
-<details>
-<summary>Table of contents</summary>
-
-- [The tests passed, but](#the-tests-passed-but)
-- [I handed over the code from before my fixes](#i-handed-over-the-code-from-before-my-fixes)
-- [Digits do not only move up and down](#digits-do-not-only-move-up-and-down)
-- [Faster, with different motion](#faster-with-different-motion)
-- [I measured my fork under the same conditions](#i-measured-my-fork-under-the-same-conditions)
-- [I had the code reviewed with the names hidden](#i-had-the-code-reviewed-with-the-names-hidden)
-- [What to keep from v0.2.1](#what-to-keep-from-v021)
-- [I decided to keep the mask default](#i-decided-to-keep-the-mask-default)
-- [Agents were worth trusting with performance work](#agents-were-worth-trusting-with-performance-work)
-- [Experiment record](#experiment-record)
-
-</details>
 
 ## The tests passed, but
 

@@ -10824,6 +10824,10 @@
         "score": 0.1
       },
       {
+        "slug": "2026/08/og-scraping-server-1",
+        "score": 0.1
+      },
+      {
         "slug": "2026/09/nextjs-cache-components-activity",
         "score": 0.09
       },
@@ -10841,10 +10845,6 @@
       },
       {
         "slug": "2026/10/web-vitals-report-timing",
-        "score": 0.07
-      },
-      {
-        "slug": "2026/09/tracing-third-party-javascript-without-sourcemaps",
         "score": 0.07
       }
     ],
