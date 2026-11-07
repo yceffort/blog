@@ -6,7 +6,7 @@
  */
 import {readFile} from 'node:fs/promises'
 
-import webpush from 'web-push'
+import {sendNotification, setVapidDetails} from 'web-push'
 
 // 블로그 구독자(push:subscriptions)와 같은 Redis를 쓰므로 키를 나눈다
 const SUBSCRIPTIONS_KEY = 'news:push:subscriptions'
@@ -30,11 +30,7 @@ if (
   process.exit(1)
 }
 
-webpush.setVapidDetails(
-  `mailto:root@yceffort.kr`,
-  VAPID_PUBLIC_KEY,
-  VAPID_PRIVATE_KEY,
-)
+setVapidDetails(`mailto:root@yceffort.kr`, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY)
 
 async function redis(command) {
   const response = await fetch(KV_REST_API_URL, {
@@ -107,7 +103,7 @@ for (const notification of notifications) {
     subscriptions.map(async (raw) => {
       const subscription = JSON.parse(raw)
       try {
-        await webpush.sendNotification(subscription, payload)
+        await sendNotification(subscription, payload)
         sent += 1
       } catch (error) {
         // 만료되거나 해지된 구독은 정리한다

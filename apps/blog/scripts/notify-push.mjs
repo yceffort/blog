@@ -8,7 +8,7 @@ import {readFile, readdir} from 'node:fs/promises'
 import {join} from 'node:path'
 import {fileURLToPath} from 'node:url'
 
-import webpush from 'web-push'
+import {sendNotification, setVapidDetails} from 'web-push'
 
 const SUBSCRIPTIONS_KEY = 'push:subscriptions'
 // 알림을 눌러 들어온 세션을 GA4에서 Direct와 가르기 위한 꼬리표
@@ -31,11 +31,7 @@ if (
   process.exit(1)
 }
 
-webpush.setVapidDetails(
-  `mailto:root@yceffort.kr`,
-  VAPID_PUBLIC_KEY,
-  VAPID_PRIVATE_KEY,
-)
+setVapidDetails(`mailto:root@yceffort.kr`, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY)
 
 async function redis(command) {
   const response = await fetch(KV_REST_API_URL, {
@@ -138,7 +134,7 @@ for (const notification of notifications) {
     subscriptions.map(async (raw) => {
       const subscription = JSON.parse(raw)
       try {
-        await webpush.sendNotification(subscription, payload)
+        await sendNotification(subscription, payload)
         sent += 1
       } catch (error) {
         // 만료되거나 해지된 구독은 정리한다
