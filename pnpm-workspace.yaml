@@ -39,3 +39,4 @@ allowBuilds:
 
 minimumReleaseAgeExclude:
   - '@yceffort/*'
+  - web-push@4.0.0
