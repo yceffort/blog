@@ -32,7 +32,18 @@ const assets = await Promise.all(
     sha256: sha256(await readFile(path.join(staticDir, file))),
   })),
 )
-const shell = await readFile(path.join(root, '.next/server/app/offline.html'))
+// Next 16.4 writes prerendered HTML under server/route-cache when a deploy
+// adapter is configured (Vercel) and under server/app otherwise.
+const serverDir = path.join(root, '.next/server')
+const shells = (await readdir(serverDir, {recursive: true})).filter((file) =>
+  /(?:^|[\\/])offline\.html$/.test(file),
+)
+if (shells.length !== 1) {
+  throw new Error(
+    `Expected one offline.html under .next/server, found ${shells.length}: ${shells.join(', ')}`,
+  )
+}
+const shell = await readFile(path.join(serverDir, shells[0]))
 await writeFile(path.join(root, 'public/offline-shell.html'), shell)
 assets.push({url: '/offline-shell.html', sha256: sha256(shell)})
 for (const file of [
