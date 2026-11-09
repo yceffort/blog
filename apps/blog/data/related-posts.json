@@ -1,5 +1,39 @@
 {
   "ko": {
+    "2026/11/react-19-2-progressive-chunk-size": [
+      {
+        "slug": "2026/05/use-client-deep-dive",
+        "score": 0.44
+      },
+      {
+        "slug": "2026/09/nextjs-cache-components-activity",
+        "score": 0.41
+      },
+      {
+        "slug": "2026/05/use-cache-deep-dive",
+        "score": 0.21
+      },
+      {
+        "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
+        "score": 0.16
+      },
+      {
+        "slug": "2023/05/blog-app-dir",
+        "score": 0.15
+      },
+      {
+        "slug": "2021/01/nextjs-refresh-server-side-props",
+        "score": 0.13
+      },
+      {
+        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
+        "score": 0.12
+      },
+      {
+        "slug": "2026/01/react-server-components-history-repeating",
+        "score": 0.12
+      }
+    ],
     "2026/11/number-flow-blind-agents": [
       {
         "slug": "2026/08/framer-motion-banner-frame-drop",
@@ -758,6 +792,10 @@
         "score": 0.57
       },
       {
+        "slug": "2026/11/react-19-2-progressive-chunk-size",
+        "score": 0.33
+      },
+      {
         "slug": "2026/05/use-client-deep-dive",
         "score": 0.31
       },
@@ -775,10 +813,6 @@
       },
       {
         "slug": "2025/06/fixing-nextjs-rendered-more-hooks-error",
-        "score": 0.17
-      },
-      {
-        "slug": "2021/12/nextjs-lesson-and-learn",
         "score": 0.17
       }
     ],
@@ -1676,10 +1710,6 @@
         "score": 0.38
       },
       {
-        "slug": "2026/05/pr-diff-vs-bundle",
-        "score": 0.38
-      },
-      {
         "slug": "2022/01/how-react-server-components-work",
         "score": 0.36
       },
@@ -1698,6 +1728,10 @@
       {
         "slug": "2025/12/nextjs-caching-deep-dive",
         "score": 0.26
+      },
+      {
+        "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
+        "score": 0.24
       }
     ],
     "2026/05/use-cache-deep-dive": [
@@ -1968,7 +2002,7 @@
         "score": 0.2
       },
       {
-        "slug": "2025/06/fixing-nextjs-rendered-more-hooks-error",
+        "slug": "2026/11/react-19-2-progressive-chunk-size",
         "score": 0.18
       }
     ],
@@ -2058,10 +2092,6 @@
         "score": 0.4
       },
       {
-        "slug": "2025/12/nextjs-caching-deep-dive",
-        "score": 0.25
-      },
-      {
         "slug": "2026/01/react-server-components-history-repeating",
         "score": 0.24
       },
@@ -2072,16 +2102,16 @@
       {
         "slug": "2026/03/nextjs-edge-runtime-rise-and-fall",
         "score": 0.22
+      },
+      {
+        "slug": "2023/06/react-use-hook",
+        "score": 0.21
       }
     ],
     "2026/03/react-is-whose": [
       {
         "slug": "2026/01/react-server-components-history-repeating",
         "score": 0.51
-      },
-      {
-        "slug": "2026/05/use-client-deep-dive",
-        "score": 0.29
       },
       {
         "slug": "2025/12/nextjs-react-security-vulnerability",
@@ -2106,6 +2136,10 @@
       {
         "slug": "2026/09/nextjs-cache-components-activity",
         "score": 0.13
+      },
+      {
+        "slug": "2026/02/react-compiler-deep-dive",
+        "score": 0.11
       }
     ],
     "2026/03/nextjs-edge-runtime-rise-and-fall": [
@@ -2696,10 +2730,6 @@
         "score": 0.13
       },
       {
-        "slug": "2020/07/change-detection-in-angular-react",
-        "score": 0.12
-      },
-      {
         "slug": "2022/03/react-hooks-in-caution",
         "score": 0.11
       },
@@ -2717,6 +2747,10 @@
       },
       {
         "slug": "2026/05/use-client-deep-dive",
+        "score": 0.09
+      },
+      {
+        "slug": "2026/03/react-server-functions-deep-dive",
         "score": 0.09
       }
     ],
@@ -3028,10 +3062,6 @@
     ],
     "2025/06/fixing-nextjs-rendered-more-hooks-error": [
       {
-        "slug": "2022/01/how-react-server-components-work",
-        "score": 0.54
-      },
-      {
         "slug": "2026/05/use-client-deep-dive",
         "score": 0.38
       },
@@ -3057,6 +3087,10 @@
       },
       {
         "slug": "2026/09/nextjs-cache-components-activity",
+        "score": 0.18
+      },
+      {
+        "slug": "2026/01/react-server-components-history-repeating",
         "score": 0.18
       }
     ],
@@ -3418,10 +3452,6 @@
         "score": 0.49
       },
       {
-        "slug": "2021/01/nextjs-refresh-server-side-props",
-        "score": 0.43
-      },
-      {
         "slug": "2026/09/markdown-pipeline-to-rust-wasm",
         "score": 0.41
       },
@@ -3432,6 +3462,10 @@
       {
         "slug": "2026/09/tailwind-to-stylex-migration",
         "score": 0.38
+      },
+      {
+        "slug": "2026/11/react-19-2-progressive-chunk-size",
+        "score": 0.35
       }
     ],
     "2025/03/react-interview-guide": [
@@ -3538,10 +3572,6 @@
     ],
     "2023/06/react-use-hook": [
       {
-        "slug": "2026/01/react-server-components-history-repeating",
-        "score": 0.47
-      },
-      {
         "slug": "2026/05/use-client-deep-dive",
         "score": 0.4
       },
@@ -3568,6 +3598,10 @@
       {
         "slug": "2022/04/deep-dive-in-react-rendering",
         "score": 0.2
+      },
+      {
+        "slug": "2026/03/react-is-whose",
+        "score": 0.19
       }
     ],
     "2023/05/why-esmodule": [
@@ -3614,10 +3648,6 @@
         "score": 0.25
       },
       {
-        "slug": "2026/09/blog-performance-after-migrations",
-        "score": 0.23
-      },
-      {
         "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
         "score": 0.21
       },
@@ -3635,6 +3665,10 @@
       },
       {
         "slug": "2021/03/server-side-rendering-and-react-components",
+        "score": 0.16
+      },
+      {
+        "slug": "2020/01/learning-from-react-count-down",
         "score": 0.16
       }
     ],
@@ -3694,16 +3728,16 @@
         "score": 0.61
       },
       {
+        "slug": "2026/11/react-19-2-progressive-chunk-size",
+        "score": 0.6
+      },
+      {
         "slug": "2026/01/react-server-components-history-repeating",
         "score": 0.6
       },
       {
         "slug": "2025/06/fixing-nextjs-rendered-more-hooks-error",
         "score": 0.59
-      },
-      {
-        "slug": "2020/10/migrate-gatsby-from-nextjs",
-        "score": 0.42
       }
     ],
     "2022/06/preload-scanner": [
@@ -3992,10 +4026,6 @@
         "score": 0.65
       },
       {
-        "slug": "2026/09/offline-marp-slides-in-nextjs",
-        "score": 0.49
-      },
-      {
         "slug": "2020/12/generate-serverless-thumbnail",
         "score": 0.38
       },
@@ -4010,6 +4040,10 @@
       {
         "slug": "2021/01/brotli-better-html-compression",
         "score": 0.36
+      },
+      {
+        "slug": "2021/05/review-of-vercel-cs",
+        "score": 0.33
       }
     ],
     "2022/04/rust-wasm-project-tutorial-2": [
@@ -5208,10 +5242,6 @@
         "score": 0.32
       },
       {
-        "slug": "2026/03/why-cloudflare-rebuilt-nextjs",
-        "score": 0.2
-      },
-      {
         "slug": "2026/08/og-scraping-server-2",
         "score": 0.19
       },
@@ -5234,6 +5264,10 @@
       {
         "slug": "2020/12/side-project-diary-2020",
         "score": 0.14
+      },
+      {
+        "slug": "2021/12/nodejs-memory-limit",
+        "score": 0.13
       }
     ],
     "2021/10/debt-of-package-json": [
@@ -6326,6 +6360,10 @@
     ],
     "2021/05/compress-all-images-in-directory": [
       {
+        "slug": "2022/06/optimize-LCP",
+        "score": 0.33
+      },
+      {
         "slug": "2021/08/core-web-vital",
         "score": 0.28
       },
@@ -6352,10 +6390,6 @@
       {
         "slug": "2026/09/tracing-third-party-javascript-without-sourcemaps",
         "score": 0.2
-      },
-      {
-        "slug": "2020/07/critical-rendering-path",
-        "score": 0.18
       }
     ],
     "2021/05/bad-habits-of-typescript": [
@@ -6666,6 +6700,10 @@
     ],
     "2021/03/hiding-contents-with-html-and-css": [
       {
+        "slug": "2026/11/react-19-2-progressive-chunk-size",
+        "score": 0.56
+      },
+      {
         "slug": "2021/11/jorney-from-tags-to-dom",
         "score": 0.17
       },
@@ -6691,10 +6729,6 @@
       },
       {
         "slug": "2026/09/tailwind-to-stylex-migration",
-        "score": 0.13
-      },
-      {
-        "slug": "2021/03/improve-css-performance",
         "score": 0.13
       }
     ],
@@ -7732,11 +7766,11 @@
         "score": 0.1
       },
       {
-        "slug": "2026/06/learning-what-ai-cant-do",
+        "slug": "2020/11/avoid-default-export",
         "score": 0.09
       },
       {
-        "slug": "2020/11/avoid-default-export",
+        "slug": "2026/06/learning-what-ai-cant-do",
         "score": 0.09
       },
       {
@@ -7906,20 +7940,20 @@
         "score": 0.49
       },
       {
-        "slug": "2026/03/is-nextjs-fast-enough",
-        "score": 0.49
-      },
-      {
-        "slug": "2025/12/nextjs-caching-deep-dive",
-        "score": 0.45
-      },
-      {
         "slug": "2026/03/why-still-nextjs",
         "score": 0.42
       },
       {
         "slug": "2019/06/20/react-nextjs-koa",
         "score": 0.42
+      },
+      {
+        "slug": "2026/08/service-worker-caching-2",
+        "score": 0.38
+      },
+      {
+        "slug": "2026/11/react-19-2-progressive-chunk-size",
+        "score": 0.35
       }
     ],
     "2020/10/implement-event-emitter": [
@@ -9134,16 +9168,16 @@
         "score": 0.28
       },
       {
+        "slug": "2026/11/react-19-2-progressive-chunk-size",
+        "score": 0.26
+      },
+      {
         "slug": "2026/09/blog-performance-after-migrations",
         "score": 0.23
       },
       {
         "slug": "2023/05/blog-app-dir",
         "score": 0.23
-      },
-      {
-        "slug": "2025/03/research",
-        "score": 0.21
       }
     ],
     "2019/12/18/goal-2020": [
@@ -9530,10 +9564,6 @@
         "score": 0.77
       },
       {
-        "slug": "2021/12/nextjs-lesson-and-learn",
-        "score": 0.69
-      },
-      {
         "slug": "2021/01/nextjs-refresh-server-side-props",
         "score": 0.65
       },
@@ -9552,6 +9582,10 @@
       {
         "slug": "2022/02/new-react-framework-remix",
         "score": 0.54
+      },
+      {
+        "slug": "2022/01/how-react-server-components-work",
+        "score": 0.53
       }
     ],
     "2019/06/17/typescript-type-enum-partial-record": [
@@ -9726,6 +9760,40 @@
     ]
   },
   "en": {
+    "2026/11/react-19-2-progressive-chunk-size": [
+      {
+        "slug": "2026/09/nextjs-cache-components-activity",
+        "score": 0.37
+      },
+      {
+        "slug": "2026/05/use-client-deep-dive",
+        "score": 0.27
+      },
+      {
+        "slug": "2026/05/use-cache-deep-dive",
+        "score": 0.13
+      },
+      {
+        "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
+        "score": 0.12
+      },
+      {
+        "slug": "2025/12/nextjs-caching-deep-dive",
+        "score": 0.1
+      },
+      {
+        "slug": "2026/03/react-server-functions-deep-dive",
+        "score": 0.08
+      },
+      {
+        "slug": "2025/12/nextjs-react-security-vulnerability",
+        "score": 0.08
+      },
+      {
+        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
+        "score": 0.07
+      }
+    ],
     "2026/11/number-flow-blind-agents": [
       {
         "slug": "2026/08/framer-motion-banner-frame-drop",
@@ -10028,7 +10096,7 @@
         "score": 0.09
       },
       {
-        "slug": "2026/08/typescript-7-oxc-migration",
+        "slug": "2021/08/uncaught-async-error",
         "score": 0.08
       }
     ],
@@ -10228,12 +10296,12 @@
         "score": 0.3
       },
       {
-        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
+        "slug": "2025/05/web-performance-analysis-2",
         "score": 0.28
       },
       {
-        "slug": "2025/05/web-performance-analysis-2",
-        "score": 0.28
+        "slug": "2025/06/web-performance-analysis-3",
+        "score": 0.24
       }
     ],
     "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps": [
@@ -10378,6 +10446,10 @@
         "score": 0.7
       },
       {
+        "slug": "2026/11/react-19-2-progressive-chunk-size",
+        "score": 0.67
+      },
+      {
         "slug": "2025/12/nextjs-caching-deep-dive",
         "score": 0.57
       },
@@ -10399,10 +10471,6 @@
       },
       {
         "slug": "2026/09/offline-marp-slides-in-nextjs",
-        "score": 0.13
-      },
-      {
-        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
         "score": 0.13
       }
     ],
@@ -10466,12 +10534,12 @@
         "score": 0.17
       },
       {
-        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
-        "score": 0.14
-      },
-      {
         "slug": "2026/09/nextjs-cache-components-activity",
         "score": 0.13
+      },
+      {
+        "slug": "2026/09/tracing-third-party-javascript-without-sourcemaps",
+        "score": 0.11
       }
     ],
     "2026/08/turbopack-scope-hoisting-singleton-split": [
@@ -10572,8 +10640,8 @@
         "score": 0.21
       },
       {
-        "slug": "2026/10/cwv-send-on-page-leave",
-        "score": 0.21
+        "slug": "2026/05/use-client-deep-dive",
+        "score": 0.18
       }
     ],
     "2026/08/service-worker-caching-1": [
@@ -10850,10 +10918,6 @@
     ],
     "2026/08/k8s-for-frontend-3": [
       {
-        "slug": "2026/08/og-scraping-server-2",
-        "score": 0.1
-      },
-      {
         "slug": "2026/10/cwv-to-tempo-and-mimir",
         "score": 0.07
       },
@@ -10880,6 +10944,10 @@
       {
         "slug": "2026/06/do-you-need-to-read-code",
         "score": 0.05
+      },
+      {
+        "slug": "2021/01/from-github-workflow-to-firebase-functions",
+        "score": 0.04
       }
     ],
     "2026/08/k8s-for-frontend-2": [
@@ -11402,10 +11470,6 @@
         "score": 0.38
       },
       {
-        "slug": "2026/03/react-server-functions-deep-dive",
-        "score": 0.27
-      },
-      {
         "slug": "2025/12/nextjs-caching-deep-dive",
         "score": 0.24
       },
@@ -11424,6 +11488,10 @@
       {
         "slug": "2026/07/frontend-past-present-after-agents",
         "score": 0.2
+      },
+      {
+        "slug": "2025/12/nextjs-react-security-vulnerability",
+        "score": 0.19
       }
     ],
     "2026/03/why-cloudflare-rebuilt-nextjs": [
@@ -11520,12 +11588,12 @@
         "score": 0.19
       },
       {
-        "slug": "2026/10/how-bundlers-remember-imports",
-        "score": 0.17
-      },
-      {
         "slug": "2026/03/is-nextjs-fast-enough",
         "score": 0.16
+      },
+      {
+        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
+        "score": 0.13
       }
     ],
     "2026/03/react-is-whose": [
@@ -11656,12 +11724,12 @@
         "score": 0.2
       },
       {
-        "slug": "2026/10/performance-improvement-workflow",
-        "score": 0.2
-      },
-      {
         "slug": "2026/09/nextjs-cache-components-activity",
         "score": 0.19
+      },
+      {
+        "slug": "2026/08/service-worker-caching-2",
+        "score": 0.16
       }
     ],
     "2026/02/nodejs-deep-dive-sample": [
@@ -12068,7 +12136,7 @@
         "score": 0.1
       },
       {
-        "slug": "2026/09/nextjs-cache-components-activity",
+        "slug": "2023/06/react-use-hook",
         "score": 0.1
       }
     ],
@@ -12136,8 +12204,8 @@
         "score": 0.25
       },
       {
-        "slug": "2026/03/is-nextjs-fast-enough",
-        "score": 0.2
+        "slug": "2026/08/og-scraping-server-1",
+        "score": 0.22
       }
     ],
     "2025/06/web-performance-analysis-4": [
@@ -12340,7 +12408,7 @@
         "score": 0.17
       },
       {
-        "slug": "2026/03/react-is-whose",
+        "slug": "2026/11/react-19-2-progressive-chunk-size",
         "score": 0.15
       }
     ],
@@ -12388,15 +12456,15 @@
         "score": 0.09
       },
       {
+        "slug": "2026/02/nodejs-deep-dive-sample",
+        "score": 0.09
+      },
+      {
         "slug": "2026/09/tracing-third-party-javascript-without-sourcemaps",
         "score": 0.08
       },
       {
         "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
-        "score": 0.08
-      },
-      {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.08
       },
       {
