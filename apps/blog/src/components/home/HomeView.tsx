@@ -82,11 +82,16 @@ async function getHomeData(locale: Locale) {
   }
 }
 export default function HomeView({locale}: {locale: Locale}) {
-  return (
-    <Suspense>
-      <HomeContent locale={locale} />
-    </Suspense>
-  )
+  if (process.env.NODE_ENV !== 'production') {
+    // 경계는 개발 모드의 connection()에만 필요하다. 프로덕션에서 감싸면 React가 완성된 경계도
+    // hidden 세그먼트로 빼내서 JS 없는 크롤러가 홈의 글 목록을 못 읽는다
+    return (
+      <Suspense>
+        <HomeContent locale={locale} />
+      </Suspense>
+    )
+  }
+  return <HomeContent locale={locale} />
 }
 async function HomeContent({locale}: {locale: Locale}) {
   if (process.env.NODE_ENV !== 'production') {
