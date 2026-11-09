@@ -8,6 +8,7 @@ tags:
   - html
 published: true
 date: 2026-11-09 19:27:00
+updated: 2026-11-09 19:39:31
 description: 'Since React 19.2, content wrapped in Suspense can be moved into a hidden element even on a static page whose render has already finished. I traced how the post bodies on this blog shipped that way from May to early November, using the React source, version-by-version reproductions, and the HTML left in the Wayback Machine.'
 art:
   undraw: files-missing
@@ -438,7 +439,7 @@ In development, the post is rendered at request time by calling `connection()`, 
 
 This fix gave up three things. The skeleton on the post route cannot come back, because `loading.tsx` is itself a boundary around the body. The number of pages generated at build grows with the number of posts. And from now on I cannot place a boundary anywhere that wraps the body. If the layout ever needs a value like `usePathname()`, I have to wrap only the small component that uses the value, not the body. For the same reason two of the three places in the second commit were harmless, a boundary whose content is 500 bytes or less is not outlined because of its size. Boundaries that actually suspend, and boundaries that meet a condition unrelated to size such as the stylesheet case above, are exceptions.
 
-After the fix was deployed, I fetched 16 paths from production again. 14 of them, including posts, lists, tags, series, and the about page, had no `hidden` segment. On the 2 home pages (`/`, `/en`) the post list was still inside a `hidden` segment. The home component has its entire content wrapped in a single `<Suspense>`, and on November 3 I had checked only the post pages. The home pages are still in that state.
+After the fix was deployed, I fetched 16 paths from production again. 14 of them, including posts, lists, tags, series, and the about page, had no `hidden` segment. On the 2 home pages (`/`, `/en`) the post list was still inside a `hidden` segment. The home component has its entire content wrapped in a single `<Suspense>`, and on November 3 I had checked only the post pages. I fixed the home pages the same way. The boundary stays only in development, and the production render is not wrapped.
 
 You can check whether your own site is affected with one line. If it prints even one line, part of that page is only visible once a script runs.
 
