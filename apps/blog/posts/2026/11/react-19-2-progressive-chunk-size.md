@@ -9,7 +9,7 @@ tags:
 published: true
 date: 2026-11-09 19:27:00
 updated: 2026-11-09 19:39:31
-description: 'React 19.2부터 Suspense로 감싼 내용은 렌더가 끝난 정적 페이지에서도 hidden 요소로 분리돼 나갈 수 있다. 이 블로그의 글 본문이 5월부터 11월 초까지 그렇게 나간 과정을 React 소스, 버전별 재현, 웨이백 머신에 남은 HTML로 추적했다.'
+description: 'React 19.2부터 Suspense로 감싼 내용이 렌더가 끝난 정적 페이지에서도 hidden 요소로 분리돼 나갈 수 있는 문제. 이 블로그의 글 본문이 5월부터 11월 초까지 그렇게 나간 과정을 React 소스, 버전별 재현, 웨이백 머신에 남은 HTML로 추적해보기'
 art:
   undraw: files-missing
 ---

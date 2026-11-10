@@ -7,7 +7,7 @@ tags:
 published: true
 date: 2026-10-26 17:59:00
 updated: 2026-10-26 20:07:02
-description: "I think order matters more than technique in performance work. This post lays out the practical flow: settle the support range and dependencies first, measure before picking a technique, decide what to fix first, choose a response when the cause lives in someone else's code or infrastructure, prove nothing broke and keep it guarded, and report numbers by grade."
+description: "What should come before choosing a performance technique? This post follows the order used in practice: settling the support range and dependencies, measuring, deciding priorities, responding when the cause lives in someone else's code or infrastructure, guarding against regressions, and reporting results."
 art:
   undraw: route-planning
 ---

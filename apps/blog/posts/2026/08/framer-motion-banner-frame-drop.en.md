@@ -7,7 +7,7 @@ tags:
   - browser
 published: true
 date: 2026-08-15 20:00:00
-description: 'A banner built with framer-motion made the entire home screen stutter for the 0.6 seconds it took to open. The record of guessing the cause from the code, having that guess overturned twice by measurement, and finally removing the reflow with a single easing function. Plus what the work left behind: the gap between declaration and execution, the principle that properties decide performance, preserving mechanisms, suspecting your instruments first, and proving sameness with a curve.'
+description: 'A banner built with framer-motion made the entire home screen stutter for the 0.6 seconds it took to open. My guess at the cause from reading the code was overturned twice by measurement, and in the end a single easing function removed the reflow.'
 art:
   undraw: motion-alert
   layout: contours

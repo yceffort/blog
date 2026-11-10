@@ -9,7 +9,7 @@ tags:
 published: true
 date: 2026-06-21 11:00:00
 updated: 2026-10-19 13:52:52
-description: 'The friction that made judgment expensive is the same friction that taught it. Why the skill growing most valuable in the AI era is the one being cultivated least'
+description: 'As code review and interviews stop reading code closely, there are fewer chances to build the judgment that matters more in the AI era. This essay checks the evidence from studies such as METR and GitClear, and considers why the need to learn judgment went away.'
 series: 'Judgment in the AI Era'
 seriesOrder: 3
 art:

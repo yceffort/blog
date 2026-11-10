@@ -8,7 +8,7 @@ tags:
 published: true
 date: 2026-10-23 13:31:00
 updated: 2026-10-23 20:34:50
-description: 'Moved a Core Web Vitals collection setup designed for shared observability infrastructure to my personal blog. Fixed a dashboard left empty by sparse traffic and changed when metrics are collected for ordinary browsers. This post records the changes from October 17 to 22, query omissions investigated on October 23, and what five days of data can support.'
+description: 'Moved a Core Web Vitals collection setup designed for shared observability infrastructure to my personal blog. Fixed a dashboard left empty by sparse traffic and changed when metrics are collected for ordinary browsers. Along the way I found why some query results went missing, and worked out how much five days of data can support.'
 series: 'Core Web Vitals 직접 수집하기'
 seriesOrder: 4
 art:

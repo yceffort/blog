@@ -8,7 +8,7 @@ tags:
   - code-review
 published: true
 date: 2026-02-14 12:00:00
-description: 'AI 코딩 도구가 바꾸는 건 개발자가 아니라, 개발자가 하던 일의 형태다.'
+description: 'AI 코딩 도구가 들어온 뒤 프론트엔드 개발자의 일에서 달라지는 것들: 명세 작성, 코드 리뷰, 인지 부채, 결정 속도, 시니어 엔지니어의 역할'
 art:
   layout: bauhaus
   hue: violet

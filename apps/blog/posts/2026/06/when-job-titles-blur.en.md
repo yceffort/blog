@@ -8,7 +8,7 @@ tags:
 published: true
 date: 2026-06-12
 updated: 2026-10-19 13:52:52
-description: 'The claim that job boundaries are collapsing is only half true. What collapses is production; judgment and responsibility remain.'
+description: 'With AI tools, people can now produce the deliverables of other roles, and so we hear that the boundaries between job titles are collapsing. Separate the ability to make something from the ability to know whether it is right, and where do the boundaries get redrawn?'
 series: 'Judgment in the AI Era'
 seriesOrder: 2
 art:

@@ -7,7 +7,7 @@ tags:
 published: true
 date: 2026-10-18 02:35:00
 updated: 2026-10-23 13:57:30
-description: 'web-vitals 6.2.3의 지표별 보고 조건과 클릭 직후 페이지를 떠날 때 INP가 누락되는 원인을 확인했다.'
+description: 'web-vitals 6.2.3의 지표별 보고 조건과, 클릭 직후 페이지를 떠날 때 INP가 누락되는 원인'
 series: 'Core Web Vitals 직접 수집하기'
 seriesOrder: 1
 art:

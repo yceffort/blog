@@ -11,7 +11,7 @@ series: 'Improving number-flow'
 seriesOrder: 4
 date: 2026-11-03 17:56:00
 updated: 2026-11-04 10:45:05
-description: 'I compared number-flow as fixed by five coding agents against my fork v0.2.1 once more. The post records performance reports that changed with the font, an anonymized code review, and the follow-up experiment that ended with keeping the mask default.'
+description: 'I compared number-flow as fixed by five coding agents against my fork v0.2.1 once more. Performance reports changed with the font, the code went through a review with the authors hidden, and a follow-up experiment ended with keeping the mask default.'
 art:
   undraw: chat-bot
 ---

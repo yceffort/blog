@@ -10,7 +10,7 @@ series: 'Improving number-flow'
 seriesOrder: 1
 date: 2026-08-11 22:00:00
 updated: 2026-10-07 16:06:37
-description: 'The minimum versions where number-flow turns animations on are Chrome 125 and Safari 17.2. A record of the decisions made while building a fork that lowers this floor to Chrome 66 and WebKit 16.4, the two judgment calls I ended up reversing, and the Safari bug investigation that made me give up on automatic downgrading.'
+description: 'number-flow turns animations on starting from Chrome 125 and Safari 17.2. While building a fork that lowers this floor to Chrome 66 and WebKit 16.4, I reversed two decisions, and after investigating a Safari bug I gave up on automatic downgrading.'
 art:
   undraw: calculator
   layout: codePanel

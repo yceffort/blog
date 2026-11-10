@@ -8,7 +8,7 @@ tags:
   - code-review
 published: true
 date: 2026-02-14 12:00:00
-description: "AI coding tools aren't changing developers—they're changing the nature of what developers do."
+description: 'How does the work of a frontend developer change once AI coding tools arrive? Thoughts centered on writing specs, code review, cognitive debt, decision speed, and the role of senior engineers.'
 art:
   layout: bauhaus
   hue: violet

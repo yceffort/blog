@@ -8,7 +8,7 @@ tags:
 published: true
 date: 2026-07-22 10:00:00
 updated: 2026-10-19 13:52:52
-description: 'Why the layers piled up, why we returned to the server, and why the stack survives even after agents. And why the survival of a stack and the value of the people who know it are two separate things'
+description: 'Why did the frontend stack pile up in layers, and why did rendering move back to the server? This essay weighs whether the same stack survives once agents write the code, and asks whether, if it does, the value of the developers who know it survives too.'
 art:
   undraw: journey
   layout: bauhaus

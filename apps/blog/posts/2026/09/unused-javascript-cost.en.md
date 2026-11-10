@@ -7,7 +7,7 @@ tags:
   - bundler
 published: true
 date: 2026-09-16 18:00:00
-description: 'How much do you lose when 10MiB of functions you never call ships to the browser? I ran 855 measurements to separate the cost created by bytes from the cost created by the shape of the code. Uncalled declarations cost about 21ms per MiB and did not grow when I slowed the CPU by 4x, while initialization code that runs the moment the file is read added 201ms per MiB to the main thread. With real libraries, merely importing a module was enough to evaluate it.'
+description: 'How much do you lose when 10MiB of functions you never call ships to the browser? I ran 855 measurements to separate the cost of file size from the cost of code shape. Uncalled declarations cost about 21ms per MiB, while initialization code that runs the moment the file is read took 201ms per MiB on the main thread. With real libraries, merely importing a module was enough to evaluate it.'
 art:
   undraw: delete-files
   layout: gridChart

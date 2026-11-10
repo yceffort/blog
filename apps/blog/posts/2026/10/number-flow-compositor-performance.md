@@ -8,7 +8,7 @@ tags:
   - css
 published: true
 date: 2026-10-07 16:05:00
-description: '구형 브라우저를 지원하도록 만든 number-flow 포크에서, 모던 브라우저의 애니메이션도 매 프레임 스타일을 재계산하고 있었다. 0.2.0에서 가산 합성의 움직임을 transform과 opacity 키프레임으로 옮긴 과정과 성능 측정, 마스크와 인터럽트에 남은 비용을 기록한다.'
+description: '구형 브라우저를 지원하려고 만든 number-flow 포크에서, 모던 브라우저에서도 매 프레임 스타일을 다시 계산하던 애니메이션. 0.2.0에서 가산 합성으로 만들던 움직임을 transform과 opacity 키프레임으로 옮긴 과정과, 마스크와 인터럽트에 남은 비용'
 series: 'number-flow 개선기'
 seriesOrder: 2
 art:

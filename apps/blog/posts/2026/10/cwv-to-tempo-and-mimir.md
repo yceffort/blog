@@ -9,7 +9,7 @@ tags:
 published: true
 date: 2026-10-22 11:27:00
 updated: 2026-10-23 13:57:31
-description: '앱 웹뷰에서 측정한 핵심 웹 지표를 공용 관측 인프라로 보내면서 일부 값이 누락됐다. 웹뷰의 이탈 이벤트부터 tail sampling, 누적 변환, Tempo 조회까지 재현 환경에서 확인하고, 수집 코드를 바꿔 해결할 수 있는 범위를 살펴봤다.'
+description: '앱 웹뷰에서 측정한 핵심 웹 지표를 공용 관측 인프라로 보낼 때 일부 값이 누락되는 문제. 웹뷰의 이탈 이벤트부터 tail sampling, 누적 변환, Tempo 조회까지 재현 환경에서 확인하고, 수집 코드를 바꿔 해결할 수 있는 범위 가늠해보기'
 series: 'Core Web Vitals 직접 수집하기'
 seriesOrder: 3
 art:

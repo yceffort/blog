@@ -8,7 +8,7 @@ tags:
   - nextjs
 published: true
 date: 2026-09-30 11:23:00
-description: '기존 Marp 뷰어를 오프라인에서 실행하려던 접근부터 배포와 네트워크, 발표자 창에서 드러난 문제를 보완해 저장 기능을 완성하기까지의 기록'
+description: '기존 Marp 뷰어를 그대로 오프라인에서 실행하려던 첫 시도부터, 배포, 네트워크, 발표자 창에서 드러난 문제를 하나씩 보완해 오프라인 저장 기능을 완성하기까지의 과정'
 art:
   undraw: presentation
 ---

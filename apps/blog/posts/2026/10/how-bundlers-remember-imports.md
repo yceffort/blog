@@ -7,7 +7,7 @@ tags:
 published: true
 date: 2026-10-08 23:04:00
 updated: 2026-10-08 23:20:06
-description: 'Turbopack 분석 파일의 동기 의존성을 정적 import로 해석한 coldpath의 분류 오류를 추적했다. webpack, Turbopack, Vite, esbuild의 그래프 정보와 산출물을 비교하고, 원래 구문을 판별할 수 있는 단서와 복원할 수 없는 경우를 살펴본다.'
+description: 'Turbopack 분석 파일의 동기 의존성을 정적 import로 해석한 coldpath의 분류 오류 추적. webpack, Turbopack, Vite, esbuild의 그래프 정보와 산출물을 비교해, 원래 구문을 판별할 수 있는 단서와 복원할 수 없는 경우 살펴보기'
 series: 'coldpath 제작기'
 seriesOrder: 4
 art:

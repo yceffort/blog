@@ -7,7 +7,7 @@ tags:
   - debugging
 published: true
 date: 2026-08-06 23:00:00
-description: "A Service's ClusterIP is an IP attached to no machine, yet curl reaches it. iptables rules and conntrack, EndpointSlice, cluster DNS and ndots, Gateway, and port-forward: a record of opening up the entire path a request takes to a pod, directly in a kind cluster. Part 3 of the Kubernetes for frontend developers series."
+description: "A Service's ClusterIP is an IP attached to no machine, so how does a curl request reach a pod? In a kind cluster, this post inspects iptables rules and conntrack, EndpointSlice, cluster DNS and ndots, Gateway, and port-forward in turn to follow the path a request takes."
 series: 'Kubernetes for Frontend Developers'
 seriesOrder: 3
 art:

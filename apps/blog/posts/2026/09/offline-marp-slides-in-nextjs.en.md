@@ -8,7 +8,7 @@ tags:
   - nextjs
 published: true
 date: 2026-09-30 11:23:00
-description: 'From running the existing Marp viewer offline to fixing what deployments, networks, and the presenter window exposed along the way.'
+description: 'I built offline saving into a Marp slide viewer. This post follows the process from the first attempt to run the existing viewer offline as-is to fixing, one at a time, the problems that deploys, networks, and the presenter window exposed.'
 art:
   undraw: presentation
 ---

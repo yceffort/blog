@@ -9,7 +9,7 @@ tags:
 published: true
 date: 2026-06-21 11:00:00
 updated: 2026-10-19 13:52:52
-description: '판단을 비싸게 만든 마찰이, 동시에 판단을 못 배우게 만든다. AI 시대에 가장 비싸지는 능력이 가장 덜 길러지는 이유'
+description: '코드 리뷰와 면접에서 코드를 깊이 읽는 일이 줄면서 함께 줄어드는, AI 시대에 더 중요해진 판단력을 기를 기회. 판단을 배울 필요가 왜 사라졌는지 METR, GitClear 등의 연구를 근거로 따라가보기'
 series: 'AI 시대의 판단'
 seriesOrder: 3
 art:

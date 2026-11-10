@@ -7,7 +7,7 @@ tags:
   - backend
 published: true
 date: 2026-08-10 12:00:00
-description: "Raise traffic 12x and it takes 31.5 seconds for a new pod to receive its first request. I pulled an itemized bill for those 31.5 seconds with a stopwatch: the structure dominated by the detection window, the conditions under which the autoscaler goes blind in the five minutes right after a deploy, the scale-down staircase, why memory-based HPA misfires on Node, and KEDA's preemptive scaling. Part 5 of the Kubernetes for frontend developers series."
+description: 'Raise traffic 12x and it takes 31.5 seconds for a new pod to receive its first request, 22.5 of them spent before the HPA notices the load. The post also covers the conditions under which the autoscaler stops responding in the five minutes right after a deploy, why scale-down comes down in steps, why memory-based HPA does not fit Node apps, and scaling ahead of time with KEDA.'
 series: 'Kubernetes for Frontend Developers'
 seriesOrder: 5
 art:

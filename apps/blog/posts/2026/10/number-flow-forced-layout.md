@@ -9,7 +9,7 @@ published: true
 series: 'number-flow 개선기'
 seriesOrder: 3
 date: 2026-11-01 08:35:00
-description: 'number-flow의 값을 바꿀 때마다 스타일과 레이아웃을 여러 번 다시 계산하고 있었다. 0.2.1에서 DOM을 읽고 쓰는 순서를 바꾸며 확인한 성능 변화와 남은 비용을 정리했다.'
+description: 'number-flow의 값을 바꿀 때마다 스타일과 레이아웃을 여러 번 다시 계산하던 문제. 0.2.1에서 DOM을 읽고 쓰는 순서를 바꾸며 확인한 성능 변화와 남은 비용'
 art:
   undraw: bento-grid
 ---

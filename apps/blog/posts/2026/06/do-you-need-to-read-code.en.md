@@ -8,7 +8,7 @@ tags:
   - software-engineering
 published: true
 date: 2026-06-12
-description: "If the spec is satisfied and the bugs get fixed, do you still need to be able to read the code? Understanding doesn't disappear: this essay traces where it moves."
+description: 'If the spec is satisfied and the bugs get fixed, do you still need to be able to read the code? This essay weighs the argument that you do not and the weak points in its premises, then lays out what you need to understand when you stop reading code directly and what juniors should aim for.'
 series: 'Judgment in the AI Era'
 seriesOrder: 1
 art:

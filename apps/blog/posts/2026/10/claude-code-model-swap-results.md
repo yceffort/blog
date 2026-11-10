@@ -4,7 +4,7 @@ tags:
   - ai
 published: true
 date: 2026-11-01 06:18:00
-description: '사내 문항 36개를 Claude Sonnet 5.5와 GLM 5.3으로 3회씩 풀었다. 216회의 해결률, 한도 중단, 비용, 패치 결함을 비교하고 공개 벤치마크와의 조건 차이를 살펴본 뒤 모델 교체 여부를 판단한다'
+description: '사내 문항 36개를 Claude Sonnet 5.5와 GLM 5.3으로 3회씩 푼 결과. 216회의 해결률, 한도 중단, 비용, 패치 결함을 비교하고 공개 벤치마크와의 조건 차이를 살펴본 뒤 모델 교체 여부 판단하기'
 series: '코딩 에이전트 모델 교체 실험'
 seriesOrder: 3
 art:

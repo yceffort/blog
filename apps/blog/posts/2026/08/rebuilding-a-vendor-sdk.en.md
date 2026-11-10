@@ -8,7 +8,7 @@ tags:
   - npm
 published: true
 date: 2026-08-31 14:00:00
-description: 'I imported one constant and 97.7% of the bundle came along with it. The vendor had no timeline for a fix, so I pried open the published source maps, recovered over 400 TypeScript files, and rewrote the build, the entry points, and the dependencies however I wanted. Everything except the logic. That got /send to -77.5% raw. The hard part came after. All 1,932 tests passed, and a few of them were watching nothing at all.'
+description: 'I imported one constant and 97.7% of the bundle came along with it. The vendor had no timeline for a fix, so I recovered over 400 TypeScript files from the published source maps, rebuilt the build, entry points, and dependencies while leaving the logic alone, and cut the raw size of /send by 77.5%. All 1,932 tests passed, but a few of them were checking nothing at all, so I had to work out again how far I could confirm that the rebuilt SDK behaves the same as the original.'
 art:
   undraw: open-source-code
   layout: columns
