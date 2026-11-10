@@ -68,6 +68,40 @@
         "score": 0.18
       }
     ],
+    "2026/11/code-review-hard-for-humans-and-ai": [
+      {
+        "slug": "2026/06/do-you-need-to-read-code",
+        "score": 0.82
+      },
+      {
+        "slug": "2026/06/learning-what-ai-cant-do",
+        "score": 0.72
+      },
+      {
+        "slug": "2026/02/frontend-engineering-in-ai-era",
+        "score": 0.72
+      },
+      {
+        "slug": "2026/04/ai-only-amplifies-what-you-see",
+        "score": 0.54
+      },
+      {
+        "slug": "2026/09/who-learns-to-judge-beta-reader",
+        "score": 0.48
+      },
+      {
+        "slug": "2026/05/pr-diff-vs-bundle",
+        "score": 0.36
+      },
+      {
+        "slug": "2026/08/who-learns-to-judge-interviews",
+        "score": 0.27
+      },
+      {
+        "slug": "2026/06/when-job-titles-blur",
+        "score": 0.19
+      }
+    ],
     "2026/10/web-vitals-report-timing": [
       {
         "slug": "2021/08/requestIdlecallback",
@@ -132,8 +166,8 @@
         "score": 0.12
       },
       {
-        "slug": "2026/06/learning-what-ai-cant-do",
-        "score": 0.1
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.11
       }
     ],
     "2026/10/performance-improvement-workflow": [
@@ -260,16 +294,16 @@
         "score": 0.22
       },
       {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.18
+      },
+      {
         "slug": "2026/06/learning-what-ai-cant-do",
         "score": 0.16
       },
       {
         "slug": "2026/07/frontend-past-present-after-agents",
         "score": 0.15
-      },
-      {
-        "slug": "2026/06/when-job-titles-blur",
-        "score": 0.1
       }
     ],
     "2026/10/in-house-swe-bench-from-merged-prs": [
@@ -290,6 +324,10 @@
         "score": 0.13
       },
       {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.12
+      },
+      {
         "slug": "2026/11/number-flow-blind-agents",
         "score": 0.09
       },
@@ -300,10 +338,6 @@
       {
         "slug": "2021/10/how-to-write-good-javascript-test-code",
         "score": 0.09
-      },
-      {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
-        "score": 0.08
       }
     ],
     "2026/10/how-bundlers-remember-imports": [
@@ -464,16 +498,16 @@
         "score": 0.13
       },
       {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.1
+      },
+      {
         "slug": "2026/06/learning-what-ai-cant-do",
         "score": 0.1
       },
       {
         "slug": "2026/07/frontend-past-present-after-agents",
         "score": 0.09
-      },
-      {
-        "slug": "2026/09/who-learns-to-judge-beta-reader",
-        "score": 0.06
       }
     ],
     "2026/09/who-learns-to-judge-beta-reader": [
@@ -498,16 +532,16 @@
         "score": 0.38
       },
       {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.36
+      },
+      {
         "slug": "2026/08/who-learns-to-judge-interviews",
         "score": 0.27
       },
       {
         "slug": "2026/07/frontend-past-present-after-agents",
         "score": 0.24
-      },
-      {
-        "slug": "2026/05/bun-rust-rewrite-real-story",
-        "score": 0.2
       }
     ],
     "2026/09/unused-javascript-cost": [
@@ -982,8 +1016,8 @@
         "score": 0.24
       },
       {
-        "slug": "2025/05/what-to-do-as-frontend-developer-in-ai-era",
-        "score": 0.24
+        "slug": "2026/07/frontend-past-present-after-agents",
+        "score": 0.23
       }
     ],
     "2026/08/typescript-7-oxc-migration": [
@@ -1624,18 +1658,22 @@
         "score": 0.33
       },
       {
-        "slug": "2025/05/what-to-do-as-frontend-developer-in-ai-era",
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
         "score": 0.31
       },
       {
-        "slug": "2025/05/frontend-challenges-ai-leadership",
-        "score": 0.29
+        "slug": "2025/05/what-to-do-as-frontend-developer-in-ai-era",
+        "score": 0.31
       }
     ],
     "2026/06/learning-what-ai-cant-do": [
       {
         "slug": "2026/04/ai-only-amplifies-what-you-see",
         "score": 0.72
+      },
+      {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.7
       },
       {
         "slug": "2026/02/frontend-engineering-in-ai-era",
@@ -1660,13 +1698,13 @@
       {
         "slug": "2025/05/frontend-truth-ai-misconceptions",
         "score": 0.23
-      },
-      {
-        "slug": "2026/05/pr-diff-vs-bundle",
-        "score": 0.23
       }
     ],
     "2026/06/do-you-need-to-read-code": [
+      {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.6
+      },
       {
         "slug": "2026/04/ai-only-amplifies-what-you-see",
         "score": 0.57
@@ -1694,10 +1732,6 @@
       {
         "slug": "2026/05/pr-diff-vs-bundle",
         "score": 0.21
-      },
-      {
-        "slug": "2025/05/why-i-wrote-a-book-in-the-age-of-ai",
-        "score": 0.18
       }
     ],
     "2026/05/use-client-deep-dive": [
@@ -1914,10 +1948,6 @@
         "score": 0.37
       },
       {
-        "slug": "2026/04/ai-only-amplifies-what-you-see",
-        "score": 0.25
-      },
-      {
         "slug": "2026/09/who-learns-to-judge-beta-reader",
         "score": 0.18
       },
@@ -1936,6 +1966,10 @@
       {
         "slug": "2026/03/react-is-whose",
         "score": 0.14
+      },
+      {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.13
       }
     ],
     "2026/04/ai-only-amplifies-what-you-see": [
@@ -1956,15 +1990,15 @@
         "score": 0.58
       },
       {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.5
+      },
+      {
         "slug": "2026/08/who-learns-to-judge-interviews",
         "score": 0.4
       },
       {
         "slug": "2026/06/when-job-titles-blur",
-        "score": 0.25
-      },
-      {
-        "slug": "2026/05/bun-rust-rewrite-real-story",
         "score": 0.25
       },
       {
@@ -2118,10 +2152,6 @@
         "score": 0.19
       },
       {
-        "slug": "2026/05/use-cache-deep-dive",
-        "score": 0.18
-      },
-      {
         "slug": "2026/05/good-package-for-long-term-users",
         "score": 0.16
       },
@@ -2140,6 +2170,10 @@
       {
         "slug": "2026/02/react-compiler-deep-dive",
         "score": 0.11
+      },
+      {
+        "slug": "2022/01/npm-colors-fakerjs",
+        "score": 0.1
       }
     ],
     "2026/03/nextjs-edge-runtime-rise-and-fall": [
@@ -2326,10 +2360,6 @@
         "score": 0.22
       },
       {
-        "slug": "2026/10/cwv-to-tempo-and-mimir",
-        "score": 0.19
-      },
-      {
         "slug": "2025/11/web-performance-deep-dive-beta-reader",
         "score": 0.19
       },
@@ -2344,12 +2374,20 @@
       {
         "slug": "2021/01/effectiveness-of-brotli",
         "score": 0.13
+      },
+      {
+        "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
+        "score": 0.13
       }
     ],
     "2026/02/frontend-engineering-in-ai-era": [
       {
         "slug": "2026/06/do-you-need-to-read-code",
         "score": 0.72
+      },
+      {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.71
       },
       {
         "slug": "2026/04/ai-only-amplifies-what-you-see",
@@ -2374,10 +2412,6 @@
       {
         "slug": "2025/05/frontend-truth-ai-misconceptions",
         "score": 0.3
-      },
-      {
-        "slug": "2026/08/who-learns-to-judge-interviews",
-        "score": 0.29
       }
     ],
     "2026/02/effect-ts-deep-dive": [
@@ -2580,7 +2614,7 @@
         "score": 0.18
       },
       {
-        "slug": "2026/07/frontend-past-present-after-agents",
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
         "score": 0.16
       }
     ],
@@ -3368,10 +3402,6 @@
     ],
     "2025/05/answering-frontend-relevance": [
       {
-        "slug": "2026/10/performance-improvement-workflow",
-        "score": 0.78
-      },
-      {
         "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
         "score": 0.77
       },
@@ -3398,6 +3428,10 @@
       {
         "slug": "2025/06/web-performance-analysis-4",
         "score": 0.33
+      },
+      {
+        "slug": "2026/02/infinite-scroll-dark-side",
+        "score": 0.32
       }
     ],
     "2025/04/web-performance-help": [
@@ -4816,15 +4850,15 @@
         "score": 0.2
       },
       {
-        "slug": "2025/12/nextjs-react-security-vulnerability",
-        "score": 0.15
-      },
-      {
         "slug": "2026/05/bun-rust-rewrite-real-story",
         "score": 0.1
       },
       {
         "slug": "2026/03/react-is-whose",
+        "score": 0.1
+      },
+      {
+        "slug": "2026/06/learning-what-ai-cant-do",
         "score": 0.1
       }
     ],
@@ -4902,10 +4936,6 @@
         "score": 0.75
       },
       {
-        "slug": "2022/01/npm-colors-fakerjs",
-        "score": 0.25
-      },
-      {
         "slug": "2026/03/why-still-nextjs",
         "score": 0.2
       },
@@ -4927,6 +4957,10 @@
       },
       {
         "slug": "2026/03/react-is-whose",
+        "score": 0.13
+      },
+      {
+        "slug": "2026/02/frontend-engineering-in-ai-era",
         "score": 0.13
       }
     ],
@@ -5220,10 +5254,6 @@
         "score": 0.15
       },
       {
-        "slug": "2026/01/typescript-exhaustive-check",
-        "score": 0.14
-      },
-      {
         "slug": "2026/10/in-house-swe-bench-from-merged-prs",
         "score": 0.12
       },
@@ -5233,6 +5263,10 @@
       },
       {
         "slug": "2020/10/prevent-double-click-on-button",
+        "score": 0.1
+      },
+      {
+        "slug": "2020/10/6-different-ways-to-declare-javascript-function",
         "score": 0.1
       }
     ],
@@ -7506,11 +7540,11 @@
         "score": 0.12
       },
       {
-        "slug": "2026/05/pr-diff-vs-bundle",
-        "score": 0.1
+        "slug": "2020/11/deep-dive-into-v8",
+        "score": 0.07
       },
       {
-        "slug": "2020/11/deep-dive-into-v8",
+        "slug": "2019/06/20/react-nextjs-koa",
         "score": 0.07
       }
     ],
@@ -9478,11 +9512,11 @@
         "score": 0.3
       },
       {
-        "slug": "2026/05/use-client-deep-dive",
-        "score": 0.26
+        "slug": "2022/03/dont-use-react-fc",
+        "score": 0.25
       },
       {
-        "slug": "2022/03/dont-use-react-fc",
+        "slug": "2020/09/react-17-release-candidates",
         "score": 0.25
       }
     ],
@@ -9828,6 +9862,40 @@
         "score": 0.14
       }
     ],
+    "2026/11/code-review-hard-for-humans-and-ai": [
+      {
+        "slug": "2026/06/do-you-need-to-read-code",
+        "score": 0.81
+      },
+      {
+        "slug": "2026/06/learning-what-ai-cant-do",
+        "score": 0.67
+      },
+      {
+        "slug": "2026/02/frontend-engineering-in-ai-era",
+        "score": 0.5
+      },
+      {
+        "slug": "2026/04/ai-only-amplifies-what-you-see",
+        "score": 0.4
+      },
+      {
+        "slug": "2026/05/pr-diff-vs-bundle",
+        "score": 0.31
+      },
+      {
+        "slug": "2026/10/model-swap-experiment-retrospective",
+        "score": 0.25
+      },
+      {
+        "slug": "2026/06/when-job-titles-blur",
+        "score": 0.16
+      },
+      {
+        "slug": "2026/05/bun-rust-rewrite-real-story",
+        "score": 0.16
+      }
+    ],
     "2026/10/web-vitals-report-timing": [
       {
         "slug": "2026/09/unused-javascript-cost",
@@ -9880,6 +9948,10 @@
         "score": 0.13
       },
       {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.12
+      },
+      {
         "slug": "2026/04/ai-only-amplifies-what-you-see",
         "score": 0.11
       },
@@ -9890,10 +9962,6 @@
       {
         "slug": "2026/06/learning-what-ai-cant-do",
         "score": 0.09
-      },
-      {
-        "slug": "2026/06/when-job-titles-blur",
-        "score": 0.07
       }
     ],
     "2026/10/performance-improvement-workflow": [
@@ -10008,6 +10076,10 @@
         "score": 0.26
       },
       {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.23
+      },
+      {
         "slug": "2026/04/ai-only-amplifies-what-you-see",
         "score": 0.2
       },
@@ -10026,10 +10098,6 @@
       {
         "slug": "2026/06/learning-what-ai-cant-do",
         "score": 0.09
-      },
-      {
-        "slug": "2026/06/when-job-titles-blur",
-        "score": 0.07
       }
     ],
     "2026/10/in-house-swe-bench-from-merged-prs": [
@@ -10040,6 +10108,10 @@
       {
         "slug": "2026/06/do-you-need-to-read-code",
         "score": 0.16
+      },
+      {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.12
       },
       {
         "slug": "2026/05/bun-rust-rewrite-real-story",
@@ -10059,10 +10131,6 @@
       },
       {
         "slug": "2026/07/frontend-past-present-after-agents",
-        "score": 0.07
-      },
-      {
-        "slug": "2026/06/learning-what-ai-cant-do",
         "score": 0.07
       }
     ],
@@ -10224,16 +10292,16 @@
         "score": 0.11
       },
       {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.1
+      },
+      {
         "slug": "2026/06/learning-what-ai-cant-do",
         "score": 0.07
       },
       {
         "slug": "2026/06/when-job-titles-blur",
         "score": 0.07
-      },
-      {
-        "slug": "2026/07/frontend-past-present-after-agents",
-        "score": 0.05
       }
     ],
     "2026/09/unused-javascript-cost": [
@@ -11062,10 +11130,6 @@
         "score": 0.36
       },
       {
-        "slug": "2026/01/coding-agent-core-concepts",
-        "score": 0.29
-      },
-      {
         "slug": "2026/06/learning-what-ai-cant-do",
         "score": 0.22
       },
@@ -11084,6 +11148,10 @@
       {
         "slug": "2025/05/what-to-do-as-frontend-developer-in-ai-era",
         "score": 0.2
+      },
+      {
+        "slug": "2026/10/performance-improvement-workflow",
+        "score": 0.19
       }
     ],
     "2026/06/when-job-titles-blur": [
@@ -11100,6 +11168,10 @@
         "score": 0.32
       },
       {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.29
+      },
+      {
         "slug": "2025/05/what-to-do-as-frontend-developer-in-ai-era",
         "score": 0.27
       },
@@ -11114,13 +11186,13 @@
       {
         "slug": "2026/10/model-swap-experiment-retrospective",
         "score": 0.14
-      },
-      {
-        "slug": "2026/10/claude-code-model-swap-results",
-        "score": 0.12
       }
     ],
     "2026/06/learning-what-ai-cant-do": [
+      {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.73
+      },
       {
         "slug": "2026/04/ai-only-amplifies-what-you-see",
         "score": 0.58
@@ -11148,13 +11220,13 @@
       {
         "slug": "2026/11/number-flow-blind-agents",
         "score": 0.16
-      },
-      {
-        "slug": "2026/09/unused-javascript-cost",
-        "score": 0.15
       }
     ],
     "2026/06/do-you-need-to-read-code": [
+      {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.52
+      },
       {
         "slug": "2026/04/ai-only-amplifies-what-you-see",
         "score": 0.37
@@ -11182,10 +11254,6 @@
       {
         "slug": "2026/10/model-swap-experiment-retrospective",
         "score": 0.22
-      },
-      {
-        "slug": "2026/05/bun-rust-rewrite-real-story",
-        "score": 0.21
       }
     ],
     "2026/05/use-client-deep-dive": [
@@ -11402,12 +11470,8 @@
         "score": 0.5
       },
       {
-        "slug": "2026/10/swe-bench-before-swapping-models",
-        "score": 0.32
-      },
-      {
-        "slug": "2026/10/model-swap-experiment-retrospective",
-        "score": 0.25
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.19
       },
       {
         "slug": "2026/04/ai-only-amplifies-what-you-see",
@@ -11424,6 +11488,10 @@
       {
         "slug": "2026/03/react-is-whose",
         "score": 0.16
+      },
+      {
+        "slug": "2026/06/when-job-titles-blur",
+        "score": 0.15
       }
     ],
     "2026/04/ai-only-amplifies-what-you-see": [
@@ -11444,6 +11512,10 @@
         "score": 0.45
       },
       {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.41
+      },
+      {
         "slug": "2026/10/model-swap-experiment-retrospective",
         "score": 0.38
       },
@@ -11454,10 +11526,6 @@
       {
         "slug": "2026/06/when-job-titles-blur",
         "score": 0.26
-      },
-      {
-        "slug": "2026/10/swe-bench-before-swapping-models",
-        "score": 0.25
       }
     ],
     "2026/03/why-still-nextjs": [
@@ -11826,11 +11894,11 @@
         "score": 0.16
       },
       {
-        "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
-        "score": 0.15
+        "slug": "2026/09/tracing-third-party-javascript-without-sourcemaps",
+        "score": 0.13
       },
       {
-        "slug": "2026/09/tracing-third-party-javascript-without-sourcemaps",
+        "slug": "2025/05/web-performance-analysis-1",
         "score": 0.13
       }
     ],
@@ -11838,6 +11906,10 @@
       {
         "slug": "2026/06/do-you-need-to-read-code",
         "score": 0.67
+      },
+      {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.61
       },
       {
         "slug": "2026/04/ai-only-amplifies-what-you-see",
@@ -11861,10 +11933,6 @@
       },
       {
         "slug": "2026/06/when-job-titles-blur",
-        "score": 0.25
-      },
-      {
-        "slug": "2026/10/model-swap-experiment-retrospective",
         "score": 0.25
       }
     ],
@@ -12022,6 +12090,10 @@
         "score": 0.28
       },
       {
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.25
+      },
+      {
         "slug": "2026/06/do-you-need-to-read-code",
         "score": 0.24
       },
@@ -12032,10 +12104,6 @@
       {
         "slug": "2026/02/frontend-engineering-in-ai-era",
         "score": 0.16
-      },
-      {
-        "slug": "2026/04/ai-only-amplifies-what-you-see",
-        "score": 0.15
       }
     ],
     "2025/12/webgpu-all-browsers": [
@@ -12056,10 +12124,6 @@
         "score": 0.09
       },
       {
-        "slug": "2026/10/performance-improvement-workflow",
-        "score": 0.09
-      },
-      {
         "slug": "2026/10/cwv-send-on-page-leave",
         "score": 0.08
       },
@@ -12069,6 +12133,10 @@
       },
       {
         "slug": "2025/06/web-performance-analysis-4",
+        "score": 0.07
+      },
+      {
+        "slug": "2025/05/web-performance-analysis-1",
         "score": 0.07
       }
     ],
@@ -12306,8 +12374,8 @@
         "score": 0.27
       },
       {
-        "slug": "2026/10/model-swap-experiment-retrospective",
-        "score": 0.25
+        "slug": "2026/11/code-review-hard-for-humans-and-ai",
+        "score": 0.26
       }
     ],
     "2025/05/web-performance-analysis-2": [
