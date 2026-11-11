@@ -1,9 +1,5 @@
 import * as stylex from '@stylexjs/stylex'
-import {
-  buildOgImageUrl,
-  parseTitleEmphasis,
-  stripTitleEmphasis,
-} from '@yceffort/shared/utils'
+import {parseTitleEmphasis, stripTitleEmphasis} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 import {cacheLife, cacheTag} from 'next/cache'
 import Link from 'next/link'
@@ -33,6 +29,7 @@ import {
   type Locale,
 } from '@/utils/Post'
 import {toInstant} from '@/utils/postDate'
+import {postOgImagePath} from '@/utils/postPaths'
 import {findSeriesByPostSlug} from '@/utils/Series'
 
 // 한국어판과 영문판 상세는 이 파일 하나로 그린다. 두 벌로 나눠 고치다 화면이 어긋났던 적이 있다.
@@ -126,13 +123,7 @@ export async function generatePostMetadata(
       url: `${SiteConfig.url}${pathPrefix}/${postSlug}`,
       images: [
         {
-          url: buildOgImageUrl({
-            title: plainTitle,
-            description: post.frontMatter.description,
-            tags: post.frontMatter.tags,
-            path: `${pathPrefix}/${postSlug}`,
-            thumbnail: post.frontMatter.thumbnail,
-          }),
+          url: postOgImagePath(postSlug, locale),
           width: 1200,
           height: 630,
         },
@@ -245,14 +236,6 @@ async function PostBody({year, slug, locale}: PostParams & {locale: Locale}) {
   const relatedPosts = await getRelatedPosts(postSlug, tags, locale, series)
   const transitionName = `post-${postSlug.replace(/\//g, '-')}`
   const plainTitle = stripTitleEmphasis(title)
-  const thumbnail = post.frontMatter.thumbnail
-  const ogImageUrl = buildOgImageUrl({
-    title: plainTitle,
-    description,
-    tags,
-    path: `${pathPrefix}/${postSlug}`,
-    thumbnail,
-  })
   const postYear = new Date(date).getFullYear()
   const postUrl = `${SiteConfig.url}${pathPrefix}/${postSlug}`
   const jsonLd = [
@@ -262,7 +245,7 @@ async function PostBody({year, slug, locale}: PostParams & {locale: Locale}) {
       date,
       updated,
       tags,
-      imageUrl: `${SiteConfig.url}${ogImageUrl}`,
+      imageUrl: `${SiteConfig.url}${postOgImagePath(postSlug, locale)}`,
       url: postUrl,
       inLanguage: labels.inLanguage,
     }),

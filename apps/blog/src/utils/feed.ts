@@ -4,7 +4,7 @@ import {NextResponse} from 'next/server'
 import {SiteConfig} from '@/config'
 import {getAllPosts} from '@/utils/Post'
 import {toInstant} from '@/utils/postDate'
-import {pathPrefixOf, type Locale} from '@/utils/postPaths'
+import {pathPrefixOf, postOgImagePath, type Locale} from '@/utils/postPaths'
 
 export async function buildFeedResponse(locale: Locale) {
   const allPosts = await getAllPosts(locale)
@@ -16,7 +16,7 @@ export async function buildFeedResponse(locale: Locale) {
   ).toUTCString()
 
   const feedXml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>${SiteConfig.title}${locale === 'en' ? ' (English)' : ''}</title>
     <link>${siteUrl}</link>
@@ -38,6 +38,7 @@ export async function buildFeedResponse(locale: Locale) {
           <guid>${postUrl}</guid>
           <pubDate>${postDate.toUTCString()}</pubDate>
           <description><![CDATA[${postDescription}]]></description>
+          <media:content url="${SiteConfig.url}${postOgImagePath(post.fields.slug, locale)}" medium="image" type="image/png" width="1200" height="630" />
           ${post.frontMatter.tags
             .map((tag) => `<category><![CDATA[${tag}]]></category>`)
             .join('')}
