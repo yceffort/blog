@@ -68,6 +68,40 @@
         "score": 0.18
       }
     ],
+    "2026/11/jobkorea-product-conference-2026": [
+      {
+        "slug": "2026/06/when-job-titles-blur",
+        "score": 0.6
+      },
+      {
+        "slug": "2026/04/ai-only-amplifies-what-you-see",
+        "score": 0.47
+      },
+      {
+        "slug": "2026/06/learning-what-ai-cant-do",
+        "score": 0.44
+      },
+      {
+        "slug": "2026/09/who-learns-to-judge-beta-reader",
+        "score": 0.4
+      },
+      {
+        "slug": "2026/02/frontend-engineering-in-ai-era",
+        "score": 0.38
+      },
+      {
+        "slug": "2026/06/do-you-need-to-read-code",
+        "score": 0.34
+      },
+      {
+        "slug": "2026/08/who-learns-to-judge-interviews",
+        "score": 0.31
+      },
+      {
+        "slug": "2026/07/frontend-past-present-after-agents",
+        "score": 0.19
+      }
+    ],
     "2026/11/code-review-hard-for-humans-and-ai": [
       {
         "slug": "2026/06/do-you-need-to-read-code",
@@ -1696,8 +1730,8 @@
         "score": 0.27
       },
       {
-        "slug": "2025/05/frontend-truth-ai-misconceptions",
-        "score": 0.23
+        "slug": "2026/11/jobkorea-product-conference-2026",
+        "score": 0.24
       }
     ],
     "2026/06/do-you-need-to-read-code": [
@@ -2624,10 +2658,6 @@
         "score": 0.32
       },
       {
-        "slug": "2022/03/rust-wasm-tutorial-2",
-        "score": 0.23
-      },
-      {
         "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
         "score": 0.19
       },
@@ -2649,6 +2679,10 @@
       },
       {
         "slug": "2026/09/unused-javascript-cost",
+        "score": 0.13
+      },
+      {
+        "slug": "2022/01/javascript-self-profiling",
         "score": 0.13
       }
     ],
@@ -3062,10 +3096,6 @@
     ],
     "2025/06/naver-pay-fe-summer-internship": [
       {
-        "slug": "2019/08/13/reactjs-interview-questions-1",
-        "score": 0.18
-      },
-      {
         "slug": "2019/08/13/reactjs-interview-questions",
         "score": 0.15
       },
@@ -3091,6 +3121,10 @@
       },
       {
         "slug": "2025/05/answering-frontend-relevance",
+        "score": 0.11
+      },
+      {
+        "slug": "2020/05/10-javascript-quiz",
         "score": 0.11
       }
     ],
@@ -3418,10 +3452,6 @@
         "score": 0.43
       },
       {
-        "slug": "2026/11/number-flow-blind-agents",
-        "score": 0.4
-      },
-      {
         "slug": "2025/05/frontend-challenges-ai-leadership",
         "score": 0.35
       },
@@ -3432,6 +3462,10 @@
       {
         "slug": "2026/02/infinite-scroll-dark-side",
         "score": 0.32
+      },
+      {
+        "slug": "2025/05/what-to-do-as-frontend-developer-in-ai-era",
+        "score": 0.24
       }
     ],
     "2025/04/web-performance-help": [
