@@ -32,6 +32,7 @@ import {
   getRelatedPosts,
   type Locale,
 } from '@/utils/Post'
+import {toInstant} from '@/utils/postDate'
 import {findSeriesByPostSlug} from '@/utils/Series'
 
 // 한국어판과 영문판 상세는 이 파일 하나로 그린다. 두 벌로 나눠 고치다 화면이 어긋났던 적이 있다.
@@ -116,6 +117,12 @@ export async function generatePostMetadata(
       title: plainTitle,
       description: post.frontMatter.description,
       ...openGraphBase(locale),
+      type: 'article',
+      publishedTime: toInstant(post.frontMatter.date).toISOString(),
+      modifiedTime: toInstant(
+        post.frontMatter.updated ?? post.frontMatter.date,
+      ).toISOString(),
+      tags: post.frontMatter.tags,
       url: `${SiteConfig.url}${pathPrefix}/${postSlug}`,
       images: [
         {
