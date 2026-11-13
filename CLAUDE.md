@@ -5,7 +5,7 @@
 - pnpm 12.1 모노레포, Node 24.20 (`.nvmrc`)
 - `apps/blog`: 메인 블로그 (yceffort.kr)
 - `apps/research`: marp 슬라이드 사이트 (research.yceffort.kr), 덱은 `apps/research/research/*.md`
-- `apps/news`: 기술 뉴스 일간/주간 호 (news.yceffort.kr), 호는 `services/news` 봇이 `apps/news/content/{daily,weekly}`에 쓴다
+- `apps/news`: 기술 뉴스 일간/주간 호 (news.yceffort.kr), 호는 `infra/news` 봇이 `apps/news/content/{daily,weekly}`에 쓴다
 - `packages/shared`: 세 앱이 같이 쓰는 컴포넌트와 유틸리티
 - `packages/markdown-rs`: 블로그 마크다운을 HAST로 바꾸는 Rust/WASM 렌더러
 - `infra/otel`: Core Web Vitals 수집용 OTel Collector, Tempo, Mimir, Grafana 구성

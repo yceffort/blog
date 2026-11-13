@@ -37,7 +37,7 @@
   },
   "overrides": [
     {
-      "files": ["**/scripts/**", "services/news/src/collect.ts"],
+      "files": ["**/scripts/**", "infra/news/src/collect.ts"],
       "rules": {
         "no-console": "off"
       }

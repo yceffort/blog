@@ -1,7 +1,7 @@
 packages:
   - 'apps/*'
   - 'packages/*'
-  - 'services/*'
+  - 'infra/*'
 
 catalog:
   '@anthropic-ai/sdk': ^0.120.0

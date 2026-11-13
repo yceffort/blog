@@ -521,6 +521,34 @@ importers:
         specifier: 'catalog:'
         version: 2.0.0
 
+  infra/news:
+    dependencies:
+      '@mozilla/readability':
+        specifier: ^0.6.0
+        version: 0.6.0
+      fast-xml-parser:
+        specifier: ^5.3.6
+        version: 5.11.2
+      jsdom:
+        specifier: ^26.0.0
+        version: 26.1.0(supports-color@10.2.2)
+    devDependencies:
+      '@types/jsdom':
+        specifier: ^21.1.7
+        version: 21.1.7
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.2.0
+      tsx:
+        specifier: ^4.19.0
+        version: 4.23.15
+      typescript:
+        specifier: 'catalog:'
+        version: 7.0.2
+      vitest:
+        specifier: 5.0.5
+        version: 5.0.5(@opentelemetry/api@1.9.1)(@types/node@26.2.0)(jsdom@26.1.0(supports-color@10.2.2))(vite@8.3.4(@types/node@26.2.0)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0))
+
   packages/markdown-rs:
     devDependencies:
       '@mdx-js/mdx':
@@ -626,34 +654,6 @@ importers:
       undraw-svg:
         specifier: 'catalog:'
         version: 2.0.0
-
-  services/news:
-    dependencies:
-      '@mozilla/readability':
-        specifier: ^0.6.0
-        version: 0.6.0
-      fast-xml-parser:
-        specifier: ^5.3.6
-        version: 5.11.2
-      jsdom:
-        specifier: ^26.0.0
-        version: 26.1.0(supports-color@10.2.2)
-    devDependencies:
-      '@types/jsdom':
-        specifier: ^21.1.7
-        version: 21.1.7
-      '@types/node':
-        specifier: 'catalog:'
-        version: 26.2.0
-      tsx:
-        specifier: ^4.19.0
-        version: 4.23.15
-      typescript:
-        specifier: 'catalog:'
-        version: 7.0.2
-      vitest:
-        specifier: 5.0.5
-        version: 5.0.5(@opentelemetry/api@1.9.1)(@types/node@26.2.0)(jsdom@26.1.0(supports-color@10.2.2))(vite@8.3.4(@types/node@26.2.0)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0))
 
 packages:
 
