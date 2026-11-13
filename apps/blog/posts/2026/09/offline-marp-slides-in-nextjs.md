@@ -8,6 +8,7 @@ tags:
   - nextjs
 published: true
 date: 2026-09-30 11:23:00
+updated: 2026-11-13 10:54:08
 description: '기존 Marp 뷰어를 그대로 오프라인에서 실행하려던 첫 시도부터, 배포, 네트워크, 발표자 창에서 드러난 문제를 하나씩 보완해 오프라인 저장 기능을 완성하기까지의 과정'
 art:
   undraw: presentation
@@ -320,7 +321,7 @@ API는 자료 JSON의 SHA-256을 ETag로 반환한다. 저장된 자산이 모�
 
 [^19]: MDN의 [Navigator.onLine](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/onLine). 로컬 네트워크에 연결되어 있어도 인터넷에 접근하지 못할 수 있으며, 브라우저와 운영체제의 판단 방식도 다르다.
 
-[^20]: 재현 스크립트는 저장소의 `experiments/offline-marp/measure.mjs`에 있다. research를 프로덕션 빌드한 뒤 `pnpm --filter research exec next start --port 3312`로 서버를 열고, 저장소 루트에서 `node experiments/offline-marp/measure.mjs`를 실행한다. [측정 원본 JSON](https://yceffort.kr/2026/09/images/offline-marp-slides/navigation-measurements.json)에 실행 환경과 18회 측정값, 서비스 워커 코드의 해시를 남겼다. 로컬 프록시는 네트워크까지 도달한 문서 요청만 지연하거나 보류한다.
+[^20]: 재현 스크립트는 저장소의 `apps/research/scripts/measure-offline-navigation.mjs`에 있다. research를 프로덕션 빌드한 뒤 `pnpm --filter research exec next start --port 3312`로 서버를 열고, 저장소 루트에서 `node apps/research/scripts/measure-offline-navigation.mjs`를 실행한다. [측정 원본 JSON](https://yceffort.kr/2026/09/images/offline-marp-slides/navigation-measurements.json)에 실행 환경과 18회 측정값, 서비스 워커 코드의 해시를 남겼다. 로컬 프록시는 네트워크까지 도달한 문서 요청만 지연하거나 보류한다.
 
 [^21]: [변경하지 않는 CSS URL 원문 보존](https://github.com/yceffort/blog/commit/7572c4a41cc73c35f6bd5384f49042fa701064d2). `rewriteDeckAssets()`에서 주소가 같으면 매칭한 원문을 그대로 반환하도록 바꾸고, SVG 데이터 URL을 사용하는 세 위치의 회귀 테스트를 추가했다.
 

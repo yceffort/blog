@@ -8,6 +8,7 @@ tags:
   - nextjs
 published: true
 date: 2026-09-30 11:23:00
+updated: 2026-11-13 10:54:08
 description: 'I built offline saving into a Marp slide viewer. This post follows the process from the first attempt to run the existing viewer offline as-is to fixing, one at a time, the problems that deploys, networks, and the presenter window exposed.'
 art:
   undraw: presentation
@@ -320,7 +321,7 @@ On a personal note, getting to actually use IndexedDB stuck with me. I had only 
 
 [^19]: MDN's [Navigator.onLine](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/onLine). You may be connected to a local network without internet access, and browsers and operating systems decide this differently.
 
-[^20]: The reproduction script is at `experiments/offline-marp/measure.mjs` in the repository. After a production build of research, start the server with `pnpm --filter research exec next start --port 3312` and run `node experiments/offline-marp/measure.mjs` from the repository root. The [raw measurement JSON](https://yceffort.kr/2026/09/images/offline-marp-slides/navigation-measurements.json) records the environment, all 18 measurements, and the service worker code hashes. The local proxy delays or holds only document requests that reach the network.
+[^20]: The reproduction script is at `apps/research/scripts/measure-offline-navigation.mjs` in the repository. After a production build of research, start the server with `pnpm --filter research exec next start --port 3312` and run `node apps/research/scripts/measure-offline-navigation.mjs` from the repository root. The [raw measurement JSON](https://yceffort.kr/2026/09/images/offline-marp-slides/navigation-measurements.json) records the environment, all 18 measurements, and the service worker code hashes. The local proxy delays or holds only document requests that reach the network.
 
 [^21]: [Preserving CSS URLs that don't change](https://github.com/yceffort/blog/commit/7572c4a41cc73c35f6bd5384f49042fa701064d2). Changed `rewriteDeckAssets()` to return the matched original text when the address is the same, and added regression tests for SVG data URLs in three places.
 

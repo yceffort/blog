@@ -10,7 +10,7 @@ import {fileURLToPath} from 'node:url'
 
 // Run after `pnpm --filter research build` and `next start --port 3312`.
 // Only a temporary browser context and the local reverse proxy are modified.
-const root = fileURLToPath(new URL('../..', import.meta.url))
+const root = fileURLToPath(new URL('../../..', import.meta.url))
 const require = createRequire(path.join(root, 'apps/research/package.json'))
 const {chromium, expect} = require('@playwright/test')
 const output = path.join(
