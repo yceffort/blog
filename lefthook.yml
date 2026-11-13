@@ -11,7 +11,6 @@ pre-commit:
           - name: oxlint
             glob: '*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}'
             exclude:
-              - 'labs/**'
               - 'experiments/**'
               # .oxlintrc.json 이 public/ 을 무시하므로 데모 번들만 staged 면 "No files found" 로 실패한다
               - 'apps/blog/public/demos/**'
@@ -21,7 +20,6 @@ pre-commit:
             glob: '*.{ts,cts,mts,tsx,js,cjs,mjs,jsx,json,md,yaml,yml,toml}'
             # 생성한 대시보드 JSON 은 .oxfmtrc.json 에서도 뺐다. 그것만 staged 면 oxfmt 가 대상 없음으로 실패한다.
             exclude:
-              - 'labs/**'
               - 'infra/otel/grafana/dashboards/**'
             run: pnpm exec oxfmt {staged_files}
             stage_fixed: true
@@ -32,12 +30,10 @@ pre-commit:
             stage_fixed: true
           - name: rust-markdownlint
             glob: '*.md'
-            exclude: 'labs/**'
             run: pnpm exec rust-markdownlint --fix --no-globs {staged_files}
             stage_fixed: true
           - name: markdown
             glob: '*.{md,mdx}'
-            exclude: 'labs/**'
             run: node apps/blog/scripts/check-markdown.mjs {staged_files}
           - name: research-markdown
             glob: 'apps/research/research/*.md'
@@ -48,7 +44,6 @@ pre-commit:
             stage_fixed: true
           - name: translation-sync
             glob: '*.md'
-            exclude: 'labs/**'
             run: node apps/blog/scripts/check-translation-sync.mjs {staged_files}
           - name: related-posts
             glob: 'apps/blog/posts/**/*.{md,mdx}'

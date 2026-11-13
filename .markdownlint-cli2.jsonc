@@ -6,7 +6,6 @@
     "**/.next/**",
     "**/target/**",
     ".claude/**",
-    "labs/**",
     "**/CHANGELOG.md",
   ],
 }
