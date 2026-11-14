@@ -94,7 +94,11 @@ const config: NextConfig = {
   // @yceffort/markdown-rs 는 import.meta.url 기준으로 wasm 을 읽으므로 번들에 넣지 않는다.
   serverExternalPackages: ['@yceffort/markdown-rs'],
   outputFileTracingIncludes: {
-    '/*': ['./posts/**/*', '../../packages/markdown-rs/pkg/**/*'],
+    '/*': [
+      './posts/**/*',
+      './public/charts/**/*.json',
+      '../../packages/markdown-rs/pkg/**/*',
+    ],
   },
   async headers() {
     return [

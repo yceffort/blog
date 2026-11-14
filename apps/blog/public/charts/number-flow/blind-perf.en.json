@@ -1,0 +1,421 @@
+{
+  "version": 1,
+  "locale": "en",
+  "title": "Seven builds measured under the same conditions",
+  "description": "Measured November 2, 2026 on Apple M5: headless Chromium 151.0.7922.34, 390×844, 4x CPU throttling, three 10-second traces per build. Bars show means; whiskers show minimum to maximum. These are recorded measurements, not a live benchmark.",
+  "source": "/demos/number-flow/blind-compare/index.html?view=perf&lang=en",
+  "views": [
+    {
+      "id": "task",
+      "label": "Update task",
+      "description": "A 9-digit number was updated once per second, 10 times, on a page whose background text changes about 182 times per second. Time occupied by one value-changing call on the main thread.",
+      "kind": "bar",
+      "horizontal": true,
+      "xLabel": "Build",
+      "yLabel": "Update task (ms)",
+      "unit": "ms",
+      "decimals": 1,
+      "domain": [
+        0,
+        15
+      ],
+      "ticks": [
+        0,
+        5,
+        10,
+        15
+      ],
+      "series": [
+        {
+          "id": "task",
+          "label": "Update task",
+          "color": 1,
+          "values": [
+            {
+              "x": "upstream",
+              "y": 12.3837,
+              "low": 11.3092,
+              "high": 13.896
+            },
+            {
+              "x": "fork v0.2.1",
+              "y": 9.416166666666667,
+              "low": 9.244499999999999,
+              "high": 9.642700000000001
+            },
+            {
+              "x": "opus",
+              "y": 6.7938333333333345,
+              "low": 6.286800000000001,
+              "high": 7.629400000000001
+            },
+            {
+              "x": "sonnet",
+              "y": 6.061233333333334,
+              "low": 5.6999,
+              "high": 6.4305
+            },
+            {
+              "x": "fable",
+              "y": 8.2615,
+              "low": 8.069100000000002,
+              "high": 8.394699999999998
+            },
+            {
+              "x": "astra",
+              "y": 2.9463666666666666,
+              "low": 2.6582,
+              "high": 3.2285000000000004
+            },
+            {
+              "x": "terra",
+              "y": 6.578333333333333,
+              "low": 6.2916,
+              "high": 6.808
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "page",
+      "label": "Page-wide cost",
+      "description": "Time spent on page-wide style recalculation and layout under the same base condition, including the background text updates.",
+      "kind": "bar",
+      "horizontal": true,
+      "xLabel": "Build",
+      "yLabel": "Page-wide cost (ms/s)",
+      "unit": "ms/s",
+      "decimals": 1,
+      "domain": [
+        0,
+        200
+      ],
+      "ticks": [
+        0,
+        100,
+        200
+      ],
+      "series": [
+        {
+          "id": "page",
+          "label": "Page-wide cost",
+          "color": 1,
+          "values": [
+            {
+              "x": "upstream",
+              "y": 175.98394817113785,
+              "low": 169.1199052077813,
+              "high": 182.91740814884338
+            },
+            {
+              "x": "fork v0.2.1",
+              "y": 34.476157745982,
+              "low": 31.074475506277256,
+              "high": 36.948378817131236
+            },
+            {
+              "x": "opus",
+              "y": 29.933127823439204,
+              "low": 25.068579346658538,
+              "high": 37.00946942070484
+            },
+            {
+              "x": "sonnet",
+              "y": 46.709737561265996,
+              "low": 43.61562772591428,
+              "high": 48.66473681575799
+            },
+            {
+              "x": "fable",
+              "y": 89.99473569250874,
+              "low": 81.27622837535432,
+              "high": 97.64249701908723
+            },
+            {
+              "x": "astra",
+              "y": 60.6189539709485,
+              "low": 58.73741114898588,
+              "high": 63.310990390738766
+            },
+            {
+              "x": "terra",
+              "y": 33.71089282125457,
+              "low": 24.735883362527808,
+              "high": 44.5621284553484
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idle",
+      "label": "Recalculations during playback",
+      "description": "Background updates were off, with only one number playing. Recalculations outside the update task and JavaScript were counted, including start/end handling. Equal counts can still differ in time spent.",
+      "kind": "bar",
+      "horizontal": true,
+      "xLabel": "Build",
+      "yLabel": "Recalculations during playback (/s)",
+      "unit": "/s",
+      "decimals": 1,
+      "domain": [
+        0,
+        60
+      ],
+      "ticks": [
+        0,
+        20,
+        40,
+        60
+      ],
+      "series": [
+        {
+          "id": "mono",
+          "label": "Width unchanged (monospace)",
+          "color": 1,
+          "values": [
+            {
+              "x": "upstream",
+              "y": 48.854619968072036,
+              "low": 48.724350573299894,
+              "high": 48.93109034546648,
+              "note": "Composite failures: 92/92"
+            },
+            {
+              "x": "fork v0.2.1",
+              "y": 4.393639391852039,
+              "low": 4.193526871920504,
+              "high": 4.79309554586618,
+              "note": "Composite failures: 20/541"
+            },
+            {
+              "x": "opus",
+              "y": 5.026598904728818,
+              "low": 4.893221909011637,
+              "high": 5.193638312431103,
+              "note": "Composite failures: 0/521"
+            },
+            {
+              "x": "sonnet",
+              "y": 5.093382748927238,
+              "low": 4.8931486133116415,
+              "high": 5.193575547048301,
+              "note": "Composite failures: 20/541"
+            },
+            {
+              "x": "fable",
+              "y": 4.094751896688124,
+              "low": 3.9948881411346044,
+              "high": 4.1946673194368005,
+              "note": "Composite failures: 0/521"
+            },
+            {
+              "x": "astra",
+              "y": 4.862838623571144,
+              "low": 4.695991501654189,
+              "high": 4.996812033922358,
+              "note": "Composite failures: 10/92"
+            },
+            {
+              "x": "terra",
+              "y": 5.093325034753172,
+              "low": 5.093178705759376,
+              "high": 5.093591243497431,
+              "note": "Composite failures: 0/521"
+            }
+          ]
+        },
+        {
+          "id": "prop",
+          "label": "Width changing (system-ui)",
+          "color": 2,
+          "values": [
+            {
+              "x": "upstream",
+              "y": 49.15091230475931,
+              "low": 49.11708544805514,
+              "high": 49.217663770278705,
+              "note": "Composite failures: 219/219"
+            },
+            {
+              "x": "fork v0.2.1",
+              "y": 26.420617792774284,
+              "low": 26.154658284398167,
+              "high": 26.75516369667711,
+              "note": "Composite failures: 10/678"
+            },
+            {
+              "x": "opus",
+              "y": 5.19160181430727,
+              "low": 5.092653338294177,
+              "high": 5.290467107319321,
+              "note": "Composite failures: 0/668"
+            },
+            {
+              "x": "sonnet",
+              "y": 49.9256323610558,
+              "low": 49.788150918960554,
+              "high": 50.02279481847716,
+              "note": "Composite failures: 147/668"
+            },
+            {
+              "x": "fable",
+              "y": 49.16444943393716,
+              "low": 49.13238401312115,
+              "high": 49.226455675221224,
+              "note": "Composite failures: 137/658"
+            },
+            {
+              "x": "astra",
+              "y": 50.05169214694593,
+              "low": 49.953218810583884,
+              "high": 50.14543675027203,
+              "note": "Composite failures: 137/219"
+            },
+            {
+              "x": "terra",
+              "y": 50.09446894806331,
+              "low": 49.831357305311926,
+              "high": 50.327206728188344,
+              "note": "Composite failures: 147/668"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idleMs",
+      "label": "Recalculation time during playback",
+      "description": "Recalculation time during playback with background updates off. Time varies with how many elements are recalculated each time.",
+      "kind": "bar",
+      "horizontal": true,
+      "xLabel": "Build",
+      "yLabel": "Recalculation time during playback (ms/s)",
+      "unit": "ms/s",
+      "decimals": 1,
+      "domain": [
+        0,
+        160
+      ],
+      "ticks": [
+        0,
+        80,
+        160
+      ],
+      "series": [
+        {
+          "id": "mono",
+          "label": "Width unchanged (monospace)",
+          "color": 1,
+          "values": [
+            {
+              "x": "upstream",
+              "y": 121.70299149191312,
+              "low": 117.36731161505253,
+              "high": 127.41208000458488,
+              "note": "Composite failures: 92/92"
+            },
+            {
+              "x": "fork v0.2.1",
+              "y": 3.8450284630730054,
+              "low": 3.534892546137253,
+              "high": 4.286525260362448,
+              "note": "Composite failures: 20/541"
+            },
+            {
+              "x": "opus",
+              "y": 3.867984490178992,
+              "low": 3.7906491927382193,
+              "high": 3.992409697361701,
+              "note": "Composite failures: 0/521"
+            },
+            {
+              "x": "sonnet",
+              "y": 5.522720033940245,
+              "low": 5.1881307887952275,
+              "high": 5.904596014729779,
+              "note": "Composite failures: 20/541"
+            },
+            {
+              "x": "fable",
+              "y": 1.9349863957421174,
+              "low": 1.4754120627245377,
+              "high": 2.2111889155316846,
+              "note": "Composite failures: 0/521"
+            },
+            {
+              "x": "astra",
+              "y": 1.3283430304912869,
+              "low": 1.2152246866499175,
+              "high": 1.409465590036246,
+              "note": "Composite failures: 10/92"
+            },
+            {
+              "x": "terra",
+              "y": 3.8633670152179302,
+              "low": 3.733202884131186,
+              "high": 4.020236602348806,
+              "note": "Composite failures: 0/521"
+            }
+          ]
+        },
+        {
+          "id": "prop",
+          "label": "Width changing (system-ui)",
+          "color": 2,
+          "values": [
+            {
+              "x": "upstream",
+              "y": 151.66805327091666,
+              "low": 148.4683705436852,
+              "high": 154.05966657472018,
+              "note": "Composite failures: 219/219"
+            },
+            {
+              "x": "fork v0.2.1",
+              "y": 17.695820749686746,
+              "low": 15.613578602869197,
+              "high": 19.335979146551537,
+              "note": "Composite failures: 10/678"
+            },
+            {
+              "x": "opus",
+              "y": 7.196558091701834,
+              "low": 6.678066221668621,
+              "high": 7.874588059763482,
+              "note": "Composite failures: 0/668"
+            },
+            {
+              "x": "sonnet",
+              "y": 32.06448985488191,
+              "low": 25.74935844018342,
+              "high": 40.65134058348263,
+              "note": "Composite failures: 147/668"
+            },
+            {
+              "x": "fable",
+              "y": 80.0740091047016,
+              "low": 74.25013199905845,
+              "high": 88.2356759002051,
+              "note": "Composite failures: 137/658"
+            },
+            {
+              "x": "astra",
+              "y": 51.07485940487019,
+              "low": 44.01697810000934,
+              "high": 60.79884477699815,
+              "note": "Composite failures: 137/219"
+            },
+            {
+              "x": "terra",
+              "y": 13.018092619514514,
+              "low": 10.568214135075026,
+              "high": 15.559669831055317,
+              "note": "Composite failures: 147/668"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

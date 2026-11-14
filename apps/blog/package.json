@@ -31,6 +31,7 @@
     "@stylexjs/stylex": "catalog:",
     "@yceffort/markdown-rs": "workspace:*",
     "@yceffort/shared": "workspace:*",
+    "chart.js": "^4.6.1",
     "date-fns": "catalog:",
     "front-matter": "catalog:",
     "glob": "^14.0.3",

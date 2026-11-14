@@ -10,6 +10,7 @@ const MULTI_SEGMENT_PREFIXES = new Set([
   'pages',
   'series',
   'demos',
+  'charts',
   'LCP',
   'splash',
   'thumbnails',

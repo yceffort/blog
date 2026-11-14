@@ -10,7 +10,7 @@ published: true
 series: 'number-flow 개선기'
 seriesOrder: 4
 date: 2026-11-03 17:56:00
-updated: 2026-11-04 10:45:05
+updated: 2026-11-14 18:30:28
 description: '코딩 에이전트 다섯 개가 고친 number-flow와 내 포크 v0.2.1을 다시 비교해보기. 글꼴에 따라 달라진 성능 보고, 작성자를 가린 코드 리뷰, 마스크 기본값을 유지하기로 한 후속 실험'
 art:
   undraw: chat-bot
@@ -30,7 +30,7 @@ art:
 
 아래에서 글꼴 조건을 바꿔 보면 다른 빌드에도 같은 일이 벌어졌음을 알 수 있다. 이 차트는 별도로 측정한 결과를 보여 준다. 지금 브라우저의 성능을 재는 것은 아니다.
 
-<LiveDemo src="/demos/number-flow/blind-compare/index.html?view=width" title="숫자 폭 조건을 바꾸며 비교하는 빌드 7종의 스타일 재계산 횟수" height={670} />
+<Chart src="/charts/number-flow/blind-width.json" />
 
 숫자 폭이 그대로일 때는 다섯 에이전트 빌드 모두 비슷했다. 폭이 바뀌자 opus만 초당 5회 안팎에 머물렀다. 내 포크 v0.2.1도 26.4회로 늘었다. 그렇다고 opus가 모든 면에서 가장 나은 코드를 만든 것은 아니었다. 뒤이어 인터럽트 때의 움직임과 코드를 살펴보니 또 다른 결과가 나왔다.
 
@@ -120,7 +120,7 @@ astra는 자릿수마다 숫자 요소 10개를 따로 움직이는 대신, 숫�
 
 아래에서 지표를 바꿔 볼 수 있다. 갱신 태스크와 페이지 전체 비용은 배경 텍스트도 바뀌는 조건이다. 재생 중 재계산은 배경 갱신을 끄고 따로 쟀다.
 
-<LiveDemo src="/demos/number-flow/blind-compare/index.html?view=perf" title="빌드 7종의 갱신 태스크, 페이지 전체 비용, 재생 중 재계산 비교" height={660} />
+<Chart src="/charts/number-flow/blind-perf.json" />
 
 업스트림과 나란히 놓으면 v0.2.1의 개선도 분명했다. 같은 기본 조건에서 갱신 태스크는 12.4ms에서 9.4ms로, 페이지 전체 스타일 재계산과 레이아웃은 176.0ms/s에서 34.5ms/s로 줄었다. 다만 더 빠른 갱신 경로를 다른 빌드가 보여 줬다. 곡선을 보존하느라 어쩔 수 없이 느렸다고 설명할 근거는 없다. 그 비용을 따로 재지 않았기 때문이다.
 

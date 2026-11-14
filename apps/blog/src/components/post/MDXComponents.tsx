@@ -3,6 +3,7 @@ import Link from 'next/link'
 import type {HTMLProps, ReactElement} from 'react'
 
 import BarCompare from '@/components/post/BarCompare'
+import Chart from '@/components/post/charts/Chart'
 import CodeBlock from '@/components/post/CodeBlock'
 import ImageZoom from '@/components/post/ImageZoom'
 import LiveDemo from '@/components/post/LiveDemo'
@@ -59,6 +60,7 @@ function NextImage(props: HTMLProps<HTMLImageElement>) {
 }
 const MdxComponents = {
   BarCompare,
+  Chart,
   LiveDemo,
   img: NextImage,
   table: (props: HTMLProps<HTMLTableElement>) => {

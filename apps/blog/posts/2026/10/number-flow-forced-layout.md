@@ -9,6 +9,7 @@ published: true
 series: 'number-flow 개선기'
 seriesOrder: 3
 date: 2026-11-01 08:35:00
+updated: 2026-11-14 18:30:28
 description: 'number-flow의 값을 바꿀 때마다 스타일과 레이아웃을 여러 번 다시 계산하던 문제. 0.2.1에서 DOM을 읽고 쓰는 순서를 바꾸며 확인한 성능 변화와 남은 비용'
 art:
   undraw: bento-grid
@@ -488,7 +489,7 @@ export const animationsOf = (scope: object): Animation[] => {
 
 갱신 직전에 `performance.mark()`를 기록하고, 이 마크가 들어 있는 태스크를 갱신 태스크로 골랐다. 그 안에서 `FunctionCall`에 포함된 `UpdateLayoutTree`와 `Layout`을 각각 셌으며, 첫 애니메이션 갱신도 평균에 넣었다. 표의 `FunctionCall` 시간에는 하위 스타일과 레이아웃 계산 시간이 포함돼 있다. JavaScript 코드만 실행한 시간은 아니다. 또 React나 Next.js 없이 만든 페이지이므로 이슈의 페이지와 실행 시간을 직접 비교하기는 어렵다.
 
-<BarCompare title="갱신 태스크 하나의 평균 길이 (CPU 4배 감속, 3회 평균)" unit="ms" before="v0.2.0" after="v0.2.1" rows="같은 자릿수|14.6|8.7;자릿수 변동|15.3|11.0" />
+<Chart src="/charts/number-flow/forced-layout.json" />
 
 | 9자리에서 9자리로, 빌드별 3회 평균           |         `v0.2.0` |           PR #18 |         `v0.2.1` |
 | -------------------------------------------- | ---------------: | ---------------: | ---------------: |

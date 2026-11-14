@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "locale": "en",
+  "title": "Style recalculations by digit width",
+  "description": "Measured November 2, 2026 on Apple M5: headless Chromium 151.0.7922.34, 390×844, 4x CPU throttling, three 10-second traces per build. Bars show means; whiskers show minimum to maximum. These are recorded measurements, not a live benchmark.",
+  "source": "/demos/number-flow/blind-compare/index.html?view=width&lang=en",
+  "views": [
+    {
+      "id": "mono",
+      "label": "Width unchanged (monospace)",
+      "description": "Background updates were off, with only one number playing. Recalculations outside the update task and JavaScript were counted, including start/end handling. Equal counts can still differ in time spent.",
+      "kind": "bar",
+      "horizontal": true,
+      "xLabel": "Build",
+      "yLabel": "Recalculations during playback (/s)",
+      "unit": "/s",
+      "decimals": 1,
+      "domain": [
+        0,
+        60
+      ],
+      "ticks": [
+        0,
+        20,
+        40,
+        60
+      ],
+      "series": [
+        {
+          "id": "mono",
+          "label": "Width unchanged (monospace)",
+          "color": 1,
+          "values": [
+            {
+              "x": "upstream",
+              "y": 48.854619968072036,
+              "low": 48.724350573299894,
+              "high": 48.93109034546648,
+              "note": "Composite failures: 92/92"
+            },
+            {
+              "x": "fork v0.2.1",
+              "y": 4.393639391852039,
+              "low": 4.193526871920504,
+              "high": 4.79309554586618,
+              "note": "Composite failures: 20/541"
+            },
+            {
+              "x": "opus",
+              "y": 5.026598904728818,
+              "low": 4.893221909011637,
+              "high": 5.193638312431103,
+              "note": "Composite failures: 0/521"
+            },
+            {
+              "x": "sonnet",
+              "y": 5.093382748927238,
+              "low": 4.8931486133116415,
+              "high": 5.193575547048301,
+              "note": "Composite failures: 20/541"
+            },
+            {
+              "x": "fable",
+              "y": 4.094751896688124,
+              "low": 3.9948881411346044,
+              "high": 4.1946673194368005,
+              "note": "Composite failures: 0/521"
+            },
+            {
+              "x": "astra",
+              "y": 4.862838623571144,
+              "low": 4.695991501654189,
+              "high": 4.996812033922358,
+              "note": "Composite failures: 10/92"
+            },
+            {
+              "x": "terra",
+              "y": 5.093325034753172,
+              "low": 5.093178705759376,
+              "high": 5.093591243497431,
+              "note": "Composite failures: 0/521"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prop",
+      "label": "Width changing (system-ui)",
+      "description": "Background updates were off, with only one number playing. Recalculations outside the update task and JavaScript were counted, including start/end handling. Equal counts can still differ in time spent.",
+      "kind": "bar",
+      "horizontal": true,
+      "xLabel": "Build",
+      "yLabel": "Recalculations during playback (/s)",
+      "unit": "/s",
+      "decimals": 1,
+      "domain": [
+        0,
+        60
+      ],
+      "ticks": [
+        0,
+        20,
+        40,
+        60
+      ],
+      "series": [
+        {
+          "id": "prop",
+          "label": "Width changing (system-ui)",
+          "color": 2,
+          "values": [
+            {
+              "x": "upstream",
+              "y": 49.15091230475931,
+              "low": 49.11708544805514,
+              "high": 49.217663770278705,
+              "note": "Composite failures: 219/219"
+            },
+            {
+              "x": "fork v0.2.1",
+              "y": 26.420617792774284,
+              "low": 26.154658284398167,
+              "high": 26.75516369667711,
+              "note": "Composite failures: 10/678"
+            },
+            {
+              "x": "opus",
+              "y": 5.19160181430727,
+              "low": 5.092653338294177,
+              "high": 5.290467107319321,
+              "note": "Composite failures: 0/668"
+            },
+            {
+              "x": "sonnet",
+              "y": 49.9256323610558,
+              "low": 49.788150918960554,
+              "high": 50.02279481847716,
+              "note": "Composite failures: 147/668"
+            },
+            {
+              "x": "fable",
+              "y": 49.16444943393716,
+              "low": 49.13238401312115,
+              "high": 49.226455675221224,
+              "note": "Composite failures: 137/658"
+            },
+            {
+              "x": "astra",
+              "y": 50.05169214694593,
+              "low": 49.953218810583884,
+              "high": 50.14543675027203,
+              "note": "Composite failures: 137/219"
+            },
+            {
+              "x": "terra",
+              "y": 50.09446894806331,
+              "low": 49.831357305311926,
+              "high": 50.327206728188344,
+              "note": "Composite failures: 147/668"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

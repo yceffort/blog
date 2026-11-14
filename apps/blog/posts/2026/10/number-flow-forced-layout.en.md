@@ -9,6 +9,7 @@ published: true
 series: 'Improving number-flow'
 seriesOrder: 3
 date: 2026-11-01 08:35:00
+updated: 2026-11-14 18:30:28
 description: 'Every time the value of number-flow changed, style and layout were being recalculated several times over. This post records the performance change observed after 0.2.1 reordered how the library reads and writes the DOM, and the costs that remain.'
 art:
   undraw: bento-grid
@@ -488,7 +489,7 @@ The background text also changes in the same order. The actual times and counts 
 
 A `performance.mark()` was recorded right before each update, and the task containing that mark was picked as the update task. Within it, the `UpdateLayoutTree` and `Layout` events nested inside `FunctionCall` were counted separately, and the first animated update was included in the averages. The `FunctionCall` time in the tables includes the time of the style and layout calculations beneath it. It is not the time spent running JavaScript alone. And since the page has no React or Next.js, its execution times are hard to compare directly with the issue's page.
 
-<BarCompare title="Average length of one update task (4x CPU throttling, mean of 3 runs)" unit="ms" before="v0.2.0" after="v0.2.1" rows="Same digit count|14.6|8.7;Digit count changes|15.3|11.0" />
+<Chart src="/charts/number-flow/forced-layout.en.json" />
 
 | 9 digits to 9 digits, mean of 3 runs per build        |         `v0.2.0` |           PR #18 |         `v0.2.1` |
 | ----------------------------------------------------- | ---------------: | ---------------: | ---------------: |

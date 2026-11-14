@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "locale": "en",
+  "title": "Turns at which 108 runs ended (3-round total; runs stopped at the 60-turn limit counted separately)",
+  "description": "108 runs per model, combining three rounds. Runs stopped by the 60-turn limit are separate from runs that finished normally.",
+  "views": [
+    {
+      "id": "default",
+      "label": "Comparison",
+      "kind": "bar",
+      "horizontal": true,
+      "xLabel": "Turns at completion",
+      "yLabel": "Runs",
+      "unit": "runs",
+      "decimals": 0,
+      "domain": [
+        0,
+        70
+      ],
+      "ticks": [
+        0,
+        20,
+        40,
+        60
+      ],
+      "series": [
+        {
+          "id": "before",
+          "label": "Sonnet 5.5",
+          "color": 1,
+          "values": [
+            {
+              "x": "0-9 turns",
+              "y": 54
+            },
+            {
+              "x": "10-19 turns",
+              "y": 31
+            },
+            {
+              "x": "20-29 turns",
+              "y": 10
+            },
+            {
+              "x": "30-39 turns",
+              "y": 4
+            },
+            {
+              "x": "40-49 turns",
+              "y": 5
+            },
+            {
+              "x": "50-59 turns",
+              "y": 2
+            },
+            {
+              "x": "60+ turns, finished normally",
+              "y": 2
+            },
+            {
+              "x": "Stopped at 60-turn limit",
+              "y": 0
+            }
+          ]
+        },
+        {
+          "id": "after",
+          "label": "GLM 5.3",
+          "color": 2,
+          "values": [
+            {
+              "x": "0-9 turns",
+              "y": 0
+            },
+            {
+              "x": "10-19 turns",
+              "y": 4
+            },
+            {
+              "x": "20-29 turns",
+              "y": 6
+            },
+            {
+              "x": "30-39 turns",
+              "y": 6
+            },
+            {
+              "x": "40-49 turns",
+              "y": 8
+            },
+            {
+              "x": "50-59 turns",
+              "y": 12
+            },
+            {
+              "x": "60+ turns, finished normally",
+              "y": 11
+            },
+            {
+              "x": "Stopped at 60-turn limit",
+              "y": 61
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

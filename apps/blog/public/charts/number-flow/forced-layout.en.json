@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "locale": "en",
+  "title": "Average length of one update task (4x CPU throttling, mean of 3 runs)",
+  "description": "4x CPU throttling, mean of three runs. Both versions were measured under the same conditions.",
+  "views": [
+    {
+      "id": "default",
+      "label": "Comparison",
+      "kind": "bar",
+      "horizontal": true,
+      "xLabel": "Digit count condition",
+      "yLabel": "Mean update task (ms)",
+      "unit": "ms",
+      "decimals": 1,
+      "domain": [
+        0,
+        20
+      ],
+      "ticks": [
+        0,
+        5,
+        10,
+        15,
+        20
+      ],
+      "series": [
+        {
+          "id": "before",
+          "label": "v0.2.0",
+          "color": 1,
+          "values": [
+            {
+              "x": "Same digit count",
+              "y": 14.6
+            },
+            {
+              "x": "Digit count changes",
+              "y": 15.3
+            }
+          ]
+        },
+        {
+          "id": "after",
+          "label": "v0.2.1",
+          "color": 2,
+          "values": [
+            {
+              "x": "Same digit count",
+              "y": 8.7
+            },
+            {
+              "x": "Digit count changes",
+              "y": 11
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

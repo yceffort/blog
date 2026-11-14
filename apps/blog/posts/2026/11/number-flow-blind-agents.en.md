@@ -10,7 +10,7 @@ published: true
 series: 'Improving number-flow'
 seriesOrder: 4
 date: 2026-11-03 17:56:00
-updated: 2026-11-04 10:45:05
+updated: 2026-11-14 18:30:28
 description: 'I compared number-flow as fixed by five coding agents against my fork v0.2.1 once more. Performance reports changed with the font, the code went through a review with the authors hidden, and a follow-up experiment ended with keeping the mask default.'
 art:
   undraw: chat-bot
@@ -30,7 +30,7 @@ In a fixed-width font, a 9-digit number keeps the same width when it changes to 
 
 Changing the font condition below shows the same thing happening to the other builds. This chart shows results measured separately. It does not measure the performance of your current browser.
 
-<LiveDemo src="/demos/number-flow/blind-compare/index.html?view=width&lang=en" title="Style recalculation counts for seven builds while switching the digit width condition" height={748} />
+<Chart src="/charts/number-flow/blind-width.en.json" />
 
 When the digit width stayed the same, all five agent builds looked similar. Once the width changed, only opus stayed around 5 per second. My fork v0.2.1 also rose to 26.4. That does not mean opus produced the best code in every respect. Looking next at the motion during interrupts and at the code gave a different picture.
 
@@ -120,7 +120,7 @@ Conversely, the page-wide style recalculation and layout time was shorter in v0.
 
 You can switch metrics below. The update task and page-wide cost come from the condition where the background text also changes. Recalculation during playback was measured separately with background updates off.
 
-<LiveDemo src="/demos/number-flow/blind-compare/index.html?view=perf&lang=en" title="Update task, page-wide cost, and recalculation during playback for seven builds" height={832} />
+<Chart src="/charts/number-flow/blind-perf.en.json" />
 
 Placed next to upstream, v0.2.1's improvement was clear too. Under the same base condition, the update task went from 12.4ms to 9.4ms, and page-wide style recalculation and layout from 176.0ms/s to 34.5ms/s. But other builds showed a faster update path. I have no basis for saying it was unavoidably slow because it preserves the curve. I did not measure that cost separately.
 

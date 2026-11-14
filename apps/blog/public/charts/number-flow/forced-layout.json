@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "locale": "ko",
+  "title": "갱신 태스크 하나의 평균 길이 (CPU 4배 감속, 3회 평균)",
+  "description": "CPU 4배 감속, 3회 측정의 평균이다. 두 버전을 같은 조건에서 측정했다.",
+  "views": [
+    {
+      "id": "default",
+      "label": "비교",
+      "kind": "bar",
+      "horizontal": true,
+      "xLabel": "자릿수 조건",
+      "yLabel": "평균 갱신 태스크 (ms)",
+      "unit": "ms",
+      "decimals": 1,
+      "domain": [
+        0,
+        20
+      ],
+      "ticks": [
+        0,
+        5,
+        10,
+        15,
+        20
+      ],
+      "series": [
+        {
+          "id": "before",
+          "label": "v0.2.0",
+          "color": 1,
+          "values": [
+            {
+              "x": "같은 자릿수",
+              "y": 14.6
+            },
+            {
+              "x": "자릿수 변동",
+              "y": 15.3
+            }
+          ]
+        },
+        {
+          "id": "after",
+          "label": "v0.2.1",
+          "color": 2,
+          "values": [
+            {
+              "x": "같은 자릿수",
+              "y": 8.7
+            },
+            {
+              "x": "자릿수 변동",
+              "y": 11
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

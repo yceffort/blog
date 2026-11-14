@@ -4,6 +4,7 @@ tags:
   - ai
 published: true
 date: 2026-11-01 06:18:00
+updated: 2026-11-14 18:30:28
 description: 'I solved 36 internal tasks three times each with Claude Sonnet 5.5 and GLM 5.3. Comparing resolved rate, limit stops, cost, and patch defects across 216 runs, looking at how the conditions differ from public benchmarks, and deciding whether to swap the model'
 series: 'Swapping the Model Behind a Coding Agent'
 seriesOrder: 3
@@ -195,7 +196,7 @@ The conditions under which the GLM card reports scores similar to or higher than
 
 ## 6.4x the turns, 15.8x the time, 13.5x the input tokens
 
-<BarCompare title="Turns at which 108 runs ended (3-round total; runs stopped at the 60-turn limit counted separately)" unit="runs" before="Sonnet 5.5" after="GLM 5.3" rows="0-9 turns|54|0;10-19 turns|31|4;20-29 turns|10|6;30-39 turns|4|6;40-49 turns|5|8;50-59 turns|2|12;60+ turns, finished normally|2|11;Stopped at 60-turn limit|0|61" />
+<Chart src="/charts/model-swap/turns.en.json" />
 
 54 of Sonnet's 108 runs finished within 10 turns, and GLM had no run finishing within 10 turns. By median, Sonnet took 9.5 turns and GLM 61. Claude Code reports a run that hit the limit as 61 turns, which is why GLM's median comes out above the limit[^1].
 
