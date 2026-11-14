@@ -6,6 +6,7 @@ tags:
   - essay
 published: true
 date: 2026-11-14 17:57:00
+updated: 2026-11-14 18:15:35
 description: 'I counted 30 days of my own records, and there was no day when I stayed on one thing for 60 minutes'
 art:
   undraw: distractions
@@ -33,11 +34,11 @@ Here, "one thing" means one Claude Code session or one Slack conversation. I lin
 > - **Switches**: Among items written within 10 minutes of the previous one, I counted only those written to a different session or conversation than the one just before.
 > - **Quiet time**: On weekdays between 10:00 and 19:00, the time when I wrote nothing in Slack for 25 minutes or more, minus meeting time. Gaps shorter than 25 minutes were not counted at all. The 25 minutes come from the length of one Pomodoro, so the values change if the threshold changes.
 > - **Concurrent sessions**: Once a session had a record, I treated it as running for the next 15 minutes and counted, minute by minute, how many overlapped.
-> - **Meetings**: Based on the calendar. I cannot tell whether I actually attended, and meals and social events (26 minutes a day) are included.
+> - **Meetings**: Based on the calendar. I did not take into account whether I actually attended, and meals and social events (26 minutes a day) are included.
 >
 > These records capture only what I wrote. Reading Slack without replying, speaking in meetings, and time spent reading code and thinking are not captured. If I only read or thought for more than 30 minutes without writing anything, that time was not counted as time on one thing. The 60 minutes is a measure of writing only.
 >
-> Every day with a focus block was a Monday or a Friday, so I cannot tell whether a difference comes from the block or from the day of the week. Session logs go back only 30 days, so I could not compare with the time before I changed jobs or before I used agents. PRs and commits are only counts, so they do not show how large each piece of work was.
+> Every day with a focus block was a Monday or a Friday, but I did not take differences between days of the week into account. I also did not take into account a comparison with the time before I changed jobs or started using agents, or the size of each PR and commit.
 
 I went through the 22 days one at a time. Here are four of them.
 
