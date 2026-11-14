@@ -10,7 +10,7 @@ x-logging: &logging
     max-file: '3'
 services:
   caddy:
-    image: caddy:2.11.7
+    image: caddy:2.11.8
     restart: unless-stopped
     logging: *logging
     environment:
