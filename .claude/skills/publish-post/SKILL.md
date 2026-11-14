@@ -1,6 +1,6 @@
 ---
 name: publish-post
-description: 블로그 초안을 발행할 준비를 한다. 영문 번역, 태그, unDraw 썸네일을 만들고 결과를 사용자에게 확인받은 뒤 `published: true`로 바꿔 커밋한다. 사용자가 "배포 준비", "발행 준비", "/publish-post"로 요청할 때 사용.
+description: '블로그 초안을 발행할 준비를 한다. 영문 번역, 태그, unDraw 썸네일을 만들고 결과를 사용자에게 확인받은 뒤 `published: true`로 바꿔 커밋한다. 사용자가 "배포 준비", "발행 준비", "/publish-post"로 요청할 때 사용.'
 argument-hint: <apps/blog/posts/YYYY/MM/slug.md>
 ---
 
@@ -46,8 +46,8 @@ node apps/blog/scripts/generate-undraw-thumbnail.mjs <파일>
 frontmatter `art.undraw`를 고르고 `apps/blog/public/thumbnails/{slug}.webp`를 만든다.
 
 - 만든 webp를 png로 바꿔 직접 열어 보고 확인한다(`sharp(webp).png().toFile(...)`).
-- **사람이 들어간 그림은 쓰지 않는다.** 카탈로그 필터(피부색 fill)를 통과한 이름이라도 사람 실루엣이 새어 나올 수 있다.
-- Anthropic API 오류(키 무효 등)로 고르지 못하면, 사람 없는 카탈로그에서 직접 고른다. 한국어본과 영문본 frontmatter에 `art:\n  undraw: <이름>`을 넣고 같은 명령을 다시 실행하면 API 없이 렌더링한다. 사람 없는 이름 목록은 스크립트의 `PEOPLE_NAME`, `SKIN` 필터를 `node_modules/undraw-svg/svgs`에 적용해 뽑는다.
+- 사람이 들어간 그림도 써도 된다(2026-11-14 확인). 일러스트는 스크립트가 고르는 것이 기본이다.
+- 스크립트가 고르지 못하면 카탈로그(`packages/shared/node_modules/undraw-svg/svgs`)에서 후보를 골라 한국어본과 영문본 frontmatter에 `art:\n  undraw: <이름>`을 넣고 같은 명령을 다시 실행한다.
 - 최근 글들과 같은 이름이 겹치지 않게 한다(`grep -rh "undraw:" apps/blog/posts/<최근 월>`).
 
 ## 5. 검증
