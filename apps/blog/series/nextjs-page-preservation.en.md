@@ -3,7 +3,7 @@ name: 'Page Preservation in Next.js'
 title: 'Page Preservation in <em>Next.js</em>'
 description: 'How Next.js with cacheComponents hides and restores pages: Activity lifecycle conflicts, measured retention across route segments, and deciding which state to keep and which work to stop.'
 art:
-  undraw: opened-tabs
+  undraw: tabs
   hue: cyan
   tone: light
 ---

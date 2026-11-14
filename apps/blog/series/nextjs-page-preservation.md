@@ -3,7 +3,7 @@ name: 'Next.js의 페이지 보존'
 title: '<em>Next.js</em>의 페이지 보존'
 description: 'cacheComponents를 켠 Next.js에서 떠난 페이지가 숨겨지고 다시 나타나는 과정. Activity와 라이브러리의 생명주기 충돌, 실제 보존 범위, 남겨 둘 상태와 종료할 작업을 나누는 메모리 관리'
 art:
-  undraw: opened-tabs
+  undraw: tabs
   hue: cyan
   tone: light
 ---
