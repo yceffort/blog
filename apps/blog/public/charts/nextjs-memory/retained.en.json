@@ -1,0 +1,420 @@
+{
+  "version": 1,
+  "locale": "en",
+  "title": "Retained posts by visit count",
+  "description": "Lines show the median of three runs; shaded areas show minimum to maximum. Each visit was followed by a 1.2-second wait and two forced GCs. The visit count includes the first entry.",
+  "source": "/demos/nextjs-page-preservation-memory/measurements.json",
+  "generatedBy": "apps/blog/scripts/generate-memory-charts.mjs",
+  "views": [
+    {
+      "id": "default",
+      "label": "Retained posts by visit count",
+      "kind": "line",
+      "xLabel": "Visits",
+      "yLabel": "Retained posts",
+      "unit": "posts",
+      "decimals": 0,
+      "xDomain": [
+        1,
+        21
+      ],
+      "domain": [
+        0,
+        10
+      ],
+      "ticks": [
+        0,
+        3,
+        6,
+        9
+      ],
+      "stepped": true,
+      "series": [
+        {
+          "id": "pair",
+          "label": "Two posts, repeated",
+          "values": [
+            {
+              "x": 1,
+              "y": 1,
+              "low": 1,
+              "high": 1
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 5,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 6,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 7,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 8,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 9,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 10,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 11,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 12,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 13,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 14,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 15,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 16,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 17,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 18,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 19,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 20,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 21,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            }
+          ]
+        },
+        {
+          "id": "same_year",
+          "label": "Same year",
+          "values": [
+            {
+              "x": 1,
+              "y": 1,
+              "low": 1,
+              "high": 1
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 4,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 5,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 6,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 7,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 8,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 9,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 10,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 11,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 12,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 13,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 14,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 15,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 16,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 17,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 18,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 19,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 20,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            }
+          ]
+        },
+        {
+          "id": "mixed_years",
+          "label": "Three years",
+          "values": [
+            {
+              "x": 1,
+              "y": 1,
+              "low": 1,
+              "high": 1
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "low": 2,
+              "high": 2
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "low": 3,
+              "high": 3
+            },
+            {
+              "x": 4,
+              "y": 4,
+              "low": 4,
+              "high": 4
+            },
+            {
+              "x": 5,
+              "y": 5,
+              "low": 5,
+              "high": 5
+            },
+            {
+              "x": 6,
+              "y": 6,
+              "low": 6,
+              "high": 6
+            },
+            {
+              "x": 7,
+              "y": 7,
+              "low": 7,
+              "high": 7
+            },
+            {
+              "x": 8,
+              "y": 8,
+              "low": 8,
+              "high": 8
+            },
+            {
+              "x": 9,
+              "y": 9,
+              "low": 9,
+              "high": 9
+            },
+            {
+              "x": 10,
+              "y": 9,
+              "low": 9,
+              "high": 9
+            },
+            {
+              "x": 11,
+              "y": 9,
+              "low": 9,
+              "high": 9
+            },
+            {
+              "x": 12,
+              "y": 9,
+              "low": 9,
+              "high": 9
+            },
+            {
+              "x": 13,
+              "y": 9,
+              "low": 9,
+              "high": 9
+            },
+            {
+              "x": 14,
+              "y": 9,
+              "low": 9,
+              "high": 9
+            },
+            {
+              "x": 15,
+              "y": 9,
+              "low": 9,
+              "high": 9
+            },
+            {
+              "x": 16,
+              "y": 9,
+              "low": 9,
+              "high": 9
+            },
+            {
+              "x": 17,
+              "y": 9,
+              "low": 9,
+              "high": 9
+            },
+            {
+              "x": 18,
+              "y": 9,
+              "low": 9,
+              "high": 9
+            },
+            {
+              "x": 19,
+              "y": 9,
+              "low": 9,
+              "high": 9
+            },
+            {
+              "x": 20,
+              "y": 9,
+              "low": 9,
+              "high": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

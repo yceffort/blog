@@ -1,0 +1,37 @@
+{
+  "files": [
+    {
+      "url": "357bae5k0ahh4.js",
+      "gzip": 2493,
+      "main": true
+    },
+    {
+      "url": "turbopack-worker-3u9zil6-2a08n.js",
+      "gzip": 635,
+      "main": false
+    },
+    {
+      "url": "turbopack-2249k24ei4z4h.js",
+      "gzip": 229,
+      "main": false
+    },
+    {
+      "url": "0-6678oua52b4.js",
+      "gzip": 56283,
+      "main": false
+    },
+    {
+      "url": "2db-mtaf5a8df.js",
+      "gzip": 837,
+      "main": false
+    },
+    {
+      "url": "turbopack-32g9idqqcaa90.js",
+      "gzip": 4393,
+      "main": false
+    }
+  ],
+  "mainGzip": 2493,
+  "totalGzip": 64870,
+  "errors": []
+}

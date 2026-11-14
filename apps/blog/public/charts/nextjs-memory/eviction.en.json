@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "locale": "en",
+  "title": "Retained posts after visiting new years",
+  "description": "The baseline is the state after visiting 20 posts across three years. Posts from new years were then visited one at a time. One additional run.",
+  "source": "/demos/nextjs-page-preservation-memory/measurements.json",
+  "generatedBy": "apps/blog/scripts/generate-memory-charts.mjs",
+  "views": [
+    {
+      "id": "default",
+      "label": "Retained posts after visiting new years",
+      "kind": "bar",
+      "xLabel": "Year of the added visit",
+      "yLabel": "Retained posts",
+      "unit": "posts",
+      "decimals": 0,
+      "domain": [
+        0,
+        10
+      ],
+      "ticks": [
+        0,
+        3,
+        6,
+        9
+      ],
+      "series": [
+        {
+          "id": "eviction",
+          "label": "Retained posts",
+          "color": 1,
+          "values": [
+            {
+              "x": "Baseline",
+              "y": 9
+            },
+            {
+              "x": "2021",
+              "y": 7
+            },
+            {
+              "x": "2020",
+              "y": 5
+            },
+            {
+              "x": "2019",
+              "y": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

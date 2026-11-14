@@ -7,6 +7,8 @@ tags:
   - caching
 published: true
 date: 2026-09-26 22:00:00
+series: 'Page Preservation in Next.js'
+seriesOrder: 1
 description: "Next.js 16's cacheComponents hides the pages you leave with React Activity instead of unmounting them. Following a three.js canvas that went blank after a back navigation, I read the router, React, and react-three-fiber source and reproduced it in a browser."
 art:
   undraw: opened-tabs

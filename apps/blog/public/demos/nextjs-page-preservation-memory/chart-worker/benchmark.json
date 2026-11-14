@@ -1,0 +1,140 @@
+{
+  "conditions": {
+    "browser": "156.0.8078.4",
+    "viewport": "390x900",
+    "dpr": 2,
+    "cpuThrottle": 4,
+    "rounds": 7,
+    "post": "number-flow-forced-layout",
+    "iframes": "blanked",
+    "cache": "fresh browser context each trial"
+  },
+  "rows": [
+    {
+      "round": 0,
+      "mode": "worker",
+      "readyMs": 856.8999999985099,
+      "mainTaskMs": 265.07200000000006,
+      "mainScriptMs": 20.022000000000013,
+      "longTasks": []
+    },
+    {
+      "round": 0,
+      "mode": "main",
+      "readyMs": 845.6000000014901,
+      "mainTaskMs": 221.13899999999987,
+      "mainScriptMs": 17.654000000000003,
+      "longTasks": []
+    },
+    {
+      "round": 1,
+      "mode": "main",
+      "readyMs": 833,
+      "mainTaskMs": 216.893,
+      "mainScriptMs": 16.822999999999976,
+      "longTasks": []
+    },
+    {
+      "round": 1,
+      "mode": "worker",
+      "readyMs": 844.0999999977648,
+      "mainTaskMs": 183.95099999999996,
+      "mainScriptMs": 16.324000000000005,
+      "longTasks": []
+    },
+    {
+      "round": 2,
+      "mode": "worker",
+      "readyMs": 840.7000000029802,
+      "mainTaskMs": 184.60600000000005,
+      "mainScriptMs": 15.462999999999976,
+      "longTasks": []
+    },
+    {
+      "round": 2,
+      "mode": "main",
+      "readyMs": 835.3999999985099,
+      "mainTaskMs": 240.9610000000001,
+      "mainScriptMs": 16.679,
+      "longTasks": []
+    },
+    {
+      "round": 3,
+      "mode": "main",
+      "readyMs": 829.5999999977648,
+      "mainTaskMs": 222.376,
+      "mainScriptMs": 17.24500000000001,
+      "longTasks": []
+    },
+    {
+      "round": 3,
+      "mode": "worker",
+      "readyMs": 838.7999999970198,
+      "mainTaskMs": 181.60299999999995,
+      "mainScriptMs": 18.416999999999987,
+      "longTasks": []
+    },
+    {
+      "round": 4,
+      "mode": "worker",
+      "readyMs": 845.3000000007451,
+      "mainTaskMs": 209.91099999999994,
+      "mainScriptMs": 15.029000000000014,
+      "longTasks": []
+    },
+    {
+      "round": 4,
+      "mode": "main",
+      "readyMs": 848.4000000022352,
+      "mainTaskMs": 250.2089999999999,
+      "mainScriptMs": 20.356999999999985,
+      "longTasks": []
+    },
+    {
+      "round": 5,
+      "mode": "main",
+      "readyMs": 838.4000000022352,
+      "mainTaskMs": 225.22600000000003,
+      "mainScriptMs": 16.25399999999999,
+      "longTasks": []
+    },
+    {
+      "round": 5,
+      "mode": "worker",
+      "readyMs": 838,
+      "mainTaskMs": 208.99900000000005,
+      "mainScriptMs": 16.22699999999999,
+      "longTasks": []
+    },
+    {
+      "round": 6,
+      "mode": "worker",
+      "readyMs": 838,
+      "mainTaskMs": 179.67699999999996,
+      "mainScriptMs": 16.907000000000004,
+      "longTasks": []
+    },
+    {
+      "round": 6,
+      "mode": "main",
+      "readyMs": 831.1000000014901,
+      "mainTaskMs": 223.9009999999999,
+      "mainScriptMs": 19.235000000000003,
+      "longTasks": []
+    }
+  ],
+  "summary": {
+    "main": {
+      "readyMs": 835.3999999985099,
+      "mainTaskMs": 223.9009999999999,
+      "mainScriptMs": 17.24500000000001,
+      "longTaskCount": 0
+    },
+    "worker": {
+      "readyMs": 840.7000000029802,
+      "mainTaskMs": 184.60600000000005,
+      "mainScriptMs": 16.324000000000005,
+      "longTaskCount": 0
+    }
+  }
+}

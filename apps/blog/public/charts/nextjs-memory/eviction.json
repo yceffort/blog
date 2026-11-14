@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "locale": "ko",
+  "title": "새 연도를 방문한 뒤 남은 글",
+  "description": "3개 연도를 오가며 글 20개를 방문한 상태가 기준이다. 이후 새 연도를 하나씩 방문했다. 추가 실험 1회.",
+  "source": "/demos/nextjs-page-preservation-memory/measurements.json",
+  "generatedBy": "apps/blog/scripts/generate-memory-charts.mjs",
+  "views": [
+    {
+      "id": "default",
+      "label": "새 연도를 방문한 뒤 남은 글",
+      "kind": "bar",
+      "xLabel": "추가 방문 연도",
+      "yLabel": "보존된 글 (개)",
+      "unit": "개",
+      "decimals": 0,
+      "domain": [
+        0,
+        10
+      ],
+      "ticks": [
+        0,
+        3,
+        6,
+        9
+      ],
+      "series": [
+        {
+          "id": "eviction",
+          "label": "보존된 글 (개)",
+          "color": 1,
+          "values": [
+            {
+              "x": "기준",
+              "y": 9
+            },
+            {
+              "x": "2021",
+              "y": 7
+            },
+            {
+              "x": "2020",
+              "y": 5
+            },
+            {
+              "x": "2019",
+              "y": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

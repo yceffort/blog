@@ -1,0 +1,1142 @@
+Chart worker source snapshot, 2026-11-14
+
+These are exact source files from apps/blog/src/components/post/charts.
+They include the canvas renderer and worker, not the whole Markdown integration.
+Requires React, Chart.js 4.6.1 and the existing StyleX setup in the blog.
+Give ChartCanvas a parent with an explicit height; RenderInput is defined in
+chartEngine.ts and ChartView in types.ts. Only plain data crosses the worker
+boundary. No environment variables or credentials are included.
+
+This snapshot was added after the November 12 memory measurements. It was not
+part of that experiment. manifest.json records SHA-256 hashes of each source.
+
+
+// FILE: ChartCanvas.tsx
+
+'use client'
+
+import * as stylex from '@stylexjs/stylex'
+import {useEffect, useRef} from 'react'
+
+import {sx} from './Chart.styles'
+import {mountChart} from './chartClient'
+import type {RenderInput} from './chartEngine'
+
+export default function ChartCanvas({
+  view,
+  dark,
+  locale,
+  label,
+}: RenderInput & {label: string}) {
+  const host = useRef<HTMLDivElement>(null)
+  const renderer = useRef<ReturnType<typeof mountChart> | null>(null)
+
+  useEffect(() => {
+    if (!host.current) return undefined
+    const mounted = mountChart(host.current)
+    renderer.current = mounted
+    return () => {
+      renderer.current = null
+      mounted.dispose()
+    }
+  }, [])
+
+  useEffect(() => {
+    renderer.current?.update({view, dark, locale}, label)
+  }, [view, dark, locale, label])
+
+  return <div ref={host} {...stylex.props(sx.canvasHost)} />
+}
+
+
+// FILE: Chart.styles.ts
+
+import * as stylex from '@stylexjs/stylex'
+
+export const sx = stylex.create({
+  figure: {
+    '@layer utilities': {
+      marginBlock: '28px',
+      marginInline: 0,
+      minWidth: 0,
+      padding: {default: '24px', '@media (max-width: 480px)': '18px 12px'},
+      border: '1px solid',
+      borderColor: {default: '#e2e8f0', ':is(.dark *)': '#334155'},
+      borderRadius: '12px',
+      backgroundColor: {default: '#ffffff', ':is(.dark *)': '#151b26'},
+      color: {default: '#475569', ':is(.dark *)': '#cbd5e1'},
+      fontSize: '14px',
+      lineHeight: 1.6,
+    },
+  },
+  caption: {
+    '@layer utilities': {
+      fontSize: '17px',
+      fontWeight: 650,
+      letterSpacing: '-0.02em',
+      color: {default: '#1e293b', ':is(.dark *)': '#f1f5f9'},
+      marginBottom: '12px',
+    },
+  },
+  legend: {
+    '@layer utilities': {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '6px 18px',
+      marginBottom: '20px',
+      fontSize: '14px',
+    },
+  },
+  item: {
+    '@layer utilities': {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '7px',
+    },
+  },
+  color0: {
+    '@layer utilities': {
+      color: {default: '#64748b', ':is(.dark *)': '#a8b4c6'},
+    },
+  },
+  color1: {
+    '@layer utilities': {
+      color: {default: '#2563eb', ':is(.dark *)': '#60a5fa'},
+    },
+  },
+  color2: {
+    '@layer utilities': {
+      color: {default: '#c65a12', ':is(.dark *)': '#fb923c'},
+    },
+  },
+  color3: {
+    '@layer utilities': {
+      color: {default: '#16804a', ':is(.dark *)': '#4ade80'},
+    },
+  },
+  axis: {
+    '@layer utilities': {
+      fontSize: '14px',
+      fontWeight: 500,
+    },
+  },
+  xAxis: {
+    '@layer utilities': {
+      textAlign: 'right',
+      marginTop: '2px',
+      paddingRight: '12px',
+    },
+  },
+  plot: {
+    '@layer utilities': {
+      position: 'relative',
+      width: '100%',
+      minWidth: 0,
+      marginTop: '4px',
+    },
+  },
+  canvasHost: {'@layer utilities': {width: '100%', height: '100%'}},
+  placeholder: {
+    '@layer utilities': {
+      display: 'grid',
+      placeItems: 'center',
+      height: '100%',
+      fontSize: '14px',
+    },
+  },
+  footer: {
+    '@layer utilities': {
+      borderTopWidth: '1px',
+      borderTopStyle: 'solid',
+      borderTopColor: {default: '#eef2f6', ':is(.dark *)': '#334155'},
+      marginTop: '20px',
+      paddingTop: '12px',
+      fontSize: '14px',
+    },
+  },
+  summary: {
+    '@layer utilities': {
+      cursor: 'pointer',
+      width: 'fit-content',
+      paddingBlock: '10px',
+    },
+  },
+  tableWrap: {
+    '@layer utilities': {
+      overflow: 'auto',
+      maxHeight: '288px',
+      marginBlock: '12px',
+    },
+  },
+  table: {
+    '@layer utilities': {
+      width: '100%',
+      borderCollapse: 'collapse',
+      textAlign: 'left',
+      fontVariantNumeric: 'tabular-nums',
+      whiteSpace: 'nowrap',
+      fontSize: '14px',
+      lineHeight: 2,
+    },
+  },
+  cell: {
+    '@layer utilities': {
+      paddingInline: '8px',
+      borderBottom: '1px solid',
+      borderColor: {default: '#eef2f6', ':is(.dark *)': '#334155'},
+    },
+  },
+  controls: {
+    '@layer utilities': {
+      minWidth: 0,
+      padding: 0,
+      borderWidth: 0,
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '8px',
+      marginBlock: '16px',
+    },
+  },
+  button: {
+    '@layer utilities': {
+      padding: '10px 14px',
+      minHeight: '44px',
+      borderRadius: '8px',
+      border: '1px solid',
+      borderColor: {default: '#cbd5e1', ':is(.dark *)': '#475569'},
+      color: 'inherit',
+      backgroundColor: 'transparent',
+      font: 'inherit',
+      cursor: 'pointer',
+      outlineOffset: '3px',
+    },
+  },
+  buttonSelected: {
+    '@layer utilities': {
+      backgroundColor: {default: '#eff6ff', ':is(.dark *)': '#1e3a5f'},
+      color: {default: '#1d4ed8', ':is(.dark *)': '#93c5fd'},
+      borderColor: {default: '#2563eb', ':is(.dark *)': '#60a5fa'},
+    },
+  },
+  description: {'@layer utilities': {marginBlock: '0 12px'}},
+  tableCaption: {
+    '@layer utilities': {
+      textAlign: 'left',
+      whiteSpace: 'normal',
+      fontWeight: 600,
+    },
+  },
+  links: {
+    '@layer utilities': {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '8px 16px',
+      marginTop: '8px',
+    },
+  },
+})
+
+
+// FILE: chartClient.ts
+
+import type {CanvasSize, RenderInput} from './chartEngine'
+import {acquireChartWorker} from './chartWorkerPool'
+
+/** Owns the DOM canvas, its worker lease, and all observers for one mounted chart. */
+export function mountChart(host: HTMLDivElement) {
+  let disposed = false
+  let input: RenderInput | undefined
+  let label = ''
+  let mode: 'new' | 'worker' | 'loading-main' | 'main' = 'new'
+  let lease: ReturnType<typeof acquireChartWorker> = null
+  let engine: typeof import('./chartEngine') | undefined
+  let chart: ReturnType<NonNullable<typeof engine>['createChart']> | undefined
+  let startupTimer: ReturnType<typeof setTimeout> | undefined
+  let frame = 0
+  let pointer: {x: number; y: number; leave: boolean} | undefined
+  const readSize = (): CanvasSize => ({
+    width: Math.floor(host.clientWidth),
+    height: Math.floor(host.clientHeight),
+    dpr: window.devicePixelRatio || 1,
+  })
+  let size = readSize()
+
+  function makeCanvas() {
+    const element = document.createElement('canvas')
+    element.setAttribute('role', 'img')
+    element.setAttribute('aria-label', label)
+    element.style.width = '100%'
+    element.style.height = '100%'
+    element.style.display = 'block'
+    host.append(element)
+    return element
+  }
+  let canvas = makeCanvas()
+
+  function ready() {
+    if (disposed) return
+    clearTimeout(startupTimer)
+    host.dataset.chartState = 'ready'
+  }
+
+  function paintMain() {
+    if (!engine || !input || size.width <= 0 || size.height <= 0) return
+    chart?.destroy()
+    chart = engine.createChart(canvas, input, size)
+    ready()
+  }
+
+  function fallback() {
+    if (disposed || mode === 'loading-main' || mode === 'main') return
+    mode = 'loading-main'
+    clearTimeout(startupTimer)
+    lease?.release()
+    lease = null
+    // An OffscreenCanvas transfer cannot be reversed or repeated, including in Strict Mode.
+    canvas.remove()
+    canvas = makeCanvas()
+    host.dataset.chartThread = 'main'
+    void import('./chartEngine')
+      .then((module) => {
+        if (disposed) return undefined
+        engine = module
+        mode = 'main'
+        paintMain()
+        return undefined
+      })
+      .catch(() => {
+        if (disposed) return
+        host.dataset.chartState = 'error'
+        canvas.remove()
+        const message = document.createElement('p')
+        message.textContent =
+          input?.locale === 'en'
+            ? 'Unable to draw the chart. The measurements are in the table below.'
+            : '그래프를 그리지 못했습니다. 아래 표에서 측정값을 확인할 수 있습니다.'
+        host.append(message)
+      })
+  }
+
+  function render() {
+    if (!input || size.width <= 0 || size.height <= 0 || disposed) return
+    host.dataset.chartState = 'loading'
+    if (mode === 'main') {
+      paintMain()
+    } else if (mode === 'worker') {
+      lease?.post({type: 'update', input})
+    } else if (mode === 'new') {
+      lease = acquireChartWorker({ready, fail: fallback})
+      if (!lease) {
+        fallback()
+        return
+      }
+      try {
+        const offscreen = canvas.transferControlToOffscreen()
+        mode = 'worker'
+        host.dataset.chartThread = 'worker'
+        startupTimer = setTimeout(fallback, 10000)
+        lease.post({type: 'init', canvas: offscreen, input, size}, [offscreen])
+      } catch {
+        fallback()
+      }
+    }
+  }
+
+  function resize() {
+    const next = readSize()
+    if (next.width <= 0 || next.height <= 0) return
+    if (
+      next.width === size.width &&
+      next.height === size.height &&
+      next.dpr === size.dpr
+    )
+      return
+    size = next
+    if (mode === 'new') render()
+    else if (mode === 'worker') lease?.post({type: 'resize', size})
+    else if (mode === 'main' && chart) engine?.resizeChart(chart, size)
+  }
+  const observer = new ResizeObserver(resize)
+  observer.observe(host)
+  window.addEventListener('resize', resize, {passive: true})
+  let resolution: MediaQueryList
+  function watchResolution() {
+    resolution?.removeEventListener('change', watchResolution)
+    resize()
+    resolution = matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`)
+    resolution.addEventListener('change', watchResolution)
+  }
+  watchResolution()
+
+  function sendPointer(event: PointerEvent) {
+    // Touch pointers leave immediately after a tap; keep the tooltip until a
+    // subsequent tap or a scroll cancellation instead of erasing it that frame.
+    if (event.type === 'pointerleave' && event.pointerType === 'touch') return
+    const rect = canvas.getBoundingClientRect()
+    pointer = {
+      x: ((event.clientX - rect.left) * size.width) / rect.width,
+      y: ((event.clientY - rect.top) * size.height) / rect.height,
+      leave: event.type === 'pointerleave' || event.type === 'pointercancel',
+    }
+    if (frame) return
+    frame = requestAnimationFrame(() => {
+      frame = 0
+      if (!pointer || disposed) return
+      if (mode === 'worker') lease?.post({type: 'pointer', ...pointer})
+      else if (mode === 'main' && chart)
+        engine?.movePointer(chart, pointer.x, pointer.y, pointer.leave)
+    })
+  }
+  const events = [
+    'pointermove',
+    'pointerdown',
+    'pointerleave',
+    'pointercancel',
+  ] as const
+  events.forEach((type) =>
+    host.addEventListener(type, sendPointer, {passive: true}),
+  )
+
+  return {
+    update(next: RenderInput, nextLabel: string) {
+      input = next
+      label = nextLabel
+      canvas.setAttribute('aria-label', label)
+      render()
+    },
+    dispose() {
+      disposed = true
+      clearTimeout(startupTimer)
+      cancelAnimationFrame(frame)
+      observer.disconnect()
+      window.removeEventListener('resize', resize)
+      resolution?.removeEventListener('change', watchResolution)
+      events.forEach((type) => host.removeEventListener(type, sendPointer))
+      lease?.release()
+      chart?.destroy()
+      host.replaceChildren()
+    },
+  }
+}
+
+
+// FILE: chartWorkerPool.ts
+
+import type {WorkerCommand, WorkerReply, WorkerRequest} from './workerProtocol'
+
+interface Subscriber {
+  ready: () => void
+  fail: () => void
+}
+interface Pool {
+  worker: Worker
+  subscribers: Map<number, Subscriber>
+}
+let pool: Pool | undefined
+let nextId = 0
+let disabled = false
+
+/** Share one worker across active renderers; release it with the last owner. */
+export function acquireChartWorker(subscriber: Subscriber) {
+  if (
+    disabled ||
+    typeof Worker === 'undefined' ||
+    typeof OffscreenCanvas === 'undefined' ||
+    !HTMLCanvasElement.prototype.transferControlToOffscreen
+  )
+    return null
+  if (!pool) {
+    try {
+      const worker = new Worker(new URL('./chart.worker.ts', import.meta.url), {
+        type: 'module',
+        name: 'blog-charts',
+      })
+      const created: Pool = {worker, subscribers: new Map()}
+      pool = created
+      worker.addEventListener(
+        'message',
+        ({data}: MessageEvent<WorkerReply>) => {
+          const owner = created.subscribers.get(data.id)
+          if (data.type === 'rendered') owner?.ready()
+          else if (data.type === 'error') owner?.fail()
+        },
+      )
+      const fail = () => {
+        disabled = true
+        if (pool === created) pool = undefined
+        const owners = [...created.subscribers.values()]
+        created.subscribers.clear()
+        worker.terminate()
+        owners.forEach((owner) => owner.fail())
+      }
+      worker.addEventListener('error', (event) => {
+        event.preventDefault()
+        fail()
+      })
+      worker.addEventListener('messageerror', fail)
+    } catch {
+      disabled = true
+      return null
+    }
+  }
+  const current = pool
+  const id = ++nextId
+  current.subscribers.set(id, subscriber)
+  return {
+    post(message: WorkerCommand, transfer: Transferable[] = []) {
+      current.worker.postMessage({...message, id}, transfer)
+    },
+    release() {
+      if (!current.subscribers.delete(id)) return
+      current.worker.postMessage({type: 'destroy', id} satisfies WorkerRequest)
+      if (current.subscribers.size === 0) {
+        current.worker.terminate()
+        if (pool === current) pool = undefined
+      }
+    },
+  }
+}
+
+
+// FILE: chart.worker.ts
+
+import {
+  createChart,
+  movePointer,
+  resizeChart,
+  type CanvasSize,
+  type RenderInput,
+} from './chartEngine'
+import type {WorkerReply, WorkerRequest} from './workerProtocol'
+
+type Entry = {
+  canvas: OffscreenCanvas
+  chart: ReturnType<typeof createChart>
+  input: RenderInput
+  size: CanvasSize
+}
+const charts = new Map<number, Entry>()
+
+// No DOM or React imports in this entry. Config callbacks are created here,
+// since functions cannot be sent through structured clone.
+globalThis.addEventListener(
+  'message',
+  ({data}: MessageEvent<WorkerRequest>) => {
+    const entry = charts.get(data.id)
+    try {
+      if (data.type === 'init') {
+        entry?.chart.destroy()
+        const chart = createChart(data.canvas, data.input, data.size)
+        charts.set(data.id, {
+          canvas: data.canvas,
+          chart,
+          input: data.input,
+          size: data.size,
+        })
+      } else if (!entry) {
+        return
+      } else if (data.type === 'destroy') {
+        entry.chart.destroy()
+        charts.delete(data.id)
+        return
+      } else if (data.type === 'update') {
+        entry.chart.destroy()
+        entry.input = data.input
+        entry.chart = createChart(entry.canvas, entry.input, entry.size)
+      } else if (data.type === 'resize') {
+        entry.size = data.size
+        resizeChart(entry.chart, data.size)
+      } else if (data.type === 'pointer') {
+        movePointer(entry.chart, data.x, data.y, data.leave)
+        return
+      }
+      globalThis.postMessage({
+        id: data.id,
+        type: 'rendered',
+      } satisfies WorkerReply)
+    } catch {
+      charts.get(data.id)?.chart.destroy()
+      charts.delete(data.id)
+      globalThis.postMessage({id: data.id, type: 'error'} satisfies WorkerReply)
+    }
+  },
+)
+
+
+// FILE: chartEngine.ts
+
+import {
+  BarController,
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Filler,
+  LinearScale,
+  LineController,
+  LineElement,
+  PointElement,
+  Tooltip,
+  type ChartDataset,
+  type ChartItem,
+  type Plugin,
+  type Scale,
+} from 'chart.js'
+
+import {
+  chartColor,
+  chartFont,
+  chartTheme,
+  formatValue,
+  type ChartView,
+} from './types'
+
+ChartJS.register(
+  BarController,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  LineController,
+  LineElement,
+  PointElement,
+  Filler,
+  Tooltip,
+)
+
+type Dataset = ChartDataset<
+  'bar' | 'line',
+  (number | {x: number; y: number})[]
+> & {seriesIndex: number; rangeOnly?: boolean}
+
+// Wrap labels at their normal font size; never scale the whole chart down for phones.
+function wrapLabel(
+  value: string,
+  width: number,
+  context: CanvasRenderingContext2D,
+  bold = false,
+): string[] {
+  context.save()
+  context.font = `${bold ? '600 ' : ''}14px ${chartFont}`
+  const lines: string[] = []
+  let line = ''
+  for (const word of value.split(' ')) {
+    if (line && context.measureText(`${line} ${word}`).width > width) {
+      lines.push(line)
+      line = ''
+    }
+    if (line) line += ' '
+    for (const character of word) {
+      if (line && context.measureText(line + character).width > width) {
+        lines.push(line)
+        line = ''
+      }
+      line += character
+    }
+  }
+  if (line) lines.push(line)
+  context.restore()
+  return lines
+}
+
+export interface RenderInput {
+  view: ChartView
+  dark: boolean
+  locale: 'ko' | 'en'
+}
+
+export interface CanvasSize {
+  width: number
+  height: number
+  dpr: number
+}
+
+/** The same configuration runs on the worker and on unsupported browsers. */
+export function createChart(
+  canvas: HTMLCanvasElement | OffscreenCanvas,
+  {view, dark, locale}: RenderInput,
+  size: CanvasSize,
+) {
+  canvas.width = size.width
+  canvas.height = size.height
+  const theme = chartTheme(dark)
+  const horizontal = view.kind === 'bar' && !!view.horizontal
+  const fmt = (value: number) => formatValue(value, view.decimals, locale)
+  const datasets: Dataset[] = []
+  view.series.forEach((series, index) => {
+    const color = chartColor(series, index, dark)
+    if (
+      view.kind === 'line' &&
+      series.values.some((point) => point.low !== undefined)
+    ) {
+      for (const edge of ['low', 'high'] as const) {
+        datasets.push({
+          type: 'line',
+          label: '',
+          seriesIndex: index,
+          rangeOnly: true,
+          data: series.values.map((point) => ({
+            x: Number(point.x),
+            y: point[edge] ?? point.y,
+          })),
+          borderWidth: 0,
+          pointRadius: 0,
+          pointHitRadius: 0,
+          backgroundColor: `${color}1f`,
+          fill: edge === 'low' ? '+1' : false,
+          stepped: view.stepped,
+          order: 1,
+        })
+      }
+    }
+    datasets.push({
+      type: view.kind,
+      label: series.label,
+      seriesIndex: index,
+      data: series.values.map((point) =>
+        view.kind === 'line' ? {x: Number(point.x), y: point.y} : point.y,
+      ),
+      backgroundColor: color,
+      borderColor: color,
+      borderWidth: view.kind === 'line' ? 2 : 0,
+      pointStyle: (['circle', 'rect', 'triangle'] as const)[index % 3],
+      pointRadius: 2.5,
+      pointHoverRadius: 5,
+      pointHitRadius: 12,
+      stepped: view.stepped,
+      tension: 0,
+      fill: false,
+      borderRadius: 2,
+      maxBarThickness: 18,
+    })
+  })
+  const annotations: Plugin = {
+    id: 'measurementLabels',
+    afterDatasetsDraw(chart) {
+      if (view.kind !== 'bar') return
+      const {ctx, scales} = chart
+      const valueScale = horizontal ? scales.x : scales.y
+      ctx.save()
+      ctx.font = `500 14px ${chartFont}`
+      ctx.fillStyle = theme.ink
+      ctx.strokeStyle = theme.ink
+      ctx.lineWidth = 1.5
+      datasets.forEach((dataset, datasetIndex) => {
+        const series = view.series[dataset.seriesIndex]
+        chart
+          .getDatasetMeta(datasetIndex)
+          .data.forEach((element, pointIndex) => {
+            const point = series.values[pointIndex]
+            const {x, y} = element.getProps(['x', 'y'], true)
+            if (point.low !== undefined && point.high !== undefined) {
+              const low = valueScale.getPixelForValue(point.low)
+              const high = valueScale.getPixelForValue(point.high)
+              ctx.beginPath()
+              if (horizontal) {
+                ctx.moveTo(low, y)
+                ctx.lineTo(high, y)
+                ctx.moveTo(low, y - 4)
+                ctx.lineTo(low, y + 4)
+                ctx.moveTo(high, y - 4)
+                ctx.lineTo(high, y + 4)
+              } else {
+                ctx.moveTo(x, low)
+                ctx.lineTo(x, high)
+                ctx.moveTo(x - 4, low)
+                ctx.lineTo(x + 4, low)
+                ctx.moveTo(x - 4, high)
+                ctx.lineTo(x + 4, high)
+              }
+              ctx.stroke()
+            }
+            const end = valueScale.getPixelForValue(point.high ?? point.y)
+            ctx.textAlign = horizontal ? 'left' : 'center'
+            ctx.textBaseline = horizontal ? 'middle' : 'bottom'
+            ctx.fillText(
+              fmt(point.y),
+              horizontal ? end + 6 : x,
+              horizontal ? y : end - 6,
+            )
+          })
+      })
+      ctx.restore()
+    },
+  }
+  const valueAxis = {
+    type: 'linear' as const,
+    min: view.domain[0],
+    max: view.domain[1],
+    border: {display: false},
+    grid: {color: theme.grid, drawTicks: false},
+    ticks: {
+      color: theme.ink,
+      font: {size: 14, family: chartFont},
+      padding: 8,
+      maxTicksLimit: 4,
+    },
+    ...(view.ticks
+      ? {
+          afterBuildTicks: (scale: Scale) => {
+            scale.ticks = view.ticks!.map((value) => ({value}))
+          },
+        }
+      : {}),
+  }
+  const categoryAxis = {
+    type: 'category' as const,
+    border: {display: false},
+    grid: {display: false},
+    ticks: {
+      color: theme.ink,
+      font: {size: 14, family: chartFont},
+      autoSkip: false,
+      maxRotation: 0,
+      padding: 8,
+      callback(this: Scale, value: string | number) {
+        return wrapLabel(
+          this.getLabelForValue(Number(value)),
+          horizontal
+            ? this.chart.width < 480
+              ? 78
+              : 180
+            : this.chart.width / view.series[0].values.length - 12,
+          this.chart.ctx,
+        )
+      },
+    },
+  }
+  const chart = new ChartJS(canvas as ChartItem, {
+    type: view.kind,
+    data: {
+      labels:
+        view.kind === 'bar'
+          ? view.series[0].values.map((point) => String(point.x))
+          : undefined,
+      datasets,
+    },
+    plugins: [annotations],
+    options: {
+      responsive: false,
+      devicePixelRatio: size.dpr,
+      events: [],
+      maintainAspectRatio: false,
+      animation: false,
+      locale,
+      indexAxis: horizontal ? 'y' : 'x',
+      layout: {padding: {top: 20, right: horizontal ? 42 : 12}},
+      interaction: {
+        mode: view.kind === 'line' ? 'nearest' : 'index',
+        axis: horizontal ? 'y' : 'x',
+        intersect: false,
+      },
+      plugins: {
+        legend: {display: false},
+        tooltip: {
+          backgroundColor: dark ? '#f1f5f9' : '#0f172a',
+          titleColor: dark ? '#0f172a' : '#f8fafc',
+          bodyColor: dark ? '#0f172a' : '#f8fafc',
+          bodyFont: {size: 14, family: chartFont},
+          titleFont: {size: 14, family: chartFont},
+          padding: 12,
+          filter: (item) => !datasets[item.datasetIndex].rangeOnly,
+          callbacks: {
+            title: (items) =>
+              items.length
+                ? wrapLabel(
+                    `${view.xLabel}: ${view.series[datasets[items[0].datasetIndex].seriesIndex].values[items[0].dataIndex].x}`,
+                    items[0].chart.width - 52,
+                    items[0].chart.ctx,
+                    true,
+                  )
+                : '',
+            label: (item) => {
+              const series =
+                view.series[datasets[item.datasetIndex].seriesIndex]
+              const point = series.values[item.dataIndex]
+              const lines = [`${series.label}: ${fmt(point.y)} ${view.unit}`]
+              if (point.low !== undefined && point.high !== undefined)
+                lines.push(
+                  `${locale === 'en' ? 'Range' : '범위'}: ${fmt(point.low)} ~ ${fmt(point.high)}`,
+                )
+              if (point.note) lines.push(point.note)
+              return lines.flatMap((line) =>
+                wrapLabel(line, item.chart.width - 52, item.chart.ctx),
+              )
+            },
+          },
+        },
+      },
+      scales:
+        view.kind === 'bar'
+          ? horizontal
+            ? {x: valueAxis, y: categoryAxis}
+            : {x: categoryAxis, y: valueAxis}
+          : {
+              x: {
+                type: 'linear',
+                min: view.xDomain?.[0],
+                max: view.xDomain?.[1],
+                border: {display: false},
+                grid: {display: false},
+                ticks: {
+                  color: theme.ink,
+                  font: {size: 14, family: chartFont},
+                  maxTicksLimit: 5,
+                  precision: 0,
+                  maxRotation: 0,
+                  padding: 8,
+                },
+              },
+              y: valueAxis,
+            },
+    },
+  })
+  return chart
+}
+
+export function resizeChart(chart: ChartJS, size: CanvasSize) {
+  chart.options.devicePixelRatio = size.dpr
+  chart.resize(size.width, size.height)
+}
+
+/** Chart.js accepts normalized coordinates when `native` is present. */
+export function movePointer(
+  chart: ChartJS,
+  x: number,
+  y: number,
+  leave: boolean,
+) {
+  const interaction = chart.options.interaction!
+  const event = {type: 'mousemove', native: null, x, y}
+  const active = leave
+    ? []
+    : chart
+        .getElementsAtEventForMode(
+          event as unknown as Event,
+          interaction.mode ?? 'nearest',
+          {axis: interaction.axis, intersect: false},
+          false,
+        )
+        .filter(
+          (item) =>
+            !(chart.data.datasets[item.datasetIndex] as Dataset).rangeOnly,
+        )
+  chart.setActiveElements(active)
+  chart.tooltip?.setActiveElements(active, {x, y})
+  chart.draw()
+}
+
+
+// FILE: workerProtocol.ts
+
+import type {CanvasSize, RenderInput} from './chartEngine'
+
+export type WorkerCommand =
+  | {
+      type: 'init'
+      canvas: OffscreenCanvas
+      input: RenderInput
+      size: CanvasSize
+    }
+  | {type: 'update'; input: RenderInput}
+  | {type: 'resize'; size: CanvasSize}
+  | {type: 'pointer'; x: number; y: number; leave: boolean}
+  | {type: 'destroy'}
+
+export type WorkerRequest = {id: number} & WorkerCommand
+
+export type WorkerReply =
+  | {id: number; type: 'rendered'}
+  | {id: number; type: 'error'}
+
+
+// FILE: types.ts
+
+export interface ChartPoint {
+  x: number | string
+  y: number
+  low?: number
+  high?: number
+  note?: string
+}
+
+export interface ChartSeries {
+  id: string
+  label: string
+  color?: number
+  values: ChartPoint[]
+}
+
+export interface ChartView {
+  id: string
+  label: string
+  description?: string
+  kind: 'line' | 'bar'
+  horizontal?: boolean
+  xLabel: string
+  yLabel: string
+  unit: string
+  decimals: number
+  domain: [number, number]
+  ticks?: number[]
+  xDomain?: [number, number]
+  stepped?: boolean
+  series: ChartSeries[]
+}
+
+export interface ChartDocument {
+  version: 1
+  locale: 'ko' | 'en'
+  title: string
+  description: string
+  source?: string
+  views: ChartView[]
+}
+
+export const chartFont =
+  'system-ui, -apple-system, BlinkMacSystemFont, sans-serif'
+
+export function chartTheme(dark: boolean) {
+  return dark
+    ? {
+        ink: '#cbd5e1',
+        grid: '#334155',
+        background: '#151b26',
+        colors: ['#a8b4c6', '#60a5fa', '#fb923c', '#4ade80'],
+      }
+    : {
+        ink: '#475569',
+        grid: '#e2e8f0',
+        background: '#ffffff',
+        colors: ['#64748b', '#2563eb', '#c65a12', '#16804a'],
+      }
+}
+
+export function chartColor(series: ChartSeries, index: number, dark: boolean) {
+  const colors = chartTheme(dark).colors
+  return colors[(series.color ?? index) % colors.length]
+}
+
+export function formatValue(value: number, decimals: number, locale: string) {
+  return value.toLocaleString(locale, {maximumFractionDigits: decimals})
+}
+
+export function chartHeight(view: ChartView) {
+  return view.kind === 'bar' && view.horizontal
+    ? Math.max(
+        260,
+        view.series[0].values.length * (view.series.length * 24 + 44) + 40,
+      )
+    : 280
+}
+
+
+// FILE: chartWorkerPool.test.ts
+
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
+
+import type {WorkerRequest} from './workerProtocol'
+
+class FakeWorker extends EventTarget {
+  static instances: FakeWorker[] = []
+  messages: WorkerRequest[] = []
+  terminate = vi.fn()
+  constructor() {
+    super()
+    FakeWorker.instances.push(this)
+  }
+  postMessage(message: WorkerRequest) {
+    this.messages.push(message)
+  }
+}
+
+beforeEach(() => {
+  vi.resetModules()
+  FakeWorker.instances = []
+  vi.stubGlobal('Worker', FakeWorker)
+  vi.stubGlobal('OffscreenCanvas', vi.fn())
+  vi.stubGlobal(
+    'HTMLCanvasElement',
+    class {
+      transferControlToOffscreen() {}
+    },
+  )
+})
+afterEach(() => vi.unstubAllGlobals())
+
+const owner = () => ({ready: vi.fn(), fail: vi.fn()})
+
+describe('chart worker ownership', () => {
+  it('keeps a shared worker until the last chart leaves, then creates a fresh worker on return', async () => {
+    const {acquireChartWorker} = await import('./chartWorkerPool')
+    const first = acquireChartWorker(owner())!
+    const second = acquireChartWorker(owner())!
+    expect(FakeWorker.instances).toHaveLength(1)
+    first.release()
+    expect(FakeWorker.instances[0].terminate).not.toHaveBeenCalled()
+    second.release()
+    second.release()
+    expect(FakeWorker.instances[0].terminate).toHaveBeenCalledOnce()
+    const restored = acquireChartWorker(owner())!
+    expect(FakeWorker.instances).toHaveLength(2)
+    restored.release()
+  })
+
+  it('falls back every live chart after a worker crash and avoids a restart loop', async () => {
+    const {acquireChartWorker} = await import('./chartWorkerPool')
+    const a = owner(),
+      b = owner()
+    const first = acquireChartWorker(a)!,
+      second = acquireChartWorker(b)!
+    const worker = FakeWorker.instances[0]
+    worker.dispatchEvent(new Event('error', {cancelable: true}))
+    expect(a.fail).toHaveBeenCalledOnce()
+    expect(b.fail).toHaveBeenCalledOnce()
+    first.release()
+    second.release()
+    expect(worker.terminate).toHaveBeenCalledOnce()
+    expect(acquireChartWorker(owner())).toBeNull()
+  })
+
+  it('isolates a chart render failure and ignores late messages after release', async () => {
+    const {acquireChartWorker} = await import('./chartWorkerPool')
+    const a = owner(),
+      b = owner()
+    const first = acquireChartWorker(a)!,
+      second = acquireChartWorker(b)!
+    first.post({type: 'pointer', x: 0, y: 0, leave: true})
+    const worker = FakeWorker.instances[0],
+      id = worker.messages[0].id
+    worker.dispatchEvent(
+      new MessageEvent('message', {data: {id, type: 'error'}}),
+    )
+    expect(a.fail).toHaveBeenCalledOnce()
+    expect(b.fail).not.toHaveBeenCalled()
+    first.release()
+    worker.dispatchEvent(
+      new MessageEvent('message', {data: {id, type: 'rendered'}}),
+    )
+    expect(a.ready).not.toHaveBeenCalled()
+    expect(worker.terminate).not.toHaveBeenCalled()
+    second.release()
+  })
+
+  it('returns a fallback when transfer is unsupported or construction is blocked', async () => {
+    const {acquireChartWorker} = await import('./chartWorkerPool')
+    vi.stubGlobal('HTMLCanvasElement', {prototype: {}})
+    expect(acquireChartWorker(owner())).toBeNull()
+    expect(FakeWorker.instances).toHaveLength(0)
+    vi.stubGlobal(
+      'HTMLCanvasElement',
+      class {
+        transferControlToOffscreen() {}
+      },
+    )
+    vi.stubGlobal(
+      'Worker',
+      vi.fn(function BlockedWorker() {
+        throw new Error('Blocked')
+      }),
+    )
+    expect(acquireChartWorker(owner())).toBeNull()
+  })
+})
+

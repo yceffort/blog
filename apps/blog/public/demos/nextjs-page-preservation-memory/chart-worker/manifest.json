@@ -1,0 +1,20 @@
+{
+  "snapshotDate": "2026-11-14",
+  "description": "Chart worker implementation added after the November 12 navigation memory measurements. The earlier heap measurements do not include this implementation.",
+  "versions": {
+    "chart.js": "4.6.1",
+    "next": "16.4.5",
+    "reactDependency": "19.2.8"
+  },
+  "files": {
+    "ChartCanvas.tsx": "4fdd5612a2d8419a3bc69a8973c6ef7513675d0fd9194f98c2d5770a93ce71dc",
+    "Chart.styles.ts": "7ade6389d5a61b872c7157200201543db27d0b1d412fd9f4bd93fdea1a10bc04",
+    "chartClient.ts": "ddd31b2b0f75b66112c81e1e5bcf094c8230eeb19150a6d145c4718941d9bc0c",
+    "chartWorkerPool.ts": "d56638aabcec17fdb0dda48f42f4f676a2527855df95ffcbaabac312088a918d",
+    "chart.worker.ts": "f5c9035a18bd48f468b2b037c52b8da7f126deeb9dc4976c8e3a7a8b18b2ebb0",
+    "chartEngine.ts": "e86cb5701d3b4734e226cbbecd310c5b27e27e2269828b764ff959357a2c1618",
+    "workerProtocol.ts": "7648e1b557734c15bc34152c4d18156944c232fdf3ebf8940c166a4ae11b426b",
+    "types.ts": "09c4fa88ebed6ac75e28d5f4642c5a311fb322c6d9143307dee376d164e898fb",
+    "chartWorkerPool.test.ts": "5cb74364c125bd4987ecad9a77a3076d4f7ac49d1248459da7963975b1450269"
+  }
+}

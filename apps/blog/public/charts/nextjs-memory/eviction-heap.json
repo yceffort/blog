@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "locale": "ko",
+  "title": "새 연도를 방문한 뒤의 JS 힙",
+  "description": "3개 연도를 오가며 글 20개를 방문한 상태가 기준이다. 이후 새 연도를 하나씩 방문했다. 추가 실험 1회.",
+  "source": "/demos/nextjs-page-preservation-memory/measurements.json",
+  "generatedBy": "apps/blog/scripts/generate-memory-charts.mjs",
+  "views": [
+    {
+      "id": "default",
+      "label": "새 연도를 방문한 뒤의 JS 힙",
+      "kind": "bar",
+      "xLabel": "추가 방문 연도",
+      "yLabel": "GC 후 JS 힙 (MiB)",
+      "unit": "MiB",
+      "decimals": 2,
+      "domain": [
+        0,
+        20
+      ],
+      "ticks": [
+        0,
+        5,
+        10,
+        15,
+        20
+      ],
+      "series": [
+        {
+          "id": "eviction",
+          "label": "GC 후 JS 힙 (MiB)",
+          "color": 1,
+          "values": [
+            {
+              "x": "기준",
+              "y": 18.34524917602539
+            },
+            {
+              "x": "2021",
+              "y": 17.581912994384766
+            },
+            {
+              "x": "2020",
+              "y": 16.132125854492188
+            },
+            {
+              "x": "2019",
+              "y": 15.259647369384766
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

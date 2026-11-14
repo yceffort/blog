@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "locale": "en",
+  "title": "JS heap after visiting new years",
+  "description": "The baseline is the state after visiting 20 posts across three years. Posts from new years were then visited one at a time. One additional run.",
+  "source": "/demos/nextjs-page-preservation-memory/measurements.json",
+  "generatedBy": "apps/blog/scripts/generate-memory-charts.mjs",
+  "views": [
+    {
+      "id": "default",
+      "label": "JS heap after visiting new years",
+      "kind": "bar",
+      "xLabel": "Year of the added visit",
+      "yLabel": "JS heap after GC (MiB)",
+      "unit": "MiB",
+      "decimals": 2,
+      "domain": [
+        0,
+        20
+      ],
+      "ticks": [
+        0,
+        5,
+        10,
+        15,
+        20
+      ],
+      "series": [
+        {
+          "id": "eviction",
+          "label": "JS heap after GC (MiB)",
+          "color": 1,
+          "values": [
+            {
+              "x": "Baseline",
+              "y": 18.34524917602539
+            },
+            {
+              "x": "2021",
+              "y": 17.581912994384766
+            },
+            {
+              "x": "2020",
+              "y": 16.132125854492188
+            },
+            {
+              "x": "2019",
+              "y": 15.259647369384766
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

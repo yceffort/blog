@@ -1,0 +1,40 @@
+import {createRequire} from 'node:module'
+import {writeFile} from 'node:fs/promises'
+import assert from 'node:assert/strict'
+const require=createRequire(new URL('../../apps/blog/package.json',import.meta.url))
+const {chromium}=require('@playwright/test')
+const browser=await chromium.launch({headless:true})
+const rows=[]
+for(let round=0;round<7;round++) for(const mode of (round%2 ? ['main','worker'] : ['worker','main'])) {
+  const context=await browser.newContext({viewport:{width:390,height:900},deviceScaleFactor:2})
+  const page=await context.newPage();const client=await context.newCDPSession(page)
+  await client.send('Emulation.setCPUThrottlingRate',{rate:4})
+  await client.send('Performance.enable')
+  // Exclude the independently animated iframe from the chart-only comparison.
+  await context.route('**/demos/**',route=>route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>Benchmark iframe omitted</title>'}))
+  await page.addInitScript(mode=>{
+    localStorage.setItem('theme','light')
+    if(mode==='main') Object.defineProperty(HTMLCanvasElement.prototype,'transferControlToOffscreen',{value:undefined})
+    window.__longTasks=[]
+    new PerformanceObserver(list=>window.__longTasks.push(...list.getEntries().map(e=>({start:e.startTime,duration:e.duration})))).observe({type:'longtask'})
+  },mode)
+  await page.goto('http://localhost:3007/2026/10/number-flow-forced-layout',{waitUntil:'networkidle'})
+  const figure=page.locator('[data-chart-renderer]');assert.equal(await figure.locator('canvas').count(),0)
+  const metrics=async()=>Object.fromEntries((await client.send('Performance.getMetrics')).metrics.map(m=>[m.name,m.value]))
+  const before=await metrics();const start=await page.evaluate(()=>performance.now())
+  await figure.scrollIntoViewIfNeeded()
+  await figure.locator('[data-chart-state="ready"]').waitFor()
+  const ready=await page.evaluate(()=>performance.now());const after=await metrics()
+  assert.equal(await figure.locator('[data-chart-thread]').getAttribute('data-chart-thread'),mode)
+  await page.waitForTimeout(50)
+  const tasks=await page.evaluate(({start,ready})=>window.__longTasks.filter(t=>t.start>=start&&t.start<=ready),{start,ready})
+  rows.push({round,mode,readyMs:ready-start,mainTaskMs:(after.TaskDuration-before.TaskDuration)*1000,mainScriptMs:(after.ScriptDuration-before.ScriptDuration)*1000,longTasks:tasks})
+  await context.close()
+}
+const summary=Object.fromEntries(['main','worker'].map(mode=>{
+  const data=rows.filter(r=>r.mode===mode)
+  const median=key=>data.map(r=>r[key]).sort((a,b)=>a-b)[3]
+  return [mode,{readyMs:median('readyMs'),mainTaskMs:median('mainTaskMs'),mainScriptMs:median('mainScriptMs'),longTaskCount:data.flatMap(r=>r.longTasks).length}]
+}))
+await writeFile('.cache/chart-worker/benchmark.json',JSON.stringify({conditions:{browser:await browser.version(),viewport:'390x900',dpr:2,cpuThrottle:4,rounds:7,post:'number-flow-forced-layout',iframes:'blanked',cache:'fresh browser context each trial'},rows,summary},null,2))
+console.log(JSON.stringify(summary));await browser.close()
