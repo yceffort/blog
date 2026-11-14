@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>30일의 기록</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fbfaf7; --ink:#252338; --ink2:#55526a; --muted:#706d7d; --grid:#e9e6ee; --axis:#cfcbd8; --band:rgba(37,35,56,.05); --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#6250d6; --n1:#252338; --n2:#7f7c8c; --n3:#aaa7b6; --crit:#d03b3b; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#181820; --ink:#f0eef8; --ink2:#c9c5d8; --muted:#b5b0c5; --grid:#2e2c3a; --axis:#474459; --band:rgba(255,255,255,.055); --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#9085e9; --n1:#f0eef8; --n2:#9d99ad; --n3:#5d5a6e; --crit:#e66767; } }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { padding: 16px 14px 10px; background: var(--bg); color: var(--ink); font: 13px/1.5 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Segoe UI", sans-serif; word-break: keep-all; }
+  main { display: flex; flex-direction: column; gap: 18px; }
+  .blk { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .cap { font-weight: 600; font-size: 13.5px; }
+  .cap small { font-weight: 400; color: var(--muted); font-size: 12px; margin-left: 6px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 12px; color: var(--ink2); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+  .sw.dot { border-radius: 50%; } .sw.line { height: 2px; width: 14px; border-radius: 0; }
+  .b1 { background: var(--s1); } .b2 { background: var(--s2); } .b3 { background: var(--s3); } .b4 { background: var(--s4); } .bn1 { background: var(--n1); } .bn2 { background: var(--n2); } .bn3 { background: var(--n3); } .bcrit { background: var(--crit); }
+  .c1 { fill: var(--s1); } .c2 { fill: var(--s2); } .c3 { fill: var(--s3); } .c4 { fill: var(--s4); } .cn1 { fill: var(--n1); } .cn2 { fill: var(--n2); } .cn3 { fill: var(--n3); }
+  .chart { position: relative; min-width: 0; }
+  svg { display: block; max-width: 100%; }
+  svg .grid { stroke: var(--grid); stroke-width: 1; } svg .axis { stroke: var(--axis); stroke-width: 1; } svg .ref { stroke: var(--crit); stroke-width: 1.5; }
+  svg .band { fill: var(--band); } svg .hit { fill: transparent; } svg .hit:hover { fill: var(--band); }
+  svg .mk { fill: var(--n1); stroke: var(--bg); stroke-width: 2; }
+  svg .cell { fill: var(--s1); } svg .cell0 { fill: var(--grid); }
+  svg text { font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+  svg text.strong { fill: var(--ink); font-weight: 600; }
+  .hbars { display: grid; grid-template-columns: minmax(0, 10.5em) minmax(0, 1fr) auto; gap: 7px 10px; align-items: center; }
+  .hbars .k { color: var(--ink2); line-height: 1.3; }
+  .hbars .t { height: 14px; border-left: 1px solid var(--axis); }
+  .hbars .t i { display: block; height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; }
+  .hbars .n { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+  .hbars .n small { color: var(--muted); }
+  .hbars.wide { grid-template-columns: minmax(0, 13em) minmax(0, 1fr) auto; }
+  .hbars .t.rel { position: relative; }
+  .hbars u { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--n1); text-decoration: none; }
+  .seg { display: flex; gap: 2px; height: 28px; }
+  .seg div { border-radius: 4px; min-width: 3px; display: flex; align-items: center; padding: 0 8px; font-size: 12px; font-weight: 600; white-space: nowrap; overflow: visible; }
+  .seg .bn1 { color: var(--bg); } .seg .bn2 { color: #fff; } .seg .bn3 { color: #0b0b0b; } .seg .b1 { color: #fff; } .seg .b2 { color: #fff; } .seg .b3 { color: #fff; } .seg .b4 { color: #fff; }
+  .tip { position: fixed; z-index: 5; pointer-events: none; background: var(--bg); color: var(--ink); border: 1px solid var(--axis); border-radius: 8px; padding: 7px 10px; font-size: 12px; line-height: 1.5; box-shadow: 0 6px 18px rgba(0,0,0,.16); max-width: 240px; }
+  .tip b { display: block; margin-bottom: 2px; } .tip div { display: flex; align-items: center; gap: 6px; } .tip em { font-style: normal; margin-left: auto; padding-left: 14px; font-variant-numeric: tabular-nums; }
+  .tip .x { display: block; border-top: 1px solid var(--grid); margin-top: 4px; padding-top: 4px; color: var(--ink2); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main></main>
+<div class="tip" id="tip" hidden></div>
+<script>
+(() => {
+  const D = {"days":[{"d":"10-15","w":"목","p":110,"s":374,"pr":11,"cm":31,"stay":47,"quiet":214,"meet":150,"fb":0,"se":22,"qm":82,"sw":184},{"d":"10-16","w":"금","p":241,"s":238,"pr":21,"cm":36,"stay":36,"quiet":100,"meet":270,"fb":1,"se":32,"qm":51,"sw":262},{"d":"10-17","w":"토","p":173,"s":8,"pr":11,"cm":103,"stay":null,"quiet":null,"meet":null,"fb":0,"se":15,"qm":null,"sw":20},{"d":"10-18","w":"일","p":119,"s":39,"pr":1,"cm":41,"stay":null,"quiet":null,"meet":null,"fb":0,"se":10,"qm":null,"sw":55},{"d":"10-19","w":"월","p":255,"s":268,"pr":18,"cm":35,"stay":29,"quiet":0,"meet":240,"fb":1,"se":44,"qm":18,"sw":233},{"d":"10-20","w":"화","p":208,"s":392,"pr":22,"cm":27,"stay":21,"quiet":68,"meet":270,"fb":0,"se":25,"qm":38,"sw":223},{"d":"10-21","w":"수","p":219,"s":298,"pr":5,"cm":19,"stay":31,"quiet":73,"meet":240,"fb":0,"se":32,"qm":38,"sw":228},{"d":"10-22","w":"목","p":314,"s":395,"pr":9,"cm":42,"stay":40,"quiet":0,"meet":240,"fb":0,"se":49,"qm":4,"sw":258},{"d":"10-23","w":"금","p":186,"s":193,"pr":25,"cm":68,"stay":29,"quiet":215,"meet":180,"fb":1,"se":30,"qm":78,"sw":178},{"d":"10-24","w":"토","p":47,"s":3,"pr":0,"cm":11,"stay":null,"quiet":null,"meet":null,"fb":0,"se":11,"qm":null,"sw":0},{"d":"10-25","w":"일","p":42,"s":6,"pr":4,"cm":26,"stay":null,"quiet":null,"meet":null,"fb":0,"se":8,"qm":null,"sw":5},{"d":"10-26","w":"월","p":297,"s":173,"pr":21,"cm":70,"stay":34,"quiet":137,"meet":180,"fb":1,"se":39,"qm":57,"sw":238},{"d":"10-27","w":"화","p":200,"s":122,"pr":7,"cm":41,"stay":27,"quiet":173,"meet":210,"fb":0,"se":18,"qm":101,"sw":127},{"d":"10-28","w":"수","p":237,"s":172,"pr":29,"cm":33,"stay":30,"quiet":94,"meet":240,"fb":0,"se":25,"qm":33,"sw":187},{"d":"10-29","w":"목","p":221,"s":310,"pr":41,"cm":102,"stay":45,"quiet":86,"meet":120,"fb":0,"se":28,"qm":86,"sw":238},{"d":"10-30","w":"금","p":237,"s":230,"pr":20,"cm":48,"stay":42,"quiet":41,"meet":480,"fb":1,"se":34,"qm":41,"sw":205},{"d":"10-31","w":"토","p":179,"s":66,"pr":24,"cm":54,"stay":null,"quiet":null,"meet":null,"fb":0,"se":24,"qm":null,"sw":72},{"d":"11-01","w":"일","p":123,"s":6,"pr":11,"cm":22,"stay":null,"quiet":null,"meet":null,"fb":0,"se":15,"qm":null,"sw":17},{"d":"11-02","w":"월","p":334,"s":192,"pr":20,"cm":46,"stay":26,"quiet":27,"meet":90,"fb":1,"se":45,"qm":27,"sw":197},{"d":"11-03","w":"화","p":204,"s":278,"pr":12,"cm":57,"stay":44,"quiet":45,"meet":300,"fb":0,"se":38,"qm":45,"sw":196},{"d":"11-04","w":"수","p":196,"s":363,"pr":25,"cm":32,"stay":31,"quiet":44,"meet":180,"fb":0,"se":29,"qm":44,"sw":228},{"d":"11-05","w":"목","p":207,"s":322,"pr":10,"cm":39,"stay":49,"quiet":25,"meet":210,"fb":0,"se":25,"qm":25,"sw":231},{"d":"11-06","w":"금","p":129,"s":201,"pr":2,"cm":27,"stay":59,"quiet":73,"meet":90,"fb":1,"se":14,"qm":73,"sw":122},{"d":"11-07","w":"토","p":94,"s":7,"pr":12,"cm":48,"stay":null,"quiet":null,"meet":null,"fb":0,"se":14,"qm":null,"sw":29},{"d":"11-08","w":"일","p":118,"s":13,"pr":4,"cm":14,"stay":null,"quiet":null,"meet":null,"fb":0,"se":15,"qm":null,"sw":14},{"d":"11-09","w":"월","p":276,"s":249,"pr":9,"cm":13,"stay":38,"quiet":142,"meet":60,"fb":1,"se":35,"qm":43,"sw":216},{"d":"11-10","w":"화","p":303,"s":376,"pr":17,"cm":37,"stay":41,"quiet":36,"meet":285,"fb":0,"se":32,"qm":36,"sw":247},{"d":"11-11","w":"수","p":277,"s":360,"pr":24,"cm":29,"stay":35,"quiet":69,"meet":150,"fb":0,"se":34,"qm":36,"sw":252},{"d":"11-12","w":"목","p":291,"s":330,"pr":29,"cm":24,"stay":32,"quiet":57,"meet":200,"fb":0,"se":44,"qm":57,"sw":234},{"d":"11-13","w":"금","p":152,"s":223,"pr":8,"cm":16,"stay":35,"quiet":189,"meet":90,"fb":1,"se":16,"qm":64,"sw":152}],"hm":[[17,10,54,8,12,0,4,7,24,31,27,4,14,15,3,19,42,5,29,40,24,50,23,4],[15,0,0,0,0,0,0,6,18,34,171,126,80,285,203,154,198,173,157,190,121,53,38,22],[0,0,0,0,0,0,1,7,9,25,257,158,82,136,160,184,179,166,236,215,24,49,61,134],[122,17,1,0,0,0,0,0,4,13,123,188,131,106,182,137,171,227,168,238,42,51,90,111],[104,65,6,0,0,0,4,2,0,58,243,195,117,184,175,283,434,262,190,238,129,14,66,105],[16,0,0,0,0,0,0,0,3,140,123,261,92,108,220,135,220,106,197,167,112,42,61,27],[48,6,0,0,0,0,0,0,4,42,58,51,66,21,28,60,40,46,44,27,30,13,15,18]],"ch":[58,2,1,1,1,0,4,6,7,36,55,103,70,122,106,60,94,127,89,91,37,27,57,57],"slack":[{"ko":"팀 동료들과의 대화방","en":"Group chat with teammates","n":1577},{"ko":"일대일 DM","en":"Direct messages","n":1394},{"ko":"우리 팀 채널","en":"Own team channels","n":908},{"ko":"챕터와 공동체 채널","en":"Chapter and guild channels","n":798},{"ko":"다른 팀 채널","en":"Other teams' channels","n":742},{"ko":"AI와 도구 채널","en":"AI and tooling channels","n":298},{"ko":"여러 팀 협업 채널","en":"Cross-team project channels","n":259},{"ko":"장애와 운영 채널","en":"Incident and ops channels","n":184},{"ko":"그 밖","en":"Other","n":47}],"gdm":[12.5,95.8,108.0,105.4,37.4],"meet":[{"ko":"챕터와 기술 공동체","en":"Chapter and tech guild","v":146.8},{"ko":"기능과 프로젝트 논의","en":"Feature and project discussions","v":30.0},{"ko":"식사와 친목","en":"Meals and socials","v":26.1},{"ko":"팀 운영과 스프린트","en":"Team operations and sprints","v":24.5},{"ko":"일대일 면담","en":"One-on-ones","v":5.5},{"ko":"장애 대응","en":"Incident response","v":5.5}],"reply":[3133,94],"team":[908,2097],"base":[{"ko":"5월","en":"May","v":114.5},{"ko":"6월","en":"Jun","v":134.8},{"ko":"7월","en":"Jul","v":145.5},{"ko":"8월","en":"Aug","v":245.1},{"ko":"9월","en":"Sep","v":193.4},{"ko":"10월 초","en":"Early Oct","v":122.0},{"ko":"최근 30일","en":"Last 30 days","v":275.4}],"live":[13588,6479,2722,909,568],"runs":[932,414,293,225,119]}
+  const params = new URLSearchParams(location.search)
+  const view = params.get('view') || 'stay'
+  const lang = params.get('lang') === 'en' ? 'en' : 'ko'
+  const t = (ko, en) => (lang === 'en' ? en : ko)
+  if (lang === 'en') { document.documentElement.lang = 'en'; document.title = 'Thirty days of work records' }
+  const main = document.querySelector('main'), tip = document.getElementById('tip')
+  const $ = id => document.getElementById(id)
+  const fmt = n => Math.round(n).toLocaleString(lang === 'en' ? 'en-US' : 'ko-KR')
+  const sum = a => a.reduce((x, y) => x + y, 0)
+  const DOW = { 월: 'Mon', 화: 'Tue', 수: 'Wed', 목: 'Thu', 금: 'Fri', 토: 'Sat', 일: 'Sun' }
+  const dow = w => t(w, DOW[w])
+  const md = d => +d.d.slice(0, 2) + '/' + +d.d.slice(3)
+  const isWe = d => d.w === '토' || d.w === '일'
+  const U = { n: t('건', ''), min: t('분', ' min'), pr: t('개', '') }
+  const days = D.days, wd = days.filter(d => d.stay != null)
+  const HL = new Set((params.get('hl') || '').split(',').filter(Boolean))
+
+  function nice(v) {
+    const raw = v / 4, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p
+    const st = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p, max = Math.ceil(v / st) * st, ticks = []
+    for (let x = 0; x <= max + 1e-9; x += st) ticks.push(x)
+    return { max, ticks }
+  }
+  function showTip(html, e) {
+    tip.innerHTML = html; tip.hidden = false
+    const r = tip.getBoundingClientRect(), x = Math.min(e.clientX + 14, innerWidth - r.width - 6), y = e.clientY - r.height - 12
+    tip.style.left = Math.max(6, x) + 'px'; tip.style.top = (y < 6 ? e.clientY + 16 : y) + 'px'
+  }
+  function hover(el, html) {
+    el.addEventListener('pointermove', e => { const h = e.target.closest('[data-i]'); if (!h) { tip.hidden = true; return } showTip(html(+h.dataset.i), e) })
+    el.addEventListener('pointerleave', () => { tip.hidden = true })
+  }
+  // 세로 막대(누적 포함). 막대는 24px 이하, 맨 위 조각만 둥글게, 조각 사이는 배경색 2px.
+  function cols(el, o) {
+    const draw = () => {
+      const W = el.clientWidth; if (!W) return
+      const H = o.h || 220, m = { t: 16, r: 6, b: o.marks ? 46 : 34, l: 36 }, iw = W - m.l - m.r, ih = H - m.t - m.b, n = o.cols.length
+      const sc = o.ticks ? { max: o.ticks[o.ticks.length - 1], ticks: o.ticks } : nice(Math.max(o.ref ? o.ref.v * 1.08 : 0, ...o.cols.map(c => sum(c.vals))))
+      const step = iw / n, bw = Math.min(24, Math.max(3, step - (step > 16 ? 8 : step > 9 ? 4 : 2))), y = v => m.t + ih - v / sc.max * ih
+      let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${o.aria}">`
+      o.cols.forEach((c, i) => { if (c.band) s += `<rect class="band" x="${m.l + i * step}" y="${m.t}" width="${step}" height="${ih}"/>` })
+      for (const k of sc.ticks) s += `<line class="${k ? 'grid' : 'axis'}" x1="${m.l}" x2="${W - m.r}" y1="${y(k)}" y2="${y(k)}"/><text x="${m.l - 6}" y="${y(k) + 3.5}" text-anchor="end">${fmt(k)}</text>`
+      o.cols.forEach((c, i) => {
+        const x = m.l + i * step + (step - bw) / 2, cx = m.l + i * step + step / 2; let acc = 0, below = false
+        const top = c.vals.reduce((a, v, k) => (v > 0 ? k : a), -1)
+        c.vals.forEach((v, k) => {
+          if (!(v > 0)) return
+          const y1 = y(acc + v), yb = y(acc) - (below ? 2 : 0); acc += v; below = true
+          const hh = Math.max(yb - y1, 1), r = k === top ? Math.min(4, bw / 2, hh) : 0, yt = yb - hh
+          s += `<path class="${o.series[k].cls}" d="M${x},${yb}V${yt + r}Q${x},${yt} ${x + r},${yt}H${x + bw - r}Q${x + bw},${yt} ${x + bw},${yt + r}V${yb}Z"/>`
+        })
+        if (c.cap) s += `<text class="strong" x="${cx}" y="${y(acc) - 6}" text-anchor="middle">${c.cap}</text>`
+        const a = o.xl(i, step), b = o.xl2 && o.xl2(i, step)
+        if (a) s += `<text ${c.hl ? 'class="strong" ' : ''}x="${cx}" y="${m.t + ih + 15}" text-anchor="middle">${a}</text>`
+        if (b) s += `<text x="${cx}" y="${m.t + ih + 28}" text-anchor="middle">${b}</text>`
+        if (c.mark) s += `<circle class="mk" cx="${cx}" cy="${H - 7}" r="4"/>`
+      })
+      if (o.ref) s += `<line class="ref" x1="${m.l}" x2="${W - m.r}" y1="${y(o.ref.v)}" y2="${y(o.ref.v)}"/><text class="strong" x="${W - m.r - 2}" y="${y(o.ref.v) - 5}" text-anchor="end">${o.ref.label}</text>`
+      o.cols.forEach((c, i) => { s += `<rect class="hit" data-i="${i}" x="${m.l + i * step}" y="${m.t}" width="${step}" height="${ih + 4}"/>` })
+      el.innerHTML = s + '</svg>'
+    }
+    draw(); new ResizeObserver(draw).observe(el)
+    hover(el, i => {
+      const c = o.cols[i]
+      return `<b>${c.title}</b>` + o.series.map((sr, k) => `<div><i class="sw ${sr.sw}"></i>${sr.name}<em>${fmt(c.vals[k])}${o.unit}</em></div>`).join('') + (c.extra ? `<span class="x">${c.extra}</span>` : '')
+    })
+  }
+  function hbars(el, items, sw, unit, total) {
+    const mx = Math.max(...items.map(i => i.v))
+    el.innerHTML = items.map(i => `<span class="k">${i.k}</span><span class="t"><i class="${sw}" style="width:${i.v / mx * 100}%"></i></span><span class="n">${fmt(i.v)}${unit}${total ? ` <small>${(i.v / total * 100).toFixed(0)}%</small>` : ''}</span>`).join('')
+  }
+  function seg(el, parts) {
+    const tot = sum(parts.map(p => p.v))
+    el.innerHTML = parts.map(p => `<div class="${p.sw}" style="flex:${p.v} 1 0" title="${p.k} ${fmt(p.v)}${p.unit} (${(p.v / tot * 100).toFixed(0)}%)">${p.label || ''}</div>`).join('')
+  }
+  // 요일 x 시간대 히트맵. 한 가지 색의 농도로만 크기를 나타낸다.
+  function heat(el) {
+    const order = [1, 2, 3, 4, 5, 6, 0], names = ['일', '월', '화', '수', '목', '금', '토'], cnt = [4, 4, 4, 4, 5, 5, 5]
+    const avg = D.hm.map((row, w) => row.map(v => v / cnt[w])), mx = Math.max(...avg.flat())
+    const draw = () => {
+      const W = el.clientWidth; if (!W) return
+      const ml = 30, mt = 18, cw = (W - ml - 4) / 24, chh = Math.max(16, Math.min(26, cw * 0.9)), H = mt + chh * 7 + 6
+      let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${t('요일과 시간대별로 직접 쓴 프롬프트와 슬랙 메시지의 하루 평균 건수', 'Average prompts and Slack messages I wrote per day, by weekday and hour')}">`
+      for (let h = 0; h < 24; h += 3) s += `<text x="${ml + h * cw + cw / 2}" y="11" text-anchor="middle">${h}</text>`
+      order.forEach((w, r) => {
+        s += `<text x="${ml - 8}" y="${mt + r * chh + chh / 2 + 4}" text-anchor="end">${dow(names[w])}</text>`
+        avg[w].forEach((v, h) => {
+          s += `<rect class="${v >= 0.5 ? 'cell' : 'cell0'}" ${v >= 0.5 ? `opacity="${(0.1 + 0.9 * v / mx).toFixed(3)}"` : ''} data-i="${w * 24 + h}" x="${ml + h * cw + 1}" y="${mt + r * chh + 1}" width="${cw - 2}" height="${chh - 2}" rx="2"/>`
+        })
+      })
+      el.innerHTML = s + '</svg>'
+    }
+    draw(); new ResizeObserver(draw).observe(el)
+    hover(el, i => { const w = Math.floor(i / 24), h = i % 24; return `<b>${dow(names[w])} ${h}${t('시대', ':00')}</b><div>${t('하루 평균', 'Daily average')}<em>${fmt(avg[w][h])}${U.n}</em></div>` })
+  }
+  const blk = (id, cap, legend, cls) => `<section class="blk">${cap ? `<div class="cap">${cap}</div>` : ''}${legend ? `<div class="legend">${legend}</div>` : ''}<div class="${cls || 'chart'}" id="${id}"></div></section>`
+  const lg = (sw, name) => `<span><i class="sw ${sw}"></i>${name}</span>`
+  const xlDay = list => (i, step) => (HL.size ? (HL.has(list[i].d) ? md(list[i]) : '') : list[i].w === '월' || i === 0 || step > 30 ? md(list[i]) : '')
+  const xlDow = list => (i, step) => (HL.size ? (HL.has(list[i].d) ? dow(list[i].w) : '') : step > 30 ? dow(list[i].w) : '')
+  const blockMark = lg('dot bn1', t('집중 블록을 잡아 둔 날', 'Days with a focus block on the calendar'))
+
+  const V = {
+    stay() {
+      main.innerHTML = blk('a', '', lg('line bcrit', t('60분', '60 minutes')) + blockMark)
+      cols($('a'), { aria: t('평일 22일 동안 하루 중 한 가지 일만 가장 오래 한 시간. 모든 날이 60분에 못 미친다', 'Longest single-context stretch on each of 22 weekdays; none reaches 60 minutes'), unit: U.min, h: 240, marks: true,
+        series: [{ name: t('한 가지 일만 가장 오래 한 시간', 'Longest stretch on one thing'), cls: 'cn1', sw: 'bn1' }], ref: { v: 60, label: t('60분', '60 min') },
+        cols: wd.map(d => ({ vals: [d.stay], mark: d.fb, hl: HL.has(d.d), title: `${md(d)} (${dow(d.w)})` })), xl: xlDay(wd), xl2: xlDow(wd) })
+    },
+    make() {
+      main.innerHTML = blk('a', '', '')
+      cols($('a'), { aria: t('30일 동안 날마다 만든 PR 수', 'Pull requests opened per day over 30 days'), unit: U.pr, h: 230,
+        series: [{ name: 'PR', cls: 'cn1', sw: 'bn1' }],
+        cols: days.map(d => ({ vals: [d.pr], band: isWe(d), hl: HL.has(d.d), title: `${md(d)} (${dow(d.w)})`, extra: `${t('커밋', 'Commits')} ${fmt(d.cm)}${U.n}, ${t('프롬프트', 'prompts')} ${fmt(d.p)}${U.n}` })), xl: xlDay(days), xl2: xlDow(days) })
+    },
+    slack() {
+      main.innerHTML = blk('a', t('슬랙 메시지를 쓴 곳', 'Where my Slack messages went') + `<small>${t('31일, 6,207건', '31 days, 6,207 messages')}</small>`, '', 'hbars') +
+        blk('b', t('팀 동료들과의 대화방에 쓴 메시지', 'Messages in the group chat with teammates') + `<small>${t('요일별 하루 평균', 'daily average by weekday')}</small>`, '')
+      hbars($('a'), D.slack.map(r => ({ k: t(r.ko, r.en), v: r.n })), 'b2', U.n, sum(D.slack.map(r => r.n)))
+      const w5 = ['월', '화', '수', '목', '금']
+      cols($('b'), { aria: t('팀 동료들과의 대화방 요일별 하루 평균 메시지 수', 'Average messages per day in the teammate group chat by weekday'), unit: U.n, h: 170,
+        series: [{ name: t('메시지', 'Messages'), cls: 'c2', sw: 'b2' }],
+        cols: D.gdm.map((v, i) => ({ vals: [v], title: dow(w5[i]), cap: fmt(v) })), xl: i => dow(w5[i]) })
+    },
+    meet() {
+      main.innerHTML = blk('a', t('평일 10~19시 540분', 'The 540 minutes between 10:00 and 19:00 on a weekday'), lg('b4', t('회의 203분', 'Meetings, 203 min')) + lg('bn3', t('회의가 아닌 시간 337분', 'Everything else, 337 min')), 'seg') +
+        blk('b', t('회의 시간의 구성', 'What the meeting time was') + `<small>${t('평일 하루 평균(분)', 'weekday daily average, minutes')}</small>`, '', 'hbars')
+      seg($('a'), [{ k: t('회의', 'Meetings'), v: 203, unit: U.min, sw: 'b4', label: '38%' }, { k: t('회의가 아닌 시간', 'Everything else'), v: 337, unit: U.min, sw: 'bn3', label: '62%' }])
+      hbars($('b'), D.meet.map(r => ({ k: t(r.ko, r.en), v: r.v })), 'b4', U.min, sum(D.meet.map(r => r.v)))
+    },
+    reply() {
+      main.innerHTML = blk('a', t('채널에 쓴 3,227건', 'The 3,227 messages I wrote in channels'), lg('b2', t('남이 연 스레드에 단 답글', 'Replies in threads')) + lg('bn3', t('새로 쓴 글', 'New posts')), 'seg') +
+        blk('b', t('답글을 쓴 채널', 'Which channels'), '', 'hbars')
+      seg($('a'), [{ k: t('답글', 'Replies'), v: D.reply[0], unit: U.n, sw: 'b2', label: `${fmt(D.reply[0])}${U.n} (97%)` }, { k: t('새 글', 'New posts'), v: D.reply[1], unit: U.n, sw: 'bn3', label: '' }])
+      hbars($('b'), [{ k: t('팀 밖 채널', 'Channels outside my team'), v: D.team[1] }, { k: t('우리 팀 채널', 'Own team channels'), v: D.team[0] }], 'b2', U.n)
+    },
+    heatmap() {
+      main.innerHTML = blk('a', t('직접 쓴 프롬프트와 슬랙 메시지', 'Prompts and Slack messages I wrote') + `<small>${t('요일과 시간대별 하루 평균, 진할수록 많음', 'daily average by weekday and hour; darker is more')}</small>`, '') +
+        blk('b', t('시간대별 커밋', 'Commits by hour') + `<small>${t('31일 합', '31 days total')}</small>`, '')
+      heat($('a'))
+      cols($('b'), { aria: t('시간대별 커밋 수, 31일 합', 'Commits by hour of day, 31 days total'), unit: U.n, h: 170,
+        series: [{ name: t('커밋', 'Commits'), cls: 'cn1', sw: 'bn1' }],
+        cols: D.ch.map((v, h) => ({ vals: [v], band: h < 10 || h >= 19, title: `${h}${t('시대', ':00')}` })), xl: (i, step) => (step > 22 || i % 3 === 0 ? String(i) : '') })
+    },
+    window() {
+      main.innerHTML = blk('a', '', lg('b3', t('슬랙도 회의도 없이 25분 이상 이어진 시간', 'Stretches of 25+ min with no Slack and no meeting')) + lg('b4', t('회의', 'Meetings')) + lg('b2', t('회의는 없는데 25분이 되기 전에 슬랙을 쓴 시간', 'Non-meeting time broken by Slack within 25 min')) + blockMark)
+      cols($('a'), { aria: t('평일 22일의 10시부터 19시까지 540분 구성', 'How the 540 minutes between 10:00 and 19:00 were spent on 22 weekdays'), unit: U.min, h: 260, marks: true, ticks: [0, 180, 360, 540],
+        series: [{ name: t('조용한 시간', 'Quiet time'), cls: 'c3', sw: 'b3' }, { name: t('회의', 'Meetings'), cls: 'c4', sw: 'b4' }, { name: t('슬랙을 쓴 시간', 'Broken by Slack'), cls: 'c2', sw: 'b2' }],
+        cols: wd.map(d => ({ vals: [d.quiet, d.meet, Math.max(0, 540 - d.quiet - d.meet)], mark: d.fb, hl: HL.has(d.d), title: `${md(d)} (${dow(d.w)})` })), xl: xlDay(wd), xl2: xlDow(wd) })
+    },
+    months() {
+      main.innerHTML = blk('a', '', '')
+      cols($('a'), { aria: t('5월부터 최근 30일까지 평일 하루 평균 슬랙 메시지 수', 'Average Slack messages per weekday from May to the last 30 days'), unit: U.n, h: 230,
+        series: [{ name: t('평일 하루 평균', 'Weekday daily average'), cls: 'c2', sw: 'b2' }],
+        cols: D.base.map((b, i) => ({ vals: [b.v], title: t(b.ko, b.en), cap: i === 0 || i === 3 || i === D.base.length - 1 ? fmt(b.v) : '' })), xl: i => t(D.base[i].ko, D.base[i].en) })
+    },
+    sessions() {
+      const lv = [t('1개', '1'), t('2개', '2'), t('3개', '3'), t('4개', '4'), t('5개 이상', '5 or more')], rn = [t('1건', '1'), t('2건', '2'), t('3~4건', '3-4'), t('5~9건', '5-9'), t('10건 이상', '10 or more')]
+      const pct = (el, labels, vals, sw) => { const tot = sum(vals), mx = Math.max(...vals); el.innerHTML = vals.map((v, i) => `<span class="k">${labels[i]}</span><span class="t"><i class="${sw}" style="width:${v / mx * 100}%"></i></span><span class="n">${(v / tot * 100).toFixed(0)}%</span>`).join('') }
+      main.innerHTML = blk('a', t('동시에 돌아가던 세션 수', 'Sessions running at the same time') + `<small>${t('세션이 하나라도 돌아가던 시간 가운데', 'share of time with at least one session active')}</small>`, '', 'hbars') +
+        blk('b', t('한 세션에 연달아 보낸 프롬프트 수', 'Prompts sent to one session in a row') + `<small>${t('다른 세션으로 넘어가기 전까지', 'before moving to another session')}</small>`, '', 'hbars')
+      pct($('a'), lv, D.live, 'b1'); pct($('b'), rn, D.runs, 'b1')
+    },
+    day() {
+      const d = wd.find(x => x.d === (params.get('d') || '10-22')) || wd[0]
+      const rows = [['p', t('프롬프트', 'Prompts'), U.n], ['se', t('연 세션', 'Sessions opened'), t('개', '')], ['s', t('슬랙 메시지', 'Slack messages'), U.n], ['sw', t('세션과 대화방을 옮겨 다닌 횟수', 'Switches to another session or chat'), t('번', '')], ['meet', t('회의', 'Meetings'), U.min], ['qm', t('슬랙도 회의도 없이 가장 길게 이어진 시간', 'Longest stretch with no Slack and no meeting'), U.min], ['stay', t('한 가지 일만 가장 오래 한 시간', 'Longest stretch on one thing'), U.min], ['pr', t('만든 PR', 'PRs opened'), U.pr]]
+      const med = k => { const v = wd.map(x => x[k]).sort((a, b) => a - b); return (v[10] + v[11]) / 2 }
+      main.innerHTML = blk('a', `${md(d)} (${dow(d.w)})`, lg('b1', t('그날의 값', 'That day')) + lg('line bn1', t('평일 22일의 중앙값', 'Median of the 22 weekdays')), 'hbars wide')
+      $('a').innerHTML = rows.map(([k, name, unit]) => { const mx = Math.max(...wd.map(x => x[k])), m = med(k); return `<span class="k">${name}</span><span class="t rel"><i class="b1" style="width:${d[k] / mx * 100}%"></i><u style="left:${m / mx * 100}%"></u></span><span class="n">${fmt(d[k])}${unit} <small>${t('중앙값', 'median')} ${fmt(m)}</small></span>` }).join('')
+    },
+    sessday() {
+      main.innerHTML = blk('a', '', '')
+      cols($('a'), { aria: t('30일 동안 날마다 연 Claude Code 세션 수', 'Claude Code sessions opened per day over 30 days'), unit: t('개', ''), h: 230,
+        series: [{ name: t('연 세션', 'Sessions opened'), cls: 'c1', sw: 'b1' }],
+        cols: days.map(d => ({ vals: [d.se], band: isWe(d), hl: HL.has(d.d), title: `${md(d)} (${dow(d.w)})`, extra: `${t('프롬프트', 'Prompts')} ${fmt(d.p)}${U.n}` })), xl: xlDay(days), xl2: xlDow(days) })
+    },
+    daily() {
+      main.innerHTML = blk('a', '', lg('b1', t('Claude Code 프롬프트', 'Claude Code prompts')) + lg('b2', t('슬랙 메시지', 'Slack messages')))
+      cols($('a'), { aria: t('30일 동안 날마다 쓴 프롬프트와 슬랙 메시지 수', 'Prompts and Slack messages written per day over 30 days'), unit: U.n, h: 250,
+        series: [{ name: t('프롬프트', 'Prompts'), cls: 'c1', sw: 'b1' }, { name: t('슬랙', 'Slack'), cls: 'c2', sw: 'b2' }],
+        cols: days.map(d => ({ vals: [d.p, d.s], band: isWe(d), hl: HL.has(d.d), title: `${md(d)} (${dow(d.w)})`, extra: `PR ${fmt(d.pr)}${U.pr}, ${t('커밋', 'commits')} ${fmt(d.cm)}${U.n}` })), xl: xlDay(days), xl2: xlDow(days) })
+    },
+  }
+  ;(V[view] || V.stay)()
+
+  // 본문에 삽입했을 때 그림 높이를 프레임에 반영한다.
+  const hostFrame = window.frameElement
+  if (hostFrame && typeof ResizeObserver === 'function') {
+    const fitFrame = () => {
+      const bodyStyle = getComputedStyle(document.body), frameStyle = getComputedStyle(hostFrame)
+      const spacing = [bodyStyle.paddingTop, bodyStyle.paddingBottom, frameStyle.borderTopWidth, frameStyle.borderBottomWidth].reduce((a, v) => a + (parseFloat(v) || 0), 0)
+      const height = `${Math.ceil(main.getBoundingClientRect().height + spacing)}px`
+      if (hostFrame.style.height !== height) hostFrame.style.height = height
+    }
+    new ResizeObserver(fitFrame).observe(main)
+  }
+})()
+</script>
+</body>
+</html>
