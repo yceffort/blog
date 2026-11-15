@@ -1,0 +1,81 @@
+// usage: node webkit-vt.mjs <vt|novt> <navigations> <out.json>
+import {execFileSync} from 'node:child_process'
+import {writeFileSync} from 'node:fs'
+import {webkit, devices} from 'playwright'
+
+const [mode = 'vt', navs = '30', out = 'result.json'] = process.argv.slice(2)
+const START = (process.env.BASE || 'https://yceffort.kr') + '/2026/11/nextjs-page-preservation-memory'
+
+function processes() {
+  const ps = execFileSync('ps', ['-axo', 'pid=,command='], {encoding: 'utf8'})
+  return ps
+    .split('\n')
+    .filter((l) => l.includes('webkit-2370') && /com\.apple\.WebKit\.(GPU|WebContent)/.test(l))
+    .map((l) => {
+      const [pid, ...rest] = l.trim().split(/\s+/)
+      return {pid: Number(pid), kind: rest.join(' ').match(/com\.apple\.WebKit\.(GPU|WebContent)/)[1]}
+    })
+}
+
+function footprintMB(pid) {
+  try {
+    const txt = execFileSync('footprint', ['-p', String(pid)], {encoding: 'utf8'})
+    const m = txt.match(/Footprint:\s+([\d.]+)\s+(KB|MB|GB)/)
+    if (!m) return null
+    const v = Number(m[1])
+    return m[2] === 'GB' ? v * 1024 : m[2] === 'KB' ? v / 1024 : v
+  } catch {
+    return null
+  }
+}
+
+function sample() {
+  const res = {}
+  for (const p of processes()) {
+    const mb = footprintMB(p.pid)
+    if (mb == null) continue
+    res[p.kind] = Math.max(res[p.kind] ?? 0, mb)
+  }
+  return res
+}
+
+const browser = await webkit.launch({headless: false})
+const context = await browser.newContext({...devices['iPhone 15 Pro']})
+if (mode === 'novt') {
+  await context.addInitScript(() => {
+    delete Document.prototype.startViewTransition
+  })
+}
+const page = await context.newPage()
+let crashed = null
+page.on('crash', () => {
+  crashed = Date.now()
+})
+await page.goto(START, {waitUntil: 'load'})
+await page.waitForTimeout(3000)
+
+const rows = [{i: 0, path: new URL(page.url()).pathname, ...sample()}]
+for (let i = 1; i <= Number(navs) && !crashed; i++) {
+  const before = new URL(page.url()).pathname
+  await page.evaluate(() => {
+    const a = [...document.querySelectorAll('.series-nav-list li a')].find((el) => el.checkVisibility())
+    a.click()
+  })
+  await page.waitForFunction((b) => location.pathname !== b, before, {timeout: 15000}).catch(() => {})
+  await page.waitForTimeout(1500)
+  const info = await page
+    .evaluate(() => ({
+      vt: typeof document.startViewTransition,
+      nodes: document.getElementsByTagName('*').length,
+    }))
+    .catch(() => ({}))
+  rows.push({i, path: new URL(page.url()).pathname, ...info, ...sample()})
+  console.log(JSON.stringify(rows.at(-1)))
+}
+if (!crashed) {
+  await page.waitForTimeout(30000)
+  rows.push({i: 'idle30s', ...sample()})
+  console.log(JSON.stringify(rows.at(-1)))
+}
+writeFileSync(out, JSON.stringify({mode, crashed, rows}, null, 2))
+await browser.close()

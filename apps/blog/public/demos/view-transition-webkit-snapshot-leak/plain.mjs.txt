@@ -1,0 +1,101 @@
+// usage: node webkit-plain.mjs <variant> <steps>
+// variant flags joined by '+':
+//   plain   : update 콜백이 transition을 참조하지 않는다
+//   capture : React처럼 같은 함수의 다른 클로저가 transition을 참조한다
+//   hide    : 이전 본문을 지우지 않고 display:none 으로 숨긴다 (Activity 흉내)
+//   anims   : ready 시점에 getAnimations({subtree:true}) 를 부른다
+//   cancel  : finished 시점에 모은 애니메이션을 cancel 한다
+import {execFileSync} from 'node:child_process'
+import {webkit, devices} from 'playwright'
+
+const [variant = 'plain', steps = '5'] = process.argv.slice(2)
+const flags = new Set(variant.split('+'))
+
+function footprintMB(kind = 'WebContent') {
+  const ps = execFileSync('ps', ['-axo', 'pid=,command='], {encoding: 'utf8'})
+  let max = 0
+  for (const l of ps.split('\n')) {
+    if (!l.includes('webkit-2370') || !l.includes(`com.apple.WebKit.${kind}`)) continue
+    try {
+      const m = execFileSync('footprint', ['-p', l.trim().split(/\s+/)[0]], {encoding: 'utf8'}).match(/Footprint:\s+([\d.]+)\s+(KB|MB|GB)/)
+      max = Math.max(max, m[2] === 'GB' ? m[1] * 1024 : m[2] === 'KB' ? m[1] / 1024 : Number(m[1]))
+    } catch {}
+  }
+  return Math.round(max)
+}
+
+const html = `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  body { margin: 0; font: 17px/1.8 -apple-system, sans-serif; background: #111; color: #ddd; }
+  main { padding: 16px; view-transition-name: page; }
+  p { margin: 0 0 16px; }
+</style></head><body><main id="m"></main>
+<script>
+  const lorem = '가나다라마바사 아자차카타파하 '.repeat(12)
+  function make(name, paras) {
+    const d = document.createElement('div')
+    for (let i = 0; i < paras; i++) { const p = document.createElement('p'); p.textContent = name + ' ' + i + ' ' + lorem; d.append(p) }
+    return d
+  }
+  const flags = new Set(${JSON.stringify([...flags])})
+  const m = document.getElementById('m')
+  const pages = { A: make('A', 230), B: make('B', 95) }
+  let cur = 'A'
+  m.append(pages.A)
+  // clean: update 콜백을 transition이 없는 스코프에서 만들고, step도 async가 아니다
+  function makeUpdate(next) {
+    return () => { pages[cur].remove(); m.append(pages[next]); cur = next }
+  }
+  if (flags.has('clean')) {
+    window.step = () => {
+      const next = cur === 'A' ? 'B' : 'A'
+      return document.startViewTransition(makeUpdate(next)).finished.then(() => {}, () => {})
+    }
+  } else window.step = async () => {
+    const next = cur === 'A' ? 'B' : 'A'
+    const t = document.startViewTransition(() => {
+      if (flags.has('hide')) {
+        pages[cur].style.display = 'none'
+        if (!pages[next].isConnected) m.append(pages[next])
+        pages[next].style.display = ''
+      } else {
+        pages[cur].remove()
+        m.append(pages[next])
+      }
+      cur = next
+    })
+    if (flags.has('capture')) {
+      window.__vt = t
+      t.finished.finally(() => { if (window.__vt === t) window.__vt = null })
+    }
+    let anims = []
+    if (flags.has('anims')) {
+      t.ready.then(() => {
+        anims = document.documentElement.getAnimations({ subtree: true })
+          .filter((a) => a.effect && a.effect.pseudoElement && a.effect.pseudoElement.startsWith('::view-transition'))
+        anims.forEach((a) => a.effect.getKeyframes())
+      })
+    }
+    await t.finished.catch(() => {})
+    if (flags.has('cancel')) anims.forEach((a) => a.cancel())
+  }
+</script></body></html>`
+
+const browser = await webkit.launch({headless: false, env: {...process.env, __XPC_JSC_useDollarVM: '1'}})
+const context = await browser.newContext({...devices['iPhone 15 Pro']})
+const page = await context.newPage()
+await page.setContent(html)
+await page.waitForTimeout(1500)
+const series = [footprintMB()]
+for (let i = 0; i < Number(steps); i++) {
+  await page.evaluate(() => window.step())
+  await page.waitForTimeout(800)
+  series.push(footprintMB())
+}
+await page.waitForTimeout(5000)
+const idle = footprintMB()
+await page.evaluate(() => { $vm.gc(); $vm.gc() })
+await page.waitForTimeout(5000)
+const afterGC = footprintMB()
+console.log(`${variant}: ${series.join(' ')} | idle ${idle} | after $vm.gc() ${afterGC}`)
+await browser.close()

@@ -1,0 +1,26 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>#page { view-transition-name: page; } p { margin: 0 0 16px; }</style>
+<main id="page"></main>
+<script>
+const page = document.getElementById('page');
+function fill(n) {
+  page.replaceChildren(...Array.from({length: n}, (_, i) => {
+    const p = document.createElement('p');
+    p.textContent = i + ' ' + 'lorem ipsum dolor sit amet '.repeat(30);
+    return p;
+  }));
+}
+fill(230);
+function makeUpdate(n) { return () => fill(n); }
+// clean: the update callback cannot reach the ViewTransition object
+function stepClean(n) { return document.startViewTransition(makeUpdate(n)).finished; }
+// cycle: the update callback shares a scope that holds t
+let current = null;
+function stepCycle(n) {
+  const t = document.startViewTransition(() => fill(n));
+  current = t;
+  t.finished.finally(() => { if (current === t) current = null; });
+  return t.finished;
+}
+</script>

@@ -1,0 +1,791 @@
+{
+  "environment": {
+    "playwright": "1.64.1",
+    "browser": "WebKit 27.2 (Playwright webkit build 2370), headed, macOS",
+    "device": "devices['iPhone 15 Pro']: 393x659 viewport, deviceScaleFactor 3, isMobile, hasTouch",
+    "metric": "footprint -p <pid> of the com.apple.WebKit.WebContent and com.apple.WebKit.GPU processes, MB"
+  },
+  "navigation": "Click the visible link in .series-nav-list between /2026/09/nextjs-cache-components-activity and /2026/11/nextjs-page-preservation-memory, wait 1.5 s, sample. After 30 moves wait 30 s and sample again (i = \"idle30s\").",
+  "mainSize": {
+    "/2026/09/nextjs-cache-components-activity": {
+      "width": 361,
+      "height": 42776,
+      "dpr": 3
+    },
+    "/2026/11/nextjs-page-preservation-memory": {
+      "width": 361,
+      "height": 17594,
+      "dpr": 3
+    }
+  },
+  "runs": {
+    "transitions": {
+      "target": "https://yceffort.kr (commit 49086956)",
+      "rows": [
+        {
+          "i": 0,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "GPU": 236,
+          "WebContent": 230
+        },
+        {
+          "i": 1,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 393,
+          "WebContent": 407
+        },
+        {
+          "i": 2,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 379,
+          "WebContent": 831
+        },
+        {
+          "i": 3,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 428,
+          "WebContent": 1000
+        },
+        {
+          "i": 4,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 405,
+          "WebContent": 1429
+        },
+        {
+          "i": 5,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 437,
+          "WebContent": 1598
+        },
+        {
+          "i": 6,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 442,
+          "WebContent": 2005
+        },
+        {
+          "i": 7,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 465,
+          "WebContent": 2177
+        },
+        {
+          "i": 8,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 453,
+          "WebContent": 2593
+        },
+        {
+          "i": 9,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 492,
+          "WebContent": 2758
+        },
+        {
+          "i": 10,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 463,
+          "WebContent": 3177
+        },
+        {
+          "i": 11,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 509,
+          "WebContent": 3340
+        },
+        {
+          "i": 12,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 500,
+          "WebContent": 3760
+        },
+        {
+          "i": 13,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 538,
+          "WebContent": 3926
+        },
+        {
+          "i": 14,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 517,
+          "WebContent": 4353
+        },
+        {
+          "i": 15,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 555,
+          "WebContent": 4520
+        },
+        {
+          "i": 16,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 524,
+          "WebContent": 4953
+        },
+        {
+          "i": 17,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 576,
+          "WebContent": 5120
+        },
+        {
+          "i": 18,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 558,
+          "WebContent": 5549
+        },
+        {
+          "i": 19,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 583,
+          "WebContent": 5716
+        },
+        {
+          "i": 20,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 562,
+          "WebContent": 6146
+        },
+        {
+          "i": 21,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 607,
+          "WebContent": 6313
+        },
+        {
+          "i": 22,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 585,
+          "WebContent": 6741
+        },
+        {
+          "i": 23,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 635,
+          "WebContent": 6908
+        },
+        {
+          "i": 24,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 597,
+          "WebContent": 7301
+        },
+        {
+          "i": 25,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 640,
+          "WebContent": 7466
+        },
+        {
+          "i": 26,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 633,
+          "WebContent": 7818
+        },
+        {
+          "i": 27,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 670,
+          "WebContent": 7980
+        },
+        {
+          "i": 28,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 654,
+          "WebContent": 8398
+        },
+        {
+          "i": 29,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 681,
+          "WebContent": 8560
+        },
+        {
+          "i": 30,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 655,
+          "WebContent": 8978
+        },
+        {
+          "i": "idle30s",
+          "GPU": 534,
+          "WebContent": 8978
+        }
+      ]
+    },
+    "startViewTransitionRemoved": {
+      "target": "https://yceffort.kr (commit 49086956), delete Document.prototype.startViewTransition in an init script",
+      "rows": [
+        {
+          "i": 0,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "GPU": 222,
+          "WebContent": 84
+        },
+        {
+          "i": 1,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 263,
+          "WebContent": 96
+        },
+        {
+          "i": 2,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 235,
+          "WebContent": 94
+        },
+        {
+          "i": 3,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 245,
+          "WebContent": 98
+        },
+        {
+          "i": 4,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 237,
+          "WebContent": 100
+        },
+        {
+          "i": 5,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 244,
+          "WebContent": 102
+        },
+        {
+          "i": 6,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 225,
+          "WebContent": 102
+        },
+        {
+          "i": 7,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 265,
+          "WebContent": 103
+        },
+        {
+          "i": 8,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 226,
+          "WebContent": 103
+        },
+        {
+          "i": 9,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 245,
+          "WebContent": 103
+        },
+        {
+          "i": 10,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 235,
+          "WebContent": 103
+        },
+        {
+          "i": 11,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 244,
+          "WebContent": 106
+        },
+        {
+          "i": 12,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 226,
+          "WebContent": 108
+        },
+        {
+          "i": 13,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 265,
+          "WebContent": 106
+        },
+        {
+          "i": 14,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 226,
+          "WebContent": 106
+        },
+        {
+          "i": 15,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 244,
+          "WebContent": 106
+        },
+        {
+          "i": 16,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 232,
+          "WebContent": 106
+        },
+        {
+          "i": 17,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 244,
+          "WebContent": 106
+        },
+        {
+          "i": 18,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 226,
+          "WebContent": 106
+        },
+        {
+          "i": 19,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 264,
+          "WebContent": 106
+        },
+        {
+          "i": 20,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 226,
+          "WebContent": 106
+        },
+        {
+          "i": 21,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 244,
+          "WebContent": 106
+        },
+        {
+          "i": 22,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 239,
+          "WebContent": 108
+        },
+        {
+          "i": 23,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 244,
+          "WebContent": 110
+        },
+        {
+          "i": 24,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 237,
+          "WebContent": 112
+        },
+        {
+          "i": 25,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 266,
+          "WebContent": 114
+        },
+        {
+          "i": 26,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 226,
+          "WebContent": 116
+        },
+        {
+          "i": 27,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 253,
+          "WebContent": 119
+        },
+        {
+          "i": 28,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 235,
+          "WebContent": 121
+        },
+        {
+          "i": 29,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "undefined",
+          "nodes": 4131,
+          "GPU": 244,
+          "WebContent": 123
+        },
+        {
+          "i": 30,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "undefined",
+          "nodes": 4132,
+          "GPU": 232,
+          "WebContent": 125
+        },
+        {
+          "i": "idle30s",
+          "GPU": 212,
+          "WebContent": 125
+        }
+      ]
+    },
+    "pageBoundaryRemoved": {
+      "target": "local next start of commit 5d42d2b8",
+      "rows": [
+        {
+          "i": 0,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "GPU": 223,
+          "WebContent": 80
+        },
+        {
+          "i": 1,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 399,
+          "WebContent": 94
+        },
+        {
+          "i": 2,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 293,
+          "WebContent": 90
+        },
+        {
+          "i": 3,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 418,
+          "WebContent": 92
+        },
+        {
+          "i": 4,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 383,
+          "WebContent": 93
+        },
+        {
+          "i": 5,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 353,
+          "WebContent": 94
+        },
+        {
+          "i": 6,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 331,
+          "WebContent": 94
+        },
+        {
+          "i": 7,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 461,
+          "WebContent": 96
+        },
+        {
+          "i": 8,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 421,
+          "WebContent": 98
+        },
+        {
+          "i": 9,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 380,
+          "WebContent": 101
+        },
+        {
+          "i": 10,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 381,
+          "WebContent": 102
+        },
+        {
+          "i": 11,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 494,
+          "WebContent": 105
+        },
+        {
+          "i": 12,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 444,
+          "WebContent": 106
+        },
+        {
+          "i": 13,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 428,
+          "WebContent": 97
+        },
+        {
+          "i": 14,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 410,
+          "WebContent": 97
+        },
+        {
+          "i": 15,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 527,
+          "WebContent": 98
+        },
+        {
+          "i": 16,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 496,
+          "WebContent": 99
+        },
+        {
+          "i": 17,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 458,
+          "WebContent": 100
+        },
+        {
+          "i": 18,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 396,
+          "WebContent": 100
+        },
+        {
+          "i": 19,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 565,
+          "WebContent": 101
+        },
+        {
+          "i": 20,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 521,
+          "WebContent": 101
+        },
+        {
+          "i": 21,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 488,
+          "WebContent": 102
+        },
+        {
+          "i": 22,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 488,
+          "WebContent": 102
+        },
+        {
+          "i": 23,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 611,
+          "WebContent": 103
+        },
+        {
+          "i": 24,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 555,
+          "WebContent": 104
+        },
+        {
+          "i": 25,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 534,
+          "WebContent": 106
+        },
+        {
+          "i": 26,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 514,
+          "WebContent": 107
+        },
+        {
+          "i": 27,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 636,
+          "WebContent": 110
+        },
+        {
+          "i": 28,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 598,
+          "WebContent": 107
+        },
+        {
+          "i": 29,
+          "path": "/2026/09/nextjs-cache-components-activity",
+          "vt": "function",
+          "nodes": 4131,
+          "GPU": 570,
+          "WebContent": 108
+        },
+        {
+          "i": 30,
+          "path": "/2026/11/nextjs-page-preservation-memory",
+          "vt": "function",
+          "nodes": 4132,
+          "GPU": 549,
+          "WebContent": 109
+        },
+        {
+          "i": "idle30s",
+          "GPU": 487,
+          "WebContent": 110
+        }
+      ]
+    }
+  }
+}

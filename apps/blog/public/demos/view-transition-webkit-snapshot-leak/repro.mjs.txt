@@ -1,0 +1,66 @@
+// WebKit 330112 댓글에 붙일 축소 재현을 그대로 측정한다
+// usage: node webkit-comment-repro.mjs <clean|cycle> <steps>
+import {execFileSync} from 'node:child_process'
+import {webkit, devices} from 'playwright'
+
+const [mode = 'clean', steps = '5'] = process.argv.slice(2)
+
+function wc() {
+  const ps = execFileSync('ps', ['-axo', 'pid=,command='], {encoding: 'utf8'})
+  let max = 0
+  for (const l of ps.split('\n')) {
+    if (!l.includes('webkit-2370') || !l.includes('com.apple.WebKit.WebContent')) continue
+    try {
+      const m = execFileSync('footprint', ['-p', l.trim().split(/\s+/)[0]], {encoding: 'utf8'}).match(/Footprint:\s+([\d.]+)\s+(KB|MB|GB)/)
+      max = Math.max(max, m[2] === 'GB' ? m[1] * 1024 : m[2] === 'KB' ? m[1] / 1024 : Number(m[1]))
+    } catch {}
+  }
+  return Math.round(max)
+}
+
+const html = `<!doctype html>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>#page { view-transition-name: page; } p { margin: 0 0 16px; }</style>
+<main id="page"></main>
+<script>
+const page = document.getElementById('page');
+function fill(n) {
+  page.replaceChildren(...Array.from({length: n}, (_, i) => {
+    const p = document.createElement('p');
+    p.textContent = i + ' ' + 'lorem ipsum dolor sit amet '.repeat(30);
+    return p;
+  }));
+}
+fill(230);
+function makeUpdate(n) { return () => fill(n); }
+// clean: the update callback cannot reach the ViewTransition object
+function stepClean(n) { return document.startViewTransition(makeUpdate(n)).finished; }
+// cycle: the update callback shares a scope that holds t
+let current = null;
+function stepCycle(n) {
+  const t = document.startViewTransition(() => fill(n));
+  current = t;
+  t.finished.finally(() => { if (current === t) current = null; });
+  return t.finished;
+}
+</script>`
+
+const browser = await webkit.launch({headless: false, env: {...process.env, __XPC_JSC_useDollarVM: '1'}})
+const context = await browser.newContext({...devices['iPhone 15 Pro']})
+const p = await context.newPage()
+await p.setContent(html)
+await p.waitForTimeout(1500)
+const h = await p.evaluate(() => Math.round(document.getElementById('page').getBoundingClientRect().height))
+const series = [wc()]
+for (let i = 0; i < Number(steps); i++) {
+  const n = i % 2 === 0 ? 95 : 230
+  await p.evaluate(([m, n]) => (m === 'clean' ? stepClean(n) : stepCycle(n)), [mode, n])
+  await p.waitForTimeout(800)
+  series.push(wc())
+}
+await p.waitForTimeout(5000)
+const idle = wc()
+await p.evaluate(() => { $vm.gc(); $vm.gc() })
+await p.waitForTimeout(5000)
+console.log(`${mode}: #page ${h}px | ${series.join(' ')} | idle ${idle} | after $vm.gc() ${wc()}`)
+await browser.close()

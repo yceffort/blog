@@ -1,0 +1,168 @@
+{
+  "environment": {
+    "playwright": "1.64.1",
+    "browser": "WebKit 27.2 (Playwright webkit build 2370), headed, macOS",
+    "device": "devices['iPhone 15 Pro']: 393x659 viewport, deviceScaleFactor 3, isMobile, hasTouch",
+    "metric": "footprint -p <pid> of the com.apple.WebKit.WebContent and com.apple.WebKit.GPU processes, MB",
+    "gc": "$vm.gc() twice, exposed with __XPC_JSC_useDollarVM=1, then wait 5 s"
+  },
+  "note": "Values are WebContent footprint in MB, transcribed from the script output. series[0] is before the first transition.",
+  "plainHtml": {
+    "page": "main with view-transition-name: page, contents alternate between 60,005px and 24,803px tall",
+    "clean": {
+      "series": [
+        17,
+        426,
+        596,
+        1004,
+        1173,
+        1582
+      ],
+      "idle5s": 1582,
+      "afterGC": 16,
+      "script": "plain.mjs.txt clean 5"
+    },
+    "asyncInline": {
+      "series": [
+        17,
+        426,
+        596,
+        1004,
+        1174,
+        1582
+      ],
+      "idle5s": 1582,
+      "afterGC": 1582,
+      "script": "plain.mjs.txt plain 5"
+    },
+    "capture": {
+      "series": [
+        16,
+        426,
+        596,
+        1004,
+        1173,
+        1582
+      ],
+      "idle5s": 1582,
+      "afterGC": 1582,
+      "script": "plain.mjs.txt capture 5"
+    }
+  },
+  "reactLikeVariantsWithoutGC": {
+    "note": "14 transitions, earlier version of plain.mjs.txt without the GC step. The drop after the 6th transition did not reproduce in later runs.",
+    "hide": [
+      16,
+      427,
+      596,
+      1005,
+      1174,
+      1583,
+      186,
+      595,
+      764,
+      1174,
+      1342,
+      1750,
+      1919,
+      2330,
+      2498
+    ],
+    "anims": [
+      16,
+      426,
+      596,
+      1004,
+      1174,
+      1582,
+      15,
+      425,
+      594,
+      1003,
+      1172,
+      1581,
+      1750,
+      2162,
+      2330
+    ],
+    "animsCancel": [
+      16,
+      426,
+      596,
+      1004,
+      1174,
+      1583,
+      15,
+      424,
+      593,
+      1003,
+      1171,
+      1581,
+      1750,
+      2161,
+      2329
+    ]
+  },
+  "blogProduction": {
+    "navigation": "8 moves between the two series posts",
+    "asIs": {
+      "series": [
+        229,
+        407,
+        831,
+        998,
+        1426,
+        1589,
+        1983,
+        2158,
+        2573
+      ],
+      "idle5s": 2572,
+      "afterGC": 2567,
+      "script": "gc.mjs.txt asis 8"
+    },
+    "releaseUpdateCallback": {
+      "series": [
+        229,
+        407,
+        831,
+        999,
+        1426,
+        1594,
+        1991,
+        2167,
+        2583
+      ],
+      "idle5s": 2584,
+      "afterGC": 104,
+      "script": "gc.mjs.txt patch 8"
+    }
+  },
+  "reducedRepro": {
+    "page": "repro.html, #page is 65,764px tall",
+    "stepClean": {
+      "series": [
+        17,
+        746,
+        1048,
+        1772,
+        2074,
+        2803
+      ],
+      "idle5s": 2803,
+      "afterGC": 17
+    },
+    "stepCycle": {
+      "series": [
+        17,
+        747,
+        1048,
+        1772,
+        2074,
+        2802
+      ],
+      "idle5s": 2802,
+      "afterGC": 2800
+    }
+  }
+}

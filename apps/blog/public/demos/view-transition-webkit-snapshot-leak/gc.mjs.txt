@@ -1,0 +1,60 @@
+// usage: BASE=... node webkit-gc.mjs <asis|patch> <navs>
+//   asis  : 그대로
+//   patch : startViewTransition 에 넘긴 update 콜백 참조를 호출 직후 끊는 래퍼를 끼운다
+import {execFileSync} from 'node:child_process'
+import {webkit, devices} from 'playwright'
+
+const [mode = 'asis', navs = '10'] = process.argv.slice(2)
+const BASE = process.env.BASE || 'https://yceffort.kr'
+
+function wc() {
+  const ps = execFileSync('ps', ['-axo', 'pid=,command='], {encoding: 'utf8'})
+  let max = 0
+  for (const l of ps.split('\n')) {
+    if (!l.includes('webkit-2370') || !l.includes('com.apple.WebKit.WebContent')) continue
+    try {
+      const m = execFileSync('footprint', ['-p', l.trim().split(/\s+/)[0]], {encoding: 'utf8'}).match(/Footprint:\s+([\d.]+)\s+(KB|MB|GB)/)
+      max = Math.max(max, m[2] === 'GB' ? m[1] * 1024 : m[2] === 'KB' ? m[1] / 1024 : Number(m[1]))
+    } catch {}
+  }
+  return Math.round(max)
+}
+
+const browser = await webkit.launch({headless: false, env: {...process.env, __XPC_JSC_useDollarVM: '1'}})
+const context = await browser.newContext({...devices['iPhone 15 Pro']})
+if (mode === 'patch') {
+  await context.addInitScript(() => {
+    const original = Document.prototype.startViewTransition
+    if (!original) return
+    const release = (fn) => {
+      let pending = fn
+      return () => {
+        const run = pending
+        pending = null
+        return run()
+      }
+    }
+    Document.prototype.startViewTransition = function (arg) {
+      if (typeof arg === 'function') return original.call(this, release(arg))
+      if (arg && typeof arg.update === 'function') return original.call(this, {types: arg.types, update: release(arg.update)})
+      return original.call(this, arg)
+    }
+  })
+}
+const page = await context.newPage()
+await page.goto(`${BASE}/2026/11/nextjs-page-preservation-memory`, {waitUntil: 'load'})
+await page.waitForTimeout(3000)
+const series = [wc()]
+for (let i = 1; i <= Number(navs); i++) {
+  const before = new URL(page.url()).pathname
+  await page.evaluate(() => [...document.querySelectorAll('.series-nav-list li a')].find((a) => a.checkVisibility()).click())
+  await page.waitForFunction((b) => location.pathname !== b, before, {timeout: 15000}).catch(() => {})
+  await page.waitForTimeout(1500)
+  series.push(wc())
+}
+await page.waitForTimeout(5000)
+const idle = wc()
+await page.evaluate(() => { $vm.gc(); $vm.gc() })
+await page.waitForTimeout(5000)
+console.log(`${mode}: ${series.join(' ')} | idle ${idle} | after $vm.gc() ${wc()}`)
+await browser.close()
