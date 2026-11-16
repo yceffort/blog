@@ -1,7 +1,7 @@
 import {ImageResponse} from 'next/og'
 import sharp from 'sharp'
 
-import {loadOgFont, OG_FONT_URL} from './font'
+import {loadOgFont} from './font'
 import {unblockSvgLoader} from './sharp'
 
 export interface OgImageContent {
@@ -40,9 +40,6 @@ export async function renderOgImage({
   ).toString('base64')
 
   const fontData = await loadOgFont()
-  if (!fontData) {
-    throw new Error(`Failed to fetch font: ${OG_FONT_URL}`)
-  }
   return new ImageResponse(
     <div
       style={{

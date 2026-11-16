@@ -1,0 +1,7 @@
+NanumGothic Bold (NAVER Nanum fonts), SIL Open Font License 1.1
+Source: https://raw.githubusercontent.com/fonts-archive/NanumGothic/3e227dcca838996dbc669e10368eb82d97adc799/NanumGothicBold.ttf (downloaded 2026-11-16)
+Distributor: https://hangeul.naver.com/font
+License text: OFL.txt (Nanum copyright line from the font's name table, license body from the SIL OFL 1.1)
+Font name table: Version 3.021 | NanumGothic | Copyright © 2011 NHN Corporation. All rights reserved. Font designed by Sandoll Communications Inc.
+sha256: 454eb3f503f377782a99eb84fc4bb7dde22a0f075d41b47427737f2985053bc9
+Used as-is (no subsetting). Read by font.ts for OG images in blog, research and news.

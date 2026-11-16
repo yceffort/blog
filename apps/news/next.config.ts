@@ -2,6 +2,9 @@ import type {NextConfig} from 'next'
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  outputFileTracingIncludes: {
+    '/api/og': ['../../packages/shared/src/og/fonts/*.ttf'],
+  },
   async headers() {
     return [
       {
