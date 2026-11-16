@@ -32,7 +32,11 @@ const styles = stylex.create({
     '@layer site': {
       position: 'relative',
       overflow: 'hidden',
-      aspectRatio: '16 / 9',
+      // 두 칸일 때는 글 칸 높이에 맞춰 늘어나야 아래에 빈 띠가 남지 않는다
+      aspectRatio: {
+        default: '16 / 9',
+        '@media (width >= 64rem)': 'auto',
+      },
       backgroundColor: 'var(--surface-2)',
       borderBottomWidth: {
         default: '1px',
@@ -75,6 +79,7 @@ const styles = stylex.create({
       fontWeight: '800',
       lineHeight: '1.25',
       letterSpacing: '-0.025em',
+      wordBreak: 'keep-all',
       color: 'var(--ink)',
       WebkitLineClamp: '3',
       WebkitBoxOrient: 'vertical',
@@ -86,6 +91,7 @@ const styles = stylex.create({
       display: '-webkit-box',
       fontSize: '15px',
       lineHeight: '1.6',
+      wordBreak: 'keep-all',
       color: 'var(--ink-3)',
       WebkitLineClamp: '3',
       WebkitBoxOrient: 'vertical',
