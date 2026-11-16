@@ -215,7 +215,7 @@ export default function SiteSearch() {
                   >
                     {item.date}
                     {item.tags.length > 0 &&
-                      ` · ${item.tags
+                      `\u2003${item.tags
                         .slice(0, 3)
                         .map((t) => `#${t}`)
                         .join(' ')}`}

@@ -11,7 +11,7 @@ import {useLocale} from '@/hooks/useLocale'
 
 const intro = {
   ko: {
-    eyebrow: 'FRONTEND ENGINEER · SEOUL',
+    eyebrow: 'FRONTEND ENGINEER\u2003SEOUL',
     sub: '웹이 동작하는 원리를 파고들고, 직접 만들고 측정한 경험을 글과 도구로 나눕니다. 요즘은 AI와 함께 일하는 개발자의 판단과 학습을 고민합니다.',
   },
   en: {

@@ -54,7 +54,8 @@ export default async function ArchivePage() {
         <span className="sec-count">ARCHIVE</span>
         <h1 className={archiveStyles.element_h1}>전체 글</h1>
         <p className={`archive-sub ${archiveStyles.archive_sub}`}>
-          {posts.length}개의 글 · {years.length}개 연도
+          {posts.length}개의 글{'\u2003'}
+          {years.length}개 연도
         </p>
       </header>
 

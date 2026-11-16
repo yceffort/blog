@@ -3,8 +3,8 @@ import {ImageResponse} from 'next/og'
 import {loadOgFont, OG_FONT_NAME} from './font'
 
 export interface HomeOgContent {
-  // 위에 작게 붙는 머리말. 각 사이트 히어로의 eyebrow와 같은 문구
-  eyebrow: string
+  // 위에 작게 붙는 머리말. 각 사이트 히어로의 eyebrow와 같은 문구를 조각으로 나눠 간격을 두고 그린다
+  eyebrow: string[]
   // 히어로 세 줄. accent는 그라데이션, muted는 흐린 문장부호
   lines: {text: string; tone?: 'accent' | 'muted'}[][]
   // 아래 왼쪽 숫자 [값, 이름]
@@ -78,7 +78,11 @@ export async function renderHomeOgImage({
             backgroundColor: P3,
           }}
         />
-        {eyebrow}
+        {eyebrow.map((part) => (
+          <span key={part} style={{marginRight: 28}}>
+            {part}
+          </span>
+        ))}
       </div>
       <div
         style={{

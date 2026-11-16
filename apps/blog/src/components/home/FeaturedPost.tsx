@@ -79,8 +79,8 @@ export default function FeaturedPost({
         <div className={featuredStyles.meta}>
           <PostDate value={date} />
           {pathPrefix
-            ? ` · ${readingTime} min · read`
-            : ` · ${readingTime}분 · read`}
+            ? `\u2003${readingTime} min read`
+            : `\u2003${readingTime}분`}
         </div>
       </div>
     </article>

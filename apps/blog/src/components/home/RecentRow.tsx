@@ -99,7 +99,7 @@ export default function RecentRow({
             <br />
           </>
         )}
-        {pathPrefix ? `${readingTime} min · read` : `${readingTime}분 · read`}
+        {pathPrefix ? `${readingTime} min read` : `${readingTime}분`}
       </div>
       <div className={`rarrow ${recentStyles.rarrow}`} aria-hidden="true">
         <svg

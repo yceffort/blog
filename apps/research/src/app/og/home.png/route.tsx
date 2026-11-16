@@ -10,7 +10,7 @@ async function renderHomePng() {
   cacheLife('max')
 
   const image = await renderHomeOgImage({
-    eyebrow: `RESEARCH LAB · SEOUL · ${new Date().getFullYear()}`,
+    eyebrow: ['RESEARCH LAB', 'SEOUL', String(new Date().getFullYear())],
     lines: [
       [{text: 'SLOW.'}],
       [

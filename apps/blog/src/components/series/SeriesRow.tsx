@@ -44,7 +44,10 @@ export default function SeriesRow({
         </ViewTransition>
         <div className={`rtags ${recentStyles.rtags}`}>
           <span>{String(posts.length).padStart(2, '0')} POSTS</span>
-          <span>· {period}</span>
+          <span>
+            {'\u2003'}
+            {period}
+          </span>
         </div>
       </div>
       <div className={`rd ${recentStyles.rd}`}>{description}</div>

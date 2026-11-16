@@ -32,7 +32,7 @@ export function DownloadButton({
     : saved
       ? update
         ? '업데이트'
-        : '저장됨 · 다시 저장'
+        : '저장됨\u2003다시 저장'
       : '↓ 오프라인 저장'
   return (
     <div className="offline-download">

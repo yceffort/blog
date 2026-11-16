@@ -312,7 +312,8 @@ async function PostBody({year, slug, locale}: PostParams & {locale: Locale}) {
             ◆{' '}
             {seriesInfo ? (
               <Link href={`${pathPrefix}/series/${seriesInfo.slug}`}>
-                SERIES · {seriesInfo.name}
+                SERIES{'\u2003'}
+                {seriesInfo.name}
               </Link>
             ) : (
               'ESSAY'
@@ -345,10 +346,12 @@ async function PostBody({year, slug, locale}: PostParams & {locale: Locale}) {
                   {updated && (
                     <>
                       {' '}
-                      · {labels.updated} <PostDate value={updated} />
+                      {'\u2003'}
+                      {labels.updated} <PostDate value={updated} />
                     </>
                   )}{' '}
-                  · {labels.readingTime(readingTime)}
+                  {'\u2003'}
+                  {labels.readingTime(readingTime)}
                 </div>
               </div>
             </div>

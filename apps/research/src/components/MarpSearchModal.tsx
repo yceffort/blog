@@ -103,8 +103,8 @@ export function MarpSearchModal({
         </div>
         <div className={styles.searchHint}>
           {results.length > 0
-            ? `${results.length}건 일치 · Enter로 첫 결과 이동 · ESC로 닫기`
-            : '/ 또는 Cmd/Ctrl+F로 열기 · ESC로 닫기'}
+            ? `${results.length}건 일치\u2003Enter로 첫 결과 이동\u2003ESC로 닫기`
+            : '/ 또는 Cmd/Ctrl+F로 열기\u2003ESC로 닫기'}
         </div>
       </dialog>
     </div>

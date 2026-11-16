@@ -69,7 +69,8 @@ export default function LiveDemo({
         className={stylex.props(sx.iframe).className}
       />
       <figcaption className={stylex.props(sx.figcaption).className}>
-        {title} ·{' '}
+        {title}
+        {'\u2003'}
         <a href={src} target="_blank" rel="noreferrer">
           새 탭에서 열기 ↗
         </a>

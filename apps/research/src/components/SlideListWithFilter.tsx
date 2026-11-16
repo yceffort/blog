@@ -160,13 +160,13 @@ function ResearchCard({slide, css}: {slide: Slide; css: string}) {
           {date && (
             <>
               <time dateTime={date}>{date}</time>
-              <span aria-hidden="true">·</span>
+              <span aria-hidden="true">{'\u2003'}</span>
             </>
           )}
           <span>{slideCount} slides</span>
           {slide.post && (
             <>
-              <span aria-hidden="true">·</span>
+              <span aria-hidden="true">{'\u2003'}</span>
               <a
                 href={slide.post}
                 target="_blank"

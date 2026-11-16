@@ -18,7 +18,7 @@ async function renderHomePng() {
     .map((p) => new Date(p.frontMatter.date).getFullYear())
     .reduce((a, b) => Math.min(a, b), year)
   const image = await renderHomeOgImage({
-    eyebrow: `LIVE · SEOUL · ${year}`,
+    eyebrow: ['LIVE', 'SEOUL', String(year)],
     lines: [
       [{text: 'GRIND.'}],
       [

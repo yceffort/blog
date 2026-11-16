@@ -51,7 +51,7 @@ export function MarpQrModal({qrUrl, onClose}: MarpQrModalProps) {
           {qrUrl}
         </button>
         <div className={styles.qrHint}>
-          클릭하여 URL 복사 · ESC 또는 Q로 닫기
+          클릭하여 URL 복사{'\u2003'}ESC 또는 Q로 닫기
         </div>
       </dialog>
     </div>

@@ -94,7 +94,8 @@ export default async function SeriesDetailView({
         className={`post-masthead ${readingProgressStyles.post_masthead}`}
       >
         <div className={`post-eyebrow ${readingProgressStyles.post_eyebrow}`}>
-          ◆ SERIES · {posts.length} POSTS
+          ◆ SERIES{'\u2003'}
+          {posts.length} POSTS
         </div>
         <ViewTransition name={`series-${slug}`} share="morph">
           <h1 className={`post-title ${readingProgressStyles.post_title}`}>

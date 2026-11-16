@@ -87,7 +87,7 @@ export default function SeriesCard({
           <span>
             {pathPrefix ? `${posts.length} posts` : `${posts.length}편의 글`}
           </span>
-          <span aria-hidden="true">·</span>
+          <span aria-hidden="true">{'\u2003'}</span>
           <span>
             {pathPrefix ? 'Updated ' : ''}
             <PostDate value={latest} />

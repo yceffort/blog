@@ -50,7 +50,7 @@ export function MarpOverview({
             </div>
             <span className={styles.overviewNumber}>
               {i + 1}
-              {hiddenIndices.includes(i) ? ' · 숨김' : ''}
+              {hiddenIndices.includes(i) ? '\u2003숨김' : ''}
             </span>
           </button>
         ))}

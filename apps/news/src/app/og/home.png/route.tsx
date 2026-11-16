@@ -8,7 +8,7 @@ export const dynamic = 'force-static'
 
 export async function GET() {
   const image = await renderHomeOgImage({
-    eyebrow: 'DAILY · SEOUL · 10:00 KST',
+    eyebrow: ['DAILY', 'SEOUL', '10:00 KST'],
     lines: [
       [{text: '매일 아침'}],
       [

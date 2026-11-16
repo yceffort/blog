@@ -61,7 +61,8 @@ const Hero = memo(function HeroBase({
         <div className="hero-main">
           <div className={`hero-eyebrow ${heroStyles.hero_eyebrow}`}>
             <span className={`dot ${heroStyles.dot}`} />
-            LIVE · SEOUL · {YEAR}
+            LIVE{'\u2003'}SEOUL{'\u2003'}
+            {YEAR}
           </div>
           <h1 ref={titleRef} className={`hero-title ${heroStyles.hero_title}`}>
             <span className={`ln ${heroStyles.ln}`}>GRIND.</span>

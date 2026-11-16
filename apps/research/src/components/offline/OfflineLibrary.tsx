@@ -90,7 +90,7 @@ export function OfflineLibrary() {
       if (url.href !== window.location.href)
         window.history.replaceState(null, '', url)
       if (!disposed) {
-        document.title = `${saved.title} · Offline`
+        document.title = `${saved.title} (Offline)`
         setDeck(saved)
       }
     })()
@@ -188,7 +188,7 @@ export function OfflineLibrary() {
             )}
           </output>
           <p className="offline-summary">
-            {state.decks.length}개 자료 ·{' '}
+            {state.decks.length}개 자료{'\u2003'}
             {formatBytes(
               state.decks.reduce((total, item) => total + item.bytes, 0),
             )}
@@ -202,7 +202,9 @@ export function OfflineLibrary() {
                 </h2>
                 {item.description && <p>{item.description}</p>}
                 <p className="offline-deck-meta">
-                  {item.html.length}장 · {formatBytes(item.bytes)} ·{' '}
+                  {item.html.length}장{'\u2003'}
+                  {formatBytes(item.bytes)}
+                  {'\u2003'}
                   {new Date(item.savedAt).toLocaleDateString('ko-KR')} 저장
                 </p>
                 <div className="offline-actions">

@@ -94,7 +94,7 @@ export default function PostRow({
             <span className={`series ${listStyles.post_row_series}`}>
               ◆ {series}
               {seriesOrder != null &&
-                ` · ${pathPrefix ? `Part ${seriesOrder}` : `${seriesOrder}편`}`}
+                `\u2003${pathPrefix ? `Part ${seriesOrder}` : `${seriesOrder}편`}`}
             </span>
           )}
           <ViewTransition
@@ -127,13 +127,13 @@ export default function PostRow({
           <PostDate value={date} />
           {updated && (
             <>
-              <span aria-hidden="true">·</span>
+              <span aria-hidden="true">{'\u2003'}</span>
               <span>
                 {pathPrefix ? 'Updated' : '수정'} <PostDate value={updated} />
               </span>
             </>
           )}
-          <span aria-hidden="true">·</span>
+          <span aria-hidden="true">{'\u2003'}</span>
           <span>
             {pathPrefix ? `${readingTime} min read` : `${readingTime}분`}
           </span>

@@ -342,7 +342,7 @@ export async function downloadDeck(
       let bytes = encoded.byteLength
       let completed = 0
       const report = () =>
-        progress({label: '이미지·폰트 저장', completed, total: assets.length})
+        progress({label: '이미지와 폰트 저장', completed, total: assets.length})
       report()
       let committed = false
       try {
@@ -405,7 +405,7 @@ export async function downloadDeck(
       : error instanceof DOMException && error.name === 'QuotaExceededError'
         ? '저장 공간이 부족합니다. 보관함에서 자료를 삭제한 뒤 다시 시도해 주세요.'
         : error instanceof TypeError
-          ? '연결 또는 외부 이미지·폰트 다운로드에 실패했습니다. 기존 저장본은 유지됩니다.'
+          ? '연결 또는 외부 이미지와 폰트 다운로드에 실패했습니다. 기존 저장본은 유지됩니다.'
           : error instanceof Error
             ? error.message
             : '저장하지 못했습니다. 다시 시도해 주세요.'

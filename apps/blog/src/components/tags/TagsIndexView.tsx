@@ -81,7 +81,8 @@ export default async function TagsIndexView({locale}: {locale: Locale}) {
       <section className={`page-hero ${tagsStyles.page_hero}`}>
         <div className={`hero-eyebrow ${tagsStyles.hero_eyebrow}`}>
           <span className={`dot ${heroStyles.dot}`} />
-          {tags.length} TAGS · {totalPosts} POSTS
+          {tags.length} TAGS{'\u2003'}
+          {totalPosts} POSTS
         </div>
         <h1 className={`page-title ${tagsStyles.page_title}`}>
           {'TAGS'}

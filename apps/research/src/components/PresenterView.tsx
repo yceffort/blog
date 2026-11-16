@@ -253,7 +253,7 @@ export function PresenterView({
         <div className={styles.slideWrapper}>
           <div className={styles.slideLabel}>
             현재 슬라이드
-            {slideGroups.hidden.includes(activeIndex) ? ' · 숨김' : ''}
+            {slideGroups.hidden.includes(activeIndex) ? '\u2003숨김' : ''}
           </div>
           <div className={`marp-presenter-slide ${styles.slideContent}`}>
             <Marp
@@ -313,7 +313,7 @@ export function PresenterView({
           <span className={styles.pageIndicator}>
             {activePosition + 1} / {slideIndices.length}
             {showHiddenSlides && slideGroups.hidden.length > 0
-              ? ' · 숨김 포함'
+              ? '\u2003숨김 포함'
               : ''}
           </span>
           <button
