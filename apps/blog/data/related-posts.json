@@ -1,5 +1,39 @@
 {
   "ko": {
+    "2026/11/which-element-caused-cls": [
+      {
+        "slug": "2026/10/cwv-self-hosted-blog",
+        "score": 0.61
+      },
+      {
+        "slug": "2026/10/cwv-send-on-page-leave",
+        "score": 0.47
+      },
+      {
+        "slug": "2026/10/cwv-to-tempo-and-mimir",
+        "score": 0.39
+      },
+      {
+        "slug": "2026/08/framer-motion-banner-frame-drop",
+        "score": 0.39
+      },
+      {
+        "slug": "2026/10/web-vitals-report-timing",
+        "score": 0.33
+      },
+      {
+        "slug": "2026/11/number-flow-blind-agents",
+        "score": 0.31
+      },
+      {
+        "slug": "2020/07/critical-rendering-path",
+        "score": 0.26
+      },
+      {
+        "slug": "2021/03/improve-css-performance",
+        "score": 0.21
+      }
+    ],
     "2026/11/react-19-2-progressive-chunk-size": [
       {
         "slug": "2026/05/use-client-deep-dive",
@@ -214,16 +248,16 @@
         "score": 0.31
       },
       {
-        "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
-        "score": 0.29
-      },
-      {
         "slug": "2020/07/critical-rendering-path",
         "score": 0.28
       },
       {
         "slug": "2022/06/preload-scanner",
         "score": 0.23
+      },
+      {
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.2
       },
       {
         "slug": "2022/01/javascript-self-profiling",
@@ -316,6 +350,10 @@
         "score": 0.56
       },
       {
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.24
+      },
+      {
         "slug": "2026/09/unused-javascript-cost",
         "score": 0.21
       },
@@ -333,10 +371,6 @@
       },
       {
         "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
-        "score": 0.14
-      },
-      {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.14
       }
     ],
@@ -460,10 +494,6 @@
         "score": 0.24
       },
       {
-        "slug": "2026/09/unused-javascript-cost",
-        "score": 0.23
-      },
-      {
         "slug": "2026/05/use-client-deep-dive",
         "score": 0.19
       },
@@ -474,16 +504,20 @@
       {
         "slug": "2020/11/deep-dive-into-v8",
         "score": 0.15
+      },
+      {
+        "slug": "2021/07/npm-workspaces-esbuild",
+        "score": 0.13
       }
     ],
     "2026/10/cwv-to-tempo-and-mimir": [
       {
-        "slug": "2020/07/critical-rendering-path",
-        "score": 0.22
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.37
       },
       {
-        "slug": "2026/09/blog-performance-after-migrations",
-        "score": 0.21
+        "slug": "2020/07/critical-rendering-path",
+        "score": 0.22
       },
       {
         "slug": "2022/01/javascript-self-profiling",
@@ -502,11 +536,11 @@
         "score": 0.15
       },
       {
-        "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
+        "slug": "2021/08/core-web-vital",
         "score": 0.15
       },
       {
-        "slug": "2021/08/core-web-vital",
+        "slug": "2026/09/one-web-on-multiple-webviews",
         "score": 0.15
       }
     ],
@@ -516,8 +550,8 @@
         "score": 0.28
       },
       {
-        "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
-        "score": 0.24
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.23
       },
       {
         "slug": "2026/09/blog-performance-after-migrations",
@@ -546,6 +580,10 @@
     ],
     "2026/10/cwv-self-hosted-blog": [
       {
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.67
+      },
+      {
         "slug": "2026/09/blog-performance-after-migrations",
         "score": 0.21
       },
@@ -572,10 +610,6 @@
       {
         "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
         "score": 0.13
-      },
-      {
-        "slug": "2026/09/tracing-third-party-javascript-without-sourcemaps",
-        "score": 0.11
       }
     ],
     "2026/10/claude-code-model-swap-results": [
@@ -686,10 +720,6 @@
         "score": 0.72
       },
       {
-        "slug": "2026/10/performance-improvement-workflow",
-        "score": 0.47
-      },
-      {
         "slug": "2022/01/javascript-self-profiling",
         "score": 0.4
       },
@@ -712,6 +742,10 @@
       {
         "slug": "2026/10/cwv-to-tempo-and-mimir",
         "score": 0.28
+      },
+      {
+        "slug": "2026/08/framer-motion-banner-frame-drop",
+        "score": 0.25
       }
     ],
     "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps": [
@@ -722,10 +756,6 @@
       {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.79
-      },
-      {
-        "slug": "2026/08/turbopack-scope-hoisting-singleton-split",
-        "score": 0.5
       },
       {
         "slug": "2020/09/typescript-enum-not-treeshaked",
@@ -745,6 +775,10 @@
       },
       {
         "slug": "2026/09/blog-performance-after-migrations",
+        "score": 0.25
+      },
+      {
+        "slug": "2026/09/markdown-pipeline-to-rust-wasm",
         "score": 0.25
       }
     ],
@@ -774,11 +808,11 @@
         "score": 0.3
       },
       {
-        "slug": "2026/10/number-flow-compositor-performance",
+        "slug": "2026/11/which-element-caused-cls",
         "score": 0.29
       },
       {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
+        "slug": "2026/10/number-flow-compositor-performance",
         "score": 0.29
       }
     ],
@@ -846,7 +880,7 @@
         "score": 0.13
       },
       {
-        "slug": "2026/01/intersection-observer-singleton-weakmap",
+        "slug": "2026/11/which-element-caused-cls",
         "score": 0.12
       }
     ],
@@ -978,12 +1012,12 @@
         "score": 0.18
       },
       {
-        "slug": "2020/07/critical-rendering-path",
-        "score": 0.17
-      },
-      {
         "slug": "2026/11/nextjs-page-preservation-memory",
         "score": 0.16
+      },
+      {
+        "slug": "2021/06/nextjs-11",
+        "score": 0.15
       }
     ],
     "2026/09/dhh-rails-world-2026-keynote": [
@@ -1072,6 +1106,10 @@
         "score": 0.35
       },
       {
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.34
+      },
+      {
         "slug": "2026/10/cwv-self-hosted-blog",
         "score": 0.34
       },
@@ -1082,10 +1120,6 @@
       {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.31
-      },
-      {
-        "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
-        "score": 0.3
       }
     ],
     "2026/08/who-learns-to-judge-interviews": [
@@ -1132,10 +1166,6 @@
         "score": 0.19
       },
       {
-        "slug": "2022/06/how-to-write-my-own-eslint-rules",
-        "score": 0.19
-      },
-      {
         "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
         "score": 0.18
       },
@@ -1153,6 +1183,10 @@
       },
       {
         "slug": "2020/10/migrate-gatsby-from-nextjs",
+        "score": 0.15
+      },
+      {
+        "slug": "2026/08/k8s-for-frontend-4",
         "score": 0.15
       }
     ],
@@ -1216,11 +1250,11 @@
         "score": 0.28
       },
       {
-        "slug": "2026/10/cwv-self-hosted-blog",
-        "score": 0.25
+        "slug": "2026/10/cwv-to-tempo-and-mimir",
+        "score": 0.18
       },
       {
-        "slug": "2026/10/cwv-to-tempo-and-mimir",
+        "slug": "2020/07/critical-rendering-path",
         "score": 0.18
       }
     ],
@@ -1650,6 +1684,10 @@
         "score": 0.4
       },
       {
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.35
+      },
+      {
         "slug": "2026/03/react-view-transition",
         "score": 0.29
       },
@@ -1660,10 +1698,6 @@
       {
         "slug": "2022/04/chrome-memory-profiler",
         "score": 0.24
-      },
-      {
-        "slug": "2026/10/cwv-to-tempo-and-mimir",
-        "score": 0.21
       }
     ],
     "2026/07/frontend-performance-deep-dive-is-out-now": [
@@ -1680,10 +1714,6 @@
         "score": 0.85
       },
       {
-        "slug": "2026/09/unused-javascript-cost",
-        "score": 0.84
-      },
-      {
         "slug": "2021/09/critical-request-and-prioritise-requests",
         "score": 0.83
       },
@@ -1698,6 +1728,10 @@
       {
         "slug": "2020/07/make-use-of-long-term-caching",
         "score": 0.76
+      },
+      {
+        "slug": "2026/10/web-vitals-report-timing",
+        "score": 0.75
       }
     ],
     "2026/07/frontend-past-present-after-agents": [
@@ -2470,15 +2504,15 @@
         "score": 0.15
       },
       {
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.13
+      },
+      {
         "slug": "2026/11/nextjs-page-preservation-memory",
         "score": 0.13
       },
       {
         "slug": "2021/01/effectiveness-of-brotli",
-        "score": 0.13
-      },
-      {
-        "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
         "score": 0.13
       }
     ],
@@ -3006,10 +3040,6 @@
         "score": 0.66
       },
       {
-        "slug": "2026/09/blog-performance-after-migrations",
-        "score": 0.65
-      },
-      {
         "slug": "2026/10/performance-improvement-workflow",
         "score": 0.64
       },
@@ -3024,6 +3054,10 @@
       {
         "slug": "2021/08/core-web-vital",
         "score": 0.59
+      },
+      {
+        "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
+        "score": 0.52
       }
     ],
     "2025/08/npm-deep-dive-author-talk": [
@@ -3078,10 +3112,6 @@
         "score": 0.75
       },
       {
-        "slug": "2022/06/optimize-LCP",
-        "score": 0.74
-      },
-      {
         "slug": "2026/09/unused-javascript-cost",
         "score": 0.73
       },
@@ -3092,6 +3122,10 @@
       {
         "slug": "2026/11/number-flow-blind-agents",
         "score": 0.68
+      },
+      {
+        "slug": "2022/01/javascript-self-profiling",
+        "score": 0.67
       }
     ],
     "2025/06/web-performance-analysis-3": [
@@ -3316,10 +3350,6 @@
         "score": 0.81
       },
       {
-        "slug": "2026/10/performance-improvement-workflow",
-        "score": 0.79
-      },
-      {
         "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
         "score": 0.78
       },
@@ -3330,6 +3360,10 @@
       {
         "slug": "2020/07/how-commonjs-is-making-your-bundles-larger",
         "score": 0.77
+      },
+      {
+        "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
+        "score": 0.76
       }
     ],
     "2025/05/web-performance-analysis-1": [
@@ -3580,10 +3614,6 @@
         "score": 0.56
       },
       {
-        "slug": "2020/10/migrate-gatsby-from-nextjs",
-        "score": 0.54
-      },
-      {
         "slug": "2026/09/blog-performance-after-migrations",
         "score": 0.49
       },
@@ -3602,6 +3632,10 @@
       {
         "slug": "2026/11/react-19-2-progressive-chunk-size",
         "score": 0.35
+      },
+      {
+        "slug": "2026/09/porting-markdownlint-cli2-to-rust",
+        "score": 0.29
       }
     ],
     "2025/03/react-interview-guide": [
@@ -3784,10 +3818,6 @@
         "score": 0.25
       },
       {
-        "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
-        "score": 0.18
-      },
-      {
         "slug": "2026/05/react-cache-function-deep-dive",
         "score": 0.17
       },
@@ -3806,6 +3836,10 @@
       {
         "slug": "2026/02/react-compiler-deep-dive",
         "score": 0.16
+      },
+      {
+        "slug": "2026/10/how-bundlers-remember-imports",
+        "score": 0.15
       }
     ],
     "2023/05/what-is-commonjs": [
@@ -3920,10 +3954,6 @@
         "score": 0.81
       },
       {
-        "slug": "2022/06/preload-scanner",
-        "score": 0.77
-      },
-      {
         "slug": "2026/10/web-vitals-report-timing",
         "score": 0.7
       },
@@ -3942,6 +3972,10 @@
       {
         "slug": "2021/08/core-web-vital",
         "score": 0.52
+      },
+      {
+        "slug": "2026/09/unused-javascript-cost",
+        "score": 0.47
       }
     ],
     "2022/06/how-to-write-my-own-eslint-rules": [
@@ -4616,12 +4650,12 @@
         "score": 0.48
       },
       {
-        "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
-        "score": 0.26
-      },
-      {
         "slug": "2025/12/webgpu-all-browsers",
         "score": 0.25
+      },
+      {
+        "slug": "2020/07/critical-rendering-path",
+        "score": 0.24
       }
     ],
     "2022/03/rust-wasm-project-tutorial-1": [
@@ -4994,8 +5028,8 @@
         "score": 0.29
       },
       {
-        "slug": "2026/10/number-flow-compositor-performance",
-        "score": 0.29
+        "slug": "2026/10/number-flow-forced-layout",
+        "score": 0.28
       }
     ],
     "2022/01/how-react-server-components-work": [
@@ -5005,6 +5039,10 @@
       },
       {
         "slug": "2026/03/react-server-functions-deep-dive",
+        "score": 0.65
+      },
+      {
+        "slug": "2023/05/blog-app-dir",
         "score": 0.65
       },
       {
@@ -5026,10 +5064,6 @@
       {
         "slug": "2026/03/is-nextjs-fast-enough",
         "score": 0.33
-      },
-      {
-        "slug": "2025/06/web-performance-analysis-3",
-        "score": 0.31
       }
     ],
     "2022/01/2021-retrospective": [
@@ -5820,6 +5854,10 @@
         "score": 0.91
       },
       {
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.88
+      },
+      {
         "slug": "2026/10/web-vitals-report-timing",
         "score": 0.84
       },
@@ -5842,10 +5880,6 @@
       {
         "slug": "2020/07/critical-rendering-path",
         "score": 0.71
-      },
-      {
-        "slug": "2026/10/cwv-to-tempo-and-mimir",
-        "score": 0.7
       }
     ],
     "2021/08/browser-nodejs-event-loop": [
@@ -5904,16 +5938,16 @@
         "score": 0.43
       },
       {
-        "slug": "2026/01/handling-large-json-responses",
-        "score": 0.43
-      },
-      {
         "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
         "score": 0.41
       },
       {
         "slug": "2020/07/the-cost-of-javascript-2019",
         "score": 0.4
+      },
+      {
+        "slug": "2026/09/unused-javascript-cost",
+        "score": 0.34
       }
     ],
     "2021/08/async-resources-async-hooks": [
@@ -6180,12 +6214,12 @@
         "score": 0.3
       },
       {
-        "slug": "2026/08/service-worker-caching-1",
+        "slug": "2020/07/make-use-of-long-term-caching",
         "score": 0.24
       },
       {
-        "slug": "2020/07/make-use-of-long-term-caching",
-        "score": 0.24
+        "slug": "2025/11/web-performance-deep-dive-beta-reader",
+        "score": 0.23
       }
     ],
     "2021/06/reduce-spread-anti-pattern": [
@@ -6920,10 +6954,6 @@
         "score": 0.38
       },
       {
-        "slug": "2026/10/performance-improvement-workflow",
-        "score": 0.38
-      },
-      {
         "slug": "2020/07/critical-rendering-path",
         "score": 0.33
       },
@@ -6933,6 +6963,10 @@
       },
       {
         "slug": "2026/05/tanstack-npm-supply-chain-attack",
+        "score": 0.32
+      },
+      {
+        "slug": "2026/10/web-vitals-report-timing",
         "score": 0.32
       }
     ],
@@ -7120,10 +7154,6 @@
         "score": 0.72
       },
       {
-        "slug": "2022/06/optimize-LCP",
-        "score": 0.65
-      },
-      {
         "slug": "2026/10/number-flow-compositor-performance",
         "score": 0.64
       },
@@ -7138,6 +7168,10 @@
       {
         "slug": "2020/10/http-cache",
         "score": 0.49
+      },
+      {
+        "slug": "2021/08/core-web-vital",
+        "score": 0.48
       }
     ],
     "2021/01/overflow-auto-scroll": [
@@ -7170,7 +7204,7 @@
         "score": 0.09
       },
       {
-        "slug": "2026/10/number-flow-forced-layout",
+        "slug": "2026/11/which-element-caused-cls",
         "score": 0.08
       }
     ],
@@ -7346,10 +7380,6 @@
     ],
     "2020/12/why-moment-has-been-deprecated": [
       {
-        "slug": "2026/09/unused-javascript-cost",
-        "score": 0.54
-      },
-      {
         "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
         "score": 0.48
       },
@@ -7376,6 +7406,10 @@
       {
         "slug": "2026/10/performance-improvement-workflow",
         "score": 0.3
+      },
+      {
+        "slug": "2021/08/core-web-vital",
+        "score": 0.22
       }
     ],
     "2020/12/side-project-diary-2020": [
@@ -7476,7 +7510,7 @@
         "score": 0.32
       },
       {
-        "slug": "2026/10/number-flow-compositor-performance",
+        "slug": "2020/07/critical-rendering-path",
         "score": 0.32
       }
     ],
@@ -7516,10 +7550,6 @@
     ],
     "2020/12/generate-serverless-thumbnail": [
       {
-        "slug": "2026/08/og-scraping-server-1",
-        "score": 0.75
-      },
-      {
         "slug": "2026/08/og-scraping-server-2",
         "score": 0.68
       },
@@ -7545,6 +7575,10 @@
       },
       {
         "slug": "2020/10/migrate-gatsby-from-nextjs",
+        "score": 0.15
+      },
+      {
+        "slug": "2026/03/why-still-nextjs",
         "score": 0.15
       }
     ],
@@ -7822,10 +7856,6 @@
     ],
     "2020/11/back-forward-cache": [
       {
-        "slug": "2026/11/nextjs-page-preservation-memory",
-        "score": 0.64
-      },
-      {
         "slug": "2026/07/frontend-performance-deep-dive-is-out-now",
         "score": 0.41
       },
@@ -7852,6 +7882,10 @@
       {
         "slug": "2020/10/defer-than-async",
         "score": 0.22
+      },
+      {
+        "slug": "2026/08/service-worker-caching-3",
+        "score": 0.21
       }
     ],
     "2020/11/avoid-default-export": [
@@ -8088,8 +8122,8 @@
         "score": 0.35
       },
       {
-        "slug": "2026/05/use-client-deep-dive",
-        "score": 0.33
+        "slug": "2026/11/nextjs-page-preservation-memory",
+        "score": 0.32
       }
     ],
     "2020/10/implement-event-emitter": [
@@ -9224,10 +9258,6 @@
         "score": 0.52
       },
       {
-        "slug": "2026/11/number-flow-blind-agents",
-        "score": 0.52
-      },
-      {
         "slug": "2021/04/nodejs-multithreading-worker-threads",
         "score": 0.36
       },
@@ -9246,6 +9276,10 @@
       {
         "slug": "2022/01/javascript-self-profiling",
         "score": 0.29
+      },
+      {
+        "slug": "2026/09/unused-javascript-cost",
+        "score": 0.26
       }
     ],
     "2020/01/chrome-cookie-same-site-secure": [
@@ -9896,6 +9930,40 @@
     ]
   },
   "en": {
+    "2026/11/which-element-caused-cls": [
+      {
+        "slug": "2026/10/cwv-self-hosted-blog",
+        "score": 0.53
+      },
+      {
+        "slug": "2026/10/cwv-send-on-page-leave",
+        "score": 0.41
+      },
+      {
+        "slug": "2026/10/cwv-to-tempo-and-mimir",
+        "score": 0.4
+      },
+      {
+        "slug": "2026/10/web-vitals-report-timing",
+        "score": 0.32
+      },
+      {
+        "slug": "2026/10/performance-improvement-workflow",
+        "score": 0.29
+      },
+      {
+        "slug": "2026/08/framer-motion-banner-frame-drop",
+        "score": 0.23
+      },
+      {
+        "slug": "2026/10/number-flow-forced-layout",
+        "score": 0.19
+      },
+      {
+        "slug": "2026/10/number-flow-compositor-performance",
+        "score": 0.19
+      }
+    ],
     "2026/11/react-19-2-progressive-chunk-size": [
       {
         "slug": "2026/09/nextjs-cache-components-activity",
@@ -9922,11 +9990,11 @@
         "score": 0.1
       },
       {
-        "slug": "2026/03/react-server-functions-deep-dive",
+        "slug": "2026/11/which-element-caused-cls",
         "score": 0.08
       },
       {
-        "slug": "2025/12/nextjs-react-security-vulnerability",
+        "slug": "2026/03/react-server-functions-deep-dive",
         "score": 0.08
       }
     ],
@@ -9986,16 +10054,16 @@
         "score": 0.17
       },
       {
-        "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
-        "score": 0.17
-      },
-      {
         "slug": "2026/01/intersection-observer-singleton-weakmap",
         "score": 0.17
       },
       {
         "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
         "score": 0.15
+      },
+      {
+        "slug": "2026/03/is-nextjs-fast-enough",
+        "score": 0.14
       }
     ],
     "2026/11/how-attention-disappears": [
@@ -10068,6 +10136,10 @@
     ],
     "2026/10/web-vitals-report-timing": [
       {
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.19
+      },
+      {
         "slug": "2026/09/unused-javascript-cost",
         "score": 0.18
       },
@@ -10094,10 +10166,6 @@
       {
         "slug": "2026/01/intersection-observer-singleton-weakmap",
         "score": 0.14
-      },
-      {
-        "slug": "2026/10/number-flow-compositor-performance",
-        "score": 0.13
       }
     ],
     "2026/10/swe-bench-before-swapping-models": [
@@ -10140,12 +10208,16 @@
         "score": 0.81
       },
       {
+        "slug": "2026/10/cwv-send-on-page-leave",
+        "score": 0.63
+      },
+      {
         "slug": "2026/10/cwv-to-tempo-and-mimir",
         "score": 0.63
       },
       {
-        "slug": "2026/10/cwv-send-on-page-leave",
-        "score": 0.63
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.46
       },
       {
         "slug": "2026/08/service-worker-caching-3",
@@ -10162,10 +10234,6 @@
       {
         "slug": "2025/05/web-performance-analysis-2",
         "score": 0.27
-      },
-      {
-        "slug": "2026/08/service-worker-caching-1",
-        "score": 0.26
       }
     ],
     "2026/10/number-flow-forced-layout": [
@@ -10182,6 +10250,10 @@
         "score": 0.22
       },
       {
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.18
+      },
+      {
         "slug": "2026/09/unused-javascript-cost",
         "score": 0.12
       },
@@ -10195,10 +10267,6 @@
       },
       {
         "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
-        "score": 0.1
-      },
-      {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.1
       }
     ],
@@ -10340,6 +10408,10 @@
     ],
     "2026/10/cwv-to-tempo-and-mimir": [
       {
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.68
+      },
+      {
         "slug": "2026/08/framer-motion-banner-frame-drop",
         "score": 0.2
       },
@@ -10366,13 +10438,13 @@
       {
         "slug": "2026/08/service-worker-caching-3",
         "score": 0.16
-      },
-      {
-        "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
-        "score": 0.14
       }
     ],
     "2026/10/cwv-send-on-page-leave": [
+      {
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.28
+      },
       {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.2
@@ -10400,13 +10472,13 @@
       {
         "slug": "2026/10/performance-improvement-workflow",
         "score": 0.13
-      },
-      {
-        "slug": "2026/08/service-worker-caching-3",
-        "score": 0.12
       }
     ],
     "2026/10/cwv-self-hosted-blog": [
+      {
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.69
+      },
       {
         "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
         "score": 0.15
@@ -10433,10 +10505,6 @@
       },
       {
         "slug": "2026/11/nextjs-page-preservation-memory",
-        "score": 0.09
-      },
-      {
-        "slug": "2026/09/building-coldpath-v8-coverage-analyzer",
         "score": 0.09
       }
     ],
@@ -10488,10 +10556,6 @@
         "score": 0.67
       },
       {
-        "slug": "2026/05/pr-diff-vs-bundle",
-        "score": 0.62
-      },
-      {
         "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.6
       },
@@ -10506,6 +10570,10 @@
       {
         "slug": "2026/10/web-vitals-report-timing",
         "score": 0.22
+      },
+      {
+        "slug": "2026/10/cwv-to-tempo-and-mimir",
+        "score": 0.18
       }
     ],
     "2026/09/tracing-third-party-javascript-without-sourcemaps": [
@@ -10552,10 +10620,6 @@
         "score": 0.81
       },
       {
-        "slug": "2026/05/pr-diff-vs-bundle",
-        "score": 0.75
-      },
-      {
         "slug": "2026/10/performance-improvement-workflow",
         "score": 0.46
       },
@@ -10574,6 +10638,10 @@
       {
         "slug": "2026/10/web-vitals-report-timing",
         "score": 0.27
+      },
+      {
+        "slug": "2026/11/nextjs-page-preservation-memory",
+        "score": 0.24
       }
     ],
     "2026/09/porting-markdownlint-cli2-to-rust": [
@@ -10666,16 +10734,16 @@
         "score": 0.26
       },
       {
-        "slug": "2026/09/unused-javascript-cost",
-        "score": 0.21
-      },
-      {
         "slug": "2026/09/nextjs-cache-components-activity",
         "score": 0.2
       },
       {
         "slug": "2026/05/use-cache-deep-dive",
         "score": 0.2
+      },
+      {
+        "slug": "2026/05/use-client-deep-dive",
+        "score": 0.18
       }
     ],
     "2026/09/nextjs-cache-components-activity": [
@@ -10824,10 +10892,6 @@
         "score": 0.23
       },
       {
-        "slug": "2026/09/unused-javascript-cost",
-        "score": 0.23
-      },
-      {
         "slug": "2026/10/cwv-to-tempo-and-mimir",
         "score": 0.19
       },
@@ -10846,6 +10910,10 @@
       {
         "slug": "2026/10/cwv-self-hosted-blog",
         "score": 0.14
+      },
+      {
+        "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
+        "score": 0.13
       }
     ],
     "2026/08/service-worker-caching-2": [
@@ -11138,11 +11206,11 @@
         "score": 0.09
       },
       {
-        "slug": "2026/08/rebuilding-a-vendor-sdk",
+        "slug": "2026/08/service-worker-caching-1",
         "score": 0.08
       },
       {
-        "slug": "2026/08/service-worker-caching-1",
+        "slug": "2026/08/rebuilding-a-vendor-sdk",
         "score": 0.08
       },
       {
@@ -11278,16 +11346,16 @@
         "score": 0.28
       },
       {
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.28
+      },
+      {
         "slug": "2026/03/react-view-transition",
         "score": 0.24
       },
       {
         "slug": "2026/10/web-vitals-report-timing",
         "score": 0.23
-      },
-      {
-        "slug": "2026/08/number-flow-fork-for-old-browsers",
-        "score": 0.22
       }
     ],
     "2026/07/frontend-past-present-after-agents": [
@@ -12064,12 +12132,12 @@
         "score": 0.15
       },
       {
-        "slug": "2025/05/web-performance-analysis-1",
-        "score": 0.13
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.14
       },
       {
-        "slug": "2026/07/frontend-past-present-after-agents",
-        "score": 0.12
+        "slug": "2025/05/web-performance-analysis-1",
+        "score": 0.13
       }
     ],
     "2026/02/frontend-engineering-in-ai-era": [
@@ -12468,16 +12536,16 @@
         "score": 0.45
       },
       {
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.44
+      },
+      {
         "slug": "2026/10/number-flow-forced-layout",
         "score": 0.44
       },
       {
         "slug": "2026/10/web-vitals-report-timing",
         "score": 0.43
-      },
-      {
-        "slug": "2026/01/intersection-observer-singleton-weakmap",
-        "score": 0.4
       }
     ],
     "2025/06/web-performance-analysis-3": [
@@ -12574,12 +12642,12 @@
         "score": 0.71
       },
       {
-        "slug": "2026/10/how-bundlers-remember-imports",
-        "score": 0.46
-      },
-      {
         "slug": "2026/08/service-worker-caching-2",
         "score": 0.4
+      },
+      {
+        "slug": "2026/10/web-vitals-report-timing",
+        "score": 0.39
       }
     ],
     "2025/05/web-performance-analysis-1": [
@@ -12608,12 +12676,12 @@
         "score": 0.67
       },
       {
-        "slug": "2026/08/service-worker-caching-2",
-        "score": 0.57
+        "slug": "2026/11/which-element-caused-cls",
+        "score": 0.61
       },
       {
-        "slug": "2026/10/web-vitals-report-timing",
-        "score": 0.54
+        "slug": "2026/08/service-worker-caching-2",
+        "score": 0.57
       }
     ],
     "2023/06/react-use-hook": [
@@ -12702,11 +12770,11 @@
         "score": 0.08
       },
       {
-        "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
+        "slug": "2026/08/og-scraping-server-1",
         "score": 0.08
       },
       {
-        "slug": "2026/08/og-scraping-server-1",
+        "slug": "2026/09/tracing-bundle-waste-with-v8-coverage-and-sourcemaps",
         "score": 0.08
       },
       {

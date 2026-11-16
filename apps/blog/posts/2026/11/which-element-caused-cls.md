@@ -2,11 +2,15 @@
 title: '블로그의 <em>CLS</em>는 어느 요소가 만들었는가'
 tags:
   - web-performance
-  - browser
   - debugging
-published: false
-date: 2026-11-12 12:40:00
+  - blogging
+  - browser
+  - css
+published: true
+date: 2026-11-16 22:15:00
 description: 'CLS 값과 함께 기록한 이동 요소로 찾은 두 가지 원인. 커서를 따라다니는 장식 요소가 레이아웃 이동으로 세어진 과정과, 전체 p75가 0.000인 동안 홈 목록이 푸터를 밀어낸 과정을 필드 데이터와 재현으로 확인했다.'
+art:
+  undraw: design-components
 ---
 
 ## Table of Contents
