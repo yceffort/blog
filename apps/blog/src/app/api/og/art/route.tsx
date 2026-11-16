@@ -1,4 +1,4 @@
-import {loadOgFont, unblockSvgLoader} from '@yceffort/shared/og'
+import {loadOgFont, OG_FONT_NAME, unblockSvgLoader} from '@yceffort/shared/og'
 import {parseTitleEmphasis} from '@yceffort/shared/utils'
 import {ImageResponse} from 'next/og'
 
@@ -344,7 +344,7 @@ export async function GET(request: Request) {
       fonts: fontData
         ? [
             {
-              name: 'NanumGothic',
+              name: OG_FONT_NAME,
               data: fontData,
               style: 'normal' as const,
               weight: 700 as const,

@@ -1,7 +1,7 @@
-NanumGothic Bold (NAVER Nanum fonts), SIL Open Font License 1.1
-Source: https://raw.githubusercontent.com/fonts-archive/NanumGothic/3e227dcca838996dbc669e10368eb82d97adc799/NanumGothicBold.ttf (downloaded 2026-11-16)
-Distributor: https://hangeul.naver.com/font
-License text: OFL.txt (Nanum copyright line from the font's name table, license body from the SIL OFL 1.1)
-Font name table: Version 3.021 | NanumGothic | Copyright © 2011 NHN Corporation. All rights reserved. Font designed by Sandoll Communications Inc.
-sha256: 454eb3f503f377782a99eb84fc4bb7dde22a0f075d41b47427737f2985053bc9
-Used as-is (no subsetting). Read by font.ts for OG images in blog, research and news.
+Pretendard Bold and Black (orioncactus/pretendard v1.3.9), SIL Open Font License 1.1
+Source: https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/public/static/Pretendard-{Bold,Black}.otf (downloaded 2026-11-16)
+License text: OFL.txt (https://raw.githubusercontent.com/orioncactus/pretendard/v1.3.9/LICENSE)
+sha256 Pretendard-Bold.otf: 2e91915fab54df71cc9598ebf608b2bdb54c6fe3c066ac61dff0bc44fca71cc7
+sha256 Pretendard-Black.otf: 94628b0bcea8936b6e5c30d98d685eb9bbaffb0fe2ed255542ecc656c248e021
+Used as-is (no subsetting). Read by font.ts for OG images in blog, research and news, and for /api/og/art in blog.
+Black is used only for the three hero lines of the home OG images.

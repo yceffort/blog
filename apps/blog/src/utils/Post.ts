@@ -16,7 +16,7 @@ import type {Locale} from './postPaths'
 const THUMB_DIR = `${process.cwd()}/public/thumbnails`
 
 // 코드 생성 썸네일(api/og/art) 캐시 무효화용 버전. 아트 디자인이 바뀌면 올린다.
-const ART_VERSION = 6
+const ART_VERSION = 7
 
 // public/thumbnails 에 생성 일러스트(webp)나 실사(png)가 있으면 그 경로, 없으면 frontmatter art 로 코드 아트 URL
 // 둘 다 없는 옛 글은 썸네일 없이 둔다

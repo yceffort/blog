@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   cacheComponents: true,
   outputFileTracingIncludes: {
-    '/api/og': ['../../packages/shared/src/og/fonts/*.ttf'],
+    '/api/og': ['../../packages/shared/src/og/fonts/*.otf'],
   },
   async headers() {
     return [

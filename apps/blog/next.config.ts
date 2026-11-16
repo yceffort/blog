@@ -98,7 +98,7 @@ const config: NextConfig = {
       './posts/**/*',
       './public/charts/**/*.json',
       '../../packages/markdown-rs/pkg/**/*',
-      '../../packages/shared/src/og/fonts/*.ttf',
+      '../../packages/shared/src/og/fonts/*.otf',
     ],
   },
   async headers() {

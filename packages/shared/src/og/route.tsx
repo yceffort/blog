@@ -1,196 +1,211 @@
 import {ImageResponse} from 'next/og'
 import sharp from 'sharp'
 
-import {loadOgFont} from './font'
+import {loadOgFont, OG_FONT_NAME} from './font'
+import {ACCENT, type Hue, hueFor, hueOfPaper, PAPER} from './palette'
 import {unblockSvgLoader} from './sharp'
 
 export interface OgImageContent {
+  // <em>으로 감싼 부분은 강조색으로 그린다
   title: string
-  description?: string | null
-  tags?: string[]
-  address: string
-  // 배경 이미지 원본. hasThumbnail이면 글 썸네일(WebP, PNG), 아니면 JPEG 기본 배경
-  image: Buffer
-  hasThumbnail: boolean
-  isLarge?: boolean
+  // 왼쪽 아래에 작게 붙는 사이트 표식
+  mark: string
+  // 썸네일이 없거나 unDraw 썸네일이 아닐 때 바탕색을 고르는 값
+  seed: string
+  // 글 썸네일(WebP, PNG). unDraw 바탕색이면 그림만 잘라 쓰고, 아니면 카드로 넣는다
+  image?: Buffer
+}
+
+const WIDTH = 1200
+const HEIGHT = 630
+const INK = '#16161d'
+
+type Part = {text: string; em: boolean}
+
+// 한국어 제목은 keep-all이라 띄어쓰기 단위로 줄을 바꾼다. 강조 경계에 공백이 없으면 한 단어로 묶는다
+function titleWords(title: string): Part[][] {
+  const words: Part[][] = []
+  let joined = false
+  for (const m of title.matchAll(/<em>(.*?)<\/em>|([^<]+)/g)) {
+    const em = m[1] !== undefined
+    for (const piece of (m[1] ?? m[2]).split(/(\s+)/)) {
+      if (!piece) {
+        continue
+      }
+      if (/^\s+$/.test(piece)) {
+        joined = false
+        continue
+      }
+      if (joined) {
+        words[words.length - 1].push({text: piece, em})
+      } else {
+        words.push([{text: piece, em}])
+      }
+      joined = true
+    }
+  }
+  return words
+}
+
+function charWidth(ch: string) {
+  if (/[ᄀ-ᇿ㄰-㆏　-鿿가-힯]/.test(ch)) {
+    return 1
+  }
+  return /[A-Z0-9]/.test(ch) ? 0.62 : 0.52
+}
+
+function textWidth(text: string) {
+  let width = 0
+  for (const ch of text) {
+    width += charWidth(ch)
+  }
+  return width
+}
+
+// 글자 폭을 어림해 maxLines 안에 들어가는 가장 큰 크기를 고른다
+function titleSize(words: Part[][], width: number, sizes: number[]) {
+  const maxLines = 4
+  const fits = (size: number) => {
+    let lines = 1
+    let x = 0
+    for (const word of words) {
+      const w = textWidth(word.map((p) => p.text).join('')) * size
+      if (x > 0 && x + w > width) {
+        lines += 1
+        x = 0
+      }
+      x += w + size * 0.28
+    }
+    return lines <= maxLines
+  }
+  return sizes.find(fits) ?? sizes[sizes.length - 1]
+}
+
+const toDataUrl = (png: Buffer) =>
+  `data:image/png;base64,${png.toString('base64')}`
+
+async function visualOf(image: Buffer, seed: string) {
+  const corner = await sharp(image)
+    .extract({left: 0, top: 0, width: 1, height: 1})
+    .raw()
+    .toBuffer()
+  const hue = hueOfPaper([...corner])
+  if (hue) {
+    // unDraw 썸네일은 바탕색 위에 그림을 가운데 둔 것이라, 여백을 잘라 그림만 쓴다
+    const illustration = await sharp(image)
+      .trim({threshold: 4})
+      .png()
+      .toBuffer()
+    return {
+      hue,
+      src: toDataUrl(illustration),
+      width: 420,
+      height: 400,
+      borderRadius: 0,
+      objectFit: 'contain' as const,
+    }
+  }
+  // 사진이나 코드 아트는 바탕색이 달라 둥근 카드로 넣는다. satori는 WebP를 그리지 못하므로 PNG로 바꾼다
+  const png = await sharp(image).png().toBuffer()
+  const {width, height} = await sharp(png).metadata()
+  return {
+    hue: hueFor(seed),
+    src: toDataUrl(png),
+    width: 440,
+    height: Math.min(440, Math.round((440 * height) / width)),
+    borderRadius: 24,
+    objectFit: 'cover' as const,
+  }
 }
 
 // 요청 없이도 그릴 수 있게 분리했다. 블로그는 빌드 때 글마다 이 함수로 PNG를 만든다
 export async function renderOgImage({
   title,
-  description,
-  tags = [],
-  address,
+  mark,
+  seed,
   image,
-  hasThumbnail,
-  isLarge = false,
 }: OgImageContent) {
   unblockSvgLoader()
-  const fontSize = {
-    title: isLarge ? 80 : 64,
-    description: isLarge ? 36 : 28,
-    tags: isLarge ? 28 : 22,
-    address: isLarge ? 32 : 26,
-  }
-  const descMaxLength = isLarge ? 60 : 80
-  const imageMime = hasThumbnail ? 'image/png' : 'image/jpeg'
-  // satori 는 WebP 를 그리지 못하고 빈 이미지로 넘어간다. 썸네일은 PNG 로 바꿔 넣는다
-  const imageBase64 = (
-    hasThumbnail ? await sharp(image).png().toBuffer() : image
-  ).toString('base64')
+  const visual = image ? await visualOf(image, seed) : undefined
+  const hue: Hue = visual?.hue ?? hueFor(seed)
+  const words = titleWords(title)
+  const titleWidth = visual ? 560 : WIDTH - 96 * 2
+  const size = titleSize(
+    words,
+    titleWidth,
+    visual ? [58, 52, 46, 40] : [72, 64, 56, 48],
+  )
 
   const fontData = await loadOgFont()
   return new ImageResponse(
     <div
       style={{
         display: 'flex',
-        height: '100%',
         width: '100%',
-        position: 'relative',
-        backgroundColor: 'black',
-        fontFamily: '"NanumGothic"',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: visual ? '0 72px 0 96px' : '0 96px',
+        backgroundColor: PAPER[hue],
+        fontFamily: OG_FONT_NAME,
       }}
     >
-      <img
-        alt={title}
-        src={`data:${imageMime};base64,${imageBase64}`}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          filter: hasThumbnail ? 'blur(1px)' : 'blur(3px)',
-          transform: 'scale(1.02)',
-        }}
-      />
-
       <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '100%',
-          height: '100%',
-          alignItems: 'flex-start',
-          justifyContent: 'center',
-          position: 'relative',
-          padding: '50px 70px',
-          ...(hasThumbnail
-            ? {
-                backgroundImage:
-                  'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.25) 100%)',
-              }
-            : {
-                backgroundColor: 'rgba(0, 0, 0, 0.4)',
-              }),
-        }}
+        style={{display: 'flex', flexDirection: 'column', width: titleWidth}}
       >
         <div
           style={{
             display: 'flex',
-            fontSize: fontSize.title,
+            flexWrap: 'wrap',
+            fontSize: size,
             fontWeight: 700,
-            lineHeight: 1.2,
-            color: '#fff',
-            textAlign: 'left',
-            wordBreak: 'keep-all',
+            lineHeight: 1.25,
             letterSpacing: '-0.03em',
-            marginBottom: isLarge ? 12 : 8,
-            justifyContent: 'flex-start',
-            textShadow: '2px 2px 8px rgba(0,0,0,0.8)',
-            width: '100%',
+            color: INK,
           }}
         >
-          {title}
+          {words.map((word, i) => (
+            <div key={i} style={{display: 'flex', marginRight: size * 0.28}}>
+              {word.map((part, j) => (
+                <span key={j} style={{color: part.em ? ACCENT[hue] : INK}}>
+                  {part.text}
+                </span>
+              ))}
+            </div>
+          ))}
         </div>
-
-        {description ? (
-          <div
-            style={{
-              display: 'flex',
-              fontSize: fontSize.description,
-              fontWeight: 400,
-              color: '#eee',
-              lineHeight: 1.4,
-              textAlign: 'left',
-              wordBreak: 'keep-all',
-              letterSpacing: '-0.02em',
-              marginBottom: isLarge ? 20 : 16,
-              maxWidth: '90%',
-              justifyContent: 'flex-start',
-              textShadow: '1px 1px 6px rgba(0,0,0,0.7)',
-              width: '100%',
-            }}
-          >
-            {description.length > descMaxLength
-              ? description.slice(0, descMaxLength) + '...'
-              : description}
-          </div>
-        ) : null}
-
-        {tags.length > 0 ? (
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'flex-start',
-              gap: '10px',
-              marginBottom: 20,
-              maxWidth: '90%',
-              width: '100%',
-            }}
-          >
-            {tags.map((tag, index) => (
-              <div
-                key={index}
-                style={{
-                  display: 'flex',
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                  borderRadius: isLarge ? '18px' : '15px',
-                  padding: isLarge ? '10px 18px' : '8px 15px',
-                  fontSize: fontSize.tags,
-                  color: '#fff',
-                  textShadow: '1px 1px 4px rgba(0,0,0,0.6)',
-                  fontWeight: 400,
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                #{tag}
-              </div>
-            ))}
-          </div>
-        ) : null}
-
         <div
           style={{
             display: 'flex',
-            fontSize: fontSize.address,
+            marginTop: 40,
+            fontSize: 24,
             fontWeight: 700,
-            color: '#fff',
-            marginTop: isLarge ? 12 : 10,
-            paddingTop: isLarge ? 20 : 16,
-            width: '100%',
-            justifyContent: 'flex-start',
-            textShadow: '1px 1px 6px rgba(0,0,0,0.7)',
-            borderTop: '2px solid rgba(255,255,255,0.3)',
+            letterSpacing: '-0.02em',
+            color: `${INK}99`,
           }}
         >
-          {address}
+          {mark}
         </div>
       </div>
+
+      {visual ? (
+        <img
+          alt=""
+          src={visual.src}
+          style={{
+            width: visual.width,
+            height: visual.height,
+            borderRadius: visual.borderRadius,
+            objectFit: visual.objectFit,
+          }}
+        />
+      ) : null}
     </div>,
     {
-      width: 1200,
-      height: 630,
+      width: WIDTH,
+      height: HEIGHT,
       fonts: [
-        {
-          name: 'NanumGothic',
-          data: fontData,
-          style: 'normal',
-          weight: 700,
-        },
+        {name: OG_FONT_NAME, data: fontData, style: 'normal', weight: 700},
       ],
       headers: {
         'Cache-Control': 'public, max-age=31536000, immutable',
@@ -200,52 +215,41 @@ export async function renderOgImage({
 }
 
 // 각 앱의 app/api/og/route.tsx에서 `export const GET = createOgImageRoute(SiteConfig.url)`로 쓴다.
-// 배경 이미지(og-background.jpg, type=page면 og-background-page.jpg)는 앱마다 public에 둔다.
+// thumbnail이 있으면 오른쪽에 그리고, 없으면 제목만 그린다
 export function createOgImageRoute(siteUrl: string) {
   return async function GET(request: Request) {
     try {
       const {searchParams} = new URL(request.url)
       const title = searchParams.get('title')
-      const tagsParam = searchParams.get('tags')
-      const pathParam = searchParams.get('path')
-      const type = searchParams.get('type')
-      const size = searchParams.get('size') // 'large' for mobile cover
-
       if (!title) {
         return new Response('Missing title', {
           status: 400,
         })
       }
-      const urlParam = searchParams.get('url')
-      const thumbnailParam = searchParams.get('thumbnail')
-      const address =
-        urlParam || (pathParam ? `${siteUrl}${pathParam}` : siteUrl)
 
-      const protocol = request.headers.get('x-forwarded-proto') || 'http'
-      const host = request.headers.get('host')
-      const baseUrl = `${protocol}://${host}`
-      const imageUrl = new URL(
-        thumbnailParam ||
-          `/${type === 'page' ? 'og-background-page.jpg' : 'og-background.jpg'}`,
-        baseUrl,
-      )
-      // thumbnail은 이 사이트의 경로만 받는다. 이어 붙이면 `.evil.com/x.png`로 호스트가 바뀐다
-      if (imageUrl.origin !== new URL(baseUrl).origin) {
-        return new Response('Invalid thumbnail', {status: 400})
-      }
-      const imageRes = await fetch(imageUrl)
-      if (!imageRes.ok) {
-        throw new Error(`Failed to fetch image: ${imageUrl}`)
+      const thumbnailParam = searchParams.get('thumbnail')
+      let image: Buffer | undefined
+      if (thumbnailParam) {
+        const protocol = request.headers.get('x-forwarded-proto') || 'http'
+        const host = request.headers.get('host')
+        const baseUrl = `${protocol}://${host}`
+        const imageUrl = new URL(thumbnailParam, baseUrl)
+        // thumbnail은 이 사이트의 경로만 받는다. 이어 붙이면 `.evil.com/x.png`로 호스트가 바뀐다
+        if (imageUrl.origin !== new URL(baseUrl).origin) {
+          return new Response('Invalid thumbnail', {status: 400})
+        }
+        const imageRes = await fetch(imageUrl)
+        if (!imageRes.ok) {
+          throw new Error(`Failed to fetch image: ${imageUrl}`)
+        }
+        image = Buffer.from(await imageRes.arrayBuffer())
       }
 
       return await renderOgImage({
         title,
-        description: searchParams.get('description'),
-        tags: tagsParam ? tagsParam.split(',') : [],
-        address,
-        image: Buffer.from(await imageRes.arrayBuffer()),
-        hasThumbnail: !!thumbnailParam,
-        isLarge: size === 'large',
+        mark: new URL(siteUrl).host,
+        seed: searchParams.get('path') ?? title,
+        image,
       })
     } catch (e: unknown) {
       return new Response(
