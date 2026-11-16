@@ -8,17 +8,12 @@ import {
   OutboundLinkTracker,
   Providers,
 } from '@yceffort/shared/components'
-import {buildOgImageUrl, THEME_COOKIE_SCRIPT} from '@yceffort/shared/utils'
+import {THEME_COOKIE_SCRIPT} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 import {Suspense, type ReactNode} from 'react'
 
 import {OfflineRegistration} from '@/components/offline/OfflineRegistration'
 import {openGraphBase, SiteConfig} from '@/config'
-
-const ogImageUrl = buildOgImageUrl({
-  title: SiteConfig.title,
-  description: '프론트엔드 딥다이브 슬라이드',
-})
 
 export const metadata: Metadata = {
   title: {
@@ -36,7 +31,7 @@ export const metadata: Metadata = {
     title: SiteConfig.title,
     description: 'yceffort research — 프론트엔드 딥다이브 슬라이드',
     url: SiteConfig.url,
-    images: [{url: ogImageUrl, width: 1200, height: 630}],
+    images: [{url: '/og/home.png', width: 1200, height: 630}],
   },
   // title, description, images는 Next가 각 페이지의 openGraph에서 채운다
   twitter: {

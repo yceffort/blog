@@ -1,4 +1,3 @@
-import {buildOgImageUrl} from '@yceffort/shared/utils'
 import type {Metadata} from 'next'
 
 import HomeView from '@/components/home/HomeView'
@@ -12,18 +11,7 @@ export const metadata: Metadata = {
     title: SiteConfig.title,
     description: SiteConfig.subtitle,
     url: SiteConfig.url,
-    images: [
-      {
-        url: buildOgImageUrl({
-          title: SiteConfig.title,
-          description: SiteConfig.subtitle,
-          path: '/',
-          type: 'page',
-        }),
-        width: 1200,
-        height: 630,
-      },
-    ],
+    images: [{url: '/og/home.png', width: 1200, height: 630}],
   },
 }
 export default function Page() {

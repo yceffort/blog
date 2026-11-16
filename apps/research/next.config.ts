@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   outputFileTracingIncludes: {
     '/api/og': ['../../packages/shared/src/og/fonts/*.otf'],
+    '/og/home.png': ['../../packages/shared/src/og/fonts/*.otf'],
   },
   async headers() {
     return [
