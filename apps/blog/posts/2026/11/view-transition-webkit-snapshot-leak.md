@@ -1,13 +1,16 @@
 ---
 title: 'iOS에서 <em>View Transition</em>이 탭을 종료시킨 이유'
 tags:
-  - nextjs
-  - react
   - memory
   - debugging
-published: false
-date: 2026-11-15 00:02:00
+  - browser
+  - web-performance
+  - react
+published: true
+date: 2026-11-17 16:39:00
 description: '아이폰에서 긴 글 두 편을 몇 번 오가면 탭이 종료됐다. WebKit이 끝난 View Transition의 스냅샷을 해제하지 않고, React가 넘긴 업데이트 콜백이 그 스냅샷을 가진 객체를 붙잡아 GC로도 회수되지 않는 과정을 측정과 소스로 확인한다'
+art:
+  undraw: mobile-browsers
 ---
 
 아이폰의 Safari에서 [Next.js의 페이지 보존](/series/nextjs-page-preservation) 시리즈의 1편과 2편을 글 상단의 시리즈 목록 링크로 번갈아 열었다. 3~4번째 이동에서 화면이 잠깐 하얗게 바뀌더니 2편이 처음부터 다시 로드됐다. 같은 방식으로 몇 번 더 오가자 이번에는 "'https://yceffort.kr/2026/09/nextjs-cache-components-activity'에서 문제가 반복적으로 발생했습니다"라는 안내만 남았다. 아이폰의 Chrome에서도 같은 순서로 "이 페이지를 열 수 없음"이 나타났다. 데스크톱 Chrome에서는 같은 동작을 반복해도 아무 일이 없었다.
