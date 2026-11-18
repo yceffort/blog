@@ -164,6 +164,13 @@ function checkFrontMatter(file, attributes, rawFrontMatter, report) {
   ) {
     report('error', 0, 'published는 따옴표 없이 true 또는 false로 써야 한다')
   }
+  // 주간 메일 렌더러는 promotion === true만 거른다. 'true'로 쓰면 광고성 글이 메일에 그대로 실린다
+  if (
+    attributes.promotion !== undefined &&
+    !/^promotion: (true|false)$/m.test(rawFrontMatter)
+  ) {
+    report('error', 0, 'promotion은 따옴표 없이 true 또는 false로 써야 한다')
+  }
 
   // Post.ts가 new Date(date).toISOString()을 무조건 호출하므로 파싱에 실패하면 빌드가 죽는다.
   if (attributes.date !== undefined) {

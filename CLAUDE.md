@@ -17,6 +17,7 @@
 - frontmatter 필수 필드: `title`, `tags`, `published`, `date`, `description`. `published`는 따옴표 없이 `true` 또는 `false`
 - 한국어 글을 고치면 `.en.md`가 있는 경우 같은 커밋에 함께 반영할 것 (pre-commit `translation-sync`가 막는다)
 - `updated`는 pre-commit 훅이 찍으므로 손으로 고치지 않는다
+- 책 판매 알림처럼 광고성 정보로 볼 수 있는 글은 `promotion: true`(따옴표 없이)를 달아 주간 메일에서 뺀다
 
 ## 시리즈
 
