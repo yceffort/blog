@@ -1,0 +1,47 @@
+name: Weekly newsletter
+on:
+  schedule:
+    # 월요일 08:00 KST에 지난주(월 ~ 일) 글을 묶어 보낸다
+    - cron: '0 23 * * 0'
+  workflow_dispatch:
+    inputs:
+      from:
+        description: 'First day (YYYY-MM-DD). Defaults to last Monday in KST'
+        required: false
+        type: string
+      to:
+        description: 'Last day (YYYY-MM-DD). Defaults to last Sunday in KST'
+        required: false
+        type: string
+      featured:
+        description: 'Slug of the post to feature. Defaults to the newest'
+        required: false
+        type: string
+      segment:
+        description: 'Resend segment id to send to instead of the subscribers (tests)'
+        required: false
+        type: string
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Send weekly newsletter
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          NEWSLETTER_SEGMENT_ID: ${{ secrets.NEWSLETTER_SEGMENT_ID }}
+          NEWSLETTER_REPLY_TO: ${{ secrets.NEWSLETTER_REPLY_TO }}
+          FROM_DAY: ${{ inputs.from }}
+          TO_DAY: ${{ inputs.to }}
+          FEATURED: ${{ inputs.featured }}
+          SEGMENT: ${{ inputs.segment }}
+        run: |
+          npm install --no-save --prefix apps/blog/scripts/newsletter front-matter@4 reading-time@1
+          node apps/blog/scripts/newsletter/send.mjs \
+            --from "$FROM_DAY" --to "$TO_DAY" --featured "$FEATURED" --segment "$SEGMENT"
