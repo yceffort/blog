@@ -86,6 +86,13 @@ const sx = stylex.create({
     '@layer utilities': {
       minWidth: '0px',
       flex: '1',
+      borderWidth: '0px',
+      backgroundColor: 'transparent',
+      padding: '0px',
+      font: 'inherit',
+      textAlign: 'left',
+      color: 'inherit',
+      cursor: 'pointer',
       '--announcement-link-translate': {
         default: null,
         '@media (hover: hover)': {

@@ -1,32 +1,75 @@
 'use client'
 
 import {getCookie, setCookie} from '@yceffort/shared/utils'
-import Link from 'next/link'
-import {usePathname} from 'next/navigation'
 import {startTransition, useEffect, useState, ViewTransition} from 'react'
 
-import {useLocale} from '@/hooks/useLocale'
-
 import * as announcementBannerStyles from './AnnouncementBanner.styles'
-const POST_PATH = '/2026/09/who-learns-to-judge-beta-reader'
-const END_AT = new Date('2026-09-30T23:59:59+09:00').getTime()
-const COOKIE_NAME = 'beta-reader-banner-dismissed'
+
+// 메일 구독 공지. 글 끝 구독 칸(#newsletter)까지 70%쯤 읽은 독자에게 한 번만 띄우고, 누르면 그 칸으로 보낸다.
+// 예전 첫 방문 툴팁(8/11 ~ 10/15)은 읽기 전에 떠서 2,486명 중 2명만 눌렀다
+const END_AT = new Date('2026-12-31T23:59:59+09:00').getTime()
+export const NEWSLETTER_NOTICE_COOKIE = 'newsletter-notice-dismissed'
+export const NEWSLETTER_ANCHOR = 'newsletter'
+
+const track = (name: string) => window.gtag?.('event', name)
+
 export default function AnnouncementBanner() {
-  const pathname = usePathname() ?? '/'
-  const {locale} = useLocale()
   const [visible, setVisible] = useState(false)
+
   useEffect(() => {
-    if (Date.now() > END_AT || getCookie(COOKIE_NAME)) {
-      return
+    const target = document.getElementById(NEWSLETTER_ANCHOR)
+    if (!target || Date.now() > END_AT || getCookie(NEWSLETTER_NOTICE_COOKIE)) {
+      return undefined
     }
-    startTransition(() => setVisible(true))
+    let shown = false
+    const onScroll = () => {
+      const formTop = target.getBoundingClientRect().top + window.scrollY
+      if (shown || (window.scrollY + window.innerHeight) / formTop < 0.7) {
+        return
+      }
+      shown = true
+      track('newsletter_notice_view')
+      startTransition(() => setVisible(true))
+    }
+    // 구독 칸이 화면에 들어오면 공지는 할 일을 다 했다
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) {
+        return
+      }
+      setCookie(NEWSLETTER_NOTICE_COOKIE, '1')
+      startTransition(() => setVisible(false))
+      stop()
+    })
+    function stop() {
+      window.removeEventListener('scroll', onScroll)
+      observer.disconnect()
+    }
+    window.addEventListener('scroll', onScroll, {passive: true})
+    observer.observe(target)
+    return stop
   }, [])
-  if (!visible || locale === 'en' || pathname === POST_PATH) {
+
+  if (!visible) {
     return null
   }
-  const dismiss = () => {
-    setCookie(COOKIE_NAME, '1')
+  const close = (event: string) => {
+    setCookie(NEWSLETTER_NOTICE_COOKIE, '1')
+    track(event)
     startTransition(() => setVisible(false))
+  }
+  const go = () => {
+    const target = document.getElementById(NEWSLETTER_ANCHOR)
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches
+    target?.scrollIntoView({
+      behavior: reduceMotion ? 'auto' : 'smooth',
+      block: 'center',
+    })
+    target
+      ?.querySelector<HTMLInputElement>('input[type="email"]')
+      ?.focus({preventScroll: true})
+    close('newsletter_notice_click')
   }
   return (
     <ViewTransition name="announcement-banner">
@@ -34,8 +77,9 @@ export default function AnnouncementBanner() {
         <div className={announcementBannerStyles.div2}>
           <div aria-hidden="true" className={announcementBannerStyles.div3} />
           <div className={announcementBannerStyles.div4}>
-            <Link
-              href={POST_PATH}
+            <button
+              type="button"
+              onClick={go}
               className={`announcement-link ${announcementBannerStyles.link}`}
             >
               <span className={announcementBannerStyles.span}>
@@ -43,29 +87,27 @@ export default function AnnouncementBanner() {
                   <span className={announcementBannerStyles.span3} />
                   <span className={announcementBannerStyles.span4} />
                 </span>
-                <span className={announcementBannerStyles.span5}>
-                  베타리더 / 인터뷰이 모집
-                </span>
+                <span className={announcementBannerStyles.span5}>NEW</span>
                 <span className={announcementBannerStyles.span6}>
-                  9월 30일까지
+                  주간 메일
                 </span>
               </span>
               <span className={announcementBannerStyles.span7}>
-                『남은 판단은 누가 배우는가』
+                월요일 아침, 지난주 글을 메일로
                 <span className={announcementBannerStyles.span8}>
                   {' '}
-                  초고를 읽어주실 분과 이야기를 들려주실 분을 찾습니다
+                  한 주에 한 번 모아서 보내드립니다
                 </span>
               </span>
               <span className={announcementBannerStyles.span9}>
-                자세히 보기
-                <span aria-hidden="true">→</span>
+                구독하기
+                <span aria-hidden="true">↓</span>
               </span>
-            </Link>
+            </button>
             <button
               type="button"
-              aria-label="배너 닫기"
-              onClick={dismiss}
+              aria-label="공지 닫기"
+              onClick={() => close('newsletter_notice_dismiss')}
               className={announcementBannerStyles.button}
             >
               <svg
