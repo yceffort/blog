@@ -15,6 +15,7 @@ const MULTI_SEGMENT_PREFIXES = new Set([
   'splash',
   'thumbnails',
   'fonts',
+  'newsletter',
 ])
 const EN_PREFIXES = new Set([
   'pages',
