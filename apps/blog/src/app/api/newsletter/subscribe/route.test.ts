@@ -67,6 +67,14 @@ afterEach(() => {
   vi.restoreAllMocks()
 })
 
+function deferred<T>() {
+  let resolve!: (value: T | PromiseLike<T>) => void
+  const promise = new Promise<T>((fulfill) => {
+    resolve = fulfill
+  })
+  return {promise, resolve}
+}
+
 describe('newsletter subscription confirmation', () => {
   it('allows an immediate retry after Resend rejects the email', async () => {
     send.mockResolvedValueOnce(new Response(null, {status: 429}))
@@ -82,10 +90,10 @@ describe('newsletter subscription confirmation', () => {
   })
 
   it('does not dispatch a second email while the first send is in flight', async () => {
-    const pending = Promise.withResolvers<Response>()
-    const started = Promise.withResolvers<void>()
+    const pending = deferred<Response>()
+    const started = deferred<void>()
     send.mockImplementationOnce(() => {
-      started.resolve()
+      started.resolve(undefined)
       return pending.promise
     })
 
