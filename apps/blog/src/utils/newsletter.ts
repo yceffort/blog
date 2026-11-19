@@ -44,6 +44,24 @@ export function readConfirmToken(token: string, now = Date.now()) {
   return Buffer.from(address, 'base64url').toString()
 }
 
+export class ResendHttpError extends Error {
+  constructor(
+    path: string,
+    readonly status: number,
+    detail: string,
+  ) {
+    super(`Resend ${path} ${status}: ${detail}`)
+  }
+
+  get definitelyRejected() {
+    return (
+      this.status >= 400 &&
+      this.status < 500 &&
+      ![408, 409].includes(this.status)
+    )
+  }
+}
+
 export async function resend(path: string, body: unknown) {
   const response = await fetch(`https://api.resend.com${path}`, {
     method: 'POST',
@@ -55,9 +73,7 @@ export async function resend(path: string, body: unknown) {
     cache: 'no-store',
   })
   if (!response.ok) {
-    throw new Error(
-      `Resend ${path} ${response.status}: ${await response.text()}`,
-    )
+    throw new ResendHttpError(path, response.status, await response.text())
   }
 }
 
