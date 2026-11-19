@@ -89,6 +89,33 @@ describe('newsletter subscription confirmation', () => {
     expect(send).toHaveBeenCalledTimes(2)
   })
 
+  it.each(['NEWSLETTER_SECRET', 'RESEND_API_KEY'])(
+    'allows an immediate retry after %s is configured',
+    async (name) => {
+      vi.stubEnv(name, '')
+      expect((await subscribe()).status).toBe(502)
+      expect(send).not.toHaveBeenCalled()
+
+      vi.stubEnv(name, 'test-only')
+      send.mockResolvedValueOnce(new Response(null, {status: 200}))
+      expect((await subscribe()).status).toBe(200)
+      expect(send).toHaveBeenCalledTimes(1)
+    },
+  )
+
+  it('allows a retry when a known rejection has an unreadable body', async () => {
+    const response = new Response(null, {status: 429})
+    vi.spyOn(response, 'text').mockRejectedValueOnce(
+      new Error('body stream lost'),
+    )
+    send.mockResolvedValueOnce(response)
+    send.mockResolvedValueOnce(new Response(null, {status: 200}))
+
+    expect((await subscribe()).status).toBe(502)
+    expect((await subscribe()).status).toBe(200)
+    expect(send).toHaveBeenCalledTimes(2)
+  })
+
   it('does not dispatch a second email while the first send is in flight', async () => {
     const pending = deferred<Response>()
     const started = deferred<void>()

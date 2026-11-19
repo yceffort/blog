@@ -3,10 +3,12 @@ import {createHash, createHmac, timingSafeEqual} from 'node:crypto'
 export const NEWSLETTER_FROM = 'yceffort <newsletter@mail.yceffort.kr>'
 const TOKEN_TTL_MS = 48 * 60 * 60 * 1000
 
+export class NewsletterConfigurationError extends Error {}
+
 function env(name: string) {
   const value = process.env[name]
   if (!value) {
-    throw new Error(`${name} is not configured`)
+    throw new NewsletterConfigurationError(`${name} is not configured`)
   }
   return value
 }
@@ -73,7 +75,8 @@ export async function resend(path: string, body: unknown) {
     cache: 'no-store',
   })
   if (!response.ok) {
-    throw new ResendHttpError(path, response.status, await response.text())
+    const detail = await response.text().catch(() => 'unreadable response body')
+    throw new ResendHttpError(path, response.status, detail)
   }
 }
 

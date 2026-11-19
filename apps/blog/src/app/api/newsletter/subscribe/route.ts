@@ -8,6 +8,7 @@ import {
   createConfirmToken,
   hashEmail,
   isEmail,
+  NewsletterConfigurationError,
   ResendHttpError,
   sendConfirmMail,
 } from '@/utils/newsletter'
@@ -92,10 +93,8 @@ export async function POST(request: Request) {
   if (verdict === 'email') {
     return NextResponse.json({ok: true})
   }
-  let sending = false
   try {
     const token = createConfirmToken(email)
-    sending = true
     await sendConfirmMail(
       email,
       `${SiteConfig.url}/newsletter/confirm?token=${token}`,
@@ -105,7 +104,7 @@ export async function POST(request: Request) {
     // 응답이 없거나 발송 수락 여부가 불분명하면 중복 발송을 막기 위해 제한을 유지한다.
     if (
       verdict &&
-      (!sending ||
+      (error instanceof NewsletterConfigurationError ||
         (error instanceof ResendHttpError && error.definitelyRejected))
     ) {
       await release(verdict)
