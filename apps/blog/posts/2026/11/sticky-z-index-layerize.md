@@ -8,6 +8,7 @@ tags:
   - css
 published: true
 date: 2026-11-21 22:15:00
+updated: 2026-11-21 23:30:07
 description: 'sticky 탭바에 양수 z-index를 주면 Chrome의 Layerize가 합쳐지지 않는 레이어 수에 비례해 느려진다. 재현 페이지에 조건을 하나씩 더하며 Chromium 159의 레이어 합치기 코드와 맞춰 본다.'
 art:
   undraw: building-blocks
@@ -22,6 +23,12 @@ Chromium 소스의 합성(compositing) 디렉터리에는 칠한 결과를 합�
 이 최악의 경우는 생각보다 흔한 CSS 조합에서 나온다. sticky 탭바에 `z-index: 1`을 주고, 탭바 아래 목록이 페인트 청크로 잘게 나뉘고, 탭바보다 앞에 다른 레이어와 합쳐지지 않는 작은 합성 레이어가 몇 개 있으면 된다. 세 조건을 갖춘 재현 페이지에서 탭바의 `z-index`를 `auto`에서 `1`로 바꾸면, Layerize(DevTools 성능 패널에 나오는, 칠한 결과를 합성 레이어로 나누는 단계) 1회 시간이 0.44ms에서 2.08ms로 늘어난다(CPU 4배 감속). 조건 하나만 빠져도 차이는 거의 사라진다.
 
 여기서 잰 것은 Layerize가 레이어 구성을 처음부터 다시 계산하는 전체 경로 1회의 비용이다. 이 경로가 얼마나 자주 도는지는 페이지에서 무엇이 바뀌느냐에 달려 있다. 재현 페이지에서는 레이어 하나를 50ms마다 켜고 꺼서 이 경로를 일부러 반복시켰고, 어떤 변경이 이 경로를 일으키는지는 마지막 절에서 따로 쟀다.
+
+> 소스 인용은 Chromium `159.0.8154.13` 태그(커밋 [`4d790f9e`](https://github.com/chromium/chromium/tree/4d790f9eb4c8abe65b8aaa3feba664e7c734ba56))를 기준으로 했다. 측정은 Apple M5, macOS 27.2.1의 Chrome Beta 159.0.8154.13에서 했다.
+>
+> 재현 페이지와 측정 스크립트는 [blog-experiments `76e4694` sticky-z-index-layerize](https://github.com/yceffort/blog-experiments/tree/76e46945958c0e514dfc3d3a1e46b7a7a2b13941/sticky-z-index-layerize)에 있다. 측정 스크립트는 CDP로 새 탭을 열고 390x844, DPR 3 모바일 화면과 CPU 4배 감속을 건 뒤 페이지를 연다. 4초 기다린 다음 10초 동안 `devtools.timeline`과 `blink` 카테고리로 트레이스를 찍고, 렌더러 메인 스레드의 `Layerize` 가운데 `PaintArtifactCompositor::Update`를 품은 것만 골라 평균을 낸다. 조건마다 3번 재서 중앙값을 썼고, 두 번째 반복은 조건 순서를 뒤집었다. DPR 1 측정만 같은 화면 크기에 DPR을 1로 바꿨다. 거리 제한은 별도 프로필의 Chrome을 플래그와 함께 띄워 쟀다. 레이어 수와 합성 이유는 CDP `LayerTree` 도메인으로 읽었다. 흔한 화면 데모의 수치는 같은 측정 스크립트로 `pattern.html?auto=1`(로드 직후부터 프레임마다 남은 수량을 바꾼다)을 잰 값이다. 숫자 폭 비교는 전체 경로만이 아니라 빠른 경로까지 포함한 `Layerize` 전체의 시간 합계로 비교했다.
+>
+> 본문의 데모는 5초 동안 `requestAnimationFrame`마다 레이어 하나를 켰다 끄고, 그 안에서 시작 시각을 담아 `MessageChannel`로 보낸 메시지가 처리될 때까지의 시간을 잰다. 블로그 페이지와 같은 메인 스레드에서 돌기 때문에 위 측정값과 직접 비교할 수는 없다.
 
 ## 흔한 화면으로 본 네 가지 조건
 
@@ -95,7 +102,7 @@ z-index: 1      [스켈레톤 막대 x K] → [줄][줄][줄]... → [탭바]   
 
 빨간 점은 `will-change: opacity` 때문에 하나하나가 합성 레이어가 된다. 실제 페이지에서는 합성 애니메이션이 걸린 작은 요소나 `will-change`를 단 요소가 이런 레이어가 된다. 줄과 줄 안의 숫자는 둘 다 `position: relative`이고, 목록의 줄이 탭바를 덮지 않도록 탭바에는 양수 `z-index`를 줬다.
 
-측정은 이 페이지를 Chrome Beta 159의 모바일 화면(390x844, DPR 3)에 띄우고 CPU를 4배 감속한 상태에서 했다. 맨 위의 작은 요소에 50ms마다 `will-change: opacity`를 켰다 껐다 해서 레이어 구성이 매번 바뀌게 했다. Layerize는 다시 칠한 결과를 보고 기존 합성 결정을 그대로 쓸 수 있는지부터 따진다. 청크 수, 각 청크의 경계와 불투명 영역, 속성 트리가 그대로면 이미 만든 레이어의 내용만 갈아 끼우는 빠른 경로로 끝나고, 하나라도 바뀌면 `PaintArtifactCompositor::Update`를 처음부터 다시 돌린다.[^3] 10초 동안 이 전체 경로가 200번 돌고, 이 글의 수치는 그 1회 평균을 3번 잰 중앙값이다. 측정 방법의 나머지는 글 끝에 적었다.
+측정은 이 페이지를 Chrome Beta 159의 모바일 화면(390x844, DPR 3)에 띄우고 CPU를 4배 감속한 상태에서 했다. 맨 위의 작은 요소에 50ms마다 `will-change: opacity`를 켰다 껐다 해서 레이어 구성이 매번 바뀌게 했다. Layerize는 다시 칠한 결과를 보고 기존 합성 결정을 그대로 쓸 수 있는지부터 따진다. 청크 수, 각 청크의 경계와 불투명 영역, 속성 트리가 그대로면 이미 만든 레이어의 내용만 갈아 끼우는 빠른 경로로 끝나고, 하나라도 바뀌면 `PaintArtifactCompositor::Update`를 처음부터 다시 돌린다.[^3] 10초 동안 이 전체 경로가 200번 돌고, 이 글의 수치는 그 1회 평균을 3번 잰 중앙값이다. 측정 방법의 나머지는 글 앞의 인용에 적었다.
 
 첫 상태에서는 빨간 점이 32개 있어도 Layerize 1회가 `z-index: 1`에서 0.11ms, `auto`에서 0.15ms로 차이가 없다.
 
@@ -340,14 +347,6 @@ BASE_FEATURE_PARAM(size_t,
 영역 밖 콘텐츠를 살리는 방법(isolation과 영역의 `will-change`)은 sticky의 영역을 무한대로 보는 판정에 기대고 있다. 그런데 그 판정 바로 위에는 sticky의 실제 이동 범위를 쓰라는 TODO가 붙어 있다. 이 TODO가 구현되면 탭바의 영역은 감싼 영역 안으로 좁아지고, `contain: paint`에서 본 것처럼 영역 밖 콘텐츠의 탐색이 다시 길어질 가능성이 높다. 줄을 static으로 바꾸거나 합쳐지지 않는 레이어를 줄이는 방법은 이 판정과 상관없이 동작한다. 앞 절의 거리 제한은 페이지가 사용자 브라우저에서 켤 수 있는 설정이 아니다.
 
 sticky 요소의 `z-index`는 탐색을 끊어 주던 레이어를 맨 뒤로 옮겼을 뿐이다. 그래서 Layerize가 길어졌을 때는 `z-index`부터 의심하기보다, 느려진 콘텐츠보다 먼저 칠해지는 작은 합성 레이어가 몇 개인지 레이어 패널에서 세어 보는 것이 원인에 가장 빨리 닿는 방법이라고 생각한다.
-
-## 기준 버전과 측정 방법
-
-소스 인용은 Chromium `159.0.8154.13` 태그(커밋 [`4d790f9e`](https://github.com/chromium/chromium/tree/4d790f9eb4c8abe65b8aaa3feba664e7c734ba56))를 기준으로 했다. 측정은 Apple M5, macOS 27.2.1의 Chrome Beta 159.0.8154.13에서 했다.
-
-재현 페이지와 측정 스크립트는 [blog-experiments `76e4694` sticky-z-index-layerize](https://github.com/yceffort/blog-experiments/tree/76e46945958c0e514dfc3d3a1e46b7a7a2b13941/sticky-z-index-layerize)에 있다. 측정 스크립트는 CDP로 새 탭을 열고 390x844, DPR 3 모바일 화면과 CPU 4배 감속을 건 뒤 페이지를 연다. 4초 기다린 다음 10초 동안 `devtools.timeline`과 `blink` 카테고리로 트레이스를 찍고, 렌더러 메인 스레드의 `Layerize` 가운데 `PaintArtifactCompositor::Update`를 품은 것만 골라 평균을 낸다. 조건마다 3번 재서 중앙값을 썼고, 두 번째 반복은 조건 순서를 뒤집었다. DPR 1 측정만 같은 화면 크기에 DPR을 1로 바꿨다. 거리 제한은 별도 프로필의 Chrome을 플래그와 함께 띄워 쟀다. 레이어 수와 합성 이유는 CDP `LayerTree` 도메인으로 읽었다. 흔한 화면 데모의 수치는 같은 측정 스크립트로 `pattern.html?auto=1`(로드 직후부터 프레임마다 남은 수량을 바꾼다)을 잰 값이다. 숫자 폭 비교는 전체 경로만이 아니라 빠른 경로까지 포함한 `Layerize` 전체의 시간 합계로 비교했다.
-
-본문의 데모는 5초 동안 `requestAnimationFrame`마다 레이어 하나를 켰다 끄고, 그 안에서 시작 시각을 담아 `MessageChannel`로 보낸 메시지가 처리될 때까지의 시간을 잰다. 블로그 페이지와 같은 메인 스레드에서 돌기 때문에 위 측정값과 직접 비교할 수는 없다.
 
 [^1]: [Chromium `4d790f9e` `third_party/blink/renderer/platform/graphics/compositing/README.md` L31-L32](https://github.com/chromium/chromium/blob/4d790f9eb4c8abe65b8aaa3feba664e7c734ba56/third_party/blink/renderer/platform/graphics/compositing/README.md?plain=1#L31-L32)
 

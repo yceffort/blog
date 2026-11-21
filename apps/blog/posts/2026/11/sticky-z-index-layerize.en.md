@@ -8,6 +8,7 @@ tags:
   - css
 published: true
 date: 2026-11-21 22:15:00
+updated: 2026-11-21 23:30:07
 description: "Giving a sticky tab bar a positive z-index makes Chrome's Layerize slow down in proportion to the number of layers that never merge. Starting from a reproduction page, I add the conditions one at a time and match each one to the layer merging code in Chromium 159."
 art:
   undraw: building-blocks
@@ -22,6 +23,12 @@ In February 2025, a feature landed to guard against that worst case: an upper li
 This worst case comes from a more common CSS combination than you might expect. Give a sticky tab bar `z-index: 1`, have the list under it split into many paint chunks, and put a few small composited layers that never merge with other layers ahead of the tab bar. On a reproduction page with all three conditions, changing the tab bar's `z-index` from `auto` to `1` raises the time of one Layerize (the step in the DevTools Performance panel that splits painted output into composited layers) from 0.44ms to 2.08ms (with a 4x CPU slowdown). Remove any one condition and the difference almost disappears.
 
 What I measured is the cost of one pass of the full path, where Layerize recomputes the layer structure from scratch. How often that path runs depends on what changes on the page. On the reproduction page I forced it to repeat by toggling a layer every 50ms, and in the last section I measured separately which changes trigger it.
+
+> Source quotes are from the Chromium `159.0.8154.13` tag (commit [`4d790f9e`](https://github.com/chromium/chromium/tree/4d790f9eb4c8abe65b8aaa3feba664e7c734ba56)). Measurements were taken in Chrome Beta 159.0.8154.13 on an Apple M5 running macOS 27.2.1.
+>
+> The reproduction page and measurement scripts are in [blog-experiments `76e4694` sticky-z-index-layerize](https://github.com/yceffort/blog-experiments/tree/76e46945958c0e514dfc3d3a1e46b7a7a2b13941/sticky-z-index-layerize). The measurement script opens a new tab over CDP, applies a 390x844, DPR 3 mobile viewport and a 4x CPU slowdown, then loads the page. After waiting 4 seconds, it records a trace for 10 seconds with the `devtools.timeline` and `blink` categories and averages only the `Layerize` events on the renderer main thread that contain `PaintArtifactCompositor::Update`. Each condition was measured three times and the median used, with the condition order reversed on the second pass. Only the DPR 1 measurements kept the same viewport size with DPR set to 1. The distance limit was measured in a Chrome with a separate profile launched with the flag. Layer counts and compositing reasons were read from the CDP `LayerTree` domain. The numbers for the common screen demo come from the same script measuring `pattern.html?auto=1` (which changes the stock number every frame right after loading). The number width comparison uses the total time of all `Layerize` events, fast path included, not only the full path.
+>
+> The demos in this post toggle a layer on every `requestAnimationFrame` for 5 seconds and measure how long it takes until a message posted with the start time over `MessageChannel` is handled. They run on the same main thread as the blog page, so they cannot be compared directly with the measurements above.
 
 ## Four conditions on a common screen
 
@@ -95,7 +102,7 @@ The skeleton of the reproduction page is below. There are K red dots at the top,
 
 Each red dot becomes its own composited layer because of `will-change: opacity`. On real pages, small elements with composited animations or elements with `will-change` become layers like these. Both the rows and the numbers inside them are `position: relative`, and the tab bar has a positive `z-index` so the rows do not cover it.
 
-I measured with this page in a mobile viewport (390x844, DPR 3) in Chrome Beta 159 with a 4x CPU slowdown. A small element at the top had `will-change: opacity` toggled every 50ms so the layer structure changed every time. Layerize first looks at the repainted output and asks whether the existing compositing decisions can be reused. If the number of chunks, each chunk's bounds and opaque area, and the property trees are unchanged, it ends on the fast path, which only swaps in the contents of the layers it already has. If any of them changed, it runs `PaintArtifactCompositor::Update` again from scratch.[^3] This full path ran 200 times in 10 seconds, and the numbers in this post are the median of three runs of the per-pass average. The rest of the method is at the end of the post.
+I measured with this page in a mobile viewport (390x844, DPR 3) in Chrome Beta 159 with a 4x CPU slowdown. A small element at the top had `will-change: opacity` toggled every 50ms so the layer structure changed every time. Layerize first looks at the repainted output and asks whether the existing compositing decisions can be reused. If the number of chunks, each chunk's bounds and opaque area, and the property trees are unchanged, it ends on the fast path, which only swaps in the contents of the layers it already has. If any of them changed, it runs `PaintArtifactCompositor::Update` again from scratch.[^3] This full path ran 200 times in 10 seconds, and the numbers in this post are the median of three runs of the per-pass average. The rest of the method is in the quote at the start of the post.
 
 In this first state, even with 32 red dots, one Layerize takes 0.11ms with `z-index: 1` and 0.15ms with `auto`, so there is no difference.
 
@@ -340,14 +347,6 @@ Making the rows static means they are painted in the normal-flow step. They are 
 The fixes that rescue the content outside the area (isolation and `will-change` on the area) rely on the check that treats sticky's area as infinite. Right above that check, though, sits a TODO to use sticky's actual range of movement. If that TODO is implemented, the tab bar's area will shrink to the wrapping area, and, as with `contain: paint`, the search for content outside the area is likely to get long again. Making the rows static or reducing the layers that never merge works regardless of that check. The distance limit from the previous section is not a setting a page can turn on in the user's browser.
 
 The sticky element's `z-index` only moved the layer that used to cut the search to the very end. So when Layerize gets long, rather than suspecting `z-index` first, I think the quickest way to the cause is to count, in the Layers panel, how many small composited layers are painted before the content that slowed down.
-
-## Versions and method
-
-Source quotes are from the Chromium `159.0.8154.13` tag (commit [`4d790f9e`](https://github.com/chromium/chromium/tree/4d790f9eb4c8abe65b8aaa3feba664e7c734ba56)). Measurements were taken in Chrome Beta 159.0.8154.13 on an Apple M5 running macOS 27.2.1.
-
-The reproduction page and measurement scripts are in [blog-experiments `76e4694` sticky-z-index-layerize](https://github.com/yceffort/blog-experiments/tree/76e46945958c0e514dfc3d3a1e46b7a7a2b13941/sticky-z-index-layerize). The measurement script opens a new tab over CDP, applies a 390x844, DPR 3 mobile viewport and a 4x CPU slowdown, then loads the page. After waiting 4 seconds, it records a trace for 10 seconds with the `devtools.timeline` and `blink` categories and averages only the `Layerize` events on the renderer main thread that contain `PaintArtifactCompositor::Update`. Each condition was measured three times and the median used, with the condition order reversed on the second pass. Only the DPR 1 measurements kept the same viewport size with DPR set to 1. The distance limit was measured in a Chrome with a separate profile launched with the flag. Layer counts and compositing reasons were read from the CDP `LayerTree` domain. The numbers for the common screen demo come from the same script measuring `pattern.html?auto=1` (which changes the stock number every frame right after loading). The number width comparison uses the total time of all `Layerize` events, fast path included, not only the full path.
-
-The demos in this post toggle a layer on every `requestAnimationFrame` for 5 seconds and measure how long it takes until a message posted with the start time over `MessageChannel` is handled. They run on the same main thread as the blog page, so they cannot be compared directly with the measurements above.
 
 [^1]: [Chromium `4d790f9e` `third_party/blink/renderer/platform/graphics/compositing/README.md` L31-L32](https://github.com/chromium/chromium/blob/4d790f9eb4c8abe65b8aaa3feba664e7c734ba56/third_party/blink/renderer/platform/graphics/compositing/README.md?plain=1#L31-L32)
 
