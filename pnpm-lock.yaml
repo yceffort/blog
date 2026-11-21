@@ -461,7 +461,7 @@ importers:
         version: 4.0.3
       markdown-it-cjk-friendly:
         specifier: ^3.0.0
-        version: 3.0.0(markdown-it@14.3.0)
+        version: 3.0.0(markdown-it@14.3.3)
       mermaid:
         specifier: 'catalog:'
         version: 12.0.0
@@ -3636,8 +3636,8 @@ packages:
   markdown-it-front-matter@0.2.4:
     resolution: {integrity: sha512-25GUs0yjS2hLl8zAemVndeEzThB1p42yxuDEKbd4JlL3jiz+jsm6e56Ya8B0VREOkNxLYB4TTwaoPJ3ElMmW+w==}
 
-  markdown-it@14.3.0:
-    resolution: {integrity: sha512-RCEsPjR+sr0x+AuYp601tKTkgFG4YEPLCzHST3cQ/fhlJkqAkz1L2/Qbp1j9qw5SBwQHFBoW8+hoN5xssOF0Tw==}
+  markdown-it@14.3.3:
+    resolution: {integrity: sha512-L//tDAkjTjJCU6pBUSBTgs3Kg4InVaZuUZog/b6V12UKhcDQ7S78877ibbCanRExwPuYP1CZD7Gd2dxSy1GXRg==}
     hasBin: true
 
   markdown-table@3.0.4:
@@ -5480,7 +5480,7 @@ snapshots:
       cssesc: 3.0.0
       js-yaml: 4.3.1
       lodash.kebabcase: 4.1.1
-      markdown-it: 14.3.0
+      markdown-it: 14.3.3
       markdown-it-front-matter: 0.2.4
       postcss: 8.5.30
       postcss-nesting: 13.0.2(postcss@8.5.30)
@@ -7639,14 +7639,14 @@ snapshots:
 
   markdown-extensions@2.0.0: {}
 
-  markdown-it-cjk-friendly@3.0.0(markdown-it@14.3.0):
+  markdown-it-cjk-friendly@3.0.0(markdown-it@14.3.3):
     dependencies:
       get-east-asian-width: 1.6.0
-      markdown-it: 14.3.0
+      markdown-it: 14.3.3
 
   markdown-it-front-matter@0.2.4: {}
 
-  markdown-it@14.3.0:
+  markdown-it@14.3.3:
     dependencies:
       argparse: 2.0.1
       entities: 4.5.0
