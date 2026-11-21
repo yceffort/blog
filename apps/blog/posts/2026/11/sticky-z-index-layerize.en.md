@@ -8,7 +8,7 @@ tags:
   - css
 published: true
 date: 2026-11-21 22:15:00
-updated: 2026-11-21 23:30:07
+updated: 2026-11-21 23:30:14
 description: "Giving a sticky tab bar a positive z-index makes Chrome's Layerize slow down in proportion to the number of layers that never merge. Starting from a reproduction page, I add the conditions one at a time and match each one to the layer merging code in Chromium 159."
 art:
   undraw: building-blocks
@@ -26,7 +26,9 @@ What I measured is the cost of one pass of the full path, where Layerize recompu
 
 > Source quotes are from the Chromium `159.0.8154.13` tag (commit [`4d790f9e`](https://github.com/chromium/chromium/tree/4d790f9eb4c8abe65b8aaa3feba664e7c734ba56)). Measurements were taken in Chrome Beta 159.0.8154.13 on an Apple M5 running macOS 27.2.1.
 >
-> The reproduction page and measurement scripts are in [blog-experiments `76e4694` sticky-z-index-layerize](https://github.com/yceffort/blog-experiments/tree/76e46945958c0e514dfc3d3a1e46b7a7a2b13941/sticky-z-index-layerize). The measurement script opens a new tab over CDP, applies a 390x844, DPR 3 mobile viewport and a 4x CPU slowdown, then loads the page. After waiting 4 seconds, it records a trace for 10 seconds with the `devtools.timeline` and `blink` categories and averages only the `Layerize` events on the renderer main thread that contain `PaintArtifactCompositor::Update`. Each condition was measured three times and the median used, with the condition order reversed on the second pass. Only the DPR 1 measurements kept the same viewport size with DPR set to 1. The distance limit was measured in a Chrome with a separate profile launched with the flag. Layer counts and compositing reasons were read from the CDP `LayerTree` domain. The numbers for the common screen demo come from the same script measuring `pattern.html?auto=1` (which changes the stock number every frame right after loading). The number width comparison uses the total time of all `Layerize` events, fast path included, not only the full path.
+> The reproduction page and measurement scripts are in [blog-experiments `7efb581` sticky-z-index-layerize](https://github.com/yceffort/blog-experiments/tree/7efb581e8c4dab6da12975d1d79129f552caf18c/sticky-z-index-layerize). The measurement script opens a new tab over CDP, applies a 390x844, DPR 3 mobile viewport and a 4x CPU slowdown, then loads the page. After waiting 4 seconds, it records a trace for 10 seconds with the `devtools.timeline` and `blink` categories and averages only the `Layerize` events on the renderer main thread that contain `PaintArtifactCompositor::Update`. Each condition was measured three times and the median used, with the condition order reversed on the second pass. Only the DPR 1 measurements kept the same viewport size with DPR set to 1. The distance limit was measured in a Chrome with a separate profile launched with the flag. Layer counts and compositing reasons were read from the CDP `LayerTree` domain. The numbers for the common screen demo come from the same script measuring `pattern.html?auto=1` (which changes the stock number every frame right after loading). The number width comparison uses the total time of all `Layerize` events, fast path included, not only the full path.
+>
+> Rows that cannot be static, and Layout and Paint with fixed-width numbers, were measured with the same script in a separate run (`run-extra.sh`). The baseline came out higher in that run than in the first, so its numbers are compared only within that run.
 >
 > The demos in this post toggle a layer on every `requestAnimationFrame` for 5 seconds and measure how long it takes until a message posted with the start time over `MessageChannel` is handled. They run on the same main thread as the blog page, so they cannot be compared directly with the measurements above.
 
@@ -329,6 +331,8 @@ I build a service that receives values in real time over WebSockets. On screens 
 
 Not every real-time update runs the full path, though. In the same demo, giving the stock number `font-variant-numeric: tabular-nums` and changing it only to values with the same digit count, the full path did not run once in 10 seconds. If the width of the number stays the same, the chunk bounds do not change, so it ends on the fast path. Total Layerize time dropped 89%, from 789ms to 88ms, with `z-index: 1`, and by more than half, from 208ms to 98ms, with `auto`. With a fixed width only the fast path runs regardless of `z-index`, so the two values end up close. On a real-time screen, it is worth checking whether the width of numbers can be fixed before touching `z-index`.
 
+Fixing the width only cuts Layerize, though. I measured the same demo (`z-index: 1`) again in a separate run and counted Layout and Paint as well. Both the update that changes the digit count and the same-width update ran Layout 600 times and Paint 1,200 times in 10 seconds, and the totals were close: Layout 377ms and 361ms, Paint 373ms and 346ms. The text changed, so laying it out and painting it again stays regardless of width. In the same run, total Layerize went from 1,221ms to 177ms. What a fixed width saves is the cost of recomputing the layer structure from scratch, and that cost is larger the more of this post's conditions a screen has.
+
 The fixes and their costs are below. The numbers are one Layerize measured on the reproduction page.
 
 | Fix                                                       | Reproduction page                                                                                            | Cost                                                                                                                                                                                                   |
@@ -343,6 +347,23 @@ The fixes and their costs are below. The numbers are one Layerize measured on th
 | `contain: paint` on the area wrapping the tab bar         | 2.04ms → 2.58ms                                                                                              | No effect                                                                                                                                                                                              |
 
 Making the rows static means they are painted in the normal-flow step. They are painted before the red dots, so they never pass the dots, and the tab bar is painted after the rows even with `z-index: auto` and stays on top. This removes the need for a positive `z-index` in the first place, so it is worth considering first.
+
+Often, though, the rows cannot be made static. I added three such cases to the reproduction page and measured them the same way. In this run the baseline came out higher than in the earlier measurements, 3.53ms with `z-index: 1` and 0.80ms with `auto`, so the table below compares values only within this run.
+
+| Row setup                                              | `z-index: 1` | `z-index: auto` |
+| ------------------------------------------------------ | ------------ | --------------- |
+| Baseline (rows and numbers `position: relative`)       | 3.53ms       | 0.80ms          |
+| Rows and numbers `position: static`                    | 0.61ms       | not measured    |
+| Static rows, number overlapped top right with grid     | 0.56ms       | 0.62ms          |
+| Static rows, `transform: translateX(0)` on rows        | 5.26ms       | 0.77ms          |
+| Static rows, `opacity: 0.99` on rows                   | 1.42ms       | 0.68ms          |
+| Height of 200 rows, only 30 visible rows with absolute | 0.70ms       | 0.30ms          |
+
+The most common case is an element floated in a row corner with `position: absolute`, like a discount badge. For the row to be the badge's reference, it has to be positioned. Here you can make the row `display: grid`, put the row content and the badge in the same grid area (`grid-area: 1 / 1`), and pin the badge to the top right with `justify-self: end` and `align-self: start`, which gives the same placement without position. On the reproduction page this brought the time down to the same level as static rows, at the cost of total Layout rising slightly from 29ms to 47ms per 10 seconds. The overlap order has to come from DOM order, because a grid item with a `z-index` other than `auto` creates a stacking context like a relative element even when it is `position: static`.[^15]
+
+If the rows have a `transform` or an `opacity` below 1, making them static does not help. Lists that swipe rows away or fade each row are examples. The specs paint such elements in the same order as positioned elements with `z-index: 0`.[^16] So the rows are painted in the same step as positioned elements rather than the normal-flow step, and a tab bar with a positive `z-index` still goes after them. On the reproduction page, the gap between `z-index: 1` and `auto` remained. Rows with a transform were even slower than the baseline, and I did not look into why.
+
+Virtual scrolling libraries place rows with absolute and `top` or `transform`, so the rows cannot be static. On the other hand they only render the visible rows, so the number of chunks that drives the cost is small to begin with. With the height of 200 rows reserved and only 30 visible rows rendered, the gap between `z-index: 1` and `auto` remained but was far smaller than the baseline that renders all 200 rows. If the rows cannot be static, pick from the other fixes in the table.
 
 The fixes that rescue the content outside the area (isolation and `will-change` on the area) rely on the check that treats sticky's area as infinite. Right above that check, though, sits a TODO to use sticky's actual range of movement. If that TODO is implemented, the tab bar's area will shrink to the wrapping area, and, as with `contain: paint`, the search for content outside the area is likely to get long again. Making the rows static or reducing the layers that never merge works regardless of that check. The distance limit from the previous section is not a setting a page can turn on in the user's browser.
 
@@ -375,3 +396,7 @@ The sticky element's `z-index` only moved the layer that used to cut the search 
 [^13]: [Chromium `4d790f9e` `third_party/blink/renderer/platform/graphics/compositing/paint_artifact_compositor.cc` L930-L942](https://github.com/chromium/chromium/blob/4d790f9eb4c8abe65b8aaa3feba664e7c734ba56/third_party/blink/renderer/platform/graphics/compositing/paint_artifact_compositor.cc#L930-L942)
 
 [^14]: [w3c/csswg-drafts `e8a75fa0` `css-will-change-1/Overview.bs` L296-L303](https://github.com/w3c/csswg-drafts/blob/e8a75fa0ddea1a9aae4fe01098f39f92102e7cb0/css-will-change-1/Overview.bs?plain=1#L296-L303)
+
+[^15]: [w3c/csswg-drafts `e8a75fa0` `css-grid-1/Overview.bs` L1232-L1237](https://github.com/w3c/csswg-drafts/blob/e8a75fa0ddea1a9aae4fe01098f39f92102e7cb0/css-grid-1/Overview.bs?plain=1#L1232-L1237)
+
+[^16]: [w3c/csswg-drafts `e8a75fa0` `css-color-4/Overview.bs` L4651-L4655](https://github.com/w3c/csswg-drafts/blob/e8a75fa0ddea1a9aae4fe01098f39f92102e7cb0/css-color-4/Overview.bs?plain=1#L4651-L4655), [w3c/csswg-drafts `e8a75fa0` `css-transforms-1/Overview.bs` L319](https://github.com/w3c/csswg-drafts/blob/e8a75fa0ddea1a9aae4fe01098f39f92102e7cb0/css-transforms-1/Overview.bs?plain=1#L319)

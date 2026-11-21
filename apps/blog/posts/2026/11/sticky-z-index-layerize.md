@@ -8,7 +8,7 @@ tags:
   - css
 published: true
 date: 2026-11-21 22:15:00
-updated: 2026-11-21 23:30:07
+updated: 2026-11-21 23:30:14
 description: 'sticky 탭바에 양수 z-index를 주면 Chrome의 Layerize가 합쳐지지 않는 레이어 수에 비례해 느려진다. 재현 페이지에 조건을 하나씩 더하며 Chromium 159의 레이어 합치기 코드와 맞춰 본다.'
 art:
   undraw: building-blocks
@@ -26,7 +26,9 @@ Chromium 소스의 합성(compositing) 디렉터리에는 칠한 결과를 합�
 
 > 소스 인용은 Chromium `159.0.8154.13` 태그(커밋 [`4d790f9e`](https://github.com/chromium/chromium/tree/4d790f9eb4c8abe65b8aaa3feba664e7c734ba56))를 기준으로 했다. 측정은 Apple M5, macOS 27.2.1의 Chrome Beta 159.0.8154.13에서 했다.
 >
-> 재현 페이지와 측정 스크립트는 [blog-experiments `76e4694` sticky-z-index-layerize](https://github.com/yceffort/blog-experiments/tree/76e46945958c0e514dfc3d3a1e46b7a7a2b13941/sticky-z-index-layerize)에 있다. 측정 스크립트는 CDP로 새 탭을 열고 390x844, DPR 3 모바일 화면과 CPU 4배 감속을 건 뒤 페이지를 연다. 4초 기다린 다음 10초 동안 `devtools.timeline`과 `blink` 카테고리로 트레이스를 찍고, 렌더러 메인 스레드의 `Layerize` 가운데 `PaintArtifactCompositor::Update`를 품은 것만 골라 평균을 낸다. 조건마다 3번 재서 중앙값을 썼고, 두 번째 반복은 조건 순서를 뒤집었다. DPR 1 측정만 같은 화면 크기에 DPR을 1로 바꿨다. 거리 제한은 별도 프로필의 Chrome을 플래그와 함께 띄워 쟀다. 레이어 수와 합성 이유는 CDP `LayerTree` 도메인으로 읽었다. 흔한 화면 데모의 수치는 같은 측정 스크립트로 `pattern.html?auto=1`(로드 직후부터 프레임마다 남은 수량을 바꾼다)을 잰 값이다. 숫자 폭 비교는 전체 경로만이 아니라 빠른 경로까지 포함한 `Layerize` 전체의 시간 합계로 비교했다.
+> 재현 페이지와 측정 스크립트는 [blog-experiments `7efb581` sticky-z-index-layerize](https://github.com/yceffort/blog-experiments/tree/7efb581e8c4dab6da12975d1d79129f552caf18c/sticky-z-index-layerize)에 있다. 측정 스크립트는 CDP로 새 탭을 열고 390x844, DPR 3 모바일 화면과 CPU 4배 감속을 건 뒤 페이지를 연다. 4초 기다린 다음 10초 동안 `devtools.timeline`과 `blink` 카테고리로 트레이스를 찍고, 렌더러 메인 스레드의 `Layerize` 가운데 `PaintArtifactCompositor::Update`를 품은 것만 골라 평균을 낸다. 조건마다 3번 재서 중앙값을 썼고, 두 번째 반복은 조건 순서를 뒤집었다. DPR 1 측정만 같은 화면 크기에 DPR을 1로 바꿨다. 거리 제한은 별도 프로필의 Chrome을 플래그와 함께 띄워 쟀다. 레이어 수와 합성 이유는 CDP `LayerTree` 도메인으로 읽었다. 흔한 화면 데모의 수치는 같은 측정 스크립트로 `pattern.html?auto=1`(로드 직후부터 프레임마다 남은 수량을 바꾼다)을 잰 값이다. 숫자 폭 비교는 전체 경로만이 아니라 빠른 경로까지 포함한 `Layerize` 전체의 시간 합계로 비교했다.
+>
+> 줄을 static으로 둘 수 없는 경우와 숫자 폭 고정 때의 Layout, Paint는 같은 스크립트로 별도 회차(`run-extra.sh`)에 쟀다. 이 회차는 기준 조건의 값이 첫 회차보다 높게 나와서 같은 회차 안에서만 비교했다.
 >
 > 본문의 데모는 5초 동안 `requestAnimationFrame`마다 레이어 하나를 켰다 끄고, 그 안에서 시작 시각을 담아 `MessageChannel`로 보낸 메시지가 처리될 때까지의 시간을 잰다. 블로그 페이지와 같은 메인 스레드에서 돌기 때문에 위 측정값과 직접 비교할 수는 없다.
 
@@ -329,6 +331,8 @@ BASE_FEATURE_PARAM(size_t,
 
 다만 모든 실시간 갱신이 전체 경로를 타지는 않는다. 같은 데모에서 남은 수량에 `font-variant-numeric: tabular-nums`를 주고 자릿수가 같은 값으로만 바꾸면, 10초 동안 전체 경로가 한 번도 돌지 않았다. 숫자 영역의 폭이 그대로면 청크의 경계가 바뀌지 않아 빠른 경로로 끝나기 때문이다. Layerize 총시간은 `z-index: 1`에서 789ms가 88ms로 89% 줄었고, `auto`에서도 208ms가 98ms로 절반 넘게 줄었다. 폭이 고정되면 `z-index`와 상관없이 빠른 경로만 돌기 때문에 두 값이 비슷해진다. 실시간 화면이라면 `z-index`를 손보기 전에 숫자 폭부터 고정할 수 있는지 살펴볼 만하다.
 
+다만 폭을 고정해서 줄어드는 것은 Layerize뿐이다. 같은 데모(`z-index: 1`)를 별도 회차에서 다시 재면서 Layout과 Paint도 함께 셌다. 자릿수가 바뀌는 갱신과 같은 폭 갱신 모두 10초 동안 Layout은 600번, Paint는 1,200번 돌았고, 시간 합계도 Layout은 377ms와 361ms, Paint는 373ms와 346ms로 비슷했다. 글자가 바뀌었으니 다시 배치하고 다시 칠하는 일은 폭과 상관없이 남는다. 같은 회차에서 Layerize 총시간은 1,221ms에서 177ms로 줄었다. 폭 고정으로 아끼는 것은 레이어 구성을 처음부터 다시 계산하는 비용이고, 이 글의 조건이 겹친 화면일수록 그 비용이 크다.
+
 고치는 방법과 그 대가는 다음과 같다. 수치는 재현 페이지에서 잰 Layerize 1회 시간이다.
 
 | 방법                                              | 재현 페이지                                                                             | 대가                                                                                                                                                |
@@ -343,6 +347,23 @@ BASE_FEATURE_PARAM(size_t,
 | 탭바를 감싼 영역에 `contain: paint`               | 2.04ms → 2.58ms                                                                         | 효과가 없다                                                                                                                                         |
 
 줄을 static으로 바꾸면 줄이 일반 흐름 단계에서 칠해진다. 빨간 점보다 먼저 칠해지므로 점을 지나칠 일이 없고, 탭바는 `z-index: auto`여도 줄보다 나중에 칠해져 줄 위에 남는다. 양수 `z-index`가 처음부터 필요 없어지는 방법이라 가장 먼저 검토할 만하다.
+
+그런데 줄을 static으로 바꿀 수 없는 경우도 흔하다. 재현 페이지에 그런 경우 세 가지를 더해 같은 방법으로 쟀다. 이 회차는 기준 조건이 `z-index: 1`에서 3.53ms, `auto`에서 0.80ms로 앞의 측정보다 높게 나와서, 아래 표는 같은 회차 안에서만 비교한다.
+
+| 줄의 구성                                        | `z-index: 1` | `z-index: auto` |
+| ------------------------------------------------ | ------------ | --------------- |
+| 기준(줄과 숫자 `position: relative`)             | 3.53ms       | 0.80ms          |
+| 줄과 숫자 `position: static`                     | 0.61ms       | 재지 않음       |
+| 줄 static, 숫자를 grid로 겹쳐 오른쪽 위에 배치   | 0.56ms       | 0.62ms          |
+| 줄 static, 줄에 `transform: translateX(0)`       | 5.26ms       | 0.77ms          |
+| 줄 static, 줄에 `opacity: 0.99`                  | 1.42ms       | 0.68ms          |
+| 줄 200개 높이에 보이는 줄 30개만 absolute로 배치 | 0.70ms       | 0.30ms          |
+
+가장 흔한 경우는 할인 배지처럼 줄 모서리에 `position: absolute`로 띄운 요소다. 줄이 배지의 기준이 되려면 positioned여야 한다. 이때는 줄을 `display: grid`로 만들고 줄의 내용과 배지를 같은 grid 영역(`grid-area: 1 / 1`)에 겹친 뒤, 배지를 `justify-self: end`와 `align-self: start`로 오른쪽 위에 붙이면 position 없이 같은 배치가 된다. 재현 페이지에서는 static으로 바꾼 것과 같은 수준으로 줄었고, 그 대신 Layout 합계가 10초에 29ms에서 47ms로 조금 늘었다. 겹치는 순서는 DOM 순서로 정해야 한다. grid 아이템은 `position: static`이어도 `z-index`가 `auto`가 아니면 relative처럼 쌓임 맥락을 만들기 때문이다.[^15]
+
+줄에 `transform`이나 1보다 작은 `opacity`가 걸려 있으면 position을 static으로 바꿔도 소용이 없다. 스와이프로 줄을 밀어 지우거나 줄마다 페이드 효과를 주는 목록이 그렇다. 명세에서는 이런 요소를 `z-index: 0`인 positioned 요소와 같은 순서로 칠한다.[^16] 그래서 줄은 일반 흐름 단계가 아니라 positioned 요소와 같은 단계에서 칠해지고, 양수 `z-index`를 준 탭바는 여전히 그 뒤로 간다. 재현 페이지에서도 `z-index: 1`과 `auto`의 차이가 그대로 남았다. transform을 건 줄은 기준 조건보다도 길었는데, 그 이유는 확인하지 않았다.
+
+가상 스크롤 라이브러리는 줄을 absolute와 `top`이나 `transform`으로 배치하므로 줄을 static으로 둘 수 없다. 대신 화면에 보이는 줄만 그리므로 비용을 키우는 청크 수가 처음부터 작다. 줄 200개 높이를 잡아 두고 보이는 줄 30개만 그린 경우 `z-index: 1`과 `auto`의 차이는 남았지만, 줄 200개를 모두 그린 기준 조건보다 훨씬 작았다. 줄을 static으로 둘 수 없다면 표의 나머지 방법 가운데에서 고르면 된다.
 
 영역 밖 콘텐츠를 살리는 방법(isolation과 영역의 `will-change`)은 sticky의 영역을 무한대로 보는 판정에 기대고 있다. 그런데 그 판정 바로 위에는 sticky의 실제 이동 범위를 쓰라는 TODO가 붙어 있다. 이 TODO가 구현되면 탭바의 영역은 감싼 영역 안으로 좁아지고, `contain: paint`에서 본 것처럼 영역 밖 콘텐츠의 탐색이 다시 길어질 가능성이 높다. 줄을 static으로 바꾸거나 합쳐지지 않는 레이어를 줄이는 방법은 이 판정과 상관없이 동작한다. 앞 절의 거리 제한은 페이지가 사용자 브라우저에서 켤 수 있는 설정이 아니다.
 
@@ -375,3 +396,7 @@ sticky 요소의 `z-index`는 탐색을 끊어 주던 레이어를 맨 뒤로 �
 [^13]: [Chromium `4d790f9e` `third_party/blink/renderer/platform/graphics/compositing/paint_artifact_compositor.cc` L930-L942](https://github.com/chromium/chromium/blob/4d790f9eb4c8abe65b8aaa3feba664e7c734ba56/third_party/blink/renderer/platform/graphics/compositing/paint_artifact_compositor.cc#L930-L942)
 
 [^14]: [w3c/csswg-drafts `e8a75fa0` `css-will-change-1/Overview.bs` L296-L303](https://github.com/w3c/csswg-drafts/blob/e8a75fa0ddea1a9aae4fe01098f39f92102e7cb0/css-will-change-1/Overview.bs?plain=1#L296-L303)
+
+[^15]: [w3c/csswg-drafts `e8a75fa0` `css-grid-1/Overview.bs` L1232-L1237](https://github.com/w3c/csswg-drafts/blob/e8a75fa0ddea1a9aae4fe01098f39f92102e7cb0/css-grid-1/Overview.bs?plain=1#L1232-L1237)
+
+[^16]: [w3c/csswg-drafts `e8a75fa0` `css-color-4/Overview.bs` L4651-L4655](https://github.com/w3c/csswg-drafts/blob/e8a75fa0ddea1a9aae4fe01098f39f92102e7cb0/css-color-4/Overview.bs?plain=1#L4651-L4655), [w3c/csswg-drafts `e8a75fa0` `css-transforms-1/Overview.bs` L319](https://github.com/w3c/csswg-drafts/blob/e8a75fa0ddea1a9aae4fe01098f39f92102e7cb0/css-transforms-1/Overview.bs?plain=1#L319)
