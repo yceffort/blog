@@ -126,8 +126,8 @@ catalogs:
       specifier: ^0.19.0
       version: 0.19.1
     '@types/node':
-      specifier: ^26.2.0
-      version: 26.2.0
+      specifier: ^26.6.6
+      version: 26.6.6
     '@types/react':
       specifier: ^19.2.18
       version: 19.2.18
@@ -276,7 +276,7 @@ importers:
         version: 7.2.0
       next:
         specifier: 'catalog:'
-        version: 16.4.5(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.9.1)(@playwright/test@1.64.1)(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.104.0)
+        version: 16.4.5(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.9.1)(@playwright/test@1.64.1)(@types/node@26.6.6)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.104.0)
       next-themes:
         specifier: 'catalog:'
         version: 0.4.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -294,7 +294,7 @@ importers:
         version: 1.5.0
       sharp:
         specifier: 'catalog:'
-        version: 0.35.5(@types/node@26.2.0)
+        version: 0.35.5(@types/node@26.6.6)
       three:
         specifier: ^0.186.0
         version: 0.186.0
@@ -328,7 +328,7 @@ importers:
         version: 3.0.5
       '@types/node':
         specifier: 'catalog:'
-        version: 26.2.0
+        version: 26.6.6
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.18
@@ -367,7 +367,7 @@ importers:
         version: 11.0.5
       vitest:
         specifier: 5.0.5
-        version: 5.0.5(@opentelemetry/api@1.9.1)(@types/node@26.2.0)(jsdom@26.1.0(supports-color@10.2.2))(vite@8.3.4(@types/node@26.2.0)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0))
+        version: 5.0.5(@opentelemetry/api@1.9.1)(@types/node@26.6.6)(jsdom@26.1.0(supports-color@10.2.2))(vite@8.3.4(@types/node@26.6.6)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0))
 
   apps/news:
     dependencies:
@@ -391,7 +391,7 @@ importers:
         version: 2.3.6(supports-color@10.2.2)
       next:
         specifier: 'catalog:'
-        version: 16.4.5(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.9.1)(@playwright/test@1.63.0)(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.104.0)
+        version: 16.4.5(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.9.1)(@playwright/test@1.63.0)(@types/node@26.6.6)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.104.0)
       next-themes:
         specifier: 'catalog:'
         version: 0.4.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -434,7 +434,7 @@ importers:
         version: 3.0.5
       '@types/node':
         specifier: 'catalog:'
-        version: 26.2.0
+        version: 26.6.6
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.18
@@ -467,7 +467,7 @@ importers:
         version: 12.0.0
       next:
         specifier: 'catalog:'
-        version: 16.4.5(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.9.1)(@playwright/test@1.64.1)(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.104.0)
+        version: 16.4.5(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.9.1)(@playwright/test@1.64.1)(@types/node@26.6.6)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.104.0)
       next-themes:
         specifier: 'catalog:'
         version: 0.4.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -507,7 +507,7 @@ importers:
         version: 0.19.0(supports-color@10.2.2)
       '@types/node':
         specifier: 'catalog:'
-        version: 26.2.0
+        version: 26.6.6
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.18
@@ -516,7 +516,7 @@ importers:
         version: 19.2.4(@types/react@19.2.18)
       sharp:
         specifier: 'catalog:'
-        version: 0.35.5(@types/node@26.2.0)
+        version: 0.35.5(@types/node@26.6.6)
       typescript:
         specifier: 'catalog:'
         version: 7.0.2
@@ -541,7 +541,7 @@ importers:
         version: 21.1.7
       '@types/node':
         specifier: 'catalog:'
-        version: 26.2.0
+        version: 26.6.6
       tsx:
         specifier: ^4.19.0
         version: 4.23.15
@@ -550,7 +550,7 @@ importers:
         version: 7.0.2
       vitest:
         specifier: 5.0.5
-        version: 5.0.5(@opentelemetry/api@1.9.1)(@types/node@26.2.0)(jsdom@26.1.0(supports-color@10.2.2))(vite@8.3.4(@types/node@26.2.0)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0))
+        version: 5.0.5(@opentelemetry/api@1.9.1)(@types/node@26.6.6)(jsdom@26.1.0(supports-color@10.2.2))(vite@8.3.4(@types/node@26.6.6)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0))
 
   packages/markdown-rs:
     devDependencies:
@@ -559,7 +559,7 @@ importers:
         version: 3.1.1(supports-color@10.2.2)
       '@types/node':
         specifier: 'catalog:'
-        version: 26.2.0
+        version: 26.6.6
       front-matter:
         specifier: 'catalog:'
         version: 4.0.2
@@ -604,7 +604,7 @@ importers:
         version: 9.0.0
       sharp:
         specifier: 'catalog:'
-        version: 0.35.5(@types/node@26.2.0)
+        version: 0.35.5(@types/node@26.6.6)
       unified:
         specifier: 'catalog:'
         version: 11.0.5
@@ -634,14 +634,14 @@ importers:
         version: 19.2.8(react@19.2.8)
       sharp:
         specifier: 'catalog:'
-        version: 0.35.5(@types/node@26.2.0)
+        version: 0.35.5(@types/node@26.6.6)
     devDependencies:
       '@anthropic-ai/sdk':
         specifier: 'catalog:'
         version: 0.120.0(zod@4.4.3)
       '@types/node':
         specifier: 'catalog:'
-        version: 26.2.0
+        version: 26.6.6
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.18
@@ -650,7 +650,7 @@ importers:
         version: 19.2.4(@types/react@19.2.18)
       next:
         specifier: 'catalog:'
-        version: 16.4.5(@opentelemetry/api@1.9.1)(@playwright/test@1.63.0)(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.102.0)
+        version: 16.4.5(@opentelemetry/api@1.9.1)(@playwright/test@1.63.0)(@types/node@26.6.6)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.102.0)
       typescript:
         specifier: 'catalog:'
         version: 7.0.2
@@ -2140,8 +2140,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@26.2.0':
-    resolution: {integrity: sha512-5IviulTZeRNp2vAJ514cc/HUlY5nZ9fCbq9DMyC52BrhFZACo3nI0R7qBxhQmo/d27NFe96ur/b7Wwxklda+kg==}
+  '@types/node@26.6.6':
+    resolution: {integrity: sha512-MzQj+8Kx3XI40OmUAE6Qoh58ZMNstNNMwn2nfd3qWsfe7nDNSqJNzes4njhz6AHwrSHOffSLwXU6yb474Q4aog==}
 
   '@types/prismjs@1.26.6':
     resolution: {integrity: sha512-vqlvI7qlMvcCBbVe0AKAb4f97//Hy0EBTaiW8AalRnG/xAN5zOiWWyrNqNXeq8+KAuvRewjCVY1+IPxk4RdNYw==}
@@ -4662,8 +4662,8 @@ packages:
   uc.micro@2.1.0:
     resolution: {integrity: sha512-ARDJmphmdvUk6Glw7y9DQ2bFkKBHwQHLi2lsaH6PPmz/Ka9sFOBsBluozhDltWmnv9u/cF6Rt87znRTPV+yp/A==}
 
-  undici-types@8.3.0:
-    resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
+  undici-types@8.9.0:
+    resolution: {integrity: sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg==}
 
   undraw-svg@2.0.0:
     resolution: {integrity: sha512-bO7s1xPlet1Rh2XWZhwGwMJpalRadUZ0i7HUAY9kA/Pds85ZwKjwewuQuDzxAHpr5a3J0yXu6GhnFPIwjUMf3A==}
@@ -6166,7 +6166,7 @@ snapshots:
 
   '@types/jsdom@21.1.7':
     dependencies:
-      '@types/node': 26.2.0
+      '@types/node': 26.6.6
       '@types/tough-cookie': 4.0.5
       parse5: 7.3.0
 
@@ -6180,9 +6180,9 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@26.2.0':
+  '@types/node@26.6.6':
     dependencies:
-      undici-types: 8.3.0
+      undici-types: 8.9.0
 
   '@types/prismjs@1.26.6': {}
 
@@ -6289,14 +6289,14 @@ snapshots:
       d3-selection: 3.0.0
       d3-transition: 3.0.1(d3-selection@3.0.0)
 
-  '@vitest/mocker@5.0.5(vite@8.3.4(@types/node@26.2.0)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0))':
+  '@vitest/mocker@5.0.5(vite@8.3.4(@types/node@26.6.6)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0))':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       '@vitest/spy': 5.0.5
       estree-walker: 3.0.3
       magic-string: 1.4.3
     optionalDependencies:
-      vite: 8.3.4(@types/node@26.2.0)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0)
+      vite: 8.3.4(@types/node@26.6.6)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0)
 
   '@vitest/spy@5.0.5': {}
 
@@ -8264,7 +8264,7 @@ snapshots:
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
 
-  next@16.4.5(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.9.1)(@playwright/test@1.63.0)(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.104.0):
+  next@16.4.5(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.9.1)(@playwright/test@1.63.0)(@types/node@26.6.6)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.104.0):
     dependencies:
       '@next/env': 16.4.5
       '@swc/helpers': 0.5.23
@@ -8286,13 +8286,13 @@ snapshots:
       '@opentelemetry/api': 1.9.1
       '@playwright/test': 1.63.0
       sass: 1.104.0
-      sharp: 0.35.5(@types/node@26.2.0)
+      sharp: 0.35.5(@types/node@26.6.6)
     transitivePeerDependencies:
       - '@babel/core'
       - '@types/node'
       - babel-plugin-macros
 
-  next@16.4.5(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.9.1)(@playwright/test@1.64.1)(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.104.0):
+  next@16.4.5(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.9.1)(@playwright/test@1.64.1)(@types/node@26.6.6)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.104.0):
     dependencies:
       '@next/env': 16.4.5
       '@swc/helpers': 0.5.23
@@ -8314,13 +8314,13 @@ snapshots:
       '@opentelemetry/api': 1.9.1
       '@playwright/test': 1.64.1
       sass: 1.104.0
-      sharp: 0.35.5(@types/node@26.2.0)
+      sharp: 0.35.5(@types/node@26.6.6)
     transitivePeerDependencies:
       - '@babel/core'
       - '@types/node'
       - babel-plugin-macros
 
-  next@16.4.5(@opentelemetry/api@1.9.1)(@playwright/test@1.63.0)(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.102.0):
+  next@16.4.5(@opentelemetry/api@1.9.1)(@playwright/test@1.63.0)(@types/node@26.6.6)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.102.0):
     dependencies:
       '@next/env': 16.4.5
       '@swc/helpers': 0.5.23
@@ -8342,7 +8342,7 @@ snapshots:
       '@opentelemetry/api': 1.9.1
       '@playwright/test': 1.63.0
       sass: 1.102.0
-      sharp: 0.35.5(@types/node@26.2.0)
+      sharp: 0.35.5(@types/node@26.6.6)
     transitivePeerDependencies:
       - '@babel/core'
       - '@types/node'
@@ -8575,7 +8575,7 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.2
-      '@types/node': 26.2.0
+      '@types/node': 26.6.6
       long: 5.3.2
 
   proxy-agent-negotiate@1.1.0: {}
@@ -8887,7 +8887,7 @@ snapshots:
       non-error: 0.1.0
       type-fest: 5.8.0
 
-  sharp@0.35.5(@types/node@26.2.0):
+  sharp@0.35.5(@types/node@26.6.6):
     dependencies:
       '@img/colour': 1.1.0
       detect-libc: 2.1.2
@@ -8918,7 +8918,7 @@ snapshots:
       '@img/sharp-win32-arm64': 0.35.5
       '@img/sharp-win32-ia32': 0.35.5
       '@img/sharp-win32-x64': 0.35.5
-      '@types/node': 26.2.0
+      '@types/node': 26.6.6
 
   shebang-command@2.0.0:
     dependencies:
@@ -9255,7 +9255,7 @@ snapshots:
 
   uc.micro@2.1.0: {}
 
-  undici-types@8.3.0: {}
+  undici-types@8.9.0: {}
 
   undraw-svg@2.0.0: {}
 
@@ -9359,7 +9359,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite@8.3.4(@types/node@26.2.0)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0):
+  vite@8.3.4(@types/node@26.6.6)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0):
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.7
@@ -9367,17 +9367,17 @@ snapshots:
       rolldown: 1.2.14
       tinyglobby: 0.2.17
     optionalDependencies:
-      '@types/node': 26.2.0
+      '@types/node': 26.6.6
       esbuild: 0.28.2
       fsevents: 2.3.3
       sass: 1.104.0
       tsx: 4.23.15
       yaml: 2.9.0
 
-  vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@26.2.0)(jsdom@26.1.0(supports-color@10.2.2))(vite@8.3.4(@types/node@26.2.0)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0)):
+  vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@26.6.6)(jsdom@26.1.0(supports-color@10.2.2))(vite@8.3.4(@types/node@26.6.6)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0)):
     dependencies:
       '@types/chai': 5.2.3
-      '@vitest/mocker': 5.0.5(vite@8.3.4(@types/node@26.2.0)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0))
+      '@vitest/mocker': 5.0.5(vite@8.3.4(@types/node@26.6.6)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0))
       chai: 6.3.0
       es-module-lexer: 2.3.2
       expect-type: 1.4.0
@@ -9388,11 +9388,11 @@ snapshots:
       tinybench: 6.2.2
       tinyexec: 1.3.1
       tinyglobby: 0.2.17
-      vite: 8.3.4(@types/node@26.2.0)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0)
+      vite: 8.3.4(@types/node@26.6.6)(esbuild@0.28.2)(sass@1.104.0)(tsx@4.23.15)(yaml@2.9.0)
       why-is-node-running: 3.2.1
     optionalDependencies:
       '@opentelemetry/api': 1.9.1
-      '@types/node': 26.2.0
+      '@types/node': 26.6.6
       jsdom: 26.1.0(supports-color@10.2.2)
     transitivePeerDependencies:
       - msw
