@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sticky z-index와 레이어 합치기</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fbfaf7; --ink:#252338; --muted:#706d7d; --line:#e9e6ee; --tab:#dfe3ec; --obst:#d1453b; --hi:#2a78d6; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#181820; --ink:#f0eef8; --muted:#b5b0c5; --line:#2e2c3a; --tab:#2c3242; --obst:#e66767; --hi:#3987e5; } }
+  html, body { margin: 0; }
+  body { background: var(--bg); color: var(--ink); font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Segoe UI", sans-serif; }
+  .panel, .meter { box-sizing: border-box; padding: 10px 12px; border-bottom: 1px solid var(--line); font-size: 12px; }
+  .panel { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 6px 12px; }
+  .panel label { display: flex; flex-direction: column; gap: 2px; color: var(--muted); }
+  .panel select, .meter button { font: inherit; color: var(--ink); }
+  .meter b { font-size: 18px; font-variant-numeric: tabular-nums; color: var(--hi); }
+  .meter small, .log { color: var(--muted); }
+  .log { margin: 4px 0 0; padding: 0 0 0 16px; font-variant-numeric: tabular-nums; }
+
+  /* 아래는 실험 페이지(blog-experiments/sticky-z-index-layerize/index.html)와 같은 크기와 구조다 */
+  #toggler { height: 4px; }
+  #toggler.on { will-change: opacity; }
+  .obst { position: relative; display: flex; flex-wrap: wrap; gap: 2px; padding: 4px; }
+  .obst i { width: 8px; height: 8px; background: var(--obst); will-change: opacity; }
+  .sticky { position: sticky; top: 0; height: 50px; line-height: 50px; padding-left: 8px; background: var(--tab); font-weight: 600; z-index: var(--z); }
+  .row { position: relative; height: 28px; padding: 0 8px; border-bottom: 1px solid var(--line); }
+  .row b { position: relative; float: right; font-weight: 400; color: var(--muted); }
+  .clip .row b { overflow: hidden; border-radius: 4px; }
+  .iso #sec { isolation: isolate; }
+  .cpaint #sec { contain: paint; }
+  .secwc #sec { will-change: transform; }
+  .listwc #list { will-change: transform; }
+  .rowstatic .row, .rowstatic .row b { position: static; }
+  .below-title { padding: 10px 8px 4px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="panel">
+  <label><span data-t="z">탭바 z-index</span><select id="z"><option>auto</option><option>0</option><option>1</option><option>201</option></select></label>
+  <label><span data-t="k">합쳐지지 않는 레이어</span><select id="k"><option>0</option><option>16</option><option>32</option><option>48</option><option>64</option><option>128</option></select></label>
+  <label><span data-t="n">목록 줄</span><select id="n"><option>50</option><option>100</option><option>150</option><option>200</option></select></label>
+  <label><span data-t="m">목록 아래 줄</span><select id="m"><option>0</option><option>100</option></select></label>
+  <label><span data-t="clip">줄마다 클립</span><select id="clip"><option value="1" data-t="on">켬</option><option value="0" data-t="off">끔</option></select></label>
+  <label><span data-t="fix">수정</span><select id="fix">
+    <option value="" data-t="none">없음</option>
+    <option value="iso">section { isolation: isolate }</option>
+    <option value="listwc">#list { will-change: transform }</option>
+    <option value="iso,listwc">isolation + #list will-change</option>
+    <option value="secwc">section { will-change: transform }</option>
+    <option value="rowstatic">.row, .row b { position: static }</option>
+    <option value="cpaint">section { contain: paint }</option>
+  </select></label>
+</div>
+<div class="meter">
+  <button type="button" id="run" data-t="run">5초 재기</button>
+  <span data-t="meter">rAF에서 다음 태스크까지</span> <b id="ms">-</b> ms
+  <small data-t="note">렌더링을 포함한 경과 시간의 근사값(중앙값). 다른 작업의 대기 시간이 섞일 수 있다</small>
+  <ol class="log" id="log"></ol>
+</div>
+<div id="toggler"></div>
+<div class="obst" id="obst"></div>
+<section id="sec">
+  <div class="sticky" data-t="tab">sticky 탭바</div>
+  <div id="list"></div>
+</section>
+<div id="belowWrap"></div>
+<div style="height: 1200px"></div>
+<script>
+(() => {
+  const q = new URLSearchParams(location.search)
+  const lang = q.get('lang') === 'en' ? 'en' : 'ko'
+  const EN = { z: 'Tab bar z-index', k: 'Layers that never merge', n: 'Rows in the list', m: 'Rows below the list', clip: 'Clip in each row', on: 'on', off: 'off', fix: 'Fix', none: 'none', run: 'Measure 5s', meter: 'From rAF to the next task', note: 'approximate elapsed time including rendering (median). Waiting for other work can be included', tab: 'sticky tab bar', below: 'Rows below the list', measuring: 'measuring...', nosample: 'no samples, measure again with the demo on screen' }
+  const KO = { below: '목록 아래 줄', measuring: '측정 중...', nosample: '표본이 없다. 데모가 화면에 보이는 상태에서 다시 재면 된다' }
+  if (lang === 'en') { document.documentElement.lang = 'en'; document.title = 'sticky z-index and layer merging'; for (const el of document.querySelectorAll('[data-t]')) el.textContent = EN[el.dataset.t] }
+  const t = key => (lang === 'en' ? EN : KO)[key]
+  const $ = id => document.getElementById(id)
+  const state = { z: q.get('z') ?? '1', k: q.get('k') ?? '32', n: q.get('n') ?? '200', m: q.get('m') ?? '0', clip: q.get('clip') ?? '1', fix: q.get('fix') ?? '' }
+  const rows = (n, from) => Array.from({ length: n }, (_, i) => `<div class="row">row ${from + i}<b>${(from + i) * 7}</b></div>`).join('')
+  const median = xs => { const s = [...xs].sort((a, b) => a - b); return s[Math.floor(s.length / 2)] }
+  const label = () => `z-index ${state.z}, k ${state.k}, n ${state.n}${state.m !== '0' ? `+${state.m}` : ''}, clip ${state.clip === '1' ? 'on' : 'off'}${state.fix ? `, ${state.fix}` : ''}`
+
+  const apply = () => {
+    document.documentElement.style.setProperty('--z', state.z)
+    document.body.className = [state.clip === '1' ? 'clip' : '', ...state.fix.split(',')].filter(Boolean).join(' ')
+    $('obst').innerHTML = '<i></i>'.repeat(Number(state.k))
+    $('list').innerHTML = rows(Number(state.n), 0)
+    $('belowWrap').innerHTML = state.m === '0' ? '' : `<div class="below-title">${t('below')}</div>${rows(Number(state.m), 1000)}`
+    for (const key of Object.keys(state)) $(key).value = state[key]
+  }
+  // 조건을 바꾸면 이전 조건의 결과를 지운다. 재는 동안에는 선택을 잠가 두 조건의 표본이 섞이지 않게 한다.
+  const selects = Object.keys(state).map($)
+  for (const key of Object.keys(state)) $(key).onchange = e => { state[key] = e.target.value; apply(); $('ms').textContent = '-' }
+  apply()
+
+  // 재는 동안 매 프레임 레이어 하나를 켰다 꺼서 레이어 계산 전체 경로를 일으킨다.
+  // requestAnimationFrame 안에서 시작 시각을 담아 메시지를 보내고, 그 메시지가 처리된 시각과의 차이를 잰다.
+  // 메시지는 그 프레임의 렌더링이 끝난 뒤 별도 태스크로 처리되므로, 렌더링 시간에 다른 작업의 대기 시간이 섞일 수 있다.
+  const channel = new MessageChannel()
+  let samples = []
+  channel.port1.onmessage = e => samples.push(performance.now() - e.data)
+  $('run').onclick = () => {
+    samples = []
+    $('run').disabled = true
+    for (const s of selects) s.disabled = true
+    $('ms').textContent = t('measuring')
+    // 5초는 첫 프레임에서 센다. 화면 밖이거나 숨은 탭이면 첫 프레임이 늦게 올 수 있다.
+    let until = 0
+    const frame = () => {
+      if (!until) until = performance.now() + 5000
+      if (performance.now() > until) {
+        $('run').disabled = false
+        for (const s of selects) s.disabled = false
+        if (!samples.length) { $('ms').textContent = t('nosample'); return }
+        const ms = median(samples)
+        $('ms').textContent = ms.toFixed(1)
+        const li = document.createElement('li')
+        li.textContent = `${label()}: ${ms.toFixed(1)} ms`
+        $('log').prepend(li)
+        while ($('log').children.length > 5) $('log').lastChild.remove()
+        return
+      }
+      $('toggler').classList.toggle('on')
+      channel.port2.postMessage(performance.now())
+      requestAnimationFrame(frame)
+    }
+    requestAnimationFrame(frame)
+  }
+})()
+</script>
+</body>
+</html>

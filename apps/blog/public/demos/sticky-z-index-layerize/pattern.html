@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>흔한 화면으로 본 네 가지 조건</title>
+<style>
+  :root { color-scheme: light dark; --bg:#efeee9; --card:#fff; --ink:#1f1d2b; --muted:#6f6c7b; --line:#ecebf0; --skel:#e3e1ea; --accent:#e5484d; --mark:#2a78d6; --panel:#1f1d2b; --panel-ink:#f3f2f7; --on:#4cc38a; --off:#8a879a; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111116; --card:#1c1c24; --ink:#f0eef8; --muted:#a9a5b8; --line:#2b2a36; --skel:#2e2d3a; --accent:#ff6b6f; --mark:#5aa2f0; --panel:#000; --panel-ink:#f0eef8; } }
+  html, body { margin: 0; }
+  body { background: var(--bg); color: var(--ink); font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Segoe UI", sans-serif; }
+  .screen { max-width: 430px; margin: 0 auto; background: var(--card); padding-bottom: 260px; }
+  header { padding: 14px 16px 4px; font-size: 18px; font-weight: 700; }
+  .sec { margin: 8px 16px; color: var(--muted); font-size: 12px; }
+  .mark { display: inline-block; min-width: 18px; height: 18px; margin-right: 4px; border-radius: 9px; background: var(--mark); color: #fff; font-size: 11px; font-weight: 700; line-height: 18px; text-align: center; vertical-align: 1px; }
+
+  /* ③ 로딩 스켈레톤: opacity가 깜박이는 막대 하나하나가 합성 레이어가 된다 */
+  .skels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0 16px 14px; }
+  .sk { padding: 8px; border: 1px solid var(--line); border-radius: 10px; }
+  .sk i { display: block; height: 9px; margin-top: 6px; border-radius: 4px; background: var(--skel); animation: pulse 1.5s ease-in-out infinite; }
+  .sk i:first-child { height: 52px; margin-top: 0; }
+  @keyframes pulse { 50% { opacity: 0.45; } }
+
+  /* ① sticky 탭바 */
+  .tabs { position: sticky; top: 0; z-index: var(--z); display: flex; align-items: center; gap: 14px; height: 46px; padding: 0 16px; background: var(--card); border-bottom: 1px solid var(--line); font-weight: 600; }
+  .tabs b { font-weight: 600; color: var(--muted); }
+  .tabs b.on { color: var(--ink); }
+
+  /* ② 상품 목록: 줄은 relative, 배지는 absolute에 둥근 모서리, 상품명은 말줄임 */
+  .item { position: relative; display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .thumb { flex: none; width: 56px; height: 56px; border-radius: 10px; background: var(--skel); }
+  .badge { position: absolute; left: 12px; top: 8px; padding: 1px 6px; overflow: hidden; border-radius: 6px; background: var(--accent); color: #fff; font-size: 10px; font-weight: 700; }
+  .info { flex: 1; min-width: 0; }
+  .title { margin: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .price { margin: 2px 0 0; font-weight: 700; }
+  /* ④ 남은 수량: 자릿수가 바뀌는 텍스트 */
+  .stock { margin-left: 6px; color: var(--muted); font-size: 12px; font-weight: 400; }
+  .static .item, .static .badge { position: static; }
+  /* ④ 같은 폭: 숫자 폭을 고정하고 자릿수가 같은 값으로만 바꾼다 */
+  .same .stock { font-variant-numeric: tabular-nums; }
+  .static .badge { display: inline-block; margin: 4px 0 0 4px; }
+
+  /* 아래 고정 패널 */
+  .panel { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; padding: 10px 12px 12px; background: var(--panel); color: var(--panel-ink); font-size: 12px; }
+  .panel .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 6px 12px; max-width: 900px; margin: 0 auto; }
+  .panel label { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .panel label > span { white-space: nowrap; }
+  .panel select, .panel button { font: inherit; }
+  .panel .meter { max-width: 900px; margin: 8px auto 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
+  .panel .meter b { font-size: 16px; font-variant-numeric: tabular-nums; }
+  .panel small { opacity: 0.75; }
+  .verdict { max-width: 900px; margin: 6px auto 0; }
+  .verdict span { display: inline-block; margin-right: 6px; padding: 0 6px; border-radius: 9px; background: var(--off); color: #fff; }
+  .verdict span.hit { background: var(--on); color: #0b2b1b; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <header data-t="title">오늘의 쇼핑</header>
+  <p class="sec"><span class="mark">3</span><span data-t="loading">추천 상품을 불러오는 중</span></p>
+  <div class="skels" id="skels"></div>
+  <nav class="tabs"><span class="mark">1</span><b class="on" data-t="t0">전체</b><b data-t="t1">의류</b><b data-t="t2">가전</b><b data-t="t3">식품</b><b data-t="t4">리빙</b></nav>
+  <div id="list"></div>
+</div>
+<div class="panel">
+  <div class="grid">
+    <label><span><span class="mark">1</span><span data-t="c1">탭바 z-index</span></span><select id="z"><option>1</option><option>auto</option></select></label>
+    <label><span><span class="mark">2</span><span data-t="c2">목록 줄</span></span><select id="rows"><option value="relative" data-t="relative">relative + 배지</option><option value="static" data-t="static">static</option></select></label>
+    <label><span><span class="mark">3</span><span data-t="c3">깜박이는 스켈레톤</span></span><select id="skel"><option value="24" data-t="s24">카드 6개(막대 24개)</option><option value="8" data-t="s8">카드 2개(막대 8개)</option><option value="0" data-t="s0">없음</option></select></label>
+    <label><span><span class="mark">4</span><span data-t="c4">남은 수량 갱신</span></span><select id="live"><option value="1" data-t="liveOn">자릿수가 바뀜</option><option value="same" data-t="liveSame">같은 폭으로 바뀜</option><option value="0" data-t="liveOff">갱신 없음</option></select></label>
+  </div>
+  <div class="meter">
+    <button type="button" id="run" data-t="run">5초 측정</button>
+    <span data-t="meter">프레임당 경과 시간</span> <b id="ms">-</b> ms
+    <small data-t="note">rAF에서 다음 태스크까지, 렌더링을 포함한 근사값의 중앙값</small>
+  </div>
+  <p class="verdict" id="verdict"></p>
+</div>
+<script>
+(() => {
+  const q = new URLSearchParams(location.search)
+  const lang = q.get('lang') === 'en' ? 'en' : 'ko'
+  const EN = { title: "Today's picks", loading: 'Loading recommendations', t0: 'All', t1: 'Fashion', t2: 'Home', t3: 'Food', t4: 'Living', c1: 'Tab bar z-index', c2: 'List rows', relative: 'relative + badge', static: 'static', c3: 'Pulsing skeleton', s24: '6 cards (24 bars)', s8: '2 cards (8 bars)', s0: 'none', c4: 'Stock count updates', liveOn: 'digit count changes', liveSame: 'same width (tabular-nums)', liveOff: 'no updates', run: 'Measure 5s', meter: 'Elapsed time per frame', note: 'median of rAF to next task, approximate, includes rendering', measuring: 'measuring...', nosample: 'no samples, measure again with the demo on screen', all: 'All four apply, the case this post measures', some: 'Not all four apply', stock: n => `${n} left`, sale: 'SALE' }
+  const KO = { measuring: '측정 중...', nosample: '표본이 없다. 데모가 화면에 보이는 상태에서 다시 재면 된다', all: '네 가지가 모두 해당한다. 이 글에서 잰 경우다', some: '네 가지가 모두 해당하지는 않는다', stock: n => `남은 수량 ${n}개`, sale: 'SALE' }
+  if (lang === 'en') { document.documentElement.lang = 'en'; document.title = 'Four conditions on a common screen'; for (const el of document.querySelectorAll('[data-t]')) el.textContent = EN[el.dataset.t] }
+  const t = key => (lang === 'en' ? EN : KO)[key]
+  const $ = id => document.getElementById(id)
+
+  const names = lang === 'en'
+    ? ['Linen-blend relaxed fit short-sleeve shirt for everyday wear', 'Wireless noise cancelling earbuds with charging case', 'Cold brew coffee concentrate, 1L, two-bottle set', 'Stainless steel electric kettle with temperature control', 'Organic cotton bath towel set, four pieces']
+    : ['린넨 혼방 오버핏 반팔 셔츠 데일리 기본 아이템', '노이즈 캔슬링 무선 이어폰 충전 케이스 포함', '콜드브루 원액 1L 2병 묶음 할인 상품', '온도 조절 스테인리스 전기 주전자 대용량', '유기농 순면 호텔식 바스 타월 4장 세트']
+  const stockText = n => t('stock')(n)
+  const item = i => `<div class="item"><div class="thumb"></div><span class="badge">${t('sale')}</span><div class="info"><p class="title">${i === 0 ? '<span class="mark">2</span>' : ''}${names[i % names.length]}</p><p class="price">${(19900 + (i % 7) * 5000).toLocaleString()}원<span class="stock">${i === 0 ? '<span class="mark">4</span>' : ''}<em>${stockText(3 + (i % 6))}</em></span></p></div></div>`
+  $('list').innerHTML = Array.from({ length: 80 }, (_, i) => item(i)).join('')
+
+  const state = { z: q.get('z') ?? '1', rows: q.get('rows') ?? 'relative', skel: q.get('skel') ?? '24', live: q.get('live') ?? '1' }
+  const selects = Object.keys(state).map($)
+  const apply = () => {
+    document.documentElement.style.setProperty('--z', state.z)
+    document.body.classList.toggle('static', state.rows === 'static')
+    document.body.classList.toggle('same', state.live === 'same')
+    $('skels').innerHTML = '<div class="sk"><i></i><i></i><i></i><i></i></div>'.repeat(Number(state.skel) / 4)
+    for (const key of Object.keys(state)) $(key).value = state[key]
+    const hits = [state.z !== 'auto' && state.z !== '0', state.rows === 'relative', state.skel !== '0', state.live === '1']
+    $('verdict').innerHTML = hits.map((h, i) => `<span class="${h ? 'hit' : ''}">${i + 1}</span>`).join('') + (hits.every(Boolean) ? t('all') : t('some'))
+  }
+  for (const key of Object.keys(state)) $(key).onchange = e => { state[key] = e.target.value; apply(); $('ms').textContent = '-' }
+  apply()
+
+  // 재는 동안 프레임마다 화면 위쪽 줄 하나의 남은 수량 자릿수를 바꾼다(④가 켜져 있을 때).
+  // requestAnimationFrame 안에서 시작 시각을 담아 메시지를 보내고, 그 메시지가 처리된 시각과의 차이를 잰다.
+  const stocks = [...document.querySelectorAll('.stock em')].slice(0, 6)
+  const median = xs => { const s = [...xs].sort((a, b) => a - b); return s[Math.floor(s.length / 2)] }
+  const channel = new MessageChannel()
+  let samples = []
+  channel.port1.onmessage = e => samples.push(performance.now() - e.data)
+  let tick = 0
+  const update = () => {
+    if (state.live === '0') return
+    const el = stocks[tick++ % stocks.length]
+    const [a, b] = state.live === 'same' ? ['3', '4'] : ['9', '12']
+    el.dataset.n = el.dataset.n === a ? b : a
+    el.textContent = stockText(el.dataset.n)
+  }
+  // ?auto=1 이면 측정 버튼 없이 로드 직후부터 프레임마다 갱신한다. 트레이스로 잴 때 쓴다.
+  if (q.get('auto') === '1') { const loop = () => { update(); requestAnimationFrame(loop) }; requestAnimationFrame(loop) }
+  $('run').onclick = () => {
+    samples = []
+    $('run').disabled = true
+    for (const s of selects) s.disabled = true
+    $('ms').textContent = t('measuring')
+    let until = 0
+    const frame = () => {
+      if (!until) until = performance.now() + 5000
+      if (performance.now() > until) {
+        $('run').disabled = false
+        for (const s of selects) s.disabled = false
+        $('ms').textContent = samples.length ? median(samples).toFixed(1) : t('nosample')
+        return
+      }
+      update()
+      channel.port2.postMessage(performance.now())
+      requestAnimationFrame(frame)
+    }
+    requestAnimationFrame(frame)
+  }
+})()
+</script>
+</body>
+</html>
