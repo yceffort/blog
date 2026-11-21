@@ -1,7 +1,11 @@
 import * as stylex from '@stylexjs/stylex'
+// Animate the individual rotate property so hover transforms cannot reset the spin.
 const motion_logo_spin = stylex.keyframes({
+  from: {
+    rotate: '0deg',
+  },
   to: {
-    transform: 'rotate(360deg)',
+    rotate: '360deg',
   },
 })
 const styles = stylex.create({

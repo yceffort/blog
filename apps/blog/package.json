@@ -5,6 +5,7 @@
   "description": "yceffort blog",
   "type": "module",
   "scripts": {
+    "test:header-motion": "node scripts/check-header-logo-motion.mjs",
     "build": "next build",
     "dev": "next dev",
     "lint:style": "stylelint '**/*.{css,scss}'",
