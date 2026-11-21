@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>주식을 산다는 것은 어떤 일인가</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fbfaf7; --ink:#252338; --ink2:#55526a; --muted:#706d7d; --grid:#e9e6ee; --axis:#cfcbd8; --chip:#f1eff5;
+    --buy:#d93a3f; --buy-bg:rgba(217,58,63,.10); --sell:#2a6fd6; --sell-bg:rgba(42,111,214,.10); --fill:#14946a; --fill-bg:rgba(20,148,106,.14);
+    --cont:#2a6fd6; --call:#eb6834; --off:#8a63d2; --rest:transparent; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#181820; --ink:#f0eef8; --ink2:#c9c5d8; --muted:#a9a4ba; --grid:#2e2c3a; --axis:#474459; --chip:#25242f;
+    --buy:#ff6b70; --buy-bg:rgba(255,107,112,.14); --sell:#5b9bf5; --sell-bg:rgba(91,155,245,.15); --fill:#2fc28f; --fill-bg:rgba(47,194,143,.18);
+    --cont:#5b9bf5; --call:#f0814f; --off:#a98bf0; } }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { padding: 16px 14px 12px; background: var(--bg); color: var(--ink); font: 13px/1.5 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Segoe UI", sans-serif; word-break: keep-all; }
+  .view { display: none; flex-direction: column; gap: 12px; }
+  .view.on { display: flex; }
+  .cap { font-weight: 600; font-size: 13.5px; }
+  .cap small { font-weight: 400; color: var(--muted); font-size: 12px; margin-left: 6px; }
+  .num { font-variant-numeric: tabular-nums; }
+  .btns { display: flex; flex-wrap: wrap; gap: 6px; }
+  button { font: inherit; font-size: 12.5px; color: var(--ink); background: var(--chip); border: 1px solid var(--axis); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+  button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .note { color: var(--ink2); font-size: 12.5px; min-height: 2.6em; }
+  .note b { color: var(--ink); }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--ink2); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+
+  /* 호가창 */
+  .book { display: grid; grid-template-columns: 1fr auto 1fr; max-width: 420px; width: 100%; border-top: 1px solid var(--axis); }
+  .book > div { padding: 6px 10px; border-bottom: 1px solid var(--grid); text-align: right; }
+  .book .h { color: var(--muted); font-size: 12px; text-align: center; }
+  .book .p { text-align: center; font-weight: 600; min-width: 92px; }
+  .book .s { background: var(--sell-bg); color: var(--sell); }
+  .book .b { background: var(--buy-bg); color: var(--buy); text-align: left; }
+  .book .e { background: transparent; }
+  .book .hit { outline: 2px solid var(--fill); outline-offset: -2px; background: var(--fill-bg); color: var(--ink); font-weight: 700; }
+  .book .add { outline: 2px dashed var(--buy); outline-offset: -2px; font-weight: 700; }
+
+  /* 단일가 */
+  .auc { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; align-items: center; }
+  .auc .pr { font-weight: 600; text-align: right; padding: 4px 10px; border-radius: 8px; border: 1px solid var(--axis); background: var(--chip); cursor: pointer; }
+  .auc .pr[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .auc .bars { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .bar { display: flex; align-items: center; gap: 6px; height: 14px; font-size: 11.5px; color: var(--ink2); }
+  .bar i { display: block; height: 100%; border-radius: 0 3px 3px 0; min-width: 2px; }
+  .bar.buy i { background: var(--buy); } .bar.sell i { background: var(--sell); } .bar.fill i { background: var(--fill); }
+  .bar.fill { font-weight: 600; color: var(--ink); }
+  .orders { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .orders h4 { margin: 0 0 4px; font-size: 12px; font-weight: 600; }
+  .orders h4.buy { color: var(--buy); } .orders h4.sell { color: var(--sell); }
+  .chip { display: flex; justify-content: space-between; gap: 6px; padding: 3px 8px; margin-bottom: 3px; border-radius: 6px; font-size: 12px; border: 1px solid var(--grid); color: var(--muted); }
+  .chip.yes { border-color: var(--fill); background: var(--fill-bg); color: var(--ink); }
+
+  /* 시간 띠 */
+  .tl { position: relative; display: grid; grid-template-columns: 88px 1fr; gap: 6px 8px; align-items: center; }
+  .tl .lab { font-size: 12px; color: var(--ink2); text-align: right; line-height: 1.25; }
+  .lane { position: relative; height: 26px; border-radius: 6px; background: var(--grid); }
+  .lane.thin { height: 14px; }
+  .seg { position: absolute; top: 0; bottom: 0; border-radius: 5px; display: flex; align-items: center; justify-content: center; overflow: hidden; color: #fff; font-size: 11px; font-weight: 600; white-space: nowrap; cursor: default; }
+  .seg.cont { background: var(--cont); } .seg.ref { background: var(--muted); } .seg.call { background: var(--call); } .seg.off { background: var(--off); } .seg.us { background: var(--cont); } .seg.day { background: var(--fill); } .seg.pre, .seg.after { background: color-mix(in srgb, var(--cont) 55%, var(--bg)); color: var(--ink); }
+  .axis { position: relative; height: 18px; grid-column: 2; font-size: 11px; color: var(--muted); }
+  .axis span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+  .axis span.first { transform: none; } .axis span.last { transform: translateX(-100%); }
+  .seg.nolabel { color: transparent; }
+  .tip { position: fixed; z-index: 5; pointer-events: none; background: var(--bg); color: var(--ink); border: 1px solid var(--axis); border-radius: 8px; padding: 6px 9px; font-size: 12px; box-shadow: 0 6px 18px rgba(0,0,0,.16); display: none; max-width: 240px; }
+</style>
+</head>
+<body>
+
+<!-- 1. 접속매매: 호가창에 주문이 들어올 때 -->
+<section class="view" id="v-book">
+  <div class="cap" data-t="bookCap">주문이 들어오는 순간 호가창과 맞춰 본다<small data-t="bookSmall">삼성전자, 2026년 11월 20일 장 마감 뒤 호가 위쪽 3단계, 장이 열려 있었다고 가정</small></div>
+  <div class="btns" role="group">
+    <button data-o="0" aria-pressed="true" data-t="bookA">180,900원에 10주 매수</button>
+    <button data-o="1" aria-pressed="false" data-t="bookB">180,800원에 10주 매수</button>
+  </div>
+  <div class="book num" id="book"></div>
+  <div class="note" id="bookNote"></div>
+</section>
+
+<!-- 2. 단일가매매: 가격 후보마다 수량 세기 -->
+<section class="view" id="v-auction">
+  <div class="cap" data-t="aucCap">가격을 하나 정했을 때 몇 주가 거래되는가<small data-t="aucSmall">가격을 눌러 보세요</small></div>
+  <div class="auc num" id="auc"></div>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--buy)"></i><span data-t="lgBuy">이 가격이면 사겠다는 수량</span></span>
+    <span><i class="sw" style="background:var(--sell)"></i><span data-t="lgSell">이 가격이면 팔겠다는 수량</span></span>
+    <span><i class="sw" style="background:var(--fill)"></i><span data-t="lgFill">거래할 수 있는 수량 (둘 중 적은 쪽)</span></span>
+  </div>
+  <div class="orders num" id="orders"></div>
+  <div class="note" id="aucNote"></div>
+</section>
+
+<!-- 3. 국내 하루 -->
+<section class="view" id="v-day">
+  <div class="cap" data-t="dayCap">평일 국내 주식 거래 시간<small data-t="daySmall">2026년 11월 기준, 한국 시간</small></div>
+  <div class="btns" role="group">
+    <button data-z="all" aria-pressed="true" data-t="zAll">8시~20시 전체</button>
+    <button data-z="open" aria-pressed="false" data-t="zOpen">장 시작 전후</button>
+    <button data-z="close" aria-pressed="false" data-t="zClose">장 마감 전후</button>
+  </div>
+  <div class="tl" id="day"></div>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--cont)"></i><span data-t="lgCont">접속매매 (들어오는 즉시 체결)</span></span>
+    <span><i class="sw" style="background:var(--call)"></i><span data-t="lgCall">단일가매매 (모았다가 한 가격에 체결)</span></span>
+    <span><i class="sw" style="background:var(--off)"></i><span data-t="lgOff">시간외 종가 (종가로만 거래)</span></span>
+    <span><i class="sw" style="background:var(--grid)"></i><span data-t="lgRest">거래 없음</span></span>
+  </div>
+</section>
+
+<!-- 4. 미국 장 -->
+<section class="view" id="v-us">
+  <div class="cap" data-t="usCap">한국 시간으로 본 미국 주식 거래 시간<small data-t="usSmall">평일 기준, 주간거래 시간은 증권사마다 다르다</small></div>
+  <div class="tl" id="us"></div>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--fill)"></i><span data-t="lgDay">주간거래 (국내 증권사, 미국 대체거래소)</span></span>
+    <span><i class="sw" style="background:color-mix(in srgb, var(--cont) 55%, var(--bg))"></i><span data-t="lgPre">프리마켓, 애프터마켓</span></span>
+    <span><i class="sw" style="background:var(--cont)"></i><span data-t="lgReg">정규장</span></span>
+    <span><i class="sw" style="background:var(--muted)"></i><span data-t="lgKrx">참고: 한국거래소 정규장</span></span>
+  </div>
+</section>
+
+<div class="tip" id="tip"></div>
+
+<script>
+(() => {
+  const params = new URLSearchParams(location.search)
+  const lang = params.get('lang') === 'en' ? 'en' : 'ko'
+  const t = (ko, en) => (lang === 'en' ? en : ko)
+  const text = {
+    ko: {},
+    en: {
+      bookCap: 'An incoming order is checked against the order book at once', bookSmall: 'Samsung Electronics, top 3 levels after the close on Nov 20, 2026, as if the market were open',
+      bookA: 'Buy 10 shares at 180,900', bookB: 'Buy 10 shares at 180,800',
+      aucCap: 'How many shares trade if one price is chosen', aucSmall: 'Tap a price',
+      lgBuy: 'Shares buyers will take at this price', lgSell: 'Shares sellers will give at this price', lgFill: 'Shares that can trade (the smaller of the two)',
+      dayCap: 'Weekday trading hours for Korean stocks', daySmall: 'As of November 2026, Korea time',
+      zAll: '8:00 to 20:00', zOpen: 'Around the open', zClose: 'Around the close',
+      lgCont: 'Continuous trading (matched on arrival)', lgCall: 'Single-price auction (collected, then one price)', lgOff: 'Off-hours closing price', lgRest: 'No trading',
+      usCap: 'U.S. stock trading hours in Korea time', usSmall: 'Weekdays. Daytime session hours differ by broker',
+      lgDay: 'Daytime session (Korean brokers via U.S. ATS)', lgPre: 'Pre-market, after-hours', lgReg: 'Regular session', lgKrx: 'For reference: KRX regular session',
+    },
+  }[lang]
+  if (lang === 'en') {
+    document.documentElement.lang = 'en'
+    document.title = 'What buying a stock involves'
+    for (const el of document.querySelectorAll('[data-t]')) {
+      const v = text[el.dataset.t]
+      if (v == null) continue
+      const small = el.querySelector('small')
+      if (small) { el.firstChild.textContent = v } else { el.textContent = v }
+    }
+  }
+  const fmt = n => n.toLocaleString(lang === 'en' ? 'en-US' : 'ko-KR')
+  const view = params.get('view') || 'book'
+  const sec = document.getElementById('v-' + view) || document.getElementById('v-book')
+  sec.classList.add('on')
+
+  const tip = document.getElementById('tip')
+  const showTip = (e, s) => { tip.textContent = s; tip.style.display = 'block'; const x = Math.min(e.clientX + 12, innerWidth - tip.offsetWidth - 8); tip.style.left = x + 'px'; tip.style.top = (e.clientY + 14) + 'px' }
+  const hideTip = () => { tip.style.display = 'none' }
+
+  // 1. 접속매매
+  const ASK = [[181100, 1613], [181000, 4074], [180900, 2561]]
+  const BID = [[180800, 590], [180700, 6100], [180600, 6290]]
+  const ORDERS = [{ price: 180900 }, { price: 180800 }]
+  function renderBook(i) {
+    const o = ORDERS[i]
+    const book = document.getElementById('book')
+    let html = `<div class="h">${t('매도 잔량', 'Sell size')}</div><div class="h">${t('가격', 'Price')}</div><div class="h">${t('매수 잔량', 'Buy size')}</div>`
+    for (const [p, q] of ASK) {
+      const hit = o.price >= p && p === Math.min(...ASK.map(a => a[0]))
+      const qq = hit ? `${fmt(q)} → ${fmt(q - 10)}` : fmt(q)
+      html += `<div class="s ${hit ? 'hit' : ''}">${qq}</div><div class="p">${fmt(p)}</div><div class="e"></div>`
+    }
+    for (const [p, q] of BID) {
+      const add = o.price < Math.min(...ASK.map(a => a[0])) && p === o.price
+      const qq = add ? `${fmt(q)} → ${fmt(q + 10)}` : fmt(q)
+      html += `<div class="e"></div><div class="p">${fmt(p)}</div><div class="b ${add ? 'add' : ''}">${qq}</div>`
+    }
+    book.innerHTML = html
+    document.getElementById('bookNote').innerHTML = i === 0
+      ? t('180,900원까지 내겠다는 주문이 들어오자마자 <b>180,900원에 팔겠다는 호가와 만나 10주가 체결</b>된다. 매도 잔량이 10주 줄어든다.',
+          'The order to pay up to 180,900 meets the sell quote at 180,900 the moment it arrives, so <b>10 shares trade at once</b>. The sell size drops by 10.')
+      : t('180,800원에 팔겠다는 사람이 없어 <b>체결되지 않는다</b>. 주문은 180,800원 매수 줄의 맨 뒤에 서서, 누군가 그 가격에 팔기를 기다린다.',
+          'Nobody sells at 180,800, so <b>nothing trades</b>. The order joins the back of the 180,800 buy queue and waits for a seller.')
+    for (const b of sec.querySelectorAll('button[data-o]')) b.setAttribute('aria-pressed', String(+b.dataset.o === i))
+  }
+
+  // 2. 단일가매매
+  const BUYS = [[181200, 300], [181000, 500], [180800, 400]]
+  const SELLS = [[180600, 200], [181000, 400], [181200, 600]]
+  const PRICES = [181200, 181000, 180800, 180600]
+  const qBuy = p => BUYS.filter(([x]) => x >= p).reduce((s, [, q]) => s + q, 0)
+  const qSell = p => SELLS.filter(([x]) => x <= p).reduce((s, [, q]) => s + q, 0)
+  const MAXQ = Math.max(...PRICES.map(p => Math.max(qBuy(p), qSell(p))))
+  const best = PRICES.reduce((a, p) => (Math.min(qBuy(p), qSell(p)) > Math.min(qBuy(a), qSell(a)) ? p : a), PRICES[0])
+  function renderAuction(sel) {
+    const auc = document.getElementById('auc')
+    auc.innerHTML = PRICES.map(p => {
+      const b = qBuy(p), s = qSell(p), f = Math.min(b, s)
+      const w = q => (q / MAXQ * 100).toFixed(1) + '%'
+      return `<button class="pr" data-p="${p}" aria-pressed="${p === sel}">${fmt(p)}</button>
+        <div class="bars">
+          <div class="bar buy"><i style="width:${w(b)}"></i>${fmt(b)}</div>
+          <div class="bar sell"><i style="width:${w(s)}"></i>${fmt(s)}</div>
+          <div class="bar fill"><i style="width:${w(f)}"></i>${fmt(f)}${p === best ? t(' (가장 많음)', ' (most)') : ''}</div>
+        </div>`
+    }).join('')
+    const chip = (yes, s) => `<div class="chip ${yes ? 'yes' : ''}"><span>${s}</span><span>${yes ? '✓' : t('제외', 'out')}</span></div>`
+    document.getElementById('orders').innerHTML =
+      `<div><h4 class="buy">${t('매수 (이 가격까지 낸다)', 'Buy (pay up to)')}</h4>${BUYS.map(([x, q]) => chip(x >= sel, t(`${fmt(x)}원 ${fmt(q)}주`, `${fmt(x)}, ${fmt(q)} sh`))).join('')}</div>` +
+      `<div><h4 class="sell">${t('매도 (이 가격 이상이면 판다)', 'Sell (at or above)')}</h4>${SELLS.map(([x, q]) => chip(x <= sel, t(`${fmt(x)}원 ${fmt(q)}주`, `${fmt(x)}, ${fmt(q)} sh`))).join('')}</div>`
+    const b = qBuy(sel), s = qSell(sel), f = Math.min(b, s)
+    document.getElementById('aucNote').innerHTML = t(
+      `${fmt(sel)}원으로 정하면 사겠다는 주문이 <b>${fmt(b)}주</b>, 팔겠다는 주문이 <b>${fmt(s)}주</b>라 거래는 적은 쪽인 <b>${fmt(f)}주</b>다.` + (sel === best ? ' 네 후보 중 가장 많아서 이 가격이 시가가 된다.' : ` ${fmt(best)}원이면 더 많이 거래된다.`),
+      `At ${fmt(sel)}, buyers want <b>${fmt(b)}</b> shares and sellers offer <b>${fmt(s)}</b>, so <b>${fmt(f)}</b> trade.` + (sel === best ? ' That is the most of the four, so this becomes the opening price.' : ` More would trade at ${fmt(best)}.`))
+  }
+
+  // 시간 띠 공통
+  const hm = s => { const [h, m, sec = 0] = s.split(':').map(Number); return h * 60 + m + sec / 60 }
+  const lbl = s => s
+  function timeline(el, from, to, rows, ticks) {
+    const pos = m => ((m - from) / (to - from) * 100)
+    let html = ''
+    for (const r of rows) {
+      html += `<div class="lab">${r.label}</div><div class="lane ${r.thin ? 'thin' : ''}">`
+      for (const s of r.segs) {
+        const a = Math.max(hm(s.from), from), b = Math.min(hm(s.to), to)
+        if (b <= a) continue
+        const left = pos(a), width = pos(b) - pos(a)
+        html += `<div class="seg ${s.cls}" style="left:${left}%;width:${width}%" data-tip="${s.name} ${s.from}~${s.to}"><span>${s.name}</span></div>`
+      }
+      html += '</div>'
+    }
+    const shown = ticks.filter(x => hm(x) >= from && hm(x) <= to)
+    html += `<div class="axis">${shown.map((x, i) => `<span class="${pos(hm(x)) < 3 ? 'first' : pos(hm(x)) > 97 ? 'last' : ''}" style="left:${pos(hm(x))}%">${lbl(x)}</span>`).join('')}</div>`
+    el.innerHTML = html
+    const fit = () => {
+      for (const s of el.querySelectorAll('.seg')) s.classList.toggle('nolabel', s.firstChild.offsetWidth + 8 > s.clientWidth)
+      let right = -Infinity
+      for (const sp of el.querySelectorAll('.axis span')) {
+        sp.style.visibility = ''
+        const r = sp.getBoundingClientRect()
+        if (r.left < right + 6) sp.style.visibility = 'hidden'
+        else right = r.right
+      }
+    }
+    fit()
+    addEventListener('resize', fit)
+    for (const s of el.querySelectorAll('.seg')) {
+      s.addEventListener('pointermove', e => showTip(e, s.dataset.tip))
+      s.addEventListener('pointerleave', hideTip)
+    }
+  }
+
+  // 3. 국내 하루
+  const KRX = [
+    { from: '08:30', to: '09:00', cls: 'call', name: t('시가 단일가', 'Opening auction') },
+    { from: '09:00', to: '15:20', cls: 'cont', name: t('정규장', 'Regular session') },
+    { from: '15:20', to: '15:30', cls: 'call', name: t('종가 단일가', 'Closing auction') },
+    { from: '16:00', to: '20:00', cls: 'cont', name: t('애프터마켓', 'After-market') },
+  ]
+  const KRX_OFF = [
+    { from: '08:30', to: '08:40', cls: 'off', name: t('장전 시간외 종가', 'Pre-hours closing price') },
+    { from: '15:40', to: '16:00', cls: 'off', name: t('장후 시간외 종가', 'Post-hours closing price') },
+  ]
+  const NXT = [
+    { from: '08:00', to: '08:50', cls: 'cont', name: t('프리마켓', 'Pre-market') },
+    { from: '09:00:30', to: '15:20', cls: 'cont', name: t('메인마켓', 'Main market') },
+    { from: '15:30', to: '15:40', cls: 'call', name: t('호가 접수', 'Order entry') },
+    { from: '15:40', to: '20:00', cls: 'cont', name: t('애프터마켓', 'After-market') },
+  ]
+  const NXT_OFF = [
+    { from: '15:30', to: '16:00', cls: 'off', name: t('종가매매', 'Closing-price trading') },
+  ]
+  const ZOOM = { all: ['08:00', '20:00', ['08:00', '09:00', '12:00', '15:30', '20:00']], open: ['07:55', '09:15', ['08:00', '08:30', '08:40', '08:50', '09:00']], close: ['15:10', '16:10', ['15:20', '15:30', '15:40', '16:00']] }
+  function renderDay(z) {
+    const [a, b, ticks] = ZOOM[z]
+    timeline(document.getElementById('day'), hm(a), hm(b), [
+      { label: t('한국거래소', 'KRX'), segs: KRX },
+      { label: t('한국거래소<br><small>시간외 종가</small>', 'KRX<br><small>closing price</small>'), segs: KRX_OFF, thin: true },
+      { label: t('넥스트레이드', 'Nextrade'), segs: NXT },
+      { label: t('넥스트레이드<br><small>종가매매</small>', 'Nextrade<br><small>closing price</small>'), segs: NXT_OFF, thin: true },
+    ], ticks)
+    for (const btn of sec.querySelectorAll('button[data-z]')) btn.setAttribute('aria-pressed', String(btn.dataset.z === z))
+  }
+
+  // 4. 미국 장 (한국 시간 0~24시, 자정을 넘는 구간은 둘로 나눔)
+  const usRow = (label, s) => ({ label, segs: [
+    { from: '00:00', to: s.regEnd, cls: 'us', name: t('정규장', 'Regular') },
+    { from: s.regEnd, to: s.afterEnd, cls: 'after', name: t('애프터', 'After') },
+    { from: s.dayFrom, to: s.dayTo, cls: 'day', name: t('주간거래', 'Daytime') },
+    { from: s.preFrom, to: s.regFrom, cls: 'pre', name: t('프리마켓', 'Pre-market') },
+    { from: s.regFrom, to: '24:00', cls: 'us', name: t('정규장', 'Regular') },
+  ] })
+  function renderUs() {
+    timeline(document.getElementById('us'), 0, 24 * 60, [
+      usRow(t('서머타임 기간<br><small>3월~11월 초</small>', 'U.S. DST<br><small>Mar to early Nov</small>'), { regEnd: '05:00', afterEnd: '09:00', dayFrom: '09:00', dayTo: '16:30', preFrom: '17:00', regFrom: '22:30' }),
+      usRow(t('그 밖의 기간', 'Rest of year'), { regEnd: '06:00', afterEnd: '10:00', dayFrom: '10:00', dayTo: '17:30', preFrom: '18:00', regFrom: '23:30' }),
+      { label: t('참고', 'Reference'), thin: true, segs: [{ from: '09:00', to: '15:30', cls: 'ref', name: t('한국거래소 정규장', 'KRX regular') }] },
+    ], ['00:00', '06:00', '12:00', '18:00', '24:00'])
+  }
+
+  if (view === 'auction') { renderAuction(best); sec.addEventListener('click', e => { const p = e.target.closest('[data-p]'); if (p) renderAuction(+p.dataset.p) }) }
+  else if (view === 'day') { renderDay('all'); sec.addEventListener('click', e => { const z = e.target.closest('[data-z]'); if (z) renderDay(z.dataset.z) }) }
+  else if (view === 'us') { renderUs() }
+  else { renderBook(0); sec.addEventListener('click', e => { const o = e.target.closest('[data-o]'); if (o) renderBook(+o.dataset.o) }) }
+})()
+</script>
+</body>
+</html>

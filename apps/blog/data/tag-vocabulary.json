@@ -50,7 +50,8 @@
     "code-review": "code review practice",
     "web-scraping": "web scraping and crawling",
     "blogging": "building, migrating, or maintaining a personal blog or site: static site generators, blogging platforms, blog design",
-    "book": "announcements or reflections about publishing, writing, or receiving awards for a book authored by the writer"
+    "book": "announcements or reflections about publishing, writing, or receiving awards for a book authored by the writer",
+    "finance": "securities and financial markets: stock exchanges, trading rules, market data, settlement, brokerage accounts"
   },
   "redirects": {
     "undici": "nodejs",
