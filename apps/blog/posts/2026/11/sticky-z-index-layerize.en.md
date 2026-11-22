@@ -8,7 +8,7 @@ tags:
   - css
 published: true
 date: 2026-11-21 22:15:00
-updated: 2026-11-22 15:22:41
+updated: 2026-11-22 16:11:41
 description: "Giving a sticky tab bar a positive z-index makes Chrome's Layerize slow down in proportion to the number of layers that never merge. Starting from a reproduction page, I add the conditions one at a time and match each one to the layer merging code in Chromium 159."
 art:
   undraw: building-blocks
@@ -236,6 +236,10 @@ The difference comes from the tab bar. Overlap testing checks whether two layers
 A tab bar with `z-index: auto` is painted after the red dots and before the rows of the list. That is because CSS paints these elements in document order, and the next section covers the exact rules. The first chunk painted after the tab bar meets the tab bar as soon as it starts walking backward. It does not merge with the tab bar, but because the tab bar's area is infinite the two overlap, so the first chunk is kept as a separate layer and the search ends right away. From the next chunk on, the candidate right before it is the layer that was just kept, so it merges on the first comparison.
 
 The layer list shows the difference too. With `auto`, a row layer whose compositing reason is "Overlaps other composited content" appears right after the tab bar layer in the layer list. With `z-index: 1`, nothing comes after the tab bar, and all the rows go back and merge into the page layer, the first layer that was built. There are 41 layers with `auto` and 40 with `z-index: 1`. `auto` spends one more layer so that every chunk's search ends after one step, while `z-index: 1` saves that layer and makes every chunk pass all K dots again.
+
+In the demo below, you can add the remaining chunks one at a time and follow this difference step by step. It uses 6 dots and 6 rows instead of the reproduction page's counts, and treats each row as a single chunk. The rules are the same as in the text: it first checks whether a chunk can merge, and if not, whether it overlaps.
+
+<LiveDemo src="/demos/sticky-z-index-layerize/search.html?lang=en" title="Following the layer merge search one chunk at a time. Switch the tab bar z-index to compare the number of checks" height={360} />
 
 ## How a positive z-index changes paint order
 

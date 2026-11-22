@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>레이어 합치기 탐색 따라가기</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fbfaf7; --ink:#252338; --muted:#706d7d; --line:#e9e6ee; --page:#e7e4ee; --dot:#d1453b; --tab:#4b6bb0; --row:#7d6e42; --hi:#2a78d6; --ok:#2f9e5b; --stop:#d9822b; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#181820; --ink:#f0eef8; --muted:#b5b0c5; --line:#2e2c3a; --page:#33313f; --hi:#5aa2f0; --ok:#4cc38a; --stop:#f0a65a; } }
+  html, body { margin: 0; }
+  body { background: var(--bg); color: var(--ink); font: 13px/1.5 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Segoe UI", sans-serif; padding: 12px; }
+  .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .bar .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  button { font: inherit; color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 4px 7px; cursor: pointer; }
+  button:disabled { opacity: 0.4; cursor: default; }
+  .seg button { border: 0; border-radius: 0; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  h2 { margin: 14px 0 4px; font-size: 12px; font-weight: 600; color: var(--muted); }
+  .strip { display: flex; gap: 3px; }
+  .strip > div { flex: 1 1 0; min-width: 0; box-sizing: border-box; padding: 5px 0; border-radius: 6px; text-align: center; font-size: 11px; line-height: 1.35; white-space: nowrap; overflow: hidden; color: #fff; }
+  .strip small { display: block; min-height: 1.35em; font-size: 10px; opacity: 0.85; }
+  @media (max-width: 380px) { .strip > div { font-size: 10px; } }
+  .page { background: var(--page); color: var(--ink) !important; }
+  .dot { background: var(--dot); }
+  .tab { background: var(--tab); }
+  .row { background: var(--row); }
+  #order > .done { opacity: 0.35; }
+  #order > .now { outline: 2px solid var(--hi); outline-offset: 1px; }
+  #layers { padding-top: 12px; }
+  #layers > div { position: relative; overflow: visible; }
+  #layers > .merge { outline: 2px solid var(--ok); outline-offset: 1px; }
+  #layers > .stop { outline: 2px solid var(--stop); outline-offset: 1px; }
+  .chk { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); min-width: 16px; height: 16px; border-radius: 8px; background: var(--hi); color: #fff; font-size: 10px; line-height: 16px; animation: pop 0.2s both; }
+  @keyframes pop { from { opacity: 0; transform: translateX(-50%) scale(0.4); } }
+  @media (prefers-reduced-motion: reduce) { .chk { animation: none; } }
+  .axis { display: flex; flex-wrap: wrap; gap: 0 12px; justify-content: space-between; margin-top: 3px; font-size: 11px; color: var(--muted); }
+  #msg { min-height: 3em; margin: 12px 0 0; }
+  #msg b { font-variant-numeric: tabular-nums; }
+  #total { margin: 6px 0 0; color: var(--muted); font-variant-numeric: tabular-nums; }
+  #total b { color: var(--hi); font-size: 15px; }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span data-t="z">탭바 z-index</span>
+  <span class="seg"><button type="button" id="z-auto">auto</button><button type="button" id="z-1">1</button></span>
+  <button type="button" id="next" data-t="next">다음 청크</button>
+  <button type="button" id="all" data-t="all">끝까지</button>
+  <button type="button" id="reset" aria-label="처음부터" title="처음부터">↺</button>
+</div>
+<h2 data-t="order">칠하는 순서</h2>
+<div class="strip" id="order"></div>
+<h2 data-t="layers">레이어 목록 (숫자는 확인한 순서)</h2>
+<div class="strip" id="layers"></div>
+<div class="axis"><span data-t="left">← 먼저 만든 레이어(화면 아래)</span><span data-t="right">나중에 만든 레이어(화면 위) →</span></div>
+<p id="msg"></p>
+<p id="total"></p>
+<script>
+(() => {
+  const lang = new URLSearchParams(location.search).get('lang') === 'en' ? 'en' : 'ko'
+  const EN = { z: 'Tab bar z-index', next: 'Next', all: 'Finish', order: 'Paint order', layers: 'Layer list (numbers show the order of checks)', left: '← built earlier (lower)', right: 'built later (higher) →' }
+  if (lang === 'en') { document.documentElement.lang = 'en'; document.title = 'Following the layer merge search'; for (const el of document.querySelectorAll('[data-t]')) el.textContent = EN[el.dataset.t]; const r = document.getElementById('reset'); r.title = 'Reset'; r.setAttribute('aria-label', 'Reset') }
+  const t = (ko, en) => (lang === 'en' ? en : ko)
+  const $ = id => document.getElementById(id)
+  const K = 6, N = 6
+  const label = c => c.kind === 'page' ? t('페이지', 'page') : c.kind === 'dot' ? t(`점${c.n}`, `dot${c.n}`) : c.kind === 'tab' ? t('탭바', 'tab') : t(`줄${c.n}`, `row${c.n}`)
+
+  // 이미 레이어가 된 청크: 페이지와 점 K개. 점은 will-change: opacity라 어떤 레이어와도 합칠 수 없고, 목록보다 위쪽에 있어 줄과 겹치지 않는다.
+  const built = [{ kind: 'page' }, ...Array.from({ length: K }, (_, i) => ({ kind: 'dot', n: i + 1 }))]
+  const rows = Array.from({ length: N }, (_, i) => ({ kind: 'row', n: i + 1 }))
+  const tab = { kind: 'tab' }
+  // 줄은 페이지 레이어나 줄 레이어에 합칠 수 있다. 탭바는 sticky라 영역을 무한대로 보므로 무엇과도 겹친다.
+  const canMerge = (chunk, layer) => chunk.kind === 'row' && (layer.kind === 'page' || layer.kind === 'row')
+  const overlaps = (chunk, layer) => chunk.kind === 'tab' || layer.kind === 'tab'
+
+  let z, queue, layers, total, last
+  const init = mode => {
+    z = mode
+    queue = z === 'auto' ? [tab, ...rows] : [...rows, tab]
+    layers = built.map(c => ({ ...c, items: 1 }))
+    total = 0
+    last = null
+  }
+  const reset = mode => { init(mode); render() }
+  const step = () => {
+    const chunk = queue.shift()
+    const checks = []
+    let result
+    for (let i = layers.length - 1; i >= 0; i--) {
+      checks.push(i)
+      if (canMerge(chunk, layers[i])) { layers[i].items++; result = 'merge'; break }
+      if (overlaps(chunk, layers[i])) { layers.push({ ...chunk, items: 1 }); result = 'stop'; break }
+    }
+    total += checks.length
+    last = { chunk, checks, result, at: checks[checks.length - 1] }
+  }
+  const totalFor = mode => { const saved = [z, queue, layers, total, last]; init(mode); while (queue.length) step(); const n = total; [z, queue, layers, total, last] = saved; return n }
+
+  const message = () => {
+    if (!last) return t(`점 ${K}개는 <code>will-change: opacity</code>로 각자 레이어가 돼 있어, 다른 레이어와 합칠 수 없고 목록 위쪽에 있어 줄과 겹치지도 않는다. "다음 청크"를 누르면 남은 청크를 칠하는 순서대로 넣는다.`,
+      `The ${K} dots are already separate layers (<code>will-change: opacity</code>). They cannot merge with other layers, and they sit above the list, so they do not overlap the rows. Press "Next" to add the rest in paint order.`)
+    const { chunk, checks, result, at } = last
+    const name = chunk.kind === 'tab' ? t('탭바', 'Tab bar') : label(chunk), n = checks.length, target = label(layers[at])
+    const count = t(` 확인 <b>${n}</b>번.`, ` <b>${n}</b> ${n === 1 ? 'check' : 'checks'}.`)
+    if (chunk.kind === 'tab') return t(`${name}: sticky라서 영역을 무한대로 보므로 바로 앞의 레이어와 겹치고, 새 레이어가 됐다.`, `${name}: it is sticky, so its area is treated as infinite. It overlaps the layer right before it and became a new layer.`) + count
+    if (result === 'stop') return t(`${name}: 탭바와는 합칠 수 없지만, 탭바의 영역이 무한대라 겹친다. 탭바보다 먼저 만든 레이어에 합치면 줄이 탭바 아래에 그려지므로 여기서 멈추고 새 레이어가 됐다.`,
+      `${name}: it cannot merge with the tab bar, but the tab bar's area is infinite, so they overlap. Merging into an earlier layer would draw the row beneath the tab bar, so the search stops and the row becomes a new layer.`) + count
+    if (n === 1) return t(`${name}: 바로 앞의 ${target} 레이어에 합쳐졌다.`, `${name}: merged into the ${target} layer right before it.`) + count
+    return t(`${name}: 점 ${K}개와는 합칠 수도 겹치지도 않아 모두 지나쳤고, 가장 먼저 만든 ${target} 레이어에 합쳐졌다.`,
+      `${name}: it can neither merge with nor overlap the ${K} dots, so it passed them all and merged into the ${target} layer, the first one built.`) + count
+  }
+
+  const render = () => {
+    $('z-auto').setAttribute('aria-pressed', z === 'auto')
+    $('z-1').setAttribute('aria-pressed', z === '1')
+    // 이미 레이어가 된 점 K개는 좁은 화면을 위해 한 칸으로 묶는다
+    const order = [built[0], { kind: 'dot', group: true }, ...(z === 'auto' ? [tab, ...rows] : [...rows, tab])]
+    const doneCount = order.length - queue.length
+    $('order').innerHTML = order.map((c, i) => `<div class="${c.kind}${i < doneCount ? ' done' : ''}${last && c === last.chunk ? ' now' : ''}">${c.group ? t(`점×${K}`, `dot×${K}`) : label(c)}</div>`).join('')
+    $('layers').innerHTML = layers.map((c, i) => {
+      const k = last ? last.checks.indexOf(i) : -1
+      const cls = last && i === last.at ? (last.result === 'merge' ? ' merge' : ' stop') : ''
+      const mark = k < 0 ? '' : `<span class="chk" style="animation-delay:${k * 70}ms">${k + 1}</span>`
+      return `<div class="${c.kind}${cls}">${mark}${label(c)}<small>${c.items > 1 ? `+${c.items - 1}` : ''}</small></div>`
+    }).join('')
+    $('msg').innerHTML = message()
+    $('total').innerHTML = t(`확인 횟수 합계 <b>${total}</b>번`, `Total checks <b>${total}</b>`) + (queue.length ? '' : t(`. 같은 청크를 <code>z-index: ${z === '1' ? 'auto' : '1'}</code>로 넣으면 ${totalFor(z === '1' ? 'auto' : '1')}번이다.`, `. With <code>z-index: ${z === '1' ? 'auto' : '1'}</code>, the same chunks take ${totalFor(z === '1' ? 'auto' : '1')}.`))
+    $('next').disabled = $('all').disabled = !queue.length
+  }
+
+  $('z-auto').onclick = () => reset('auto')
+  $('z-1').onclick = () => reset('1')
+  $('next').onclick = () => { step(); render() }
+  $('all').onclick = () => { while (queue.length) step(); render() }
+  $('reset').onclick = () => reset(z)
+  reset('1')
+})()
+</script>
+</body>
+</html>
