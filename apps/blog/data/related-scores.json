@@ -20138,5 +20138,7 @@
   "en:2025/05/web-performance-analysis-1|2026/11/sticky-z-index-layerize": 0.32,
   "en:2021/08/uncaught-async-error|2026/11/sticky-z-index-layerize": 0.03,
   "en:2025/05/web-performance-analysis-2|2026/11/sticky-z-index-layerize": 0.18,
-  "en:2021/12/nodejs-memory-limit|2026/11/sticky-z-index-layerize": 0.04
+  "en:2021/12/nodejs-memory-limit|2026/11/sticky-z-index-layerize": 0.04,
+  "en:2026/11/react-19-2-progressive-chunk-size|2026/11/sticky-z-index-layerize": 0.03,
+  "en:2026/11/websocket-trade-server-securities-basics|2026/11/sticky-z-index-layerize": 0.02
 }
