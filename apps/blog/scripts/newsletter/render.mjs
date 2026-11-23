@@ -238,7 +238,7 @@ export function renderWeekly({from, to, featured: featuredSlug}) {
       <td valign="top" style="padding:14px 12px 14px 16px;">
         ${metaLine(p, 6)}
         <h3 class="ink row-title" style="margin:0;font-family:${SANS};font-size:16px;line-height:24px;font-weight:700;letter-spacing:-0.01em;color:${C.ink};word-break:keep-all;"><a href="${url(p)}" class="ink" style="color:${C.ink};text-decoration:none;">${titleHtml(p.title, p.hue)}</a></h3>
-        <p class="ink2 row-desc" style="margin:4px 0 0;font-family:${SANS};font-size:13px;line-height:20px;color:${C.ink2};word-break:keep-all;">${esc(p.description)}</p>
+        <p class="ink2" style="margin:4px 0 0;font-family:${SANS};font-size:13px;line-height:20px;color:${C.ink2};word-break:keep-all;">${esc(p.description)}</p>
         ${series(p)}
       </td>
       ${p.thumbnail ? `<td class="row-thumb" width="128" valign="middle" style="width:128px;padding:10px 12px 10px 0;"><a href="${url(p)}" style="display:block;"><img src="${p.thumbnail}" width="128" height="67" alt="" style="display:block;width:128px;height:auto;border:0;border-radius:10px;"></a></td>` : ''}
@@ -278,7 +278,6 @@ a{text-decoration:none}
 .hero-title{font-size:24px!important;line-height:31px!important}
 .feat-title{font-size:20px!important;line-height:28px!important}
 .row-title{font-size:16px!important;line-height:23px!important}
-.row-desc{display:none!important}
 .row-thumb{width:88px!important;padding-right:10px!important}
 .row-thumb img{width:88px!important}
 }
