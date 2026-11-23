@@ -318,7 +318,7 @@ ${ogscCss}
 
 <tr><td class="px" style="padding:18px 32px 20px;"><div class="line" style="border-top:1px solid ${C.line};height:0;line-height:0;font-size:0;">&nbsp;</div></td></tr>
 ${featuredHtml}
-${rest.length ? `<tr><td class="px" style="padding:26px 32px 10px;"><p class="muted" style="margin:0;font-family:${MONO};font-size:11px;line-height:16px;letter-spacing:0.14em;color:${C.muted};">MORE THIS WEEK</p></td></tr>${rest.map(rowHtml).join('')}` : ''}
+${rest.length ? `<tr><td class="px" style="padding:26px 32px 10px;"><p class="muted" style="margin:0;font-family:${MONO};font-size:11px;line-height:16px;letter-spacing:0.14em;color:${C.muted};">MORE FROM LAST WEEK</p></td></tr>${rest.map(rowHtml).join('')}` : ''}
 
 <tr><td class="px" style="padding:20px 32px 24px;">
   <div class="line" style="border-top:1px solid ${C.line};height:0;line-height:0;font-size:0;">&nbsp;</div>
