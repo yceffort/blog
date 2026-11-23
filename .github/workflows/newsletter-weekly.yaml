@@ -1,8 +1,7 @@
 name: Weekly newsletter
 on:
-  schedule:
-    # 월요일 08:00 KST에 지난주(월 ~ 일) 글을 묶어 보낸다
-    - cron: '0 23 * * 0'
+  # 월요일 08:00 KST에 지난주(월 ~ 일) 글을 묶어 보낸다. 블로그의 Vercel Cron(apps/blog/vercel.json)이 이 workflow_dispatch로 시작한다.
+  # GitHub 예약 실행은 부하가 몰리면 늦거나 빠져서 쓰지 않는다.
   workflow_dispatch:
     inputs:
       from:

@@ -1,6 +1,12 @@
 {
   "installCommand": "pnpm install --frozen-lockfile",
   "ignoreCommand": "git diff --quiet \"$VERCEL_GIT_PREVIOUS_SHA\" HEAD -- \":(top)\" \":(top,exclude)apps/news\" \":(top,exclude)infra/news\" || exit 1",
+  "crons": [
+    {
+      "path": "/api/cron/newsletter-weekly",
+      "schedule": "0 23 * * 0"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
