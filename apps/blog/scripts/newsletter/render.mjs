@@ -313,7 +313,7 @@ ${ogscCss}
 
 <tr><td class="px" style="padding:22px 32px 0;">
   <p class="brand" style="margin:0 0 8px;font-family:${MONO};font-size:11px;line-height:16px;letter-spacing:0.14em;color:${C.brand};">&#9670;&nbsp;${from.replace(/-/g, '.')} ~ ${md(to)}</p>
-  <h1 class="ink hero-title" style="margin:0;font-family:${SANS};font-size:26px;line-height:34px;font-weight:800;letter-spacing:-0.03em;color:${C.ink};word-break:keep-all;">한 주 동안 쓴 글 <span class="brand" style="color:${C.brand};">${posts.length}편</span></h1>
+  <h1 class="ink hero-title" style="margin:0;font-family:${SANS};font-size:26px;line-height:34px;font-weight:800;letter-spacing:-0.03em;color:${C.ink};word-break:keep-all;">지난주 새 글 <span class="brand" style="color:${C.brand};">${posts.length}편</span></h1>
 </td></tr>
 
 <tr><td class="px" style="padding:18px 32px 20px;"><div class="line" style="border-top:1px solid ${C.line};height:0;line-height:0;font-size:0;">&nbsp;</div></td></tr>
@@ -339,7 +339,7 @@ ${rest.length ? `<tr><td class="px" style="padding:26px 32px 10px;"><p class="mu
 
   const text = [
     `yceffort WEEKLY No.${week} (${from} ~ ${to})`,
-    `한 주 동안 쓴 글 ${posts.length}편`,
+    `지난주 새 글 ${posts.length}편`,
     '',
     ...[featured, ...rest].flatMap((p) => [
       `[${label(p)}] ${plainTitle(p.title)} (${md(p.day)} ${dow(p.day)}, ${p.minutes}분)`,
