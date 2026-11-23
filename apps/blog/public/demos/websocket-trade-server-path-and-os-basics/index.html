@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>체결 한 건은 어떤 길로 브라우저까지 오는가</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fbfaf7; --ink:#252338; --ink2:#55526a; --muted:#706d7d; --grid:#e9e6ee; --axis:#cfcbd8; --chip:#f1eff5;
+    --a:#2a6fd6; --a-bg:rgba(42,111,214,.08); --b:#eb6834; --b-bg:rgba(235,104,52,.08); --k:#8a63d2; --k-bg:rgba(138,99,210,.10); --wall:#d93a3f;
+    --g:#14946a; --g-bg:rgba(20,148,106,.09); --red:#d93a3f; --red-bg:rgba(217,58,63,.10); }
+  @media (prefers-color-scheme: dark) { :root { --bg:#181820; --ink:#f0eef8; --ink2:#c9c5d8; --muted:#a9a4ba; --grid:#2e2c3a; --axis:#474459; --chip:#25242f;
+    --a:#5b9bf5; --a-bg:rgba(91,155,245,.12); --b:#f0814f; --b-bg:rgba(240,129,79,.12); --k:#a98bf0; --k-bg:rgba(169,139,240,.14); --wall:#ff6b70;
+    --g:#2fc28f; --g-bg:rgba(47,194,143,.13); --red:#ff6b70; --red-bg:rgba(255,107,112,.14); } }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { padding: 16px 14px 12px; background: var(--bg); color: var(--ink); font: 13px/1.5 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Segoe UI", sans-serif; word-break: keep-all; }
+  .view { display: none; flex-direction: column; max-width: 680px; margin: 0 auto; }
+  .view.on { display: flex; }
+
+  /* os */
+  .mode { font-size: 11.5px; font-weight: 600; color: var(--muted); letter-spacing: .02em; margin-bottom: 6px; }
+  .procs { display: grid; grid-template-columns: 1fr 64px 1fr; align-items: stretch; }
+  .proc { border: 1.5px solid; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+  .proc.a { border-color: var(--a); background: var(--a-bg); }
+  .proc.b { border-color: var(--b); background: var(--b-bg); }
+  .ph { font-weight: 700; font-size: 13.5px; }
+  .proc.a .ph { color: var(--a); } .proc.b .ph { color: var(--b); }
+  .threads { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .th { position: relative; font-size: 12px; padding: 3px 10px; border-radius: 999px; background: var(--bg); border: 1px solid var(--axis); }
+  .mem { flex: 1; border-radius: 8px; padding: 8px; background: var(--bg); border: 1px dashed var(--axis); display: flex; flex-direction: column; gap: 2px; }
+  .mem b { font-size: 12.5px; }
+  .mem span { font-size: 11.5px; color: var(--ink2); }
+  .wall { position: relative; display: flex; align-items: center; justify-content: center; }
+  .wall::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; border-left: 2px dashed var(--wall); }
+  .wall span { position: relative; background: var(--bg); color: var(--wall); font-size: 11.5px; font-weight: 600; line-height: 1.35; text-align: center; padding: 4px 0; }
+  .calls { display: grid; grid-template-columns: 1fr 64px 1fr; height: 54px; }
+  .call { position: relative; display: flex; align-items: center; justify-content: center; }
+  .call::before { content: ""; position: absolute; top: 0; bottom: 7px; left: 50%; border-left: 2px solid var(--k); }
+  .call::after { content: ""; position: absolute; bottom: 0; left: calc(50% - 5px); border: 6px solid transparent; border-bottom: 0; border-top: 8px solid var(--k); transform: translateX(1px); }
+  .call span { position: relative; background: var(--bg); color: var(--k); font-size: 12px; font-weight: 600; padding: 0 6px; }
+  .kernel { border: 1.5px solid var(--k); background: var(--k-bg); border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+  .kernel .ph { color: var(--k); }
+  .jobs { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .jobs span { font-size: 12px; padding: 3px 10px; border-radius: 8px; background: var(--bg); border: 1px solid var(--axis); }
+  .down { position: relative; height: 40px; display: flex; align-items: center; justify-content: center; }
+  .down::before { content: ""; position: absolute; top: 0; bottom: 7px; left: 50%; border-left: 2px solid var(--axis); }
+  .down::after { content: ""; position: absolute; bottom: 0; left: calc(50% - 5px); border: 6px solid transparent; border-bottom: 0; border-top: 8px solid var(--axis); transform: translateX(1px); }
+  .down span { position: relative; background: var(--bg); color: var(--ink2); font-size: 12px; padding: 0 6px; }
+  .hw { border: 1.5px solid var(--axis); background: var(--chip); border-radius: 12px; padding: 8px 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .hw .ph { color: var(--ink2); margin-right: 2px; }
+  .hw span { font-size: 12px; padding: 3px 8px; border-radius: 8px; background: var(--bg); border: 1px solid var(--axis); }
+  .kh { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0 10px; }
+  .kh .mode { margin: 0; }
+
+  /* 공통 부품 */
+  .box { --tc: var(--ink); border: 1.5px solid var(--axis); border-radius: 12px; padding: 10px; background: var(--chip); display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .box.a { --tc: var(--a); border-color: var(--a); background: var(--a-bg); }
+  .box.b { --tc: var(--b); border-color: var(--b); background: var(--b-bg); }
+  .box.k { --tc: var(--k); border-color: var(--k); background: var(--k-bg); }
+  .box.g { --tc: var(--g); border-color: var(--g); background: var(--g-bg); }
+  .box.dash { border-style: dashed; background: transparent; }
+  .box.c { align-items: center; text-align: center; }
+  .box.tight { padding: 7px 10px; gap: 4px; }
+  .ttl { font-weight: 700; font-size: 13.5px; line-height: 1.35; color: var(--tc); }
+  .sub { font-size: 11.5px; line-height: 1.4; color: var(--ink2); }
+  .hd { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0 10px; }
+  .hd .mode { margin: 0; }
+  .chip { font-size: 12px; line-height: 1.4; padding: 4px 10px; border-radius: 8px; background: var(--bg); border: 1px solid var(--axis); min-width: 0; }
+  .chip.c { text-align: center; }
+  .chip.stack { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; text-align: center; }
+  .chip.stack b { font-size: 12.5px; }
+  .chip.a { border-color: var(--a); color: var(--a); font-weight: 700; }
+  .chip b.k { color: var(--k); } .chip b.a { color: var(--a); } .chip b.g { color: var(--g); }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .no { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: var(--ink); color: var(--bg); font-size: 11px; font-weight: 700; flex: none; }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 11.5px; color: var(--ink2); margin-bottom: 10px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { display: inline-block; width: 22px; border-top: 2px solid var(--ink2); }
+  .legend i.a { border-color: var(--a); } .legend i.b { border-color: var(--b); }
+  .legend i.dash { border-top-style: dashed; } .legend i.thick { border-top-width: 4px; }
+  .legend i.sq { width: 12px; height: 12px; border: 0; border-radius: 3px; }
+
+  /* 세로 화살표 */
+  .arr { --c: var(--axis); --lc: var(--ink2); --w: 2px; position: relative; min-height: 34px; display: flex; align-items: center; justify-content: center;
+    background-image: linear-gradient(var(--c), var(--c)); background-repeat: no-repeat; background-position: center top; background-size: var(--w) calc(100% - 7px); }
+  .arr.dash { --c: var(--muted); background-image: repeating-linear-gradient(to bottom, var(--c) 0 5px, transparent 5px 9px); }
+  .arr::after { content: ""; position: absolute; bottom: 0; left: 50%; margin-left: -6px; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid var(--c); }
+  .arr.up { background-position: center bottom; }
+  .arr.up::after { bottom: auto; top: 0; border-top: 0; border-bottom: 8px solid var(--c); }
+  .arr.both { background-position: center; background-size: var(--w) calc(100% - 14px); }
+  .arr.both::before { content: ""; position: absolute; top: 0; left: 50%; margin-left: -6px; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 8px solid var(--c); }
+  .arr.line { background-size: var(--w) 100%; }
+  .arr.line::after { display: none; }
+  .arr.thick { --w: 4px; --c: var(--ink2); min-height: 46px; }
+  .arr.thick::after { margin-left: -8px; border-left-width: 8px; border-right-width: 8px; border-top-width: 10px; }
+  .arr.a { --c: var(--a); --lc: var(--a); } .arr.b { --c: var(--b); --lc: var(--b); } .arr.k { --c: var(--k); --lc: var(--k); } .arr.g { --c: var(--g); --lc: var(--g); }
+  .arr span { position: relative; background: var(--bg); color: var(--lc); font-size: 12px; font-weight: 600; line-height: 1.35; padding: 2px 6px; text-align: center; max-width: 92%; }
+  .arr.sm { min-height: 22px; }
+  .arr:has(> span) { padding: 4px 0 12px; }
+  .arr.up:has(> span) { padding: 12px 0 4px; }
+  .arr.both:has(> span) { padding: 12px 0; }
+  .box > .arr span { background: var(--chip); }
+
+  /* 가로 화살표 */
+  .hx { --c: var(--axis); position: relative; padding: 3px 2px 14px; text-align: center; font-size: 12px; line-height: 1.35; color: var(--ink2); min-width: 18px; }
+  .hx::before { content: ""; position: absolute; left: 0; right: 6px; bottom: 5px; border-top: 2px solid var(--c); }
+  .hx::after { content: ""; position: absolute; right: 0; bottom: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 8px solid var(--c); }
+  .hx.l::before { left: 6px; right: 0; }
+  .hx.l::after { right: auto; left: 0; border-left: 0; border-right: 8px solid var(--c); }
+  .hx.dash { --c: var(--muted); }
+  .hx.dash::before { border-top-style: dashed; }
+  .hx.a { --c: var(--a); } .hx.g { --c: var(--g); } .hx.k { --c: var(--k); } .hx.b { --c: var(--b); } .hx.red { --c: var(--red); }
+  .hx.bare { padding: 0; height: 12px; align-self: center; }
+  .hx.x > b { position: absolute; left: 50%; bottom: -5px; transform: translateX(-50%); color: var(--red); font-size: 13px; font-weight: 800; background: var(--bg); line-height: 1; padding: 0 1px; }
+
+  /* 시퀀스 */
+  .parts { display: flex; justify-content: space-between; }
+  .parts .box { width: 34%; padding: 6px 8px; }
+  .seq { position: relative; padding: 8px 0 4px; }
+  .seq::before, .seq::after { content: ""; position: absolute; top: 0; bottom: 0; border-left: 1.5px dashed var(--axis); }
+  .seq::before { left: 17%; } .seq::after { left: 83%; }
+  .msg { margin: 2px 17%; }
+  .msg code { font: 600 11.5px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ink); }
+  .grp { position: relative; margin: 6px 8%; padding: 0 0 2px; border: 1px dashed var(--muted); border-radius: 8px; }
+  .grp > .gl { display: inline-block; font-size: 11px; font-weight: 600; color: var(--ink2); background: var(--chip); padding: 1px 8px; border-radius: 7px 0 7px 0; margin-bottom: 2px; }
+  .grp .msg { margin: 2px 10.7%; }
+
+  /* frame */
+  .lay { padding: 8px 10px 10px; }
+  .lay .lay { background: var(--bg); }
+
+  /* path */
+  .chain { display: grid; grid-template-columns: 1fr 14px 1fr 14px 1fr 14px 1fr; align-items: center; gap: 4px; }
+  .chain .chip { padding: 5px 4px; display: flex; flex-direction: column; align-items: center; gap: 3px; text-align: center; height: 100%; justify-content: center; }
+  .row { display: flex; align-items: center; gap: 8px; }
+  .row .sub { margin-left: auto; text-align: right; }
+
+  /* buffers */
+  .cells { display: flex; gap: 3px; }
+  .cells i { flex: 1; height: 12px; border-radius: 3px; border: 1px solid var(--axis); background: var(--bg); }
+  .cells i.on { background: var(--k); border-color: var(--k); }
+  .bufrow { display: grid; grid-template-columns: 1fr 44px 1fr; align-items: center; }
+  .net { display: grid; grid-template-columns: 1fr 44px 1fr; }
+  .net .pair { grid-column: 3; display: grid; grid-template-columns: 1fr 1fr; }
+  .net .arr { min-height: 60px; }
+
+  /* backpressure */
+  .stage { display: flex; flex-direction: column; gap: 6px; padding: 10px 0; border-bottom: 1px solid var(--grid); }
+  .stage:last-child { border-bottom: 0; padding-bottom: 0; }
+  .stage:first-child { padding-top: 0; }
+  .st { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; }
+  .pipe { display: grid; grid-template-columns: auto minmax(16px, 1fr) 2fr minmax(16px, 1fr) 2fr minmax(16px, 1fr) auto; align-items: center; gap: 4px; }
+  .node { font-size: 12px; font-weight: 700; padding: 5px 8px; border-radius: 8px; border: 1.5px solid; text-align: center; }
+  .node.a { color: var(--a); border-color: var(--a); background: var(--a-bg); }
+  .node.g { color: var(--g); border-color: var(--g); background: var(--g-bg); }
+  .node.off { opacity: .45; border-style: dashed; }
+  .node.red { color: var(--red); border-color: var(--red); background: var(--red-bg); }
+  .bufn { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: var(--ink2); text-align: center; }
+  .bufn .cells i { height: 10px; }
+  .cap2 { font-size: 12px; color: var(--ink2); line-height: 1.45; }
+  .cap2 b { color: var(--ink); }
+
+  /* threads */
+  .thr { position: relative; display: grid; grid-template-columns: 58% 1fr; row-gap: 8px; padding-bottom: 10px; }
+  .thr-bg { position: absolute; left: 0; top: 0; bottom: 0; width: 58%; border: 1.5px solid var(--a); background: var(--a-bg); border-radius: 12px; }
+  .thr-t { position: relative; grid-column: 1; padding: 10px 12px 0; font-weight: 700; font-size: 13.5px; color: var(--a); }
+  .thr-l { position: relative; padding: 0 12px; display: flex; align-items: center; }
+  .thr-l .chip { display: flex; flex-direction: column; }
+  .thr-l .chip .sub { font-size: 11px; }
+  .thr-r { position: relative; display: flex; align-items: center; }
+  .wire { flex: 1; border-top: 2px solid var(--axis); min-width: 16px; }
+  .pill { font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1.5px solid var(--g); color: var(--g); background: var(--g-bg); font-weight: 600; text-align: center; }
+  .vdots { justify-content: center; color: var(--muted); font-weight: 800; line-height: 1; }
+
+  /* epoll */
+  .dots { display: grid; grid-template-columns: repeat(20, 1fr); gap: 3px; max-width: 300px; }
+  .dots i { aspect-ratio: 1; border-radius: 2px; background: var(--bg); border: 1px solid var(--axis); }
+  .box.k .dots i.on { background: var(--k); border-color: var(--k); }
+  .box.a .dots i.on { background: var(--a); border-color: var(--a); }
+  .three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+  /* mmap */
+  .addr { position: relative; height: 16px; border-radius: 4px; background: var(--bg); border: 1px solid var(--axis); }
+  .addr i { position: absolute; top: -1px; bottom: -1px; border-radius: 4px; }
+  .box.b .addr i { background: var(--b); } .box.a .addr i { background: var(--a); }
+  .pages { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; }
+  .pages i { height: 18px; border-radius: 3px; background: var(--bg); border: 1px solid var(--axis); }
+  .pages i.on { background: linear-gradient(135deg, var(--b) 0 50%, var(--a) 50% 100%); border-color: transparent; }
+
+  /* torn */
+  .torn { display: grid; grid-template-columns: 70px 1fr; gap: 10px 10px; align-items: center; }
+  .who { font-size: 12px; font-weight: 700; text-align: center; padding: 4px 0; border-radius: 8px; border: 1.5px solid; }
+  .who.b { color: var(--b); border-color: var(--b); background: var(--b-bg); }
+  .who.a { color: var(--a); border-color: var(--a); background: var(--a-bg); }
+  .act { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; }
+  .rec { display: flex; gap: 3px; height: 24px; font-size: 11px; }
+  .rec > *, .rec .body > * { display: flex; align-items: center; justify-content: center; border-radius: 4px; font-style: normal; font-weight: 600; white-space: nowrap; overflow: hidden; }
+  .rec .len { width: 36px; flex: none; }
+  .rec .body { flex: 1; display: flex; gap: 3px; border-radius: 5px; }
+  .rec .c30 { flex: 30; } .rec .c33 { flex: 33; }
+  .new { background: var(--b); color: #fff; }
+  .old { background: repeating-linear-gradient(45deg, var(--grid) 0 4px, var(--chip) 4px 8px); color: var(--muted); box-shadow: inset 0 0 0 1px var(--axis); }
+  .rd { outline: 2px solid var(--a); outline-offset: 2px; }
+  .warn { color: var(--red); font-size: 12px; font-weight: 600; }
+  .legend i.sq.new { background: var(--b); }
+  .legend i.sq.old { background: repeating-linear-gradient(45deg, var(--grid) 0 3px, var(--chip) 3px 6px); box-shadow: inset 0 0 0 1px var(--axis); }
+  .legend i.sq.rd { background: transparent; outline: 2px solid var(--a); outline-offset: -2px; }
+</style>
+</head>
+<body>
+
+<section class="view" id="v-os">
+  <div class="mode" data-t="osUser">사용자 모드에서 실행</div>
+  <div class="procs">
+    <div class="proc a">
+      <div class="ph" data-t="osProcA">프로세스 A</div>
+      <div class="threads"><span class="th" data-t="osTh1">스레드 1</span><span class="th" data-t="osTh2">스레드 2</span></div>
+      <div class="mem"><b data-t="osMemA">A의 메모리</b><span data-t="osMemShare">두 스레드가 함께 쓴다</span></div>
+    </div>
+    <div class="wall"><span data-t="osWall">서로의<br>메모리를<br>볼 수<br>없다</span></div>
+    <div class="proc b">
+      <div class="ph" data-t="osProcB">프로세스 B</div>
+      <div class="threads"><span class="th" data-t="osTh">스레드</span></div>
+      <div class="mem"><b data-t="osMemB">B의 메모리</b><span data-t="osMemOwn">B의 스레드만 쓴다</span></div>
+    </div>
+  </div>
+  <div class="calls">
+    <div class="call"><span data-t="osCall">시스템 콜</span></div>
+    <div></div>
+    <div class="call"><span data-t="osCall">시스템 콜</span></div>
+  </div>
+  <div class="kernel">
+    <div class="kh"><div class="ph" data-t="osKernel">커널</div><div class="mode" data-t="osKernelMode">커널 모드에서 실행</div></div>
+    <div class="jobs">
+      <span data-t="osJob1">어느 스레드를 어느 코어에서 실행할지 정한다</span>
+      <span data-t="osJob2">프로세스에 메모리를 나눠 준다</span>
+      <span data-t="osJob3">네트워크 카드로 데이터를 보내고 받는다</span>
+    </div>
+  </div>
+  <div class="down"><span data-t="osOnly">하드웨어를 직접 다루는 것은 커널뿐이다</span></div>
+  <div class="hw">
+    <div class="ph" data-t="osHw">하드웨어</div>
+    <span data-t="osCpu">CPU 코어</span><span data-t="osRam">메모리</span><span data-t="osNic">네트워크 카드</span>
+  </div>
+</section>
+
+<section class="view" id="v-arch">
+  <div class="legend"><span><i class="a"></i><span data-t="archLgConn">브라우저의 연결</span></span><span><i class="b"></i><span data-t="archLgTrade">체결</span></span></div>
+  <div class="box g c tight"><div class="ttl" data-t="browser">브라우저</div></div>
+  <div class="arr a"><span>wss://</span></div>
+  <div class="box c tight"><div class="ttl" data-t="lb">로드 밸런서</div></div>
+  <div class="two"><div class="arr a"></div><div class="arr a"></div></div>
+  <div class="two">
+    <div class="box"><div class="ttl" data-t="m1">기계 1</div><div class="chip c" data-t="proxy">리버스 프록시, TLS 종료</div><div class="arr a sm"></div><div class="chip c a">gateway</div></div>
+    <div class="box"><div class="ttl" data-t="m2">기계 2</div><div class="chip c" data-t="proxy">리버스 프록시, TLS 종료</div><div class="arr a sm"></div><div class="chip c a">gateway</div></div>
+  </div>
+  <div class="two"><div class="arr b up"></div><div class="arr b up"></div></div>
+  <div class="box c tight"><div class="ttl" data-t="broker">메시지 브로커</div></div>
+  <div class="arr b up"><span data-t="archTrade">체결</span></div>
+  <div class="box b c tight"><div class="ttl">feed</div></div>
+</section>
+
+<section class="view" id="v-sw">
+  <div class="box g">
+    <div class="ttl" data-t="browser">브라우저</div>
+    <div class="two">
+      <div class="chip stack"><b data-t="tabA">탭 A</b><span class="sub" data-t="tabASub">종목 페이지</span></div>
+      <div class="chip stack"><b data-t="tabB">탭 B</b><span class="sub" data-t="tabBSub">다른 종목 페이지</span></div>
+    </div>
+    <div class="two"><div class="arr g both sm"></div><div class="arr g both sm"></div></div>
+    <div class="chip stack"><b>SharedWorker</b><span class="sub" data-t="swSub">웹소켓 1개, 구독 id 0, 1, 2 ...</span><span class="sub" data-t="swPm">탭과는 postMessage로 주고받는다</span></div>
+  </div>
+  <div class="arr both a"><span data-t="swConn">웹소켓 연결 1개</span></div>
+  <div class="box c tight"><div class="ttl" data-t="server">서버</div></div>
+</section>
+
+<section class="view" id="v-frame">
+  <div class="box lay"><div class="ttl" data-t="frTcp">TCP 바이트 스트림</div>
+    <div class="box k lay"><div class="ttl" data-t="frWs">웹소켓 프레임</div>
+      <div class="chip"><b class="k" data-t="frWsHd">웹소켓 헤더</b> <span data-t="frWsHdSub">마지막 조각 여부, 종류(텍스트), 길이</span></div>
+      <div class="box a lay"><div class="hd"><div class="ttl" data-t="frStomp">STOMP 프레임</div><div class="mode" data-t="frStompSize">압축 전 403바이트</div></div>
+        <div class="chip"><b class="a" data-t="frCmd">명령</b> <span class="mono">MESSAGE</span></div>
+        <div class="chip"><b class="a" data-t="frHd">헤더 4줄</b> <span class="mono">message-id, subscription, content-length, content-type</span></div>
+        <div class="box g lay"><div class="ttl" data-t="frBody">본문</div>
+          <div class="chip"><b class="g">JSON</b> <span class="mono">code, dt, close, volume ...</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="v-stomp">
+  <div class="parts">
+    <div class="box g c"><div class="ttl" data-t="stW">브라우저의 SharedWorker</div></div>
+    <div class="box a c"><div class="ttl" data-t="server">서버</div></div>
+  </div>
+  <div class="seq">
+    <div class="hx g msg"><span data-t="stUp">HTTP 업그레이드 요청</span> <code>v12.stomp</code> <span data-t="stOffer">제안</span></div>
+    <div class="hx a l dash msg"><code>101 Switching Protocols</code> <code>v12.stomp</code> <span data-t="stPick">선택</span></div>
+    <div class="hx g msg"><code>CONNECT</code></div>
+    <div class="hx a l dash msg"><code>CONNECTED</code></div>
+    <div class="hx g msg"><code>SUBSCRIBE</code> <span data-t="stSub">id 0, 종목의 체결 topic</span></div>
+    <div class="hx a l dash msg"><code>RECEIPT</code> <code>0-sub_receipt</code></div>
+    <div class="grp"><span class="gl" data-t="stLoop">체결이 생길 때마다</span>
+      <div class="hx a l dash msg"><code>MESSAGE</code> <span>subscription 0</span></div>
+      <div class="hx a l dash msg"><code>MESSAGE</code> <span>subscription 0</span></div>
+    </div>
+    <div class="grp"><span class="gl" data-t="stHb">heartbeat, 5초마다 양쪽에서</span>
+      <div class="hx g msg" data-t="stNl">줄바꿈 한 글자</div>
+      <div class="hx a l dash msg" data-t="stNl">줄바꿈 한 글자</div>
+    </div>
+    <div class="hx g msg"><code>UNSUBSCRIBE</code> <span>id 0</span></div>
+    <div class="hx a l dash msg"><code>RECEIPT</code> <code>0-unsub_receipt</code></div>
+  </div>
+</section>
+
+<section class="view" id="v-path">
+  <div class="legend"><span><i class="thick"></i><span data-t="pLgSeen">프레임으로 관찰한 구간</span></span><span><i class="dash"></i><span data-t="pLgMade">내가 상상해서 만든 구간</span></span></div>
+  <div class="box c tight"><div class="ttl" data-t="pEx">거래소</div></div>
+  <div class="arr dash"></div>
+  <div class="box">
+    <div class="ttl" data-t="pSrv">서버 기계</div>
+    <div class="box b tight"><div class="row"><b class="no">1</b><div class="ttl" data-t="pFeed">feed 프로세스</div><div class="sub" data-t="pFeedSub">체결을 받아 기록</div></div></div>
+    <div class="arr dash sm"></div>
+    <div class="box tight"><div class="row"><b class="no">2</b><div class="ttl" data-t="pRing">공유 메모리의 링 버퍼</div></div></div>
+    <div class="arr dash sm"></div>
+    <div class="box a">
+      <div class="ttl" data-t="pGw">gateway 프로세스</div>
+      <div class="chain">
+        <div class="chip"><b class="no">3</b><span data-t="pReader">링을 읽는 스레드</span></div><div class="hx dash bare"></div>
+        <div class="chip"><b class="no">4</b><span data-t="pHub">구독 색인</span></div><div class="hx dash bare"></div>
+        <div class="chip"><b class="no">4</b><span data-t="pQueue">연결별 큐</span></div><div class="hx dash bare"></div>
+        <div class="chip"><b class="no">5</b><span data-t="pTask">연결별 태스크</span></div>
+      </div>
+    </div>
+    <div class="arr dash sm"><span class="mono">send</span></div>
+    <div class="box k tight"><div class="row"><b class="no">6</b><div class="ttl" data-t="pKernel">커널</div><div class="sub" data-t="pKernelSub">소켓 송신 버퍼</div></div></div>
+  </div>
+  <div class="arr thick"><span data-t="pWire">TCP, 웹소켓 프레임</span></div>
+  <div class="box g">
+    <div class="ttl" data-t="browser">브라우저</div>
+    <div class="bufrow"><div class="chip c">SharedWorker</div><div class="hx bare"></div><div class="chip c" data-t="pTab">탭</div></div>
+  </div>
+</section>
+
+<section class="view" id="v-send">
+  <div class="box a tight"><div class="hd"><div class="ttl" data-t="sdThread">gateway의 스레드</div><div class="mode" data-t="sdUser">사용자 모드</div></div></div>
+  <div class="arr k"><span><span class="mono" data-t="sdSendCall">send(fd, 프레임)</span> <span data-t="sdCall">호출, CPU가 커널 모드로 전환</span></span></div>
+  <div class="box k">
+    <div class="hd"><div class="ttl" data-t="sdKernel">커널</div><div class="mode" data-t="sdKMode">커널 모드</div></div>
+    <div class="row chip"><b class="no">1</b><span data-t="sdFind">fd가 가리키는 소켓을 찾는다</span></div>
+    <div class="row chip"><b class="no">2</b><span data-t="sdCopy">프레임을 소켓의 송신 버퍼로 복사한다</span></div>
+  </div>
+  <div class="two"><div class="arr k"></div><div class="arr k"></div></div>
+  <div class="box dash">
+    <div class="sub" data-t="sdPar">아래 두 일의 선후는 정해져 있지 않다</div>
+    <div class="two">
+      <div class="box a tight"><div class="ttl" data-t="sdThread">gateway의 스레드</div><div class="sub" data-t="sdRet">받아들인 바이트 수를 돌려받고 사용자 모드로 복귀</div></div>
+      <div class="box tight"><div class="ttl" data-t="sdNic">네트워크 카드</div><div class="sub" data-t="sdTx">TCP의 규칙이 허락하는 만큼 전송</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="v-buf">
+  <div class="box">
+    <div class="ttl" data-t="bfSrv">서버 기계</div>
+    <div class="bufrow">
+      <div class="box a tight c"><div class="ttl">gateway</div><div class="sub mono" data-t="bfSend">send(fd, 프레임)</div></div>
+      <div class="hx k" data-t="bfCopy">복사</div>
+      <div class="box k tight"><div class="ttl" data-t="bfSb">송신 버퍼</div><div class="cells" data-n="8" data-on="3"></div></div>
+    </div>
+  </div>
+  <div class="net">
+    <div></div><div></div>
+    <div class="pair"><div class="arr k"><span data-t="bfSeg">TCP 세그먼트</span></div><div class="arr up dash"><span data-t="bfWin">수신 버퍼에 남은 공간</span></div></div>
+  </div>
+  <div class="box">
+    <div class="ttl" data-t="bfCli">사용자 기계</div>
+    <div class="bufrow">
+      <div class="box g tight c"><div class="ttl" data-t="browser">브라우저</div><div class="sub mono">onmessage</div></div>
+      <div class="hx k l" data-t="bfCopy">복사</div>
+      <div class="box k tight"><div class="ttl" data-t="bfRb">수신 버퍼</div><div class="cells" data-n="8" data-on="2"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="v-bp">
+  <div class="stage">
+    <div class="st"><b class="no">1</b><span data-t="bp1">브라우저가 읽는 동안</span></div>
+    <div class="pipe">
+      <div class="node a">gateway</div><div class="hx a bare"></div>
+      <div class="bufn"><span data-t="bfSb">송신 버퍼</span><div class="cells" data-n="6" data-on="1"></div></div><div class="hx k bare"></div>
+      <div class="bufn"><span data-t="bfRb">수신 버퍼</span><div class="cells" data-n="6" data-on="1"></div></div><div class="hx g bare"></div>
+      <div class="node g" data-t="browser">브라우저</div>
+    </div>
+    <div class="cap2" data-t="bp1Cap">브라우저가 onmessage로 가져가는 동안 받는 커널은 "받았다, 남은 공간 넉넉함"을 알린다.</div>
+  </div>
+  <div class="stage">
+    <div class="st"><b class="no">2</b><span data-t="bp2">브라우저가 읽지 않기 시작하면</span></div>
+    <div class="pipe">
+      <div class="node a">gateway</div><div class="hx a bare"></div>
+      <div class="bufn"><span data-t="bfSb">송신 버퍼</span><div class="cells" data-n="6" data-on="1"></div></div><div class="hx k bare"></div>
+      <div class="bufn"><span data-t="bfRb">수신 버퍼</span><div class="cells" data-n="6" data-on="6"></div></div><div class="hx bare"></div>
+      <div class="node g off" data-t="browser">브라우저</div>
+    </div>
+    <div class="cap2" data-t="bp2Cap">수신 버퍼가 차면 받는 커널은 "받았다, 남은 공간 0"을 알린다.</div>
+  </div>
+  <div class="stage">
+    <div class="st"><b class="no">3</b><span data-t="bp3">남은 공간이 0인데 계속 send하면</span></div>
+    <div class="pipe">
+      <div class="node red">gateway</div><div class="hx red bare"></div>
+      <div class="bufn"><span data-t="bfSb">송신 버퍼</span><div class="cells" data-n="6" data-on="6"></div></div><div class="hx red bare x"><b>×</b></div>
+      <div class="bufn"><span data-t="bfRb">수신 버퍼</span><div class="cells" data-n="6" data-on="6"></div></div><div class="hx bare"></div>
+      <div class="node g off" data-t="browser">브라우저</div>
+    </div>
+    <div class="cap2" data-t="bp3Cap">보내지 못한 바이트가 송신 버퍼에 쌓이고, 송신 버퍼까지 차면 send는 "더 넣을 곳이 없다"를 돌려준다.</div>
+  </div>
+</section>
+
+<section class="view" id="v-thr">
+  <div class="thr">
+    <div class="thr-bg"></div>
+    <div class="thr-t" data-t="thTitle">연결마다 스레드를 두는 서버</div><div></div>
+    <div class="thr-l"><div class="chip"><b data-t="thT1">스레드 1</b><span class="sub" data-t="thWait">recv에서 대기</span></div></div><div class="thr-r"><i class="wire"></i><span class="pill" data-t="thC1">연결 1</span></div>
+    <div class="thr-l"><div class="chip"><b data-t="thT2">스레드 2</b><span class="sub" data-t="thWait">recv에서 대기</span></div></div><div class="thr-r"><i class="wire"></i><span class="pill" data-t="thC2">연결 2</span></div>
+    <div class="thr-l vdots">⋮</div><div class="thr-r vdots">⋮</div>
+    <div class="thr-l"><div class="chip"><b data-t="thT3">스레드 10000</b><span class="sub" data-t="thWait">recv에서 대기</span></div></div><div class="thr-r"><i class="wire"></i><span class="pill" data-t="thC3">연결 10000</span></div>
+  </div>
+</section>
+
+<section class="view" id="v-ep">
+  <div class="box k">
+    <div class="hd"><div class="ttl" data-t="sdKernel">커널</div><div class="mode">epoll, kqueue</div></div>
+    <div class="sub" data-t="epK">등록된 소켓 1만 개 중 준비된 것의 목록</div>
+    <div class="dots" data-n="40" data-hot="3,17,26,35"></div>
+  </div>
+  <div class="arr k"><span data-t="epReady">읽을 것이 생긴 소켓</span></div>
+  <div class="box a">
+    <div class="ttl" data-t="epRt">gateway 프로세스의 비동기 런타임</div>
+    <div class="sub" data-t="epTasks">태스크 1만 개, 연결마다 하나</div>
+    <div class="dots" data-n="40" data-hot="3,17,26,35"></div>
+    <div class="three"><div class="arr a sm"></div><div class="arr a sm"></div><div class="arr a sm"></div></div>
+    <div class="three">
+      <div class="chip stack"><b data-t="epW1">워커 스레드 1</b></div>
+      <div class="chip stack"><b data-t="epW2">워커 스레드 2</b></div>
+      <div class="chip stack"><b data-t="epWn">워커 스레드 N</b><span class="sub" data-t="epCores">코어 수만큼</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="v-mm">
+  <div class="two">
+    <div class="box b"><div class="ttl" data-t="mmFeed">feed의 가상 주소 공간</div><div class="addr"><i style="left:10%;width:34%"></i></div><div class="sub" data-t="mmRange">링 버퍼가 보이는 주소 범위</div></div>
+    <div class="box a"><div class="ttl" data-t="mmGw">gateway의 가상 주소 공간</div><div class="addr"><i style="left:56%;width:34%"></i></div><div class="sub" data-t="mmRange2">링 버퍼가 보이는 주소 범위. feed와 다른 주소여도 된다</div></div>
+  </div>
+  <div class="two"><div class="arr b"><span data-t="mmRw">mmap, 읽기와 쓰기</span></div><div class="arr a"><span data-t="mmRo">mmap, 읽기 전용</span></div></div>
+  <div class="box">
+    <div class="hd"><div class="ttl" data-t="mmPhys">실제 메모리</div><div class="mode" data-t="mmSame">두 프로세스가 같은 페이지들을 본다</div></div>
+    <div class="pages"><i></i><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="arr line"></div>
+  <div class="box c tight"><div class="ttl" data-t="mmFile">링 파일</div></div>
+</section>
+
+<section class="view" id="v-torn">
+  <div class="legend"><span><i class="sq new"></i><span data-t="tnLgNew">feed가 새로 쓴 바이트</span></span><span><i class="sq old"></i><span data-t="tnLgOld">예전 레코드의 바이트</span></span><span><i class="sq rd"></i><span data-t="tnLgRd">gateway가 읽은 범위</span></span></div>
+  <div class="torn">
+    <div class="who b">feed</div>
+    <div class="act"><span data-t="tn1">길이 63을 쓴다</span><div class="rec"><i class="len new">63</i><span class="body"><i class="c30 old" data-t="tnHead">앞 30바이트</i><i class="c33 old" data-t="tnTail">뒤 33바이트</i></span></div></div>
+    <div class="who b">feed</div>
+    <div class="act"><span data-t="tn2">내용의 앞 30바이트를 쓴다</span><div class="rec"><i class="len new">63</i><span class="body"><i class="c30 new" data-t="tnHead">앞 30바이트</i><i class="c33 old" data-t="tnTail">뒤 33바이트</i></span></div></div>
+    <div class="who a">gateway</div>
+    <div class="act"><span data-t="tn3">길이를 읽는다 (63)</span><div class="rec"><i class="len new rd">63</i><span class="body"><i class="c30 new" data-t="tnHead">앞 30바이트</i><i class="c33 old" data-t="tnTail">뒤 33바이트</i></span></div></div>
+    <div class="who a">gateway</div>
+    <div class="act"><span data-t="tn4">내용 63바이트를 읽는다</span><div class="rec"><i class="len new">63</i><span class="body rd"><i class="c30 new" data-t="tnHead">앞 30바이트</i><i class="c33 old" data-t="tnTail">뒤 33바이트</i></span></div><span class="warn" data-t="tn4Warn">뒤 33바이트는 예전 레코드의 일부다</span></div>
+    <div class="who b">feed</div>
+    <div class="act"><span data-t="tn5">내용의 나머지 33바이트를 쓴다</span><div class="rec"><i class="len new">63</i><span class="body"><i class="c30 new" data-t="tnHead">앞 30바이트</i><i class="c33 new" data-t="tnTail">뒤 33바이트</i></span></div></div>
+  </div>
+</section>
+
+<script>
+(() => {
+  const params = new URLSearchParams(location.search)
+  const lang = params.get('lang') === 'en' ? 'en' : 'ko'
+  const text = {
+    ko: {},
+    en: {
+      osUser: 'Runs in user mode', osProcA: 'Process A', osProcB: 'Process B', osTh1: 'Thread 1', osTh2: 'Thread 2', osTh: 'Thread',
+      osMemA: "A's memory", osMemShare: 'Both threads use it', osMemB: "B's memory", osMemOwn: "Only B's thread uses it",
+      osWall: 'Cannot see each other’s memory', osCall: 'System call', osKernelMode: 'Runs in kernel mode', osKernel: 'Kernel',
+      osJob1: 'Decides which thread runs on which core', osJob2: 'Hands out memory to processes', osJob3: 'Sends and receives data through the network card',
+      osOnly: 'Only the kernel touches the hardware', osHw: 'Hardware', osCpu: 'CPU cores', osRam: 'Memory', osNic: 'Network card',
+      browser: 'Browser', server: 'Server',
+      archLgConn: "The browser's connection", archLgTrade: 'Trades', lb: 'Load balancer', m1: 'Machine 1', m2: 'Machine 2',
+      proxy: 'Reverse proxy, TLS termination', broker: 'Message broker', archTrade: 'Trades',
+      tabA: 'Tab A', tabASub: 'Stock page', tabB: 'Tab B', tabBSub: 'Another stock page',
+      swSub: 'One WebSocket, subscription ids 0, 1, 2 ...', swPm: 'Talks to tabs with postMessage', swConn: 'One WebSocket connection',
+      frTcp: 'TCP byte stream', frWs: 'WebSocket frame', frWsHd: 'WebSocket header', frWsHdSub: 'final-fragment flag, type (text), length',
+      frStomp: 'STOMP frame', frStompSize: '403 bytes before compression', frCmd: 'Command', frHd: '4 header lines', frBody: 'Body',
+      stW: "Browser's SharedWorker", stUp: 'HTTP upgrade request, offers', stOffer: '', stPick: 'chosen', stSub: 'id 0, the stock’s trade topic',
+      stLoop: 'Every time a trade happens', stHb: 'Heartbeat, every 5 seconds both ways', stNl: 'One newline character',
+      pLgSeen: 'Observed in frames', pLgMade: 'Imagined and built by me', pEx: 'Exchange', pSrv: 'Server machine',
+      pFeed: 'feed process', pFeedSub: 'Receives and records trades', pRing: 'Ring buffer in shared memory', pGw: 'gateway process',
+      pReader: 'Thread reading the ring', pHub: 'Subscription index', pQueue: 'Per-connection queue', pTask: 'Per-connection task',
+      pKernel: 'Kernel', pKernelSub: 'Socket send buffer', pWire: 'TCP, WebSocket frames', pTab: 'Tab',
+      sdThread: "gateway's thread", sdUser: 'User mode', sdSendCall: 'send(fd, frame)', sdCall: 'called, CPU switches to kernel mode', sdKernel: 'Kernel', sdKMode: 'Kernel mode',
+      sdFind: 'Finds the socket the fd points to', sdCopy: "Copies the frame into the socket's send buffer",
+      sdPar: 'The order of these two is not fixed', sdRet: 'Gets the number of accepted bytes and returns to user mode', sdNic: 'Network card', sdTx: 'Sends as much as TCP rules allow',
+      bfSrv: 'Server machine', bfSend: 'send(fd, frame)', bfCopy: 'Copy', bfSb: 'Send buffer', bfRb: 'Receive buffer', bfSeg: 'TCP segments', bfWin: 'Space left in the receive buffer', bfCli: "User's machine",
+      bp1: 'While the browser reads', bp1Cap: 'While the browser reads with onmessage, the receiving kernel reports "received, plenty of room".',
+      bp2: 'When the browser stops reading', bp2Cap: 'Once the receive buffer fills, the receiving kernel reports "received, no room".',
+      bp3: 'Sending on with no room left', bp3Cap: 'Unsent bytes pile up in the send buffer. Once it fills, send returns "no room left".',
+      thTitle: 'A server with one thread per connection', thT1: 'Thread 1', thT2: 'Thread 2', thT3: 'Thread 10000', thWait: 'waiting in recv',
+      thC1: 'Connection 1', thC2: 'Connection 2', thC3: 'Connection 10000',
+      epK: 'List of the ready ones among 10,000 registered sockets', epReady: 'Sockets with something to read', epRt: "Async runtime in the gateway process",
+      epTasks: '10,000 tasks, one per connection', epW1: 'Worker thread 1', epW2: 'Worker thread 2', epWn: 'Worker thread N', epCores: 'as many as cores',
+      mmFeed: "feed's virtual address space", mmGw: "gateway's virtual address space", mmRange: 'Where the ring buffer appears',
+      mmRange2: 'Where the ring buffer appears, which may differ from feed', mmRw: 'mmap, read and write', mmRo: 'mmap, read only',
+      mmPhys: 'Physical memory', mmSame: 'Both processes see the same pages', mmFile: 'Ring file',
+      tnLgNew: 'Bytes feed just wrote', tnLgOld: 'Bytes of the old record', tnLgRd: 'Range gateway read', tnHead: 'first 30 bytes', tnTail: 'last 33 bytes',
+      tn1: 'Writes length 63', tn2: 'Writes the first 30 bytes of the content', tn3: 'Reads the length (63)', tn4: 'Reads 63 bytes of content',
+      tn4Warn: 'The last 33 bytes belong to an old record', tn5: 'Writes the remaining 33 bytes',
+    },
+  }[lang]
+  if (lang === 'en') {
+    document.documentElement.lang = 'en'
+    document.title = 'How one trade reaches the browser'
+    for (const el of document.querySelectorAll('[data-t]')) {
+      const v = text[el.dataset.t]
+      if (v != null) el.textContent = v
+    }
+  }
+  for (const el of document.querySelectorAll('.cells')) {
+    const n = Number(el.dataset.n), on = Number(el.dataset.on)
+    el.innerHTML = Array.from({length: n}, (_, i) => `<i${i < on ? ' class="on"' : ''}></i>`).join('')
+  }
+  for (const el of document.querySelectorAll('.dots')) {
+    const hot = new Set(el.dataset.hot.split(',').map(Number))
+    el.innerHTML = Array.from({length: Number(el.dataset.n)}, (_, i) => `<i${hot.has(i) ? ' class="on"' : ''}></i>`).join('')
+  }
+  const view = params.get('view') || 'os'
+  const sec = document.getElementById('v-' + view) || document.getElementById('v-os')
+  sec.classList.add('on')
+})()
+</script>
+</body>
+</html>
